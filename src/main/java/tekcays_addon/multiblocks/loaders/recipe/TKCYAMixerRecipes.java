@@ -1,14 +1,14 @@
-package gregicality.multiblocks.loaders.recipe;
+package tekcays_addon.multiblocks.loaders.recipe;
 
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 
-import static gregicality.multiblocks.api.unification.GCYMMaterials.*;
+import static tekcays_addon.multiblocks.api.unification.TKCYAMaterials.*;
 import static gregtech.api.GTValues.*;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.dust;
 
-public class GCYMMixerRecipes {
+public class TKCYAMixerRecipes {
 
     public static void init() {
         RecipeMaps.MIXER_RECIPES.recipeBuilder()

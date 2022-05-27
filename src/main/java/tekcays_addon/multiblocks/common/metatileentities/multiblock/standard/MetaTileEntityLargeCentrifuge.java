@@ -1,9 +1,9 @@
-package gregicality.multiblocks.common.metatileentities.multiblock.standard;
+package tekcays_addon.multiblocks.common.metatileentities.multiblock.standard;
 
-import gregicality.multiblocks.api.metatileentity.GCYMRecipeMapMultiblockController;
-import gregicality.multiblocks.api.render.GCYMTextures;
-import gregicality.multiblocks.common.block.GCYMMetaBlocks;
-import gregicality.multiblocks.common.block.blocks.BlockLargeMultiblockCasing;
+import tekcays_addon.multiblocks.api.metatileentity.TKCYARecipeMapMultiblockController;
+import tekcays_addon.multiblocks.api.render.TKCYATextures;
+import tekcays_addon.multiblocks.common.block.TKCYAMetaBlocks;
+import tekcays_addon.multiblocks.common.block.blocks.BlockLargeMultiblockCasing;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 
 import static gregtech.api.util.RelativeDirection.*;
 
-public class MetaTileEntityLargeCentrifuge extends GCYMRecipeMapMultiblockController {
+public class MetaTileEntityLargeCentrifuge extends TKCYARecipeMapMultiblockController {
 
     public MetaTileEntityLargeCentrifuge(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.CENTRIFUGE_RECIPES, RecipeMaps.THERMAL_CENTRIFUGE_RECIPES});
@@ -49,7 +49,7 @@ public class MetaTileEntityLargeCentrifuge extends GCYMRecipeMapMultiblockContro
     }
 
     private IBlockState getCasingState() {
-        return GCYMMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.VIBRATION_SAFE_CASING);
+        return TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.VIBRATION_SAFE_CASING);
     }
 
     private IBlockState getCasingState2() {
@@ -58,12 +58,12 @@ public class MetaTileEntityLargeCentrifuge extends GCYMRecipeMapMultiblockContro
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
-        return GCYMTextures.VIBRATION_SAFE_CASING;
+        return TKCYATextures.VIBRATION_SAFE_CASING;
     }
 
     @Nonnull
     @Override
     protected OrientedOverlayRenderer getFrontOverlay() {
-        return GCYMTextures.LARGE_CENTRIFUGE_OVERLAY;
+        return TKCYATextures.LARGE_CENTRIFUGE_OVERLAY;
     }
 }

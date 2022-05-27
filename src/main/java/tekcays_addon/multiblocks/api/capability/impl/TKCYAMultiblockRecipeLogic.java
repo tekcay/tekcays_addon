@@ -1,9 +1,9 @@
-package gregicality.multiblocks.api.capability.impl;
+package tekcays_addon.multiblocks.api.capability.impl;
 
-import gregicality.multiblocks.api.capability.IParallelMultiblock;
-import gregicality.multiblocks.api.metatileentity.GCYMMultiblockAbility;
-import gregicality.multiblocks.api.metatileentity.GCYMRecipeMapMultiblockController;
-import gregicality.multiblocks.common.GCYMConfigHolder;
+import tekcays_addon.multiblocks.api.capability.IParallelMultiblock;
+import tekcays_addon.multiblocks.api.metatileentity.TKCYAMultiblockAbility;
+import tekcays_addon.multiblocks.api.metatileentity.TKCYARecipeMapMultiblockController;
+import tekcays_addon.multiblocks.common.TKCYAConfigHolder;
 import gregtech.api.GTValues;
 import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.ITieredMetaTileEntity;
@@ -11,9 +11,9 @@ import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 
 import java.util.List;
 
-public class GCYMMultiblockRecipeLogic extends MultiblockRecipeLogic {
+public class TKCYAMultiblockRecipeLogic extends MultiblockRecipeLogic {
 
-    public GCYMMultiblockRecipeLogic(RecipeMapMultiblockController tileEntity) {
+    public TKCYAMultiblockRecipeLogic(RecipeMapMultiblockController tileEntity) {
         super(tileEntity);
     }
 
@@ -32,13 +32,13 @@ public class GCYMMultiblockRecipeLogic extends MultiblockRecipeLogic {
 
     @Override
     protected long getMaxVoltage() {
-        if (!GCYMConfigHolder.globalMultiblocks.enableTieredCasings)
+        if (!TKCYAConfigHolder.globalMultiblocks.enableTieredCasings)
             return super.getMaxVoltage();
 
-        if (getMetaTileEntity() instanceof GCYMRecipeMapMultiblockController && !((GCYMRecipeMapMultiblockController) getMetaTileEntity()).isTiered())
+        if (getMetaTileEntity() instanceof TKCYARecipeMapMultiblockController && !((TKCYARecipeMapMultiblockController) getMetaTileEntity()).isTiered())
             return super.getMaxVoltage();
 
-        List<ITieredMetaTileEntity> list = getMetaTileEntity().getAbilities(GCYMMultiblockAbility.TIERED_HATCH);
+        List<ITieredMetaTileEntity> list = getMetaTileEntity().getAbilities(TKCYAMultiblockAbility.TIERED_HATCH);
 
         if (list.isEmpty())
             return super.getMaxVoltage();

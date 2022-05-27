@@ -1,7 +1,7 @@
-package gregicality.multiblocks.common.metatileentities.multiblock.standard;
+package tekcays_addon.multiblocks.common.metatileentities.multiblock.standard;
 
-import gregicality.multiblocks.api.metatileentity.GCYMRecipeMapMultiblockController;
-import gregicality.multiblocks.api.render.GCYMTextures;
+import tekcays_addon.multiblocks.api.metatileentity.TKCYARecipeMapMultiblockController;
+import tekcays_addon.multiblocks.api.render.TKCYATextures;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -18,7 +18,7 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class MetaTileEntityLargePackager extends GCYMRecipeMapMultiblockController {
+public class MetaTileEntityLargePackager extends TKCYARecipeMapMultiblockController {
 
     public MetaTileEntityLargePackager(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, RecipeMaps.PACKER_RECIPES);
@@ -53,7 +53,7 @@ public class MetaTileEntityLargePackager extends GCYMRecipeMapMultiblockControll
     @Nonnull
     @Override
     protected OrientedOverlayRenderer getFrontOverlay() {
-        return GCYMTextures.LARGE_PACKAGER_OVERLAY;
+        return TKCYATextures.LARGE_PACKAGER_OVERLAY;
     }
 
     @Override

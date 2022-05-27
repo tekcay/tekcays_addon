@@ -1,10 +1,10 @@
-package gregicality.multiblocks.common.metatileentities.multiblock.standard;
+package tekcays_addon.multiblocks.common.metatileentities.multiblock.standard;
 
-import gregicality.multiblocks.api.metatileentity.GCYMRecipeMapMultiblockController;
-import gregicality.multiblocks.api.render.GCYMTextures;
-import gregicality.multiblocks.common.block.GCYMMetaBlocks;
-import gregicality.multiblocks.common.block.blocks.BlockLargeMultiblockCasing;
-import gregicality.multiblocks.common.block.blocks.BlockUniqueCasing;
+import tekcays_addon.multiblocks.api.metatileentity.TKCYARecipeMapMultiblockController;
+import tekcays_addon.multiblocks.api.render.TKCYATextures;
+import tekcays_addon.multiblocks.common.block.TKCYAMetaBlocks;
+import tekcays_addon.multiblocks.common.block.blocks.BlockLargeMultiblockCasing;
+import tekcays_addon.multiblocks.common.block.blocks.BlockUniqueCasing;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -18,7 +18,7 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class MetaTileEntityLargeElectrolyzer extends GCYMRecipeMapMultiblockController {
+public class MetaTileEntityLargeElectrolyzer extends TKCYARecipeMapMultiblockController {
 
     public MetaTileEntityLargeElectrolyzer(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, RecipeMaps.ELECTROLYZER_RECIPES);
@@ -44,21 +44,21 @@ public class MetaTileEntityLargeElectrolyzer extends GCYMRecipeMapMultiblockCont
     }
 
     private IBlockState getCasingState() {
-        return GCYMMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.NONCONDUCTING_CASING);
+        return TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.NONCONDUCTING_CASING);
     }
 
     private IBlockState getCasingState2() {
-        return GCYMMetaBlocks.UNIQUE_CASING.getState(BlockUniqueCasing.UniqueCasingType.ELECTROLYTIC_CELL);
+        return TKCYAMetaBlocks.UNIQUE_CASING.getState(BlockUniqueCasing.UniqueCasingType.ELECTROLYTIC_CELL);
     }
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
-        return GCYMTextures.NONCONDUCTING_CASING;
+        return TKCYATextures.NONCONDUCTING_CASING;
     }
 
     @Nonnull
     @Override
     protected OrientedOverlayRenderer getFrontOverlay() {
-        return GCYMTextures.LARGE_ELECTROLYZER_OVERLAY;
+        return TKCYATextures.LARGE_ELECTROLYZER_OVERLAY;
     }
 }

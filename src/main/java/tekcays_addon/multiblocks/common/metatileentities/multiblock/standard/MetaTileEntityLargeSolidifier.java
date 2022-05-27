@@ -1,9 +1,9 @@
-package gregicality.multiblocks.common.metatileentities.multiblock.standard;
+package tekcays_addon.multiblocks.common.metatileentities.multiblock.standard;
 
-import gregicality.multiblocks.api.metatileentity.GCYMRecipeMapMultiblockController;
-import gregicality.multiblocks.api.render.GCYMTextures;
-import gregicality.multiblocks.common.block.GCYMMetaBlocks;
-import gregicality.multiblocks.common.block.blocks.BlockLargeMultiblockCasing;
+import tekcays_addon.multiblocks.api.metatileentity.TKCYARecipeMapMultiblockController;
+import tekcays_addon.multiblocks.api.render.TKCYATextures;
+import tekcays_addon.multiblocks.common.block.TKCYAMetaBlocks;
+import tekcays_addon.multiblocks.common.block.blocks.BlockLargeMultiblockCasing;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 
 import static gregtech.api.util.RelativeDirection.*;
 
-public class MetaTileEntityLargeSolidifier extends GCYMRecipeMapMultiblockController {
+public class MetaTileEntityLargeSolidifier extends TKCYARecipeMapMultiblockController {
 
     public MetaTileEntityLargeSolidifier(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, RecipeMaps.FLUID_SOLIDFICATION_RECIPES);
@@ -49,7 +49,7 @@ public class MetaTileEntityLargeSolidifier extends GCYMRecipeMapMultiblockContro
     }
 
     private IBlockState getCasingState() {
-        return GCYMMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.WATERTIGHT_CASING);
+        return TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.WATERTIGHT_CASING);
     }
 
     private IBlockState getCasingState2() {
@@ -58,12 +58,12 @@ public class MetaTileEntityLargeSolidifier extends GCYMRecipeMapMultiblockContro
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
-        return GCYMTextures.WATERTIGHT_CASING;
+        return TKCYATextures.WATERTIGHT_CASING;
     }
 
     @Nonnull
     @Override
     protected OrientedOverlayRenderer getFrontOverlay() {
-        return GCYMTextures.LARGE_SOLIDIFIER_OVERLAY;
+        return TKCYATextures.LARGE_SOLIDIFIER_OVERLAY;
     }
 }

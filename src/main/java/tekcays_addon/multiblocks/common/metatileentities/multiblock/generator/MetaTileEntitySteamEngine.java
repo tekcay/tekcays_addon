@@ -1,8 +1,8 @@
-package gregicality.multiblocks.common.metatileentities.multiblock.generator;
+package tekcays_addon.multiblocks.common.metatileentities.multiblock.generator;
 
-import gregicality.multiblocks.api.render.GCYMTextures;
-import gregicality.multiblocks.common.block.GCYMMetaBlocks;
-import gregicality.multiblocks.common.block.blocks.BlockLargeMultiblockCasing;
+import tekcays_addon.multiblocks.api.render.TKCYATextures;
+import tekcays_addon.multiblocks.common.block.TKCYAMetaBlocks;
+import tekcays_addon.multiblocks.common.block.blocks.BlockLargeMultiblockCasing;
 import gregtech.api.GTValues;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -55,7 +55,7 @@ public class MetaTileEntitySteamEngine extends FuelMultiblockController {
     }
 
     private IBlockState getCasingState() {
-        return GCYMMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.STEAM_CASING);
+        return TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.STEAM_CASING);
     }
 
     private IBlockState getCasingState2() {
@@ -65,18 +65,18 @@ public class MetaTileEntitySteamEngine extends FuelMultiblockController {
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("gcym.machine.steam_engine.tooltip.1", GTValues.VNF[GTValues.MV]));
+        tooltip.add(I18n.format("tkcya.machine.steam_engine.tooltip.1", GTValues.VNF[GTValues.MV]));
     }
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
-        return GCYMTextures.STEAM_CASING;
+        return TKCYATextures.STEAM_CASING;
     }
 
     @Nonnull
     @Override
     protected ICubeRenderer getFrontOverlay() {
-        return GCYMTextures.STEAM_ENGINE_OVERLAY;
+        return TKCYATextures.STEAM_ENGINE_OVERLAY;
     }
 
     @Override

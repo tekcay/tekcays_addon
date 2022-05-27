@@ -1,10 +1,10 @@
-package gregicality.multiblocks.common.metatileentities.multiblock.standard;
+package tekcays_addon.multiblocks.common.metatileentities.multiblock.standard;
 
-import gregicality.multiblocks.api.metatileentity.GCYMRecipeMapMultiblockController;
-import gregicality.multiblocks.api.render.GCYMTextures;
-import gregicality.multiblocks.common.block.GCYMMetaBlocks;
-import gregicality.multiblocks.common.block.blocks.BlockLargeMultiblockCasing;
-import gregicality.multiblocks.common.block.blocks.BlockUniqueCasing;
+import tekcays_addon.multiblocks.api.metatileentity.TKCYARecipeMapMultiblockController;
+import tekcays_addon.multiblocks.api.render.TKCYATextures;
+import tekcays_addon.multiblocks.common.block.TKCYAMetaBlocks;
+import tekcays_addon.multiblocks.common.block.blocks.BlockLargeMultiblockCasing;
+import tekcays_addon.multiblocks.common.block.blocks.BlockUniqueCasing;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 
 import static gregtech.api.util.RelativeDirection.*;
 
-public class MetaTileEntityLargeCutter extends GCYMRecipeMapMultiblockController {
+public class MetaTileEntityLargeCutter extends TKCYARecipeMapMultiblockController {
 
     public MetaTileEntityLargeCutter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.CUTTER_RECIPES, RecipeMaps.LATHE_RECIPES});
@@ -53,7 +53,7 @@ public class MetaTileEntityLargeCutter extends GCYMRecipeMapMultiblockController
     }
 
     private IBlockState getCasingState() {
-        return GCYMMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.CUTTER_CASING);
+        return TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.CUTTER_CASING);
     }
 
     private IBlockState getCasingState2() {
@@ -61,17 +61,17 @@ public class MetaTileEntityLargeCutter extends GCYMRecipeMapMultiblockController
     }
 
     private IBlockState getCasingState3() {
-        return GCYMMetaBlocks.UNIQUE_CASING.getState(BlockUniqueCasing.UniqueCasingType.SLICING_BLADES);
+        return TKCYAMetaBlocks.UNIQUE_CASING.getState(BlockUniqueCasing.UniqueCasingType.SLICING_BLADES);
     }
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
-        return GCYMTextures.CUTTER_CASING;
+        return TKCYATextures.CUTTER_CASING;
     }
 
     @Nonnull
     @Override
     protected OrientedOverlayRenderer getFrontOverlay() {
-        return GCYMTextures.LARGE_CUTTER_OVERLAY;
+        return TKCYATextures.LARGE_CUTTER_OVERLAY;
     }
 }

@@ -1,10 +1,10 @@
-package gregicality.multiblocks.common.metatileentities.multiblockpart;
+package tekcays_addon.multiblocks.common.metatileentities.multiblockpart;
 
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregicality.multiblocks.api.metatileentity.GCYMMultiblockAbility;
-import gregicality.multiblocks.api.render.GCYMTextures;
+import tekcays_addon.multiblocks.api.metatileentity.TKCYAMultiblockAbility;
+import tekcays_addon.multiblocks.api.render.TKCYATextures;
 import gregtech.api.GTValues;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.metatileentity.ITieredMetaTileEntity;
@@ -46,18 +46,18 @@ public class MetaTileEntityTieredHatch extends MetaTileEntityMultiblockPart impl
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        GCYMTextures.TIERED_HATCH_OVERLAY.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), false, false);
+        TKCYATextures.TIERED_HATCH_OVERLAY.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), false, false);
     }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("gcym.machine.tiered_hatch.tooltip.1", GTValues.VNF[getTier()]));
+        tooltip.add(I18n.format("tkcya.machine.tiered_hatch.tooltip.1", GTValues.VNF[getTier()]));
     }
 
     @Override
     public MultiblockAbility<ITieredMetaTileEntity> getAbility() {
-        return GCYMMultiblockAbility.TIERED_HATCH;
+        return TKCYAMultiblockAbility.TIERED_HATCH;
     }
 
     @Override

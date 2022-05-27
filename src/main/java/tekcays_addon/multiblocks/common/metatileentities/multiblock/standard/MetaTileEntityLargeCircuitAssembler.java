@@ -1,9 +1,9 @@
-package gregicality.multiblocks.common.metatileentities.multiblock.standard;
+package tekcays_addon.multiblocks.common.metatileentities.multiblock.standard;
 
-import gregicality.multiblocks.api.metatileentity.GCYMRecipeMapMultiblockController;
-import gregicality.multiblocks.api.render.GCYMTextures;
-import gregicality.multiblocks.common.block.GCYMMetaBlocks;
-import gregicality.multiblocks.common.block.blocks.BlockLargeMultiblockCasing;
+import tekcays_addon.multiblocks.api.metatileentity.TKCYARecipeMapMultiblockController;
+import tekcays_addon.multiblocks.api.render.TKCYATextures;
+import tekcays_addon.multiblocks.common.block.TKCYAMetaBlocks;
+import tekcays_addon.multiblocks.common.block.blocks.BlockLargeMultiblockCasing;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 
 import static gregtech.api.util.RelativeDirection.*;
 
-public class MetaTileEntityLargeCircuitAssembler extends GCYMRecipeMapMultiblockController {
+public class MetaTileEntityLargeCircuitAssembler extends TKCYARecipeMapMultiblockController {
 
     public MetaTileEntityLargeCircuitAssembler(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, RecipeMaps.CIRCUIT_ASSEMBLER_RECIPES);
@@ -53,7 +53,7 @@ public class MetaTileEntityLargeCircuitAssembler extends GCYMRecipeMapMultiblock
     }
 
     private IBlockState getCasingState() {
-        return GCYMMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.ASSEMBLING_CASING);
+        return TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.ASSEMBLING_CASING);
     }
 
     private IBlockState getCasingState2() {
@@ -70,12 +70,12 @@ public class MetaTileEntityLargeCircuitAssembler extends GCYMRecipeMapMultiblock
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
-        return GCYMTextures.ASSEMBLING_CASING;
+        return TKCYATextures.ASSEMBLING_CASING;
     }
 
     @Nonnull
     @Override
     protected OrientedOverlayRenderer getFrontOverlay() {
-        return GCYMTextures.LARGE_CIRCUIT_ASSEMBLER_OVERLAY;
+        return TKCYATextures.LARGE_CIRCUIT_ASSEMBLER_OVERLAY;
     }
 }

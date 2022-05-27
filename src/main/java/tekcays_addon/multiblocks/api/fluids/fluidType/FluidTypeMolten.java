@@ -1,4 +1,4 @@
-package gregicality.multiblocks.api.fluids.fluidType;
+package tekcays_addon.multiblocks.api.fluids.fluidType;
 
 import gregtech.api.fluids.fluidType.FluidTypeLiquid;
 import net.minecraftforge.fluids.Fluid;

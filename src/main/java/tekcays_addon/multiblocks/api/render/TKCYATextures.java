@@ -1,6 +1,6 @@
-package gregicality.multiblocks.api.render;
+package tekcays_addon.multiblocks.api.render;
 
-import gregicality.multiblocks.GregicalityMultiblocks;
+import tekcays_addon.multiblocks.TekCaysAddon;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import net.minecraftforge.fml.common.Mod;
@@ -8,8 +8,8 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import static gregtech.client.renderer.texture.cube.OrientedOverlayRenderer.OverlayFace.*;
 
-@Mod.EventBusSubscriber(modid = GregicalityMultiblocks.MODID, value = Side.CLIENT)
-public class GCYMTextures {
+@Mod.EventBusSubscriber(modid = TekCaysAddon.MODID, value = Side.CLIENT)
+public class TKCYATextures {
 
     // Multiblock Controllers
     public static OrientedOverlayRenderer LARGE_MACERATOR_OVERLAY;

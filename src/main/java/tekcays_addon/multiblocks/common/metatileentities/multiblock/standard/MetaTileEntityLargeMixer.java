@@ -1,10 +1,10 @@
-package gregicality.multiblocks.common.metatileentities.multiblock.standard;
+package tekcays_addon.multiblocks.common.metatileentities.multiblock.standard;
 
-import gregicality.multiblocks.api.metatileentity.GCYMRecipeMapMultiblockController;
-import gregicality.multiblocks.api.render.GCYMTextures;
-import gregicality.multiblocks.api.unification.GCYMMaterials;
-import gregicality.multiblocks.common.block.GCYMMetaBlocks;
-import gregicality.multiblocks.common.block.blocks.BlockLargeMultiblockCasing;
+import tekcays_addon.multiblocks.api.metatileentity.TKCYARecipeMapMultiblockController;
+import tekcays_addon.multiblocks.api.render.TKCYATextures;
+import tekcays_addon.multiblocks.api.unification.TKCYAMaterials;
+import tekcays_addon.multiblocks.common.block.TKCYAMetaBlocks;
+import tekcays_addon.multiblocks.common.block.blocks.BlockLargeMultiblockCasing;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -22,7 +22,7 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class MetaTileEntityLargeMixer extends GCYMRecipeMapMultiblockController {
+public class MetaTileEntityLargeMixer extends TKCYARecipeMapMultiblockController {
 
     public MetaTileEntityLargeMixer(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, RecipeMaps.MIXER_RECIPES);
@@ -53,7 +53,7 @@ public class MetaTileEntityLargeMixer extends GCYMRecipeMapMultiblockController 
     }
 
     private IBlockState getCasingState() {
-        return GCYMMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.MIXER_CASING);
+        return TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.MIXER_CASING);
     }
 
     private IBlockState getCasingState2() {
@@ -69,18 +69,18 @@ public class MetaTileEntityLargeMixer extends GCYMRecipeMapMultiblockController 
     }
 
     private IBlockState getFrameState() {
-        return MetaBlocks.FRAMES.get(GCYMMaterials.HastelloyX).getBlock(GCYMMaterials.HastelloyX);
+        return MetaBlocks.FRAMES.get(TKCYAMaterials.HastelloyX).getBlock(TKCYAMaterials.HastelloyX);
     }
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
-        return GCYMTextures.MIXER_CASING;
+        return TKCYATextures.MIXER_CASING;
     }
 
     @Nonnull
     @Override
     protected OrientedOverlayRenderer getFrontOverlay() {
-        return GCYMTextures.LARGE_MIXER_OVERLAY;
+        return TKCYATextures.LARGE_MIXER_OVERLAY;
     }
 
     @Override

@@ -1,11 +1,11 @@
-package gregicality.multiblocks.common.metatileentities.multiblock.standard;
+package tekcays_addon.multiblocks.common.metatileentities.multiblock.standard;
 
-import gregicality.multiblocks.api.recipes.GCYMRecipeMaps;
-import gregicality.multiblocks.api.render.GCYMTextures;
-import gregicality.multiblocks.common.block.GCYMMetaBlocks;
-import gregicality.multiblocks.common.block.blocks.BlockLargeMultiblockCasing;
-import gregicality.multiblocks.common.block.blocks.BlockUniqueCasing;
-import gregicality.multiblocks.common.metatileentities.GCYMMetaTileEntities;
+import tekcays_addon.multiblocks.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.multiblocks.api.render.TKCYATextures;
+import tekcays_addon.multiblocks.common.block.TKCYAMetaBlocks;
+import tekcays_addon.multiblocks.common.block.blocks.BlockLargeMultiblockCasing;
+import tekcays_addon.multiblocks.common.block.blocks.BlockUniqueCasing;
+import tekcays_addon.multiblocks.common.metatileentities.TKCYAMetaTileEntities;
 import gregtech.api.GTValues;
 import gregtech.api.capability.IHeatingCoil;
 import gregtech.api.capability.impl.HeatingCoilRecipeLogic;
@@ -51,7 +51,7 @@ public class MetaTileEntityAlloyBlastSmelter extends RecipeMapMultiblockControll
     private int blastFurnaceTemperature;
 
     public MetaTileEntityAlloyBlastSmelter(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, GCYMRecipeMaps.ALLOY_BLAST_RECIPES);
+        super(metaTileEntityId, TKCYARecipeMaps.ALLOY_BLAST_RECIPES);
         this.recipeMapWorkable = new HeatingCoilRecipeLogic(this);
     }
 
@@ -119,7 +119,7 @@ public class MetaTileEntityAlloyBlastSmelter extends RecipeMapMultiblockControll
                 .aisle("XXXXX", "C###C", "G###G", "C###C", "XXMXX")
                 .aisle("FXXXH", "C###C", "G###G", "C###C", "XXXXX")
                 .aisle("#ISO#", "#CCC#", "#GGG#", "#CCC#", "#XXX#")
-                .where('S', GCYMMetaTileEntities.ALLOY_BLAST_SMELTER, EnumFacing.SOUTH)
+                .where('S', TKCYAMetaTileEntities.ALLOY_BLAST_SMELTER, EnumFacing.SOUTH)
                 .where('X', getCasingState())
                 .where('G', getCasingState2())
                 .where('M', MetaTileEntities.MUFFLER_HATCH[GTValues.HV], EnumFacing.UP)
@@ -138,11 +138,11 @@ public class MetaTileEntityAlloyBlastSmelter extends RecipeMapMultiblockControll
     }
 
     private IBlockState getCasingState() {
-        return GCYMMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.HIGH_TEMPERATURE_CASING);
+        return TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.HIGH_TEMPERATURE_CASING);
     }
 
     private IBlockState getCasingState2() {
-        return GCYMMetaBlocks.UNIQUE_CASING.getState(BlockUniqueCasing.UniqueCasingType.HEAT_VENT);
+        return TKCYAMetaBlocks.UNIQUE_CASING.getState(BlockUniqueCasing.UniqueCasingType.HEAT_VENT);
     }
 
     @Override
@@ -155,13 +155,13 @@ public class MetaTileEntityAlloyBlastSmelter extends RecipeMapMultiblockControll
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
-        return GCYMTextures.BLAST_CASING;
+        return TKCYATextures.BLAST_CASING;
     }
 
     @Nonnull
     @Override
     protected OrientedOverlayRenderer getFrontOverlay() {
-        return GCYMTextures.ALLOY_BLAST_SMELTER_OVERLAY;
+        return TKCYATextures.ALLOY_BLAST_SMELTER_OVERLAY;
     }
 
     @Override

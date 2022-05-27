@@ -1,6 +1,6 @@
-package gregicality.multiblocks.common.metatileentities.multiblock.standard;
+package tekcays_addon.multiblocks.common.metatileentities.multiblock.standard;
 
-import gregicality.multiblocks.api.render.GCYMTextures;
+import tekcays_addon.multiblocks.api.render.TKCYATextures;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -76,7 +76,7 @@ public class MetaTileEntityElectricImplosionCompressor extends RecipeMapMultiblo
     @Nonnull
     @Override
     protected OrientedOverlayRenderer getFrontOverlay() {
-        return GCYMTextures.ELECTRIC_IMPLOSION_OVERLAY;
+        return TKCYATextures.ELECTRIC_IMPLOSION_OVERLAY;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package gregicality.multiblocks.api.recipes;
+package tekcays_addon.multiblocks.api.recipes;
 
 import crafttweaker.annotations.ZenRegister;
 import gregtech.api.gui.GuiTextures;
@@ -10,7 +10,7 @@ import stanhebben.zenscript.annotations.ZenProperty;
 
 @ZenExpansion("mods.gregtech.recipe.RecipeMaps")
 @ZenRegister
-public class GCYMRecipeMaps {
+public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<BlastRecipeBuilder> ALLOY_BLAST_RECIPES = new RecipeMap<>("alloy_blast_smelter", 1, 9, 0, 0, 0, 2, 1, 2, new BlastRecipeBuilder(), false)

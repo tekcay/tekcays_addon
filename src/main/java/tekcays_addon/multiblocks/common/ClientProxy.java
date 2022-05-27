@@ -1,9 +1,9 @@
-package gregicality.multiblocks.common;
+package tekcays_addon.multiblocks.common;
 
 import codechicken.lib.texture.TextureUtils;
-import gregicality.multiblocks.api.fluids.GCYMMetaFluids;
-import gregicality.multiblocks.api.render.GCYMTextures;
-import gregicality.multiblocks.common.block.GCYMMetaBlocks;
+import tekcays_addon.multiblocks.api.fluids.TKCYAMetaFluids;
+import tekcays_addon.multiblocks.api.render.TKCYATextures;
+import tekcays_addon.multiblocks.common.block.TKCYAMetaBlocks;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -15,13 +15,13 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void preLoad() {
         super.preLoad();
-        GCYMTextures.preInit();
-        TextureUtils.addIconRegister(GCYMMetaFluids::registerSprites);
+        TKCYATextures.preInit();
+        TextureUtils.addIconRegister(TKCYAMetaFluids::registerSprites);
     }
 
 
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
-        GCYMMetaBlocks.registerItemModels();
+        TKCYAMetaBlocks.registerItemModels();
     }
 }

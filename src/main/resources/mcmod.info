@@ -1,11 +1,11 @@
 [{
-  "modid": "gcym",
-  "name": "Gregicality Multiblocks",
-  "description": "Multiblock Machines module of Gregicality.",
+  "modid": "tkcya",
+  "name": "TeK_CaY's Addon",
+  "description": "Addon for GTCEu",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "authorList": [
-      "TechLord22"
+      "TeK_CaY"
   ],
   "credits": "GregoriusT for making GregTech and textures, various GT community members and the Gregtech CEu Dev Team for help in development.",
   "dependencies": ["codechickenlib", "gregtech"]
