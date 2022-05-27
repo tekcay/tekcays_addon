@@ -1,7 +1,7 @@
-package gregicality.multiblocks.common.block;
+package tekcays_addon.multiblocks.common.block;
 
-import gregicality.multiblocks.common.block.blocks.BlockLargeMultiblockCasing;
-import gregicality.multiblocks.common.block.blocks.BlockUniqueCasing;
+import tekcays_addon.multiblocks.common.block.blocks.BlockLargeMultiblockCasing;
+import tekcays_addon.multiblocks.common.block.blocks.BlockUniqueCasing;
 import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
@@ -12,9 +12,9 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GCYMMetaBlocks {
+public class TKCYAMetaBlocks {
 
-    private GCYMMetaBlocks() {
+    private TKCYAMetaBlocks() {
 
     }
 

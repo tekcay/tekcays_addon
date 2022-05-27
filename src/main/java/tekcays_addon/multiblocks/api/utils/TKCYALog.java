@@ -1,11 +1,11 @@
-package gregicality.multiblocks.api.utils;
+package tekcays_addon.multiblocks.api.utils;
 
 import org.apache.logging.log4j.Logger;
 
-public class GCYMLog {
+public class TKCYALog {
     public static Logger logger;
 
-    public GCYMLog() {
+    public TKCYALog() {
     }
 
     public static void init(Logger modLogger) {

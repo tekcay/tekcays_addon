@@ -1,4 +1,4 @@
-package gregicality.multiblocks.loaders.recipe;
+package tekcays_addon.multiblocks.loaders.recipe;
 
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.common.items.MetaItems;
@@ -7,7 +7,7 @@ import static gregtech.api.unification.material.Materials.Graphene;
 import static gregtech.api.unification.ore.OrePrefix.dust;
 import static gregtech.api.unification.ore.OrePrefix.foil;
 
-public class GCYMMiscRecipes {
+public class TKCYAMiscRecipes {
 
     public static void init() {
         grapheneRecipes();

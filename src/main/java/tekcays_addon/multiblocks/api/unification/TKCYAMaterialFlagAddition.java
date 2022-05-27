@@ -1,9 +1,9 @@
-package gregicality.multiblocks.api.unification;
+package tekcays_addon.multiblocks.api.unification;
 
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.info.MaterialFlags;
 
-public class GCYMMaterialFlagAddition {
+public class TKCYAMaterialFlagAddition {
 
     public static void init() {
 

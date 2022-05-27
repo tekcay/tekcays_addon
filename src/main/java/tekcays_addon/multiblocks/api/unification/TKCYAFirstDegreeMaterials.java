@@ -1,15 +1,15 @@
-package gregicality.multiblocks.api.unification;
+package tekcays_addon.multiblocks.api.unification;
 
 import gregtech.api.GTValues;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.info.MaterialIconSet;
 import gregtech.api.unification.material.properties.BlastProperty;
 
-import static gregicality.multiblocks.api.unification.GCYMMaterials.*;
+import static tekcays_addon.multiblocks.api.unification.TKCYAMaterials.*;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
 
-public class GCYMFirstDegreeMaterials {
+public class TKCYAFirstDegreeMaterials {
 
     public static void init() {
         Stellite100 = new Material.Builder(3000, "stellite_100")

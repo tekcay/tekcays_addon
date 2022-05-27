@@ -1,7 +1,7 @@
-package gregicality.multiblocks.loaders.recipe.handlers;
+package tekcays_addon.multiblocks.loaders.recipe.handlers;
 
-import gregicality.multiblocks.api.recipes.GCYMRecipeMaps;
-import gregicality.multiblocks.api.unification.properties.GCYMPropertyKey;
+import tekcays_addon.multiblocks.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.multiblocks.api.unification.properties.TKCYAPropertyKey;
 import gregtech.api.GTValues;
 import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMaps;
@@ -19,10 +19,10 @@ import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nonnull;
 
-public class GCYMMaterialRecipeHandler {
+public class TKCYAMaterialRecipeHandler {
 
     public static void register() {
-        OrePrefix.ingot.addProcessingHandler(PropertyKey.BLAST, GCYMMaterialRecipeHandler::processIngot);
+        OrePrefix.ingot.addProcessingHandler(PropertyKey.BLAST, TKCYAMaterialRecipeHandler::processIngot);
     }
 
     public static void processIngot(OrePrefix ingotPrefix, @Nonnull Material material, BlastProperty property) {
@@ -31,13 +31,13 @@ public class GCYMMaterialRecipeHandler {
 
         // get the output fluid
         Fluid molten = null;
-        if (material.hasProperty(GCYMPropertyKey.ALLOY_BLAST))
-            molten = material.getProperty(GCYMPropertyKey.ALLOY_BLAST).getFluid();
+        if (material.hasProperty(TKCYAPropertyKey.ALLOY_BLAST))
+            molten = material.getProperty(TKCYAPropertyKey.ALLOY_BLAST).getFluid();
         if (!OrePrefix.ingotHot.doGenerateItem(material) && material.hasProperty(PropertyKey.FLUID))
             molten = material.getProperty(PropertyKey.FLUID).getFluid();
         if (molten == null) return;
 
-        RecipeBuilder<BlastRecipeBuilder> builder = GCYMRecipeMaps.ALLOY_BLAST_RECIPES.recipeBuilder()
+        RecipeBuilder<BlastRecipeBuilder> builder = TKCYARecipeMaps.ALLOY_BLAST_RECIPES.recipeBuilder()
                 .blastFurnaceTemp(material.getBlastTemperature());
 
         // apply the duration override

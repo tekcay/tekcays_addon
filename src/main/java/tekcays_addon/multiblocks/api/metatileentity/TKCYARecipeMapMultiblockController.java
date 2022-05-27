@@ -1,8 +1,8 @@
-package gregicality.multiblocks.api.metatileentity;
+package tekcays_addon.multiblocks.api.metatileentity;
 
-import gregicality.multiblocks.api.capability.IParallelMultiblock;
-import gregicality.multiblocks.api.capability.impl.GCYMMultiblockRecipeLogic;
-import gregicality.multiblocks.common.GCYMConfigHolder;
+import tekcays_addon.multiblocks.api.capability.IParallelMultiblock;
+import tekcays_addon.multiblocks.api.capability.impl.TKCYAMultiblockRecipeLogic;
+import tekcays_addon.multiblocks.common.TKCYAConfigHolder;
 import gregtech.api.GTValues;
 import gregtech.api.metatileentity.ITieredMetaTileEntity;
 import gregtech.api.metatileentity.multiblock.MultiMapMultiblockController;
@@ -19,34 +19,34 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class GCYMRecipeMapMultiblockController extends MultiMapMultiblockController implements IParallelMultiblock {
+public abstract class TKCYARecipeMapMultiblockController extends MultiMapMultiblockController implements IParallelMultiblock {
 
-    public GCYMRecipeMapMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
+    public TKCYARecipeMapMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
         this(metaTileEntityId, new RecipeMap<?>[]{recipeMap});
     }
 
-    public GCYMRecipeMapMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?>[] recipeMaps) {
+    public TKCYARecipeMapMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?>[] recipeMaps) {
         super(metaTileEntityId, recipeMaps);
-        this.recipeMapWorkable = new GCYMMultiblockRecipeLogic(this);
+        this.recipeMapWorkable = new TKCYAMultiblockRecipeLogic(this);
     }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         if (isParallel())
-            tooltip.add(I18n.format("gcym.tooltip.parallel_enabled"));
-        if (GCYMConfigHolder.globalMultiblocks.enableTieredCasings && isTiered())
-            tooltip.add(I18n.format("gcym.tooltip.tiered_hatch_enabled"));
+            tooltip.add(I18n.format("tkcya.tooltip.parallel_enabled"));
+        if (TKCYAConfigHolder.globalMultiblocks.enableTieredCasings && isTiered())
+            tooltip.add(I18n.format("tkcya.tooltip.tiered_hatch_enabled"));
     }
 
     @Override
     protected void addExtraDisplayInfo(List<ITextComponent> textList) {
         super.addExtraDisplayInfo(textList);
-        List<ITieredMetaTileEntity> list = getAbilities(GCYMMultiblockAbility.TIERED_HATCH);
-        if (GCYMConfigHolder.globalMultiblocks.enableTieredCasings && !list.isEmpty()) {
+        List<ITieredMetaTileEntity> list = getAbilities(TKCYAMultiblockAbility.TIERED_HATCH);
+        if (TKCYAConfigHolder.globalMultiblocks.enableTieredCasings && !list.isEmpty()) {
             long maxVoltage = Math.min(GTValues.V[list.get(0).getTier()], Math.max(energyContainer.getInputVoltage(), energyContainer.getOutputVoltage()));
             String voltageName = GTValues.VNF[list.get(0).getTier()];
-            textList.add(new TextComponentTranslation("gcym.multiblock.tiered_hatch.tooltip", maxVoltage, voltageName));
+            textList.add(new TextComponentTranslation("tkcya.multiblock.tiered_hatch.tooltip", maxVoltage, voltageName));
         }
     }
 
@@ -57,24 +57,24 @@ public abstract class GCYMRecipeMapMultiblockController extends MultiMapMultiblo
 
     @Override
     public int getMaxParallel() {
-        return this.getAbilities(GCYMMultiblockAbility.PARALLEL_HATCH).isEmpty() ? 1 :
-                this.getAbilities(GCYMMultiblockAbility.PARALLEL_HATCH).get(0).getCurrentParallel();
+        return this.getAbilities(TKCYAMultiblockAbility.PARALLEL_HATCH).isEmpty() ? 1 :
+                this.getAbilities(TKCYAMultiblockAbility.PARALLEL_HATCH).get(0).getCurrentParallel();
     }
 
     public boolean isTiered() {
-        return GCYMConfigHolder.globalMultiblocks.enableTieredCasings;
+        return TKCYAConfigHolder.globalMultiblocks.enableTieredCasings;
     }
 
     @Override
     public TraceabilityPredicate autoAbilities(boolean checkEnergyIn, boolean checkMaintenance, boolean checkItemIn, boolean checkItemOut, boolean checkFluidIn, boolean checkFluidOut, boolean checkMuffler) {
         TraceabilityPredicate predicate = super.autoAbilities(checkEnergyIn, checkMaintenance, checkItemIn, checkItemOut, checkFluidIn, checkFluidOut, checkMuffler);
         if (isParallel())
-            predicate = predicate.or(abilities(GCYMMultiblockAbility.PARALLEL_HATCH).setMaxGlobalLimited(1).setPreviewCount(1));
+            predicate = predicate.or(abilities(TKCYAMultiblockAbility.PARALLEL_HATCH).setMaxGlobalLimited(1).setPreviewCount(1));
         return predicate;
     }
 
     @Nonnull
     public static TraceabilityPredicate tieredCasing() {
-        return new TraceabilityPredicate(abilities(GCYMMultiblockAbility.TIERED_HATCH).setMinGlobalLimited(GCYMConfigHolder.globalMultiblocks.enableTieredCasings ? 1 : 0).setMaxGlobalLimited(1));
+        return new TraceabilityPredicate(abilities(TKCYAMultiblockAbility.TIERED_HATCH).setMinGlobalLimited(TKCYAConfigHolder.globalMultiblocks.enableTieredCasings ? 1 : 0).setMaxGlobalLimited(1));
     }
 }

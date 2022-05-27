@@ -1,11 +1,11 @@
-package gregicality.multiblocks.api.metatileentity;
+package tekcays_addon.multiblocks.api.metatileentity;
 
-import gregicality.multiblocks.api.capability.IParallelHatch;
+import tekcays_addon.multiblocks.api.capability.IParallelHatch;
 import gregtech.api.metatileentity.ITieredMetaTileEntity;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 
 @SuppressWarnings("InstantiationOfUtilityClass")
-public class GCYMMultiblockAbility {
+public class TKCYAMultiblockAbility {
 
     public static final MultiblockAbility<IParallelHatch> PARALLEL_HATCH = new MultiblockAbility<>("parallel_hatch");
 

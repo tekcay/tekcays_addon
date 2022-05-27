@@ -1,8 +1,8 @@
-package gregicality.multiblocks.api.unification;
+package tekcays_addon.multiblocks.api.unification;
 
 import gregtech.api.unification.material.Material;
 
-public class GCYMMaterials {
+public class TKCYAMaterials {
 
     /*
      * First Degree Materials 3000-3019
@@ -35,12 +35,12 @@ public class GCYMMaterials {
      */
     public static void init() {
         // First Degree 3000-3019
-        GCYMFirstDegreeMaterials.init();
+        TKCYAFirstDegreeMaterials.init();
 
         // Second Degree 3020-3039
-        GCYMSecondDegreeMaterials.init();
+        TKCYASecondDegreeMaterials.init();
 
         // Flags
-        GCYMMaterialFlagAddition.init();
+        TKCYAMaterialFlagAddition.init();
     }
 }
