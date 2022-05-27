@@ -1,8 +1,8 @@
-package gregicality.multiblocks.common.metatileentities.multiblock.standard;
+package tekcays_addon.multiblocks.common.metatileentities.multiblock.standard;
 
-import gregicality.multiblocks.api.render.GCYMTextures;
-import gregicality.multiblocks.common.block.GCYMMetaBlocks;
-import gregicality.multiblocks.common.block.blocks.BlockUniqueCasing;
+import tekcays_addon.multiblocks.api.render.TKCYATextures;
+import tekcays_addon.multiblocks.common.block.TKCYAMetaBlocks;
+import tekcays_addon.multiblocks.common.block.blocks.BlockUniqueCasing;
 import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -75,7 +75,7 @@ public class MetaTileEntityMegaVacuumFreezer extends RecipeMapMultiblockControll
     }
 
     private IBlockState getCasingState4() {
-        return GCYMMetaBlocks.UNIQUE_CASING.getState(BlockUniqueCasing.UniqueCasingType.HEAT_VENT);
+        return TKCYAMetaBlocks.UNIQUE_CASING.getState(BlockUniqueCasing.UniqueCasingType.HEAT_VENT);
     }
 
     private IBlockState getCasingState5() {
@@ -90,13 +90,13 @@ public class MetaTileEntityMegaVacuumFreezer extends RecipeMapMultiblockControll
     @Nonnull
     @Override
     protected OrientedOverlayRenderer getFrontOverlay() {
-        return GCYMTextures.MEGA_VACUUM_FREEZER_OVERLAY;
+        return TKCYATextures.MEGA_VACUUM_FREEZER_OVERLAY;
     }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("gcym.machine.mega_vacuum_freezer.tooltip.1", MAX_PARALLEL));
+        tooltip.add(I18n.format("tkcya.machine.mega_vacuum_freezer.tooltip.1", MAX_PARALLEL));
     }
 
     @SuppressWarnings("InnerClassMayBeStatic")

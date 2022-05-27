@@ -1,11 +1,11 @@
-package gregicality.multiblocks.common.metatileentities.multiblockpart;
+package tekcays_addon.multiblocks.common.metatileentities.multiblockpart;
 
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregicality.multiblocks.api.capability.IParallelHatch;
-import gregicality.multiblocks.api.metatileentity.GCYMMultiblockAbility;
-import gregicality.multiblocks.api.render.GCYMTextures;
+import tekcays_addon.multiblocks.api.capability.IParallelHatch;
+import tekcays_addon.multiblocks.api.metatileentity.TKCYAMultiblockAbility;
+import tekcays_addon.multiblocks.api.render.TKCYATextures;
 import gregtech.api.GTValues;
 import gregtech.api.capability.GregtechTileCapabilities;
 import gregtech.api.gui.GuiTextures;
@@ -65,7 +65,7 @@ public class MetaTileEntityParallelHatch extends MetaTileEntityMultiblockPart im
     protected ModularUI createUI(@Nonnull EntityPlayer entityPlayer) {
         ServerWidgetGroup parallelAmountGroup = new ServerWidgetGroup(() -> true);
         parallelAmountGroup.addWidget(new ImageWidget(62, 36, 53, 20, GuiTextures.DISPLAY)
-                .setTooltip(I18n.format("gcym.machine.parallel_hatch.display")));
+                .setTooltip(I18n.format("tkcya.machine.parallel_hatch.display")));
 
         parallelAmountGroup.addWidget(new IncrementButtonWidget(118, 36, 30, 20, 1, 4, 16, 64, this::setCurrentParallel)
                 .setDefaultTooltip()
@@ -117,13 +117,13 @@ public class MetaTileEntityParallelHatch extends MetaTileEntityMultiblockPart im
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("gcym.machine.parallel_hatch.tooltip", this.maxParallel));
+        tooltip.add(I18n.format("tkcya.machine.parallel_hatch.tooltip", this.maxParallel));
         tooltip.add(I18n.format("gregtech.universal.disabled"));
     }
 
     @Override
     public MultiblockAbility<IParallelHatch> getAbility() {
-        return GCYMMultiblockAbility.PARALLEL_HATCH;
+        return TKCYAMultiblockAbility.PARALLEL_HATCH;
     }
 
     @Override
@@ -137,13 +137,13 @@ public class MetaTileEntityParallelHatch extends MetaTileEntityMultiblockPart im
         if (shouldRenderOverlay()) {
             OrientedOverlayRenderer overlayRenderer;
             if (getTier() == GTValues.IV)
-                overlayRenderer = GCYMTextures.PARALLEL_HATCH_MK1_OVERLAY;
+                overlayRenderer = TKCYATextures.PARALLEL_HATCH_MK1_OVERLAY;
             else if (getTier() == GTValues.LuV)
-                overlayRenderer = GCYMTextures.PARALLEL_HATCH_MK2_OVERLAY;
+                overlayRenderer = TKCYATextures.PARALLEL_HATCH_MK2_OVERLAY;
             else if (getTier() == GTValues.ZPM)
-                overlayRenderer = GCYMTextures.PARALLEL_HATCH_MK3_OVERLAY;
+                overlayRenderer = TKCYATextures.PARALLEL_HATCH_MK3_OVERLAY;
             else
-                overlayRenderer = GCYMTextures.PARALLEL_HATCH_MK4_OVERLAY;
+                overlayRenderer = TKCYATextures.PARALLEL_HATCH_MK4_OVERLAY;
 
             if (getController() != null && getController() instanceof RecipeMapMultiblockController) {
                 overlayRenderer.renderOrientedState(renderState, translation, pipeline, getFrontFacing(),

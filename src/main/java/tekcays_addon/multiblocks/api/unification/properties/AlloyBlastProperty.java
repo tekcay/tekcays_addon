@@ -1,4 +1,4 @@
-package gregicality.multiblocks.api.unification.properties;
+package tekcays_addon.multiblocks.api.unification.properties;
 
 import com.google.common.base.Preconditions;
 import gregtech.api.unification.material.properties.IMaterialProperty;

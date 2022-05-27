@@ -1,4 +1,4 @@
-package gregicality.multiblocks.common.block.blocks;
+package tekcays_addon.multiblocks.common.block.blocks;
 
 import gregtech.api.block.VariantActiveBlock;
 import net.minecraft.block.SoundType;

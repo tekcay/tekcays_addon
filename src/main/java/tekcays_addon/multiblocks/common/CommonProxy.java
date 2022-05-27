@@ -1,9 +1,9 @@
-package gregicality.multiblocks.common;
+package tekcays_addon.multiblocks.common;
 
-import gregicality.multiblocks.GregicalityMultiblocks;
-import gregicality.multiblocks.api.utils.GCYMLog;
-import gregicality.multiblocks.common.block.GCYMMetaBlocks;
-import gregicality.multiblocks.loaders.recipe.GCYMRecipeLoader;
+import tekcays_addon.multiblocks.TekCaysAddon;
+import tekcays_addon.multiblocks.api.utils.TKCYALog;
+import tekcays_addon.multiblocks.common.block.TKCYAMetaBlocks;
+import tekcays_addon.multiblocks.loaders.recipe.TKCYARecipeLoader;
 import gregtech.api.block.VariantItemBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -20,7 +20,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 import java.util.Objects;
 import java.util.function.Function;
 
-@Mod.EventBusSubscriber(modid = GregicalityMultiblocks.MODID)
+@Mod.EventBusSubscriber(modid = TekCaysAddon.MODID)
 public class CommonProxy {
 
     public void preLoad() {
@@ -29,28 +29,28 @@ public class CommonProxy {
 
     @SubscribeEvent
     public static void syncConfigValues(ConfigChangedEvent.OnConfigChangedEvent event) {
-        if (event.getModID().equals(GregicalityMultiblocks.MODID)) {
-            ConfigManager.sync(GregicalityMultiblocks.MODID, Config.Type.INSTANCE);
+        if (event.getModID().equals(TekCaysAddon.MODID)) {
+            ConfigManager.sync(TekCaysAddon.MODID, Config.Type.INSTANCE);
         }
     }
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
-        GCYMLog.logger.info("Registering blocks...");
+        TKCYALog.logger.info("Registering blocks...");
         IForgeRegistry<Block> registry = event.getRegistry();
 
-        registry.register(GCYMMetaBlocks.UNIQUE_CASING);
-        registry.register(GCYMMetaBlocks.LARGE_MULTIBLOCK_CASING);
+        registry.register(TKCYAMetaBlocks.UNIQUE_CASING);
+        registry.register(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING);
     }
 
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
-        GCYMLog.logger.info("Registering Items...");
+        TKCYALog.logger.info("Registering Items...");
         IForgeRegistry<Item> registry = event.getRegistry();
 
-        registry.register(createItemBlock(GCYMMetaBlocks.UNIQUE_CASING, VariantItemBlock::new));
-        registry.register(createItemBlock(GCYMMetaBlocks.LARGE_MULTIBLOCK_CASING, VariantItemBlock::new));
+        registry.register(createItemBlock(TKCYAMetaBlocks.UNIQUE_CASING, VariantItemBlock::new));
+        registry.register(createItemBlock(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING, VariantItemBlock::new));
     }
 
     private static <T extends Block> ItemBlock createItemBlock(T block, Function<T, ItemBlock> producer) {
@@ -61,11 +61,11 @@ public class CommonProxy {
 
     @SubscribeEvent()
     public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
-        GCYMLog.logger.info("Registering recipe low...");
+        TKCYALog.logger.info("Registering recipe low...");
 
         // Main recipe registration
         // This is called AFTER GregTech registers recipes, so
         // anything here is safe to call removals in
-        GCYMRecipeLoader.init();
+        TKCYARecipeLoader.init();
     }
 }

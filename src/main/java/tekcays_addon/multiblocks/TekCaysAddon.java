@@ -1,10 +1,10 @@
 package tekcays_addon.multiblocks;
 
-import tekcays_addon.multiblocks.api.fluids.TKCY_AMetaFluids;
-import tekcays_addon.multiblocks.api.utils.TKCY_ALog;
+import tekcays_addon.multiblocks.api.fluids.TKCYAMetaFluids;
+import tekcays_addon.multiblocks.api.utils.TKCYALog;
 import tekcays_addon.multiblocks.common.CommonProxy;
-import tekcays_addon.multiblocks.common.block.TKCY_AMetaBlocks;
-import tekcays_addon.multiblocks.common.metatileentities.TKCY_AMetaTileEntities;
+import tekcays_addon.multiblocks.common.block.TKCYAMetaBlocks;
+import tekcays_addon.multiblocks.common.metatileentities.TKCYAMetaTileEntities;
 import gregtech.api.GTValues;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
         dependencies = GTValues.MOD_VERSION_DEP)
 public class TekCaysAddon {
 
-    public static final String MODID = "tkcy_a";
+    public static final String MODID = "tkcya";
     public static final String NAME = "TeK_CaY's Addon";
     public static final String VERSION = "@VERSION@";
 
@@ -25,11 +25,11 @@ public class TekCaysAddon {
 
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
-        TKCY_ALog.init(event.getModLog());
+        TKCYALog.init(event.getModLog());
 
-        TKCY_AMetaFluids.init();
-        TKCY_AMetaBlocks.init();
-        TKCY_AMetaTileEntities.init();
+        TKCYAMetaFluids.init();
+        TKCYAMetaBlocks.init();
+        TKCYAMetaTileEntities.init();
 
         proxy.preLoad();
     }

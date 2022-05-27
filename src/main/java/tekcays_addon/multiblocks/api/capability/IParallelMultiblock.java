@@ -1,4 +1,4 @@
-package gregicality.multiblocks.api.capability;
+package tekcays_addon.multiblocks.api.capability;
 
 public interface IParallelMultiblock {
 

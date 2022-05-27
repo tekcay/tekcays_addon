@@ -31,7 +31,7 @@ val config: Properties = file("build.properties").inputStream().let {
     return@let prop
 }
 
-val modVersion = config["gcym.version"] as String
+val modVersion = config["tkcya.version"] as String
 val mcVersion = config["mc.version"] as String
 val forgeVersion = "$mcVersion-${config["forge.version"]}"
 val shortVersion = mcVersion.substring(0, mcVersion.lastIndexOf("."))
@@ -46,7 +46,7 @@ configure<JavaPluginConvention> {
 }
 
 configure<BasePluginConvention> {
-    archivesBaseName = "GregicalityMultiblocks"
+    archivesBaseName = "TekCaysAddon"
 }
 
 configure<UserBaseExtension> {
@@ -54,7 +54,7 @@ configure<UserBaseExtension> {
     mappings = config["mcp.version"] as String
     runDir = "run"
     replace("@VERSION@", modVersion)
-    replaceIn("GregicalityMultiblocks.java")
+    replaceIn("TekCaysAddon.java")
 }
 
 repositories {
