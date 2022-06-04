@@ -39,7 +39,6 @@ public class CommonProxy {
         TKCYALog.logger.info("Registering blocks...");
         IForgeRegistry<Block> registry = event.getRegistry();
 
-        registry.register(TKCYAMetaBlocks.UNIQUE_CASING);
         registry.register(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING);
     }
 
@@ -49,7 +48,6 @@ public class CommonProxy {
         TKCYALog.logger.info("Registering Items...");
         IForgeRegistry<Item> registry = event.getRegistry();
 
-        registry.register(createItemBlock(TKCYAMetaBlocks.UNIQUE_CASING, VariantItemBlock::new));
         registry.register(createItemBlock(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING, VariantItemBlock::new));
     }
 
