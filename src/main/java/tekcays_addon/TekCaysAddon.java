@@ -18,7 +18,7 @@ public class TekCaysAddon {
     public static final String NAME = "TeK_CaY's Addon";
     public static final String VERSION = "@VERSION@";
 
-    @SidedProxy(modId = MODID, clientSide = "ClientProxy", serverSide = "CommonProxy")
+    @SidedProxy(modId = MODID, clientSide = "tekcays_addon.common.ClientProxy", serverSide = "tekcays_addon.common.CommonProxy")
     public static CommonProxy proxy;
 
     @Mod.EventHandler
