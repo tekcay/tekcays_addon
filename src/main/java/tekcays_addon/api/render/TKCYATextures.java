@@ -32,7 +32,7 @@ public class TKCYATextures {
 
     public static void preInit() {
         // Simple Machines
-        CLUSTER_MILL_OVERLAY = new OrientedOverlayRenderer("machines/wiremill", FRONT);
+        CLUSTER_MILL_OVERLAY = new OrientedOverlayRenderer("machines/cluster_mill", FRONT);
 
         // Casings
         MACERATOR_CASING = new SimpleOverlayRenderer("casings/large_multiblock_casing/macerator_casing");
