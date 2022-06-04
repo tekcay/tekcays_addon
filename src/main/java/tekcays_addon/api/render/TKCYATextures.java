@@ -12,7 +12,7 @@ import static gregtech.client.renderer.texture.cube.OrientedOverlayRenderer.Over
 public class TKCYATextures {
 
     // Multiblock Controllers
-    public static OrientedOverlayRenderer CLUSTER_MILL_OVERLAY;
+    public static OrientedOverlayRenderer CLUSTER_MILL_OVERLAY = new OrientedOverlayRenderer("machines/cluster_mill", FRONT);
 
     // Casings
     public static SimpleOverlayRenderer MACERATOR_CASING;
@@ -32,7 +32,7 @@ public class TKCYATextures {
 
     public static void preInit() {
         // Simple Machines
-        CLUSTER_MILL_OVERLAY = new OrientedOverlayRenderer("machines/cluster_mill", FRONT);
+
 
         // Casings
         MACERATOR_CASING = new SimpleOverlayRenderer("casings/large_multiblock_casing/macerator_casing");

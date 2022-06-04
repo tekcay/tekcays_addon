@@ -15,7 +15,5 @@ public class TKCYARecipeMaps {
     @ZenProperty
     public static final RecipeMap<SimpleRecipeBuilder> CLUSTER_MILL_RECIPES = new RecipeMap<>(
             "cluster_mill", 1, 1, 1, 1, 0, 0, 0, 0, new SimpleRecipeBuilder(), false)
-            .setSlotOverlay(false, false, false, GuiTextures.WIREMILL_OVERLAY)
-            .setSlotOverlay(true, false, true, GuiTextures.WIREMILL_OVERLAY)
             .setSound(GTSounds.MOTOR);
 }
