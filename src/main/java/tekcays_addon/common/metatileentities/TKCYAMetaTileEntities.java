@@ -19,8 +19,7 @@ import static gregtech.common.metatileentities.MetaTileEntities.*;
 
 public class TKCYAMetaTileEntities {
 
-    //public static final SimpleMachineMetaTileEntity[] CLUSTER_MILL = new SimpleMachineMetaTileEntity[4];
-    public static SimpleMachineMetaTileEntity[] CLUSTER_MILL = new SimpleMachineMetaTileEntity[GTValues.V.length - 1];
+    public static SimpleMachineMetaTileEntity[] CLUSTER_MILL = new SimpleMachineMetaTileEntity[5];
 
     public static void init() {
        // TKCYALog.logger.info("Registering MetaTileEntities");
