@@ -1,7 +1,6 @@
 package tekcays_addon.common.block;
 
 import tekcays_addon.common.block.blocks.BlockLargeMultiblockCasing;
-import tekcays_addon.common.block.blocks.BlockUniqueCasing;
 import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
@@ -18,19 +17,15 @@ public class TKCYAMetaBlocks {
 
     }
 
-    public static BlockUniqueCasing UNIQUE_CASING;
     public static BlockLargeMultiblockCasing LARGE_MULTIBLOCK_CASING;
 
     public static void init() {
-        UNIQUE_CASING = new BlockUniqueCasing();
-        UNIQUE_CASING.setRegistryName("unique_casing");
         LARGE_MULTIBLOCK_CASING = new BlockLargeMultiblockCasing();
         LARGE_MULTIBLOCK_CASING.setRegistryName("large_multiblock_casing");
     }
 
     @SideOnly(Side.CLIENT)
     public static void registerItemModels() {
-        registerItemModel(UNIQUE_CASING);
         registerItemModel(LARGE_MULTIBLOCK_CASING);
     }
 
