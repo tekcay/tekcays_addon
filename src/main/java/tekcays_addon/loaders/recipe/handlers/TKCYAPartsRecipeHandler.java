@@ -3,6 +3,7 @@ package tekcays_addon.loaders.recipe.handlers;
 import gregtech.api.recipes.ModHandler;
 import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMaps;
+import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.MarkerMaterial;
 import gregtech.api.unification.material.MarkerMaterials;
@@ -41,12 +42,11 @@ public class TKCYAPartsRecipeHandler {
                     OreDictUnifier.get(foilPrefix, material, 2),
                     "hP ", 'P', new UnificationEntry(plate, material));
 
-        RecipeMaps.BENDER_RECIPES.recipeBuilder()
+        TKCYARecipeMaps.CLUSTER_MILL_RECIPES.recipeBuilder()
                 .input(plate, material)
                 .output(foilPrefix, material, 4)
                 .duration((int) material.getMass())
                 .EUt(24)
-                .circuitMeta(1)
                 .buildAndRegister();
 
         if (material.hasFlag(NO_SMASHING)) {
