@@ -1,8 +1,7 @@
 package tekcays_addon.loaders.recipe.handlers;
 
-import gregtech.api.recipes.ModHandler;
-import gregtech.api.recipes.RecipeBuilder;
-import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.recipes.*;
+import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.MarkerMaterial;
@@ -37,6 +36,9 @@ public class TKCYAPartsRecipeHandler {
     }
 
     public static void processFoil(OrePrefix foilPrefix, Material material, IngotProperty property) {
+
+        GTRecipeHandler.removeRecipesByInputs(BENDER_RECIPES, OreDictUnifier.get(plate, material), IntCircuitIngredient.getIntegratedCircuit(1));
+
         if (!material.hasFlag(NO_SMASHING))
             ModHandler.addShapedRecipe(String.format("foil_%s", material),
                     OreDictUnifier.get(foilPrefix, material, 2),
@@ -49,24 +51,7 @@ public class TKCYAPartsRecipeHandler {
                 .EUt(24)
                 .buildAndRegister();
 
-        if (material.hasFlag(NO_SMASHING)) {
-            RecipeMaps.EXTRUDER_RECIPES.recipeBuilder()
-                    .input(ingot, material)
-                    .notConsumable(MetaItems.SHAPE_EXTRUDER_FOIL)
-                    .output(foilPrefix, material, 4)
-                    .duration((int) material.getMass())
-                    .EUt(24)
-                    .buildAndRegister();
-
-            RecipeMaps.EXTRUDER_RECIPES.recipeBuilder()
-                    .input(dust, material)
-                    .notConsumable(MetaItems.SHAPE_EXTRUDER_FOIL)
-                    .output(foilPrefix, material, 4)
-                    .duration((int) material.getMass())
-                    .EUt(24)
-                    .buildAndRegister();
-        }
     }
-
 }
+
 
