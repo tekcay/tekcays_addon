@@ -13,6 +13,7 @@ public class TKCYATextures {
 
     // SimpleMachines
     public static OrientedOverlayRenderer CLUSTER_MILL_OVERLAY = new OrientedOverlayRenderer("machines/cluster_mill", FRONT);
+    public static OrientedOverlayRenderer ADVANCED_POLARIZER_OVERLAY = new OrientedOverlayRenderer("machines/advanced_polarizer", FRONT);
 
     // Casings
     public static SimpleOverlayRenderer MACERATOR_CASING;
