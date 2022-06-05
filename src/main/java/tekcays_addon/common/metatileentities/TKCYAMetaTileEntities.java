@@ -31,7 +31,7 @@ public class TKCYAMetaTileEntities {
         }
 
         if (TKCYAConfigHolder.magneticOverhaul.enableMagneticOverhaul) {
-            registerSimpleMetaTileEntity(ADVANCED_POLARIZER, 11000, "advanced_polarizer", TKCYARecipeMaps.ADVANCED_POLARIZER_RECIPES, TKCYATextures.ADVANCED_POLARIZER_OVERLAY, true, TKCYAMetaTileEntities::tkcyaId, GTUtility.hvCappedTankSizeFunction);
+            registerSimpleMetaTileEntity(ADVANCED_POLARIZER, 11004, "advanced_polarizer", TKCYARecipeMaps.ADVANCED_POLARIZER_RECIPES, TKCYATextures.ADVANCED_POLARIZER_OVERLAY, true, TKCYAMetaTileEntities::tkcyaId, GTUtility.hvCappedTankSizeFunction);
         }
     }
 
