@@ -12,8 +12,10 @@ import stanhebben.zenscript.annotations.ZenProperty;
 @ZenRegister
 public class TKCYARecipeMaps {
 
-    @ZenProperty
-    public static final RecipeMap<SimpleRecipeBuilder> CLUSTER_MILL_RECIPES = new RecipeMap<>(
-            "cluster_mill", 1, 1, 1, 1, 0, 0, 0, 0, new SimpleRecipeBuilder(), false)
-            .setSound(GTSounds.MOTOR);
+
+        @ZenProperty
+        public static final RecipeMap<SimpleRecipeBuilder> CLUSTER_MILL_RECIPES = new RecipeMap<>(
+                "cluster_mill", 1, 1, 1, 1, 0, 0, 0, 0, new SimpleRecipeBuilder(), false)
+                .setSound(GTSounds.MOTOR);
+
 }

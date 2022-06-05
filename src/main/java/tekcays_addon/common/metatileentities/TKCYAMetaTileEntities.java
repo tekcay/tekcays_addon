@@ -12,6 +12,7 @@ import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.utils.TKCYALog;
+import tekcays_addon.common.TKCYAConfigHolder;
 
 import java.util.function.Function;
 
@@ -24,8 +25,9 @@ public class TKCYAMetaTileEntities {
     public static void init() {
        // TKCYALog.logger.info("Registering MetaTileEntities");
 
-        registerSimpleMetaTileEntity(CLUSTER_MILL, 11000, "cluster_mill", TKCYARecipeMaps.CLUSTER_MILL_RECIPES, TKCYATextures.CLUSTER_MILL_OVERLAY, true, TKCYAMetaTileEntities::tkcyaId, GTUtility.hvCappedTankSizeFunction);
-
+        if (TKCYAConfigHolder.foilOverhaul.enableFoilOverhaul) {
+            registerSimpleMetaTileEntity(CLUSTER_MILL, 11000, "cluster_mill", TKCYARecipeMaps.CLUSTER_MILL_RECIPES, TKCYATextures.CLUSTER_MILL_OVERLAY, true, TKCYAMetaTileEntities::tkcyaId, GTUtility.hvCappedTankSizeFunction);
+        }
     }
 
 

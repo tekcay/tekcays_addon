@@ -11,7 +11,7 @@ import static gregtech.client.renderer.texture.cube.OrientedOverlayRenderer.Over
 @Mod.EventBusSubscriber(modid = TekCaysAddon.MODID, value = Side.CLIENT)
 public class TKCYATextures {
 
-    // Multiblock Controllers
+    // SimpleMachines
     public static OrientedOverlayRenderer CLUSTER_MILL_OVERLAY = new OrientedOverlayRenderer("machines/cluster_mill", FRONT);
 
     // Casings
