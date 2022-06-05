@@ -7,12 +7,12 @@ import net.minecraftforge.common.config.Config;
 public class TKCYAConfigHolder {
 
     @Config.Comment("Config options applying to all TKCYA Multiblocks")
-    @Config.Name("Global Multiblock Options")
-    public static GlobalMultiblocks globalMultiblocks = new GlobalMultiblocks();
+    @Config.Name("Foil overhaul")
+    public static FoilOverhaul foilOverhaul = new FoilOverhaul();
 
-    public static class GlobalMultiblocks {
+    public static class FoilOverhaul {
 
-        @Config.Comment({"Makes nearly every TKCYA Multiblock require blocks which set their maximum voltages.", "Default: false"})
-        public boolean enableTieredCasings = false;
+        @Config.Comment({"Foils are made in the Cluster Mill.", "Default: true"})
+        public boolean enableFoilOverhaul = false;
     }
 }
