@@ -6,6 +6,7 @@ public class TKCYARecipeLoader {
 
     public static void init() {
         TKCYAPartsRecipeHandler.register();
+        TKCYAMetaTileEntityLoader.init();
     }
 
 }
