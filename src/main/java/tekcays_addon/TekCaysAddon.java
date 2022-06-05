@@ -3,6 +3,7 @@ package tekcays_addon;
 import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.CommonProxy;
 import tekcays_addon.common.block.TKCYAMetaBlocks;
+import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 import gregtech.api.GTValues;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -18,13 +19,14 @@ public class TekCaysAddon {
     public static final String NAME = "TeK_CaY's Addon";
     public static final String VERSION = "@VERSION@";
 
-    @SidedProxy(modId = MODID, clientSide = "ClientProxy", serverSide = "CommonProxy")
+    @SidedProxy(modId = MODID, clientSide = "tekcays_addon.common.ClientProxy", serverSide = "tekcays_addon.common.CommonProxy")
     public static CommonProxy proxy;
 
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
         TKCYALog.init(event.getModLog());
         TKCYAMetaBlocks.init();
+        TKCYAMetaTileEntities.init();
 
         proxy.preLoad();
     }

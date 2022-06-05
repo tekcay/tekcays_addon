@@ -1,6 +1,5 @@
 package tekcays_addon.common;
 
-import codechicken.lib.texture.TextureUtils;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.common.block.TKCYAMetaBlocks;
 import net.minecraftforge.client.event.ModelRegistryEvent;

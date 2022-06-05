@@ -11,8 +11,8 @@ import static gregtech.client.renderer.texture.cube.OrientedOverlayRenderer.Over
 @Mod.EventBusSubscriber(modid = TekCaysAddon.MODID, value = Side.CLIENT)
 public class TKCYATextures {
 
-    // Multiblock Controllers
-    public static OrientedOverlayRenderer LARGE_MACERATOR_OVERLAY;
+    // SimpleMachines
+    public static OrientedOverlayRenderer CLUSTER_MILL_OVERLAY = new OrientedOverlayRenderer("machines/cluster_mill", FRONT);
 
     // Casings
     public static SimpleOverlayRenderer MACERATOR_CASING;
@@ -31,8 +31,8 @@ public class TKCYATextures {
 
 
     public static void preInit() {
-        // Multiblock Controllers
-        LARGE_MACERATOR_OVERLAY = new OrientedOverlayRenderer("multiblock/large_macerator", FRONT);
+        // Simple Machines
+
 
         // Casings
         MACERATOR_CASING = new SimpleOverlayRenderer("casings/large_multiblock_casing/macerator_casing");
