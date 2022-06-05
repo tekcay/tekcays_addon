@@ -10,9 +10,17 @@ public class TKCYAConfigHolder {
     @Config.Name("Foil overhaul")
     public static FoilOverhaul foilOverhaul = new FoilOverhaul();
 
-    public static class FoilOverhaul {
+    @Config.Comment("Config options applying to all TKCYA Multiblocks")
+    @Config.Name("Magnetic overhaul")
+    public static MagneticOverhaul magneticOverhaul = new MagneticOverhaul();
 
+    public static class FoilOverhaul {
         @Config.Comment({"Foils are made in the Cluster Mill.", "Default: true"})
-        public boolean enableFoilOverhaul = false;
+        public boolean enableFoilOverhaul = true;
+    }
+    public static class MagneticOverhaul {
+
+        @Config.Comment({"Magnetic parts need magnetite", "Default: true"})
+        public boolean enableMagneticOverhaul = true;
     }
 }

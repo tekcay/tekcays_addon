@@ -3,6 +3,13 @@ tkcya.machine.cluster_mill.lv.name=Cluster Mill LV
 tkcya.machine.cluster_mill.mv.name=Cluster Mill MV
 tkcya.machine.cluster_mill.hv.name=Cluster Mill HV
 tkcya.machine.cluster_mill.ev.name=Cluster Mill EV
+tkcya.machine.cluster_mill.iv.name=Cluster Mill IV
+
+tkcya.machine.advanced_polarizer.lv.name=Polarizer LV
+tkcya.machine.advanced_polarizer.mv.name=Polarizer MV
+tkcya.machine.advanced_polarizer.hv.name=Polarizer HV
+tkcya.machine.advanced_polarizer.ev.name=Polarizer EV
+tkcya.machine.advanced_polarizer.iv.name=Polarizer IV
 
 tkcya.machine.melter.name=Melter
 
@@ -19,6 +26,7 @@ tkcya.multiblock.melter.description=A multiblock for melting ores and pure mater
 
 # RecipeMaps
 recipemap.cluster_mill.name=Cluster Mill
+recipemap.advanced_polarizer.name=Polarizing
 recipemap.melter.name=Melting
 
 # Materials
