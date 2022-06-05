@@ -13,6 +13,6 @@ public class TKCYAMetaTileEntityLoader {
                     "MMM", "CHC", "MMM",
                     'M', CraftingComponent.MOTOR, 'C', CraftingComponent.CIRCUIT, 'H', CraftingComponent.HULL);
         }
-    }  
+    }
 
 }
