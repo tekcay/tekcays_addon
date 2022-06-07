@@ -3,7 +3,7 @@ package tekcays_addon.common.metatileentities.multi;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregtech.api.capability.impl.MelterRecipeLogic;
+import gregtech.api.capability.impl.BoilerRecipeLogic;
 import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.capability.impl.ItemHandlerList;
 import gregtech.api.gui.Widget.ClickData;
@@ -34,7 +34,6 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandlerModifiable;
-import tekcays_addon.api.capability.impl.MelterRecipeLogic;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -48,7 +47,7 @@ import static net.minecraft.util.text.TextFormatting.*;
 public class MetaTileEntityMelter extends MultiblockWithDisplayBase {
 
     public final BoilerType boilerType;
-    protected MelterRecipeLogic recipeLogic;
+    protected BoilerRecipeLogic recipeLogic;
 
     private FluidTankList fluidImportInventory;
     private ItemHandlerList itemImportInventory;
@@ -59,7 +58,7 @@ public class MetaTileEntityMelter extends MultiblockWithDisplayBase {
     public MetaTileEntityMelter(ResourceLocation metaTileEntityId, BoilerType boilerType) {
         super(metaTileEntityId);
         this.boilerType = boilerType;
-        this.recipeLogic = new MelterRecipeLogic(this);
+        this.recipeLogic = new BoilerRecipeLogic(this);
         resetTileAbilities();
     }
 
@@ -273,7 +272,7 @@ public class MetaTileEntityMelter extends MultiblockWithDisplayBase {
 
     @Override
     protected boolean shouldUpdate(MTETrait trait) {
-        return !(trait instanceof MelterRecipeLogic);
+        return !(trait instanceof BoilerRecipeLogic);
     }
 
     @Override
