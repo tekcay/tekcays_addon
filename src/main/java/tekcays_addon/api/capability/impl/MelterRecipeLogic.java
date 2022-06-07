@@ -89,7 +89,20 @@ public class MelterRecipeLogic extends AbstractRecipeLogic {
                 didStartRecipe = true;
                 break;
             }
+
+            Recipe gasFuelRecipe = RecipeMaps.GAS_TURBINE_FUELS.findRecipe(
+                    GTValues.V[GTValues.MAX], dummyList, Collections.singletonList(fuelStack), Integer.MAX_VALUE);
+            // run only if it can apply a certain amount of "parallel", this is to mitigate int division
+            if (gasFuelRecipe != null && fuelStack.amount >= gasFuelRecipe.getFluidInputs().get(0).amount * FLUID_DRAIN_MULTIPLIER) {
+                fluidTank.drain(gasFuelRecipe.getFluidInputs().get(0).amount * FLUID_DRAIN_MULTIPLIER, true);
+                // multiply by 2, as it is 2x burntime for semi-fluid
+                setMaxProgress(adjustBurnTimeForThrottle(Math.max(1, boiler.boilerType.runtimeBoost((Math.abs(gasFuelRecipe.getEUt()) * gasFuelRecipe.getDuration() / FLUID_BURNTIME_TO_EU * 2)))));
+                didStartRecipe = true;
+                break;
+            }
+
         }
+        
 
         if (!didStartRecipe) {
             IItemHandlerModifiable importItems = boiler.getImportItems();
