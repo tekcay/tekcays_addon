@@ -17,6 +17,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import tekcays_addon.common.metatileentities.multi.MetaTileEntityMelter;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -27,16 +28,17 @@ import static gregtech.api.capability.GregtechDataCodes.BOILER_LAST_TICK_STEAM;
 
 public class MelterRecipeLogic extends AbstractRecipeLogic {
 
-    private static final long STEAM_PER_WATER = 160;
+    //private static final long STEAM_PER_WATER = 160;
 
     private static final int FLUID_DRAIN_MULTIPLIER = 100;
     private static final int FLUID_BURNTIME_TO_EU = 800 / FLUID_DRAIN_MULTIPLIER;
 
-    private int currentHeat;
-    private int lastTickSteamOutput;
-    private int excessWater, excessFuel, excessProjectedEU;
+    //private int currentHeat;
+    //private int lastTickSteamOutput;
+    private int excessWater;
+    private int excessProjectedEU;
 
-    public MelterRecipeLogic(MetaTileEntityLargeBoiler tileEntity) {
+    public MelterRecipeLogic(MetaTileEntityLargeMelter tileEntity) {
         super(tileEntity, null);
         this.fluidOutputs = Collections.emptyList();
         this.itemOutputs = NonNullList.create();
@@ -53,7 +55,7 @@ public class MelterRecipeLogic extends AbstractRecipeLogic {
 
     @Override
     protected void trySearchNewRecipe() {
-        MetaTileEntityLargeBoiler boiler = (MetaTileEntityLargeBoiler) metaTileEntity;
+        MetaTileEntityLargeMelter boiler = (MetaTileEntityLargeMelter) metaTileEntity;
         if (ConfigHolder.machines.enableMaintenance && boiler.hasMaintenanceMechanics() && boiler.getNumMaintenanceProblems() > 5) {
             return;
         }
@@ -160,12 +162,16 @@ public class MelterRecipeLogic extends AbstractRecipeLogic {
         }
     }
 
+    /*
     private int getMaximumHeatFromMaintenance() {
         if (ConfigHolder.machines.enableMaintenance) {
             return (int) Math.min(currentHeat, (1 - 0.1 * getMetaTileEntity().getNumMaintenanceProblems()) * getMaximumHeat());
         } else return currentHeat;
     }
 
+     */
+
+    /*
     private int adjustEUtForThrottle(int rawEUt) {
         int throttle = ((MetaTileEntityLargeBoiler) metaTileEntity).getThrottle();
         return Math.max(25, (int) (rawEUt * (throttle / 100.0)));
@@ -182,6 +188,9 @@ public class MelterRecipeLogic extends AbstractRecipeLogic {
         return adjustedBurnTime;
     }
 
+     */
+
+    /*
     private int getMaximumHeat() {
         return ((MetaTileEntityLargeBoiler) metaTileEntity).boilerType.getTicksToBoiling();
     }
@@ -196,10 +205,14 @@ public class MelterRecipeLogic extends AbstractRecipeLogic {
         }
         this.currentHeat = heat;
     }
+    
+     */
 
+    /*
     public int getLastTickSteam() {
         return lastTickSteamOutput;
     }
+
 
     public void setLastTickSteam(int lastTickSteamOutput) {
         if (lastTickSteamOutput != this.lastTickSteamOutput && !metaTileEntity.getWorld().isRemote) {
@@ -208,12 +221,14 @@ public class MelterRecipeLogic extends AbstractRecipeLogic {
         this.lastTickSteamOutput = lastTickSteamOutput;
     }
 
+     */
+
     public void invalidate() {
         progressTime = 0;
         maxProgressTime = 0;
         recipeEUt = 0;
         setActive(false);
-        setLastTickSteam(0);
+        //setLastTickSteam(0);
     }
 
     @Override
@@ -225,8 +240,8 @@ public class MelterRecipeLogic extends AbstractRecipeLogic {
     }
 
     @Override
-    public MetaTileEntityLargeBoiler getMetaTileEntity() {
-        return (MetaTileEntityLargeBoiler) super.getMetaTileEntity();
+    public MetaTileEntityMelter getMetaTileEntity() {
+        return (MetaTileEntityMelter) super.getMetaTileEntity();
     }
 
     @Override
@@ -240,9 +255,9 @@ public class MelterRecipeLogic extends AbstractRecipeLogic {
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = super.serializeNBT();
-        compound.setInteger("Heat", currentHeat);
+        //compound.setInteger("Heat", currentHeat);
         compound.setInteger("ExcessFuel", excessFuel);
-        compound.setInteger("ExcessWater", excessWater);
+        //compound.setInteger("ExcessWater", excessWater);
         compound.setInteger("ExcessProjectedEU", excessProjectedEU);
         return compound;
     }
@@ -250,12 +265,13 @@ public class MelterRecipeLogic extends AbstractRecipeLogic {
     @Override
     public void deserializeNBT(@Nonnull NBTTagCompound compound) {
         super.deserializeNBT(compound);
-        this.currentHeat = compound.getInteger("Heat");
+        //this.currentHeat = compound.getInteger("Heat");
         this.excessFuel = compound.getInteger("ExcessFuel");
-        this.excessWater = compound.getInteger("ExcessWater");
+       // this.excessWater = compound.getInteger("ExcessWater");
         this.excessProjectedEU = compound.getInteger("ExcessProjectedEU");
     }
 
+    /*
     @Override
     public void writeInitialData(@Nonnull PacketBuffer buf) {
         super.writeInitialData(buf);
@@ -269,7 +285,10 @@ public class MelterRecipeLogic extends AbstractRecipeLogic {
         this.currentHeat = buf.readVarInt();
         this.lastTickSteamOutput = buf.readVarInt();
     }
+    
+     */
 
+    /*
     @Override
     public void receiveCustomData(int dataId, PacketBuffer buf) {
         super.receiveCustomData(dataId, buf);
@@ -280,35 +299,37 @@ public class MelterRecipeLogic extends AbstractRecipeLogic {
         }
     }
 
+
+     */
     // Required overrides to use RecipeLogic, but all of them are redirected by the above overrides.
 
     @Override
     protected long getEnergyInputPerSecond() {
-        GTLog.logger.error("Large Boiler called getEnergyInputPerSecond(), this should not be possible!");
+        GTLog.logger.error("Melter called getEnergyInputPerSecond(), this should not be possible!");
         return 0;
     }
 
     @Override
     protected long getEnergyStored() {
-        GTLog.logger.error("Large Boiler called getEnergyStored(), this should not be possible!");
+        GTLog.logger.error("Melter called getEnergyStored(), this should not be possible!");
         return 0;
     }
 
     @Override
     protected long getEnergyCapacity() {
-        GTLog.logger.error("Large Boiler called getEnergyCapacity(), this should not be possible!");
+        GTLog.logger.error("Melter called getEnergyCapacity(), this should not be possible!");
         return 0;
     }
 
     @Override
     protected boolean drawEnergy(int recipeEUt, boolean simulate) {
-        GTLog.logger.error("Large Boiler called drawEnergy(), this should not be possible!");
+        GTLog.logger.error("Melter called drawEnergy(), this should not be possible!");
         return false;
     }
 
     @Override
     protected long getMaxVoltage() {
-        GTLog.logger.error("Large Boiler called getMaxVoltage(), this should not be possible!");
+        GTLog.logger.error("Melter called getMaxVoltage(), this should not be possible!");
         return 0;
     }
 }
