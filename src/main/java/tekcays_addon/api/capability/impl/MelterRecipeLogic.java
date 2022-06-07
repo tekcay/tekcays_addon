@@ -55,14 +55,14 @@ public class MelterRecipeLogic extends AbstractRecipeLogic {
 
     @Override
     protected void trySearchNewRecipe() {
-        MetaTileEntityLargeMelter boiler = (MetaTileEntityLargeMelter) metaTileEntity;
-        if (ConfigHolder.machines.enableMaintenance && boiler.hasMaintenanceMechanics() && boiler.getNumMaintenanceProblems() > 5) {
+        MetaTileEntityLargeMelter melter = (MetaTileEntityLargeMelter) metaTileEntity;
+        if (ConfigHolder.machines.enableMaintenance && melter.hasMaintenanceMechanics() && melter.getNumMaintenanceProblems() > 5) {
             return;
         }
 
         // can optimize with an override of checkPreviousRecipe() and a check here
 
-        IMultipleTankHandler importFluids = boiler.getImportFluids();
+        IMultipleTankHandler importFluids = melter.getImportFluids();
         List<ItemStack> dummyList = NonNullList.create();
         boolean didStartRecipe = false;
 
@@ -76,7 +76,7 @@ public class MelterRecipeLogic extends AbstractRecipeLogic {
             if (dieselRecipe != null && fuelStack.amount >= dieselRecipe.getFluidInputs().get(0).amount * FLUID_DRAIN_MULTIPLIER) {
                 fluidTank.drain(dieselRecipe.getFluidInputs().get(0).amount * FLUID_DRAIN_MULTIPLIER, true);
                 // divide by 2, as it is half burntime for combustion
-                setMaxProgress(adjustBurnTimeForThrottle(Math.max(1, boiler.boilerType.runtimeBoost((Math.abs(dieselRecipe.getEUt()) * dieselRecipe.getDuration()) / FLUID_BURNTIME_TO_EU / 2))));
+                setMaxProgress(adjustBurnTimeForThrottle(Math.max(1, melter.melterType.runtimeBoost((Math.abs(dieselRecipe.getEUt()) * dieselRecipe.getDuration()) / FLUID_BURNTIME_TO_EU / 2))));
                 didStartRecipe = true;
                 break;
             }
@@ -87,7 +87,7 @@ public class MelterRecipeLogic extends AbstractRecipeLogic {
             if (denseFuelRecipe != null && fuelStack.amount >= denseFuelRecipe.getFluidInputs().get(0).amount * FLUID_DRAIN_MULTIPLIER) {
                 fluidTank.drain(denseFuelRecipe.getFluidInputs().get(0).amount * FLUID_DRAIN_MULTIPLIER, true);
                 // multiply by 2, as it is 2x burntime for semi-fluid
-                setMaxProgress(adjustBurnTimeForThrottle(Math.max(1, boiler.boilerType.runtimeBoost((Math.abs(denseFuelRecipe.getEUt()) * denseFuelRecipe.getDuration() / FLUID_BURNTIME_TO_EU * 2)))));
+                setMaxProgress(adjustBurnTimeForThrottle(Math.max(1, melter.melterType.runtimeBoost((Math.abs(denseFuelRecipe.getEUt()) * denseFuelRecipe.getDuration() / FLUID_BURNTIME_TO_EU * 2)))));
                 didStartRecipe = true;
                 break;
             }
@@ -98,7 +98,7 @@ public class MelterRecipeLogic extends AbstractRecipeLogic {
             if (gasFuelRecipe != null && fuelStack.amount >= gasFuelRecipe.getFluidInputs().get(0).amount * FLUID_DRAIN_MULTIPLIER) {
                 fluidTank.drain(gasFuelRecipe.getFluidInputs().get(0).amount * FLUID_DRAIN_MULTIPLIER, true);
                 // multiply by 2, as it is 2x burntime for semi-fluid
-                setMaxProgress(adjustBurnTimeForThrottle(Math.max(1, boiler.boilerType.runtimeBoost((Math.abs(gasFuelRecipe.getEUt()) * gasFuelRecipe.getDuration() / FLUID_BURNTIME_TO_EU * 2)))));
+                setMaxProgress(adjustBurnTimeForThrottle(Math.max(1, melter.melterType.runtimeBoost((Math.abs(gasFuelRecipe.getEUt()) * gasFuelRecipe.getDuration() / FLUID_BURNTIME_TO_EU * 2)))));
                 didStartRecipe = true;
                 break;
             }
@@ -107,7 +107,7 @@ public class MelterRecipeLogic extends AbstractRecipeLogic {
         
 
         if (!didStartRecipe) {
-            IItemHandlerModifiable importItems = boiler.getImportItems();
+            IItemHandlerModifiable importItems = melter.getImportItems();
             for (int i = 0; i < importItems.getSlots(); i++) {
                 ItemStack stack = importItems.getStackInSlot(i);
                 int fuelBurnTime = (int) Math.ceil(ModHandler.getFuelValue(stack));
@@ -116,7 +116,7 @@ public class MelterRecipeLogic extends AbstractRecipeLogic {
                     this.excessFuel += fuelBurnTime % 80;
                     int excessProgress = this.excessFuel / 80;
                     this.excessFuel %= 80;
-                    setMaxProgress(excessProgress + adjustBurnTimeForThrottle(boiler.boilerType.runtimeBoost(fuelBurnTime / 80)));
+                    setMaxProgress(excessProgress + adjustBurnTimeForThrottle(melter.melterType.runtimeBoost(fuelBurnTime / 80)));
                     stack.shrink(1);
                     didStartRecipe = true;
                     break;
@@ -125,7 +125,7 @@ public class MelterRecipeLogic extends AbstractRecipeLogic {
         }
         if (didStartRecipe) {
             this.progressTime = 1;
-            this.recipeEUt = adjustEUtForThrottle(boiler.boilerType.steamPerTick());
+            this.recipeEUt = adjustEUtForThrottle(melter.melterType.steamPerTick());
             if (wasActiveAndNeedsUpdate) {
                 wasActiveAndNeedsUpdate = false;
             } else {
@@ -178,8 +178,8 @@ public class MelterRecipeLogic extends AbstractRecipeLogic {
     }
 
     private int adjustBurnTimeForThrottle(int rawBurnTime) {
-        MetaTileEntityLargeBoiler boiler = (MetaTileEntityLargeBoiler) metaTileEntity;
-        int EUt = boiler.boilerType.steamPerTick();
+        MetaTileEntityLargeBoiler melter = (MetaTileEntityLargeBoiler) metaTileEntity;
+        int EUt = melter.melterType.steamPerTick();
         int adjustedEUt = adjustEUtForThrottle(EUt);
         int adjustedBurnTime = rawBurnTime * EUt / adjustedEUt;
         this.excessProjectedEU += EUt * rawBurnTime - adjustedEUt * adjustedBurnTime;
@@ -192,7 +192,7 @@ public class MelterRecipeLogic extends AbstractRecipeLogic {
 
     /*
     private int getMaximumHeat() {
-        return ((MetaTileEntityLargeBoiler) metaTileEntity).boilerType.getTicksToBoiling();
+        return ((MetaTileEntityLargeBoiler) metaTileEntity).melterType.getTicksToBoiling();
     }
 
     public int getHeatScaled() {

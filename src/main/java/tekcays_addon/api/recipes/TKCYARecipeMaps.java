@@ -5,9 +5,12 @@ import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.widgets.ProgressWidget;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.builders.SimpleRecipeBuilder;
+import tkcays_addon.api.recipes.builders.MelterRecipeBuilder;
 import gregtech.api.sound.GTSounds;
 import stanhebben.zenscript.annotations.ZenExpansion;
 import stanhebben.zenscript.annotations.ZenProperty;
+
+
 
 @ZenExpansion("mods.tkcya.recipe.RecipeMaps")
 @ZenRegister
@@ -24,5 +27,12 @@ public class TKCYARecipeMaps {
             "advanced_polarizer", 1, 2, 1, 1, 0, 0, 0, 0, new SimpleRecipeBuilder(), false)
             .setProgressBar(GuiTextures.PROGRESS_BAR_MAGNET, ProgressWidget.MoveType.HORIZONTAL)
             .setSound(GTSounds.ARC);
+
+    @ZenProperty
+    public static final MelterRecipeMap<MelterRecipeBuilder> MELTER_RECIPES = (MelterRecipeMap<MelterRecipeBuilder>) new MelterRecipeMap<>
+            ("melter", new MelterRecipeBuilder())
+            .setSound(GTSounds.FURNACE)
+            .setSlotOverlay(false, false, true, GuiTextures.FURNACE_OVERLAY_1)
+            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW_MULTIPLE, ProgressWidget.MoveType.HORIZONTAL);
 
 }
