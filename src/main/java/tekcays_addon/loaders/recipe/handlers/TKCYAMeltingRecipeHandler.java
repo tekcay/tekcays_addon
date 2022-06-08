@@ -67,16 +67,16 @@ public class TKCYAMeltingRecipeHandler {
             if (m.hasProperty(PropertyKey.INGOT) && m.getProperty(PropertyKey.INGOT).getMacerateInto() != m) {
                 m = m.getProperty(PropertyKey.INGOT).getMacerateInto();
             }
-            if (!m.hasProperty(PropertyKey.FLUID) || (prefix == OrePrefix.dust && m.hasProperty(PropertyKey.BLAST))) {
-                return;
-            }
+            if (!m.hasProperty(PropertyKey.FLUID)) return;
+
             TKCYARecipeMaps.PRIMITIVE_MELTER_RECIPES.recipeBuilder()
                     .inputs(input.copy())
                     .fluidOutputs(m.getFluid((int) (ms.amount * L / M)))
                     .duration((int) Math.max(1, ms.amount * ms.material.getMass() / M))
                     .buildAndRegister();
 
-            TKCYARecipeMaps.PRIMITIVE_MELTER_RECIPES.recipeBuilder()
+            TKCYARecipeMaps.ELECTRIC_MELTER_RECIPES.recipeBuilder()
+                    .setTemp(m.getFluid().getTemperature())
                     .inputs(input.copy())
                     .fluidOutputs(m.getFluid((int) (ms.amount * L / M)))
                     .duration((int) Math.max(1, ms.amount * ms.material.getMass() / M))
