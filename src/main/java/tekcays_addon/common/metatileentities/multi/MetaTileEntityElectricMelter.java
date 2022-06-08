@@ -1,45 +1,47 @@
 package tekcays_addon.common.metatileentities.multi;
 
 import codechicken.lib.render.CCRenderState;
-        import codechicken.lib.render.pipeline.IVertexOperation;
-        import codechicken.lib.vec.Matrix4;
-        import gregtech.api.capability.impl.MultiblockRecipeLogic;
-        import gregtech.api.gui.Widget;
-        import gregtech.api.metatileentity.MetaTileEntity;
-        import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-        import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-        import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-        import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
-        import gregtech.api.pattern.BlockPattern;
-        import gregtech.api.pattern.FactoryBlockPattern;
-        import gregtech.api.pattern.PatternMatchContext;
-        import gregtech.api.pattern.TraceabilityPredicate;
-        import gregtech.api.recipes.Recipe;
-        import gregtech.api.util.RelativeDirection;
-        import gregtech.client.renderer.ICubeRenderer;
-        import gregtech.common.ConfigHolder;
-        import gregtech.common.blocks.BlockGlassCasing;
-        import gregtech.common.blocks.MetaBlocks;
-        import net.minecraft.block.state.IBlockState;
-        import net.minecraft.client.resources.I18n;
-        import net.minecraft.item.ItemStack;
-        import net.minecraft.nbt.NBTTagCompound;
-        import net.minecraft.network.PacketBuffer;
-        import net.minecraft.util.ResourceLocation;
-        import net.minecraft.util.text.*;
-        import net.minecraft.util.text.event.HoverEvent;
-        import net.minecraft.world.World;
+import codechicken.lib.render.pipeline.IVertexOperation;
+import codechicken.lib.vec.Matrix4;
+import gregtech.api.capability.impl.MultiblockRecipeLogic;
+import gregtech.api.gui.Widget;
+import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.metatileentity.multiblock.IMultiblockPart;
+import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
+import gregtech.api.pattern.BlockPattern;
+import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.TraceabilityPredicate;
+import gregtech.api.recipes.Recipe;
+import gregtech.api.util.RelativeDirection;
+import gregtech.client.renderer.ICubeRenderer;
+import gregtech.client.renderer.texture.Textures;
+import gregtech.common.ConfigHolder;
+import gregtech.common.blocks.BlockGlassCasing;
+import gregtech.common.blocks.BlockMetalCasing;
+import gregtech.common.blocks.MetaBlocks;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.*;
+import net.minecraft.util.text.event.HoverEvent;
+import net.minecraft.world.World;
+import tekcays_addon.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.api.recipes.builders.ElectricMelterRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
-import tkcays_addon.api.recipes.builders.MelterRecipeBuilder;
 
 import javax.annotation.Nullable;
-        import java.util.List;
+import java.util.List;
 
-        import static gregtech.api.gui.widgets.AdvancedTextWidget.withButton;
-        import static gregtech.api.unification.material.Materials.Steel;
+import static gregtech.api.gui.widgets.AdvancedTextWidget.withButton;
+import static gregtech.api.unification.material.Materials.Steel;
 
-public class MetaTileEntityMelter extends RecipeMapMultiblockController {
+public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController {
 
     private int temp;
     private int targetTemp;
@@ -47,9 +49,9 @@ public class MetaTileEntityMelter extends RecipeMapMultiblockController {
     private boolean hasEnoughEnergy;
     public int size;
 
-    public MetaTileEntityMelter(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYAMetaTileEntities.);
-        this.recipeMapWorkable = new MelterLogic(this);
+    public MetaTileEntityElectricMelter(ResourceLocation metaTileEntityId) {
+        super(metaTileEntityId, TKCYARecipeMaps.ELECTRIC_MELTER_RECIPES);
+        this.recipeMapWorkable = new ElectricMelterLogic(this);
 
         temp = 300;
         targetTemp = 300;
@@ -179,7 +181,7 @@ public class MetaTileEntityMelter extends RecipeMapMultiblockController {
     }
 
     protected IBlockState getCasingState() {
-        return GTFO_METAL_CASING.getState(GTFOMetalCasing.CasingType.BISMUTH_BRONZE_CASING);
+        return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.PRIMITIVE_BRICKS);
     }
 
     protected IBlockState getFrameState() {
@@ -188,12 +190,12 @@ public class MetaTileEntityMelter extends RecipeMapMultiblockController {
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
-        return TKCYATextures.NONCONDUCTING_CASING;
+        return Textures.PRIMITIVE_BRICKS;
     }
 
     @Override
     protected ICubeRenderer getFrontOverlay() {
-        return TKCYATextures.ADVANCED_POLARIZER_OVERLAY;
+        return TKCYATextures.PRIMITIVE_MELTER_OVERLAY;
     }
 
     @Override
@@ -217,7 +219,7 @@ public class MetaTileEntityMelter extends RecipeMapMultiblockController {
     public static TraceabilityPredicate isIndicatorPredicate() {
         return new TraceabilityPredicate((blockWorldState) -> {
             if (air().test(blockWorldState)) {
-                blockWorldState.getMatchContext().increment("melterLength", 1);
+                blockWorldState.getMatchContext().increment("bakingOvenLength", 1);
                 return true;
             } else
                 return false;
@@ -233,12 +235,12 @@ public class MetaTileEntityMelter extends RecipeMapMultiblockController {
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
-        this.size = context.getOrDefault("melterLength", 1) - 1;
+        this.size = context.getOrDefault("bakingOvenLength", 1) - 1;
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTileEntityMelter(metaTileEntityId);
+        return new MetaTileEntityElectricMelter(metaTileEntityId);
     }
 
     public int temperatureEnergyCost(int temp) {
@@ -309,7 +311,7 @@ public class MetaTileEntityMelter extends RecipeMapMultiblockController {
 
     @Override
     public boolean checkRecipe(Recipe recipe, boolean consumeIfSuccess) {
-        return recipe.getProperty(MelterRecipeBuilder.TemperatureProperty.getInstance(), 0) == temp;
+        return recipe.getProperty(ElectricMelterRecipeBuilder.TemperatureProperty.getInstance(), 0) == temp;
     }
 
     @Override
@@ -317,14 +319,14 @@ public class MetaTileEntityMelter extends RecipeMapMultiblockController {
         return sourcePart == null && temp > 300 ? 15 : 0;
     }
 
-    private class MelterLogic extends MultiblockRecipeLogic {
-        public MelterLogic(RecipeMapMultiblockController tileEntity) {
+    private class ElectricMelterLogic extends MultiblockRecipeLogic {
+        public ElectricMelterLogic(RecipeMapMultiblockController tileEntity) {
             super(tileEntity);
         }
 
         @Override
         public int getParallelLimit() {
-            return ((MetaTileEntityMelter) this.getMetaTileEntity()).size;
+            return ((MetaTileEntityElectricMelter) this.getMetaTileEntity()).size;
         }
 
         @Override
@@ -342,3 +344,4 @@ public class MetaTileEntityMelter extends RecipeMapMultiblockController {
         this.getFrontOverlay().renderOrientedState(renderState, translation, pipeline, this.getFrontFacing(), temp > 300, this.recipeMapWorkable.isWorkingEnabled());
     }
 }
+

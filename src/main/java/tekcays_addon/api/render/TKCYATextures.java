@@ -15,6 +15,10 @@ public class TKCYATextures {
     public static OrientedOverlayRenderer CLUSTER_MILL_OVERLAY = new OrientedOverlayRenderer("machines/cluster_mill", FRONT);
     public static OrientedOverlayRenderer ADVANCED_POLARIZER_OVERLAY = new OrientedOverlayRenderer("machines/advanced_polarizer", FRONT, TOP);
 
+    //MeltingOverhaul
+    public static OrientedOverlayRenderer PRIMITIVE_MELTER_OVERLAY = new OrientedOverlayRenderer("machines/primitive_melter", FRONT);
+    public static OrientedOverlayRenderer ELECTRIC_MELTER_OVERLAY = new OrientedOverlayRenderer("machines/electric_melter", FRONT);
+
     // Casings
     public static SimpleOverlayRenderer MACERATOR_CASING;
     public static SimpleOverlayRenderer BLAST_CASING;

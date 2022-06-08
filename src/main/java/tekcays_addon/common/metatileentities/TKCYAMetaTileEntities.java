@@ -1,25 +1,16 @@
 package tekcays_addon.common.metatileentities;
 
-import gregtech.api.GTValues;
-import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
 import gregtech.api.util.GTUtility;
-import gregtech.common.metatileentities.MetaTileEntities;
-import gregtech.common.metatileentities.multi.MetaTileEntityPrimitiveBlastFurnace;
-import mezz.jei.api.ingredients.IIngredientBlacklist;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.Loader;
 import tekcays_addon.TekCaysAddon;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
 
-import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
 import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.TKCYAConfigHolder;
-import tekcays_addon.common.metatileentities.multi.MetaTileEntityMelter;
-
-import java.util.function.Function;
+import tekcays_addon.common.metatileentities.multi.MetaTileEntityElectricMelter;
+import tekcays_addon.common.metatileentities.multi.MetaTileEntityPrimitiveMelter;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
 
@@ -29,7 +20,10 @@ public class TKCYAMetaTileEntities {
     public static SimpleMachineMetaTileEntity[] CLUSTER_MILL = new SimpleMachineMetaTileEntity[5];
     public static SimpleMachineMetaTileEntity[] ADVANCED_POLARIZER = new SimpleMachineMetaTileEntity[5];
 
-    public static MetaTileEntityMelter MELTER;
+    public static MetaTileEntityPrimitiveMelter PRIMITIVE_MELTER;
+    public static MetaTileEntityElectricMelter ELECTRIC_MELTER;
+
+
 
     public static void init() {
 
@@ -44,7 +38,8 @@ public class TKCYAMetaTileEntities {
         }
 
         if (TKCYAConfigHolder.meltingOverhaul.enableMeltingOverhaul) {
-            MELTER = registerMetaTileEntity(11015, new MetaTileEntityMelter(tkcyaId("melter")));
+            PRIMITIVE_MELTER = registerMetaTileEntity(11010, new MetaTileEntityPrimitiveMelter(tkcyaId("primitive_melter")));
+            ELECTRIC_MELTER = registerMetaTileEntity(11011, new MetaTileEntityElectricMelter(tkcyaId("electric_melter")));
         }
 
 

@@ -1,4 +1,4 @@
-package tkcays_addon.api.recipes.builders;
+package tekcays_addon.api.recipes.builders;
 
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeBuilder;
@@ -12,28 +12,28 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class MelterRecipeBuilder extends RecipeBuilder<MelterRecipeBuilder> {
+public class ElectricMelterRecipeBuilder extends RecipeBuilder<ElectricMelterRecipeBuilder> {
 
     private int temp;
 
-    public MelterRecipeBuilder() {
+    public ElectricMelterRecipeBuilder() {
     }
 
-    public MelterRecipeBuilder(Recipe recipe, RecipeMap<MelterRecipeBuilder> recipeMap) {
+    public ElectricMelterRecipeBuilder(Recipe recipe, RecipeMap<ElectricMelterRecipeBuilder> recipeMap) {
         super(recipe, recipeMap);
         this.temp = recipe.getRecipePropertyStorage().getRecipePropertyValue(TemperatureProperty.getInstance(), 0);
     }
 
-    public MelterRecipeBuilder(RecipeBuilder<MelterRecipeBuilder> recipeBuilder) {
+    public ElectricMelterRecipeBuilder(RecipeBuilder<ElectricMelterRecipeBuilder> recipeBuilder) {
         super(recipeBuilder);
     }
 
     @Override
-    public MelterRecipeBuilder copy() {
-        return new MelterRecipeBuilder(this);
+    public ElectricMelterRecipeBuilder copy() {
+        return new ElectricMelterRecipeBuilder(this);
     }
 
-    public MelterRecipeBuilder setTemp(int temperature) {
+    public ElectricMelterRecipeBuilder setTemp(int temperature) {
         this.temp = temperature;
         return this;
     }
@@ -103,3 +103,4 @@ public class MelterRecipeBuilder extends RecipeBuilder<MelterRecipeBuilder> {
         }
     }
 }
+
