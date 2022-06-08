@@ -1,8 +1,6 @@
 package tekcays_addon.loaders.recipe.handlers;
 
-import gregtech.api.GTValues;
 import gregtech.api.recipes.RecipeBuilder;
-import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.properties.PropertyKey;
@@ -16,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import static gregtech.api.GTValues.L;
 import static gregtech.api.GTValues.M;
 
@@ -26,13 +27,13 @@ public class TKCYAMeltingRecipeHandler {
             ItemStack itemStack = entry.getKey();
             ItemMaterialInfo materialInfo = entry.getValue();
             ArrayList<MaterialStack> materialStacks = new ArrayList<>(materialInfo.getMaterials());
-            registerMeltingRecipes(itemStack, materialStacks, false, null);
+            registerMeltingRecipes(itemStack, materialStacks, null);
         }
     }
 
 
 
-    private static void registerMeltingRecipes(ItemStack input, List<MaterialStack> materials, int multiplier, @Nullable OrePrefix prefix) {
+    private static void registerMeltingRecipes(ItemStack input, List<MaterialStack> materials, @Nullable OrePrefix prefix) {
 
         // Handle simple materials separately
         if (prefix != null && prefix.secondaryMaterials.isEmpty()) {
