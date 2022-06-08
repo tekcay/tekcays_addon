@@ -41,11 +41,6 @@ public class TKCYAPartsRecipeHandler {
         if (TKCYAConfigHolder.foilOverhaul.enableFoilOverhaul) {
             GTRecipeHandler.removeRecipesByInputs(BENDER_RECIPES, OreDictUnifier.get(plate, material), IntCircuitIngredient.getIntegratedCircuit(1));
 
-            if (!material.hasFlag(NO_SMASHING))
-                ModHandler.addShapedRecipe(String.format("foil_%s", material),
-                        OreDictUnifier.get(foilPrefix, material, 2),
-                        "hP ", 'P', new UnificationEntry(plate, material));
-
             TKCYARecipeMaps.CLUSTER_MILL_RECIPES.recipeBuilder()
                     .input(plate, material)
                     .output(foilPrefix, material, 4)

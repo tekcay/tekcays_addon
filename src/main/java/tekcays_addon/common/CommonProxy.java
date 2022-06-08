@@ -79,7 +79,6 @@ public class CommonProxy {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void registerRecipesLowest(RegistryEvent.Register<IRecipe> event) {
         TKCYALog.logger.info("Running late material handlers...");
-        //OrePrefix.runMaterialHandlers();
         TKCYARecipeLoader.loadLatest();
 
         if (Loader.isModLoaded(GTValues.MODID_CT)) {
