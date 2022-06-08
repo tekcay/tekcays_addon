@@ -115,9 +115,9 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController 
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
 
-        tooltip.add(I18n.format("gregtechfoodoption.machine.electric_baking_oven.tooltip.1"));
-        tooltip.add(I18n.format("gregtechfoodoption.machine.electric_baking_oven.tooltip.2"));
-        tooltip.add(I18n.format("gregtechfoodoption.machine.electric_baking_oven.tooltip.3"));
+        tooltip.add(I18n.format("tekcays_addon.machine.electric_melter.tooltip.1"));
+        tooltip.add(I18n.format("tekcays_addon.machine.electric_melter.tooltip.2"));
+        tooltip.add(I18n.format("tekcays_addon.machine.electric_melter.tooltip.3"));
     }
 
     @Override
@@ -148,21 +148,21 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController 
                 textList.add((new TextComponentTranslation("gregtech.multiblock.not_enough_energy")).setStyle((new Style()).setColor(TextFormatting.RED)));
             }
 
-            textList.add(new TextComponentTranslation("gregtechfoodoption.multiblock.electric_baking_oven.tooltip.1", temp));
-            textList.add(new TextComponentTranslation("gregtechfoodoption.multiblock.electric_baking_oven.tooltip.4", temperatureEnergyCost(temp)));
+            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_melter.tooltip.1", temp));
+            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_melter.tooltip.4", temperatureEnergyCost(temp)));
 
-            ITextComponent buttonText = new TextComponentTranslation("gregtechfoodoption.multiblock.electric_baking_oven.tooltip.3");
+            ITextComponent buttonText = new TextComponentTranslation("tekcays_addon.multiblock.electric_melter.tooltip.3");
             buttonText.appendText(" ");
             buttonText.appendSibling(withButton(new TextComponentString("[-]"), "sub"));
             buttonText.appendText(" ");
             buttonText.appendSibling(withButton(new TextComponentString("[+]"), "add"));
             textList.add(buttonText);
 
-            textList.add(new TextComponentTranslation("gregtechfoodoption.multiblock.electric_baking_oven.tooltip.5", targetTemp));
+            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_melter.tooltip.5", targetTemp));
 
 
             if (!canAchieveTargetTemp && hasEnoughEnergy)
-                textList.add(new TextComponentTranslation("gregtechfoodoption.multiblock.electric_baking_oven.tooltip.2")
+                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_melter.tooltip.2")
                         .setStyle(new Style().setColor(TextFormatting.RED)));
             if (!hasEnoughEnergy)
                 textList.add(new TextComponentTranslation("gregtech.multiblock.not_enough_energy")
@@ -219,7 +219,7 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController 
     public static TraceabilityPredicate isIndicatorPredicate() {
         return new TraceabilityPredicate((blockWorldState) -> {
             if (air().test(blockWorldState)) {
-                blockWorldState.getMatchContext().increment("bakingOvenLength", 1);
+                blockWorldState.getMatchContext().increment("electricMelterLength", 1);
                 return true;
             } else
                 return false;
@@ -235,7 +235,7 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController 
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
-        this.size = context.getOrDefault("bakingOvenLength", 1) - 1;
+        this.size = context.getOrDefault("electricMelterLength", 1) - 1;
     }
 
     @Override
