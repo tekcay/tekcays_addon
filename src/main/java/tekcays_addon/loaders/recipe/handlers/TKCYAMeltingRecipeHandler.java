@@ -11,8 +11,10 @@ import net.minecraft.item.ItemStack;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,9 +33,29 @@ public class TKCYAMeltingRecipeHandler {
         }
     }
 
+    public static void registerMeltingRecipes(ItemStack input, List<MaterialStack> components, @Nullable OrePrefix prefix) {
+
+        // Gather the valid Materials for use in recycling recipes.
+        // - Filter out Materials that cannot create a Dust
+        // - Filter out Materials that do not equate to at least 1 Nugget worth of Material.
+        // - Sort Materials on a descending material amount
+        List<MaterialStack> materials = components.stream()
+                .filter(stack -> stack.material.hasProperty(PropertyKey.DUST))
+                .filter(stack -> stack.amount >= M / 9)
+                .sorted(Comparator.comparingLong(ms -> -ms.amount))
+                .collect(Collectors.toList());
+
+        // Exit if no Materials matching the above requirements exist.
+        if (materials.isEmpty()) return;
+
+        if (prefix != null) {
+            registerMelterRecipes(input, components, prefix);
+        }
+    }
 
 
-    private static void registerMeltingRecipes(ItemStack input, List<MaterialStack> materials, @Nullable OrePrefix prefix) {
+
+    private static void registerMelterRecipes(ItemStack input, List<MaterialStack> materials, @Nullable OrePrefix prefix) {
 
         // Handle simple materials separately
         if (prefix != null && prefix.secondaryMaterials.isEmpty()) {
