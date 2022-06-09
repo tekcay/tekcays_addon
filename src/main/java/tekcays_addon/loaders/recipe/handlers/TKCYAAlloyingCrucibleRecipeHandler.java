@@ -13,6 +13,7 @@ import static gregtech.api.GTValues.L;
 import static gregtech.api.unification.material.Materials.Carbon;
 import static gregtech.api.unification.material.Materials.EXT2_METAL;
 import static gregtech.api.unification.material.info.MaterialFlags.DISABLE_DECOMPOSITION;
+import static gregtech.api.unification.ore.OrePrefix.dust;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,20 +36,36 @@ public class TKCYAAlloyingCrucibleRecipeHandler {
     public static void register(Material material) {
 
         Collection<FluidStack> f = new ArrayList<>();
+        boolean containsCarbon = false;
+        int outputMultiplier = 0;
 
         for (MaterialStack ms : material.getMaterialComponents()) {
             if (!ms.material.hasProperty(PropertyKey.FLUID)) break;
             if (ms.material.getFluid().isGaseous()) break; // Will make special recipes for those
-            f.add(ms.material.getFluid((int) ms.amount * L));
+            outputMultiplier += ms.amount;
+            if (ms.material == Carbon) {
+                containsCarbon = true;
+            } else {
+                f.add(ms.material.getFluid((int) ms.amount * L));
+            }
         }
 
-        if (f.size() != material.getMaterialComponents().size()) return; //Means that some materials were removed
+        if (f.size() != material.getMaterialComponents().size() && !containsCarbon) return; //Means that some materials were removed
 
-        TKCYARecipeMaps.ALLOYING_CRUCIBLE_RECIPES.recipeBuilder()
-                .fluidInputs(f)
-                .fluidOutputs(material.getFluid(L))
-                .duration((int) material.getMass())
-                .buildAndRegister();
+        if (!containsCarbon) {
+            TKCYARecipeMaps.ALLOYING_CRUCIBLE_RECIPES.recipeBuilder()
+                    .fluidInputs(f)
+                    .fluidOutputs(material.getFluid(L * outputMultiplier))
+                    .duration((int) material.getMass())
+                    .buildAndRegister();
+        } else {
+            TKCYARecipeMaps.ALLOYING_CRUCIBLE_RECIPES.recipeBuilder()
+                    .fluidInputs(f)
+                    .input(dust, Carbon)
+                    .fluidOutputs(material.getFluid(L * outputMultiplier))
+                    .duration((int) material.getMass())
+                    .buildAndRegister();
+        }
 
     }
 }
