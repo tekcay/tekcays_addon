@@ -36,40 +36,13 @@ public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<ElectricMelterRecipeBuilder> ELECTRIC_MELTER_RECIPES = new RecipeMap<>(
-            "primitive_melter", 1, 4, 0, 1, 0, 1, 1, 2, new ElectricMelterRecipeBuilder(), false)
+            "electric_melter", 1, 4, 0, 1, 0, 1, 1, 2, new ElectricMelterRecipeBuilder(), false)
             .setSound(GTSounds.FURNACE);
 
     @ZenProperty
     public static final RecipeMap<PrimitiveRecipeBuilder> ALLOYING_CRUCIBLE_RECIPES = new RecipeMap<>(
-            "primitive_melter", 0, 8, 0, 0, 0, 8, 1, 1, new PrimitiveRecipeBuilder(), false)
+            "alloying_crucible", 0, 8, 0, 0, 0, 8, 1, 1, new PrimitiveRecipeBuilder(), false)
             .setSound(GTSounds.CHEMICAL_REACTOR);
 
-
-
-    /*
-    @ZenProperty
-    public static final ElectricMelterRecipeMap<ElectricMelterRecipeBuilder> ELECTRIC_MELTER_RECIPES =
-            (ElectricMelterRecipeMap<ElectricMelterRecipeBuilder>) new ElectricMelterRecipeMap<>("electric_melter", new ElectricMelterRecipeBuilder())
-            .setSound(GTSounds.FURNACE)
-            .setSlotOverlay(false, false, true, GuiTextures.FURNACE_OVERLAY_1)
-            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW_MULTIPLE, ProgressWidget.MoveType.HORIZONTAL);
-
-
-
-    @ZenProperty
-    public static final RecipeMap<PrimitiveMelterRecipeBuilder> PRIMITIVE_MELTER_RECIPES = new RecipeMap<>(
-            "primitive_melter", 1, 2, 0, 1, 0, 0, 0, 0, new PrimitiveMelterRecipeBuilder(), false)
-            .setSound(GTSounds.FURNACE)
-            .onRecipeBuild(recipeBuilder -> {
-                if (((PrimitiveMelterRecipeBuilder) recipeBuilder).getTemperature() != -1) {
-                    ELECTRIC_MELTER_RECIPES.recipeBuilder().setTemp(((PrimitiveMelterRecipeBuilder) recipeBuilder).getTemperature())
-                            .duration(recipeBuilder.getDuration() / 4)
-                            .inputs(recipeBuilder.getInputs().get(0)) // We don't need charcoal.
-                            .outputs(recipeBuilder.getOutputs())
-                            .buildAndRegister();
-                }
-            });
-
-     */
 
 }

@@ -10,17 +10,17 @@ import static gregtech.api.unification.ore.OrePrefix.dust;
 
 public class TKCYAMeltingRecipeHandler {
 
-    public static void init () {
+    public static void init() {
 
-        for (Material material : GregTechAPI.MATERIAL_REGISTRY) {
-            if (material.hasProperty(PropertyKey.DUST)) {
-                if (material.hasProperty(PropertyKey.FLUID)) {
-                    if (material.getFluid().getTemperature() > 300) {
-                        registerMeltingRecipes(material);
+            for (Material material : GregTechAPI.MATERIAL_REGISTRY) {
+                if (material.hasProperty(PropertyKey.DUST)) {
+                    if (material.hasProperty(PropertyKey.FLUID)) {
+                        if (material.getFluid().getTemperature() > 300) {
+                            registerMeltingRecipes(material);
+                        }
                     }
                 }
             }
-        }
 
     }
 

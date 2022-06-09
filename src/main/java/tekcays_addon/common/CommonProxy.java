@@ -67,7 +67,6 @@ public class CommonProxy {
     @SubscribeEvent()
     public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
         TKCYALog.logger.info("Registering recipe low...");
-        TKCYARecipeLoader.loadLatest();
 
         // Main recipe registration
         // This is called AFTER GregTech registers recipes, so
@@ -81,6 +80,7 @@ public class CommonProxy {
     @SubscribeEvent//(priority = EventPriority.LOWEST)
     public static void registerRecipesLowest(RegistryEvent.Register<IRecipe> event) {
         TKCYALog.logger.info("Running late material handlers...");
+        TKCYARecipeLoader.loadLatest();
 
         if (Loader.isModLoaded(GTValues.MODID_CT)) {
             MetaItemBracketHandler.rebuildComponentRegistry();
