@@ -1,6 +1,7 @@
 package tekcays_addon.common;
 
 import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.api.unification.material.properties.TKCYAPropertyAddition;
 import tekcays_addon.TekCaysAddon;
 import gregtech.api.GregTechAPI;
 import net.minecraftforge.fml.common.Mod;
@@ -13,6 +14,7 @@ public class TKCYAEventHandlers {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void registerMaterials(GregTechAPI.MaterialEvent event) {
         TKCYAMaterials.init();
+        TKCYAPropertyAddition.init();
     }
 
     @SubscribeEvent

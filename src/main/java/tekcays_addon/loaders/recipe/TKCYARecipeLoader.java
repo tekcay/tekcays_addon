@@ -17,6 +17,10 @@ public class TKCYARecipeLoader {
         if (TKCYAConfigHolder.meltingOverhaul.enableMeltingOverhaul) {
             TKCYAMeltingRecipeHandler.init();
         }
+
+        if (TKCYAConfigHolder.meltingOverhaul.enableAlloyingOverhaul) {
+            TKCYAAlloyingCruicbleRecipeHandler.init();
+        }
     }
 
 }
