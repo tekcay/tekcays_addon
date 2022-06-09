@@ -22,6 +22,5 @@ public class TKCYAPropertyAddition {
         Phosphorus.setProperty(PropertyKey.FLUID, new FluidProperty());
         Phosphorus.getProperty(PropertyKey.FLUID).setFluidTemperature(860);
 
-
     }
 }
