@@ -2,6 +2,7 @@ package tekcays_addon.common.metatileentities;
 
 import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
 import gregtech.api.util.GTUtility;
+import gregtech.common.metatileentities.multi.MetaTileEntityPrimitiveBlastFurnace;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.TekCaysAddon;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
@@ -9,6 +10,7 @@ import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.common.TKCYAConfigHolder;
+import tekcays_addon.common.metatileentities.multi.MetaTileEntityAlloyingCrucible;
 import tekcays_addon.common.metatileentities.multi.MetaTileEntityElectricMelter;
 import tekcays_addon.common.metatileentities.multi.MetaTileEntityPrimitiveMelter;
 
@@ -22,6 +24,7 @@ public class TKCYAMetaTileEntities {
 
     public static MetaTileEntityPrimitiveMelter PRIMITIVE_MELTER;
     public static MetaTileEntityElectricMelter ELECTRIC_MELTER;
+    public static MetaTileEntityAlloyingCrucible ALLOYING_CRUCIBLE;
 
 
 
@@ -40,6 +43,10 @@ public class TKCYAMetaTileEntities {
         if (TKCYAConfigHolder.meltingOverhaul.enableMeltingOverhaul) {
             PRIMITIVE_MELTER = registerMetaTileEntity(11010, new MetaTileEntityPrimitiveMelter(tkcyaId("primitive_melter")));
             ELECTRIC_MELTER = registerMetaTileEntity(11011, new MetaTileEntityElectricMelter(tkcyaId("electric_melter")));
+        }
+
+        if (TKCYAConfigHolder.meltingOverhaul.enableAlloyingOverhaul) {
+            ALLOYING_CRUCIBLE = registerMetaTileEntity(11012, new MetaTileEntityAlloyingCrucible(tkcyaId("alloying_crucible")));
         }
 
 
