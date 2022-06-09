@@ -1,4 +1,4 @@
-package tekcays_addon.api.unification;
+package tekcays_addon.api.unification.material.materials;
 
 import gregtech.api.GTValues;
 import gregtech.api.unification.material.Material;

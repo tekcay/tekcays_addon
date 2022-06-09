@@ -1,12 +1,12 @@
 package tekcays_addon.loaders.recipe;
 
+import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.loaders.recipe.handlers.*;
 
 public class TKCYARecipeLoader {
 
     public static void preload() {
     }
-
     public static void load() {
         TKCYAPartsRecipeHandler.register();
         TKCYAPolarizingRecipeHandler.register();
@@ -14,7 +14,9 @@ public class TKCYARecipeLoader {
     }
 
     public static void loadLatest() {
-        TKCYAMeltingRecipeHandler.init();
+        if (TKCYAConfigHolder.meltingOverhaul.enableMeltingOverhaul) {
+            TKCYAMeltingRecipeHandler.init();
+        }
     }
 
 }

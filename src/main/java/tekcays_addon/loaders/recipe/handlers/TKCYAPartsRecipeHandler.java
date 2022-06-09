@@ -1,5 +1,6 @@
 package tekcays_addon.loaders.recipe.handlers;
 
+import gregtech.api.GTValues;
 import gregtech.api.recipes.*;
 import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
@@ -32,7 +33,7 @@ public class TKCYAPartsRecipeHandler {
 
     public static void register() {
 
-        OrePrefix.foil.addProcessingHandler(PropertyKey.INGOT, tekcays_addon.loaders.recipe.handlers.TKCYAPartsRecipeHandler::processFoil);
+        OrePrefix.foil.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processFoil);
 
     }
 
@@ -49,6 +50,9 @@ public class TKCYAPartsRecipeHandler {
                     .buildAndRegister();
         }
     }
+
+
+
 }
 
 
