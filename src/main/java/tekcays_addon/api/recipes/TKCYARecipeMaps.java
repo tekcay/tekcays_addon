@@ -4,6 +4,7 @@ import crafttweaker.annotations.ZenRegister;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.widgets.ProgressWidget;
 import gregtech.api.recipes.RecipeMap;
+import gregtech.api.recipes.builders.PrimitiveRecipeBuilder;
 import gregtech.api.recipes.builders.SimpleRecipeBuilder;
 import gregtech.api.sound.GTSounds;
 import stanhebben.zenscript.annotations.ZenExpansion;
@@ -37,6 +38,12 @@ public class TKCYARecipeMaps {
     public static final RecipeMap<ElectricMelterRecipeBuilder> ELECTRIC_MELTER_RECIPES = new RecipeMap<>(
             "primitive_melter", 1, 4, 0, 1, 0, 1, 1, 2, new ElectricMelterRecipeBuilder(), false)
             .setSound(GTSounds.FURNACE);
+
+    @ZenProperty
+    public static final RecipeMap<PrimitiveRecipeBuilder> ALLOYING_CRUCIBLE_RECIPES = new RecipeMap<>(
+            "primitive_melter", 0, 8, 0, 0, 0, 8, 1, 1, new PrimitiveRecipeBuilder(), false)
+            .setSound(GTSounds.CHEMICAL_REACTOR);
+
 
 
     /*

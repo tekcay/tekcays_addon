@@ -195,7 +195,7 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController 
 
     @Override
     protected ICubeRenderer getFrontOverlay() {
-        return TKCYATextures.PRIMITIVE_MELTER_OVERLAY;
+        return TKCYATextures.ELECTRIC_MELTER_OVERLAY;
     }
 
     @Override

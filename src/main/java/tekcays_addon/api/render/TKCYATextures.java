@@ -1,5 +1,6 @@
 package tekcays_addon.api.render;
 
+import gregtech.client.renderer.ICubeRenderer;
 import tekcays_addon.TekCaysAddon;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
@@ -18,6 +19,7 @@ public class TKCYATextures {
     //MeltingOverhaul
     public static OrientedOverlayRenderer PRIMITIVE_MELTER_OVERLAY = new OrientedOverlayRenderer("machines/primitive_melter", FRONT);
     public static OrientedOverlayRenderer ELECTRIC_MELTER_OVERLAY = new OrientedOverlayRenderer("machines/electric_melter", FRONT);
+    public static OrientedOverlayRenderer ALLOYING_CRUCIBLE_OVERLAY = new OrientedOverlayRenderer("machines/alloying_crucible", FRONT);
 
     // Casings
     public static SimpleOverlayRenderer MACERATOR_CASING;
