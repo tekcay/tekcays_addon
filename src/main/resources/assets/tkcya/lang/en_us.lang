@@ -11,10 +11,14 @@ tkcya.machine.advanced_polarizer.hv.name=Polarizer HV
 tkcya.machine.advanced_polarizer.ev.name=Polarizer EV
 tkcya.machine.advanced_polarizer.iv.name=Polarizer IV
 
-tkcya.machine.melter.name=Melter
+tkcya.machine.primitive_melter.name=Primitive Melter
+tkcya.machine.electric_melter.name=Electric Melter
+tkcya.machine.alloying_crucible.name=Alloying_crucible
 
 # multiblock descriptions
-tkcya.multiblock.melter.description=A multiblock for melting ores and pure materials
+tkcya.multiblock.primitive_melter.description=A multiblock for melting ores and pure materials using combustible
+tkcya.multiblock.electric_melter.description=A multiblock for melting ores and pure materials using electricity
+tkcya.multiblock.alloying_crucible.description=A multiblock for alloying molten metals
 
 
 
@@ -27,7 +31,9 @@ tkcya.multiblock.melter.description=A multiblock for melting ores and pure mater
 # RecipeMaps
 recipemap.cluster_mill.name=Cluster Mill
 recipemap.advanced_polarizer.name=Polarizing
-recipemap.melter.name=Melting
+recipemap.primitive_melter.name=Melting
+recipemap.electric_melter.name=Melting
+recipemap.alloying_crucible.name=Alloyin
 
 # Materials
 material.unpure_bronze=Unpure Bronze
