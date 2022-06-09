@@ -19,7 +19,7 @@ public class TKCYARecipeLoader {
         }
 
         if (TKCYAConfigHolder.meltingOverhaul.enableAlloyingOverhaul) {
-            TKCYAAlloyingCruicbleRecipeHandler.init();
+            TKCYAAlloyingCrucibleRecipeHandler.init();
         }
     }
 
