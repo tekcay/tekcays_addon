@@ -1,50 +1,31 @@
 package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.GTValues;
-import gregtech.api.recipes.*;
-import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import gregtech.api.unification.OreDictUnifier;
-import gregtech.api.unification.material.MarkerMaterial;
-import gregtech.api.unification.material.MarkerMaterials;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
-import gregtech.api.unification.material.properties.DustProperty;
-import gregtech.api.unification.material.properties.GemProperty;
-import gregtech.api.unification.material.properties.IngotProperty;
-import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.api.unification.ore.OrePrefix;
-import gregtech.api.unification.stack.UnificationEntry;
-import gregtech.api.util.GTUtility;
-import gregtech.common.ConfigHolder;
-import gregtech.common.items.MetaItems;
-import tekcays_addon.common.TKCYAConfigHolder;
 
-import static gregtech.api.GTValues.*;
-import static gregtech.api.recipes.RecipeMaps.BENDER_RECIPES;
-import static gregtech.api.recipes.RecipeMaps.LATHE_RECIPES;
-import static gregtech.api.unification.material.info.MaterialFlags.*;
+import java.util.List;
+import java.util.Map;
+
+import static gregtech.api.GTValues.LV;
+import static gregtech.api.GTValues.VA;
 import static gregtech.api.unification.ore.OrePrefix.*;
+import static tekcays_addon.api.utils.MiscMethods.*;
 
 public class TKCYAPartsRecipeHandler {
 
-    private TKCYAPartsRecipeHandler() {
-    }
 
-    public static void register() {
+    public static void processFoil() {
 
-        OrePrefix.foil.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processFoil);
+        List<Material> foilMaterials = getFoilMaterialsList();
 
-    }
-
-    public static void processFoil(OrePrefix foilPrefix, Material material, IngotProperty property) {
-
-        if (TKCYAConfigHolder.foilOverhaul.enableFoilOverhaul) {
-            GTRecipeHandler.removeRecipesByInputs(BENDER_RECIPES, OreDictUnifier.get(plate, material), IntCircuitIngredient.getIntegratedCircuit(1));
+        for (Material material : foilMaterials) {
 
             TKCYARecipeMaps.CLUSTER_MILL_RECIPES.recipeBuilder()
                     .input(plate, material)
-                    .output(foilPrefix, material, 4)
+                    .output(foil, material, 4)
                     .duration((int) material.getMass())
                     .EUt(24)
                     .buildAndRegister();
@@ -52,7 +33,35 @@ public class TKCYAPartsRecipeHandler {
     }
 
 
+    public static void processPolarizing() {
+
+        OrePrefix[] polarizingPrefixes = new OrePrefix[]{
+                OrePrefix.stick, OrePrefix.stickLong, OrePrefix.plate, OrePrefix.ingot, OrePrefix.plateDense, OrePrefix.rotor,
+                OrePrefix.bolt, OrePrefix.screw, OrePrefix.wireFine, OrePrefix.foil, OrePrefix.dust, OrePrefix.ring};
+
+        Map<Material, Material> magneticMaterialsMap = getMagneticMaterialsMap();
+
+        for (OrePrefix polarizingPrefix : polarizingPrefixes) {
+            magneticMaterialsMap.forEach((m, magneticMaterial) -> {
+
+                TKCYARecipeMaps.ADVANCED_POLARIZER_RECIPES.recipeBuilder() //polarizing
+                        .input(polarizingPrefix, m)
+                        .input(OrePrefix.dust, Materials.Magnetite)
+                        .output(polarizingPrefix, magneticMaterial)
+                        .duration((int) ((int) m.getMass() * polarizingPrefix.getMaterialAmount(m) / GTValues.M))
+                        .EUt(8 * getVoltageMultiplier(m))
+                        .buildAndRegister();
+            });
+        }
+    }
+
+    private static int getVoltageMultiplier(Material material) {
+        return material.getBlastTemperature() >= 1200 ? VA[LV] : 2;
+    }
 
 }
+
+
+
 
 

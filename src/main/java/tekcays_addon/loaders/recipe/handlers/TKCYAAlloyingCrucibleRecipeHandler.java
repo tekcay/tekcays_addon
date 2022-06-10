@@ -3,7 +3,6 @@ package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.GregTechAPI;
 import gregtech.api.unification.material.Material;
-import gregtech.api.unification.material.info.MaterialFlag;
 import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.api.unification.stack.MaterialStack;
 import net.minecraftforge.fluids.FluidStack;
@@ -11,7 +10,6 @@ import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
 import static gregtech.api.GTValues.L;
 import static gregtech.api.unification.material.Materials.Carbon;
-import static gregtech.api.unification.material.Materials.EXT2_METAL;
 import static gregtech.api.unification.material.info.MaterialFlags.DISABLE_DECOMPOSITION;
 import static gregtech.api.unification.ore.OrePrefix.dust;
 
@@ -23,11 +21,12 @@ public class TKCYAAlloyingCrucibleRecipeHandler {
     public static void init() {
 
         for (Material material : GregTechAPI.MATERIAL_REGISTRY) {
-            if (material.getMaterialComponents().size() < 2) continue;
+            if (material.getMaterialComponents().size() == 1) continue; //To remove element materials
+            if (material.hasFlags(DISABLE_DECOMPOSITION)) continue; //To remove polymers & chemicals
             if (!material.hasProperty(PropertyKey.FLUID)) continue;
-            if (material.hasFlags(DISABLE_DECOMPOSITION)) continue; // To remove polymers & chemicals
             if (material.getFluid().getTemperature() <= 300) continue;
             register(material);
+
         }
     }
 

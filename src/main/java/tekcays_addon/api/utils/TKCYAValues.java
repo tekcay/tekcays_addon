@@ -1,4 +1,4 @@
-package tekcays_addon.api;
+package tekcays_addon.api.utils;
 
 public class TKCYAValues {
 
