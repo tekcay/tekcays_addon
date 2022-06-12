@@ -7,19 +7,19 @@ import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 
 import java.util.List;
-import java.util.Map;
 
 import static gregtech.api.GTValues.LV;
 import static gregtech.api.GTValues.VA;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static tekcays_addon.api.utils.MiscMethods.*;
+import static tekcays_addon.api.utils.RegistriesList.*;
 
 public class TKCYAPartsRecipeHandler {
 
 
     public static void processFoil() {
 
-        List<Material> foilMaterials = getFoilMaterialsList();
+        List<Material> foilMaterials = FOIL_MATERIALS.list;
 
         for (Material material : foilMaterials) {
 
@@ -35,25 +35,24 @@ public class TKCYAPartsRecipeHandler {
 
     public static void processPolarizing() {
 
-        OrePrefix[] polarizingPrefixes = new OrePrefix[]{
-                OrePrefix.stick, OrePrefix.stickLong, OrePrefix.plate, OrePrefix.ingot, OrePrefix.plateDense, OrePrefix.rotor,
-                OrePrefix.bolt, OrePrefix.screw, OrePrefix.wireFine, OrePrefix.foil, OrePrefix.dust, OrePrefix.ring};
+        //Map<Material, Material> map = magneticMaterialsMap;
 
-        Map<Material, Material> magneticMaterialsMap = getMagneticMaterialsMap();
+        //map.forEach((m, magneticMaterial) -> {
+            MAGNETIC_MATERIALS.map.forEach((m, magneticMaterial) -> {
 
-        for (OrePrefix polarizingPrefix : polarizingPrefixes) {
-            magneticMaterialsMap.forEach((m, magneticMaterial) -> {
+            for (OrePrefix polarizingPrefix : getMaterialOrePrefixesList(magneticMaterial)) {
 
                 TKCYARecipeMaps.ADVANCED_POLARIZER_RECIPES.recipeBuilder() //polarizing
-                        .input(polarizingPrefix, m)
-                        .input(OrePrefix.dust, Materials.Magnetite)
-                        .output(polarizingPrefix, magneticMaterial)
-                        .duration((int) ((int) m.getMass() * polarizingPrefix.getMaterialAmount(m) / GTValues.M))
-                        .EUt(8 * getVoltageMultiplier(m))
-                        .buildAndRegister();
+                            .input(polarizingPrefix, m)
+                            .input(OrePrefix.dust, Materials.Magnetite)
+                            .output(polarizingPrefix, magneticMaterial)
+                            .duration((int) ((int) m.getMass() * polarizingPrefix.getMaterialAmount(m) / GTValues.M))
+                            .EUt(8 * getVoltageMultiplier(m))
+                            .buildAndRegister();
+                }
             });
         }
-    }
+
 
     private static int getVoltageMultiplier(Material material) {
         return material.getBlastTemperature() >= 1200 ? VA[LV] : 2;

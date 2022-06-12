@@ -13,12 +13,13 @@ import static gregtech.api.recipes.RecipeMaps.BENDER_RECIPES;
 import static gregtech.api.recipes.RecipeMaps.POLARIZER_RECIPES;
 import static gregtech.api.unification.ore.OrePrefix.plate;
 import static tekcays_addon.api.utils.MiscMethods.*;
+import static tekcays_addon.api.utils.RegistriesList.*;
 
 public class RecipeRemovals {
 
     public static void foilRecipeRemovals(){
 
-        List<Material> foilMaterials = getFoilMaterialsList();
+        List<Material> foilMaterials = FOIL_MATERIALS.list;
 
         for (Material material : foilMaterials) {
             GTRecipeHandler.removeRecipesByInputs(BENDER_RECIPES, OreDictUnifier.get(plate, material), IntCircuitIngredient.getIntegratedCircuit(1));
@@ -27,18 +28,17 @@ public class RecipeRemovals {
 
     public static void polarizerRecipeRemovals() {
 
-        OrePrefix[] polarizingPrefix = new OrePrefix[]{
-                OrePrefix.stick, OrePrefix.stickLong, OrePrefix.plate, OrePrefix.ingot, OrePrefix.plateDense, OrePrefix.rotor,
-                OrePrefix.bolt, OrePrefix.screw, OrePrefix.wireFine, OrePrefix.foil, OrePrefix.dust, OrePrefix.ring};
 
-        Map<Material, Material> magneticMaterialsMap = getMagneticMaterialsMap();
+        MAGNETIC_MATERIALS.map.forEach((m, magneticMaterial) -> {
 
-        for (OrePrefix prefix : polarizingPrefix) {
-            magneticMaterialsMap.keySet().forEach(m -> {
+            for (OrePrefix prefix : getMaterialOrePrefixesList(magneticMaterial)) {
+
+                if (!prefix.doGenerateItem(magneticMaterial)) continue;
 
                 GTRecipeHandler.removeRecipesByInputs(POLARIZER_RECIPES, OreDictUnifier.get(prefix, m));
-            });
-        }
+
+            }
+        });
     }
 
 }
