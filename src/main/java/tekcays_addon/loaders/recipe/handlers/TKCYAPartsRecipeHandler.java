@@ -139,7 +139,7 @@ public class TKCYAPartsRecipeHandler {
             for (OrePrefix prefix : MOLD_PRODUCTION.values()) {
 
                 //Molds
-                FORMING_PRESS_RECIPES.recipeBuilder()
+                FORMING_PRESS_RECIPES.recipeBuilder() //TODO To fix
                         .duration(120)
                         .EUt(22)
                         .notConsumable(prefix, m)
