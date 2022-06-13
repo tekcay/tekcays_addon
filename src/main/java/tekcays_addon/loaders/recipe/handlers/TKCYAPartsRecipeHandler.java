@@ -1,57 +1,95 @@
 package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.GTValues;
+import gregtech.api.recipes.GTRecipeHandler;
+import gregtech.api.recipes.ingredients.IntCircuitIngredient;
+import gregtech.api.unification.OreDictUnifier;
+import gregtech.api.unification.material.properties.IngotProperty;
+import gregtech.api.unification.material.properties.PropertyKey;
+import net.minecraft.item.ItemStack;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 
-import java.util.List;
-
 import static gregtech.api.GTValues.LV;
 import static gregtech.api.GTValues.VA;
+import static gregtech.api.recipes.RecipeMaps.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
-import static tekcays_addon.api.utils.MiscMethods.*;
-import static tekcays_addon.api.utils.RegistriesList.*;
 
 public class TKCYAPartsRecipeHandler {
 
+    public static void initFoil() {
 
-    public static void processFoil() {
+        foil.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processFoil);
 
-        List<Material> foilMaterials = FOIL_MATERIALS.list;
+    }
 
-        for (Material material : foilMaterials) {
+    private static final OrePrefix[] POLARIZING_PREFIXES = new OrePrefix[]{
+        OrePrefix.stick, OrePrefix.stickLong, OrePrefix.plate, OrePrefix.ingot, OrePrefix.plateDense, OrePrefix.rotor,
+        OrePrefix.bolt, OrePrefix.screw, OrePrefix.wireFine, OrePrefix.foil, OrePrefix.dust, OrePrefix.ring};
 
-            TKCYARecipeMaps.CLUSTER_MILL_RECIPES.recipeBuilder()
-                    .input(plate, material)
-                    .output(foil, material, 4)
-                    .duration((int) material.getMass())
-                    .EUt(24)
-                    .buildAndRegister();
+    public static void initPolarizing(){
+
+        for (OrePrefix orePrefix : POLARIZING_PREFIXES) {
+            orePrefix.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processPolarizing);
+        }
+    }
+
+    public static void removeAlloySmelter() {
+
+        for (OrePrefix orePrefix : OrePrefix.values()) {
+            orePrefix.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processAlloySmelter);
+        }
+    }
+
+    public static void removeExtractor() {
+
+        for (OrePrefix orePrefix : OrePrefix.values()) {
+            orePrefix.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processExtractor);
         }
     }
 
 
-    public static void processPolarizing() {
+    public static void processFoil(OrePrefix foilPrefix, Material material, IngotProperty property) {
 
-        //Map<Material, Material> map = magneticMaterialsMap;
+        GTRecipeHandler.removeRecipesByInputs(BENDER_RECIPES, OreDictUnifier.get(plate, material), IntCircuitIngredient.getIntegratedCircuit(1));
 
-        //map.forEach((m, magneticMaterial) -> {
-            MAGNETIC_MATERIALS.map.forEach((m, magneticMaterial) -> {
+        TKCYARecipeMaps.CLUSTER_MILL_RECIPES.recipeBuilder()
+            .input(plate, material)
+            .output(foilPrefix, material, 4)
+            .duration((int) material.getMass())
+            .EUt(24)
+            .buildAndRegister();
+    }
 
-            for (OrePrefix polarizingPrefix : getMaterialOrePrefixesList(magneticMaterial)) {
+
+    public static void processPolarizing(OrePrefix polarizingPrefix, Material material, IngotProperty property) {
+
+        Material magneticMaterial = property.getMagneticMaterial();
+
+        GTRecipeHandler.removeAllRecipes(POLARIZER_RECIPES);
+
+        if (magneticMaterial != null && polarizingPrefix.doGenerateItem(magneticMaterial)) {
+                ItemStack magneticStack = OreDictUnifier.get(polarizingPrefix, magneticMaterial);
 
                 TKCYARecipeMaps.ADVANCED_POLARIZER_RECIPES.recipeBuilder() //polarizing
-                            .input(polarizingPrefix, m)
-                            .input(OrePrefix.dust, Materials.Magnetite)
-                            .output(polarizingPrefix, magneticMaterial)
-                            .duration((int) ((int) m.getMass() * polarizingPrefix.getMaterialAmount(m) / GTValues.M))
-                            .EUt(8 * getVoltageMultiplier(m))
-                            .buildAndRegister();
-                }
-            });
+                        .input(polarizingPrefix, material)
+                        .input(OrePrefix.dust, Materials.Magnetite)
+                        .outputs(magneticStack)
+                        .duration((int) ((int) material.getMass() * polarizingPrefix.getMaterialAmount(material) / GTValues.M))
+                        .EUt(8 * getVoltageMultiplier(material))
+                        .buildAndRegister();
         }
+    }
+
+    public static void processAlloySmelter(OrePrefix prefix, Material material, IngotProperty property) {
+        GTRecipeHandler.removeAllRecipes(ALLOY_SMELTER_RECIPES);
+    }
+
+    public static void processExtractor(OrePrefix prefix, Material material, IngotProperty property) {
+        GTRecipeHandler.removeAllRecipes(EXTRACTOR_RECIPES);
+    }
 
 
     private static int getVoltageMultiplier(Material material) {
