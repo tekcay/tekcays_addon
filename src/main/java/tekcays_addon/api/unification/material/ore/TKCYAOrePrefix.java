@@ -12,10 +12,10 @@ public class TKCYAOrePrefix {
     // Molds
     public static final OrePrefix moldIngot = new OrePrefix("moldIngot", M * 4, null, TKCYAMaterialIconType.moldIngot, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
     public static final OrePrefix moldPlate = new OrePrefix("moldPlate", M * 4, null, TKCYAMaterialIconType.moldPlate, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
-    public static final OrePrefix moldRod = new OrePrefix("moldRod", M * 4, null, TKCYAMaterialIconType.moldRod, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
-    public static final OrePrefix moldLongRod = new OrePrefix("moldLongRod", M * 4, null, TKCYAMaterialIconType.moldLongRod, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
+    public static final OrePrefix moldStick = new OrePrefix("moldStick", M * 4, null, TKCYAMaterialIconType.moldStick, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
+    public static final OrePrefix moldStickLong = new OrePrefix("moldStickLong", M * 4, null, TKCYAMaterialIconType.moldStickLong, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
     public static final OrePrefix moldGear = new OrePrefix("moldGear", M * 4, null, TKCYAMaterialIconType.moldGear, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
-    public static final OrePrefix moldSmallGear = new OrePrefix("moldSmallGear", M * 4, null, TKCYAMaterialIconType.moldSmallGear, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
+    public static final OrePrefix moldGearSmall = new OrePrefix("moldGearSmall", M * 4, null, TKCYAMaterialIconType.moldGearSmall, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
     public static final OrePrefix moldBolt = new OrePrefix("moldBolt", M * 4, null, TKCYAMaterialIconType.moldBolt, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
     public static final OrePrefix moldBall = new OrePrefix("moldBall", M * 4, null, TKCYAMaterialIconType.moldBall, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
     public static final OrePrefix moldCylinder = new OrePrefix("moldCylinder", M * 4, null, TKCYAMaterialIconType.moldCylinder, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));

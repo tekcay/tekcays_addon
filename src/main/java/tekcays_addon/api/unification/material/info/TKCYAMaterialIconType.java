@@ -7,10 +7,10 @@ public class TKCYAMaterialIconType {
     // Molds
     public static final MaterialIconType moldIngot = new MaterialIconType("moldIngot");
     public static final MaterialIconType moldPlate = new MaterialIconType("moldPlate");
-    public static final MaterialIconType moldRod = new MaterialIconType("moldRod");
-    public static final MaterialIconType moldLongRod = new MaterialIconType("moldLongRod");
+    public static final MaterialIconType moldStick = new MaterialIconType("moldStick");
+    public static final MaterialIconType moldStickLong = new MaterialIconType("moldStickLong");
     public static final MaterialIconType moldGear = new MaterialIconType("moldGear");
-    public static final MaterialIconType moldSmallGear = new MaterialIconType("moldSmallGear");
+    public static final MaterialIconType moldGearSmall = new MaterialIconType("moldGearSmall");
     public static final MaterialIconType moldBolt = new MaterialIconType("moldBolt");
     public static final MaterialIconType moldBall = new MaterialIconType("moldBall");
     public static final MaterialIconType moldCylinder = new MaterialIconType("moldCylinder");

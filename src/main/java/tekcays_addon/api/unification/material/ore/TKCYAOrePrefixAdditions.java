@@ -8,10 +8,10 @@ public class TKCYAOrePrefixAdditions {
 
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldIngot);
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldPlate);
-        MetaItems.addOrePrefix(TKCYAOrePrefix.moldRod);
-        MetaItems.addOrePrefix(TKCYAOrePrefix.moldLongRod);
+        MetaItems.addOrePrefix(TKCYAOrePrefix.moldStick);
+        MetaItems.addOrePrefix(TKCYAOrePrefix.moldStickLong);
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldGear);
-        MetaItems.addOrePrefix(TKCYAOrePrefix.moldSmallGear);
+        MetaItems.addOrePrefix(TKCYAOrePrefix.moldGearSmall);
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldBolt);
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldBall);
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldCylinder);
