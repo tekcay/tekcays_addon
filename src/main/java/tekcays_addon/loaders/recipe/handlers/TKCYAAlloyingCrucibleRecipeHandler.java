@@ -2,7 +2,6 @@ package tekcays_addon.loaders.recipe.handlers;
 
 
 import gregtech.api.GregTechAPI;
-import gregtech.api.recipes.GTRecipeHandler;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.api.unification.stack.MaterialStack;
@@ -10,7 +9,6 @@ import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
 import static gregtech.api.GTValues.L;
-import static gregtech.api.recipes.RecipeMaps.ALLOY_SMELTER_RECIPES;
 import static gregtech.api.unification.material.Materials.Carbon;
 import static gregtech.api.unification.material.info.MaterialFlags.DISABLE_DECOMPOSITION;
 import static gregtech.api.unification.ore.OrePrefix.dust;
