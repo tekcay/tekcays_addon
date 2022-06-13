@@ -13,6 +13,7 @@ import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.metatileentities.multi.MetaTileEntityAlloyingCrucible;
 import tekcays_addon.common.metatileentities.multi.MetaTileEntityElectricMelter;
 import tekcays_addon.common.metatileentities.multi.MetaTileEntityPrimitiveMelter;
+import tekcays_addon.common.metatileentities.single.SimplePrimitiveMachine;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
 
@@ -25,7 +26,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityPrimitiveMelter PRIMITIVE_MELTER;
     public static MetaTileEntityElectricMelter ELECTRIC_MELTER;
     public static MetaTileEntityAlloyingCrucible ALLOYING_CRUCIBLE;
-    public static SimpleMachineMetaTileEntity[] CASTING_TABLE = new SimpleMachineMetaTileEntity[1];
+    public static SimplePrimitiveMachine CASTING_TABLE;
 
 
 
@@ -51,8 +52,7 @@ public class TKCYAMetaTileEntities {
         }
 
         if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
-            registerSimpleMetaTileEntity(CASTING_TABLE, 11013, "casting_table", TKCYARecipeMaps.CASTING_TABLE_RECIPES,
-            TKCYATextures.CASTING_TABLE_OVERLAY, true, TKCYAMetaTileEntities::tkcyaId, GTUtility.hvCappedTankSizeFunction);
+            CASTING_TABLE = registerMetaTileEntity(11013, new SimplePrimitiveMachine(tkcyaId("casting_table")));
         }
 
 

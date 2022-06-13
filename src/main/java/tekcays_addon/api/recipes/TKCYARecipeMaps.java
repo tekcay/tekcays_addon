@@ -46,6 +46,6 @@ public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<PrimitiveRecipeBuilder> CASTING_TABLE_RECIPES = new RecipeMap<>(
-            "casting_table", 2, 2, 0, 1, 1, 2, 0, 0, new PrimitiveRecipeBuilder(), false)
+            "casting_table", 1, 1, 0, 1, 1, 2, 0, 0, new PrimitiveRecipeBuilder(), false)
             .setSound(GTSounds.CHEMICAL_REACTOR);
 }

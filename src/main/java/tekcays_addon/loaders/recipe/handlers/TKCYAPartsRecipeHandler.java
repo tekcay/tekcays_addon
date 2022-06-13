@@ -4,6 +4,7 @@ import gregtech.api.GTValues;
 import gregtech.api.recipes.GTRecipeHandler;
 import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import gregtech.api.unification.OreDictUnifier;
+import gregtech.api.unification.material.info.MaterialFlag;
 import gregtech.api.unification.material.properties.IngotProperty;
 import gregtech.api.unification.material.properties.PropertyKey;
 import net.minecraft.item.ItemStack;
@@ -12,10 +13,13 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 
+
 import static gregtech.api.GTValues.LV;
 import static gregtech.api.GTValues.VA;
 import static gregtech.api.recipes.RecipeMaps.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
+import static tekcays_addon.api.unification.TKCYAMaterialFlagAddition.MOLD_MATERIALS;
+import static tekcays_addon.loaders.recipe.handlers.TKCYACastingTableRecipeHandler.MOLD_PRODUCTION;
 
 public class TKCYAPartsRecipeHandler {
 
@@ -91,10 +95,39 @@ public class TKCYAPartsRecipeHandler {
         GTRecipeHandler.removeAllRecipes(EXTRACTOR_RECIPES);
     }
 
+    public static void processCasting(OrePrefix prefix, Material material, IngotProperty ingotProperty) {
+        GTRecipeHandler.removeAllRecipes(FLUID_SOLIDFICATION_RECIPES);
+
+        for (Material m : MOLD_MATERIALS) {
+            if (!material.hasProperty(PropertyKey.FLUID)) continue;
+            if (m.getFluid().getTemperature() > material.getFluid().getTemperature()) { //Compares temperatures of the mold material w/ and the fluid material
+
+                TKCYARecipeMaps.CASTING_TABLE_RECIPES.recipeBuilder()
+                        .fluidInputs(material.getFluid((int) (prefix.getMaterialAmount(material) * GTValues.L / GTValues.M)))
+                        .notConsumable(MOLD_PRODUCTION.get(prefix), m)
+                        .output(prefix, material)
+                        .duration((int) (prefix.getMaterialAmount(material) * material.getFluid().getTemperature() / GTValues.M))
+                        .buildAndRegister();
+
+            } else { //Otherwise, it burns
+
+                TKCYARecipeMaps.CASTING_TABLE_RECIPES.recipeBuilder()
+                        .fluidInputs(material.getFluid((int) (prefix.getMaterialAmount(material) * GTValues.L / GTValues.M)))
+                        .input(MOLD_PRODUCTION.get(prefix), m)
+                        .output(dust, Materials.Ash)
+                        .duration(20)
+                        .hidden()
+                        .buildAndRegister();
+            }
+        }
+    }
+
+
 
     private static int getVoltageMultiplier(Material material) {
         return material.getBlastTemperature() >= 1200 ? VA[LV] : 2;
     }
+
 
 }
 

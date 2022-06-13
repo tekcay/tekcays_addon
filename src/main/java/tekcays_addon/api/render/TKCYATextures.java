@@ -1,7 +1,5 @@
 package tekcays_addon.api.render;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
-import gregtech.client.renderer.ICubeRenderer;
 import tekcays_addon.TekCaysAddon;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
@@ -20,7 +18,7 @@ public class TKCYATextures {
 
 
 
-    public static final OrientedOverlayRenderer CASTING_TABLE_OVERLAY = new OrientedOverlayRenderer("machines/casting_table", FRONT);
+    public static OrientedOverlayRenderer CASTING_TABLE_OVERLAY = new OrientedOverlayRenderer("machines/casting_table", FRONT);
 
     //MeltingOverhaul
     public static OrientedOverlayRenderer PRIMITIVE_MELTER_OVERLAY = new OrientedOverlayRenderer("multiblocks/primitive", FRONT);

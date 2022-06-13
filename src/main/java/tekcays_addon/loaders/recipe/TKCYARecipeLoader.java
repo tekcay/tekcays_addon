@@ -26,6 +26,8 @@ public class TKCYARecipeLoader {
         if (TKCYAConfigHolder.magneticOverhaul.enableMagneticOverhaul) {
             TKCYAPartsRecipeHandler.initPolarizing();
         }
+
+
     }
 
 
@@ -38,6 +40,11 @@ public class TKCYARecipeLoader {
         if (TKCYAConfigHolder.meltingOverhaul.enableAlloyingOverhaul) {
             TKCYAAlloyingCrucibleRecipeHandler.init();
         }
+
+        if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
+            TKCYACastingTableRecipeHandler.init();
+        }
+
     }
 
 }
