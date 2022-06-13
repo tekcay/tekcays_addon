@@ -2,7 +2,6 @@ package tekcays_addon.common.metatileentities;
 
 import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
 import gregtech.api.util.GTUtility;
-import gregtech.common.metatileentities.multi.MetaTileEntityPrimitiveBlastFurnace;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.TekCaysAddon;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
@@ -13,7 +12,8 @@ import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.metatileentities.multi.MetaTileEntityAlloyingCrucible;
 import tekcays_addon.common.metatileentities.multi.MetaTileEntityElectricMelter;
 import tekcays_addon.common.metatileentities.multi.MetaTileEntityPrimitiveMelter;
-import tekcays_addon.common.metatileentities.single.SimplePrimitiveMachine;
+import tekcays_addon.common.metatileentities.single.MetaTileEntityCastingTable;
+import tekcays_addon.common.metatileentities.steam.SteamCooler;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
 
@@ -26,7 +26,9 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityPrimitiveMelter PRIMITIVE_MELTER;
     public static MetaTileEntityElectricMelter ELECTRIC_MELTER;
     public static MetaTileEntityAlloyingCrucible ALLOYING_CRUCIBLE;
-    public static SimplePrimitiveMachine CASTING_TABLE;
+    public static MetaTileEntityCastingTable CASTING_TABLE;
+    public static SteamCooler STEAM_COOLER_BRONZE;
+    public static SteamCooler STEAM_COOLER_STEEL;
 
 
 
@@ -52,7 +54,11 @@ public class TKCYAMetaTileEntities {
         }
 
         if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
-            CASTING_TABLE = registerMetaTileEntity(11013, new SimplePrimitiveMachine(tkcyaId("casting_table")));
+            CASTING_TABLE = registerMetaTileEntity(11013, new MetaTileEntityCastingTable(tkcyaId("casting_table")));
+
+            STEAM_COOLER_BRONZE = registerMetaTileEntity(5, new SteamCooler(tkcyaId("steam_cooler_bronze"), false));
+            STEAM_COOLER_BRONZE = registerMetaTileEntity(6, new SteamCooler(tkcyaId("steam_cooler_steel"), true));
+
         }
 
 

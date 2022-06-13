@@ -109,7 +109,7 @@ public class TKCYAPartsRecipeHandler {
                         .duration((int) (prefix.getMaterialAmount(material) * material.getFluid().getTemperature() / GTValues.M))
                         .buildAndRegister();
 
-            } else { //Otherwise, it burns
+            } else { //Otherwise, it burns the mold
 
                 TKCYARecipeMaps.CASTING_TABLE_RECIPES.recipeBuilder()
                         .fluidInputs(material.getFluid((int) (prefix.getMaterialAmount(material) * GTValues.L / GTValues.M)))

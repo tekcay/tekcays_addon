@@ -22,15 +22,15 @@ import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
 import javax.annotation.Nonnull;
 
-public class SimplePrimitiveMachine extends RecipeMapPrimitiveMultiblockController {
+public class MetaTileEntityCastingTable extends RecipeMapPrimitiveMultiblockController {
 
-    public SimplePrimitiveMachine(ResourceLocation metaTileEntityId) {
+    public MetaTileEntityCastingTable(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.CASTING_TABLE_RECIPES);
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new SimplePrimitiveMachine(metaTileEntityId);
+        return new MetaTileEntityCastingTable(metaTileEntityId);
     }
 
     @Override
