@@ -6,6 +6,7 @@ public class TKCYAOrePrefixAdditions {
 
     public static void moldsInit(){
 
+        MetaItems.addOrePrefix(TKCYAOrePrefix.moldEmpty);
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldIngot);
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldPlate);
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldStick);

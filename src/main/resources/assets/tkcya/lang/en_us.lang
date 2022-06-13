@@ -11,12 +11,14 @@ tkcya.machine.advanced_polarizer.hv.name=Polarizer HV
 tkcya.machine.advanced_polarizer.ev.name=Polarizer EV
 tkcya.machine.advanced_polarizer.iv.name=Polarizer IV
 
-tkcya.machine.casting_table.lv.name=Casting Table
+tkcya.machine.steam_cooler_bronze.name=Steam Cooler
+tkcya.machine.steam_cooler_steel.name=High Pressure Steam Cooler
 
 tkcya.machine.primitive_melter.name=Primitive Melter
 tkcya.machine.electric_melter.name=Electric Melter
 tkcya.machine.alloying_crucible.name=Alloying Crucible
-tkcya.machine.alloying_crucible.name=Casting Table
+tkcya.machine.casting_table.name=Casting Table
+
 
 # multiblock descriptions
 tkcya.multiblock.primitive_melter.description=A multiblock for melting ores and pure materials using combustible
@@ -59,6 +61,7 @@ tkcya.fluid.molten=Molten %s
 
 
 # Ore Prefixes
+item.material.oreprefix.moldEmpty=%s Mold Empty
 item.material.oreprefix.moldIngot=%s Mold Ingot
 item.material.oreprefix.moldPlate=%s Mold Plate
 item.material.oreprefix.moldRod=%s Mold Rod

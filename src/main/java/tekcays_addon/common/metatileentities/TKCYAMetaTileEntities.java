@@ -56,8 +56,8 @@ public class TKCYAMetaTileEntities {
         if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
             CASTING_TABLE = registerMetaTileEntity(11013, new MetaTileEntityCastingTable(tkcyaId("casting_table")));
 
-            STEAM_COOLER_BRONZE = registerMetaTileEntity(5, new SteamCooler(tkcyaId("steam_cooler_bronze"), false));
-            STEAM_COOLER_BRONZE = registerMetaTileEntity(6, new SteamCooler(tkcyaId("steam_cooler_steel"), true));
+            STEAM_COOLER_BRONZE = registerMetaTileEntity(11014, new SteamCooler(tkcyaId("steam_cooler_bronze"), false));
+            STEAM_COOLER_STEEL = registerMetaTileEntity(11015, new SteamCooler(tkcyaId("steam_cooler_steel"), true));
 
         }
 

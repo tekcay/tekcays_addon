@@ -3,6 +3,8 @@ package tekcays_addon.common.metatileentities.single;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
+import gregtech.api.capability.impl.FilteredFluidHandler;
+import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.*;
@@ -12,17 +14,22 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.RecipeMapPrimitiveMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.recipes.ModHandler;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 
 import net.minecraft.entity.player.EntityPlayer;
 
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidTank;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.api.utils.MiscMethods;
 
 import javax.annotation.Nonnull;
 
 public class MetaTileEntityCastingTable extends RecipeMapPrimitiveMultiblockController {
+
+    protected FluidTank airInputFluidTank, moltenInputFluidTank;
 
     public MetaTileEntityCastingTable(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.CASTING_TABLE_RECIPES);
@@ -60,13 +67,22 @@ public class MetaTileEntityCastingTable extends RecipeMapPrimitiveMultiblockCont
 
 
     @Override
+    protected FluidTankList createImportFluidHandler() { //TODO Not working properly
+        //this.airInputFluidTank = new FilteredFluidHandler(2000);//.setFillPredicate(MiscMethods::isAir);
+        this.moltenInputFluidTank = new FilteredFluidHandler(2000);//.setFillPredicate(MiscMethods::isNotAir);
+        return new FluidTankList(false, moltenInputFluidTank);
+    }
+
+    @Override
     protected ModularUI.Builder createUITemplate(EntityPlayer entityPlayer) {
         return ModularUI.builder(GuiTextures.BACKGROUND, 176, 166)
                 .shouldColor(false)
                 .widget(new LabelWidget(5, 5, getMetaFullName()))
                 .widget(new SlotWidget(importItems, 0, 52, 38, true, true)
                         .setBackgroundTexture(GuiTextures.SLOT))
-                .widget(new TankWidget(importFluids.getTankAt(0), 20, 38, 20, 18)
+                .widget(new TankWidget(moltenInputFluidTank, 20, 50, 20, 18)
+                        .setBackgroundTexture(GuiTextures.FLUID_TANK_BACKGROUND))
+                .widget(new TankWidget(moltenInputFluidTank, 20, 25, 20, 18)
                         .setBackgroundTexture(GuiTextures.FLUID_TANK_BACKGROUND))
                 .widget(new RecipeProgressWidget(recipeMapWorkable::getProgressPercent, 77, 39, 20, 15,
                         GuiTextures.PROGRESS_BAR_BATH, ProgressWidget.MoveType.HORIZONTAL, TKCYARecipeMaps.CASTING_TABLE_RECIPES))

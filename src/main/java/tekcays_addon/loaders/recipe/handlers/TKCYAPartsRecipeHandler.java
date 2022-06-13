@@ -4,9 +4,9 @@ import gregtech.api.GTValues;
 import gregtech.api.recipes.GTRecipeHandler;
 import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import gregtech.api.unification.OreDictUnifier;
-import gregtech.api.unification.material.info.MaterialFlag;
 import gregtech.api.unification.material.properties.IngotProperty;
 import gregtech.api.unification.material.properties.PropertyKey;
+import gregtech.common.items.MetaItems;
 import net.minecraft.item.ItemStack;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import gregtech.api.unification.material.Material;
@@ -19,6 +19,7 @@ import static gregtech.api.GTValues.VA;
 import static gregtech.api.recipes.RecipeMaps.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static tekcays_addon.api.unification.TKCYAMaterialFlagAddition.MOLD_MATERIALS;
+import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
 import static tekcays_addon.loaders.recipe.handlers.TKCYACastingTableRecipeHandler.MOLD_PRODUCTION;
 
 public class TKCYAPartsRecipeHandler {
@@ -117,6 +118,33 @@ public class TKCYAPartsRecipeHandler {
                         .output(dust, Materials.Ash)
                         .duration(20)
                         .hidden()
+                        .buildAndRegister();
+            }
+        }
+    }
+
+    public static void processMolds(){
+
+        for (Material m : MOLD_MATERIALS) {
+
+            //Empty molds
+            BENDER_RECIPES.recipeBuilder()
+                    .duration(180)
+                    .EUt(12)
+                    .circuitMeta(4)
+                    .input(plate, m, 4)
+                    .output(moldEmpty, m)
+                    .buildAndRegister();
+
+            for (OrePrefix prefix : MOLD_PRODUCTION.values()) {
+
+                //Molds
+                FORMING_PRESS_RECIPES.recipeBuilder()
+                        .duration(120)
+                        .EUt(22)
+                        .notConsumable(prefix, m)
+                        .input(moldEmpty, m)
+                        .output(prefix, m)
                         .buildAndRegister();
             }
         }

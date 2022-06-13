@@ -1,5 +1,6 @@
 package tekcays_addon.api.unification.material.ore;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
 import gregtech.api.unification.ore.OrePrefix;
 import tekcays_addon.api.unification.material.info.TKCYAMaterialIconType;
 
@@ -10,6 +11,7 @@ import static tekcays_addon.api.unification.material.info.TKCYAMaterialFlags.GEN
 public class TKCYAOrePrefix {
 
     // Molds
+    public static final OrePrefix moldEmpty = new OrePrefix("moldEmpty", M * 4, null, TKCYAMaterialIconType.moldEmpty, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
     public static final OrePrefix moldIngot = new OrePrefix("moldIngot", M * 4, null, TKCYAMaterialIconType.moldIngot, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
     public static final OrePrefix moldPlate = new OrePrefix("moldPlate", M * 4, null, TKCYAMaterialIconType.moldPlate, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
     public static final OrePrefix moldStick = new OrePrefix("moldStick", M * 4, null, TKCYAMaterialIconType.moldStick, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));

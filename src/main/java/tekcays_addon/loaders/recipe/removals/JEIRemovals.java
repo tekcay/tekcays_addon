@@ -41,6 +41,20 @@ public class JEIRemovals implements IModPlugin { {
             ingredientBlacklist.addIngredientToBlacklist(STEAM_ALLOY_SMELTER_STEEL.getStackForm());
         }
 
+        if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
+            for (int i = GTValues.LV; i < GTValues.UV + 1; i++) {
+                ingredientBlacklist.addIngredientToBlacklist(FLUID_SOLIDIFIER[i].getStackForm());
+            }
+        }
+
+        if (TKCYAConfigHolder.energyOverhaul.disableGasTurbinesOverhaul) {
+            for (int i = GTValues.LV; i < GTValues.HV + 1; i++) {
+                ingredientBlacklist.addIngredientToBlacklist(GAS_TURBINE[i].getStackForm());
+            }
+            ingredientBlacklist.addIngredientToBlacklist(LARGE_GAS_TURBINE);
+        }
+
+
     }
 
 }

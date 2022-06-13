@@ -27,6 +27,16 @@ public class TKCYARecipeLoader {
             TKCYAPartsRecipeHandler.initPolarizing();
         }
 
+        if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
+            GasCollectorRecipeHandler.init();
+            ShapedCraftingRecipes.molds();
+            TKCYAPartsRecipeHandler.processMolds();
+        }
+
+        if (TKCYAConfigHolder.energyOverhaul.disableGasTurbinesOverhaul) {
+            BurningGasBoilerRecipeHandler.init();
+        }
+
 
     }
 
