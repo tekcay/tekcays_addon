@@ -1,5 +1,6 @@
 package tekcays_addon.api.render;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
 import gregtech.client.renderer.ICubeRenderer;
 import tekcays_addon.TekCaysAddon;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
@@ -12,9 +13,14 @@ import static gregtech.client.renderer.texture.cube.OrientedOverlayRenderer.Over
 @Mod.EventBusSubscriber(modid = TekCaysAddon.MODID, value = Side.CLIENT)
 public class TKCYATextures {
 
+
     // SimpleMachines
     public static OrientedOverlayRenderer CLUSTER_MILL_OVERLAY = new OrientedOverlayRenderer("machines/cluster_mill", FRONT);
     public static OrientedOverlayRenderer ADVANCED_POLARIZER_OVERLAY = new OrientedOverlayRenderer("machines/advanced_polarizer", FRONT, TOP);
+
+
+
+    public static final OrientedOverlayRenderer CASTING_TABLE_OVERLAY = new OrientedOverlayRenderer("machines/casting_table", FRONT);
 
     //MeltingOverhaul
     public static OrientedOverlayRenderer PRIMITIVE_MELTER_OVERLAY = new OrientedOverlayRenderer("multiblocks/primitive", FRONT);

@@ -25,6 +25,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityPrimitiveMelter PRIMITIVE_MELTER;
     public static MetaTileEntityElectricMelter ELECTRIC_MELTER;
     public static MetaTileEntityAlloyingCrucible ALLOYING_CRUCIBLE;
+    public static SimpleMachineMetaTileEntity[] CASTING_TABLE = new SimpleMachineMetaTileEntity[1];
 
 
 
@@ -47,6 +48,11 @@ public class TKCYAMetaTileEntities {
 
         if (TKCYAConfigHolder.meltingOverhaul.enableAlloyingOverhaul) {
             ALLOYING_CRUCIBLE = registerMetaTileEntity(11012, new MetaTileEntityAlloyingCrucible(tkcyaId("alloying_crucible")));
+        }
+
+        if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
+            registerSimpleMetaTileEntity(CASTING_TABLE, 11013, "casting_table", TKCYARecipeMaps.CASTING_TABLE_RECIPES,
+            TKCYATextures.CASTING_TABLE_OVERLAY, true, TKCYAMetaTileEntities::tkcyaId, GTUtility.hvCappedTankSizeFunction);
         }
 
 
