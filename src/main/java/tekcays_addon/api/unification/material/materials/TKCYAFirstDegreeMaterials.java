@@ -1,16 +1,18 @@
 package tekcays_addon.api.unification.material.materials;
 
-import gregtech.api.GTValues;
 import gregtech.api.unification.material.Material;
-import gregtech.api.unification.material.info.MaterialIconSet;
-import gregtech.api.unification.material.properties.BlastProperty;
 
-import static gregtech.api.unification.material.Materials.*;
-import static gregtech.api.unification.material.info.MaterialFlags.*;
+import static gregtech.api.unification.material.info.MaterialIconSet.DULL;
+import static tekcays_addon.api.unification.TKCYAMaterials.*;
 
 public class TKCYAFirstDegreeMaterials {
 
     public static void init() {
+
+        Ceramic = new Material.Builder(24000, "ceramic")
+                .dust(1).ingot()
+                .color(0xf6ad30).iconSet(DULL)
+                .build();
 
     }
 }

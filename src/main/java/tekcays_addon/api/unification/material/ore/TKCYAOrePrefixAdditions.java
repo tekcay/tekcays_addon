@@ -13,7 +13,7 @@ public class TKCYAOrePrefixAdditions {
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldGear);
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldSmallGear);
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldBolt);
-        MetaItems.addOrePrefix(TKCYAOrePrefix.moldBall;
+        MetaItems.addOrePrefix(TKCYAOrePrefix.moldBall);
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldCylinder);
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldRing);
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldRotor);

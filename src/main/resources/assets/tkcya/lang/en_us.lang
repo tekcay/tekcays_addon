@@ -42,6 +42,8 @@ material.unpure_copper=Unpure Copper
 material.unpure_tin=Unpure Tin
 material.unpure_iron=Unpure Iron
 
+
+material.ceramic=Ceramic
 material.galvanized_steel=Galvanized Steel
 material.hydrogen_fluorine=Hydrogen Fluorine
 material.hydrogen_chlorine=Hydrogen Chlorine
@@ -50,3 +52,17 @@ material.hydrogen_iodine=Hydrogen Iodine
 
 # fluids
 tkcya.fluid.molten=Molten %s
+
+
+# Ore Prefixes
+item.material.oreprefix.moldIngot=%s Mold Ingot
+item.material.oreprefix.moldPlate=%s Mold Plate
+item.material.oreprefix.moldRod=%s Mold Rod
+item.material.oreprefix.moldLongRod=%s Mold LongRod
+item.material.oreprefix.moldGear=%s Mold Gear
+item.material.oreprefix.moldSmallGear=%s Mold SmallGear
+item.material.oreprefix.moldBolt=%s Mold Bolt
+item.material.oreprefix.moldBall=%s Mold Ball
+item.material.oreprefix.moldCylinder=%s Mold Cylinder
+item.material.oreprefix.moldRotor=%s Mold Rotor
+item.material.oreprefix.moldRing=%s Mold Ring
