@@ -37,6 +37,6 @@ public class TKCYAConfigHolder {
         public boolean enableAlloyingOverhaul = true;
 
         @Config.Comment({"Magnetic parts need magnetite", "Default: true"})
-        public boolean enableCastingingOverhaul = true;
+        public boolean enableCastingOverhaul = true;
     }
 }

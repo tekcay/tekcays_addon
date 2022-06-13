@@ -1,6 +1,7 @@
 package tekcays_addon.common;
 
 import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.api.unification.material.ore.TKCYAOrePrefixAdditions;
 import tekcays_addon.api.unification.material.properties.TKCYAPropertyAddition;
 import tekcays_addon.TekCaysAddon;
 import gregtech.api.GregTechAPI;
@@ -15,6 +16,11 @@ public class TKCYAEventHandlers {
     public static void registerMaterials(GregTechAPI.MaterialEvent event) {
         TKCYAMaterials.init();
         TKCYAPropertyAddition.init();
+
+        if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
+
+            TKCYAOrePrefixAdditions.moldsInit();
+        }
     }
 
     @SubscribeEvent

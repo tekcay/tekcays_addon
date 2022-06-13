@@ -5,8 +5,8 @@ import gregtech.api.unification.material.properties.PropertyKey;
 
 public class TKCYAMaterialFlags {
 
-    public static final MaterialFlag MELTING = new MaterialFlag.Builder("melting")
-            .requireProps(PropertyKey.DUST, PropertyKey.INGOT, PropertyKey.FLUID)
+    public static final MaterialFlag GENERATE_MOLDS = new MaterialFlag.Builder("mold")
+            .requireProps(PropertyKey.INGOT)
             .build();
 
 }

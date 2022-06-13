@@ -1,0 +1,6 @@
+{"parent": "item/generated", 
+ "textures": 
+ {"layer0": "tkcya:items/material_sets/bright/moldBall", 
+ "layer1": "tkcya:items/material_sets/bright/moldBall_overlay" 
+ } 
+ }

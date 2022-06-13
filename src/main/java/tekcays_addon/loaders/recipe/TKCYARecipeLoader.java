@@ -1,12 +1,7 @@
 package tekcays_addon.loaders.recipe;
 
-import gregtech.api.recipes.GTRecipeHandler;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.loaders.recipe.handlers.*;
-
-import static gregtech.api.recipes.RecipeMaps.ALLOY_SMELTER_RECIPES;
-import static gregtech.api.recipes.RecipeMaps.EXTRACTOR_RECIPES;
-
 
 public class TKCYARecipeLoader {
 
