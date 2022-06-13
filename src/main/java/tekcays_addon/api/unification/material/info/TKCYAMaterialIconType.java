@@ -5,6 +5,8 @@ import gregtech.api.unification.material.info.MaterialIconType;
 public class TKCYAMaterialIconType {
 
     // Molds
+
+    public static final MaterialIconType moldEmpty = new MaterialIconType("moldEmpty");
     public static final MaterialIconType moldIngot = new MaterialIconType("moldIngot");
     public static final MaterialIconType moldPlate = new MaterialIconType("moldPlate");
     public static final MaterialIconType moldStick = new MaterialIconType("moldStick");
