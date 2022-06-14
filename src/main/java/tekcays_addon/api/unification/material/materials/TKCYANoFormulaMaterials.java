@@ -2,10 +2,11 @@ package tekcays_addon.api.unification.material.materials;
 
 import gregtech.api.unification.material.Material;
 
-import static gregtech.api.unification.material.info.MaterialIconSet.DULL;
+import static gregtech.api.unification.material.info.MaterialIconSet.SAND;
 import static tekcays_addon.api.unification.TKCYAMaterials.*;
+import static gregtech.api.unification.material.info.MaterialIconSet.DULL;
 
-public class TKCYAFirstDegreeMaterials {
+public class TKCYANoFormulaMaterials {
 
     public static void init() {
 
@@ -16,5 +17,10 @@ public class TKCYAFirstDegreeMaterials {
                 .color(0xf6ad30).iconSet(DULL)
                 .build();
 
+        MicaPulp = new Material.Builder(24002, "mica_pulp")
+                .dust(1)
+                .color(0x91744).iconSet(SAND)
+                .build();
     }
+
 }

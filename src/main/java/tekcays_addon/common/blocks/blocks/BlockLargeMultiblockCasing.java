@@ -1,4 +1,4 @@
-package tekcays_addon.common.block.blocks;
+package tekcays_addon.common.blocks.blocks;
 
 import gregtech.api.block.VariantBlock;
 import net.minecraft.block.SoundType;

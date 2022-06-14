@@ -1,14 +1,12 @@
 package tekcays_addon.common;
 
 import gregtech.api.GTValues;
+import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.recipes.crafttweaker.MetaItemBracketHandler;
-import gregtech.api.unification.ore.OrePrefix;
-import gregtech.api.util.GTLog;
-import gregtech.loaders.recipe.GTRecipeManager;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import tekcays_addon.api.utils.TKCYALog;
-import tekcays_addon.common.block.TKCYAMetaBlocks;
+import tekcays_addon.common.blocks.TKCYAMetaBlocks;
+import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.loaders.recipe.TKCYARecipeLoader;
 import tekcays_addon.TekCaysAddon;
 import gregtech.api.block.VariantItemBlock;
@@ -54,6 +52,12 @@ public class CommonProxy {
     public static void registerItems(RegistryEvent.Register<Item> event) {
         TKCYALog.logger.info("Registering Items...");
         IForgeRegistry<Item> registry = event.getRegistry();
+
+        for (MetaItem<?> item : TKCYAMetaItems.ITEMS) {
+            registry.register(item);
+            item.registerSubItems();
+        }
+
 
         registry.register(createItemBlock(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING, VariantItemBlock::new));
     }

@@ -34,12 +34,12 @@ public class TKCYAMetaTileEntities {
 
     public static void init() {
 
-        if (TKCYAConfigHolder.foilOverhaul.enableFoilOverhaul) {
+        if (TKCYAConfigHolder.miscOverhaul.enableFoilOverhaul) {
             registerSimpleMetaTileEntity(CLUSTER_MILL, 11000, "cluster_mill", TKCYARecipeMaps.CLUSTER_MILL_RECIPES,
                     TKCYATextures.CLUSTER_MILL_OVERLAY, true, TKCYAMetaTileEntities::tkcyaId, GTUtility.hvCappedTankSizeFunction);
         }
 
-        if (TKCYAConfigHolder.magneticOverhaul.enableMagneticOverhaul) {
+        if (TKCYAConfigHolder.miscOverhaul.enableMagneticOverhaul) {
             registerSimpleMetaTileEntity(ADVANCED_POLARIZER, 11005, "advanced_polarizer", TKCYARecipeMaps.ADVANCED_POLARIZER_RECIPES,
                     TKCYATextures.ADVANCED_POLARIZER_OVERLAY, true, TKCYAMetaTileEntities::tkcyaId, GTUtility.hvCappedTankSizeFunction);
         }

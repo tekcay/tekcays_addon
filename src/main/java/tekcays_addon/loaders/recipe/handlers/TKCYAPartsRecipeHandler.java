@@ -6,7 +6,6 @@ import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.properties.IngotProperty;
 import gregtech.api.unification.material.properties.PropertyKey;
-import gregtech.common.items.MetaItems;
 import net.minecraft.item.ItemStack;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import gregtech.api.unification.material.Material;

@@ -1,9 +1,10 @@
 package tekcays_addon.api.unification.material.materials;
 
 
-public class TKCYASecondDegreeMaterials {
+public class TKCYAAlloys {
 
     public static void init() {
+
 
 
     }

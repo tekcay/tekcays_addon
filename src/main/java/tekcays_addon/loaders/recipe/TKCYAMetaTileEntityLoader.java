@@ -20,13 +20,13 @@ import gregicality.multiblocks.common.metatileentities.GCYMMetaTileEntities;
 public class TKCYAMetaTileEntityLoader {
 
     public static void init() {
-        if (TKCYAConfigHolder.foilOverhaul.enableFoilOverhaul) {
+        if (TKCYAConfigHolder.miscOverhaul.enableFoilOverhaul) {
             MetaTileEntityLoader.registerMachineRecipe(CLUSTER_MILL,
                     "MMM", "CHC", "MMM",
                     'M', MOTOR, 'C', CIRCUIT, 'H', HULL);
         }
 
-        if (TKCYAConfigHolder.magneticOverhaul.enableMagneticOverhaul) {
+        if (TKCYAConfigHolder.miscOverhaul.enableMagneticOverhaul) {
             removeTieredRecipeByName("gregtech:gregtech.machine.polarizer.", LV, UV); //removed recipes for GTCEu polarizers
             MetaTileEntityLoader.registerMachineRecipe(ADVANCED_POLARIZER,
                     "ZSZ", "WMW", "ZSZ",

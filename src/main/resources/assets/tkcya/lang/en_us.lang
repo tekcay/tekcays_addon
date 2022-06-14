@@ -50,6 +50,7 @@ material.unpure_iron=Unpure Iron
 
 
 material.ceramic=Ceramic
+material.mica_pulp=Mica Based
 material.galvanized_steel=Galvanized Steel
 material.hydrogen_fluorine=Hydrogen Fluorine
 material.hydrogen_chlorine=Hydrogen Chlorine
@@ -59,6 +60,11 @@ material.hydrogen_iodine=Hydrogen Iodine
 # fluids
 tkcya.fluid.molten=Molten %s
 
+metaitem.mica_sheet.name=Mica Based Sheet
+metaitem.mica_insulator_sheet.name=Mica Insulator Sheet
+metaitem.mica_insulator_foil.name=Mica Insulator Foil
+
+item.mica_pulp.dust=Mica Based Pulp
 
 # Ore Prefixes
 item.material.oreprefix.moldEmpty=%s Mold Empty

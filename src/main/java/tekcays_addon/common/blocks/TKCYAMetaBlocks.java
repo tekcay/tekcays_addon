@@ -1,6 +1,6 @@
-package tekcays_addon.common.block;
+package tekcays_addon.common.blocks;
 
-import tekcays_addon.common.block.blocks.BlockLargeMultiblockCasing;
+import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;

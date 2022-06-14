@@ -2,7 +2,8 @@ package tekcays_addon;
 
 import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.CommonProxy;
-import tekcays_addon.common.block.TKCYAMetaBlocks;
+import tekcays_addon.common.blocks.TKCYAMetaBlocks;
+import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 import gregtech.api.GTValues;
 import net.minecraftforge.fml.common.Mod;
@@ -26,6 +27,7 @@ public class TekCaysAddon {
     public void onPreInit(FMLPreInitializationEvent event) {
         TKCYALog.init(event.getModLog());
         TKCYAMetaBlocks.init();
+        TKCYAMetaItems.init();
         TKCYAMetaTileEntities.init();
 
         proxy.preLoad();

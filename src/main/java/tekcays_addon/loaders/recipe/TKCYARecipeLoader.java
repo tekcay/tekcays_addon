@@ -1,7 +1,9 @@
 package tekcays_addon.loaders.recipe;
 
-import tekcays_addon.common.TKCYAConfigHolder;
+import tekcays_addon.loaders.recipe.chains.*;
 import tekcays_addon.loaders.recipe.handlers.*;
+
+import static tekcays_addon.common.TKCYAConfigHolder.*;
 
 public class TKCYARecipeLoader {
 
@@ -11,47 +13,50 @@ public class TKCYARecipeLoader {
 
         TKCYAMetaTileEntityLoader.init();
 
-        if (TKCYAConfigHolder.foilOverhaul.enableFoilOverhaul) {
+        if (miscOverhaul.enableFoilOverhaul) {
             TKCYAPartsRecipeHandler.initFoil();
         }
 
-        if (TKCYAConfigHolder.meltingOverhaul.enableMeltingOverhaul) {
+        if (meltingOverhaul.enableMeltingOverhaul) {
             TKCYAPartsRecipeHandler.removeExtractor();
         }
 
-        if (TKCYAConfigHolder.meltingOverhaul.enableAlloyingOverhaul) {
+        if (meltingOverhaul.enableAlloyingOverhaul) {
             TKCYAPartsRecipeHandler.removeAlloySmelter();
         }
 
-        if (TKCYAConfigHolder.magneticOverhaul.enableMagneticOverhaul) {
+        if (miscOverhaul.enableMagneticOverhaul) {
             TKCYAPartsRecipeHandler.initPolarizing();
         }
 
-        if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
+        if (meltingOverhaul.enableCastingOverhaul) {
             GasCollectorRecipeHandler.init();
             ShapedCraftingRecipes.molds();
             TKCYAPartsRecipeHandler.processMolds();
         }
 
-        if (TKCYAConfigHolder.energyOverhaul.disableGasTurbinesOverhaul) {
+        if (energyOverhaul.disableGasTurbinesOverhaul) {
             BurningGasBoilerRecipeHandler.init();
         }
 
+        if (miscOverhaul.enableCoilOverhaul) {
+            Coils.init();
+        }
 
     }
 
 
     public static void loadLatest() {
 
-        if (TKCYAConfigHolder.meltingOverhaul.enableMeltingOverhaul) {
+        if (meltingOverhaul.enableMeltingOverhaul) {
             TKCYAMeltingRecipeHandler.init();
         }
 
-        if (TKCYAConfigHolder.meltingOverhaul.enableAlloyingOverhaul) {
+        if (meltingOverhaul.enableAlloyingOverhaul) {
             TKCYAAlloyingCrucibleRecipeHandler.init();
         }
 
-        if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
+        if (meltingOverhaul.enableCastingOverhaul) {
             TKCYACastingTableRecipeHandler.init();
         }
 

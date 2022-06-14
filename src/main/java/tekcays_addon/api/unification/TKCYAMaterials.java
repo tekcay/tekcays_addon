@@ -1,8 +1,7 @@
 package tekcays_addon.api.unification;
 
 import gregtech.api.unification.material.Material;
-import tekcays_addon.api.unification.material.materials.TKCYAFirstDegreeMaterials;
-import tekcays_addon.api.unification.material.materials.TKCYASecondDegreeMaterials;
+import tekcays_addon.api.unification.material.materials.*;
 
 public class TKCYAMaterials {
 
@@ -11,16 +10,36 @@ public class TKCYAMaterials {
      */
 
     public static void init() {
-        // First Degree 3000-3019
-        TKCYAFirstDegreeMaterials.init();
+
+        // NoFormula 24000-24100
+        TKCYANoFormulaMaterials.init();
+
+        // 24101-24200
+        TKCYAMiscMaterials.init();
+
+        // Alloys 3000-3019
+        TKCYAAlloys.init();
 
         // Second Degree 3020-3039
-        TKCYASecondDegreeMaterials.init();
+        TKCYAOrganicCompounds.init();
+
+
 
         // Flags
         TKCYAMaterialFlagAddition.init();
     }
 
+    /**
+     * No Formula
+     */
+
     public static Material Ceramic;
+    public static Material MicaPulp;
+
+    /**
+     * Misc
+     */
+
+
 
 }
