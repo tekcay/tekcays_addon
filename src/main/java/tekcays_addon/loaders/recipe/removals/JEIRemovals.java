@@ -1,6 +1,9 @@
 package tekcays_addon.loaders.recipe.removals;
 
 import gregtech.api.GTValues;
+import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
+import gregtech.common.metatileentities.MetaTileEntities;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
 import tekcays_addon.common.TKCYAConfigHolder;
@@ -53,6 +56,22 @@ public class JEIRemovals implements IModPlugin { {
             }
             ingredientBlacklist.addIngredientToBlacklist(LARGE_GAS_TURBINE);
         }
+
+
+        if (TKCYAConfigHolder.miscOverhaul.disableHighTierMachines) {
+
+            /*
+
+            for ()
+
+            for (int i = GTValues.LuV; i < GTValues.UV + 1; i++) {
+                ingredientBlacklist.addIngredientToBlacklist(GAS_TURBINE[i].getStackForm());
+            }
+                         
+             */
+        }
+
+
 
 
     }

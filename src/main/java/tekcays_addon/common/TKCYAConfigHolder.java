@@ -29,6 +29,9 @@ public class TKCYAConfigHolder {
 
         @Config.Comment({"Magnetic parts need magnetite", "Default: true"})
         public boolean enableMagneticOverhaul = true;
+
+        @Config.Comment({"Disable IV+ tier machines", "Default: true"})
+        public boolean disableHighTierMachines = true;
     }
 
 
