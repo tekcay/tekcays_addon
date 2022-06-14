@@ -13,11 +13,10 @@ public class TKCYAMetaItem1 extends StandardMetaItem {
 
     @Override
     public void registerSubItems() {
-        // Credits: ID 0-10
 
-        MICA_SHEET = addItem(0, "mica_sheet");
-        MICA_INSULATOR_SHEET = addItem(1, "mica_insulator_sheet");
-        MICA_INSULATOR_FOIL = addItem(2, "mica_insulator_foil");
+        MICA_SHEET = addItem(0, "mica.sheet");
+        MICA_INSULATOR_SHEET = addItem(1, "mica_insulator.sheet");
+        MICA_INSULATOR_FOIL = addItem(2, "mica_insulator.foil");
 
     }
 }

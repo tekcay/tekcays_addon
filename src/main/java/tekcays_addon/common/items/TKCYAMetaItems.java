@@ -20,6 +20,7 @@ public final class TKCYAMetaItems {
     public static void init() {
         TKCYAMetaItem1 metaItem1 = new TKCYAMetaItem1();
         metaItem1.setRegistryName("meta_item_1");
+    }
 
 
 }
