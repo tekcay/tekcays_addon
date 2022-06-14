@@ -52,7 +52,7 @@ public class Coils {
         //Mica insulator sheet
 
         RecipeMaps.FORMING_PRESS_RECIPES.recipeBuilder() //TODO : use another machine ?
-                .input(OrePrefix.plate, TKCYAMaterials.MicaPulp, 5)
+                .input(TKCYAMetaItems.MICA_SHEET, 5)
                 .input(OrePrefix.dust, Materials.SiliconDioxide, 3)
                 .output(TKCYAMetaItems.MICA_INSULATOR_SHEET, 5)
                 .EUt(30)
