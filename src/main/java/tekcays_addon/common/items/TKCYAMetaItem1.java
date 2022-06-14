@@ -1,6 +1,5 @@
 package tekcays_addon.common.items;
 
-import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.items.metaitem.StandardMetaItem;
 
 import static tekcays_addon.common.items.TKCYAMetaItems.*;

@@ -2,7 +2,6 @@ package tekcays_addon.common.items;
 
 import gregtech.api.items.metaitem.MetaItem;
 
-import java.util.List;
 
 public final class TKCYAMetaItems {
 
@@ -10,7 +9,7 @@ public final class TKCYAMetaItems {
         super();
     }
 
-    public static final List<MetaItem<?>> ITEMS = MetaItem.getMetaItems();
+    //public static final List<MetaItem<?>> ITEMS = MetaItem.getMetaItems();
 
     public static MetaItem<?>.MetaValueItem MICA_SHEET;
     public static MetaItem<?>.MetaValueItem MICA_INSULATOR_SHEET;

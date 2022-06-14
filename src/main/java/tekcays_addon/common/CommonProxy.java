@@ -53,12 +53,6 @@ public class CommonProxy {
         TKCYALog.logger.info("Registering Items...");
         IForgeRegistry<Item> registry = event.getRegistry();
 
-        for (MetaItem<?> item : TKCYAMetaItems.ITEMS) {
-            registry.register(item);
-            item.registerSubItems();
-        }
-
-
         registry.register(createItemBlock(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING, VariantItemBlock::new));
     }
 
