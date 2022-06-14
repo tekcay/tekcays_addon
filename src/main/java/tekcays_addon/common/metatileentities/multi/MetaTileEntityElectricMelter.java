@@ -3,30 +3,31 @@ package tekcays_addon.common.metatileentities.multi;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
+import gregtech.api.GTValues;
 import gregtech.api.capability.impl.MultiblockRecipeLogic;
-import gregtech.api.gui.Widget;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
-import gregtech.api.pattern.TraceabilityPredicate;
+import gregtech.api.pattern.*;
 import gregtech.api.recipes.Recipe;
+import gregtech.api.recipes.recipeproperties.TemperatureProperty;
 import gregtech.api.util.RelativeDirection;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.ConfigHolder;
-import gregtech.common.blocks.BlockGlassCasing;
 import gregtech.common.blocks.BlockMetalCasing;
+import gregtech.common.blocks.BlockWireCoil;
 import gregtech.common.blocks.MetaBlocks;
+import gregtech.common.metatileentities.MetaTileEntities;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.*;
 import net.minecraft.util.text.event.HoverEvent;
@@ -34,24 +35,27 @@ import net.minecraft.world.World;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.recipes.builders.ElectricMelterRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 
-import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
-import static gregtech.api.gui.widgets.AdvancedTextWidget.withButton;
-import static gregtech.api.unification.material.Materials.Steel;
+import javax.annotation.Nullable;
 
-public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController {
+public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController{
 
     private int temp;
     private int targetTemp;
+    private int increaseTemp;
     private boolean canAchieveTargetTemp;
     private boolean hasEnoughEnergy;
     public int size;
 
     public MetaTileEntityElectricMelter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.ELECTRIC_MELTER_RECIPES);
-        this.recipeMapWorkable = new ElectricMelterLogic(this);
+        //this.recipeMapWorkable = new ElectricMelterLogic(this);
 
         temp = 300;
         targetTemp = 300;
@@ -86,15 +90,15 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController 
     private void stepTowardsTargetTemp() {
         canAchieveTargetTemp = true;
         if (temp > 300 && (!this.recipeMapWorkable.isWorkingEnabled() || targetTemp < temp)) {
-            setTemp(temp - 5);
+            setTemp(temp - increaseTemp);
             if (temp == 300)
                 markDirty();
             return;
         }
         if (temp == targetTemp) return;
-        if (temperatureEnergyCost(this.temp + 5) <= this.getEnergyContainer().getInputVoltage() * this.getEnergyContainer().getInputAmperage() && hasEnoughEnergy) {
-            setTemp(temp + 5);
-            if (temp == 305)
+        if (temperatureEnergyCost(this.temp + increaseTemp) <= this.getEnergyContainer().getInputVoltage() * this.getEnergyContainer().getInputAmperage() && hasEnoughEnergy) {
+            setTemp(temp + increaseTemp);
+            if (temp == temp + increaseTemp)
                 markDirty();
         } else {
             canAchieveTargetTemp = false;
@@ -106,9 +110,25 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController 
             energyContainer.removeEnergy(temperatureEnergyCost(this.temp));
             return true;
         }
-        setTemp(temp - 5);
+        setTemp(temp - increaseTemp);
         return false;
     }
+
+    /*
+    private class ElectricMelterLogic extends MultiblockRecipeLogic {
+        public ElectricMelterLogic(RecipeMapMultiblockController tileEntity) {
+            super(tileEntity);
+        }
+
+        @Override
+        protected int[] calculateOverclock(Recipe recipe) {
+            return new int[]{0, recipe.getDuration()};
+        }
+    }
+
+     */
+
+
 
 
     @Override
@@ -144,12 +164,16 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController 
                 textList.add(new TextComponentTranslation("gregtech.multiblock.idling"));
             }
 
+
             if (this.recipeMapWorkable.isHasNotEnoughEnergy()) {
                 textList.add((new TextComponentTranslation("gregtech.multiblock.not_enough_energy")).setStyle((new Style()).setColor(TextFormatting.RED)));
             }
 
+
             textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_melter.tooltip.1", temp));
             textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_melter.tooltip.4", temperatureEnergyCost(temp)));
+
+            /*
 
             ITextComponent buttonText = new TextComponentTranslation("tekcays_addon.multiblock.electric_melter.tooltip.3");
             buttonText.appendText(" ");
@@ -158,19 +182,25 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController 
             buttonText.appendSibling(withButton(new TextComponentString("[+]"), "add"));
             textList.add(buttonText);
 
+             */
+
             textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_melter.tooltip.5", targetTemp));
 
 
             if (!canAchieveTargetTemp && hasEnoughEnergy)
                 textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_melter.tooltip.2")
                         .setStyle(new Style().setColor(TextFormatting.RED)));
+            /*
             if (!hasEnoughEnergy)
                 textList.add(new TextComponentTranslation("gregtech.multiblock.not_enough_energy")
                         .setStyle(new Style().setColor(TextFormatting.RED)));
 
+             */
+
         }
     }
 
+    /*
     @Override
     protected void handleDisplayClick(String componentData, Widget.ClickData clickData) {
         super.handleDisplayClick(componentData, clickData);
@@ -180,17 +210,16 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController 
             targetTemp = 300;
     }
 
+     */
+
     protected IBlockState getCasingState() {
-        return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.PRIMITIVE_BRICKS);
+        return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.INVAR_HEATPROOF);
     }
 
-    protected IBlockState getFrameState() {
-        return MetaBlocks.FRAMES.get(Steel).getBlock(Steel);
-    }
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
-        return Textures.PRIMITIVE_BRICKS;
+        return Textures.HEAT_PROOF_CASING;
     }
 
     @Override
@@ -201,29 +230,54 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController 
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RelativeDirection.FRONT, RelativeDirection.UP, RelativeDirection.RIGHT)
-                .aisle("XXXX", "YXXX", "XXXX", "####")
-                .aisle("XXXX", "GFFX", "GIOX", "XXXX").setRepeatable(2, 14)
-                .aisle("XXXX", "XXXX", "XXXX", "####")
-                .where('X', states(getCasingState()).setMinGlobalLimited(10).or(autoAbilities()))
-                .where('F', states(getFrameState()))
-                .where('G', states(MetaBlocks.TRANSPARENT_CASING.getState(BlockGlassCasing.CasingType.TEMPERED_GLASS)))
-                .where('#', any())
-                .where('O', air())
-                .where('I', isIndicatorPredicate())
-                .where('Y', selfPredicate())
+                .aisle("XXX", "CCC", "CCC", "XXX")
+                .aisle("SXX", "C#C", "C#C", "XMX")
+                .aisle("XXX", "CCC", "CCC", "XXX")
+                .where('S', selfPredicate())
+                .where('X', states(getCasingState()).setMinGlobalLimited(9)
+                        .or(autoAbilities(true, true, true, true, true, true, false)))
+                .where('M', abilities(MultiblockAbility.MUFFLER_HATCH))
+                .where('C', heatingCoils())
+                .where('#', air())
                 .build();
 
     }
 
-    // This function is highly useful for detecting the length of this multiblock.
-    public static TraceabilityPredicate isIndicatorPredicate() {
-        return new TraceabilityPredicate((blockWorldState) -> {
-            if (air().test(blockWorldState)) {
-                blockWorldState.getMatchContext().increment("electricMelterLength", 1);
-                return true;
-            } else
-                return false;
-        });
+
+    /*
+    @Override
+    public List<MultiblockShapeInfo> getMatchingShapes() {
+        ArrayList<MultiblockShapeInfo> shapeInfo = new ArrayList<>();
+        MultiblockShapeInfo.Builder builder = MultiblockShapeInfo.builder()
+                .aisle("XEM", "CCC", "CCC", "XXX")
+                .aisle("FXD", "C#C", "C#C", "XHX")
+                .aisle("ISO", "CCC", "CCC", "XXX")
+                .where('X', MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.INVAR_HEATPROOF))
+                .where('S', TKCYAMetaTileEntities.ELECTRIC_MELTER, EnumFacing.SOUTH)
+                .where('#', Blocks.AIR.getDefaultState())
+                .where('E', MetaTileEntities.ENERGY_INPUT_HATCH[GTValues.MV], EnumFacing.NORTH)
+                .where('I', MetaTileEntities.ITEM_IMPORT_BUS[GTValues.LV], EnumFacing.SOUTH)
+                .where('O', MetaTileEntities.ITEM_EXPORT_BUS[GTValues.LV], EnumFacing.SOUTH)
+                .where('F', MetaTileEntities.FLUID_IMPORT_HATCH[GTValues.LV], EnumFacing.WEST)
+                .where('D', MetaTileEntities.FLUID_EXPORT_HATCH[GTValues.LV], EnumFacing.EAST)
+                .where('H', MetaTileEntities.MUFFLER_HATCH[GTValues.LV], EnumFacing.UP)
+                .where('M', () -> ConfigHolder.machines.enableMaintenance ? MetaTileEntities.MAINTENANCE_HATCH : MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.INVAR_HEATPROOF), EnumFacing.NORTH);
+        Arrays.stream(BlockWireCoil.CoilType.values())
+                .sorted(Comparator.comparingInt(BlockWireCoil.CoilType::getLevel))
+                .forEach(coilType -> shapeInfo.add(builder.where('C', MetaBlocks.WIRE_COIL.getState(coilType)).build()));
+        return shapeInfo;
+    }
+
+
+     */
+    @Override
+    public boolean hasMufflerMechanics() {
+        return true;
+    }
+
+    @Override
+    public boolean hasMaintenanceMechanics() {
+        return true;
     }
 
     @Override
@@ -235,7 +289,15 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController 
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
-        this.size = context.getOrDefault("electricMelterLength", 1) - 1;
+        Object type = context.get("CoilType");
+        if (type instanceof BlockWireCoil.CoilType) {
+            this.targetTemp = ((BlockWireCoil.CoilType) type).getCoilTemperature();
+            this.increaseTemp = (int) (((BlockWireCoil.CoilType) type).getCoilTemperature() / 200);
+        } else {
+            this.targetTemp = BlockWireCoil.CoilType.CUPRONICKEL.getCoilTemperature();
+            this.increaseTemp = (int) ((BlockWireCoil.CoilType.CUPRONICKEL).getCoilTemperature() / 200);
+        }
+
     }
 
     @Override
@@ -311,7 +373,7 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController 
 
     @Override
     public boolean checkRecipe(Recipe recipe, boolean consumeIfSuccess) {
-        return recipe.getProperty(ElectricMelterRecipeBuilder.TemperatureProperty.getInstance(), 0) == temp;
+        return this.temp >= recipe.getProperty(TemperatureProperty.getInstance(), 0);
     }
 
     @Override
@@ -319,29 +381,16 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController 
         return sourcePart == null && temp > 300 ? 15 : 0;
     }
 
-    private class ElectricMelterLogic extends MultiblockRecipeLogic {
-        public ElectricMelterLogic(RecipeMapMultiblockController tileEntity) {
-            super(tileEntity);
-        }
-
-        @Override
-        public int getParallelLimit() {
-            return ((MetaTileEntityElectricMelter) this.getMetaTileEntity()).size;
-        }
-
-        @Override
-        protected int[] calculateOverclock(Recipe recipe) {
-            return new int[]{0, recipe.getDuration()};
-        }
-    }
-
     public boolean canCreateSound() {
         return temp > 300 && this.recipeMapWorkable.isWorkingEnabled();
     }
 
+    /*
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
         this.getFrontOverlay().renderOrientedState(renderState, translation, pipeline, this.getFrontFacing(), temp > 300, this.recipeMapWorkable.isWorkingEnabled());
     }
+
+     */
 }
 

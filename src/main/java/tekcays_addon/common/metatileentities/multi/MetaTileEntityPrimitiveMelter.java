@@ -12,10 +12,12 @@ import gregtech.api.gui.widgets.SlotWidget;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
+import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.metatileentity.multiblock.RecipeMapPrimitiveMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.util.RelativeDirection;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing;
@@ -38,10 +40,6 @@ public class MetaTileEntityPrimitiveMelter extends RecipeMapMultiblockController
     @Override
     public int getLightValueForPart(IMultiblockPart sourcePart) {
         return sourcePart == null && recipeMapWorkable.isActive() ? 15 : 0;
-    }
-
-    protected IBlockState getFrameState() {
-        return MetaBlocks.FRAMES.get(Iron).getBlock(Iron);
     }
 
     @Override
@@ -68,18 +66,22 @@ public class MetaTileEntityPrimitiveMelter extends RecipeMapMultiblockController
         this.itemInventory = new ItemHandlerProxy(emptyHandler, emptyHandler);
     }
 
+    protected IBlockState getCasingState() {
+        return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.PRIMITIVE_BRICKS);
+    }
+
     @Override
     protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
-                .aisle("XXXX", "XXXX", "XXXX", " XX ")
-                .aisle("XXXX", "XFFX", "X##X", " XX ")
-                .aisle("XXXX", "YFFX", "X##X", " XX ")
-                .where('X', states(MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.PRIMITIVE_BRICKS)))
-                .where('F', states(getFrameState()))
+        return FactoryBlockPattern.start(RelativeDirection.FRONT, RelativeDirection.UP, RelativeDirection.RIGHT)
+                .aisle("XXX", "XXX", "XXX")
+                .aisle("XXX", "S#X", "XXX")
+                .aisle("XXX", "XXX", "XXX")
+                .where('S', selfPredicate())
+                .where('X', states(getCasingState())
+                        .or(autoAbilities()))
                 .where('#', air())
-                .where(' ', any())
-                .where('Y', selfPredicate())
                 .build();
+
     }
 
     @Override
@@ -88,6 +90,9 @@ public class MetaTileEntityPrimitiveMelter extends RecipeMapMultiblockController
     }
 
     public boolean hasMaintenanceMechanics() {
+        return false;
+    }
+    public boolean hasMufflerMechanics() {
         return false;
     }
 }

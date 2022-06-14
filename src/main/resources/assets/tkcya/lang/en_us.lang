@@ -80,3 +80,11 @@ item.material.oreprefix.moldCylinder=%s Mold Cylinder
 item.material.oreprefix.moldRotor=%s Mold Rotor
 item.material.oreprefix.moldRing=%s Mold Ring
 item.material.oreprefix.moldCasing=%s Mold Casing
+
+
+tekcays_addon.multiblock.electric_melter.tooltip.1=Temperature: §a%dK§7.
+tekcays_addon.multiblock.electric_melter.tooltip.2=Not enough energy can be inputted to reach the target!
+tekcays_addon.multiblock.electric_melter.tooltip.3=Set target temperature:
+tekcays_addon.multiblock.electric_melter.tooltip.4=Consumption: %d EU/t.
+tekcays_addon.multiblock.electric_melter.tooltip.5=Target temperature: §a%dK§7.
+tekcays_addon.recipe.melter_temperature=Temperature: %dK

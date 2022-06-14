@@ -67,7 +67,7 @@ public class JEIRemovals implements IModPlugin { {
             for (int i = GTValues.LuV; i < GTValues.UV + 1; i++) {
                 ingredientBlacklist.addIngredientToBlacklist(GAS_TURBINE[i].getStackForm());
             }
-                         
+
              */
         }
 
