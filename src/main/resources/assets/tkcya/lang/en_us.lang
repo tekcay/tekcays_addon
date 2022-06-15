@@ -16,6 +16,7 @@ tkcya.machine.steam_cooler_steel.name=High Pressure Steam Cooler
 
 tkcya.machine.primitive_melter.name=Primitive Melter
 tkcya.machine.electric_melter.name=Electric Melter
+tkcya.machine.electric_melter.name=Fuel Melter
 tkcya.machine.alloying_crucible.name=Alloying Crucible
 tkcya.machine.casting_table.name=Casting Table
 
@@ -87,4 +88,11 @@ tekcays_addon.multiblock.electric_melter.tooltip.2=Not enough energy can be inpu
 tekcays_addon.multiblock.electric_melter.tooltip.3=Set target temperature:
 tekcays_addon.multiblock.electric_melter.tooltip.4=Consumption: %d EU/t.
 tekcays_addon.multiblock.electric_melter.tooltip.5=Target temperature: §a%dK§7.
+
+tekcays_addon.multiblock.fuel_melter.tooltip.1=Temperature: §a%dK§7.
+tekcays_addon.multiblock.fuel_melter.tooltip.2=Not enough energy can be inputted to reach the target!
+tekcays_addon.multiblock.fuel_melter.tooltip.3=Set target temperature:
+tekcays_addon.multiblock.fuel_melter.tooltip.4=Consumption: %d EU/t.
+tekcays_addon.multiblock.fuel_melter.tooltip.5=Target temperature: §a%dK§7.
+
 tekcays_addon.recipe.melter_temperature=Temperature: %dK

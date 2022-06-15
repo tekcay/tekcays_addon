@@ -9,9 +9,7 @@ import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.common.TKCYAConfigHolder;
-import tekcays_addon.common.metatileentities.multi.MetaTileEntityAlloyingCrucible;
-import tekcays_addon.common.metatileentities.multi.MetaTileEntityElectricMelter;
-import tekcays_addon.common.metatileentities.multi.MetaTileEntityPrimitiveMelter;
+import tekcays_addon.common.metatileentities.multi.*;
 import tekcays_addon.common.metatileentities.single.MetaTileEntityCastingTable;
 import tekcays_addon.common.metatileentities.steam.SteamCooler;
 
@@ -25,6 +23,7 @@ public class TKCYAMetaTileEntities {
 
     public static MetaTileEntityPrimitiveMelter PRIMITIVE_MELTER;
     public static MetaTileEntityElectricMelter ELECTRIC_MELTER;
+    public static MetaTileEntityFuelMelter FUEL_MELTER;
     public static MetaTileEntityAlloyingCrucible ALLOYING_CRUCIBLE;
     public static MetaTileEntityCastingTable CASTING_TABLE;
     public static SteamCooler STEAM_COOLER_BRONZE;
@@ -47,17 +46,18 @@ public class TKCYAMetaTileEntities {
         if (TKCYAConfigHolder.meltingOverhaul.enableMeltingOverhaul) {
             PRIMITIVE_MELTER = registerMetaTileEntity(11010, new MetaTileEntityPrimitiveMelter(tkcyaId("primitive_melter")));
             ELECTRIC_MELTER = registerMetaTileEntity(11011, new MetaTileEntityElectricMelter(tkcyaId("electric_melter")));
+            FUEL_MELTER = registerMetaTileEntity(11012, new MetaTileEntityFuelMelter(tkcyaId("fuel_melter")));
         }
 
         if (TKCYAConfigHolder.meltingOverhaul.enableAlloyingOverhaul) {
-            ALLOYING_CRUCIBLE = registerMetaTileEntity(11012, new MetaTileEntityAlloyingCrucible(tkcyaId("alloying_crucible")));
+            ALLOYING_CRUCIBLE = registerMetaTileEntity(11013, new MetaTileEntityAlloyingCrucible(tkcyaId("alloying_crucible")));
         }
 
         if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
-            CASTING_TABLE = registerMetaTileEntity(11013, new MetaTileEntityCastingTable(tkcyaId("casting_table")));
+            CASTING_TABLE = registerMetaTileEntity(11014, new MetaTileEntityCastingTable(tkcyaId("casting_table")));
 
-            STEAM_COOLER_BRONZE = registerMetaTileEntity(11014, new SteamCooler(tkcyaId("steam_cooler_bronze"), false));
-            STEAM_COOLER_STEEL = registerMetaTileEntity(11015, new SteamCooler(tkcyaId("steam_cooler_steel"), true));
+            STEAM_COOLER_BRONZE = registerMetaTileEntity(11015, new SteamCooler(tkcyaId("steam_cooler_bronze"), false));
+            STEAM_COOLER_STEEL = registerMetaTileEntity(11016, new SteamCooler(tkcyaId("steam_cooler_steel"), true));
 
         }
 
