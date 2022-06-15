@@ -1,13 +1,13 @@
 package tekcays_addon.api.pattern;
 
-import codechicken.lib.util.ArrayUtils;
 import gregtech.api.pattern.PatternStringError;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.util.BlockInfo;
 import gregtech.common.blocks.BlockFireboxCasing;
-import static gregtech.common.blocks.BlockFireboxCasing.FireboxCasingType.;
 import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.state.IBlockState;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;
 import java.util.LinkedList;

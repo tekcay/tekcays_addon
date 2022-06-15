@@ -1,9 +1,6 @@
 package tekcays_addon.common.metatileentities.multi;
 
-import gregtech.api.capability.impl.BoilerRecipeLogic;
 import gregtech.api.capability.impl.FluidTankList;
-import gregtech.api.capability.impl.ItemHandlerList;
-import gregtech.api.metatileentity.MTETrait;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -13,7 +10,6 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.pattern.TraceabilityPredicate;
-import gregtech.api.recipes.ModHandler;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.recipeproperties.TemperatureProperty;
 import gregtech.api.util.RelativeDirection;
@@ -24,7 +20,6 @@ import gregtech.common.blocks.BlockFireboxCasing;
 import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.BlockWireCoil;
 import gregtech.common.blocks.MetaBlocks;
-import gregtech.common.metatileentities.multi.BoilerType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -40,7 +35,6 @@ import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
-import net.minecraftforge.items.IItemHandlerModifiable;
 import tekcays_addon.api.pattern.TKCYATraceabilityPredicate;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.render.TKCYATextures;
@@ -112,7 +106,7 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockController{
 
             FluidStack fuelStack = fluidTank.drain(Integer.MAX_VALUE, false);
 
-            if (fuelStack == null || !MiscMethods.isFuel(fuelStack)) continue;
+            if (!MiscMethods.isFuel(fuelStack)) continue;
 
             if (fuelStack.amount >= temperatureFuelCost(this.temp)) {
                 fluidTank.drain(temperatureFuelCost(this.temp), true);
@@ -123,23 +117,6 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockController{
         setTemp(temp - increaseTemp);
         return false;
     }
-
-    /*
-    private class ElectricMelterLogic extends MultiblockRecipeLogic {
-        public ElectricMelterLogic(RecipeMapMultiblockController tileEntity) {
-            super(tileEntity);
-        }
-
-        @Override
-        protected int[] calculateOverclock(Recipe recipe) {
-            return new int[]{0, recipe.getDuration()};
-        }
-    }
-
-     */
-
-
-
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
@@ -223,10 +200,6 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockController{
      */
 
     protected IBlockState getCasingState() {
-        return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.INVAR_HEATPROOF);
-    }
-
-    protected IBlockState getFirebox() {
         return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.INVAR_HEATPROOF);
     }
 
@@ -439,7 +412,8 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockController{
 
     ///////////////////From LargeBoiler
 
-    private void initializeAbilities() {
+    @Override
+    public void initializeAbilities() {
         this.fluidImportInventory = new FluidTankList(true, getAbilities(MultiblockAbility.IMPORT_FLUIDS));
     }
 
