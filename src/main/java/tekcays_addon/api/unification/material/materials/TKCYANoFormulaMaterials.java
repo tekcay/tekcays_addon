@@ -19,7 +19,12 @@ public class TKCYANoFormulaMaterials {
 
         MicaPulp = new Material.Builder(24002, "mica_pulp")
                 .dust(1)
-                .color(0x91744).iconSet(SAND)
+                .color(0xf1cd91).iconSet(SAND)
+                .build();
+
+        Fuel = new Material.Builder(24000, "fuel")
+                .fluid()
+                .color(0xf6ad30)
                 .build();
     }
 

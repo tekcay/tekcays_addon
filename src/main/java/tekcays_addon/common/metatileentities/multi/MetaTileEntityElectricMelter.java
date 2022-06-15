@@ -1,10 +1,5 @@
 package tekcays_addon.common.metatileentities.multi;
 
-import codechicken.lib.render.CCRenderState;
-import codechicken.lib.render.pipeline.IVertexOperation;
-import codechicken.lib.vec.Matrix4;
-import gregtech.api.GTValues;
-import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -27,19 +22,13 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.*;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.recipes.builders.ElectricMelterRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -51,7 +40,6 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController{
     private int increaseTemp;
     private boolean canAchieveTargetTemp;
     private boolean hasEnoughEnergy;
-    public int size;
 
     public MetaTileEntityElectricMelter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.ELECTRIC_MELTER_RECIPES);
@@ -306,7 +294,7 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController{
     }
 
     public int temperatureEnergyCost(int temp) {
-        return temp <= 300 ? 0 : (int) Math.exp(((double) temp - 100 + (size * 5)) / 100);
+        return temp <= 300 ? 0 : (int) Math.exp(((double) temp - 100) / 100);
     }
 
     // Is the inverse of the previous function.

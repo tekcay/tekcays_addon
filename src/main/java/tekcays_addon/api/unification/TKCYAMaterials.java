@@ -35,6 +35,7 @@ public class TKCYAMaterials {
 
     public static Material Ceramic;
     public static Material MicaPulp;
+    public static Material Fuel;
 
     /**
      * Misc

@@ -36,7 +36,7 @@ public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<ElectricMelterRecipeBuilder> ELECTRIC_MELTER_RECIPES = new RecipeMap<>(
-            "electric_melter", 1, 4, 0, 1, 0, 1, 1, 2, new ElectricMelterRecipeBuilder(), false)
+            "electric_melter", 1, 1, 0, 1, 0, 0, 1, 1, new ElectricMelterRecipeBuilder(), false)
             .setSound(GTSounds.FURNACE);
 
     @ZenProperty
