@@ -12,28 +12,28 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class ElectricMelterRecipeBuilder extends RecipeBuilder<ElectricMelterRecipeBuilder> {
+public class MelterRecipeBuilder extends RecipeBuilder<MelterRecipeBuilder> {
 
     private int temp;
 
-    public ElectricMelterRecipeBuilder() {
+    public MelterRecipeBuilder() {
     }
 
-    public ElectricMelterRecipeBuilder(Recipe recipe, RecipeMap<ElectricMelterRecipeBuilder> recipeMap) {
+    public MelterRecipeBuilder(Recipe recipe, RecipeMap<MelterRecipeBuilder> recipeMap) {
         super(recipe, recipeMap);
         this.temp = recipe.getRecipePropertyStorage().getRecipePropertyValue(TemperatureProperty.getInstance(), 0);
     }
 
-    public ElectricMelterRecipeBuilder(RecipeBuilder<ElectricMelterRecipeBuilder> recipeBuilder) {
+    public MelterRecipeBuilder(RecipeBuilder<MelterRecipeBuilder> recipeBuilder) {
         super(recipeBuilder);
     }
 
     @Override
-    public ElectricMelterRecipeBuilder copy() {
-        return new ElectricMelterRecipeBuilder(this);
+    public MelterRecipeBuilder copy() {
+        return new MelterRecipeBuilder(this);
     }
 
-    public ElectricMelterRecipeBuilder setTemp(int temperature) {
+    public MelterRecipeBuilder setTemp(int temperature) {
         this.temp = temperature;
         return this;
     }
@@ -98,7 +98,7 @@ public class ElectricMelterRecipeBuilder extends RecipeBuilder<ElectricMelterRec
 
         @Override
         public void drawInfo(Minecraft minecraft, int x, int y, int color, Object value) {
-            minecraft.fontRenderer.drawString(I18n.format("gregtechfoodoption.recipe.baking_oven_temperature",
+            minecraft.fontRenderer.drawString(I18n.format("tekcays_addon.recipe.melter_temperature",
                     value), x, y, color);
         }
     }

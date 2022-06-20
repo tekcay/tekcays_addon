@@ -4,17 +4,10 @@ import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
 import gregtech.api.capability.impl.ItemHandlerProxy;
-import gregtech.api.gui.GuiTextures;
-import gregtech.api.gui.ModularUI;
-import gregtech.api.gui.widgets.LabelWidget;
-import gregtech.api.gui.widgets.ProgressWidget;
-import gregtech.api.gui.widgets.SlotWidget;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
-import gregtech.api.metatileentity.multiblock.RecipeMapPrimitiveMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.util.RelativeDirection;
@@ -23,7 +16,6 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
@@ -34,7 +26,7 @@ import static gregtech.api.unification.material.Materials.Iron;
 public class MetaTileEntityPrimitiveMelter extends RecipeMapMultiblockController {
 
     public MetaTileEntityPrimitiveMelter(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.PRIMITIVE_MELTER_RECIPES);
+        super(metaTileEntityId, TKCYARecipeMaps.MELTER_RECIPES);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package tekcays_addon.common.metatileentities.multi;
 
 import gregtech.api.capability.impl.FluidTankList;
+import gregtech.api.capability.impl.ItemHandlerList;
+import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -11,7 +13,6 @@ import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
-import gregtech.api.recipes.recipeproperties.TemperatureProperty;
 import gregtech.api.util.RelativeDirection;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
@@ -35,88 +36,99 @@ import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.pattern.TKCYATraceabilityPredicate;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.api.recipes.builders.MelterRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.utils.MiscMethods;
 
 import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
+
 
 public class MetaTileEntityFuelMelter extends RecipeMapMultiblockController{
 
 
-    private int temp;
-    private int targetTemp;
-    private int increaseTemp;
-    private boolean canAchieveTargetTemp;
-    private boolean hasEnoughFuel;
-
-    //From Large Boiler
-
-    private FluidTankList fluidImportInventory;
+    private int temp, targetTemp, increaseTemp;
+    private boolean canAchieveTargetTemp, hasEnoughFuel;
+    private FluidTankList fuelFluidImport;
 
     public MetaTileEntityFuelMelter(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.ELECTRIC_MELTER_RECIPES);
+        super(metaTileEntityId, TKCYARecipeMaps.MELTER_RECIPES);
+        this.recipeMapWorkable = new MetaTileEntityFuelMelter.FuelMelterLogic(this);
 
         temp = 300;
-        targetTemp = 300;
     }
-
 
     @Override
     protected void updateFormedValid() {
-        if (getWorld().isRemote) return;
-
         super.updateFormedValid();
 
-        if (temp > 300)
-            hasEnoughFuel = drainFuel();
-        else
-            hasEnoughFuel = true;
+        hasEnoughFuel = drainFuel();
 
-        if (getOffsetTimer() % 20 == 0 && !recipeMapWorkable.isActive())
-            stepTowardsTargetTemp();
-        else if (targetTemp == temp) {
+        if (getOffsetTimer() % 20 == 0 && !recipeMapWorkable.isActive()) {
+            stepTowardsTargetTemp(getFuelAmount());        }
+        else if (temp >= targetTemp) {
             canAchieveTargetTemp = true;
         }
     }
 
-    private void stepTowardsTargetTemp() {
+    private void stepTowardsTargetTemp(int fuelAmount) {
         canAchieveTargetTemp = true;
-        if (temp > 300 && (!this.recipeMapWorkable.isWorkingEnabled() || targetTemp < temp)) {
-            setTemp(temp - increaseTemp);
-            if (temp == 300)
-                markDirty();
-            return;
-        }
-        if (temp == targetTemp) return;
-        if (temperatureFuelCost(this.temp + increaseTemp) <= this.getEnergyContainer().getInputVoltage() * this.getEnergyContainer().getInputAmperage() && hasEnoughFuel) {
+
+        if (temp >= targetTemp) return;
+        if (fuelAmount >= temperatureFuelCost(temp + increaseTemp) && hasEnoughFuel) {
             setTemp(temp + increaseTemp);
-            if (temp == temp + increaseTemp)
-                markDirty();
         } else {
             canAchieveTargetTemp = false;
         }
     }
 
+    public int temperatureFuelCost(int temp) {
+        return temp <= 300 ? 0 : 1; //(int) Math.exp(((double) temp - 100) / 300)
+    }
+
     private boolean drainFuel() {
-        for (IFluidTank fluidTank : importFluids.getFluidTanks()) {
 
-            FluidStack fuelStack = fluidTank.drain(Integer.MAX_VALUE, false);
-
-            if (!MiscMethods.isFuel(fuelStack)) continue;
-
-            if (fuelStack.amount >= temperatureFuelCost(this.temp)) {
-                fluidTank.drain(temperatureFuelCost(this.temp), true);
-                return true;
-            }
-
+        if (getFuelAmount() >= temperatureFuelCost(this.temp)) {
+            fuelFluidImport.drain(temperatureFuelCost(this.temp), true);
+            return true;
         }
-        setTemp(temp - increaseTemp);
+
+        if (temp - increaseTemp < 300) return false;
+        if (getOffsetTimer() % 20 == 0) {
+            setTemp(temp - increaseTemp);
+        }
+
         return false;
     }
+
+    /*
+    @Override
+    public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
+        return true;
+        //return temp >= recipe.getProperty(MelterRecipeBuilder.TemperatureProperty.getInstance(), 0);
+    }
+    
+     */
+
+
+    private int getFuelAmount() {
+
+        int fuelAmount = 0;
+        for (IFluidTank fluidTank : fuelFluidImport.getFluidTanks()) {
+
+            FluidStack fuelStack = fluidTank.drain(Integer.MAX_VALUE, false);
+            if (!MiscMethods.isFuel(fuelStack)) continue;
+            fuelAmount += fuelStack.amount;
+        }
+
+        return fuelAmount;
+    }
+
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
@@ -125,6 +137,7 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockController{
         tooltip.add(I18n.format("tekcays_addon.machine.fuel_melter.tooltip.1"));
         tooltip.add(I18n.format("tekcays_addon.machine.fuel_melter.tooltip.2"));
         tooltip.add(I18n.format("tekcays_addon.machine.fuel_melter.tooltip.3"));
+        tooltip.add(I18n.format("tekcays_addon.machine.fuel_melter.tooltip.4"));
     }
 
     @Override
@@ -156,20 +169,22 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockController{
                 textList.add((new TextComponentTranslation("gregtech.multiblock.not_enough_energy")).setStyle((new Style()).setColor(TextFormatting.RED)));
             }
 
+            ///////////Current temperature
 
             textList.add(new TextComponentTranslation("tekcays_addon.multiblock.fuel_melter.tooltip.1", temp));
-            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.fuel_melter.tooltip.4", temperatureFuelCost(temp)));
 
-            /*
+            ///////////L/t consumption
 
-            ITextComponent buttonText = new TextComponentTranslation("tekcays_addon.multiblock.fuel_melter.tooltip.3");
-            buttonText.appendText(" ");
-            buttonText.appendSibling(withButton(new TextComponentString("[-]"), "sub"));
-            buttonText.appendText(" ");
-            buttonText.appendSibling(withButton(new TextComponentString("[+]"), "add"));
-            textList.add(buttonText);
+            if (getFuelAmount() > temperatureFuelCost(this.temp)) {
 
-             */
+                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.fuel_melter.tooltip.4", temperatureFuelCost(temp)));
+            } else {
+                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.fuel_melter.tooltip.4", 0));
+            }
+
+
+
+            ///////////Target Temperature
 
             textList.add(new TextComponentTranslation("tekcays_addon.multiblock.fuel_melter.tooltip.5", targetTemp));
 
@@ -177,27 +192,11 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockController{
             if (!canAchieveTargetTemp && hasEnoughFuel)
                 textList.add(new TextComponentTranslation("tekcays_addon.multiblock.fuel_melter.tooltip.2")
                         .setStyle(new Style().setColor(TextFormatting.RED)));
-            /*
-            if (!hasEnoughFuel)
-                textList.add(new TextComponentTranslation("gregtech.multiblock.not_enough_energy")
-                        .setStyle(new Style().setColor(TextFormatting.RED)));
 
-             */
 
         }
     }
 
-    /*
-    @Override
-    protected void handleDisplayClick(String componentData, Widget.ClickData clickData) {
-        super.handleDisplayClick(componentData, clickData);
-        int modifier = componentData.equals("add") ? 1 : -1;
-        targetTemp += 5 * modifier;
-        if (targetTemp < 300)
-            targetTemp = 300;
-    }
-
-     */
 
     protected IBlockState getCasingState() {
         return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.INVAR_HEATPROOF);
@@ -222,15 +221,15 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockController{
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RelativeDirection.FRONT, RelativeDirection.UP, RelativeDirection.RIGHT)
                 .aisle("FFF", "CCC", "CCC", "XXX")
-                .aisle("FFF", "C#C", "C#C", "SMX")
+                .aisle("SFF", "C#C", "C#C", "XMX")
                 .aisle("FFF", "CCC", "CCC", "XXX")
                 .where('S', selfPredicate())
-                .where('X', states(getCasingState()).setMinGlobalLimited(9)
-                        .or(autoAbilities(true, true, true, true, false, true, false)))
-                .where('F', firebox().setMinGlobalLimited(4)
-                        .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setMinGlobalLimited(1))
-                        .or(abilities(MultiblockAbility.IMPORT_ITEMS).setMaxGlobalLimited(1)))
+                .where('X', states(getCasingState()).setMinGlobalLimited(4)
+                        .or(autoAbilities(false, true, true, false, false, true, false)))
+                //.where('I', abilities(MultiblockAbility.IMPORT_FLUIDS))
                 .where('M', abilities(MultiblockAbility.MUFFLER_HATCH))
+                .where('F', states(getCasingState()).setMinGlobalLimited(7) //firebox())
+                                .or(abilities(MultiblockAbility.IMPORT_FLUIDS)))
                 .where('C', heatingCoils())
                 .where('#', air())
                 .build();
@@ -279,27 +278,32 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockController{
         setTemp(300);
         super.invalidateStructure();
         resetTileAbilities();
-        replaceFireboxAsActive(false);
+        //replaceFireboxAsActive(false);
     }
 
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
         initializeAbilities();
-        replaceFireboxAsActive(true);
+        //replaceFireboxAsActive(true);
         Object coilType = context.get("CoilType");
-        Object fireboxType = context.get("FireboxType");
+        //Object fireboxType = context.get("FireboxType");
         if (coilType instanceof BlockWireCoil.CoilType) {
             this.targetTemp = ((BlockWireCoil.CoilType) coilType).getCoilTemperature();
+            this.increaseTemp = ((BlockWireCoil.CoilType) coilType).getCoilTemperature() / 200;
         } else {
             this.targetTemp = BlockWireCoil.CoilType.CUPRONICKEL.getCoilTemperature();
+            this.increaseTemp = ((BlockWireCoil.CoilType) coilType).getCoilTemperature() / 200;
         }
 
+        /*
         if (fireboxType instanceof BlockFireboxCasing.FireboxCasingType) {
             this.increaseTemp = ((BlockFireboxCasing.FireboxCasingType) fireboxType).hashCode() * 4;
         } else {
             this.increaseTemp = BlockFireboxCasing.FireboxCasingType.BRONZE_FIREBOX.hashCode() * 4;
         }
+
+         */
 
     }
 
@@ -307,7 +311,7 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockController{
         BlockPos centerPos = getPos().offset(getFrontFacing().getOpposite()).down();
         for (int x = -1; x <= 1; x++) {
             for (int z = -1; z <= 1; z++) {
-                BlockPos blockPos = centerPos.add(x, 0, z);
+                BlockPos blockPos = centerPos.add(x, 0, z); //
                 IBlockState blockState = getWorld().getBlockState(blockPos);
                 if (blockState.getBlock() instanceof BlockFireboxCasing) {
                     blockState = blockState.withProperty(BlockFireboxCasing.ACTIVE, isActive);
@@ -317,20 +321,10 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockController{
         }
     }
 
+
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityFuelMelter(metaTileEntityId);
-    }
-
-    public int temperatureFuelCost(int temp) {
-        return temp <= 300 ? 0 : (int) Math.exp(((double) temp - 100) / 100);
-    }
-
-    // Is the inverse of the previous function.
-    public static int temperatureForEnergy(int EUt) {
-        if (EUt <= 8)
-            return 300;
-        return (int) (Math.log(EUt) * 100) + 100;
     }
 
     @Override
@@ -387,12 +381,6 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockController{
         this.hasEnoughFuel = buf.readBoolean();
     }
 
-
-    @Override
-    public boolean checkRecipe(Recipe recipe, boolean consumeIfSuccess) {
-        return this.temp >= recipe.getProperty(TemperatureProperty.getInstance(), 0);
-    }
-
     @Override
     public int getLightValueForPart(IMultiblockPart sourcePart) {
         return sourcePart == null && temp > 300 ? 15 : 0;
@@ -402,38 +390,39 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockController{
         return temp > 300 && this.recipeMapWorkable.isWorkingEnabled();
     }
 
-    /*
-    public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
-        super.renderMetaTileEntity(renderState, translation, pipeline);
-        this.getFrontOverlay().renderOrientedState(renderState, translation, pipeline, this.getFrontFacing(), temp > 300, this.recipeMapWorkable.isWorkingEnabled());
-    }
-
-     */
-
-    ///////////////////From LargeBoiler
 
     @Override
     public void initializeAbilities() {
-        this.fluidImportInventory = new FluidTankList(true, getAbilities(MultiblockAbility.IMPORT_FLUIDS));
+        this.fuelFluidImport = new FluidTankList(true, getAbilities(MultiblockAbility.IMPORT_FLUIDS));
+        this.inputInventory = new ItemHandlerList(getAbilities(MultiblockAbility.IMPORT_ITEMS));
+        this.outputFluidInventory = new FluidTankList(true, getAbilities(MultiblockAbility.EXPORT_FLUIDS));
     }
 
     private void resetTileAbilities() {
-        this.fluidImportInventory = new FluidTankList(true);
+        this.fuelFluidImport = new FluidTankList(true);
+        this.inputInventory = new ItemStackHandler(0);
+        this.outputFluidInventory = new FluidTankList(true);
     }
 
     private boolean isFireboxPart(IMultiblockPart sourcePart) {
         return isStructureFormed() && (((MetaTileEntity) sourcePart).getPos().getY() < getPos().getY());
     }
 
-    @Override
-    public FluidTankList getImportFluids() {
-        return fluidImportInventory;
-    }
 
 
-    @Override
-    protected boolean shouldShowVoidingModeButton() {
-        return false;
+
+    private static class FuelMelterLogic extends MultiblockRecipeLogic {
+
+        public FuelMelterLogic(RecipeMapMultiblockController tileEntity) {
+            super(tileEntity);
+        }
+
+        @Override
+        protected int[] calculateOverclock(Recipe recipe) {
+            return new int[]{0, recipe.getDuration()};
+        }
+
+
     }
 
 

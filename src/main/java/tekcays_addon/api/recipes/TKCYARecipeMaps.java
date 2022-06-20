@@ -30,13 +30,8 @@ public class TKCYARecipeMaps {
             .setSound(GTSounds.ARC);
 
     @ZenProperty
-    public static final RecipeMap<PrimitiveMelterRecipeBuilder> PRIMITIVE_MELTER_RECIPES = new RecipeMap<>(
-            "primitive_melter", 1, 2, 0, 1, 0, 1, 1, 1, new PrimitiveMelterRecipeBuilder(), false)
-            .setSound(GTSounds.FURNACE);
-
-    @ZenProperty
-    public static final RecipeMap<ElectricMelterRecipeBuilder> ELECTRIC_MELTER_RECIPES = new RecipeMap<>(
-            "electric_melter", 1, 1, 0, 1, 0, 0, 1, 1, new ElectricMelterRecipeBuilder(), false)
+    public static final RecipeMap<MelterRecipeBuilder> MELTER_RECIPES = new RecipeMap<>(
+            "primitive_melter", 1, 1, 0, 0, 0, 0, 1, 1, new MelterRecipeBuilder(), false)
             .setSound(GTSounds.FURNACE);
 
     @ZenProperty

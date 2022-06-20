@@ -25,13 +25,13 @@ public class TKCYAMeltingRecipeHandler {
 
     public static void registerMeltingRecipes(Material material) {
 
-    TKCYARecipeMaps.PRIMITIVE_MELTER_RECIPES.recipeBuilder()
+    TKCYARecipeMaps.MELTER_RECIPES.recipeBuilder()
             .input(dust, material)
             .fluidOutputs(material.getFluid(L))
             .duration((int) material.getMass())
             .buildAndRegister();
 
-    TKCYARecipeMaps.ELECTRIC_MELTER_RECIPES.recipeBuilder()
+    TKCYARecipeMaps.MELTER_RECIPES.recipeBuilder()
             .setTemp(material.getFluid().getTemperature())
             .input(dust, material)
             .fluidOutputs(material.getFluid(L))

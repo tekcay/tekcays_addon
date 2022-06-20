@@ -22,7 +22,7 @@ public class TKCYANoFormulaMaterials {
                 .color(0xf1cd91).iconSet(SAND)
                 .build();
 
-        Fuel = new Material.Builder(24000, "fuel")
+        Fuel = new Material.Builder(24003, "fuel")
                 .fluid()
                 .color(0xf6ad30)
                 .build();
