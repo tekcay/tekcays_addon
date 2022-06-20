@@ -120,6 +120,7 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController{
         return temp >= recipe.getProperty(MelterRecipeBuilder.TemperatureProperty.getInstance(), 0);
     }
 
+
     @Override
     public void initializeAbilities() {
         this.energyImport = new EnergyContainerList(getAbilities(MultiblockAbility.INPUT_ENERGY));
@@ -133,6 +134,8 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController{
         this.inputInventory = new ItemStackHandler(0);
         this.outputFluidInventory = new FluidTankList(true);
     }
+
+
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {

@@ -106,14 +106,12 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockController{
         return false;
     }
 
-    /*
+
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
         return true;
         //return temp >= recipe.getProperty(MelterRecipeBuilder.TemperatureProperty.getInstance(), 0);
     }
-    
-     */
 
 
     private int getFuelAmount() {
@@ -389,7 +387,6 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockController{
     public boolean canCreateSound() {
         return temp > 300 && this.recipeMapWorkable.isWorkingEnabled();
     }
-
 
     @Override
     public void initializeAbilities() {
