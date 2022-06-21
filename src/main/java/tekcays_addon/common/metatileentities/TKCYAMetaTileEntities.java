@@ -27,12 +27,14 @@ public class TKCYAMetaTileEntities {
 
     public static SimpleMachineMetaTileEntity[] CLUSTER_MILL = new SimpleMachineMetaTileEntity[5];
     public static SimpleMachineMetaTileEntity[] ADVANCED_POLARIZER = new SimpleMachineMetaTileEntity[5];
+    public static SimpleNoEnergyMachineMetaTileEntity[] CASTING_TABLE = new SimpleNoEnergyMachineMetaTileEntity[1];
 
     public static MetaTileEntityPrimitiveMelter PRIMITIVE_MELTER;
     public static MetaTileEntityElectricMelter ELECTRIC_MELTER;
     public static MetaTileEntityFuelMelter FUEL_MELTER;
     public static MetaTileEntityAlloyingCrucible ALLOYING_CRUCIBLE;
-    public static MetaTileEntityCastingTable CASTING_TABLE;
+    //public static MetaTileEntityCastingTable CASTING_TABLE;
+
     public static SteamCooler STEAM_COOLER_BRONZE;
     public static SteamCooler STEAM_COOLER_STEEL;
 
@@ -62,6 +64,8 @@ public class TKCYAMetaTileEntities {
 
         if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
             //CASTING_TABLE = registerMetaTileEntity(11014, new MetaTileEntityCastingTable(tkcyaId("casting_table")));
+            registerSimpleNoEnergyMetaTileEntity(CASTING_TABLE, 11014, "casting_table", TKCYARecipeMaps.CASTING_TABLE_RECIPES,
+                    TKCYATextures.CASTING_TABLE_OVERLAY, true, TKCYAMetaTileEntities::tkcyaId, GTUtility.hvCappedTankSizeFunction);
 
             STEAM_COOLER_BRONZE = registerMetaTileEntity(11015, new SteamCooler(tkcyaId("steam_cooler_bronze"), false));
             STEAM_COOLER_STEEL = registerMetaTileEntity(11016, new SteamCooler(tkcyaId("steam_cooler_steel"), true));
