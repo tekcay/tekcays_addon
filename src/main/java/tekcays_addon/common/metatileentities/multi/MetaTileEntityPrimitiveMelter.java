@@ -21,8 +21,6 @@ import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.render.TKCYATextures;
 
-import static gregtech.api.unification.material.Materials.Iron;
-
 public class MetaTileEntityPrimitiveMelter extends RecipeMapMultiblockController {
 
     public MetaTileEntityPrimitiveMelter(ResourceLocation metaTileEntityId) {

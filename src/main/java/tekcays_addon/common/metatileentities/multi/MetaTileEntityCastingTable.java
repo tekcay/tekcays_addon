@@ -1,4 +1,4 @@
-package tekcays_addon.common.metatileentities.single;
+package tekcays_addon.common.metatileentities.multi;
 
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
@@ -14,7 +14,6 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.RecipeMapPrimitiveMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.recipes.ModHandler;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 
@@ -68,9 +67,9 @@ public class MetaTileEntityCastingTable extends RecipeMapPrimitiveMultiblockCont
 
     @Override
     protected FluidTankList createImportFluidHandler() { //TODO Not working properly
-        //this.airInputFluidTank = new FilteredFluidHandler(2000);//.setFillPredicate(MiscMethods::isAir);
-        this.moltenInputFluidTank = new FilteredFluidHandler(2000);//.setFillPredicate(MiscMethods::isNotAir);
-        return new FluidTankList(false, moltenInputFluidTank);
+        this.airInputFluidTank = new FilteredFluidHandler(2000).setFillPredicate(MiscMethods::isAir);
+        this.moltenInputFluidTank = new FilteredFluidHandler(2000).setFillPredicate(MiscMethods::isNotAir);
+        return new FluidTankList(true, moltenInputFluidTank);
     }
 
     @Override
@@ -80,7 +79,7 @@ public class MetaTileEntityCastingTable extends RecipeMapPrimitiveMultiblockCont
                 .widget(new LabelWidget(5, 5, getMetaFullName()))
                 .widget(new SlotWidget(importItems, 0, 52, 38, true, true)
                         .setBackgroundTexture(GuiTextures.SLOT))
-                .widget(new TankWidget(moltenInputFluidTank, 20, 50, 20, 18)
+                .widget(new TankWidget(airInputFluidTank, 20, 50, 20, 18)
                         .setBackgroundTexture(GuiTextures.FLUID_TANK_BACKGROUND))
                 .widget(new TankWidget(moltenInputFluidTank, 20, 25, 20, 18)
                         .setBackgroundTexture(GuiTextures.FLUID_TANK_BACKGROUND))

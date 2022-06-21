@@ -37,6 +37,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.ItemStackHandler;
+import tekcays_addon.api.metatileentity.mutiblock.RecipeMapMultiblockNoEnergyController;
 import tekcays_addon.api.pattern.TKCYATraceabilityPredicate;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.recipes.builders.MelterRecipeBuilder;
@@ -49,7 +50,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class MetaTileEntityFuelMelter extends RecipeMapMultiblockController{
+public class MetaTileEntityFuelMelter extends RecipeMapMultiblockNoEnergyController {
 
 
     private int temp, targetTemp, increaseTemp;
@@ -58,7 +59,7 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockController{
 
     public MetaTileEntityFuelMelter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.MELTER_RECIPES);
-        this.recipeMapWorkable = new MetaTileEntityFuelMelter.FuelMelterLogic(this);
+        //this.recipeMapWorkable = new FuelMelterLogic(this);
 
         temp = 300;
     }
@@ -109,8 +110,7 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockController{
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        return true;
-        //return temp >= recipe.getProperty(MelterRecipeBuilder.TemperatureProperty.getInstance(), 0);
+        return temp >= recipe.getProperty(MelterRecipeBuilder.TemperatureProperty.getInstance(), 0);
     }
 
 

@@ -10,7 +10,7 @@ import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.metatileentities.multi.*;
-import tekcays_addon.common.metatileentities.single.MetaTileEntityCastingTable;
+import tekcays_addon.common.metatileentities.multi.MetaTileEntityCastingTable;
 import tekcays_addon.common.metatileentities.steam.SteamCooler;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
