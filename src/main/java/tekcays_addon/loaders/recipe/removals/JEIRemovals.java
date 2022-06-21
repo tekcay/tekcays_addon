@@ -42,6 +42,7 @@ public class JEIRemovals implements IModPlugin { {
             }
             ingredientBlacklist.addIngredientToBlacklist(STEAM_ALLOY_SMELTER_BRONZE.getStackForm());
             ingredientBlacklist.addIngredientToBlacklist(STEAM_ALLOY_SMELTER_STEEL.getStackForm());
+
         }
 
         if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
@@ -51,10 +52,10 @@ public class JEIRemovals implements IModPlugin { {
         }
 
         if (TKCYAConfigHolder.energyOverhaul.disableGasTurbinesOverhaul) {
-            for (int i = GTValues.LV; i < GTValues.HV + 1; i++) {
+            for (int i = GTValues.LV; i < GTValues.HV; i++) {
                 ingredientBlacklist.addIngredientToBlacklist(GAS_TURBINE[i].getStackForm());
             }
-            ingredientBlacklist.addIngredientToBlacklist(LARGE_GAS_TURBINE);
+            ingredientBlacklist.addIngredientToBlacklist(LARGE_GAS_TURBINE.getStackForm());
         }
 
 
