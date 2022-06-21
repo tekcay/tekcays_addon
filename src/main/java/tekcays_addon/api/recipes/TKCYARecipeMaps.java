@@ -38,9 +38,9 @@ public class TKCYARecipeMaps {
     public static final RecipeMap<PrimitiveRecipeBuilder> ALLOYING_CRUCIBLE_RECIPES = new RecipeMap<>(
             "alloying_crucible", 0, 0, 0, 0, 1, 8, 1, 1, new PrimitiveRecipeBuilder(), false)
             .setSound(GTSounds.CHEMICAL_REACTOR);
-
     @ZenProperty
     public static final RecipeMap<PrimitiveRecipeBuilder> CASTING_TABLE_RECIPES = new RecipeMap<>(
-            "casting_table", 1, 1, 0, 1, 1, 2, 0, 0, new PrimitiveRecipeBuilder(), false)
+            "casting_table", 1, 1, 0, 1, 1, 2, 0, 1, new PrimitiveRecipeBuilder(), false)
             .setSound(GTSounds.CHEMICAL_REACTOR);
+
 }
