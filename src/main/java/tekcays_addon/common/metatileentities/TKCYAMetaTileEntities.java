@@ -12,8 +12,6 @@ import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.metatileentities.multi.*;
 import tekcays_addon.common.metatileentities.steam.SteamCooler;
 
-import java.util.function.Function;
-
 import static gregtech.common.metatileentities.MetaTileEntities.*;
 
 public class TKCYAMetaTileEntities {

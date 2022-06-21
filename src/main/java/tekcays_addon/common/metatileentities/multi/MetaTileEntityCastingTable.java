@@ -28,8 +28,6 @@ import javax.annotation.Nonnull;
 
 public class MetaTileEntityCastingTable extends RecipeMapPrimitiveMultiblockController {
 
-    protected FluidTank airInputFluidTank, moltenInputFluidTank;
-
     public MetaTileEntityCastingTable(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.CASTING_TABLE_RECIPES);
     }
@@ -64,7 +62,7 @@ public class MetaTileEntityCastingTable extends RecipeMapPrimitiveMultiblockCont
         return sourcePart == null && recipeMapWorkable.isActive() ? 15 : 0;
     }
 
-
+    /*
     @Override
     protected FluidTankList createImportFluidHandler() { //TODO Not working properly
         this.airInputFluidTank = new FilteredFluidHandler(2000).setFillPredicate(MiscMethods::isAir);
@@ -72,21 +70,34 @@ public class MetaTileEntityCastingTable extends RecipeMapPrimitiveMultiblockCont
         return new FluidTankList(true, moltenInputFluidTank);
     }
 
+     */
+
+
+
     @Override
     protected ModularUI.Builder createUITemplate(EntityPlayer entityPlayer) {
         return ModularUI.builder(GuiTextures.BACKGROUND, 176, 166)
                 .shouldColor(false)
                 .widget(new LabelWidget(5, 5, getMetaFullName()))
+
                 .widget(new SlotWidget(importItems, 0, 52, 38, true, true)
                         .setBackgroundTexture(GuiTextures.SLOT))
-                .widget(new TankWidget(airInputFluidTank, 20, 50, 20, 18)
-                        .setBackgroundTexture(GuiTextures.FLUID_TANK_BACKGROUND))
-                .widget(new TankWidget(moltenInputFluidTank, 20, 25, 20, 18)
-                        .setBackgroundTexture(GuiTextures.FLUID_TANK_BACKGROUND))
+
+                .widget(new TankWidget(importFluids.getTankAt(0), 20, 50, 18, 18)
+                        .setBackgroundTexture(GuiTextures.FLUID_SLOT)
+                        .setAlwaysShowFull(true)
+                        .setContainerClicking(true, true))
+                .widget(new TankWidget(importFluids.getTankAt(1), 20, 25, 18, 18)
+                        .setBackgroundTexture(GuiTextures.FLUID_SLOT)
+                        .setAlwaysShowFull(true)
+                        .setContainerClicking(true, true))
+
                 .widget(new RecipeProgressWidget(recipeMapWorkable::getProgressPercent, 77, 39, 20, 15,
                         GuiTextures.PROGRESS_BAR_BATH, ProgressWidget.MoveType.HORIZONTAL, TKCYARecipeMaps.CASTING_TABLE_RECIPES))
+
                 .widget(new SlotWidget(exportItems, 0, 104, 38, true, false)
                         .setBackgroundTexture(GuiTextures.SLOT))
+
                 .bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 0);
     }
 
