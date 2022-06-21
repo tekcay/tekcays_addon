@@ -11,6 +11,12 @@ tkcya.machine.advanced_polarizer.hv.name=Polarizer HV
 tkcya.machine.advanced_polarizer.ev.name=Polarizer EV
 tkcya.machine.advanced_polarizer.iv.name=Polarizer IV
 
+tkcya.machine.casting_table.lv.name=Casting Table LV
+tkcya.machine.casting_table.mv.name=Casting Table MV
+tkcya.machine.casting_table.hv.name=Casting Table HV
+tkcya.machine.casting_table.ev.name=Casting Table EV
+tkcya.machine.casting_table.iv.name=Casting Table IV
+
 tkcya.machine.steam_cooler_bronze.name=Steam Cooler
 tkcya.machine.steam_cooler_steel.name=High Pressure Steam Cooler
 
