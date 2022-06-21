@@ -1,5 +1,7 @@
 package tekcays_addon.loaders.recipe;
 
+import gregtech.api.recipes.GTRecipeHandler;
+import gregtech.api.recipes.RecipeMaps;
 import tekcays_addon.loaders.recipe.chains.*;
 import tekcays_addon.loaders.recipe.handlers.*;
 
@@ -23,6 +25,7 @@ public class TKCYARecipeLoader {
 
         if (meltingOverhaul.enableAlloyingOverhaul) {
             TKCYAPartsRecipeHandler.removeAlloySmelter();
+            GTRecipeHandler.removeAllRecipes(RecipeMaps.PRIMITIVE_BLAST_FURNACE_RECIPES);
         }
 
         if (miscOverhaul.enableMagneticOverhaul) {

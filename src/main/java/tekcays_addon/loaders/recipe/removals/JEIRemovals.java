@@ -43,6 +43,8 @@ public class JEIRemovals implements IModPlugin { {
             ingredientBlacklist.addIngredientToBlacklist(STEAM_ALLOY_SMELTER_BRONZE.getStackForm());
             ingredientBlacklist.addIngredientToBlacklist(STEAM_ALLOY_SMELTER_STEEL.getStackForm());
 
+            ingredientBlacklist.addIngredientToBlacklist(PRIMITIVE_BLAST_FURNACE.getStackForm());
+
         }
 
         if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
