@@ -39,8 +39,8 @@ public class TKCYAAlloyingCrucibleRecipeHandler {
         int outputMultiplier = 0;
 
         for (MaterialStack ms : material.getMaterialComponents()) {
-            if (!ms.material.hasProperty(PropertyKey.FLUID)) break;
-            if (ms.material.getFluid().isGaseous()) break; // Will make special recipes for those
+            if (!ms.material.hasProperty(PropertyKey.FLUID)) continue;
+            if (ms.material.getFluid().isGaseous()) continue; // Will make special recipes for those
             outputMultiplier += ms.amount;
             if (ms.material == Carbon) {
                 containsCarbon = true;
@@ -49,6 +49,7 @@ public class TKCYAAlloyingCrucibleRecipeHandler {
             }
         }
 
+        if (f.size() < 2) return;
         if (f.size() != material.getMaterialComponents().size() && !containsCarbon) return; //Means that some materials were removed
 
         if (!containsCarbon) {
