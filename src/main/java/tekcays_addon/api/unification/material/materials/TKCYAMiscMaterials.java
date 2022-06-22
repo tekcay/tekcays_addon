@@ -8,11 +8,11 @@ import static tekcays_addon.api.unification.TKCYAMaterials.*;
 
 public class TKCYAMiscMaterials {
 
-    public static void init({
+    public static void init(){
 
         HotAir = new Material.Builder(24101, "hot_air")
                 .fluid()
-                .components(Materials.Air)
+                .components(Materials.Air, 1)
                 .color(0xf6ad30).iconSet(DULL)
                 .build();
 

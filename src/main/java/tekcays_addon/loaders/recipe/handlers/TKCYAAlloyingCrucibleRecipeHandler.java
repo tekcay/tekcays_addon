@@ -11,7 +11,6 @@ import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import static gregtech.api.GTValues.L;
 import static gregtech.api.unification.material.Materials.Carbon;
 import static gregtech.api.unification.material.info.MaterialFlags.DISABLE_DECOMPOSITION;
-import static gregtech.api.unification.ore.OrePrefix.dust;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,7 +48,7 @@ public class TKCYAAlloyingCrucibleRecipeHandler {
             }
         }
 
-        if (f.size() < 2) return; /To remove element materials
+        if (f.size() < 2) return; //To remove element materials
         if (f.size() != material.getMaterialComponents().size() && !containsCarbon) return; //Means that some materials were removed
 
         if (!containsCarbon) {

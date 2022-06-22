@@ -44,7 +44,7 @@ public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<SimpleRecipeBuilder> ELECTRIC_CASTING_RECIPES = new RecipeMap<>(
-            "electric_cating_table", 1, 2, 1, 1, 2, 2, 0, 0, new SimpleRecipeBuilder(), false)
+            "electric_casting_table", 1, 2, 1, 1, 1, 2, 0, 1, new SimpleRecipeBuilder(), false)
             .setSound(GTSounds.MIXER);
 
 

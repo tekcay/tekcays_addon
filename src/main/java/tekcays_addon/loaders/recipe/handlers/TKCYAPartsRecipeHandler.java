@@ -112,11 +112,20 @@ public class TKCYAPartsRecipeHandler {
                         .duration((int) (prefix.getMaterialAmount(material) * material.getFluid().getTemperature() / GTValues.M))
                         .buildAndRegister();
 
+                //Air Cooled
+
+                TKCYARecipeMaps.CASTING_TABLE_RECIPES.recipeBuilder()
+                        .fluidInputs(material.getFluid((int) (prefix.getMaterialAmount(material) * GTValues.L / GTValues.M)), Materials.Air.getFluid(material.getFluid().getTemperature()))
+                        .notConsumable(MOLD_PRODUCTION.get(prefix), m)
+                        .output(prefix, material)
+                        .duration((int) (0.8 * prefix.getMaterialAmount(material) * material.getFluid().getTemperature() / GTValues.M))
+                        .buildAndRegister();
+
                 TKCYARecipeMaps.ELECTRIC_CASTING_RECIPES.recipeBuilder()
                         .fluidInputs(material.getFluid((int) (prefix.getMaterialAmount(material) * GTValues.L / GTValues.M)), Materials.Air.getFluid(material.getFluid().getTemperature()))
                         .notConsumable(MOLD_PRODUCTION.get(prefix), m)
                         .output(prefix, material)
-                        .duration((int) (0.75 * prefix.getMaterialAmount(material) * material.getFluid().getTemperature() / GTValues.M))
+                        .duration((int) (0.6 * prefix.getMaterialAmount(material) * material.getFluid().getTemperature() / GTValues.M))
                         .EUt(30)
                         .buildAndRegister();
 

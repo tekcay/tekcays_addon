@@ -20,6 +20,7 @@ public class TKCYAEventHandlers {
         if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
 
             TKCYAOrePrefixAdditions.moldsInit();
+            TKCYAOrePrefixAdditions.moldsTooltip();
         }
     }
 

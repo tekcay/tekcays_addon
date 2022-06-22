@@ -3,6 +3,9 @@ package tekcays_addon.api.unification.material.ore;
 import gregtech.api.unification.ore.OrePrefix;
 import tekcays_addon.api.unification.material.info.TKCYAMaterialIconType;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static gregtech.api.GTValues.M;
 import static gregtech.api.unification.ore.OrePrefix.Flags.ENABLE_UNIFICATION;
 import static tekcays_addon.api.unification.material.info.TKCYAMaterialFlags.GENERATE_MOLDS;
