@@ -19,6 +19,7 @@ public class TKCYAMetaTileEntities {
 
     public static SimpleMachineMetaTileEntity[] CLUSTER_MILL = new SimpleMachineMetaTileEntity[5];
     public static SimpleMachineMetaTileEntity[] ADVANCED_POLARIZER = new SimpleMachineMetaTileEntity[5];
+    public static SimpleMachineMetaTileEntity[] ELECTRIC_CASTING_TABLE = new SimpleMachineMetaTileEntity[5];
 
     public static MetaTileEntityPrimitiveMelter PRIMITIVE_MELTER;
     public static MetaTileEntityElectricMelter ELECTRIC_MELTER;
@@ -55,6 +56,9 @@ public class TKCYAMetaTileEntities {
 
         if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
             CASTING_TABLE = registerMetaTileEntity(11014, new MetaTileEntityCastingTable(tkcyaId("casting_table")));
+
+            registerSimpleMetaTileEntity(ELECTRIC_CASTING_TABLE, 110017, "advanced_polarizer", TKCYARecipeMaps.ELECTRIC_CASTING_RECIPES,
+                    TKCYATextures.CASTING_TABLE_OVERLAY, true, TKCYAMetaTileEntities::tkcyaId, GTUtility.hvCappedTankSizeFunction);
 
 
             STEAM_COOLER_BRONZE = registerMetaTileEntity(11015, new SteamCooler(tkcyaId("steam_cooler_bronze"), false));

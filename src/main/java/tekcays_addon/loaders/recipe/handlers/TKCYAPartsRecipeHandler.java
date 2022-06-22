@@ -6,11 +6,14 @@ import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.properties.IngotProperty;
 import gregtech.api.unification.material.properties.PropertyKey;
+import gregtech.common.items.MetaItem1;
+import gregtech.common.items.MetaItems;
 import net.minecraft.item.ItemStack;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
+import tekcays_addon.api.unification.TKCYAMaterials;
 
 
 import static gregtech.api.GTValues.LV;
@@ -109,6 +112,27 @@ public class TKCYAPartsRecipeHandler {
                         .duration((int) (prefix.getMaterialAmount(material) * material.getFluid().getTemperature() / GTValues.M))
                         .buildAndRegister();
 
+                TKCYARecipeMaps.ELECTRIC_CASTING_RECIPES.recipeBuilder()
+                        .fluidInputs(material.getFluid((int) (prefix.getMaterialAmount(material) * GTValues.L / GTValues.M)), Materials.Air.getFluid(material.getFluid().getTemperature()))
+                        .notConsumable(MOLD_PRODUCTION.get(prefix), m)
+                        .output(prefix, material)
+                        .duration((int) (0.75 * prefix.getMaterialAmount(material) * material.getFluid().getTemperature() / GTValues.M))
+                        .EUt(30)
+                        .buildAndRegister();
+
+
+                //When using a pump, it outputs Hot Air
+
+                TKCYARecipeMaps.ELECTRIC_CASTING_RECIPES.recipeBuilder()
+                        .fluidInputs(material.getFluid((int) (prefix.getMaterialAmount(material) * GTValues.L / GTValues.M)), Materials.Air.getFluid(material.getFluid().getTemperature()))
+                        .notConsumable(MOLD_PRODUCTION.get(prefix), m)
+                        .notConsumable(MetaItems.ELECTRIC_PUMP_LV)
+                        .output(prefix, material)
+                        .fluidOutputs(TKCYAMaterials.HotAir.getFluid(material.getFluid().getTemperature()))
+                        .duration((int) (0.75 * prefix.getMaterialAmount(material) * material.getFluid().getTemperature() / GTValues.M))
+                        .EUt(30)
+                        .buildAndRegister();
+
             } else { //Otherwise, it burns the mold
 
                 TKCYARecipeMaps.CASTING_TABLE_RECIPES.recipeBuilder()
@@ -118,6 +142,16 @@ public class TKCYAPartsRecipeHandler {
                         .duration(20)
                         .hidden()
                         .buildAndRegister();
+
+                TKCYARecipeMaps.ELECTRIC_CASTING_RECIPES.recipeBuilder()
+                        .fluidInputs(material.getFluid((int) (prefix.getMaterialAmount(material) * GTValues.L / GTValues.M)))
+                        .input(MOLD_PRODUCTION.get(prefix), m)
+                        .output(dust, Materials.Ash)
+                        .duration(20)
+                        .EUt(30)
+                        .hidden()
+                        .buildAndRegister();
+
             }
         }
     }

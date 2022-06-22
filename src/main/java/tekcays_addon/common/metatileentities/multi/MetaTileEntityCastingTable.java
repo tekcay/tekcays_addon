@@ -3,8 +3,6 @@ package tekcays_addon.common.metatileentities.multi;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregtech.api.capability.impl.FilteredFluidHandler;
-import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.*;
@@ -14,19 +12,22 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.RecipeMapPrimitiveMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
+
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 
 import net.minecraft.entity.player.EntityPlayer;
 
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.FluidTank;
+
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.utils.MiscMethods;
+
 
 import javax.annotation.Nonnull;
 
 public class MetaTileEntityCastingTable extends RecipeMapPrimitiveMultiblockController {
+
+    private boolean boostAllowed;
 
     public MetaTileEntityCastingTable(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.CASTING_TABLE_RECIPES);
@@ -111,8 +112,6 @@ public class MetaTileEntityCastingTable extends RecipeMapPrimitiveMultiblockCont
     public boolean hasMaintenanceMechanics() {
         return false;
     }
-
-
 
 
 }

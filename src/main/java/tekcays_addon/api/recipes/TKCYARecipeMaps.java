@@ -12,7 +12,6 @@ import stanhebben.zenscript.annotations.ZenProperty;
 import tekcays_addon.api.recipes.builders.*;
 
 
-
 @ZenExpansion("mods.tkcya.recipe.RecipeMaps")
 @ZenRegister
 public class TKCYARecipeMaps {
@@ -40,7 +39,13 @@ public class TKCYARecipeMaps {
             .setSound(GTSounds.CHEMICAL_REACTOR);
     @ZenProperty
     public static final RecipeMap<PrimitiveRecipeBuilder> CASTING_TABLE_RECIPES = new RecipeMap<>(
-            "casting_table", 1, 1, 0, 1, 1, 2, 0, 1, new PrimitiveRecipeBuilder(), false)
+            "casting_table", 1, 1, 1, 1, 1, 2, 0, 1, new PrimitiveRecipeBuilder(), false)
             .setSound(GTSounds.CHEMICAL_REACTOR);
+
+    @ZenProperty
+    public static final RecipeMap<SimpleRecipeBuilder> ELECTRIC_CASTING_RECIPES = new RecipeMap<>(
+            "electric_cating_table", 1, 2, 1, 1, 2, 2, 0, 0, new SimpleRecipeBuilder(), false)
+            .setSound(GTSounds.MIXER);
+
 
 }

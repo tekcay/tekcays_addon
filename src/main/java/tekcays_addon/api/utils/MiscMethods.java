@@ -22,11 +22,6 @@ public class MiscMethods {
         return false;
     }
 
-    public static boolean isNotAir(@Nullable FluidStack fluid) {
-        if (fluid == null) return false;
-        if (!fluid.isFluidEqual(new FluidStack(Materials.Air.getFluid(), 1))) return false;
 
-        return false;
-    }
 
 }

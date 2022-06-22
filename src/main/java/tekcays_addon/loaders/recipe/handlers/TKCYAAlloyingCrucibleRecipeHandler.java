@@ -21,7 +21,7 @@ public class TKCYAAlloyingCrucibleRecipeHandler {
     public static void init() {
 
         for (Material material : GregTechAPI.MATERIAL_REGISTRY) {
-            if (material.getMaterialComponents().size() == 1) continue; //To remove element materials //TODO seems like it does not work
+            //if (material.getMaterialComponents().size() == 1) continue; //To remove element materials //TODO seems like it does not work
             if (material.hasFlags(DISABLE_DECOMPOSITION)) continue; //To remove polymers & chemicals
             if (!material.hasProperty(PropertyKey.FLUID)) continue;
             if (material.getFluid().getTemperature() <= 300) continue;
@@ -49,7 +49,7 @@ public class TKCYAAlloyingCrucibleRecipeHandler {
             }
         }
 
-        if (f.size() < 2) return;
+        if (f.size() < 2) return; /To remove element materials
         if (f.size() != material.getMaterialComponents().size() && !containsCarbon) return; //Means that some materials were removed
 
         if (!containsCarbon) {
