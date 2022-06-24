@@ -35,7 +35,7 @@ import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.recipes.builders.MelterRecipeBuilder;
+import tekcays_addon.api.recipes.builders.BlastingRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
 
 import javax.annotation.Nonnull;
@@ -119,7 +119,8 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        return temp >= recipe.getProperty(MelterRecipeBuilder.TemperatureProperty.getInstance(), 0);
+        return temp >= recipe.getProperty(BlastingRecipeBuilder.TemperatureProperty.getInstance(), 0)
+                & pressure >= recipe.getProperty(BlastingRecipeBuilder.PressureProperty.getInstance(), 0);
     }
 
 
