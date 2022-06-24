@@ -43,6 +43,9 @@ public class TKCYAConfigHolder {
         @Config.Comment({"Magnetic parts need magnetite", "Default: true"})
         public boolean enableAlloyingOverhaul = true;
 
+        @Config.Comment({"Overhaul for steel making", "Default: true"})
+        public boolean enableBlastingOverhaul = true;
+
         @Config.Comment({"Magnetic parts need magnetite", "Default: true"})
         public boolean enableCastingOverhaul = true;
     }

@@ -26,6 +26,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityFuelMelter FUEL_MELTER;
     public static MetaTileEntityAlloyingCrucible ALLOYING_CRUCIBLE;
     public static MetaTileEntityCastingTable CASTING_TABLE;
+    public static MetaTileEntityElectricPressureBlastFurnace ELECTRIC_PRESSURE_BLAST_FURNACE;
 
     public static SteamCooler STEAM_COOLER_BRONZE;
     public static SteamCooler STEAM_COOLER_STEEL;
@@ -63,6 +64,11 @@ public class TKCYAMetaTileEntities {
 
             STEAM_COOLER_BRONZE = registerMetaTileEntity(11020, new SteamCooler(tkcyaId("steam_cooler_bronze"), false));
             STEAM_COOLER_STEEL = registerMetaTileEntity(11021, new SteamCooler(tkcyaId("steam_cooler_steel"), true));
+
+        }
+
+        if (TKCYAConfigHolder.meltingOverhaul.enableBlastingOverhaul) {
+            ELECTRIC_PRESSURE_BLAST_FURNACE = registerMetaTileEntity(11022, new MetaTileEntityElectricPressureBlastFurnace(tkcyaId("electric_pressure_blast_furnace")));
 
         }
 
