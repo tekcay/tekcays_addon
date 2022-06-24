@@ -274,7 +274,7 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
                 .aisle("XXX", "CCC", "CCC", "XXX")
                 .where('S', selfPredicate())
                 .where('X', states(getCasingState()).setMinGlobalLimited(9)
-                        .or(autoAbilities(true, true, true, false, true, true, false)))
+                        .or(autoAbilities(true, true, true, true, true, true, false)))
                 .where('M', abilities(MultiblockAbility.MUFFLER_HATCH))
                 .where('C', heatingCoils())
                 .where('#', air())

@@ -47,5 +47,8 @@ public class TKCYARecipeMaps {
             "electric_casting_table", 1, 2, 1, 1, 1, 2, 0, 1, new SimpleRecipeBuilder(), false)
             .setSound(GTSounds.MIXER);
 
-
+    @ZenProperty
+    public static final RecipeMap<BlastingRecipeBuilder> BLASTING_RECIPES = new RecipeMap<>(
+            "pressure_blasting", 0, 2, 0, 2, 1, 2, 0, 1, new BlastingRecipeBuilder(), false)
+            .setSound(GTSounds.COOLING);
 }
