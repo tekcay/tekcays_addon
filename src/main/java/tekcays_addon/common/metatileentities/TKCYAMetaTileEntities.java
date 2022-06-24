@@ -26,10 +26,12 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityFuelMelter FUEL_MELTER;
     public static MetaTileEntityAlloyingCrucible ALLOYING_CRUCIBLE;
     public static MetaTileEntityCastingTable CASTING_TABLE;
-    public static MetaTileEntityElectricPressureBlastFurnace ELECTRIC_PRESSURE_BLAST_FURNACE;
-
     public static SteamCooler STEAM_COOLER_BRONZE;
     public static SteamCooler STEAM_COOLER_STEEL;
+    public static MetaTileEntityElectricPressureBlastFurnace ELECTRIC_PRESSURE_BLAST_FURNACE;
+    public static MetaTilePrimitiveBath PRIMITIVE_BATH;
+
+
 
 
 
@@ -70,6 +72,10 @@ public class TKCYAMetaTileEntities {
         if (TKCYAConfigHolder.meltingOverhaul.enableBlastingOverhaul) {
             ELECTRIC_PRESSURE_BLAST_FURNACE = registerMetaTileEntity(11022, new MetaTileEntityElectricPressureBlastFurnace(tkcyaId("electric_pressure_blast_furnace")));
 
+        }
+
+        if (TKCYAConfigHolder.miscOverhaul.enableGalvanizedSteel) {
+            PRIMITIVE_BATH = registerMetaTileEntity(11023, new MetaTilePrimitiveBath(tkcyaId("primitive_bath")));
         }
 
 

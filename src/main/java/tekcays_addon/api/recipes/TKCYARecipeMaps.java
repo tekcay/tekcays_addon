@@ -51,4 +51,9 @@ public class TKCYARecipeMaps {
     public static final RecipeMap<BlastingRecipeBuilder> BLASTING_RECIPES = new RecipeMap<>(
             "pressure_blasting", 0, 2, 0, 2, 1, 2, 0, 1, new BlastingRecipeBuilder(), false)
             .setSound(GTSounds.COOLING);
+    @ZenProperty
+    public static final RecipeMap<PrimitiveRecipeBuilder> GALVANIZING = new RecipeMap<>(
+            "galvanizing", 1, 1, 1, 1, 1, 1, 0, 0, new PrimitiveRecipeBuilder(), false)
+            .setSound(GTSounds.CHEMICAL_REACTOR);
+
 }
