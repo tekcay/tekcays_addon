@@ -44,14 +44,19 @@ import java.util.List;
 
 public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultiblockController{
 
+    // Temperature
     private int temp, targetTemp, increaseTemp;
+    private boolean canAchieveTargetTemp;
+    //GasPressure
     private int pressure, targetPressure, increasePressure;
-    private boolean canAchieveTargetTemp, hasEnoughEnergy;
+    private boolean canAchieveTargetPressure;
+    //Energy
+    private boolean hasEnoughEnergy;
     private IEnergyContainer energyImport;
 
     public MetaTileEntityElectricPressureBlastFurnace(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.MELTER_RECIPES);
-        this.recipeMapWorkable = new ElectricMelterLogic(this);
+        super(metaTileEntityId, TKCYARecipeMaps.BLASTING_RECIPES);
+        this.recipeMapWorkable = new ElectricPressureBlastFurnaceLogic(this);
 
         temp = 300;
         pressure = 1;
@@ -74,6 +79,14 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
         }
     }
 
+    public void setPressure (int pressure) {
+        this.pressure = pressure;
+        if (!getWorld().isRemote) {
+            writeCustomData(600, buf -> buf.writeInt(pressure));
+            markDirty();
+        }
+    }
+
     @Override
     public void updateFormedValid() {
         super.updateFormedValid();
@@ -83,14 +96,23 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
         if (getOffsetTimer() % 20 == 0 && !recipeMapWorkable.isActive()) {
             stepTowardsTargetTemp();
         }
-        else if (temp >= targetTemp) {
-
-            canAchieveTargetTemp = true;
+        else {
+            if (temp >= targetTemp) {
+                canAchieveTargetTemp = true;
+            }
+            if (pressure >= targetPressure) {
+                canAchieveTargetPressure = true;
+            }
         }
     }
     public int temperatureEnergyCost(int temp) {
         return temp <= 300 ? 0 : (int) Math.exp(((double) temp - 100) / 100);  // (int) (1.5 * Math.pow(10, -10) * Math.pow(temp, 3.6) + 10)
     }
+
+    public int pressureEnergyCost(int pressure) {
+        return pressure <= 300 ? 0 : (int) Math.exp(((double) pressure - 100) / 100);
+    }
+
     private void stepTowardsTargetTemp() {
         canAchieveTargetTemp = true;
 
@@ -102,13 +124,25 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
         }
     }
 
+    private void stepTowardsTargetPressure() {
+        canAchieveTargetPressure = true;
+
+        if (pressure >= targetPressure) return;
+        if (getEnergy() >= pressureEnergyCost(pressure + increasePressure)  && hasEnoughEnergy) {
+            setPressure(pressure + increasePressure);
+        } else {
+            canAchieveTargetPressure = false;
+        }
+    }
+
     private boolean drainEnergy() {
 
-        if (getEnergy() != 0 && getEnergy() >= temperatureEnergyCost(temp)) {
-            energyImport.removeEnergy(temperatureEnergyCost(temp));
+        if (getEnergy() != 0 && getEnergy() >= temperatureEnergyCost(temp) + pressureEnergyCost(pressure)) {
+            energyImport.removeEnergy(temperatureEnergyCost(temp) + pressureEnergyCost(pressure));
             return true;
         }
         if (temp - increaseTemp < 300) return false;
+        if (pressure - increasePressure < 1) return false;
         if (getOffsetTimer() % 20 == 0) {
             setTemp(temp - increaseTemp);
         }
@@ -370,9 +404,9 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
 
 
 
-    private static class ElectricMelterLogic extends MultiblockRecipeLogic {
+    private static class ElectricPressureBlastFurnaceLogic extends MultiblockRecipeLogic {
 
-        public ElectricMelterLogic(RecipeMapMultiblockController tileEntity) {
+        public ElectricPressureBlastFurnaceLogic(RecipeMapMultiblockController tileEntity) {
             super(tileEntity);
         }
 
