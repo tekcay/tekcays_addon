@@ -122,3 +122,14 @@ tekcays_addon.multiblock.fuel_melter.tooltip.4=Consumption: %d L/t.
 tekcays_addon.multiblock.fuel_melter.tooltip.5=Target temperature: §a%dK§7.
 
 tekcays_addon.recipe.melter_temperature=Temperature: %dK
+
+tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.1=Temperature: §a%dK§7.
+tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.7=Pressure: §a%d bar§7.
+tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.2=Not enough energy can be inputted to reach the target!
+tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.4=Consumption: %d EU/t.
+tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.5=Target temperature: §a%dK§7.
+tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.6=Target pressure: §a%d bar§7.
+
+tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.1=Only runs recipes if the required temperature and pressure are set.
+tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.2=The §aEU§7 per tick required is exponentially related to the current temperature and pressure.
+tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.3=The target temperature and the temperature increasing speed are set by the coils.
