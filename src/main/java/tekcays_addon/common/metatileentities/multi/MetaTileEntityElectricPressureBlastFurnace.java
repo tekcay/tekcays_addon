@@ -93,13 +93,15 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
     public void updateFormedValid() {
         super.updateFormedValid();
 
-        for (ItemStack itemStack : this.inputInventory)
-            if (this.inputInventory == MetaItems.ELECTRIC_PUMP_LV.getStackForm())
+        //getTargetPressure();
+        //getIncreasePressure();
 
         hasEnoughEnergy = drainEnergy();
 
         if (getOffsetTimer() % 20 == 0 && !recipeMapWorkable.isActive()) {
             stepTowardsTargetTemp();
+        }
+        else if (getOffsetTimer() % 200 == 0 && !recipeMapWorkable.isActive()) {
             stepTowardsTargetPressure();
         }
         else {
@@ -111,6 +113,26 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
             }
         }
     }
+
+    /*
+    private void getTargetPressure(){ //Depends of the pump tier
+
+        for (ItemStack itemStack : this.inputInventory)
+            if (inputInventory. == MetaItems.ELECTRIC_PUMP_LV.getStackForm())
+                targetPressure = 1;
+
+    }
+
+    private void getIncreasePressure(){ //Depends of the amount of pumps
+
+        for (ItemStack itemStack : this.inputInventory)
+            if (inputInventory. == MetaItems.ELECTRIC_PUMP_LV.getStackForm())
+                increasePressure = 1;
+
+    }
+
+     */
+
     public int temperatureEnergyCost(int temp) {
         return temp <= 300 ? 0 : (int) Math.exp(((double) temp - 100) / 100);  // (int) (1.5 * Math.pow(10, -10) * Math.pow(temp, 3.6) + 10)
     }
@@ -168,6 +190,8 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
     public void initializeAbilities() {
         this.energyImport = new EnergyContainerList(getAbilities(MultiblockAbility.INPUT_ENERGY));
         this.inputInventory = new ItemHandlerList(getAbilities(MultiblockAbility.IMPORT_ITEMS));
+        this.outputInventory = new ItemHandlerList(getAbilities(MultiblockAbility.EXPORT_ITEMS));
+        this.inputFluidInventory= new FluidTankList(true, getAbilities(MultiblockAbility.IMPORT_FLUIDS));
         this.outputFluidInventory = new FluidTankList(true, getAbilities(MultiblockAbility.EXPORT_FLUIDS));
     }
 
@@ -175,6 +199,8 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
     public void resetTileAbilities() {
         this.energyImport = new EnergyContainerList(Lists.newArrayList());
         this.inputInventory = new ItemStackHandler(0);
+        this.outputInventory = new ItemStackHandler(0);
+        this.inputFluidInventory= new FluidTankList(true);
         this.outputFluidInventory = new FluidTankList(true);
     }
 
@@ -240,7 +266,7 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
 
             textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.5", targetTemp));
 
-            ///////////Target Temperature
+            ///////////Target Pressure
 
             textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.6", targetPressure));
 
@@ -273,7 +299,7 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
                 .aisle("SXX", "C#C", "C#C", "XMX")
                 .aisle("XXX", "CCC", "CCC", "XXX")
                 .where('S', selfPredicate())
-                .where('X', states(getCasingState()).setMinGlobalLimited(9)
+                .where('X', states(getCasingState()).setMinGlobalLimited(5)
                         .or(autoAbilities(true, true, true, true, true, true, false)))
                 .where('M', abilities(MultiblockAbility.MUFFLER_HATCH))
                 .where('C', heatingCoils())
@@ -322,6 +348,7 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
     @Override
     public void invalidateStructure() {
         setTemp(300);
+        setPressure(1);
         super.invalidateStructure();
         resetTileAbilities();
     }
@@ -356,6 +383,9 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
         data.setInteger("temp", this.temp);
         data.setInteger("targetTemp", this.targetTemp);
         data.setBoolean("canAchieveTargetTemp", this.canAchieveTargetTemp);
+        data.setInteger("pressure", this.pressure);
+        data.setInteger("targetPressure", this.targetPressure);
+        data.setBoolean("canAchieveTargetPressure", this.canAchieveTargetPressure);
         data.setBoolean("hasEnoughEnergy", this.hasEnoughEnergy);
         return data;
     }
@@ -375,6 +405,9 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
         this.temp = data.getInteger("temp");
         this.targetTemp = data.getInteger("targetTemp");
         this.canAchieveTargetTemp = data.getBoolean("canAchieveTargetTemp");
+        this.pressure = data.getInteger("pressure");
+        this.targetPressure = data.getInteger("targetPressure");
+        this.canAchieveTargetPressure= data.getBoolean("canAchieveTargetPressure");
         this.hasEnoughEnergy = data.getBoolean("hasEnoughEnergy");
     }
 
@@ -384,6 +417,9 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
         buf.writeInt(this.temp);
         buf.writeInt(this.targetTemp);
         buf.writeBoolean(this.canAchieveTargetTemp);
+        buf.writeInt(this.pressure);
+        buf.writeInt(this.targetPressure;
+        buf.writeBoolean(this.canAchieveTargetPressure;
         buf.writeBoolean(this.hasEnoughEnergy);
     }
 
@@ -393,6 +429,9 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
         this.temp = buf.readInt();
         this.targetTemp = buf.readInt();
         this.canAchieveTargetTemp = buf.readBoolean();
+        this.pressure = buf.readInt();
+        this.targetPressure = buf.readInt();
+        this.canAchieveTargetPressure = buf.readBoolean();
         this.hasEnoughEnergy = buf.readBoolean();
     }
     @Override
@@ -400,7 +439,7 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
         return sourcePart == null && temp > 300 ? 15 : 0;
     }
     public boolean canCreateSound() {
-        return temp > 300 || this.recipeMapWorkable.isActive();
+        return temp > 300 || pressure > 1 || this.recipeMapWorkable.isActive();
     }
     @Override
     public SoundEvent getSound() {

@@ -34,6 +34,7 @@ tkcya.machine.electric_melter.name=Electric Melter
 tkcya.machine.fuel_melter.name=Fuel Melter
 tkcya.machine.alloying_crucible.name=Alloying Crucible
 tkcya.machine.casting_table.name=Casting Table
+tkcya.machine.electric_pressure_blast_furnace.name=Electric Pressure Blast Furnace
 
 
 # multiblock descriptions
