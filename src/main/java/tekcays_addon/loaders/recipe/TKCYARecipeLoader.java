@@ -46,6 +46,10 @@ public class TKCYARecipeLoader {
             Coils.init();
         }
 
+        if (miscOverhaul.enableGalvanizedSteel) {
+            GalvanizingRecipeHandler.init();
+        }
+
     }
 
 

@@ -32,6 +32,9 @@ public class TKCYAConfigHolder {
 
         @Config.Comment({"Disable IV+ tier machines", "Default: true"})
         public boolean disableHighTierMachines = true;
+
+        @Config.Comment({"Replace normal steel with galvanized steel", "Default: true"})
+        public boolean enableGalvanizedSteel = true;
     }
 
 

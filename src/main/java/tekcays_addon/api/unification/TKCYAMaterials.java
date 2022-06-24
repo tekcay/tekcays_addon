@@ -20,7 +20,7 @@ public class TKCYAMaterials {
         // 24101-24200
         TKCYAMiscMaterials.init();
 
-        // Alloys 3000-3019
+        // Alloys 24201-24300
         TKCYAAlloys.init();
 
         // Second Degree 3020-3039
@@ -33,7 +33,7 @@ public class TKCYAMaterials {
     }
 
 
-    public static Material HotAir;
+
 
     /**
      * No Formula
@@ -46,6 +46,15 @@ public class TKCYAMaterials {
     /**
      * Misc
      */
+
+    public static Material HotAir;
+
+
+    /**
+     * Alloys
+     */
+
+    public static Material GalvanizedSteel;
 
 
 

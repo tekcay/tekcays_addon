@@ -138,7 +138,7 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
     }
 
     public int pressureEnergyCost(int pressure) {
-        return pressure <= 300 ? 0 : (int) Math.exp(((double) pressure - 100) / 100);
+        return pressure <= 1 ? 0 : (int) Math.exp(((double) pressure - 100) / 100);
     }
 
     private void stepTowardsTargetTemp() {
