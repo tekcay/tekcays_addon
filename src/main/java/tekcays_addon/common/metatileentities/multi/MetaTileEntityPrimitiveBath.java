@@ -20,16 +20,16 @@ import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
 import javax.annotation.Nonnull;
 
-public class MetaTilePrimitiveBath extends RecipeMapPrimitiveMultiblockController {
+public class MetaTileEntityPrimitiveBath extends RecipeMapPrimitiveMultiblockController {
 
 
-    public MetaTilePrimitiveBath(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.GALVANIZING;
+    public MetaTileEntityPrimitiveBath(ResourceLocation metaTileEntityId) {
+        super(metaTileEntityId, TKCYARecipeMaps.GALVANIZING);
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTilePrimitiveBath(metaTileEntityId);
+        return new MetaTileEntityPrimitiveBath(metaTileEntityId);
     }
 
     @Override

@@ -251,7 +251,7 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
 
             ///////////Current pressure
 
-            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.7", pressure);
+            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.7", pressure));
 
             ///////////EU/t consumption
 
@@ -418,8 +418,8 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
         buf.writeInt(this.targetTemp);
         buf.writeBoolean(this.canAchieveTargetTemp);
         buf.writeInt(this.pressure);
-        buf.writeInt(this.targetPressure;
-        buf.writeBoolean(this.canAchieveTargetPressure;
+        buf.writeInt(this.targetPressure);
+        buf.writeBoolean(this.canAchieveTargetPressure);
         buf.writeBoolean(this.hasEnoughEnergy);
     }
 

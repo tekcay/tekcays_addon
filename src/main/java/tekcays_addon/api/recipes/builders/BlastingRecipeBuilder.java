@@ -94,7 +94,7 @@ public class BlastingRecipeBuilder extends RecipeBuilder<BlastingRecipeBuilder> 
 
     public static class PressureProperty extends RecipeProperty<Integer> {
 
-        private static final String KEY = "pressure;
+        private static final String KEY = "pressure";
 
         private static PressureProperty INSTANCE;
 
