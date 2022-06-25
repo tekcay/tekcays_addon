@@ -14,12 +14,10 @@ public class AssemblerRecipeHandler {
         ASSEMBLER_RECIPES.recipeBuilder()
                 .input(OrePrefix.plate, TKCYAMaterials.GalvanizedSteel)
                 .circuitMeta(8)
-                .output(MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.LV))
+                .outputs(MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.LV))
                 .duration(50)
                 .EUt(16)
                 .buildAndRegister();
-
-
     }
 
 }
