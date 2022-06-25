@@ -1,5 +1,6 @@
 package tekcays_addon.api.unification.material.materials;
 
+import gregtech.api.fluids.fluidType.FluidTypes;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 
@@ -11,9 +12,9 @@ public class TKCYAMiscMaterials {
     public static void init(){
 
         HotAir = new Material.Builder(24101, "hot_air")
-                .fluid()
+                .fluid(FluidTypes.GAS)
                 .components(Materials.Air, 1)
-                .color(0xf6ad30).iconSet(DULL)
+                .color(0xe08b41)
                 .build();
 
     }

@@ -16,7 +16,7 @@ public class TKCYAAlloys {
                 .ingot()
                 .flags(GENERATE_FOIL, GENERATE_BOLT_SCREW, GENERATE_FRAME, GENERATE_PLATE, GENERATE_FINE_WIRE, GENERATE_ROTOR, GENERATE_SMALL_GEAR, NO_UNIFICATION, NO_SMELTING)
                 .components(Iron, 9, Zinc, 1)
-                .color(0xf6ad30).iconSet(METALLIC)
+                .color(0xf5f8fa).iconSet(METALLIC)
                 .build();
 
     }

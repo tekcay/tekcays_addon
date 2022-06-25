@@ -21,12 +21,14 @@ public class GalvanizingRecipeHandler {
                     .input(orePrefix, Steel)
                     .fluidInputs(Zinc.getFluid((int) (orePrefix.getMaterialAmount(Steel) * GTValues.L / GTValues.M * 9)))
                     .duration((int) orePrefix.getMaterialAmount(Steel))
+                    .output(orePrefix, TKCYAMaterials.GalvanizedSteel)
                     .EUt((int) GTValues.V[LV])
                     .buildAndRegister();
 
             TKCYARecipeMaps.GALVANIZING.recipeBuilder()
                     .input(orePrefix, Steel)
                     .fluidInputs(Zinc.getFluid((int) (orePrefix.getMaterialAmount(Steel) * GTValues.L / GTValues.M * 9)))
+                    .output(orePrefix, TKCYAMaterials.GalvanizedSteel)
                     .duration((int) orePrefix.getMaterialAmount(Steel) * 4)
                     .buildAndRegister();
 
