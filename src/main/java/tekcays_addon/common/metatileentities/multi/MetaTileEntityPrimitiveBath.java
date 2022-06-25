@@ -24,7 +24,7 @@ public class MetaTileEntityPrimitiveBath extends RecipeMapPrimitiveMultiblockCon
 
 
     public MetaTileEntityPrimitiveBath(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.GALVANIZING);
+        super(metaTileEntityId, TKCYARecipeMaps.PRIMITIVE_BATH);
     }
 
     @Override

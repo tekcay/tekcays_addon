@@ -19,17 +19,17 @@ public class GalvanizingRecipeHandler {
 
             RecipeMaps.CHEMICAL_BATH_RECIPES.recipeBuilder()
                     .input(orePrefix, Steel)
-                    .fluidInputs(Zinc.getFluid((int) (orePrefix.getMaterialAmount(Steel) * GTValues.L / GTValues.M * 9)))
-                    .duration((int) orePrefix.getMaterialAmount(Steel))
+                    .fluidInputs(Zinc.getFluid((int) (orePrefix.getMaterialAmount(Steel) * GTValues.L / (GTValues.M * 9))))
+                    .duration((int) (orePrefix.getMaterialAmount(Steel) / GTValues.M))
                     .output(orePrefix, TKCYAMaterials.GalvanizedSteel)
                     .EUt((int) GTValues.V[LV])
                     .buildAndRegister();
 
-            TKCYARecipeMaps.GALVANIZING.recipeBuilder()
+            TKCYARecipeMaps.PRIMITIVE_BATH.recipeBuilder()
                     .input(orePrefix, Steel)
-                    .fluidInputs(Zinc.getFluid((int) (orePrefix.getMaterialAmount(Steel) * GTValues.L / GTValues.M * 9)))
+                    .fluidInputs(Zinc.getFluid((int) (orePrefix.getMaterialAmount(Steel) * GTValues.L / (GTValues.M * 9))))
                     .output(orePrefix, TKCYAMaterials.GalvanizedSteel)
-                    .duration((int) orePrefix.getMaterialAmount(Steel) * 4)
+                    .duration((int) (4 * orePrefix.getMaterialAmount(Steel) / GTValues.M))
                     .buildAndRegister();
 
         }
