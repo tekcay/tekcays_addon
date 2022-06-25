@@ -4,6 +4,7 @@ import gregtech.api.recipes.GTRecipeHandler;
 import gregtech.api.recipes.RecipeMaps;
 import tekcays_addon.loaders.recipe.chains.*;
 import tekcays_addon.loaders.recipe.handlers.*;
+import tekcays_addon.loaders.recipe.removals.RecipesRemovalHandler;
 
 import static tekcays_addon.common.TKCYAConfigHolder.*;
 
@@ -47,17 +48,20 @@ public class TKCYARecipeLoader {
         }
 
         if (miscOverhaul.enableGalvanizedSteel) {
-            BathRecipeHandler.galvanizingSteelInit();
-        }
-
-        if (miscOverhaul.enableTreatingWoodInBath) {
+            RecipesRemovalHandler.steelRemovalsInit();
             BathRecipeHandler.treatingWoodInit();
+            ShapedCraftingRecipes.galvanizedSteel();
+            AssemblerRecipeHandler.galvanizedSteel();
         }
 
     }
 
 
     public static void loadLatest() {
+
+        if (miscOverhaul.enableGalvanizedSteel) {
+            BathRecipeHandler.galvanizingSteelInit();
+        }
 
         if (meltingOverhaul.enableMeltingOverhaul) {
             TKCYAMeltingRecipeHandler.init();

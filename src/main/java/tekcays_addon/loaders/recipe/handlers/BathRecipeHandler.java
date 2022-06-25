@@ -18,6 +18,7 @@ public class BathRecipeHandler {
             if (orePrefix == OrePrefix.dust
                     || orePrefix == OrePrefix.dustSmall
                     || orePrefix == OrePrefix.dustTiny
+                    || orePrefix == OrePrefix.nugget
                     || !orePrefix.doGenerateItem(Steel)
                     || !orePrefix.doGenerateItem(GalvanizedSteel)) continue;
 

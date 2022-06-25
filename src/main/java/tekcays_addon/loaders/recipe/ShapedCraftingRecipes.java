@@ -4,6 +4,9 @@ import gregtech.api.recipes.ModHandler;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.ore.OrePrefix;
+import gregtech.common.blocks.BlockMachineCasing;
+import gregtech.common.blocks.MetaBlocks;
+import tekcays_addon.api.unification.TKCYAMaterials;
 
 import static tekcays_addon.api.unification.TKCYAMaterialFlagAddition.MOLD_MATERIALS;
 import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
@@ -34,6 +37,12 @@ public class ShapedCraftingRecipes{
                     " h ", " S ", "   ", 'S', OreDictUnifier.get(moldEmpty, m));
         
         }
+    }
+
+    public static void galvanizedSteel() {
+
+        ModHandler.addShapedRecipe("lv_machine_casing", MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.LV),
+        "PPP", "PwP", "PPP", 'P', OreDictUnifier.get(OrePrefix.plate, TKCYAMaterials.GalvanizedSteel));
 
     }
 
