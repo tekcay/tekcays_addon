@@ -35,6 +35,9 @@ public class TKCYAConfigHolder {
 
         @Config.Comment({"Replace normal steel with galvanized steel", "Default: true"})
         public boolean enableGalvanizedSteel = true;
+
+        @Config.Comment({"Treated wood is made in bath", "Default: true"})
+        public boolean enableTreatingWoodInBath= true;
     }
 
 

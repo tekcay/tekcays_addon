@@ -47,7 +47,11 @@ public class TKCYARecipeLoader {
         }
 
         if (miscOverhaul.enableGalvanizedSteel) {
-            GalvanizingRecipeHandler.init();
+            BathRecipeHandler.galvanizingSteelInit();
+        }
+
+        if (miscOverhaul.enableTreatingWoodInBath) {
+            BathRecipeHandler.treatingWoodInit();
         }
 
     }

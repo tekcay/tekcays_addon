@@ -67,13 +67,13 @@ public class MetaTileEntityPrimitiveBath extends RecipeMapPrimitiveMultiblockCon
                 .widget(new SlotWidget(importItems, 0, 52, 38, true, true)
                         .setBackgroundTexture(GuiTextures.SLOT))
 
-                .widget(new TankWidget(importFluids.getTankAt(0), 20, 50, 18, 18)
+                .widget(new TankWidget(importFluids.getTankAt(0), 20, 38, 18, 18)
                         .setBackgroundTexture(GuiTextures.FLUID_SLOT)
                         .setAlwaysShowFull(true)
                         .setContainerClicking(true, true))
 
                 .widget(new RecipeProgressWidget(recipeMapWorkable::getProgressPercent, 77, 39, 20, 15,
-                        GuiTextures.PROGRESS_BAR_BATH, ProgressWidget.MoveType.HORIZONTAL, TKCYARecipeMaps.CASTING_TABLE_RECIPES))
+                        GuiTextures.PROGRESS_BAR_BATH, ProgressWidget.MoveType.HORIZONTAL, TKCYARecipeMaps.PRIMITIVE_BATH))
 
                 .widget(new SlotWidget(exportItems, 0, 104, 38, true, false)
                         .setBackgroundTexture(GuiTextures.SLOT))
