@@ -35,6 +35,7 @@ tkcya.machine.fuel_melter.name=Fuel Melter
 tkcya.machine.alloying_crucible.name=Alloying Crucible
 tkcya.machine.casting_table.name=Casting Table
 tkcya.machine.electric_pressure_blast_furnace.name=Electric Pressure Blast Furnace
+tkcya.machine.primitive_bath.name=Primitive Bath
 
 
 # multiblock descriptions
@@ -57,6 +58,7 @@ recipemap.primitive_melter.name=Melting
 recipemap.electric_melter.name=Melting
 recipemap.alloying_crucible.name=Alloying
 recipemap.casting_table.name=Casting
+recipemap.primitive_bath.name=Bath
 recipemap.electric_casting_table.name=Casting
 
 # Materials
