@@ -138,7 +138,7 @@ public class TKCYAPartsRecipeHandler {
                         .notConsumable(MetaItems.ELECTRIC_PUMP_LV)
                         .output(prefix, material)
                         .fluidOutputs(TKCYAMaterials.HotAir.getFluid(material.getFluid().getTemperature()))
-                        .duration((int) (0.75 * prefix.getMaterialAmount(material) * material.getFluid().getTemperature() / GTValues.M))
+                        .duration((int) (0.6 * prefix.getMaterialAmount(material) * material.getFluid().getTemperature() / GTValues.M))
                         .EUt(30)
                         .buildAndRegister();
 
