@@ -1,10 +1,15 @@
 package tekcays_addon.api.utils;
 
+import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.unification.material.Materials;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.unification.TKCYAMaterials;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
+
+import static tekcays_addon.api.utils.TKCYAValues.ELECTRIC_PUMPS;
 
 public class MiscMethods {
 
@@ -20,6 +25,19 @@ public class MiscMethods {
         if (fluid.isFluidEqual(new FluidStack(Materials.Air.getFluid(), 1))) return true;
 
         return false;
+    }
+
+
+
+    public static Map<Integer, Integer> getPumpPressureMap() {
+        Map<Integer, Integer> map = new HashMap<>();
+        int tier = 0;
+
+        for (MetaItem.MetaValueItem pump : ELECTRIC_PUMPS) {
+            tier++;
+            map.put(tier * 10, tier);
+        }
+        return map;
     }
 
 
