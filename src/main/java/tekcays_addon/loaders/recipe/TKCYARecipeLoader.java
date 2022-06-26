@@ -60,6 +60,10 @@ public class TKCYARecipeLoader {
             RecipesRemovalHandler.shapedComponentsRecipes();
         }
 
+        if (meltingOverhaul.enableBlastingOverhaul) {
+            BlastingRecipeHandler.init();
+        }
+
     }
 
 

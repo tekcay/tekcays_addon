@@ -96,6 +96,7 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
         super.updateFormedValid();
 
         getTargetPressure();
+        getIncreasePressure();
 
         hasEnoughEnergy = drainEnergy();
 
@@ -115,15 +116,23 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
         }
     }
 
+    private void getIncreasePressure(){
+        increasePressure = 1;
+    }
+
     private void getTargetPressure(){ //Depends of the pump tier
         int tier = 0;
-        for (int slotIndex = 0; slotIndex < getInputInventory().getSlots(); slotIndex++)
+        boolean containsPump = false;
+        for (int slotIndex = 0; slotIndex < getInputInventory().getSlots(); slotIndex++) {
             for (MetaItem.MetaValueItem pump : ELECTRIC_PUMPS) {
                 tier++;
-                if (!getInputInventory().extractItem(slotIndex, 1, true).isItemEqual(pump.getStackForm())) continue;
+                if (!getInputInventory().isItemValid(slotIndex, pump.getStackForm())) continue;
+                //if (!getInputInventory().extractItem(slotIndex, 1, true).isItemEqual(pump.getStackForm())) continue;
                 targetPressure = tier * 10;
+                containsPump = true;
             }
-
+        }
+        if (!containsPump) targetPressure = 5;
     }
 
     public int temperatureEnergyCost(int temp) {
@@ -151,6 +160,7 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
         if (pressure >= targetPressure) return;
         if (getEnergy() >= pressureEnergyCost(pressure + increasePressure)  && hasEnoughEnergy) {
             setPressure(pressure + increasePressure);
+
         } else {
             canAchieveTargetPressure = false;
         }

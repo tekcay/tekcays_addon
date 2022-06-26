@@ -49,7 +49,7 @@ public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<BlastingRecipeBuilder> BLASTING_RECIPES = new RecipeMap<>(
-            "pressure_blasting", 0, 2, 0, 2, 1, 2, 0, 1, new BlastingRecipeBuilder(), false)
+            "pressure_blasting", 0, 1, 0, 1, 1, 2, 0, 1, new BlastingRecipeBuilder(), false)
             .setSound(GTSounds.COOLING);
 
     @ZenProperty

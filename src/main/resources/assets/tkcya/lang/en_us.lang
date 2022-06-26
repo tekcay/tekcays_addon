@@ -60,6 +60,7 @@ recipemap.alloying_crucible.name=Alloying
 recipemap.casting_table.name=Casting
 recipemap.primitive_bath.name=Bath
 recipemap.electric_casting_table.name=Casting
+recipemap.pressure_blasting.name=Blasting
 
 # Materials
 material.unpure_bronze=Unpure Bronze
@@ -75,7 +76,6 @@ material.mica_pulp=Mica Based
 material.fuel=Burnable Fuel
 material.hot_air=Hot Air
 fluid.fuel.tooltip=To be used in the fuel consuming machines
-material.galvanized_steel=Galvanized Steel
 material.hydrogen_fluorine=Hydrogen Fluorine
 material.hydrogen_chlorine=Hydrogen Chlorine
 material.hydrogen_bromine=Hydrogen Bromine
@@ -138,3 +138,6 @@ tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.6=Target pressu
 tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.1=Only runs recipes if the required temperature and pressure are set.
 tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.2=The §aEU§7 per tick required is exponentially related to the current temperature and pressure.
 tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.3=The target temperature and the temperature increasing speed are set by the coils.
+
+tekcays_addon.recipe.blasting_temperature=Temperature: %dK
+tekcays_addon.recipe.blasting_pressure=Pressure: %d bar
