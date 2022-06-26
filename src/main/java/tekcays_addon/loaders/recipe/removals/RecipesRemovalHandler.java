@@ -14,8 +14,7 @@ import gregtech.common.items.MetaItems;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
-import static gregtech.api.unification.material.Materials.Iron;
-import static gregtech.api.unification.material.Materials.Steel;
+import static gregtech.api.unification.material.Materials.*;
 
 public class RecipesRemovalHandler {
 
@@ -111,6 +110,11 @@ public class RecipesRemovalHandler {
         ModHandler.removeRecipes(MetaItems.FLUID_REGULATOR_IV.getStackForm());
         ModHandler.removeRecipes(MetaItems.CONVEYOR_MODULE_IV.getStackForm());
         
+    }
+
+    public static void removeShapedTreatedWoodRecipe(){
+
+        ModHandler.removeRecipes(OreDictUnifier.get(OrePrefix.plank, TreatedWood));
     }
 
 

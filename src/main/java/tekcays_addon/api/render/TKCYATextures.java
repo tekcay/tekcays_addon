@@ -25,6 +25,9 @@ public class TKCYATextures {
     public static OrientedOverlayRenderer ELECTRIC_MELTER_OVERLAY = new OrientedOverlayRenderer("multiblocks/electric_melter", FRONT);
     public static OrientedOverlayRenderer ALLOYING_CRUCIBLE_OVERLAY = new OrientedOverlayRenderer("multiblocks/primitive", FRONT);
 
+    // From MC
+    public static SimpleOverlayRenderer MC_BRICK;
+
     // Casings
     public static SimpleOverlayRenderer MACERATOR_CASING;
     public static SimpleOverlayRenderer BLAST_CASING;
@@ -44,6 +47,9 @@ public class TKCYATextures {
     public static void preInit() {
         // Simple Machines
 
+
+        //From MC
+        MC_BRICK = new SimpleOverlayRenderer("mc_brick");
 
         // Casings
         MACERATOR_CASING = new SimpleOverlayRenderer("casings/large_multiblock_casing/macerator_casing");

@@ -14,8 +14,10 @@ import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static gregtech.api.unification.ore.OrePrefix.cableGtSingle;
 import static gregtech.loaders.recipe.CraftingComponent.*;
+import static net.minecraft.init.Items.BRICK;
 import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.*;
 import gregicality.multiblocks.common.metatileentities.GCYMMetaTileEntities;
+import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 
 public class TKCYAMetaTileEntityLoader {
 
@@ -44,6 +46,12 @@ public class TKCYAMetaTileEntityLoader {
                     'W', new UnificationEntry(cableGtSingle, Platinum));
 
         }
+
+        if (TKCYAConfigHolder.miscOverhaul.enableGalvanizedSteel) {
+            ModHandler.addShapedRecipe(true, "primitive_bath", PRIMITIVE_BATH.getStackForm(),
+                    "BBB", "BhB", "BBB", 'B', BRICK);
+        }
+
     }
 
 }

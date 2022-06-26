@@ -49,6 +49,7 @@ public class TKCYARecipeLoader {
 
         if (miscOverhaul.enableGalvanizedSteel) {
             RecipesRemovalHandler.steelRemovalsInit();
+            RecipesRemovalHandler.removeShapedTreatedWoodRecipe();
             BathRecipeHandler.treatingWoodInit();
             ShapedCraftingRecipes.galvanizedSteel();
             AssemblerRecipeHandler.galvanizedSteel();

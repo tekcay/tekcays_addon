@@ -14,9 +14,11 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.api.render.TKCYATextures;
 
 import javax.annotation.Nonnull;
 
@@ -42,7 +44,7 @@ public class MetaTileEntityPrimitiveBath extends RecipeMapPrimitiveMultiblockCon
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
-        return Textures.PRIMITIVE_BRICKS;
+        return TKCYATextures.MC_BRICK;
     }
 
 
