@@ -7,7 +7,9 @@ import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.blocks.BlockMachineCasing;
 import gregtech.common.blocks.MetaBlocks;
 import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.common.items.TKCYAMetaItems;
 
+import static net.minecraft.init.Blocks.IRON_BARS;
 import static tekcays_addon.api.unification.TKCYAMaterialFlagAddition.MOLD_MATERIALS;
 import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
 
@@ -40,10 +42,14 @@ public class ShapedCraftingRecipes{
     }
 
     public static void galvanizedSteel() {
-
         ModHandler.addShapedRecipe("lv_machine_casing", MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.LV),
         "PPP", "PwP", "PPP", 'P', OreDictUnifier.get(OrePrefix.plate, TKCYAMaterials.GalvanizedSteel));
 
+    }
+
+    public static void gasCollector() {
+        ModHandler.addShapedRecipe("gas_collector_MetaItem", TKCYAMetaItems.GAS_COLLECTOR.getStackForm(),
+                "SSS", "SwS", "SSS", 'S', IRON_BARS);
     }
 
 }
