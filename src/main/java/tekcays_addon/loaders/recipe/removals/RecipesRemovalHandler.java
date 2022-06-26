@@ -88,24 +88,28 @@ public class RecipesRemovalHandler {
         ModHandler.removeRecipes(MetaItems.ELECTRIC_PUMP_MV.getStackForm());
         ModHandler.removeRecipes(MetaItems.ROBOT_ARM_MV.getStackForm());
         ModHandler.removeRecipes(MetaItems.FLUID_REGULATOR_MV.getStackForm());
+        ModHandler.removeRecipes(MetaItems.CONVEYOR_MODULE_MV.getStackForm());
 
         ModHandler.removeRecipes(MetaItems.ELECTRIC_MOTOR_HV.getStackForm());
         ModHandler.removeRecipes(MetaItems.ELECTRIC_PISTON_HV.getStackForm());
         ModHandler.removeRecipes(MetaItems.ELECTRIC_PUMP_HV.getStackForm());
         ModHandler.removeRecipes(MetaItems.ROBOT_ARM_HV.getStackForm());
         ModHandler.removeRecipes(MetaItems.FLUID_REGULATOR_HV.getStackForm());
+        ModHandler.removeRecipes(MetaItems.CONVEYOR_MODULE_HV.getStackForm());
 
         ModHandler.removeRecipes(MetaItems.ELECTRIC_MOTOR_EV.getStackForm());
         ModHandler.removeRecipes(MetaItems.ELECTRIC_PISTON_EV.getStackForm());
         ModHandler.removeRecipes(MetaItems.ELECTRIC_PUMP_EV.getStackForm());
         ModHandler.removeRecipes(MetaItems.ROBOT_ARM_EV.getStackForm());
         ModHandler.removeRecipes(MetaItems.FLUID_REGULATOR_EV.getStackForm());
+        ModHandler.removeRecipes(MetaItems.CONVEYOR_MODULE_EV.getStackForm());
 
         ModHandler.removeRecipes(MetaItems.ELECTRIC_MOTOR_IV.getStackForm());
         ModHandler.removeRecipes(MetaItems.ELECTRIC_PISTON_IV.getStackForm());
         ModHandler.removeRecipes(MetaItems.ELECTRIC_PUMP_IV.getStackForm());
         ModHandler.removeRecipes(MetaItems.ROBOT_ARM_IV.getStackForm());
         ModHandler.removeRecipes(MetaItems.FLUID_REGULATOR_IV.getStackForm());
+        ModHandler.removeRecipes(MetaItems.CONVEYOR_MODULE_IV.getStackForm());
         
     }
 
