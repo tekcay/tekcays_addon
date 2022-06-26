@@ -54,6 +54,10 @@ public class TKCYARecipeLoader {
             AssemblerRecipeHandler.galvanizedSteel();
         }
 
+        if (miscOverhaul.disableComponentsShapesRecipes) {
+            RecipesRemovalHandler.shapedComponentsRecipes();
+        }
+
     }
 
 

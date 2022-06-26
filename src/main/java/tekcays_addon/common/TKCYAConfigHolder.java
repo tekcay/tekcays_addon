@@ -36,6 +36,9 @@ public class TKCYAConfigHolder {
         @Config.Comment({"Replace normal steel with galvanized steel", "Default: true"})
         public boolean enableGalvanizedSteel = true;
 
+        @Config.Comment({"Components can not be made in shaped recipe", "Default: true"})
+        public boolean disableComponentsShapesRecipes = true;
+
     }
 
 
