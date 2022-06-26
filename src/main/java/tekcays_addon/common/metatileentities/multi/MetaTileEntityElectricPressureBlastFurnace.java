@@ -6,6 +6,7 @@ import gregtech.api.capability.impl.EnergyContainerList;
 import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.capability.impl.ItemHandlerList;
 import gregtech.api.capability.impl.MultiblockRecipeLogic;
+import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -23,7 +24,6 @@ import gregtech.common.ConfigHolder;
 import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.BlockWireCoil;
 import gregtech.common.blocks.MetaBlocks;
-import gregtech.common.items.MetaItem1;
 import gregtech.common.items.MetaItems;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -43,6 +43,8 @@ import tekcays_addon.api.render.TKCYATextures;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+
+import static tekcays_addon.api.utils.TKCYAValues.ELECTRIC_PUMPS;
 
 public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultiblockController{
 
@@ -93,8 +95,7 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
     public void updateFormedValid() {
         super.updateFormedValid();
 
-        //getTargetPressure();
-        //getIncreasePressure();
+        getTargetPressure();
 
         hasEnoughEnergy = drainEnergy();
 
@@ -114,24 +115,16 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
         }
     }
 
-    /*
     private void getTargetPressure(){ //Depends of the pump tier
-
+        int tier = 0;
         for (ItemStack itemStack : this.inputInventory)
-            if (inputInventory. == MetaItems.ELECTRIC_PUMP_LV.getStackForm())
-                targetPressure = 1;
+            for (MetaItem.MetaValueItem pump : ELECTRIC_PUMPS) {
+                tier++;
+                if (itemStack.isItemEqual(pump.getStackForm())) continue;
+                targetPressure = (pump.hashCode() + 1) * 10;
+            }
 
     }
-
-    private void getIncreasePressure(){ //Depends of the amount of pumps
-
-        for (ItemStack itemStack : this.inputInventory)
-            if (inputInventory. == MetaItems.ELECTRIC_PUMP_LV.getStackForm())
-                increasePressure = 1;
-
-    }
-
-     */
 
     public int temperatureEnergyCost(int temp) {
         return temp <= 300 ? 0 : (int) Math.exp(((double) temp - 100) / 100);  // (int) (1.5 * Math.pow(10, -10) * Math.pow(temp, 3.6) + 10)
