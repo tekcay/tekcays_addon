@@ -14,6 +14,7 @@ public final class TKCYAMetaItems {
     public static MetaItem<?>.MetaValueItem MICA_SHEET;
     public static MetaItem<?>.MetaValueItem MICA_INSULATOR_SHEET;
     public static MetaItem<?>.MetaValueItem MICA_INSULATOR_FOIL;
+    public static MetaItem<?>.MetaValueItem GAS_COLLECTOR;
 
 
     public static void init() {

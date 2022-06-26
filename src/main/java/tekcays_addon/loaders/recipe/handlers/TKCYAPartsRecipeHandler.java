@@ -13,6 +13,8 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.common.items.TKCYAMetaItem1;
+import tekcays_addon.common.items.TKCYAMetaItems;
 
 
 import static gregtech.api.GTValues.LV;
@@ -129,12 +131,12 @@ public class TKCYAPartsRecipeHandler {
                         .buildAndRegister();
 
 
-                //When using a pump, it outputs Hot Air
+                //When using a gas colletor, it outputs Hot Air
 
                 TKCYARecipeMaps.ELECTRIC_CASTING_RECIPES.recipeBuilder()
                         .fluidInputs(material.getFluid((int) (prefix.getMaterialAmount(material) * GTValues.L / GTValues.M)), Materials.Air.getFluid(material.getFluid().getTemperature()))
                         .notConsumable(MOLD_PRODUCTION.get(prefix), m)
-                        .notConsumable(MetaItems.ELECTRIC_PUMP_LV)
+                        .notConsumable(TKCYAMetaItems.GAS_COLLECTOR)
                         .output(prefix, material)
                         .fluidOutputs(TKCYAMaterials.HotAir.getFluid(material.getFluid().getTemperature()))
                         .duration((int) (0.6 * prefix.getMaterialAmount(material) * material.getFluid().getTemperature() / GTValues.M))

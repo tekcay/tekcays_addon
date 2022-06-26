@@ -16,6 +16,7 @@ public class TKCYAMetaItem1 extends StandardMetaItem {
         MICA_SHEET = addItem(0, "mica.sheet");
         MICA_INSULATOR_SHEET = addItem(1, "mica_insulator.sheet");
         MICA_INSULATOR_FOIL = addItem(2, "mica_insulator.foil");
+        GAS_COLLECTOR = addItem(3, "gas_collector");
 
     }
 }

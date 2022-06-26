@@ -33,7 +33,7 @@ public class TKCYAMetaTileEntityLoader {
                     'P', PUMP, 'N', PIPE_NORMAL, 'H', HULL, 'C', CIRCUIT);
 
             ModHandler.addShapedRecipe(true, "casting_table", CASTING_TABLE.getStackForm(),
-                    "PPP", "PhP", "PPP", 'P', MetaItems.FIRECLAY_BRICK);
+                    "PPP", "PhP", "PPP", 'P', MetaItems.COKE_OVEN_BRICK);
         }
 
         if (TKCYAConfigHolder.miscOverhaul.enableMagneticOverhaul) {

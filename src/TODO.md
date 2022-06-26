@@ -25,6 +25,7 @@ The molten material/alloy is poured in a **casting block**, probably a MTE.
 * this **casting block** contains 1 input and 1 fluid input, one for the mold, one for the molten material/alloy.
 * additionnal molds made of different material must be made, namely ceramic for the early game, then probably something inspired from **[GT6](https://github.com/GregTech6/gregtech6)**, including tungsten and carbon higher melting point materials/alloys.
 * adding all the molds in different `oreRegistry` might be more convenient for `recipes`.
+* adding a `MetaItem` called GasCollector which can collect Hot Air when Air is used for cooling. Textures are from the Drain from **[GT6](https://github.com/GregTech6/gregtech6/blob/master/src/main/resources/assets/gregtech/textures/items/gt.multiitem.technological/1020.png)**,
 
 `RecipeMap`:
 ```
