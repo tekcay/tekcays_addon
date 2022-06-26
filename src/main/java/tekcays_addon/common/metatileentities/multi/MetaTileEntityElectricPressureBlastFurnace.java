@@ -24,7 +24,6 @@ import gregtech.common.ConfigHolder;
 import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.BlockWireCoil;
 import gregtech.common.blocks.MetaBlocks;
-import gregtech.common.items.MetaItems;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -42,6 +41,8 @@ import tekcays_addon.api.render.TKCYATextures;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import static tekcays_addon.api.utils.TKCYAValues.ELECTRIC_PUMPS;
@@ -52,18 +53,29 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
     private int temp, targetTemp, increaseTemp;
     private boolean canAchieveTargetTemp;
     //GasPressure
+    private static int pressureMultiplier = 100; //to make stuff easier
     private int pressure, targetPressure, increasePressure;
     private boolean canAchieveTargetPressure;
     //Energy
     private boolean hasEnoughEnergy;
     private IEnergyContainer energyImport;
 
+    DecimalFormat df = new DecimalFormat("##,#");
+
+    public static String getShowablePressure(int pressure) {
+       return BigDecimal.valueOf(pressure).divide(BigDecimal.valueOf(pressureMultiplier), 1, BigDecimal.ROUND_UP).toString();
+
+        //return String.format("%.1f", (float) (pressure/pressureMultiplier));
+    }
+
+
     public MetaTileEntityElectricPressureBlastFurnace(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.BLASTING_RECIPES);
         this.recipeMapWorkable = new ElectricPressureBlastFurnaceLogic(this);
 
         temp = 300;
-        pressure = 1;
+        pressure = 1 * pressureMultiplier;
+        targetPressure = 5 * pressureMultiplier;
     }
 
     private long getEnergy() {
@@ -86,7 +98,7 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
     public void setPressure (int pressure) {
         this.pressure = pressure;
         if (!getWorld().isRemote) {
-            writeCustomData(600, buf -> buf.writeInt(pressure));
+            writeCustomData(600, buf -> buf.writeFloat(pressure));
             markDirty();
         }
     }
@@ -102,8 +114,6 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
 
         if (getOffsetTimer() % 20 == 0 && !recipeMapWorkable.isActive()) {
             stepTowardsTargetTemp();
-        }
-        else if (getOffsetTimer() % 200 == 0 && !recipeMapWorkable.isActive()) {
             stepTowardsTargetPressure();
         }
         else {
@@ -117,30 +127,41 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
     }
 
     private void getIncreasePressure(){
-        increasePressure = 1;
+        increasePressure = 5;
     }
 
     private void getTargetPressure(){ //Depends of the pump tier
-        int tier = 0;
+
         boolean containsPump = false;
         for (int slotIndex = 0; slotIndex < getInputInventory().getSlots(); slotIndex++) {
+            int tier = 0;
             for (MetaItem.MetaValueItem pump : ELECTRIC_PUMPS) {
                 tier++;
-                if (!getInputInventory().isItemValid(slotIndex, pump.getStackForm())) continue;
-                //if (!getInputInventory().extractItem(slotIndex, 1, true).isItemEqual(pump.getStackForm())) continue;
-                targetPressure = tier * 10;
+                //if (!getInputInventory().isItemValid(slotIndex, pump.getStackForm())) continue;
+                if (!getInputInventory().extractItem(slotIndex, 1, true).isItemEqual(pump.getStackForm())) continue;
+                targetPressure = tier * 10 * pressureMultiplier;
                 containsPump = true;
             }
         }
-        if (!containsPump) targetPressure = 5;
+        if (!containsPump) targetPressure = 500;
     }
 
     public int temperatureEnergyCost(int temp) {
-        return temp <= 300 ? 0 : (int) Math.exp(((double) temp - 100) / 100);  // (int) (1.5 * Math.pow(10, -10) * Math.pow(temp, 3.6) + 10)
+
+        if (temp > 300 && temp < 2100) {
+            return (int) (0.000042 * Math.pow(temp - 300, 2));
+        }
+        if (temp < 4000) {
+            return (int) (0.000052 * Math.pow(temp - 300, 2));
+        }
+        if (temp < 6000) {
+            return (int) (0.000062 * Math.pow(temp - 300, 2));
+        }
+        return 0;
     }
 
     public int pressureEnergyCost(int pressure) {
-        return pressure <= 1 ? 0 : (int) Math.exp(((double) pressure - 100) / 100);
+        return pressure <= 1 * pressureMultiplier ? 0 : (int) (2 * pressure * Math.log(pressure) / pressureMultiplier);
     }
 
     private void stepTowardsTargetTemp() {
@@ -176,6 +197,7 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
         if (pressure - increasePressure < 1) return false;
         if (getOffsetTimer() % 20 == 0) {
             setTemp(temp - increaseTemp);
+            setPressure(pressure - increasePressure);
         }
 
         return false;
@@ -185,7 +207,7 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
         return temp >= recipe.getProperty(BlastingRecipeBuilder.TemperatureProperty.getInstance(), 0)
-                & pressure >= recipe.getProperty(BlastingRecipeBuilder.PressureProperty.getInstance(), 0);
+                & pressure/pressureMultiplier >= recipe.getProperty(BlastingRecipeBuilder.PressureProperty.getInstance(), 0);
     }
 
 
@@ -254,7 +276,7 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
 
             ///////////Current pressure
 
-            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.7", pressure));
+            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.7", getShowablePressure(pressure)));
 
             ///////////EU/t consumption
 
@@ -271,7 +293,7 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
 
             ///////////Target Pressure
 
-            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.6", targetPressure));
+            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.6", getShowablePressure(targetPressure)));
 
 
             if (!canAchieveTargetTemp && hasEnoughEnergy)
@@ -351,7 +373,8 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
     @Override
     public void invalidateStructure() {
         setTemp(300);
-        setPressure(1);
+        setPressure(1 * pressureMultiplier);
+        targetPressure = 5 * pressureMultiplier;
         super.invalidateStructure();
         resetTileAbilities();
     }
