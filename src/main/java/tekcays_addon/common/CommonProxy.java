@@ -1,7 +1,12 @@
 package tekcays_addon.common;
 
+import gregtech.api.GTValues;
+import gregtech.api.items.metaitem.MetaItem;
+import gregtech.api.recipes.crafttweaker.MetaItemBracketHandler;
+import net.minecraftforge.fml.common.Loader;
 import tekcays_addon.api.utils.TKCYALog;
-import tekcays_addon.common.block.TKCYAMetaBlocks;
+import tekcays_addon.common.blocks.TKCYAMetaBlocks;
+import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.loaders.recipe.TKCYARecipeLoader;
 import tekcays_addon.TekCaysAddon;
 import gregtech.api.block.VariantItemBlock;
@@ -64,6 +69,19 @@ public class CommonProxy {
         // Main recipe registration
         // This is called AFTER GregTech registers recipes, so
         // anything here is safe to call removals in
-        TKCYARecipeLoader.init();
+        TKCYARecipeLoader.load();
+    }
+
+    //this is called last, so all mods finished registering their stuff, as example, CraftTweaker
+    //if it registered some kind of ore dictionary entry, late processing will hook it and generate recipes
+    //
+    @SubscribeEvent//(priority = EventPriority.LOWEST)
+    public static void registerRecipesLowest(RegistryEvent.Register<IRecipe> event) {
+        TKCYALog.logger.info("Running late material handlers...");
+        TKCYARecipeLoader.loadLatest();
+
+        if (Loader.isModLoaded(GTValues.MODID_CT)) {
+            MetaItemBracketHandler.rebuildComponentRegistry();
+        }
     }
 }

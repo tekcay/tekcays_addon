@@ -11,10 +11,37 @@ tkcya.machine.advanced_polarizer.hv.name=Polarizer HV
 tkcya.machine.advanced_polarizer.ev.name=Polarizer EV
 tkcya.machine.advanced_polarizer.iv.name=Polarizer IV
 
-tkcya.machine.melter.name=Melter
+tkcya.machine.electric_casting_table.lv.name=Electric Casting Table LV
+tkcya.machine.electric_casting_table.mv.name=Electric Casting Table MV
+tkcya.machine.electric_casting_table.hv.name=Electric Casting Table HV
+tkcya.machine.electric_casting_table.ev.name=Electric Casting Table EV
+tkcya.machine.electric_casting_table.iv.name=Electric Casting Table IV
+
+tkcya.machine.electric_casting_table.lv.tooltip=Air speeds up the recipe by %d40%
+tkcya.machine.electric_casting_table.mv.tooltip=Air speeds up the recipe by %d40%
+tkcya.machine.electric_casting_table.hv.tooltip=Air speeds up the recipe by %d40%
+tkcya.machine.electric_casting_table.ev.tooltip=Air speeds up the recipe by %d40%
+tkcya.machine.electric_casting_table.iv.tooltip=Air speeds up the recipe by %d40%
+
+tkcya.machine.steam_cooler_bronze.name=Steam Cooler
+tkcya.machine.steam_cooler_steel.name=High Pressure Steam Cooler
+
+tkcya.machine.steam_cooler_bronze.tooltip=Air speeds up the recipe by %d20%
+tkcya.machine.steam_cooler_steel.tooltip=Air speeds up the recipe by %d20%
+
+tkcya.machine.primitive_melter.name=Primitive Melter
+tkcya.machine.electric_melter.name=Electric Melter
+tkcya.machine.fuel_melter.name=Fuel Melter
+tkcya.machine.alloying_crucible.name=Alloying Crucible
+tkcya.machine.casting_table.name=Casting Table
+tkcya.machine.electric_pressure_blast_furnace.name=Electric Pressure Blast Furnace
+tkcya.machine.primitive_bath.name=Primitive Bath
+
 
 # multiblock descriptions
-tkcya.multiblock.melter.description=A multiblock for melting ores and pure materials
+tkcya.multiblock.primitive_melter.description=A multiblock for melting ores and pure materials using combustible
+tkcya.multiblock.electric_melter.description=A multiblock for melting ores and pure materials using electricity
+tkcya.multiblock.alloying_crucible.description=A multiblock for alloying molten metals
 
 
 
@@ -27,7 +54,12 @@ tkcya.multiblock.melter.description=A multiblock for melting ores and pure mater
 # RecipeMaps
 recipemap.cluster_mill.name=Cluster Mill
 recipemap.advanced_polarizer.name=Polarizing
-recipemap.melter.name=Melting
+recipemap.primitive_melter.name=Melting
+recipemap.electric_melter.name=Melting
+recipemap.alloying_crucible.name=Alloying
+recipemap.casting_table.name=Casting
+recipemap.primitive_bath.name=Bath
+recipemap.electric_casting_table.name=Casting
 
 # Materials
 material.unpure_bronze=Unpure Bronze
@@ -35,7 +67,14 @@ material.unpure_steel=Unpure Steel
 material.unpure_copper=Unpure Copper
 material.unpure_tin=Unpure Tin
 material.unpure_iron=Unpure Iron
+material.galvanized_steel=Galvanized Steel
 
+
+material.ceramic=Ceramic
+material.mica_pulp=Mica Based
+material.fuel=Burnable Fuel
+material.hot_air=Hot Air
+fluid.fuel.tooltip=To be used in the fuel consuming machines
 material.galvanized_steel=Galvanized Steel
 material.hydrogen_fluorine=Hydrogen Fluorine
 material.hydrogen_chlorine=Hydrogen Chlorine
@@ -44,3 +83,58 @@ material.hydrogen_iodine=Hydrogen Iodine
 
 # fluids
 tkcya.fluid.molten=Molten %s
+
+metaitem.mica.sheet.name=Mica Based Sheet
+metaitem.mica_insulator.sheet.name=Mica Insulator Sheet
+metaitem.mica_insulator.foil.name=Mica Insulator Foil
+metaitem.gas_collector.name=Gas Collector
+
+item.mica_pulp.dust=Mica Based Pulp
+
+# Ore Prefixes
+item.material.oreprefix.moldEmpty=%s Mold Empty
+item.material.oreprefix.moldIngot=%s Mold Ingot
+item.material.oreprefix.moldPlate=%s Mold Plate
+item.material.oreprefix.moldRod=%s Mold Rod
+item.material.oreprefix.moldRodLong=%s Mold Long Rod
+item.material.oreprefix.moldGear=%s Mold Gear
+item.material.oreprefix.moldGearSmall=%s Mold Small Gear
+item.material.oreprefix.moldBolt=%s Mold Bolt
+item.material.oreprefix.moldBall=%s Mold Ball
+item.material.oreprefix.moldCylinder=%s Mold Cylinder
+item.material.oreprefix.moldRotor=%s Mold Rotor
+item.material.oreprefix.moldRing=%s Mold Ring
+item.material.oreprefix.moldCasing=%s Mold Casing
+
+
+tekcays_addon.multiblock.electric_melter.tooltip.1=Temperature: §a%dK§7.
+tekcays_addon.multiblock.electric_melter.tooltip.2=Not enough energy can be inputted to reach the target!
+tekcays_addon.multiblock.electric_melter.tooltip.4=Consumption: %d EU/t.
+tekcays_addon.multiblock.electric_melter.tooltip.5=Target temperature: §a%dK§7.
+
+tekcays_addon.machine.electric_melter.tooltip.1=Only runs recipes if the required temperature is set.
+tekcays_addon.machine.electric_melter.tooltip.2=The §aEU§7 per tick required is exponentially related to the current temperature.
+tekcays_addon.machine.electric_melter.tooltip.3=The target temperature and the temperature increasing speed are set by the coils.
+
+tekcays_addon.machine.fuel_melter.tooltip.1=Only runs recipes if the required temperature is set.
+tekcays_addon.machine.fuel_melter.tooltip.2=The §aL§7 per tick required is exponentially related to the current temperature.
+tekcays_addon.machine.fuel_melter.tooltip.3=The target temperature is set by the coils.
+tekcays_addon.machine.fuel_melter.tooltip.4=The temperature increasing speed is set by the fireboxes.
+
+tekcays_addon.multiblock.fuel_melter.tooltip.1=Temperature: §a%dK§7.
+tekcays_addon.multiblock.fuel_melter.tooltip.2=Not enough energy can be inputted to reach the target!
+tekcays_addon.multiblock.fuel_melter.tooltip.4=Consumption: %d L/t.
+tekcays_addon.multiblock.fuel_melter.tooltip.5=Target temperature: §a%dK§7.
+
+tekcays_addon.recipe.melter_temperature=Temperature: %dK
+
+tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.1=Temperature: §a%dK§7.
+tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.7=Pressure: §a%d bar§7.
+tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.2=Not enough energy can be inputted to reach the target!
+tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.4=Consumption: %d EU/t.
+tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.5=Target temperature: §a%dK§7.
+tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.6=Target pressure: §a%d bar§7.
+
+tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.1=Only runs recipes if the required temperature and pressure are set.
+tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.2=The §aEU§7 per tick required is exponentially related to the current temperature and pressure.
+tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.3=The target temperature and the temperature increasing speed are set by the coils.
