@@ -37,7 +37,7 @@ public class AssemblerRecipeHandler {
         //LV Piston
         ASSEMBLER_RECIPES.recipeBuilder()
                 .input(OrePrefix.plate, GalvanizedSteel, 3)
-                .input(OrePrefix.stick, GalvanizedSteel)
+                .input(OrePrefix.stick, GalvanizedSteel, 2)
                 .input(OrePrefix.cableGtSingle, Materials.Tin, 2)
                 .input(OrePrefix.gearSmall, GalvanizedSteel)
                 .input(MetaItems.ELECTRIC_MOTOR_LV)

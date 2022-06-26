@@ -1,6 +1,5 @@
 package tekcays_addon.loaders.recipe.removals;
 
-import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.recipes.GTRecipeHandler;
 import gregtech.api.recipes.ModHandler;
 import gregtech.api.recipes.RecipeMaps;
@@ -52,10 +51,11 @@ public class RecipesRemovalHandler {
                 new ItemStack[] {
                         OreDictUnifier.get(OrePrefix.stick, Steel, 2),
                         OreDictUnifier.get(OrePrefix.plate, Steel, 3),
-                        OreDictUnifier.get(OrePrefix.gear, Steel),
-                        OreDictUnifier.get(OrePrefix.cableGtSingle, Materials.Tin, 2)},
+                        OreDictUnifier.get(OrePrefix.gearSmall, Steel),
+                        OreDictUnifier.get(OrePrefix.cableGtSingle, Materials.Tin, 2),
+                        MetaItems.ELECTRIC_MOTOR_LV.getStackForm()},
                 new FluidStack[] {});
-
+                
         //LV Robot Arm
         GTRecipeHandler.removeRecipesByInputs(RecipeMaps.ASSEMBLER_RECIPES,
                 new ItemStack[] {
