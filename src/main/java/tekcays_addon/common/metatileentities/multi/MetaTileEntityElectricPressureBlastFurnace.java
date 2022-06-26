@@ -117,11 +117,11 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
 
     private void getTargetPressure(){ //Depends of the pump tier
         int tier = 0;
-        for (ItemStack itemStack : this.inputInventory)
+        for (int slotIndex = 0; slotIndex < getInputInventory().getSlots(); slotIndex++)
             for (MetaItem.MetaValueItem pump : ELECTRIC_PUMPS) {
                 tier++;
-                if (itemStack.isItemEqual(pump.getStackForm())) continue;
-                targetPressure = (pump.hashCode() + 1) * 10;
+                if (!getInputInventory().extractItem(slotIndex, 1, true).isItemEqual(pump.getStackForm())) continue;
+                targetPressure = tier * 10;
             }
 
     }
