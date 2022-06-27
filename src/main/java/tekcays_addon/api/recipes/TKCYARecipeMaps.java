@@ -54,7 +54,7 @@ public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<MelterRecipeBuilder> BLASTING_RECIPES = new RecipeMap<>(
-            "blasting", 1, 1, 0, 0, 1, 1, 2, 2, new MelterRecipeBuilder(), false)
+            "blasting", 1, 1, 0, 0, 0, 1, 1, 2, new MelterRecipeBuilder(), false)
             .setSound(GTSounds.FURNACE);
 
     @ZenProperty

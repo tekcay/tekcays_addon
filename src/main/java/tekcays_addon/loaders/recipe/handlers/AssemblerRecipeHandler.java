@@ -23,6 +23,15 @@ public class AssemblerRecipeHandler {
                 .EUt(16)
                 .buildAndRegister();
 
+        //ULV Machine Casing
+        ASSEMBLER_RECIPES.recipeBuilder()
+                .input(OrePrefix.plate, Materials.Potin, 8)
+                .circuitMeta(8)
+                .outputs(MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.ULV))
+                .duration(25)
+                .EUt(16)
+                .buildAndRegister();
+
         // LV Motor
         ASSEMBLER_RECIPES.recipeBuilder()
                 .input(OrePrefix.stick, GalvanizedSteel, 2)
