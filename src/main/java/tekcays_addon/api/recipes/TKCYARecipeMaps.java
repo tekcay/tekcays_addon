@@ -48,9 +48,14 @@ public class TKCYARecipeMaps {
             .setSound(GTSounds.MIXER);
 
     @ZenProperty
-    public static final RecipeMap<BlastingRecipeBuilder> BLASTING_RECIPES = new RecipeMap<>(
-            "pressure_blasting", 0, 1, 0, 1, 1, 2, 0, 1, new BlastingRecipeBuilder(), false)
+    public static final RecipeMap<ConvertingRecipeBuilder> CONVERTING_RECIPES = new RecipeMap<>(
+            "converting", 0, 1, 0, 1, 1, 2, 0, 1, new ConvertingRecipeBuilder(), false)
             .setSound(GTSounds.COOLING);
+
+    @ZenProperty
+    public static final RecipeMap<MelterRecipeBuilder> BLASTING_RECIPES = new RecipeMap<>(
+            "blasting", 1, 1, 0, 0, 1, 1, 2, 2, new MelterRecipeBuilder(), false)
+            .setSound(GTSounds.FURNACE);
 
     @ZenProperty
     public static final RecipeMap<PrimitiveRecipeBuilder> PRIMITIVE_BATH = new RecipeMap<>(

@@ -33,8 +33,9 @@ tkcya.machine.electric_melter.name=Electric Melter
 tkcya.machine.fuel_melter.name=Fuel Melter
 tkcya.machine.alloying_crucible.name=Alloying Crucible
 tkcya.machine.casting_table.name=Casting Table
-tkcya.machine.electric_pressure_blast_furnace.name=Electric Pressure Blast Furnace
+tkcya.machine.electric_converter.name=Electric Converter
 tkcya.machine.primitive_bath.name=Primitive Bath
+tkcya.machine.tkcya_blast_furnace.name=Blast Furnace
 
 
 # multiblock descriptions
@@ -59,7 +60,8 @@ recipemap.alloying_crucible.name=Alloying
 recipemap.casting_table.name=Casting
 recipemap.primitive_bath.name=Bath
 recipemap.electric_casting_table.name=Casting
-recipemap.pressure_blasting.name=Blasting
+recipemap.blasting.name=Blasting
+recipemap.converting.name=Converting
 
 # Materials
 material.unpure_bronze=Unpure Bronze
@@ -67,14 +69,22 @@ material.unpure_steel=Unpure Steel
 material.unpure_copper=Unpure Copper
 material.unpure_tin=Unpure Tin
 material.unpure_iron=Unpure Iron
+
+
+##Alloys/Intermediates
 material.galvanized_steel=Galvanized Steel
+material.pig_iron=Pig Iron
 
-
+##NoFrmula
 material.ceramic=Ceramic
 material.mica_pulp=Mica Based
 material.fuel=Burnable Fuel
+
+##Misc
 material.hot_air=Hot Air
+
 fluid.fuel.tooltip=To be used in the fuel consuming machines
+
 material.hydrogen_fluorine=Hydrogen Fluorine
 material.hydrogen_chlorine=Hydrogen Chlorine
 material.hydrogen_bromine=Hydrogen Bromine
@@ -127,16 +137,28 @@ tekcays_addon.multiblock.fuel_melter.tooltip.5=Target temperature: §a%d K§7.
 
 tekcays_addon.recipe.melter_temperature=Temperature: %dK
 
-tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.1=Temperature: §a%d K§7.
-tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.7=Pressure: §a%s bar§7.
-tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.2=Not enough energy can be input to reach the target!
-tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.4=Consumption: %d EU/t.
-tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.5=Target temperature: §a%d K§7.
-tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.6=Target pressure: §a%s bar§7.
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.1=Only runs recipes if the required temperature is set.
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.2=The §aL§7 per tick required is exponentially related to the current temperature.
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.3=The target temperature is set by the coils.
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.4=The temperature increasing speed is set by the fireboxes.
 
-tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.1=Only runs recipes if the required temperature and pressure are set.
-tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.2=The §aEU§7 per tick required is exponentially related to the current temperature and pressure.
-tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.3=The target temperature and the temperature increasing speed are set by the coils.
+tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.1=Temperature: §a%d K§7.
+tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.2=Not enough energy can be input to reach the target!
+tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4=Consumption: %d L/t.
+tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.5=Target temperature: §a%d K§7.
+
+tekcays_addon.recipe.tkcya_blast_furnace_temperature=Temperature: %dK
+
+tekcays_addon.multiblock.electric_converter.tooltip.1=Temperature: §a%d K§7.
+tekcays_addon.multiblock.electric_converter.tooltip.7=Pressure: §a%s bar§7.
+tekcays_addon.multiblock.electric_converter.tooltip.2=Not enough energy can be input to reach the target!
+tekcays_addon.multiblock.electric_converter.tooltip.4=Consumption: %d EU/t.
+tekcays_addon.multiblock.electric_converter.tooltip.5=Target temperature: §a%d K§7.
+tekcays_addon.multiblock.electric_converter.tooltip.6=Target pressure: §a%s bar§7.
+
+tekcays_addon.machine.electric_converter.tooltip.1=Only runs recipes if the required temperature and pressure are set.
+tekcays_addon.machine.electric_converter.tooltip.2=The §aEU§7 per tick required is exponentially related to the current temperature and pressure.
+tekcays_addon.machine.electric_converter.tooltip.3=The target temperature and the temperature increasing speed are set by the coils.
 
 tekcays_addon.recipe.blasting_temperature=Temperature: %dK
 tekcays_addon.recipe.blasting_pressure=Pressure: %d bar

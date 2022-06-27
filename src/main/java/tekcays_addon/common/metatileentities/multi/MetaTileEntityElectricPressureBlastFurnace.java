@@ -36,7 +36,7 @@ import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.recipes.builders.BlastingRecipeBuilder;
+import tekcays_addon.api.recipes.builders.ConvertingRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
 
 import javax.annotation.Nonnull;
@@ -70,7 +70,7 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
 
 
     public MetaTileEntityElectricPressureBlastFurnace(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.BLASTING_RECIPES);
+        super(metaTileEntityId, TKCYARecipeMaps.CONVERTING_RECIPES);
         this.recipeMapWorkable = new ElectricPressureBlastFurnaceLogic(this);
 
         temp = 300;
@@ -206,8 +206,8 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        return temp >= recipe.getProperty(BlastingRecipeBuilder.TemperatureProperty.getInstance(), 0)
-                & pressure/pressureMultiplier >= recipe.getProperty(BlastingRecipeBuilder.PressureProperty.getInstance(), 0);
+        return temp >= recipe.getProperty(ConvertingRecipeBuilder.TemperatureProperty.getInstance(), 0)
+                & pressure/pressureMultiplier >= recipe.getProperty(ConvertingRecipeBuilder.PressureProperty.getInstance(), 0);
     }
 
 
@@ -235,9 +235,9 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
 
-        tooltip.add(I18n.format("tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.1"));//Only runs recipes if the required temperature is set.
-        tooltip.add(I18n.format("tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.2"));//The §aEU§7 per tick required is exponentially related to the current temperature and pressure.
-        tooltip.add(I18n.format("tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.3"));//The target temperature and the temperature increasing speed are set by the coils.
+        tooltip.add(I18n.format("tekcays_addon.machine.electric_converter.tooltip.1"));//Only runs recipes if the required temperature is set.
+        tooltip.add(I18n.format("tekcays_addon.machine.electric_converter.tooltip.2"));//The §aEU§7 per tick required is exponentially related to the current temperature and pressure.
+        tooltip.add(I18n.format("tekcays_addon.machine.electric_converter.tooltip.3"));//The target temperature and the temperature increasing speed are set by the coils.
     }
 
     @Override
@@ -272,32 +272,32 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
 
             ///////////Current temperature
 
-            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.1", temp));
+            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_converter.tooltip.1", temp));
 
             ///////////Current pressure
 
-            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.7", getShowablePressure(pressure)));
+            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_converter.tooltip.7", getShowablePressure(pressure)));
 
             ///////////EU/t consumption
 
             if (getEnergy() > temperatureEnergyCost(this.temp) + pressureEnergyCost(this.pressure)) {
 
-                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.4", temperatureEnergyCost(temp) + pressureEnergyCost(pressure)));
+                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_converter.tooltip.4", temperatureEnergyCost(temp) + pressureEnergyCost(pressure)));
             } else {
-                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.4", 0));
+                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_converter.tooltip.4", 0));
             }
 
             ///////////Target Temperature
 
-            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.5", targetTemp));
+            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_converter.tooltip.5", targetTemp));
 
             ///////////Target Pressure
 
-            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.6", getShowablePressure(targetPressure)));
+            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_converter.tooltip.6", getShowablePressure(targetPressure)));
 
 
             if (!canAchieveTargetTemp && hasEnoughEnergy)
-                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.2")
+                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_converter.tooltip.2")
                         .setStyle(new Style().setColor(TextFormatting.RED)));
 
         }

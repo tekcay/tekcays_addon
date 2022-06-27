@@ -11,36 +11,35 @@ import gregtech.api.util.ValidationResult;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import tekcays_addon.api.recipes.recipeproperties.PressureProperty;
 
-public class BlastingRecipeBuilder extends RecipeBuilder<BlastingRecipeBuilder> {
+public class ConvertingRecipeBuilder extends RecipeBuilder<ConvertingRecipeBuilder> {
 
     private int temp, pressure;
 
-    public BlastingRecipeBuilder() {
+    public ConvertingRecipeBuilder() {
     }
 
-    public BlastingRecipeBuilder(Recipe recipe, RecipeMap<BlastingRecipeBuilder> recipeMap) {
+    public ConvertingRecipeBuilder(Recipe recipe, RecipeMap<ConvertingRecipeBuilder> recipeMap) {
         super(recipe, recipeMap);
         this.temp = recipe.getRecipePropertyStorage().getRecipePropertyValue(TemperatureProperty.getInstance(), 0);
         this.pressure= recipe.getRecipePropertyStorage().getRecipePropertyValue(PressureProperty.getInstance(), 0);
     }
 
-    public BlastingRecipeBuilder(RecipeBuilder<BlastingRecipeBuilder> recipeBuilder) {
+    public ConvertingRecipeBuilder(RecipeBuilder<ConvertingRecipeBuilder> recipeBuilder) {
         super(recipeBuilder);
     }
 
     @Override
-    public BlastingRecipeBuilder copy() {
-        return new BlastingRecipeBuilder(this);
+    public ConvertingRecipeBuilder copy() {
+        return new ConvertingRecipeBuilder(this);
     }
 
-    public BlastingRecipeBuilder setTemp(int temperature) {
+    public ConvertingRecipeBuilder setTemp(int temperature) {
         this.temp = temperature;
         return this;
     }
 
-    public BlastingRecipeBuilder setPressure(int pressure) {
+    public ConvertingRecipeBuilder setPressure(int pressure) {
         this.pressure = pressure;
         return this;
     }
