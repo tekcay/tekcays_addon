@@ -239,17 +239,19 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     @Override
     public boolean hasMufflerMechanics() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean hasMaintenanceMechanics() {
-        return true;
+        return false;
     }
 
     @Override
     public void invalidateStructure() {
         setTemp(300);
+        setIncreaseTemp();
+        setTargetTemp();
         super.invalidateStructure();
         resetTileAbilities();
     }

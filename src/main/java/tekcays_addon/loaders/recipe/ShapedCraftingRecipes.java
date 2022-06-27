@@ -1,11 +1,14 @@
 package tekcays_addon.loaders.recipe;
 
+import gregtech.api.block.machines.BlockMachine;
 import gregtech.api.recipes.ModHandler;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
+import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.blocks.BlockMachineCasing;
 import gregtech.common.blocks.MetaBlocks;
+import gregtech.common.metatileentities.electric.MetaTileEntityHull;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
@@ -44,6 +47,9 @@ public class ShapedCraftingRecipes{
     public static void galvanizedSteel() {
         ModHandler.addShapedRecipe("lv_machine_casing", MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.LV),
         "PPP", "PwP", "PPP", 'P', OreDictUnifier.get(OrePrefix.plate, TKCYAMaterials.GalvanizedSteel));
+
+        ModHandler.addShapedRecipe("ulv_machine_casing", MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.ULV),
+                "PPP", "PwP", "PPP", 'P', OreDictUnifier.get(OrePrefix.plate, Materials.Potin));
 
     }
 

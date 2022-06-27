@@ -2,22 +2,31 @@ package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.GTValues;
 import gregtech.api.unification.material.Materials;
+import gregtech.api.unification.ore.OrePrefix;
 import tekcays_addon.api.unification.TKCYAMaterials;
 
-import static tekcays_addon.api.recipes.TKCYARecipeMaps.CONVERTING_RECIPES;
+import static tekcays_addon.api.recipes.TKCYARecipeMaps.BLASTING_RECIPES;
 
 public class BlastingRecipeHandler {
 
     public static void init() {
 
 
-        //Steel
-        CONVERTING_RECIPES.recipeBuilder()
+        //Pig Iron
+
+        ////Fro BandedIron
+        BLASTING_RECIPES.recipeBuilder()
                 .setTemp(1800)
-                .setPressure(5)
-                .fluidInputs(Materials.Oxygen.getFluid(3000))
-                .fluidInputs(TKCYAMaterials.PigIron.getFluid(GTValues.L))
-                .fluidOutputs(Materials.Steel.getFluid(GTValues.L))
+                .input(OrePrefix.dust, Materials.BandedIron)
+                .fluidOutputs(TKCYAMaterials.PigIron.getFluid(2 * GTValues.L))
+                .duration(200)
+                .buildAndRegister();
+
+        ////From Magnetite
+        BLASTING_RECIPES.recipeBuilder()
+                .setTemp(1800)
+                .input(OrePrefix.dust, Materials.Magnetite)
+                .fluidOutputs(TKCYAMaterials.PigIron.getFluid(3 * GTValues.L))
                 .duration(200)
                 .buildAndRegister();
     }
