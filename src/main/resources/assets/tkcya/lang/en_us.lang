@@ -64,6 +64,7 @@ recipemap.blasting.name=Blasting
 recipemap.converting.name=Converting
 
 # Materials
+
 material.unpure_bronze=Unpure Bronze
 material.unpure_steel=Unpure Steel
 material.unpure_copper=Unpure Copper
@@ -75,10 +76,12 @@ material.unpure_iron=Unpure Iron
 material.galvanized_steel=Galvanized Steel
 material.pig_iron=Pig Iron
 
-##NoFrmula
+##NoFormula
 material.ceramic=Ceramic
 material.mica_pulp=Mica Based
 material.fuel=Burnable Fuel
+material.hot_flue_gas=Hot Flue Gas
+material.flue_gas=Flue Gas
 
 ##Misc
 material.hot_air=Hot Air
@@ -92,6 +95,11 @@ material.hydrogen_iodine=Hydrogen Iodine
 
 # fluids
 tkcya.fluid.molten=Molten %s
+
+
+
+
+#MetaItems
 
 metaitem.mica.sheet.name=Mica Based Sheet
 metaitem.mica_insulator.sheet.name=Mica Insulator Sheet
