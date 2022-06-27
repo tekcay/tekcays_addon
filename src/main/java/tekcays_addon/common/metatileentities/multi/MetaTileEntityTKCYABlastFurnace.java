@@ -62,7 +62,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
     public MetaTileEntityTKCYABlastFurnace(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.MELTER_RECIPES);
+        super(metaTileEntityId, TKCYARecipeMaps.BLASTING_RECIPES);
         this.recipeMapWorkable = new TKCYABlastFurnaceLogic(this);
 
         temp = 300;

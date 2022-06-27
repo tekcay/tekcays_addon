@@ -11,6 +11,7 @@ import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.blocks.BlockMachineCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
+import gregtech.common.metatileentities.MetaTileEntities;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -72,6 +73,13 @@ public class RecipesRemovalHandler {
 
         //LV Machine Casing
         ModHandler.removeRecipes(MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.LV));
+
+        //ULV Machine Casing
+        ModHandler.removeRecipes(MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.ULV));
+
+        //ULV Machine Hull
+        ModHandler.removeRecipes(MetaTileEntities.HULL[0].getStackForm());
+
 
         //LV Motor
         ModHandler.removeRecipes(MetaItems.ELECTRIC_MOTOR_LV.getStackForm());

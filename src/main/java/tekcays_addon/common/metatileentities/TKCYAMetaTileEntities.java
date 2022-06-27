@@ -28,7 +28,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityCastingTable CASTING_TABLE;
     public static SteamCooler STEAM_COOLER_BRONZE;
     public static SteamCooler STEAM_COOLER_STEEL;
-    public static MetaTileEntityElectricPressureBlastFurnace ELECTRIC_CONVERTER;
+    public static MetaTileEntityConverter ELECTRIC_CONVERTER;
     public static MetaTileEntityPrimitiveBath PRIMITIVE_BATH;
     public static MetaTileEntityTKCYABlastFurnace TKCYA_BLAST_FURNACE;
 
@@ -71,7 +71,7 @@ public class TKCYAMetaTileEntities {
         }
 
         if (TKCYAConfigHolder.meltingOverhaul.enableBlastingOverhaul) {
-            ELECTRIC_CONVERTER = registerMetaTileEntity(11022, new MetaTileEntityElectricPressureBlastFurnace(tkcyaId("electric_converter")));
+            ELECTRIC_CONVERTER = registerMetaTileEntity(11022, new MetaTileEntityConverter(tkcyaId("electric_converter")));
             TKCYA_BLAST_FURNACE = registerMetaTileEntity(11023, new MetaTileEntityTKCYABlastFurnace(tkcyaId("tkcya_blast_furnace")));
         }
 

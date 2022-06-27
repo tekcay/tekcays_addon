@@ -8,6 +8,8 @@ import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.blocks.BlockMachineCasing;
 import gregtech.common.blocks.MetaBlocks;
+import gregtech.common.items.MetaItems;
+import gregtech.common.metatileentities.MetaTileEntities;
 import gregtech.common.metatileentities.electric.MetaTileEntityHull;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.common.items.TKCYAMetaItems;
@@ -51,6 +53,12 @@ public class ShapedCraftingRecipes{
         ModHandler.addShapedRecipe("ulv_machine_casing", MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.ULV),
                 "PPP", "PwP", "PPP", 'P', OreDictUnifier.get(OrePrefix.plate, Materials.Potin));
 
+        ModHandler.addShapedRecipe("ulv_machine_hull", MetaTileEntities.HULL[0].getStackForm(),
+                " w ", "PBP", "WCW",
+                'W', OreDictUnifier.get(OrePrefix.cableGtSingle, Materials.RedAlloy),
+                'P', OreDictUnifier.get(OrePrefix.plate, Materials.Potin),
+                'B', OreDictUnifier.get(OrePrefix.plate, Materials.Brass),
+                'C', MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.ULV));
     }
 
     public static void gasCollector() {

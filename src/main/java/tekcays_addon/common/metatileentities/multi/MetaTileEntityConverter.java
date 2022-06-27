@@ -47,7 +47,7 @@ import java.util.List;
 
 import static tekcays_addon.api.utils.TKCYAValues.ELECTRIC_PUMPS;
 
-public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultiblockController{
+public class MetaTileEntityConverter extends RecipeMapMultiblockController{
 
     // Temperature
     private int temp, targetTemp, increaseTemp;
@@ -69,7 +69,7 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
     }
 
 
-    public MetaTileEntityElectricPressureBlastFurnace(ResourceLocation metaTileEntityId) {
+    public MetaTileEntityConverter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.CONVERTING_RECIPES);
         this.recipeMapWorkable = new ElectricPressureBlastFurnaceLogic(this);
 
@@ -396,7 +396,7 @@ public class MetaTileEntityElectricPressureBlastFurnace extends RecipeMapMultibl
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTileEntityElectricPressureBlastFurnace(metaTileEntityId);
+        return new MetaTileEntityConverter(metaTileEntityId);
     }
 
 
