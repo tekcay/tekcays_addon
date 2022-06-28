@@ -113,25 +113,11 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
     public void setMultiplier() {
-
         if (!hasAcceptedFluid()) return;
-
 
         getGasCostMap().entrySet().stream()
                 .filter(e -> MiscMethods.isSameFluid(inputGasFluidStack, e.getKey()))
                 .forEach(e -> inputFluidMultiplier = e.getValue());
-
-
-        /*
-        getGasCostMap().forEach((fluidToCheck, multiplier) -> {
-            if (MiscMethods.isSameFluid(inputGasFluidStack, fluidToCheck)) {
-                inputFluidMultiplier = multiplier;
-            }
-        });
-
-         */
-
-
     }
 
     public Map<Fluid, Integer> getGasCostMap() {
@@ -168,7 +154,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
     public int getTemperatureGasConsumption(int temperature) {
-        return inputFluidMultiplier * (temperature - 300) * height ; //TODO formula for consumption t
+        return inputFluidMultiplier * (temperature - 300) * height ; //TODO formula for consumption
     }
 
 
@@ -277,8 +263,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 .where('X', states(getCasingState())
                         .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1)))
                 .where('O', states(getCasingState())
-                        .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setExactLimit(2))
-                        .or(abilities(MultiblockAbility.IMPORT_ITEMS).setExactLimit(2)))
+                        .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMaxGlobalLimited(2))
+                        .or(abilities(MultiblockAbility.IMPORT_ITEMS).setMaxGlobalLimited(2)))
                 .where('I', isIndicatorPredicate())
                 .where('#', air())
                 .build();

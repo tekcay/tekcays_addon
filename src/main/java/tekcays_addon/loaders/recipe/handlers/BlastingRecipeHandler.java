@@ -14,7 +14,7 @@ public class BlastingRecipeHandler {
 
         //Pig Iron
 
-        ////Fro BandedIron
+        ////From BandedIron
         BLASTING_RECIPES.recipeBuilder()
                 .setTemp(1800)
                 .input(OrePrefix.dust, Materials.BandedIron)
