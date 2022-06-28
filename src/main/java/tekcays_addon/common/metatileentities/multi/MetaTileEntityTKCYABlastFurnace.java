@@ -62,7 +62,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     private final Fluid[] ACCEPTED_INPUT_FLUIDS = {Materials.Air.getFluid(), TKCYAMaterials.HotFlueGas.getFluid()};
     private final int[] ACCEPTED_INPUT_FLUIDS_MULTIPLIER = {10, 1};
-    private int temperatureGasCalculatedCost;
+    private int temperatureGasCalculatedCost, temperatureGasConsumption;
 
     public void setIncreaseTemp() {
         increaseTemp = 5;
@@ -78,6 +78,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
         temp = 300;
         temperatureGasCalculatedCost = 0;
+        temperatureGasConsumption = 0;
     }
 
     @Override
@@ -88,24 +89,27 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         hasEnoughGas = hasEnoughInputGas(temp);
         
         if (temp >= targetTemp && hasEnoughInputGas(temp)) {
-            drainGas(temp);  
             canAchieveTargetTemp = true;
+            SetTemperatureGasConsumption();
+            drainGas();
         }
         
         if (!hasEnoughInputGas(temp) && temp - increaseTemp >= 300) {
             canAchieveTargetTemp = false;
-            setTemp(temp - increaseTemp);
+            temperatureGasCalculatedCost = 0;
+            if (getOffsetTimer() % 20 == 0) {
+                setTemp(temp - increaseTemp);
+            }
         }
-
         
         if (temp < targetTemp - increaseTemp && hasEnoughInputGas(temp + increaseTemp)) {
             canAchieveTargetTemp = true;
             if (getOffsetTimer() % 20 == 0) {
-                drainGas(temp + increaseTemp);
                 setTemp(temp + increaseTemp);
+                SetTemperatureGasConsumption();
+                drainGas();
             }
         }
-
     }
 
 
@@ -122,36 +126,36 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
 
-    public int SetTemperatureGasCost(int temp, Fluid fluid) {
+    public void SetTemperatureGasCost(int temperature) {
 
         getGasCostMap().forEach((fluidToCheck, multiplier) -> {
-            if (fluid != fluidToCheck) return;
-            temperatureGasCalculatedCost = multiplier + temp * 2 * height; //TODO formula for consumption
+            if (getInputFluidStack().getFluid() != fluidToCheck) return;
+            temperatureGasCalculatedCost = multiplier + temperature * 2 * height; //TODO formula for consumption
         });
-        return temperatureGasCalculatedCost;
+    }
+
+    //What is actually consumed
+    public void SetTemperatureGasConsumption() {
+
+        getGasCostMap().forEach((fluidToCheck, multiplier) -> {
+            if (getInputFluidStack().getFluid() != fluidToCheck) return;
+            temperatureGasConsumption = multiplier + temp * 2 * height; //TODO formula for consumption
+        });
     }
 
     
     private boolean hasEnoughInputGas(int temperature) {
         if (getInputFluidStack() == null) return false;
-        return (getInputFluidStack().amount >= SetTemperatureGasCost(temperature, getInputFluidStack().getFluid()));        
+        SetTemperatureGasCost(temperature);
+        return getInputFluidStack().amount >= temperatureGasCalculatedCost;   
     }
     
 
-    private void drainGas(int temperature) {
-
-        airOrFlueGasImport.drain(SetTemperatureGasCost(temperature, getInputFluidStack().getFluid()), true);
-        
-        /*
-        getGasToCheckAmountName().forEach((amount, fluid) -> {
-            if (amount < SetTemperatureGasCost(this.temp, fluid)) return;
-            airOrFlueGasImport.drain(SetTemperatureGasCost(this.temp, fluid), true);
-        });
-        
-         */
+    private void drainGas() {
+        airOrFlueGasImport.drain(new FluidStack(getInputFluidStack().getFluid(), temperatureGasCalculatedCost), true);
     }
 
-    private FluidStack @Nullable getInputFluidStack() {
+    private @Nullable FluidStack getInputFluidStack() {
 
         for (IFluidTank fluidTank : airOrFlueGasImport.getFluidTanks()) {
 
@@ -214,16 +218,16 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
             if (canAchieveTargetTemp) {
 
-                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4", temperatureGasCalculatedCost, getInputFluidStack().getLocalizedName()));
+                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4", temperatureGasConsumption, getInputFluidStack().getLocalizedName()));
             } else {
-                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4", 0));
+                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.5"));
             }
 
 
 
             ///////////Target Temperature
 
-            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.5", targetTemp));
+            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.6", targetTemp));
 
 
             ///////////If not enough input gas
