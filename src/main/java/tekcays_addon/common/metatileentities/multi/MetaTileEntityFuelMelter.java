@@ -40,13 +40,12 @@ import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.metatileentity.mutiblock.RecipeMapMultiblockNoEnergyController;
 import tekcays_addon.api.pattern.TKCYATraceabilityPredicate;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.recipes.builders.MelterRecipeBuilder;
+import tekcays_addon.api.recipes.builders.TemperatureRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.utils.MiscMethods;
 
 import javax.annotation.Nullable;
 import javax.annotation.Nonnull;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -110,7 +109,7 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockNoEnergyControl
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        return temp >= recipe.getProperty(MelterRecipeBuilder.TemperatureProperty.getInstance(), 0);
+        return temp >= recipe.getProperty(TemperatureRecipeBuilder.TemperatureProperty.getInstance(), 0);
     }
 
 

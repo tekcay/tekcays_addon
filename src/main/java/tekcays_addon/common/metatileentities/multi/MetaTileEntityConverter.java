@@ -36,7 +36,7 @@ import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.recipes.builders.ConvertingRecipeBuilder;
+import tekcays_addon.api.recipes.builders.TemperaturePressureRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
 
 import javax.annotation.Nonnull;
@@ -206,8 +206,8 @@ public class MetaTileEntityConverter extends RecipeMapMultiblockController{
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        return temp >= recipe.getProperty(ConvertingRecipeBuilder.TemperatureProperty.getInstance(), 0)
-                & pressure/pressureMultiplier >= recipe.getProperty(ConvertingRecipeBuilder.PressureProperty.getInstance(), 0);
+        return temp >= recipe.getProperty(TemperaturePressureRecipeBuilder.TemperatureProperty.getInstance(), 0)
+                & pressure/pressureMultiplier >= recipe.getProperty(TemperaturePressureRecipeBuilder.PressureProperty.getInstance(), 0);
     }
 
 

@@ -1,7 +1,7 @@
 package tekcays_addon.api.utils;
 
 import gregtech.api.items.metaitem.MetaItem;
-import gregtech.api.unification.material.Materials;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.unification.TKCYAMaterials;
 
@@ -20,9 +20,9 @@ public class MiscMethods {
         return false;
     }
 
-    public static boolean isAir(@Nullable FluidStack fluid) {
-        if (fluid == null) return false;
-        if (fluid.isFluidEqual(new FluidStack(Materials.Air.getFluid(), 1))) return true;
+    public static boolean isSameFluid(@Nullable FluidStack fluidStack, Fluid fluid) {
+        if (fluidStack == null) return false;
+        if (fluidStack.isFluidEqual(new FluidStack(fluid, 1))) return true;
 
         return false;
     }

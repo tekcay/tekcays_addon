@@ -11,6 +11,7 @@ import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
+import gregtech.api.unification.material.Materials;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.ConfigHolder;
@@ -28,19 +29,24 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.capability.impl.MultiblockNoEnergyRecipeLogic;
 import tekcays_addon.api.metatileentity.mutiblock.RecipeMapMultiblockNoEnergyController;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.recipes.builders.MelterRecipeBuilder;
+import tekcays_addon.api.recipes.builders.TemperatureRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.api.utils.MiscMethods;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 
 import static gregtech.api.util.RelativeDirection.*;
 
@@ -48,10 +54,15 @@ import static gregtech.api.util.RelativeDirection.*;
 public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergyController {
 
 
+    private boolean canAchieveTargetTemp, hasEnoughGas;
     private int temp, targetTemp, increaseTemp;
-    private boolean canAchieveTargetTemp, hasEnoughFuel;
     private int height;
-    private FluidTankList fuelFluidImport;
+    private FluidTankList airOrFlueGasImport;
+
+
+    private final Fluid[] ACCEPTED_INPUT_FLUIDS = {Materials.Air.getFluid(), TKCYAMaterials.HotFlueGas.getFluid()};
+    private final int[] ACCEPTED_INPUT_FLUIDS_MULTIPLIER = {10, 1};
+    private int temperatureGasCalculatedCost;
 
     public void setIncreaseTemp() {
         increaseTemp = 5;
@@ -66,6 +77,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         this.recipeMapWorkable = new TKCYABlastFurnaceLogic(this);
 
         temp = 300;
+        temperatureGasCalculatedCost = 0;
     }
 
     @Override
@@ -73,64 +85,88 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         super.updateFormedValid();
         setIncreaseTemp();
         setTargetTemp();
-
-        hasEnoughFuel = drainFuel();
-
-        if (getOffsetTimer() % 20 == 0 && !recipeMapWorkable.isActive()) {
-            stepTowardsTargetTemp(getFuelAmount());        }
-        else if (temp >= targetTemp) {
+        hasEnoughGas = hasEnoughInputGas(temp);
+        
+        if (temp >= targetTemp && hasEnoughInputGas(temp)) {
+            drainGas(temp);  
             canAchieveTargetTemp = true;
         }
-    }
-
-    private void stepTowardsTargetTemp(int fuelAmount) {
-        canAchieveTargetTemp = true;
-
-        if (temp >= targetTemp) return;
-        if (fuelAmount >= temperatureFuelCost(temp + increaseTemp) && hasEnoughFuel) {
-            setTemp(temp + increaseTemp);
-        } else {
+        
+        if (!hasEnoughInputGas(temp) && temp - increaseTemp >= 300) {
             canAchieveTargetTemp = false;
-        }
-    }
-
-    public int temperatureFuelCost(int temp) {
-        return temp <= 300 ? 0 : 1; //(int) Math.exp(((double) temp - 100) / 300)
-    }
-
-    private boolean drainFuel() {
-
-        if (getFuelAmount() >= temperatureFuelCost(this.temp)) {
-            fuelFluidImport.drain(temperatureFuelCost(this.temp), true);
-            return true;
-        }
-
-        if (temp - increaseTemp < 300) return false;
-        if (getOffsetTimer() % 20 == 0) {
             setTemp(temp - increaseTemp);
         }
 
-        return false;
+        
+        if (temp < targetTemp - increaseTemp && hasEnoughInputGas(temp + increaseTemp)) {
+            canAchieveTargetTemp = true;
+            if (getOffsetTimer() % 20 == 0) {
+                drainGas(temp + increaseTemp);
+                setTemp(temp + increaseTemp);
+            }
+        }
+
     }
 
+
+    public Map<Fluid, Integer> getGasCostMap() {
+
+        Map<Fluid, Integer> gasCostMap = new HashMap<>();
+
+        if (ACCEPTED_INPUT_FLUIDS.length != ACCEPTED_INPUT_FLUIDS_MULTIPLIER.length) return gasCostMap;
+
+        for (int i = 0; i < ACCEPTED_INPUT_FLUIDS.length; i++) {
+            gasCostMap.put(ACCEPTED_INPUT_FLUIDS[i], ACCEPTED_INPUT_FLUIDS_MULTIPLIER[i]);
+        }
+        return gasCostMap;
+    }
+
+
+    public int SetTemperatureGasCost(int temp, Fluid fluid) {
+
+        getGasCostMap().forEach((fluidToCheck, multiplier) -> {
+            if (fluid != fluidToCheck) return;
+            temperatureGasCalculatedCost = multiplier + temp * 2 * height; //TODO formula for consumption
+        });
+        return temperatureGasCalculatedCost;
+    }
+
+    
+    private boolean hasEnoughInputGas(int temperature) {
+        if (getInputFluidStack() == null) return false;
+        return (getInputFluidStack().amount >= SetTemperatureGasCost(temperature, getInputFluidStack().getFluid()));        
+    }
+    
+
+    private void drainGas(int temperature) {
+
+        airOrFlueGasImport.drain(SetTemperatureGasCost(temperature, getInputFluidStack().getFluid()), true);
+        
+        /*
+        getGasToCheckAmountName().forEach((amount, fluid) -> {
+            if (amount < SetTemperatureGasCost(this.temp, fluid)) return;
+            airOrFlueGasImport.drain(SetTemperatureGasCost(this.temp, fluid), true);
+        });
+        
+         */
+    }
+
+    private FluidStack @Nullable getInputFluidStack() {
+
+        for (IFluidTank fluidTank : airOrFlueGasImport.getFluidTanks()) {
+
+            FluidStack fluidStack = fluidTank.drain(Integer.MAX_VALUE, false);
+
+            for (Fluid fluid : ACCEPTED_INPUT_FLUIDS) {
+                if (MiscMethods.isSameFluid(fluidStack, fluid)) return fluidStack;
+            }
+        }
+        return null;
+    }  
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        return temp >= recipe.getProperty(MelterRecipeBuilder.TemperatureProperty.getInstance(), 0);
-    }
-
-
-    private int getFuelAmount() {
-
-        int fuelAmount = 0;
-        for (IFluidTank fluidTank : fuelFluidImport.getFluidTanks()) {
-
-            FluidStack fuelStack = fluidTank.drain(Integer.MAX_VALUE, false);
-            if (!MiscMethods.isFuel(fuelStack)) continue;
-            fuelAmount += fuelStack.amount;
-        }
-
-        return fuelAmount;
+        return temp >= recipe.getProperty(TemperatureRecipeBuilder.TemperatureProperty.getInstance(), 0);
     }
 
 
@@ -169,9 +205,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             }
 
 
-            if (this.recipeMapWorkable.isHasNotEnoughEnergy()) {
-                textList.add((new TextComponentTranslation("gregtech.multiblock.not_enough_energy")).setStyle((new Style()).setColor(TextFormatting.RED)));
-            }
 
             ///////////Current temperature
 
@@ -179,9 +212,9 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
             ///////////L/t consumption
 
-            if (getFuelAmount() > temperatureFuelCost(this.temp)) {
+            if (canAchieveTargetTemp) {
 
-                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4", temperatureFuelCost(temp)));
+                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4", temperatureGasCalculatedCost, getInputFluidStack().getLocalizedName()));
             } else {
                 textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4", 0));
             }
@@ -193,7 +226,9 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.5", targetTemp));
 
 
-            if (!canAchieveTargetTemp && hasEnoughFuel)
+            ///////////If not enough input gas
+            
+            if (!hasEnoughGas)
                 textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.2")
                         .setStyle(new Style().setColor(TextFormatting.RED)));
 
@@ -285,7 +320,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         data.setInteger("temp", this.temp);
         data.setInteger("targetTemp", this.targetTemp);
         data.setBoolean("canAchieveTargetTemp", this.canAchieveTargetTemp);
-        data.setBoolean("hasEnoughFuel", this.hasEnoughFuel);
+        data.setBoolean("hasEnoughGas", this.hasEnoughGas);
         return data;
     }
 
@@ -312,7 +347,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         this.temp = data.getInteger("temp");
         this.targetTemp = data.getInteger("targetTemp");
         this.canAchieveTargetTemp = data.getBoolean("canAchieveTargetTemp");
-        this.hasEnoughFuel = data.getBoolean("hasEnoughFuel");
+        this.hasEnoughGas = data.getBoolean("hasEnoughGas");
     }
 
     @Override
@@ -321,7 +356,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         buf.writeInt(this.temp);
         buf.writeInt(this.targetTemp);
         buf.writeBoolean(this.canAchieveTargetTemp);
-        buf.writeBoolean(this.hasEnoughFuel);
+        buf.writeBoolean(this.hasEnoughGas);
     }
 
     @Override
@@ -330,7 +365,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         this.temp = buf.readInt();
         this.targetTemp = buf.readInt();
         this.canAchieveTargetTemp = buf.readBoolean();
-        this.hasEnoughFuel = buf.readBoolean();
+        this.hasEnoughGas = buf.readBoolean();
     }
 
     @Override
@@ -344,13 +379,13 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     @Override
     public void initializeAbilities() {
-        this.fuelFluidImport = new FluidTankList(true, getAbilities(MultiblockAbility.IMPORT_FLUIDS));
+        this.airOrFlueGasImport = new FluidTankList(true, getAbilities(MultiblockAbility.IMPORT_FLUIDS));
         this.inputInventory = new ItemHandlerList(getAbilities(MultiblockAbility.IMPORT_ITEMS));
         this.outputFluidInventory = new FluidTankList(true, getAbilities(MultiblockAbility.EXPORT_FLUIDS));
     }
 
     private void resetTileAbilities() {
-        this.fuelFluidImport = new FluidTankList(true);
+        this.airOrFlueGasImport = new FluidTankList(true);
         this.inputInventory = new ItemStackHandler(0);
         this.outputFluidInventory = new FluidTankList(true);
     }

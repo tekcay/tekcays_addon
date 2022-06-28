@@ -151,8 +151,8 @@ tekcays_addon.machine.tkcya_blast_furnace.tooltip.3=The target temperature is se
 tekcays_addon.machine.tkcya_blast_furnace.tooltip.4=The temperature increasing speed is set by the fireboxes.
 
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.1=Temperature: §a%d K§7.
-tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.2=Not enough energy can be input to reach the target!
-tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4=Consumption: %d L/t.
+tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.2=Not enough gas to reach the target temperature!
+tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4=Consumption: %d L/t of %s.
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.5=Target temperature: §a%d K§7.
 
 tekcays_addon.recipe.tkcya_blast_furnace_temperature=Temperature: %dK

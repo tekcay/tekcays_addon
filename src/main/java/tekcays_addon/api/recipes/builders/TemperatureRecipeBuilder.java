@@ -12,35 +12,29 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class ConvertingRecipeBuilder extends RecipeBuilder<ConvertingRecipeBuilder> {
+public class TemperatureRecipeBuilder extends RecipeBuilder<TemperatureRecipeBuilder> {
 
-    private int temp, pressure;
+    private int temp;
 
-    public ConvertingRecipeBuilder() {
+    public TemperatureRecipeBuilder() {
     }
 
-    public ConvertingRecipeBuilder(Recipe recipe, RecipeMap<ConvertingRecipeBuilder> recipeMap) {
+    public TemperatureRecipeBuilder(Recipe recipe, RecipeMap<TemperatureRecipeBuilder> recipeMap) {
         super(recipe, recipeMap);
         this.temp = recipe.getRecipePropertyStorage().getRecipePropertyValue(TemperatureProperty.getInstance(), 0);
-        this.pressure= recipe.getRecipePropertyStorage().getRecipePropertyValue(PressureProperty.getInstance(), 0);
     }
 
-    public ConvertingRecipeBuilder(RecipeBuilder<ConvertingRecipeBuilder> recipeBuilder) {
+    public TemperatureRecipeBuilder(RecipeBuilder<TemperatureRecipeBuilder> recipeBuilder) {
         super(recipeBuilder);
     }
 
     @Override
-    public ConvertingRecipeBuilder copy() {
-        return new ConvertingRecipeBuilder(this);
+    public TemperatureRecipeBuilder copy() {
+        return new TemperatureRecipeBuilder(this);
     }
 
-    public ConvertingRecipeBuilder setTemp(int temperature) {
+    public TemperatureRecipeBuilder setTemp(int temperature) {
         this.temp = temperature;
-        return this;
-    }
-
-    public ConvertingRecipeBuilder setPressure(int pressure) {
-        this.pressure = pressure;
         return this;
     }
 
@@ -49,9 +43,7 @@ public class ConvertingRecipeBuilder extends RecipeBuilder<ConvertingRecipeBuild
         this.EUt(1); // Allow parallelization to not / by zero
         Recipe recipe = new Recipe(inputs, outputs, chancedOutputs, fluidInputs, fluidOutputs,
                 duration, EUt, hidden, false);
-        if (!recipe.getRecipePropertyStorage().store(TemperatureProperty.getInstance(), temp)
-                || !recipe.getRecipePropertyStorage().store(PressureProperty.getInstance(), pressure)
-                || !recipe.getRecipePropertyStorage().store(PrimitiveProperty.getInstance(), true)) {
+        if (!recipe.getRecipePropertyStorage().store(TemperatureProperty.getInstance(), temp) || !recipe.getRecipePropertyStorage().store(PrimitiveProperty.getInstance(), true)) {
             return ValidationResult.newResult(EnumValidationResult.INVALID, recipe);
         }
 
@@ -62,11 +54,6 @@ public class ConvertingRecipeBuilder extends RecipeBuilder<ConvertingRecipeBuild
     protected EnumValidationResult finalizeAndValidate() {
         if (this.temp <= 300) {
             GTLog.logger.error("Temperature cannot be less or equal to 300", new IllegalArgumentException());
-            this.recipeStatus = EnumValidationResult.INVALID;
-        }
-
-        if (this.pressure < 0) {
-            GTLog.logger.error("Pressure cannot be negative", new IllegalArgumentException());
             this.recipeStatus = EnumValidationResult.INVALID;
         }
 
@@ -87,34 +74,7 @@ public class ConvertingRecipeBuilder extends RecipeBuilder<ConvertingRecipeBuild
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
                 .append(TemperatureProperty.getInstance().getKey(), temp)
-                .append(PressureProperty.getInstance().getKey(), pressure)
                 .toString();
-    }
-
-    public static class PressureProperty extends RecipeProperty<Integer> {
-
-        private static final String KEY = "pressure";
-
-        private static PressureProperty INSTANCE;
-
-
-        protected PressureProperty() {
-            super(KEY, Integer.class);
-        }
-
-        public static PressureProperty getInstance() {
-            if (INSTANCE == null) {
-                INSTANCE = new PressureProperty();
-            }
-
-            return INSTANCE;
-        }
-
-        @Override
-        public void drawInfo(Minecraft minecraft, int x, int y, int color, Object value) {
-            minecraft.fontRenderer.drawString(I18n.format("tekcays_addon.recipe.blasting_pressure",
-                    value), x, y, color);
-        }
     }
 
     public static class TemperatureProperty extends RecipeProperty<Integer> {
@@ -138,7 +98,7 @@ public class ConvertingRecipeBuilder extends RecipeBuilder<ConvertingRecipeBuild
 
         @Override
         public void drawInfo(Minecraft minecraft, int x, int y, int color, Object value) {
-            minecraft.fontRenderer.drawString(I18n.format("tekcays_addon.recipe.blasting_temperature",
+            minecraft.fontRenderer.drawString(I18n.format("tekcays_addon.recipe.melter_temperature",
                     value), x, y, color);
         }
     }
