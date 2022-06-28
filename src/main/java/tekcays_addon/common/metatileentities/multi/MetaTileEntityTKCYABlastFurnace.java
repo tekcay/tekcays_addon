@@ -43,11 +43,9 @@ import tekcays_addon.api.utils.MiscMethods;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.security.Key;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 import static gregtech.api.util.RelativeDirection.*;
@@ -65,6 +63,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     private final Fluid[] ACCEPTED_INPUT_FLUIDS = {Materials.Air.getFluid(), TKCYAMaterials.HotFlueGas.getFluid()};
     private final int[] ACCEPTED_INPUT_FLUIDS_MULTIPLIER = {10, 1};
     private int inputFluidMultiplier;
+    private FluidStack inputGasFluidStack;
 
     public void setIncreaseTemp() {
         increaseTemp = 5;
@@ -115,8 +114,10 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     public void setMultiplier() {
 
+        if (!hasAcceptedFluid()) return;
+
         getGasCostMap().entrySet().stream()
-                .filter(e -> e == getInputFluidStack().getFluid())
+                .filter(e -> e == inputGasFluidStack.getFluid())
                 .forEach(e -> inputFluidMultiplier = e.getValue());
 
         /*
@@ -124,7 +125,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             if (getInputFluidStack().getFluid() != fluidToCheck) return;
             inputFluidMultiplier = multiplier;
         });
-        
+
          */
     }
 
@@ -140,22 +141,25 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         return gasCostMap;
     }
 
-    private @Nullable FluidStack getInputFluidStack() {
+    private boolean hasAcceptedFluid() {
 
         for (IFluidTank fluidTank : airOrFlueGasImport.getFluidTanks()) {
 
             FluidStack fluidStack = fluidTank.drain(Integer.MAX_VALUE, false);
 
             for (Fluid fluid : ACCEPTED_INPUT_FLUIDS) {
-                if (MiscMethods.isSameFluid(fluidStack, fluid)) return fluidStack;
+                if (MiscMethods.isSameFluid(fluidStack, fluid)) {
+                    inputGasFluidStack = fluidStack;
+                    return true;
+                }
             }
         }
-        return null;
+        return false;
     }
 
     private boolean hasEnoughInputGas(int temperature) {
-        if (getInputFluidStack() == null) return false;
-        return getInputFluidStack().amount >= getTemperatureGasConsumption(temperature);
+        if (!hasAcceptedFluid()) return false;
+        return inputGasFluidStack.amount >= getTemperatureGasConsumption(temperature);
     }
 
     public int getTemperatureGasConsumption(int temperature) {
@@ -164,7 +168,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
 
     private void drainGas(int temperature) {
-        airOrFlueGasImport.drain(new FluidStack(getInputFluidStack().getFluid(), getTemperatureGasConsumption(temperature)), true);
+        airOrFlueGasImport.drain(new FluidStack(inputGasFluidStack.getFluid(), getTemperatureGasConsumption(temperature)), true);
     }
 
 
@@ -219,7 +223,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
             if (canAchieveTargetTemp) {
 
-                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4", getTemperatureGasConsumption(temp), getInputFluidStack().getLocalizedName()));
+                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4", getTemperatureGasConsumption(temp), inputGasFluidStack.getLocalizedName()));
             } else {
                 textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.5"));
             }
