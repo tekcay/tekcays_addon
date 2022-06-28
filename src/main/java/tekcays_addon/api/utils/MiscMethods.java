@@ -20,7 +20,7 @@ public class MiscMethods {
         return false;
     }
 
-    public static boolean isSameFluid(@Nullable FluidStack fluidStack, Fluid fluid) {
+    public static boolean isSameFluid(FluidStack fluidStack, Fluid fluid) {
         if (fluidStack == null) return false;
         if (fluidStack.isFluidEqual(new FluidStack(fluid, 1))) return true;
 

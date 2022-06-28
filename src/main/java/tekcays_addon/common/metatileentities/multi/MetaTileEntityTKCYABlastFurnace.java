@@ -116,17 +116,22 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
         if (!hasAcceptedFluid()) return;
 
+
         getGasCostMap().entrySet().stream()
-                .filter(e -> e == inputGasFluidStack.getFluid())
+                .filter(e -> MiscMethods.isSameFluid(inputGasFluidStack, e.getKey()))
                 .forEach(e -> inputFluidMultiplier = e.getValue());
+
 
         /*
         getGasCostMap().forEach((fluidToCheck, multiplier) -> {
-            if (getInputFluidStack().getFluid() != fluidToCheck) return;
-            inputFluidMultiplier = multiplier;
+            if (MiscMethods.isSameFluid(inputGasFluidStack, fluidToCheck)) {
+                inputFluidMultiplier = multiplier;
+            }
         });
 
          */
+
+
     }
 
     public Map<Fluid, Integer> getGasCostMap() {
@@ -163,7 +168,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
     public int getTemperatureGasConsumption(int temperature) {
-        return inputFluidMultiplier * (temperature - 300) * height; //TODO formula for consumption
+        return inputFluidMultiplier ; //TODO formula for consumption + (temperature - 300) * height
     }
 
 
@@ -315,7 +320,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
         initializeAbilities();
-        this.height = context.getOrDefault("blastFurnaceHeight", 1) - 1;
+        this.height = context.getOrDefault("blastFurnaceHeight", 1);
     }
 
     @Override
