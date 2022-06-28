@@ -43,9 +43,11 @@ import tekcays_addon.api.utils.MiscMethods;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.security.Key;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 import static gregtech.api.util.RelativeDirection.*;
@@ -113,10 +115,17 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     public void setMultiplier() {
 
+        getGasCostMap().entrySet().stream()
+                .filter(e -> e == getInputFluidStack().getFluid())
+                .forEach(e -> inputFluidMultiplier = e.getValue());
+
+        /*
         getGasCostMap().forEach((fluidToCheck, multiplier) -> {
             if (getInputFluidStack().getFluid() != fluidToCheck) return;
             inputFluidMultiplier = multiplier;
         });
+        
+         */
     }
 
     public Map<Fluid, Integer> getGasCostMap() {
