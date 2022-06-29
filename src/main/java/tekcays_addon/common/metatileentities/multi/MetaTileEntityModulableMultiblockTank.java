@@ -157,21 +157,8 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
         return super.onRightClick(playerIn, hand, facing, hitResult);
     }
 
-    /*
-    @Override
-    protected ModularUI.Builder createUITemplate(@Nonnull EntityPlayer entityPlayer) {
-        return ModularUI.defaultBuilder()
-                .widget(new LabelWidget(6, 6, getMetaFullName()))
-                .widget(new TankWidget(importFluids.getTankAt(0), 52, 18, 72, 61)
-                        .setBackgroundTexture(GuiTextures.SLOT)
-                        .setContainerClicking(true, true))
-                .bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 0);
-    }
-
-     */
-
-    public double getFillPercentage() {
-       return 100.0D * this.fluidInventory.drain(Integer.MAX_VALUE, false).amount / this.actualCapacity;
+    public int getFillPercentage() {
+       return (int) (100.0D * this.importFluids.drain(Integer.MAX_VALUE, false).amount / this.actualCapacity);
     }
 
     @Override
@@ -222,8 +209,6 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
             textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.content", fluidInventory.drain(Integer.MAX_VALUE, false)));
             textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.capacity", this.actualCapacity));
             textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.fill.percentage", getFillPercentage()));
-
-            tkcya.multiblock.modulable_tank.capacity.percentage
         }
 
     }
