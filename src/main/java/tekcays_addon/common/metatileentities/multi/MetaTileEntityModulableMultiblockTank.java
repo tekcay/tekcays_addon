@@ -62,7 +62,7 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
         super(metaTileEntityId);
         this.isMetal = isMetal;
         this.capacity = capacity;
-        initializeAbilities();
+        //initializeAbilities();
     }
 
     protected void initializeAbilities() {
@@ -95,7 +95,7 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
                 .aisle("XXX", "XXX", "XXX")
                 .aisle("XSX", "X X", "XXX")
-                .aisle("XXX", "XIX", "XXX").setRepeatable(1,11)
+                .aisle("XXX", "XIX", "XXX").setRepeatable(0,11)
                 .aisle("XXX", "XXX", "XXX")
                 .where('S', selfPredicate())
                 .where('I', isIndicatorPredicate())
@@ -123,7 +123,7 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
         initializeAbilities();
-        this.height = context.getOrDefault("modulableTankHeight", 1);
+        this.height = context.getOrDefault("modulableTankHeight", 1) + 1;
         this.actualCapacity = this.capacity * this.height;
     }
 
