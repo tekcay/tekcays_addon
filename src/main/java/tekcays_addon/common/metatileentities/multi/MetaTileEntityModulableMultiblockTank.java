@@ -74,7 +74,7 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
     @Nonnull
     private List<FluidTank> makeFluidTanks() {
         List<FluidTank> fluidTankList = new ArrayList<>(1);
-        fluidTankList.add(new FilteredFluidHandler(capacity).setFillPredicate(
+        fluidTankList.add(new FilteredFluidHandler(actualCapacity).setFillPredicate(
                 fluidStack -> isMetal || (!fluidStack.getFluid().isGaseous() && fluidStack.getFluid().getTemperature() <= 325)
         ));
         return fluidTankList;
@@ -168,8 +168,8 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
 
     public String getTankContent() {
         return isTankEmpty() ? "Empty"
-                : this.importFluids.getTankAt(0).getFluidAmount()
-                + "L of "
+                : this.importFluids.getTankAt(0).getFluidAmount() / 1000
+                + " kL of "
                 + this.importFluids.getTankAt(0).getFluid().getLocalizedName();
     }
 
