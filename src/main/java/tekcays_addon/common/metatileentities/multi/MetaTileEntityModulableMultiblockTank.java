@@ -17,6 +17,8 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiblockWithDisplayBase;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing;
@@ -38,10 +40,13 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static gregtech.api.util.RelativeDirection.*;
+
 public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplayBase {
 
     private final boolean isMetal;
     private final int capacity;
+    int height;
 
     public MetaTileEntityModulableMultiblockTank(ResourceLocation metaTileEntityId, boolean isMetal, int capacity) {
         super(metaTileEntityId);
@@ -77,15 +82,33 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
 
     @Override
     protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
+        return FactoryBlockPattern.start(RIGHT, FRONT, UP)
                 .aisle("XXX", "XXX", "XXX")
-                .aisle("XXX", "X X", "XXX")
-                .aisle("XXX", "XSX", "XXX")
+                .aisle("XSX", "X X", "XXX")
+                .aisle("XXX", "XIX", "XXX").setRepeatable(0,11)
+                .aisle("XXX", "XXX", "XXX")
                 .where('S', selfPredicate())
+                .where('I', isIndicatorPredicate())
                 .where('X', states(getCasingState()).setMinGlobalLimited(23)
                         .or(metaTileEntities(getValve()).setMaxGlobalLimited(2)))
                 .where(' ', air())
                 .build();
+    }
+
+    // This function is highly useful for detecting the length of this multiblock. FROM GTFO
+    public static TraceabilityPredicate isIndicatorPredicate() {
+        return new TraceabilityPredicate((blockWorldState) -> {
+            if (air().test(blockWorldState)) {
+                blockWorldState.getMatchContext().increment("modulableTankHeight", 1);
+                return true;
+            } else
+                return false;
+        });
+    }
+
+    protected void formStructure(PatternMatchContext context) {
+        super.formStructure(context);
+        this.height = context.getOrDefault("modulableTankHeight", 1);
     }
 
     private IBlockState getCasingState() {
