@@ -62,7 +62,7 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
         super(metaTileEntityId);
         this.isMetal = isMetal;
         this.capacity = capacity;
-        //initializeAbilities();
+        initializeAbilities();
     }
 
     protected void initializeAbilities() {
@@ -153,17 +153,17 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
     }
 
     public boolean isTankEmpty() {
-        return fluidInventory.drain(1, false) == null;
+        return importFluids.drain(1, false) == null;
     }
 
     public int getFillPercentage() {
        return isTankEmpty() ? 0
-               : (int) (100.0D * this.fluidInventory.drain(Integer.MAX_VALUE, false).amount / this.actualCapacity);
+               : (int) (100.0D * this.importFluids.drain(Integer.MAX_VALUE, false).amount / this.actualCapacity);
     }
 
     public int getTankContent() {
         return isTankEmpty() ? 0
-                : fluidInventory.drain(Integer.MAX_VALUE, false).amount;
+                : importFluids.drain(Integer.MAX_VALUE, false).amount;
     }
 
     @Override
