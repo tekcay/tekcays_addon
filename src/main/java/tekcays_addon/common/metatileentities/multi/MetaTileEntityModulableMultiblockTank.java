@@ -40,12 +40,14 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static gregtech.api.util.RelativeDirection.*;
@@ -150,15 +152,18 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
         return false;
     }
 
-    @Override
-    public boolean onRightClick(EntityPlayer playerIn, EnumHand hand, EnumFacing facing, CuboidRayTraceResult hitResult) {
-        if (!isStructureFormed())
-            return false;
-        return super.onRightClick(playerIn, hand, facing, hitResult);
+    public boolean isTankEmpty() {
+        return fluidInventory.drain(1, false) == null;
     }
 
     public int getFillPercentage() {
-       return (int) (100.0D * this.importFluids.drain(Integer.MAX_VALUE, false).amount / this.actualCapacity);
+       return isTankEmpty() ? 0
+               : (int) (100.0D * this.fluidInventory.drain(Integer.MAX_VALUE, false).amount / this.actualCapacity);
+    }
+
+    public int getTankContent() {
+        return isTankEmpty() ? 0
+                : fluidInventory.drain(Integer.MAX_VALUE, false).amount;
     }
 
     @Override
@@ -198,6 +203,7 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
         this.actualCapacity = buf.readInt();
     }
 
+
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
 
@@ -206,7 +212,7 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
             tooltip.setStyle((new Style()).setColor(TextFormatting.GRAY));
             textList.add((new TextComponentTranslation("gregtech.multiblock.invalid_structure")).setStyle((new Style()).setColor(TextFormatting.RED).setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
         } else {
-            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.content", fluidInventory.drain(Integer.MAX_VALUE, false)));
+            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.content", getTankContent()));
             textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.capacity", this.actualCapacity));
             textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.fill.percentage", getFillPercentage()));
         }
