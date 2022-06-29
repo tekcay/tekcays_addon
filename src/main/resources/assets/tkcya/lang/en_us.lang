@@ -37,6 +37,8 @@ tkcya.machine.casting_table.name=Casting Table
 tkcya.machine.electric_pressure_blast_furnace.name=Electric Pressure Blast Furnace
 tkcya.machine.primitive_bath.name=Primitive Bath
 
+tkcya.machine.modulable_steel_tank.name=Steel Tank
+
 
 # multiblock descriptions
 tkcya.multiblock.primitive_melter.description=A multiblock for melting ores and pure materials using combustible
@@ -138,3 +140,9 @@ tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.6=Target pressu
 tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.1=Only runs recipes if the required temperature and pressure are set.
 tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.2=The §aEU§7 per tick required is exponentially related to the current temperature and pressure.
 tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.3=The target temperature and the temperature increasing speed are set by the coils.
+
+
+##Modulable Tanks
+tkcya.multiblock.modulable_tank.tooltip=Fill and drain through the tank valves.
+tkcya.multiblock.modulable_tank.capacity=Capacity: %,d L
+tkcya.machine.modulable_tank.capacity=Capacity: %,d L %s

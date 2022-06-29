@@ -29,9 +29,16 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidTank;
 
@@ -46,13 +53,13 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
 
     private final boolean isMetal;
     private final int capacity;
-    int height;
+    private int actualCapacity, height;
 
     public MetaTileEntityModulableMultiblockTank(ResourceLocation metaTileEntityId, boolean isMetal, int capacity) {
         super(metaTileEntityId);
         this.isMetal = isMetal;
         this.capacity = capacity;
-        initializeAbilities();
+        //initializeAbilities();
     }
 
     protected void initializeAbilities() {
@@ -77,7 +84,7 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
 
     @Override
     protected void updateFormedValid() {
-
+     ;
     }
 
     @Override
@@ -85,7 +92,7 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
                 .aisle("XXX", "XXX", "XXX")
                 .aisle("XSX", "X X", "XXX")
-                .aisle("XXX", "XIX", "XXX").setRepeatable(0,11)
+                .aisle("XXX", "XIX", "XXX").setRepeatable(1,11)
                 .aisle("XXX", "XXX", "XXX")
                 .where('S', selfPredicate())
                 .where('I', isIndicatorPredicate())
@@ -95,8 +102,11 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
                 .build();
     }
 
+
     // This function is highly useful for detecting the length of this multiblock. FROM GTFO
+
     public static TraceabilityPredicate isIndicatorPredicate() {
+
         return new TraceabilityPredicate((blockWorldState) -> {
             if (air().test(blockWorldState)) {
                 blockWorldState.getMatchContext().increment("modulableTankHeight", 1);
@@ -106,10 +116,14 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
         });
     }
 
+    @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
+        initializeAbilities();
         this.height = context.getOrDefault("modulableTankHeight", 1);
+        this.actualCapacity = this.capacity * this.height;
     }
+
 
     private IBlockState getCasingState() {
         if (isMetal)
@@ -142,6 +156,7 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
         return super.onRightClick(playerIn, hand, facing, hitResult);
     }
 
+    /*
     @Override
     protected ModularUI.Builder createUITemplate(@Nonnull EntityPlayer entityPlayer) {
         return ModularUI.defaultBuilder()
@@ -151,6 +166,8 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
                         .setContainerClicking(true, true))
                 .bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 0);
     }
+
+     */
 
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
@@ -165,9 +182,47 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
     }
 
     @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound data) {
+        super.writeToNBT(data);
+        data.setInteger("actualCapacity", this.actualCapacity);
+        return data;
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound data) {
+        super.readFromNBT(data);
+        this.actualCapacity = data.getInteger("actualCapacity");
+    }
+
+    @Override
+    public void writeInitialSyncData(PacketBuffer buf) {
+        super.writeInitialSyncData(buf);
+        buf.writeInt(this.actualCapacity);
+    }
+
+    @Override
+    public void receiveInitialSyncData(PacketBuffer buf) {
+        super.receiveInitialSyncData(buf);
+        this.actualCapacity = buf.readInt();
+    }
+
+    @Override
+    protected void addDisplayText(List<ITextComponent> textList) {
+
+        if (!this.isStructureFormed()) {
+            ITextComponent tooltip = new TextComponentTranslation("gregtech.multiblock.invalid_structure.tooltip");
+            tooltip.setStyle((new Style()).setColor(TextFormatting.GRAY));
+            textList.add((new TextComponentTranslation("gregtech.multiblock.invalid_structure")).setStyle((new Style()).setColor(TextFormatting.RED).setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
+        } else {
+            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.capacity", actualCapacity));
+        }
+
+    }
+
+    @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("gregtech.multiblock.tank.tooltip"));
-        tooltip.add(I18n.format("gregtech.machine.quantum_tank.capacity", capacity));
+        tooltip.add(I18n.format("tkcya.multiblock.modulable_tank.tooltip"));
+        tooltip.add(I18n.format("tkcya.machine.modulable_tank.capacity", capacity, "per layer."));
     }
 }
