@@ -56,17 +56,23 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
 
     private final boolean isMetal;
     private final int capacity;
-    private int actualCapacity, height;
+    private int actualCapacity;
 
     public MetaTileEntityModulableMultiblockTank(ResourceLocation metaTileEntityId, boolean isMetal, int capacity) {
         super(metaTileEntityId);
         this.isMetal = isMetal;
         this.capacity = capacity;
-        //initializeAbilities();
+        resetAbilities();
     }
 
     protected void initializeAbilities() {
         this.importFluids = new FluidTankList(true, makeFluidTanks());
+        this.exportFluids = importFluids;
+        this.fluidInventory = new FluidHandlerProxy(this.importFluids, this.exportFluids);
+    }
+
+    protected void resetAbilities() {
+        this.importFluids = new FluidTankList(true);
         this.exportFluids = importFluids;
         this.fluidInventory = new FluidHandlerProxy(this.importFluids, this.exportFluids);
     }
@@ -123,8 +129,8 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
         initializeAbilities();
-        this.height = context.getOrDefault("modulableTankHeight", 1) + 1;
-        this.actualCapacity = this.capacity * this.height;
+        int height = context.getOrDefault("modulableTankHeight", 1) + 1;
+        this.actualCapacity = this.capacity * height;
     }
 
 
@@ -158,7 +164,6 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
 
     public String getFillPercentage() {
        return isTankEmpty() ? "0% Filled"
-               //: (100.0f * this.importFluids.getTankAt(0).getFluidAmount() / this.actualCapacity);
                 : BigDecimal.valueOf(100 * this.importFluids.getTankAt(0).getFluidAmount())
                .divide(BigDecimal.valueOf(this.actualCapacity), 1, BigDecimal.ROUND_UP).toString()
                + "% Filled";
