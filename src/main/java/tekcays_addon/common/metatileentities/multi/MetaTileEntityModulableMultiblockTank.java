@@ -157,7 +157,7 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
     }
 
     public String getFillPercentage() {
-       return isTankEmpty() ? "Empty"
+       return isTankEmpty() ? "0% Filled"
                //: (100.0f * this.importFluids.getTankAt(0).getFluidAmount() / this.actualCapacity);
                 : BigDecimal.valueOf(100 * this.importFluids.getTankAt(0).getFluidAmount())
                .divide(BigDecimal.valueOf(this.actualCapacity), 1, BigDecimal.ROUND_UP).toString()
@@ -166,9 +166,11 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
 
 
 
-    public int getTankContent() {
-        return isTankEmpty() ? 0
-                : this.importFluids.getTankAt(0).getFluidAmount();
+    public String getTankContent() {
+        return isTankEmpty() ? "Empty"
+                : this.importFluids.getTankAt(0).getFluidAmount()
+                + "L of "
+                + this.importFluids.getTankAt(0).getFluid().getLocalizedName();
     }
 
     @Override
@@ -218,7 +220,7 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
             textList.add((new TextComponentTranslation("gregtech.multiblock.invalid_structure")).setStyle((new Style()).setColor(TextFormatting.RED).setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
         } else {
             textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.content", getTankContent()));
-            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.capacity", this.actualCapacity));
+            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.capacity", this.actualCapacity / 1000));
             textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.fill.percentage", getFillPercentage()));
         }
 
