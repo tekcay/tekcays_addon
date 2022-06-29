@@ -95,7 +95,7 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
                 .aisle("XXX", "XXX", "XXX")
                 .aisle("XSX", "X X", "XXX")
-                .aisle("XXX", "XIX", "XXX").setRepeatable(0,11)
+                .aisle("XXX", "XIX", "XXX").setRepeatable(1,11)
                 .aisle("XXX", "XXX", "XXX")
                 .where('S', selfPredicate())
                 .where('I', isIndicatorPredicate())
@@ -153,17 +153,17 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
     }
 
     public boolean isTankEmpty() {
-        return importFluids.drain(1, false) == null;
+        return this.importFluids.getTankAt(0).drain(Integer.MAX_VALUE, false) == null;
     }
 
     public int getFillPercentage() {
        return isTankEmpty() ? 0
-               : (int) (100.0D * this.importFluids.drain(Integer.MAX_VALUE, false).amount / this.actualCapacity);
+               : (int) (100.0D * this.importFluids.getTankAt(0).getFluidAmount() / this.actualCapacity);
     }
 
     public int getTankContent() {
         return isTankEmpty() ? 0
-                : importFluids.drain(Integer.MAX_VALUE, false).amount;
+                : this.importFluids.getTankAt(0).getFluidAmount();
     }
 
     @Override
