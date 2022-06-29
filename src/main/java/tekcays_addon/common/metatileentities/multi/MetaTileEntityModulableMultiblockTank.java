@@ -62,7 +62,7 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
         super(metaTileEntityId);
         this.isMetal = isMetal;
         this.capacity = capacity;
-        resetAbilities();
+        //resetAbilities();
     }
 
     protected void initializeAbilities() {
@@ -71,11 +71,14 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
         this.fluidInventory = new FluidHandlerProxy(this.importFluids, this.exportFluids);
     }
 
+    /*
     protected void resetAbilities() {
         this.importFluids = new FluidTankList(true);
         this.exportFluids = importFluids;
         this.fluidInventory = new FluidHandlerProxy(this.importFluids, this.exportFluids);
     }
+    
+     */
 
     @Nonnull
     private List<FluidTank> makeFluidTanks() {
