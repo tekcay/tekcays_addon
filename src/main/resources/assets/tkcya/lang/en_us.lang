@@ -146,5 +146,5 @@ tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.3=The target tempe
 tkcya.multiblock.modulable_tank.tooltip=Fill and drain through the tank valves.
 tkcya.multiblock.modulable_tank.content=Content: %d L
 tkcya.multiblock.modulable_tank.capacity=Capacity: %d L
-tkcya.multiblock.modulable_tank.fill.percentage=%d % Filled
+tkcya.multiblock.modulable_tank.fill.percentage=%d %% Filled
 tkcya.machine.modulable_tank.capacity=Capacity: %,d L %s
