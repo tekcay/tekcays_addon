@@ -44,6 +44,7 @@ import net.minecraftforge.fluids.FluidTank;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -169,6 +170,10 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
 
      */
 
+    public double getFillPercentage() {
+       return 100.0D * this.fluidInventory.drain(Integer.MAX_VALUE, false).amount / this.actualCapacity;
+    }
+
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
@@ -214,7 +219,11 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
             tooltip.setStyle((new Style()).setColor(TextFormatting.GRAY));
             textList.add((new TextComponentTranslation("gregtech.multiblock.invalid_structure")).setStyle((new Style()).setColor(TextFormatting.RED).setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
         } else {
-            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.capacity", actualCapacity));
+            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.content", fluidInventory.drain(Integer.MAX_VALUE, false)));
+            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.capacity", this.actualCapacity));
+            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.fill.percentage", getFillPercentage()));
+
+            tkcya.multiblock.modulable_tank.capacity.percentage
         }
 
     }
