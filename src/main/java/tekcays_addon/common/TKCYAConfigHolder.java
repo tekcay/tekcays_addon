@@ -39,6 +39,9 @@ public class TKCYAConfigHolder {
         @Config.Comment({"Components can not be made in shaped recipe", "Default: true"})
         public boolean disableComponentsShapesRecipes = true;
 
+        @Config.Comment({"Multiblock tanks capacity depends of their height", "Default: true"})
+        public boolean enableModulableTanks = true;
+
     }
 
 

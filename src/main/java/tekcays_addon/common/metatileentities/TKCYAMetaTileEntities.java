@@ -31,6 +31,10 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityElectricPressureBlastFurnace ELECTRIC_PRESSURE_BLAST_FURNACE;
     public static MetaTileEntityPrimitiveBath PRIMITIVE_BATH;
 
+    //TANKS
+
+    public static MetaTileEntityModulableMultiblockTank MODULABLE_STEEL_TANK;
+
 
 
 
@@ -76,6 +80,10 @@ public class TKCYAMetaTileEntities {
 
         if (TKCYAConfigHolder.miscOverhaul.enableGalvanizedSteel) {
             PRIMITIVE_BATH = registerMetaTileEntity(11023, new MetaTileEntityPrimitiveBath(tkcyaId("primitive_bath")));
+        }
+
+        if (TKCYAConfigHolder.miscOverhaul.enableModulableTanks) {
+            MODULABLE_STEEL_TANK = registerMetaTileEntity(11025, new MetaTileEntityModulableMultiblockTank(tkcyaId("modulable_steel_tank"), true, 1000 * 1000));
         }
 
 
