@@ -156,10 +156,15 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
         return this.importFluids.getTankAt(0).drain(Integer.MAX_VALUE, false) == null;
     }
 
-    public float getFillPercentage() {
-       return isTankEmpty() ? 0
-               : (100.0f * this.importFluids.getTankAt(0).getFluidAmount() / this.actualCapacity);
+    public String getFillPercentage() {
+       return isTankEmpty() ? "Empty"
+               //: (100.0f * this.importFluids.getTankAt(0).getFluidAmount() / this.actualCapacity);
+                : BigDecimal.valueOf(100 * this.importFluids.getTankAt(0).getFluidAmount())
+               .divide(BigDecimal.valueOf(this.actualCapacity), 1, BigDecimal.ROUND_UP).toString()
+               + "% Filled";
     }
+
+
 
     public int getTankContent() {
         return isTankEmpty() ? 0
