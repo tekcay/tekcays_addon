@@ -30,6 +30,7 @@ public class TKCYAMetaTileEntities {
     public static SteamCooler STEAM_COOLER_STEEL;
     public static MetaTileEntityElectricPressureBlastFurnace ELECTRIC_PRESSURE_BLAST_FURNACE;
     public static MetaTileEntityPrimitiveBath PRIMITIVE_BATH;
+    public static MetaTileEntityCrystallizer CRYSTALLIZER;
 
 
 
@@ -76,6 +77,10 @@ public class TKCYAMetaTileEntities {
 
         if (TKCYAConfigHolder.miscOverhaul.enableGalvanizedSteel) {
             PRIMITIVE_BATH = registerMetaTileEntity(11023, new MetaTileEntityPrimitiveBath(tkcyaId("primitive_bath")));
+        }
+
+        if (TKCYAConfigHolder.meltingOverhaul.enableBouleCrystallization) {
+            CRYSTALLIZER = registerMetaTileEntity(11024, new MetaTileEntityCrystallizer(tkcyaId("crystallizer")));
         }
 
 
