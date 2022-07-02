@@ -42,6 +42,7 @@ import tekcays_addon.api.recipes.builders.TemperatureRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.api.utils.MiscMethods;
+import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -183,11 +184,13 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     private boolean hasAcceptedItem() {
 
-        for (int i = 0;  i <= coalOrCokeImport.getSlots(); i++) {
+        TKCYALog.logger.info("getSlots = " + coalOrCokeImport.getSlots());
+
+        for (int i = 1;  i <= coalOrCokeImport.getSlots(); i++) {
 
             for (ItemStack stack : ACCEPTED_INPUT_ITEMS) {
-
-                if (stack.isItemEqual(coalOrCokeImport.extractItem(i, 1, true))) { 
+                if (coalOrCokeImport.extractItem(i, 1, true) == ItemStack.EMPTY) break;
+                if (stack.isItemEqual(coalOrCokeImport.extractItem(i, 1, true))) {
                     inputItemSlot = i;
                     inputItemStack = stack;
                     return true;
