@@ -57,4 +57,8 @@ public class TKCYARecipeMaps {
             "primitive_bath", 1, 1, 1, 1, 1, 1, 0, 0, new PrimitiveRecipeBuilder(), false)
             .setSound(GTSounds.CHEMICAL_REACTOR);
 
+    @ZenProperty
+    public static final RecipeMap<PrimitiveRecipeBuilder> CRYSTALLIZATION = new RecipeMap<>(
+            "crystallization", 0, 0, 1, 1, 1, 3, 0, 0, new PrimitiveRecipeBuilder(), false);
+
 }

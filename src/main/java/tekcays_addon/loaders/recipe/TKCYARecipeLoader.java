@@ -60,6 +60,7 @@ public class TKCYARecipeLoader {
             RecipesRemovalHandler.shapedComponentsRecipes();
         }
 
+
     }
 
 
@@ -71,6 +72,9 @@ public class TKCYARecipeLoader {
 
         if (meltingOverhaul.enableMeltingOverhaul) {
             TKCYAMeltingRecipeHandler.init();
+            if (meltingOverhaul.enableBouleCrystallization) {
+                CrystallizerHandler.boules();
+            }
         }
 
         if (meltingOverhaul.enableAlloyingOverhaul) {

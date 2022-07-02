@@ -55,6 +55,9 @@ public class TKCYAConfigHolder {
 
         @Config.Comment({"Magnetic parts need magnetite", "Default: true"})
         public boolean enableCastingOverhaul = true;
+
+        @Config.Comment({"Boule must be crystallized", "Default : true"})
+        public boolean enableBouleCrystallization = true;
     }
 
     public static class EnergyOverhaul {
