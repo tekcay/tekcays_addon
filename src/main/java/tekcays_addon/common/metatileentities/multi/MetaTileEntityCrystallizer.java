@@ -46,8 +46,8 @@ public class MetaTileEntityCrystallizer extends RecipeMapMultiblockNoEnergyContr
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
                 .aisle("BBB", "BBB", "BBB")
-                .aisle("BBB", "S B", "BBB")
-                .aisle("BBB", "BBB", "BBB")
+                .aisle("BBB", "B B", "BBB")
+                .aisle("BBB", "BSB", "BBB")
                 .where('B', states(getCasingState())
                         .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setMaxGlobalLimited(3))
                         .or(abilities(MultiblockAbility.EXPORT_ITEMS).setExactLimit(1)))
