@@ -155,6 +155,7 @@ tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.2=Not enough gas to reach t
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4=Consumption: %d L/t of %s.
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.5=Consumption: 0 L/t.
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.6=Target temperature: §a%d K§7.
+tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.7=Not enough solid fuel to reach the target temperature!
 
 tekcays_addon.recipe.tkcya_blast_furnace_temperature=Temperature: %dK
 

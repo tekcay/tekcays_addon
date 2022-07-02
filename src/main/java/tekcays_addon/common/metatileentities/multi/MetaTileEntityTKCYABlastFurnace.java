@@ -11,6 +11,7 @@ import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
+import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Materials;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
@@ -32,6 +33,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.capability.impl.MultiblockNoEnergyRecipeLogic;
 import tekcays_addon.api.metatileentity.mutiblock.RecipeMapMultiblockNoEnergyController;
@@ -48,22 +50,28 @@ import java.util.List;
 import java.util.Map;
 
 
+import static gregtech.api.unification.ore.OrePrefix.gem;
 import static gregtech.api.util.RelativeDirection.*;
 
 
 public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergyController {
 
 
-    private boolean canAchieveTargetTemp, hasEnoughGas;
+    private boolean canAchieveTargetTemp, hasEnoughGas, hasEnoughItem;
     private int temp, targetTemp, increaseTemp;
     private int height;
     private FluidTankList airOrFlueGasImport;
+    private IItemHandlerModifiable coalOrCokeImport;
+    private int inputItemSlot, itemHeatingValue;
 
 
     private final Fluid[] ACCEPTED_INPUT_FLUIDS = {Materials.Air.getFluid(), TKCYAMaterials.HotFlueGas.getFluid()};
+    private final ItemStack[] ACCEPTED_INPUT_ITEMS = {OreDictUnifier.get(gem, Materials.Charcoal), OreDictUnifier.get(gem, Materials.Coal), OreDictUnifier.get(gem, Materials.Coke)};
     private final int[] ACCEPTED_INPUT_FLUIDS_MULTIPLIER = {10, 1};
-    private int inputFluidMultiplier;
+    private final int[] ACCEPTED_INPUT_ITEMS_MULTIPLIER = {2, 2, 1};
+    private int inputFluidMultiplier, inputItemMultiplier;
     private FluidStack inputGasFluidStack;
+    private ItemStack inputItemStack;
 
     public void setIncreaseTemp() {
         increaseTemp = 5;
@@ -88,36 +96,49 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         setTargetTemp();
         setMultiplier();
         hasEnoughGas = hasEnoughInputGas(temp);
+        hasEnoughItem = hasEnoughInputItem(temp);
         
-        if (temp >= targetTemp && hasEnoughInputGas(temp)) {
+        if (temp >= targetTemp && hasEnoughInputGas(temp) && hasEnoughInputItem(temp)) {
             canAchieveTargetTemp = true;
             getTemperatureGasConsumption(temp);
             drainGas(temp);
+            drainItem(temp);
         }
         
-        if (!hasEnoughInputGas(temp) && temp - increaseTemp >= 300) {
+        if (temp - increaseTemp >= 300 &&
+        (!hasEnoughInputGas(temp) || !hasEnoughInputItem(temp)))
+        {
             canAchieveTargetTemp = false;
             if (getOffsetTimer() % 20 == 0) {
                 setTemp(temp - increaseTemp);
             }
         }
         
-        if (temp < targetTemp - increaseTemp && hasEnoughInputGas(temp + increaseTemp)) {
+        if (temp < targetTemp - increaseTemp
+            && hasEnoughInputGas(temp + increaseTemp)
+            && hasEnoughInputItem(temp + increaseTemp)) {
+
             canAchieveTargetTemp = true;
             if (getOffsetTimer() % 20 == 0) {
                 getTemperatureGasConsumption(temp + increaseTemp);
+                getTemperatureItemConsumption(temp + increaseTemp);
                 drainGas(temp + increaseTemp);
+                drainItem(temp + increaseTemp);
                 setTemp(temp + increaseTemp);
             }
         }
     }
 
     public void setMultiplier() {
-        if (!hasAcceptedFluid()) return;
+        if (!hasAcceptedFluid() || !hasAcceptedItem()) return;
 
         getGasCostMap().entrySet().stream()
                 .filter(e -> MiscMethods.isSameFluid(inputGasFluidStack, e.getKey()))
                 .forEach(e -> inputFluidMultiplier = e.getValue());
+
+        getItemCostMap().entrySet().stream()
+                .filter(e -> inputItemStack.isItemEqual(e.getKey()))
+                .forEach(e -> inputItemMultiplier = e.getValue());
     }
 
     public Map<Fluid, Integer> getGasCostMap() {
@@ -130,6 +151,18 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             gasCostMap.put(ACCEPTED_INPUT_FLUIDS[i], ACCEPTED_INPUT_FLUIDS_MULTIPLIER[i]);
         }
         return gasCostMap;
+    }
+
+    public Map<ItemStack, Integer> getItemCostMap() {
+
+        Map<ItemStack, Integer> itemCostMap = new HashMap<>();
+
+        if (ACCEPTED_INPUT_ITEMS.length != ACCEPTED_INPUT_ITEMS_MULTIPLIER.length) return itemCostMap;
+
+        for (int i = 0; i < ACCEPTED_INPUT_ITEMS.length; i++) {
+            itemCostMap.put(ACCEPTED_INPUT_ITEMS[i], ACCEPTED_INPUT_ITEMS_MULTIPLIER[i]);
+        }
+        return itemCostMap;
     }
 
     private boolean hasAcceptedFluid() {
@@ -148,18 +181,53 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         return false;
     }
 
+    private boolean hasAcceptedItem() {
+
+        for (int i = 0;  i <= coalOrCokeImport.getSlots(); i++) {
+
+            for (ItemStack stack : ACCEPTED_INPUT_ITEMS) {
+
+                if (stack.isItemEqual(coalOrCokeImport.extractItem(i, 1, true))) { 
+                    inputItemSlot = i;
+                    inputItemStack = stack;
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+
     private boolean hasEnoughInputGas(int temperature) {
         if (!hasAcceptedFluid()) return false;
         return inputGasFluidStack.amount >= getTemperatureGasConsumption(temperature);
+    }
+
+    private boolean hasEnoughInputItem(int temperature) {
+        return hasAcceptedItem() || itemHeatingValue >= getTemperatureItemConsumption(temperature);
     }
 
     public int getTemperatureGasConsumption(int temperature) {
         return inputFluidMultiplier * (temperature - 300) * height ; //TODO formula for consumption
     }
 
+    public int getTemperatureItemConsumption(int temperature) {
+        return inputItemMultiplier * (temperature - 300) * height ; //TODO formula for consumption
+    }
+
 
     private void drainGas(int temperature) {
         airOrFlueGasImport.drain(new FluidStack(inputGasFluidStack.getFluid(), getTemperatureGasConsumption(temperature)), true);
+    }
+    
+    private void drainItem(int temperature) {
+        if (itemHeatingValue < getTemperatureItemConsumption(temperature)) {
+            coalOrCokeImport.extractItem(inputItemSlot, 1, false);
+            itemHeatingValue += 1000 - getTemperatureItemConsumption(temperature);
+        } else {
+            itemHeatingValue -= getTemperatureItemConsumption(temperature);
+        }
     }
 
 
@@ -230,6 +298,12 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             
             if (!hasEnoughGas)
                 textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.2")
+                        .setStyle(new Style().setColor(TextFormatting.RED)));
+
+            ///////////If not enough input item
+
+            if (!hasEnoughItem)
+                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.8")
                         .setStyle(new Style().setColor(TextFormatting.RED)));
 
 
@@ -380,13 +454,13 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     @Override
     public void initializeAbilities() {
         this.airOrFlueGasImport = new FluidTankList(true, getAbilities(MultiblockAbility.IMPORT_FLUIDS));
-        this.inputInventory = new ItemHandlerList(getAbilities(MultiblockAbility.IMPORT_ITEMS));
+        this.coalOrCokeImport = new ItemHandlerList(getAbilities(MultiblockAbility.IMPORT_ITEMS));
         this.outputFluidInventory = new FluidTankList(true, getAbilities(MultiblockAbility.EXPORT_FLUIDS));
     }
 
     private void resetTileAbilities() {
         this.airOrFlueGasImport = new FluidTankList(true);
-        this.inputInventory = new ItemStackHandler(0);
+        this.coalOrCokeImport = new ItemStackHandler(0);
         this.outputFluidInventory = new FluidTankList(true);
     }
 
