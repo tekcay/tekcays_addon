@@ -187,17 +187,16 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         TKCYALog.logger.info("getSlots = " + coalOrCokeImport.getSlots());
 
         for (int i = 1;  i <= coalOrCokeImport.getSlots(); i++) {
-
+            //if (coalOrCokeImport.extractItem(i, 1, true) == ItemStack.EMPTY) continue;
             for (ItemStack stack : ACCEPTED_INPUT_ITEMS) {
-                if (coalOrCokeImport.extractItem(i, 1, true) == ItemStack.EMPTY) break;
-                if (stack.isItemEqual(coalOrCokeImport.extractItem(i, 1, true))) {
+                if (coalOrCokeImport.isItemValid(i, stack)) {
+                //if (stack.isItemEqual(coalOrCokeImport.extractItem(i, 1, true))) {
                     inputItemSlot = i;
                     inputItemStack = stack;
                     return true;
                 }
             }
         }
-
         return false;
     }
 
