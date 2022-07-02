@@ -13,9 +13,13 @@ public class TKCYAAlloys {
     public static void init() {
 
         GalvanizedSteel = new Material.Builder(24201, "galvanized_steel")
-                .ingot()
-                .flags(GENERATE_FOIL, GENERATE_BOLT_SCREW, GENERATE_FRAME, GENERATE_PLATE, GENERATE_FINE_WIRE, GENERATE_ROTOR, GENERATE_SMALL_GEAR, NO_UNIFICATION, NO_SMELTING, DISABLE_DECOMPOSITION)
-                .components(Iron, 9, Zinc, 1)
+                .ingot(3)
+                .toolStats(8.0f, 4.0f, 768, 25)
+                .fluidPipeProperties(2000, 100, true, true, true, false)
+                .flags(EXT2_METAL, GENERATE_ROTOR, GENERATE_SMALL_GEAR, GENERATE_SPRING,
+                        GENERATE_SPRING_SMALL, GENERATE_FRAME, GENERATE_GEAR,
+                        NO_UNIFICATION, NO_SMELTING, DISABLE_DECOMPOSITION)
+                .components(Steel, 9, Zinc, 1)
                 .color(0xf5f8fa).iconSet(METALLIC)
                 .build();
 

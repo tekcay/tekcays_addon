@@ -1,9 +1,14 @@
 package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.GTValues;
+import gregtech.api.items.metaitem.MetaOreDictItem;
 import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.ore.OrePrefix;
+import gregtech.api.util.OreDictExprFilter;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.api.utils.TKCYALog;
+import tekcays_addon.api.utils.TKCYAValues;
 
 import static gregtech.api.GTValues.LV;
 import static gregtech.api.unification.material.Materials.*;
@@ -13,15 +18,7 @@ public class BathRecipeHandler {
 
     public static void galvanizingSteelInit(){
 
-        for (OrePrefix orePrefix : OrePrefix.values()) {
-
-            if (orePrefix == OrePrefix.dust
-                    || orePrefix == OrePrefix.dustSmall
-                    || orePrefix == OrePrefix.dustTiny
-                    || orePrefix == OrePrefix.nugget
-                    || !orePrefix.doGenerateItem(Steel)
-                    || !orePrefix.doGenerateItem(GalvanizedSteel)) continue;
-
+        for (OrePrefix orePrefix : TKCYAValues.STEEL_TO_GALVANIZED_OREPREFIXES) {
 
             RecipeMaps.CHEMICAL_BATH_RECIPES.recipeBuilder()
                     .input(orePrefix, Steel)

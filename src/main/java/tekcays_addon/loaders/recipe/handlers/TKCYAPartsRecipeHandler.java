@@ -6,14 +6,13 @@ import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.properties.IngotProperty;
 import gregtech.api.unification.material.properties.PropertyKey;
-import gregtech.common.items.MetaItems;
 import net.minecraft.item.ItemStack;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import tekcays_addon.api.unification.TKCYAMaterials;
-import tekcays_addon.common.items.TKCYAMetaItem1;
+import tekcays_addon.api.utils.TKCYAValues;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
 
@@ -33,13 +32,9 @@ public class TKCYAPartsRecipeHandler {
 
     }
 
-    private static final OrePrefix[] POLARIZING_PREFIXES = new OrePrefix[]{
-        OrePrefix.stick, OrePrefix.stickLong, OrePrefix.plate, OrePrefix.ingot, OrePrefix.plateDense, OrePrefix.rotor,
-        OrePrefix.bolt, OrePrefix.screw, OrePrefix.wireFine, OrePrefix.foil, OrePrefix.dust, OrePrefix.ring};
-
     public static void initPolarizing(){
 
-        for (OrePrefix orePrefix : POLARIZING_PREFIXES) {
+        for (OrePrefix orePrefix : TKCYAValues.POLARIZING_PREFIXES) {
             orePrefix.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processPolarizing);
         }
     }
@@ -131,7 +126,7 @@ public class TKCYAPartsRecipeHandler {
                         .buildAndRegister();
 
 
-                //When using a gas colletor, it outputs Hot Air
+                //When using a gas collector, it outputs Hot Air
 
                 TKCYARecipeMaps.ELECTRIC_CASTING_RECIPES.recipeBuilder()
                         .fluidInputs(material.getFluid((int) (prefix.getMaterialAmount(material) * GTValues.L / GTValues.M)), Materials.Air.getFluid(material.getFluid().getTemperature()))
