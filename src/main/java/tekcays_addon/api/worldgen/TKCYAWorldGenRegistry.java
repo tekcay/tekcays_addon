@@ -121,7 +121,7 @@ public class TKCYAWorldGenRegistry {
             /*
             if (definition.getDepositName().equals("nether/lava_deposit.json")) {
                 TKCYALog.logger.info("nether/lava_deposit.json DEPOSIT DETECTED!");
-             
+
                 WorldGenRegistry.INSTANCE.removeVeinDefinitions(definition);
             }
 
@@ -147,18 +147,18 @@ public class TKCYAWorldGenRegistry {
         Path bedrockFluidVeinRootPath = tkcyaWorldgenRootPath.resolve("fluid");
         FileSystem zipFileSystem = null;
         try {
-            URI sampleUri = TKCYAWorldGenRegistry.class.getResource("/assets/gcy_multiblocks/.tkcyaassetsroot").toURI();
+            URI sampleUri = TKCYAWorldGenRegistry.class.getResource("/assets/tkcya/.tkcyaassetsroot").toURI();
             // The Path for representing the vein folder in the vein folder in the assets folder in the Gregtech resources folder in the jar
             Path oreVeinJarRootPath;
             // The Path for representing the fluid folder in the vein folder in the assets folder in the Gregtech resources folder in the jar
             Path bedrockFluidJarRootPath;
             if (sampleUri.getScheme().equals("jar") || sampleUri.getScheme().equals("zip")) {
                 zipFileSystem = FileSystems.newFileSystem(sampleUri, Collections.emptyMap());
-                oreVeinJarRootPath = zipFileSystem.getPath("/assets/gcy_multiblocks/worldgen/vein");
-                bedrockFluidJarRootPath = zipFileSystem.getPath("/assets/gcy_multiblocks/worldgen/fluid");
+                oreVeinJarRootPath = zipFileSystem.getPath("/assets/tkcya/worldgen/vein");
+                bedrockFluidJarRootPath = zipFileSystem.getPath("/assets/tkcya/worldgen/fluid");
             } else if (sampleUri.getScheme().equals("file")) {
-                oreVeinJarRootPath = Paths.get(TKCYAWorldGenRegistry.class.getResource("/assets/gcy_multiblocks/worldgen/vein").toURI());
-                bedrockFluidJarRootPath = Paths.get(TKCYAWorldGenRegistry.class.getResource("/assets/gcy_multiblocks/worldgen/fluid").toURI());
+                oreVeinJarRootPath = Paths.get(TKCYAWorldGenRegistry.class.getResource("/assets/tkcya/worldgen/vein").toURI());
+                bedrockFluidJarRootPath = Paths.get(TKCYAWorldGenRegistry.class.getResource("/assets/tkcya/worldgen/fluid").toURI());
             } else {
                 throw new IllegalStateException("Unable to locate absolute path to TKCYA worldgen root directory: " + sampleUri);
             }
