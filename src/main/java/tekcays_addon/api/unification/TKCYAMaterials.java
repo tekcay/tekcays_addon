@@ -48,6 +48,7 @@ public class TKCYAMaterials {
      */
 
     public static Material HotAir;
+    public static Material PreciousMetal;
 
 
     /**

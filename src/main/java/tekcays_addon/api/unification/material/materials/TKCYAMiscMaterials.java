@@ -5,6 +5,7 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 
 import static gregtech.api.unification.material.info.MaterialIconSet.DULL;
+import static gregtech.api.unification.material.info.MaterialIconSet.SHINY;
 import static tekcays_addon.api.unification.TKCYAMaterials.*;
 
 public class TKCYAMiscMaterials {
@@ -16,6 +17,15 @@ public class TKCYAMiscMaterials {
                 .components(Materials.Air, 1)
                 .color(0xe08b41)
                 .build();
+
+        PreciousMetal = new Material.Builder(24102, "precious_metal")
+                .ingot().ore()
+                .addOreByproducts(Materials.Cobalt, Materials.Copper)
+                .components(Materials.Gold)
+                .iconSet(SHINY)
+                .color(0xB99023)
+                .build();
+        PreciousMetal.setFormula("Au?");
 
     }
 
