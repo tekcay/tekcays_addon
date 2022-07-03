@@ -77,6 +77,9 @@ material.mica_pulp=Mica Based
 material.fuel=Burnable Fuel
 material.hot_air=Hot Air
 material.precious_metal=Precious Metal
+material.gold_alloy=Gold Alloy
+
+
 fluid.fuel.tooltip=To be used in the fuel consuming machines
 material.galvanized_steel=Galvanized Steel
 material.hydrogen_fluorine=Hydrogen Fluorine

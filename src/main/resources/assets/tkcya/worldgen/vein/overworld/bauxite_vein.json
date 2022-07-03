@@ -25,10 +25,10 @@
         "secondary": "ore:ilmenite"
       },
       {
-        "between": "ore:rutile"
+        "between": "ore:bauxite"
       },
       {
-        "sporadic": "ore:bauxite"
+        "sporadic": "ore:ilmenite"
       }
     ]
   }
