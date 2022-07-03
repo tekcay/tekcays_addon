@@ -55,10 +55,10 @@ public class TKCYAWorldGenRegistry {
         extractJarVeinDefinitions(configPath, veinPath, oreVeinsToAdd);
         extractJarVeinDefinitions(configPath, bedrockVeinPath, fluidVeinsToAdd);
 
-//        TKCYALog.logger.info("Vein Size Before Addition: " + WorldGenRegistry.getOreDeposits().size());
-//        TKCYALog.logger.info("Fluid Vein Size Before Addition: " + WorldGenRegistry.getBedrockVeinDeposits().size());
+        TKCYALog.logger.info("Vein Size Before Addition: " + WorldGenRegistry.getOreDeposits().size());
+        TKCYALog.logger.info("Fluid Vein Size Before Addition: " + WorldGenRegistry.getBedrockVeinDeposits().size());
         addVeins();
-        addFluidVeins();
+        //addFluidVeins();  //TODO Returns NullPointer
 
         try {
             WorldGenRegistry.INSTANCE.reinitializeRegisteredVeins();
@@ -66,11 +66,11 @@ public class TKCYAWorldGenRegistry {
             e.printStackTrace();
         }
 
-//        TKCYALog.logger.info("Vein Size After Addition: " + WorldGenRegistry.getOreDeposits().size());
-//        TKCYALog.logger.info("Fluid Vein Size After Addition: " + WorldGenRegistry.getBedrockVeinDeposits().size());
+       TKCYALog.logger.info("Vein Size After Addition: " + WorldGenRegistry.getOreDeposits().size());
+        TKCYALog.logger.info("Fluid Vein Size After Addition: " + WorldGenRegistry.getBedrockVeinDeposits().size());
 
-//        TKCYALog.logger.info("Vein Size Before Removals: " + WorldGenRegistry.getOreDeposits().size());
-//        TKCYALog.logger.info("Fluid Vein Size Before Removals: " + WorldGenRegistry.getBedrockVeinDeposits().size());
+        TKCYALog.logger.info("Vein Size Before Removals: " + WorldGenRegistry.getOreDeposits().size());
+        TKCYALog.logger.info("Fluid Vein Size Before Removals: " + WorldGenRegistry.getBedrockVeinDeposits().size());
         removeVeins();
         removeFluidVeins();
 
@@ -104,13 +104,12 @@ public class TKCYAWorldGenRegistry {
     public void removeVeins() {
         for (int i = 0; i < WorldGenRegistry.getOreDeposits().size(); i++) {
             OreDepositDefinition definition = WorldGenRegistry.getOreDeposits().get(i);
-            /*
-            if (definition.getDepositName().equals("end/naquadah_vein.json")) {
-                TKCYALog.logger.info("end/naquadah_vein.json VEIN DETECTED!");
 
+            if (definition.getDepositName().startsWith("overworld/")
+            || definition.getDepositName().startsWith("end/")
+            || definition.getDepositName().startsWith("nether/")) {
                 WorldGenRegistry.INSTANCE.removeVeinDefinitions(definition);
             }
-            */
         }
     }
 
@@ -147,7 +146,7 @@ public class TKCYAWorldGenRegistry {
         Path bedrockFluidVeinRootPath = tkcyaWorldgenRootPath.resolve("fluid");
         FileSystem zipFileSystem = null;
         try {
-            URI sampleUri = TKCYAWorldGenRegistry.class.getResource("/assets/tkcya/.tkcyaassetsroot").toURI();
+            URI sampleUri = TKCYAWorldGenRegistry.class.getResource("/assets/tkcya/.tkcyaassetsroot").toURI(); //"/assets/tkcya/.tkcyaassetsroot"
             // The Path for representing the vein folder in the vein folder in the assets folder in the Gregtech resources folder in the jar
             Path oreVeinJarRootPath;
             // The Path for representing the fluid folder in the vein folder in the assets folder in the Gregtech resources folder in the jar
@@ -218,6 +217,18 @@ public class TKCYAWorldGenRegistry {
         int count = path.getNameCount();
         String separator = FileSystems.getDefault().getSeparator();
         String[] split = path.toString().split("\\\\" + separator);
-        return "tkcya" + separator + split[count - 2] + separator + split[count - 1] + separator + split[count];
+        return "tkcya" + separator + split[0];
+        ////////
+        /*
+        String veinName = "tkcya";
+        for (int i = count; i >= 0; i--) {
+            TKCYALog.logger.info("i = " + i);
+            TKCYALog.logger.info("split[count - i = " + split[count - i]);
+            veinName += separator + split[count - i];
+        }
+        return veinName;
+
+         */
+        //return "tkcya" + separator + split[count - 2] + separator + split[count - 1] + separator + split[count];
     }
 }
