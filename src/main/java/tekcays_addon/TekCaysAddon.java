@@ -1,5 +1,6 @@
 package tekcays_addon;
 
+import gregtech.api.worldgen.config.WorldGenRegistry;
 import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.CommonProxy;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
@@ -31,5 +32,6 @@ public class TekCaysAddon {
         TKCYAMetaTileEntities.init();
 
         proxy.preLoad();
+        WorldGenRegistry.INSTANCE.initializeRegistry();
     }
 }
