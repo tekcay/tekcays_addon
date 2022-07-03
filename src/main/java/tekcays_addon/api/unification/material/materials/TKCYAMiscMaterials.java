@@ -19,9 +19,9 @@ public class TKCYAMiscMaterials {
                 .build();
 
         PreciousMetal = new Material.Builder(24102, "precious_metal")
-                .ingot().ore()
+                .dust().ore()
                 .addOreByproducts(Materials.Cobalt, Materials.Copper)
-                .components(Materials.Gold)
+                .components(Materials.Gold, 1)
                 .iconSet(SHINY)
                 .color(0xB99023)
                 .build();
