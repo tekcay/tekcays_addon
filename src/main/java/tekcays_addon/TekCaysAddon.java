@@ -1,7 +1,8 @@
 package tekcays_addon;
 
-import gregtech.api.worldgen.config.WorldGenRegistry;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import tekcays_addon.api.utils.TKCYALog;
+import tekcays_addon.api.worldgen.TKCYAWorldGenRegistry;
 import tekcays_addon.common.CommonProxy;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.items.TKCYAMetaItems;
@@ -10,6 +11,8 @@ import gregtech.api.GTValues;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+
+import java.io.IOException;
 
 @Mod(   modid        = TekCaysAddon.MODID,
         name         = TekCaysAddon.NAME,
@@ -32,6 +35,16 @@ public class TekCaysAddon {
         TKCYAMetaTileEntities.init();
 
         proxy.preLoad();
-        WorldGenRegistry.INSTANCE.initializeRegistry();
     }
+
+    @Mod.EventHandler
+    public void onInit(FMLInitializationEvent event) {
+        try {
+            TKCYAWorldGenRegistry.INSTANCE.addRemoveVeins();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
