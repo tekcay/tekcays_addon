@@ -16,7 +16,7 @@
 #    - name: Clone Repository
 #      shell: bash
 #      run: |
-#        /usr/bin/git clone https://github.com/Gregicality/gregicality-machines.git ./
+#        /usr/bin/git clone https://github.com/tekcay/tekcays_addon.git ./
 #    - name: Declare some variables
 #      id: vars
 #      shell: bash
