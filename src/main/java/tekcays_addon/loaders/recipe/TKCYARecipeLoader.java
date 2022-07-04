@@ -60,6 +60,7 @@ public class TKCYARecipeLoader {
             RecipesRemovalHandler.shapedComponentsRecipes();
         }
 
+        MineralChains.init();
 
     }
 
