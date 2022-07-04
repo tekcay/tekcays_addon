@@ -7,6 +7,10 @@ public class GoldChain {
 
     public static void init() {
 
+        ////FROM GCYL
+
+        /*
+
         // STEP 2
         // Cu3Au? + HNO3 -> Cu3Au?(OH) + NO2
         CHEMICAL_RECIPES.recipeBuilder().duration(80)
@@ -45,6 +49,8 @@ public class GoldChain {
                 .fluidInputs(Oxygen.getFluid(5000))
                 .output(dust, PotassiumMetabisulfite, 9)
                 .buildAndRegister();
+
+         */
 
 
     }
