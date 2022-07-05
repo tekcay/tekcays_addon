@@ -21,6 +21,7 @@ import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
@@ -61,7 +62,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     private boolean canAchieveTargetTemp, hasEnoughGas, hasEnoughItem;
     private int temp, targetTemp, increaseTemp;
-    private int height;
+    private int height, chimneyHeight;
     private FluidTankList airOrFlueGasImport;
     private IItemHandlerModifiable coalOrCokeImport;
     private int inputItemSlot, itemHeatingValue;
@@ -278,8 +279,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 textList.add(new TextComponentTranslation("gregtech.multiblock.idling"));
             }
 
-
-
             ///////////Current temperature
 
             textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.1", temp));
@@ -309,8 +308,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             if (!hasEnoughInputItem(temp + increaseTemp))
                 textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.7")
                         .setStyle(new Style().setColor(TextFormatting.RED)));
-
-
         }
     }
 
@@ -333,9 +330,10 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
-                .aisle("#SY#", "YXXY", "YXXY", "#YY#")
-                .aisle("#YY#", "Y##Y", "Y#IY", "#YY#").setRepeatable(1, 11)
-                .aisle("#YY#", "YOOY", "YOOY", "#YY#")
+                .aisle("#YSY#", "YXXXY", "YXXXY", "YXXXY", "#YYY#")
+                .aisle("#YYY#", "Y###Y", "Y#I#Y", "Y###Y", "#YYY#").setRepeatable(1, 11)
+                .aisle("#YYY#", "YOOOY", "YOOOY", "YOOOY", "#YYY#")
+                .aisle("#####", "#####", "##C##", "#####", "#####").setRepeatable(0, 11)
                 .where('S', selfPredicate())
                 .where('Y', states(getCasingState()))
                 .where('X', states(getCasingState())
@@ -343,7 +341,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 .where('O', states(getCasingState())
                         .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMaxGlobalLimited(2))
                         .or(abilities(MultiblockAbility.IMPORT_ITEMS).setMinGlobalLimited(1,1).setMaxGlobalLimited(2)))
-                .where('I', isIndicatorPredicate())
+                .where('I', heightIndicatorPredicate())
+                .where('C', chimneyIndicatorPredicate())
                 .where('#', air())
                 .build();
 
@@ -370,10 +369,20 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
     // This function is highly useful for detecting the length of this multiblock.
-    public static TraceabilityPredicate isIndicatorPredicate() {
+    public static TraceabilityPredicate heightIndicatorPredicate() {
         return new TraceabilityPredicate((blockWorldState) -> {
             if (air().test(blockWorldState)) {
                 blockWorldState.getMatchContext().increment("blastFurnaceHeight", 1);
+                return true;
+            } else
+                return false;
+        });
+    }
+
+    public static TraceabilityPredicate chimneyIndicatorPredicate() {
+        return new TraceabilityPredicate((blockWorldState) -> {
+            if (states(Blocks.BRICK_BLOCK.getDefaultState()).test(blockWorldState)) {
+                blockWorldState.getMatchContext().increment("blastFurnaceChimney", 1);
                 return true;
             } else
                 return false;
@@ -385,6 +394,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         super.formStructure(context);
         initializeAbilities();
         this.height = context.getOrDefault("blastFurnaceHeight", 1);
+        this.chimneyHeight = context.getOrDefault("blastFurnaceChimney", 0);
     }
 
     @Override
