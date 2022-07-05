@@ -45,6 +45,7 @@ import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.api.utils.MiscMethods;
 import tekcays_addon.api.utils.TKCYALog;
+import tekcays_addon.common.items.TKCYAMetaItems;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -203,6 +204,16 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         }
         return false;
     }
+
+    private boolean hasGasCollectorItem() {
+
+        for (int i = 0;  i < coalOrCokeImport.getSlots(); i++) {
+            ItemStack input = coalOrCokeImport.getStackInSlot(i);
+            if (input.isItemEqual((TKCYAMetaItems.GAS_COLLECTOR).getStackForm())) return true;
+        }
+        return false;
+    }
+
 
 
     private boolean hasEnoughInputGas(int temperature) {
