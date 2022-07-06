@@ -70,8 +70,8 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockNoEnergyControl
         hasEnoughFuel = drainFuel();
 
         if (getOffsetTimer() % 20 == 0 && !recipeMapWorkable.isActive()) {
-            stepTowardsTargetTemp(getFuelAmount());        }
-        else if (temp >= targetTemp) {
+            stepTowardsTargetTemp(getFuelAmount());
+        } else if (temp >= targetTemp) {
             canAchieveTargetTemp = true;
         }
     }

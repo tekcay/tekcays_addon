@@ -176,17 +176,22 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     private boolean hasAcceptedFluid() {
 
-        for (int i = 0; i < airOrFlueGasImport.getTanks(); i++) {
+        /*
+        //for (int i = 0; i < airOrFlueGasImport.getTanks(); i++) {
+        //TKCYALog.logger.info("i = " + i);
 
-            FluidStack fluidStack = airOrFlueGasImport.getTankAt(i).getFluid();
+        //FluidStack fluidStack = airOrFlueGasImport.getTankAt(i).getFluid();
+        for (IFluidTank fluidTank : airOrFlueGasImport.getFluidTanks()) {
 
             for (Fluid fluid : ACCEPTED_INPUT_FLUIDS) {
-                if (MiscMethods.isSameFluid(fluidStack, fluid)) {
-                    inputGasFluidStack = fluidStack;
+                if (MiscMethods.isSameFluid(fluidTank.getFluid(), fluid)) {
+                    inputGasFluidStack = fluidTank.getFluid();
                     return true;
                 }
             }
         }
+
+         */
         return false;
     }
 
