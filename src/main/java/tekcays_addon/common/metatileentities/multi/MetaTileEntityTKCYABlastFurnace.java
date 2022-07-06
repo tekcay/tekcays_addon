@@ -61,7 +61,7 @@ import static gregtech.api.util.RelativeDirection.*;
 public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergyController {
 
 
-    private boolean canAchieveTargetTemp, hasEnoughGas, hasEnoughItem, hasGasOutputHatch;
+    private boolean canAchieveTargetTemp, hasEnoughGas, hasEnoughItem;
     private int temp, targetTemp, increaseTemp;
     private int height, hasGasOutputHatchInt;
     private FluidTankList airOrFlueGasImport;
@@ -249,7 +249,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
     public boolean getHasGasOutputHatch() {
-        return hasGasOutputHatch = hasGasOutputHatchInt == 1;
+        return hasGasOutputHatchInt == 1;
     }
 
 
