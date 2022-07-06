@@ -125,10 +125,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             }
         }
 
-        if (temp <= targetTemp - increaseTemp
-            && hasEnoughInputGas(temp + increaseTemp)
-            && hasEnoughInputItem(temp + increaseTemp)) {
-
+        if (canHeatUp()) {
              canAchieveTargetTemp = true;
             if (getOffsetTimer() % 20 == 0) {
                 drainGas(temp + increaseTemp);
@@ -206,6 +203,16 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             }
         }
         return false;
+    }
+
+    public boolean isHeating() {
+        return temp > 300 && hasEnoughInputGas(temp) && hasEnoughInputItem(temp);
+    }
+
+    public boolean canHeatUp() {
+        return temp <= targetTemp - increaseTemp
+                && hasEnoughInputGas(temp + increaseTemp)
+                && hasEnoughInputItem(temp + increaseTemp);
     }
 
     private boolean hasGasCollectorItem() {
@@ -346,14 +353,16 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
-                .aisle("#Y#Y#", "YXXXY", "YXXXY", "YXXXY", "#YYY#")
+                .aisle("#YYY#", "YXXXY", "YXXXY", "YXXXY", "#YYY#")
                 .aisle("#YSY#", "Y###Y", "Y###Y", "Y###Y", "#YYY#")
                 .aisle("#YYY#", "Y###Y", "Y#I#Y", "Y###Y", "#YYY#").setRepeatable(1, 11)
-                .aisle("#YYY#", "YOOOY", "YOCOY", "YOOOY", "#YYY#")
+                .aisle("#YYY#", "YOOOY", "YOOOY", "YOOOY", "#YYY#")
+                .aisle("#####", "#####", "##C##", "#####", "#####").setRepeatable(0, 1)
                 .where('S', selfPredicate())
                 .where('Y', states(getCasingState()))
                 .where('X', states(getCasingState())
-                        .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1)))
+                        .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1))
+                        .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setExactLimit(1)))
                 .where('O', states(getCasingState())
                         .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMaxGlobalLimited(2))
                         .or(abilities(MultiblockAbility.IMPORT_ITEMS).setMinGlobalLimited(1,1).setMaxGlobalLimited(2)))
@@ -520,14 +529,14 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
     ////////////////
-    //Added particles/muffler effect if no gas recovery
+    //Added particles/muffler effect if no gas recovery, code from GTCEu's PBF
     /////////////////
 
     @Override
     public void update() {
         super.update();
 
-        if (this.isActive() && !getHasGasOutputHatch()) {
+        if (isHeating() && !getHasGasOutputHatch()) {
             if (getWorld().isRemote) {
                 pollutionParticles();
             }
