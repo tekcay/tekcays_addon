@@ -61,9 +61,9 @@ import static gregtech.api.util.RelativeDirection.*;
 public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergyController {
 
 
-    private boolean canAchieveTargetTemp, hasEnoughGas, hasEnoughItem;
+    private boolean canAchieveTargetTemp, hasEnoughGas, hasEnoughItem, hasGasOutputHatch;
     private int temp, targetTemp, increaseTemp;
-    private int height, chimneyHeight;
+    private int height, hasGasOutputHatchInt;
     private FluidTankList airOrFlueGasImport;
     private IItemHandlerModifiable coalOrCokeImport;
     private int inputItemSlot, itemHeatingValue;
@@ -248,6 +248,11 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         }
     }
 
+    public boolean getHasGasOutputHatch() {
+        return hasGasOutputHatch = hasGasOutputHatchInt == 1;
+    }
+
+
 
 
     @Override
@@ -341,10 +346,10 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
-                .aisle("#YSY#", "YXXXY", "YXXXY", "YXXXY", "#YYY#")
+                .aisle("#Y#Y#", "YXXXY", "YXXXY", "YXXXY", "#YYY#")
+                .aisle("#YSY#", "Y###Y", "Y###Y", "Y###Y", "#YYY#")
                 .aisle("#YYY#", "Y###Y", "Y#I#Y", "Y###Y", "#YYY#").setRepeatable(1, 11)
-                .aisle("#YYY#", "YOOOY", "YOOOY", "YOOOY", "#YYY#")
-                .aisle("#####", "#####", "##C##", "#####", "#####").setRepeatable(0, 11)
+                .aisle("#YYY#", "YOOOY", "YOCOY", "YOOOY", "#YYY#")
                 .where('S', selfPredicate())
                 .where('Y', states(getCasingState()))
                 .where('X', states(getCasingState())
@@ -353,7 +358,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                         .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMaxGlobalLimited(2))
                         .or(abilities(MultiblockAbility.IMPORT_ITEMS).setMinGlobalLimited(1,1).setMaxGlobalLimited(2)))
                 .where('I', heightIndicatorPredicate())
-                .where('C', chimneyIndicatorPredicate())
+                .where('C', fluidOutputHatchPredicate())
                 .where('#', air())
                 .build();
 
@@ -390,10 +395,10 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         });
     }
 
-    public static TraceabilityPredicate chimneyIndicatorPredicate() {
+    public static TraceabilityPredicate fluidOutputHatchPredicate() {
         return new TraceabilityPredicate((blockWorldState) -> {
-            if (states(Blocks.BRICK_BLOCK.getDefaultState()).test(blockWorldState)) {
-                blockWorldState.getMatchContext().increment("blastFurnaceChimney", 1);
+            if (abilities(MultiblockAbility.EXPORT_FLUIDS).test(blockWorldState)) {
+                blockWorldState.getMatchContext().set("blasFurnaceHasGasOutput", 1);
                 return true;
             } else
                 return false;
@@ -405,7 +410,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         super.formStructure(context);
         initializeAbilities();
         this.height = context.getOrDefault("blastFurnaceHeight", 1);
-        this.chimneyHeight = context.getOrDefault("blastFurnaceChimney", 0);
+        this.hasGasOutputHatchInt = context.getOrDefault("blastFurnaceHasGasOutput", 1);
     }
 
     @Override

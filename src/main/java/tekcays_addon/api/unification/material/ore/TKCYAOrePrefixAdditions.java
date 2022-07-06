@@ -30,28 +30,19 @@ public class TKCYAOrePrefixAdditions {
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldCasing);
     }
 
+
     public static void moldsTooltip(){ //TODO show temperature for each mold
 
-        /*
-
+    /*
         for (Material m : MOLD_MATERIALS) {
-
             for (OrePrefix prefix : MOLD_PRODUCTION.values()) {
 
-                OreDictUnifier.get(prefix, m).
+                OreDictUnifier.get(prefix, m).getTooltip.add(m.getFluid().getTemperature() + " K");
 
-                        lines.add(I18n.format("metaitem.generic.electric_item.tooltip",
-
+                        lines.add(I18n.format("metaitem.mold.tooltip", m.getFluid().getTemperature()));
             }
-
-        }
-
-         */
-
-
-
-
-
-
+        }     */
     }
+
+
 }
