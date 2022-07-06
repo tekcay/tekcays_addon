@@ -1,5 +1,6 @@
 package tekcays_addon.common.metatileentities.multi;
 
+import gregtech.api.GTValues;
 import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.capability.impl.ItemHandlerList;
 import gregtech.api.metatileentity.MetaTileEntity;
@@ -25,7 +26,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -251,9 +254,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     public boolean getHasGasOutputHatch() {
         return hasGasOutputHatchInt == 1;
     }
-
-
-
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
@@ -496,6 +496,10 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
 
+    ////////////////
+    //Remove overlocking
+    /////////////////
+
     private static class TKCYABlastFurnaceLogic extends MultiblockNoEnergyRecipeLogic {
 
         public TKCYABlastFurnaceLogic(RecipeMapMultiblockNoEnergyController tileEntity) {
@@ -513,6 +517,32 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         }
 
 
+    }
+
+    ////////////////
+    //Added particles/muffler effect if no gas recovery
+    /////////////////
+
+    @Override
+    public void update() {
+        super.update();
+
+        if (this.isActive() && !getHasGasOutputHatch()) {
+            if (getWorld().isRemote) {
+                pollutionParticles();
+            }
+        }
+    }
+
+    private void pollutionParticles() {
+        BlockPos pos = this.getPos();
+        EnumFacing facing = this.getFrontFacing().getOpposite();
+        float xPos = facing.getXOffset() * 0.76F + pos.getX() + 0.5F;
+        float yPos = facing.getYOffset() * 0.76F + pos.getY() + 0.25F;
+        float zPos = facing.getZOffset() * 0.76F + pos.getZ() + 0.5F;
+
+        float ySpd = facing.getYOffset() * 0.1F + 0.2F + 0.1F * GTValues.RNG.nextFloat();
+        runMufflerEffect(xPos, yPos, zPos, 0, ySpd, 0);
     }
 
 
