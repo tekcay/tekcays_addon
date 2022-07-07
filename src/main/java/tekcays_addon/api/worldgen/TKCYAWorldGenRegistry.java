@@ -105,9 +105,9 @@ public class TKCYAWorldGenRegistry {
         for (int i = 0; i < WorldGenRegistry.getOreDeposits().size(); i++) {
             OreDepositDefinition definition = WorldGenRegistry.getOreDeposits().get(i);
 
-            if (definition.getDepositName().startsWith("overworld/")
-            || definition.getDepositName().startsWith("end/")
-            || definition.getDepositName().startsWith("nether/")) {
+            if (definition.getDepositName().startsWith("overworld")
+            || definition.getDepositName().startsWith("end")
+            || definition.getDepositName().startsWith("nether")) {
                 WorldGenRegistry.INSTANCE.removeVeinDefinitions(definition);
             }
         }
@@ -214,21 +214,19 @@ public class TKCYAWorldGenRegistry {
 
     @Nonnull
     private static String getActualVeinName(@Nonnull Path path) {
-        int count = path.getNameCount();
-        String separator = FileSystems.getDefault().getSeparator();
-        String[] split = path.toString().split("\\\\" + separator);
-        return "tkcya" + separator + split[0];
+
+        //String separator = FileSystems.getDefault().getSeparator(); !!!! Works on Linux, on Windows it returns <\> !!!!
+
         ////////
-        /*
+        String separator = "\\";
+        String[] split = path.toString().split("/");
+        int count = split.length - 1;
+
         String veinName = "tkcya";
-        for (int i = count; i >= 0; i--) {
-            TKCYALog.logger.info("i = " + i);
-            TKCYALog.logger.info("split[count - i = " + split[count - i]);
+        for (int i = count - 2; i >= 0; i--) {
             veinName += separator + split[count - i];
         }
         return veinName;
 
-         */
-        //return "tkcya" + separator + split[count - 2] + separator + split[count - 1] + separator + split[count];
     }
 }

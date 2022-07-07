@@ -1,6 +1,5 @@
 package tekcays_addon.api.unification;
 
-import gregicality.multiblocks.api.unification.properties.AlloyBlastProperty;
 import gregtech.api.unification.material.Material;
 import tekcays_addon.api.unification.material.materials.*;
 
@@ -50,6 +49,20 @@ public class TKCYAMaterials {
     public static Material HotAir;
     public static Material PreciousMetal;
     public static Material GoldAlloy;
+
+    //FluorideChain
+
+    public static Material PotassiumBifluoride;
+    public static Material Fluorite;
+    public static Material CalciumSulfonate;
+    public static Material LithiumFluoride;
+    public static Material SodiumFluoride;
+    public static Material PotassiumFluoride;
+    public static Material LithiumHydroxide;
+    public static Material HydrogenFluoride;
+    public static Material HydrogenChloride;
+    public static Material HydrogenBromide;
+    public static Material HydrogenIodide;
 
 
     /**
