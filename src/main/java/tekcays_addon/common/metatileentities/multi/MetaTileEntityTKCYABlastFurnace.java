@@ -139,6 +139,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
     public void setMultiplier() {
+
         if (!hasAcceptedFluid() || !hasAcceptedItem()) return;
 
         getGasCostMap().entrySet().stream()
@@ -176,11 +177,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     private boolean hasAcceptedFluid() {
 
-        /*
-        //for (int i = 0; i < airOrFlueGasImport.getTanks(); i++) {
-        //TKCYALog.logger.info("i = " + i);
-
-        //FluidStack fluidStack = airOrFlueGasImport.getTankAt(i).getFluid();
         for (IFluidTank fluidTank : airOrFlueGasImport.getFluidTanks()) {
 
             for (Fluid fluid : ACCEPTED_INPUT_FLUIDS) {
@@ -190,8 +186,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 }
             }
         }
-
-         */
         return false;
     }
 
