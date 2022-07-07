@@ -104,7 +104,7 @@ public class TKCYAWorldGenRegistry {
     public void removeVeins() {
         for (int i = 0; i < WorldGenRegistry.getOreDeposits().size(); i++) {
             OreDepositDefinition definition = WorldGenRegistry.getOreDeposits().get(i);
-
+                TKCYALog.logger.info("DefinitionRemoval = " + definition.getDepositName());
             if (definition.getDepositName().startsWith("overworld/")
             || definition.getDepositName().startsWith("end/")
             || definition.getDepositName().startsWith("nether/")) {
@@ -218,7 +218,8 @@ public class TKCYAWorldGenRegistry {
         //String separator = FileSystems.getDefault().getSeparator(); !!!! Works on Linux, on Windows it returns <\> !!!!
         String separator = "/";
         String[] split = path.toString().split("\\\\" + separator);
-        return "tkcya" + separator + split[0];
+        //return "tkcya" + separator + split[0];
+        return "tkcya" + split[0];
         ////////
         /*
         String veinName = "tkcya";
