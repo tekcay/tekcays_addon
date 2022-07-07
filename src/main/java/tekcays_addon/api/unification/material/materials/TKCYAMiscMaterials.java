@@ -50,7 +50,7 @@ public class TKCYAMiscMaterials {
                 .build();
 
         Fluorite = new Material.Builder(24015, "fluorite")
-                .dust().ore()
+                .dust()//.ore()
                 .color(0xFF6400).iconSet(MaterialIconSet.BRIGHT)
                 .components(Calcium, 1, Fluorine, 2)
                 .build();

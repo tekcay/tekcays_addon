@@ -215,7 +215,8 @@ public class TKCYAWorldGenRegistry {
     @Nonnull
     private static String getActualVeinName(@Nonnull Path path) {
         int count = path.getNameCount();
-        String separator = FileSystems.getDefault().getSeparator();
+        //String separator = FileSystems.getDefault().getSeparator(); !!!! Works on Linux, on Windows it returns <\> !!!!
+        String separator = "/";
         String[] split = path.toString().split("\\\\" + separator);
         return "tkcya" + separator + split[0];
         ////////
