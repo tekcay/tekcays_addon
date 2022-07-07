@@ -105,8 +105,6 @@ public class TKCYAWorldGenRegistry {
         for (int i = 0; i < WorldGenRegistry.getOreDeposits().size(); i++) {
             OreDepositDefinition definition = WorldGenRegistry.getOreDeposits().get(i);
 
-            TKCYALog.logger.info("veinDefinition = " + definition.getDepositName());
-
             if (definition.getDepositName().startsWith("overworld")
             || definition.getDepositName().startsWith("end")
             || definition.getDepositName().startsWith("nether")) {
@@ -228,7 +226,6 @@ public class TKCYAWorldGenRegistry {
         for (int i = count - 2; i >= 0; i--) {
             veinName += separator + split[count - i];
         }
-        TKCYALog.logger.info("veinName = " + veinName);
         return veinName;
 
     }
