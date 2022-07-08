@@ -30,12 +30,12 @@ public class TKCYAValues {
     // For the New Blast Furnace
     //////////////////
 
-    private static final Map<Fluid, Integer> GAS_COST_MAP = new TreeMap<>() {{
+    private static final Map<Fluid, Integer> GAS_COST_MAP = new HashMap<>() {{
         put(Materials.Air.getFluid(), 10);
         put(TKCYAMaterials.HotFlueGas.getFluid(), 1);
 
     }};
-    private static final Map<ItemStack, Integer> ITEM_COST_MAP = new TreeMap<>() {{
+    private static final Map<ItemStack, Integer> ITEM_COST_MAP = new HashMap<>() {{
         put(OreDictUnifier.get(gem, Materials.Charcoal), 2);
         put(OreDictUnifier.get(gem, Materials.Coal), 2);
         put(OreDictUnifier.get(gem, Materials.Coke), 1);
@@ -43,10 +43,22 @@ public class TKCYAValues {
     }};
 
 
+    /**
+     * @return a {@code Map} with every gas ({@code Fluid}) accepted as fuel in {@code MetaTileEntityTKCYABlastFurnace} as the
+     * {@code key} and the corresponding multiplier ({@code int}) and the {@code value}.
+     * <br /><br />
+     * The higher the multiplier, the faster the gas is consummed.
+     */
     public static Map<Fluid, Integer> getGasCostMap() {
         return GAS_COST_MAP;
     }
 
+    /**
+     * @return a {@code Map} with every stack ({@code ItemStack}) accepted as fuel in {@code MetaTileEntityTKCYABlastFurnace} as the
+     * {@code key} and the corresponding multiplier ({@code int}) and the {@code value}.
+     * <br /><br />
+     * The higher the multiplier, the faster the item is consummed.
+     */
     public static Map<ItemStack, Integer> getItemCostMap() {
         return ITEM_COST_MAP;
     }
