@@ -70,6 +70,10 @@ public class TKCYAValues {
      * {@code key} and the corresponding multiplier ({@code int}) and the {@code value}.
      * <br /><br />
      * The higher the multiplier, the faster the gas is consummed.
+     * <br /><br />
+     * {@code .keySet()} return all the accepted fluids ({@code Fluid[]}).
+     * <br /><br />
+     * {@code .values()} return all the multipliers ({@code int[]}).
      */
     public static Map<Fluid, Integer> getGasCostMap() {
         return GAS_COST_MAP;
@@ -80,6 +84,10 @@ public class TKCYAValues {
      * {@code key} and the corresponding multiplier ({@code int}) and the {@code value}.
      * <br /><br />
      * The higher the multiplier, the faster the item is consummed.
+     * <br /><br />
+     * {@code .keySet()} return all the accepted items ({@code ItemStack[]}).
+     * <br /><br />
+     * {@code .values()} return all the multipliers ({@code int[]}).
      */
     public static Map<ItemStack, Integer> getItemCostMap() {
         return ITEM_COST_MAP;

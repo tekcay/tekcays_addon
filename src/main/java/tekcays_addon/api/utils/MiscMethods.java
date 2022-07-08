@@ -20,6 +20,14 @@ public class MiscMethods {
         return false;
     }
 
+    /**
+     * Checks if a {@code FluidStack} is made of a certain {@code Fluid}.
+     * This can avoid certain {@code NullPointer} exceptions.
+     * <br /><br />
+     * @param fluidStack the {@code FluidStack} that is checked.
+     * @param fluid the {@code Fluid} to compare to.
+     * @return true if condition is met.
+     */
     public static boolean isSameFluid(FluidStack fluidStack, Fluid fluid) {
         if (fluidStack == null) return false;
         if (fluidStack.isFluidEqual(new FluidStack(fluid, 1))) return true;

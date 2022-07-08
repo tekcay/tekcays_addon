@@ -40,6 +40,7 @@ import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.recipes.builders.TemperatureRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.utils.MiscMethods;
+import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
 import javax.annotation.Nonnull;
@@ -99,6 +100,9 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         setTargetTemp();
         setMultiplier();
 
+        TKCYALog.logger.info("itemMultiplier = " + inputItemMultiplier);
+        TKCYALog.logger.info("fluidMultiplier = " + inputFluidMultiplier);
+
         if (temp >= targetTemp && hasEnoughInputGas(temp) && hasEnoughInputItem(temp)) {
             canAchieveTargetTemp = true;
             if (getOffsetTimer() % 20 == 0) {
@@ -107,9 +111,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             }
         }
         
-        if (temp - increaseTemp >= 300 &&
-            (!hasEnoughInputGas(temp) || !hasEnoughInputItem(temp)))
-        {
+        if (temp - increaseTemp >= 300 && (!hasEnoughInputGas(temp) || !hasEnoughInputItem(temp))) {
             canAchieveTargetTemp = false;
             if (getOffsetTimer() % 20 == 0) {
                 setTemp(temp - increaseTemp);
@@ -141,7 +143,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         if (!hasAcceptedFluid() || !hasAcceptedItem()) return;
 
         getGasCostMap().entrySet().stream()
-                .filter(e -> MiscMethods.isSameFluid(getFluidToDrain(), e.getKey()))
+                .filter(e -> MiscMethods.isSameFluid(fluidToDrain, e.getKey()))
                 .forEach(e -> inputFluidMultiplier = e.getValue());
 
         getItemCostMap().entrySet().stream()
@@ -210,22 +212,13 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         return false;
     }
 
-    public void setFluidToDrain(FluidStack fs) {
-        this.fluidToDrain = fs;
-    }
-
-    public FluidStack getFluidToDrain() {
-        return fluidToDrain;
-    }
-
-
 
     private boolean hasEnoughInputGas(int temperature) {
-        if (!hasAcceptedFluid()) return false;
+        //if (!hasAcceptedFluid()) return false;
 
         for (FluidStack fs : inputGasFluidStack) {
             if (fs.amount >= getTemperatureGasConsumption(temperature)) {
-                setFluidToDrain(fs);
+                fluidToDrain = fs;
                 return true;
             }
         }
@@ -233,7 +226,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
     private boolean hasEnoughInputItem(int temperature) {
-        return hasAcceptedItem() || itemHeatingValue >= getTemperatureItemConsumption(temperature);
+        //return hasAcceptedItem() || itemHeatingValue >= getTemperatureItemConsumption(temperature);
+        return itemHeatingValue >= getTemperatureItemConsumption(temperature);
     }
 
     public int getTemperatureGasConsumption(int temperature) {
@@ -246,7 +240,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
 
     private void drainGas(int temperature) {
-        airOrFlueGasImport.drain(new FluidStack(getFluidToDrain().getFluid(), getTemperatureGasConsumption(temperature)), true);
+        airOrFlueGasImport.drain(new FluidStack(fluidToDrain.getFluid(), getTemperatureGasConsumption(temperature)), true);
     }
     
     private void drainItem(int temperature) {
@@ -311,7 +305,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
             if (canAchieveTargetTemp) {
 
-                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4", getTemperatureGasConsumption(temp), getFluidToDrain().getLocalizedName()));
+                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4", getTemperatureGasConsumption(temp), fluidToDrain.getLocalizedName()));
             } else {
                 textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.5"));
             }
