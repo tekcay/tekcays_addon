@@ -61,13 +61,12 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     private int height, hasGasOutputHatchInt;
     private FluidTankList airOrFlueGasImport;
     private IItemHandlerModifiable coalOrCokeImport;
-    private int inputItemSlot, itemHeatingValue;
+    private int inputItemSlot, itemHeatingValue, fluidHeatingValue;
 
    private int inputFluidMultiplier, inputItemMultiplier;
 
 
 
-    private List<FluidStack> inputGasFluidStack;
     private FluidStack fluidToDrain;
     private ItemStack inputItemStack;
 
@@ -89,6 +88,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         inputGasFluidStack = new ArrayList<>();
         inputItemSlot = 0;
         itemHeatingValue = 0;
+        fluidHeatingValue = 0;
         hasAcceptedFluid = false;
         hasAcceptedItem = false;
         hasEnoughGas = false;
@@ -106,7 +106,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         TKCYALog.logger.info("fluidMultiplier = " + inputFluidMultiplier);
 
         ///// Case: No fuel or not enough fuel, and temp can be decreased
-        if (temp - increaseTemp >= 300 && (!hasAcceptedFluid || !hasAcceptedItem || !hasEnoughInputGas(temp) || !hasEnoughInputItem(temp))) {
+        if (temp - increaseTemp >= 300 && ((!hasAcceptedFluid || !hasAcceptedItem) || (!hasEnoughInputGas(temp) || !hasEnoughInputItem(temp)))) {
             canAchieveTargetTemp = false;
             if (getOffsetTimer() % 20 == 0) {
                 setTemp(temp - increaseTemp);
@@ -175,12 +175,9 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
             for (Fluid fluid : getGasCostMap().keySet()) { //ACCEPTED_INPUT_FLUIDS
                 if (MiscMethods.isSameFluid(fluidTank.getFluid(), fluid)) {
-                    //Checks if there is enough to be consummed. Else it will check another tank.
-                    if (fluidTank.getFluid().amount < getTemperatureGasConsumption(temp)) break;
                     fluidToDrain = fluidTank.getFluid();
                     hasAcceptedFluid = true;
                     return true;
-                    //inputGasFluidStack.add(fluidTank.getFluid());
                 }
             }
         }
@@ -236,7 +233,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     private boolean hasEnoughInputGas(int temperature) {
         if (!hasAcceptedFluid) return false;
-        return fluidToDrain.amount >= getTemperatureGasConsumption(temperature);
+        return fluidToDrain.amount >= getTemperatureGasConsumption(temperature) || fluidHeatingValue >= getTemperatureGasConsumption(temperature);
 
         /*
         for (FluidStack fs : inputGasFluidStack) {
@@ -264,7 +261,17 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
 
     private void drainGas(int temperature) {
-        airOrFlueGasImport.drain(new FluidStack(fluidToDrain.getFluid(), getTemperatureGasConsumption(temperature)), true);
+        int consum = getTemperatureGasConsumption(temperature);
+        if (fluidToDrain.amount < consum) {
+            if (fluidHeatingValue < consum) {
+
+                int toDrain = airOrFlueGasImport.drain(fluidToDrain, false).amount;
+                airOrFlueGasImport.drain(fluidToDrain, true);
+                fluidHeatingValue = consum - toDrain;
+
+            } else fluidHeatingValue -= consum;
+
+        } else airOrFlueGasImport.drain(new FluidStack(fluidToDrain.getFluid(), consum), true);
     }
     
     private void drainItem(int temperature) {
