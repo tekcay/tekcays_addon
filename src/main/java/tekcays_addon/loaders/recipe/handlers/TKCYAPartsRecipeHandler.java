@@ -8,6 +8,8 @@ import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.properties.IngotProperty;
 import gregtech.api.unification.material.properties.PropertyKey;
+import gregtech.common.items.MetaItems;
+import gregtech.common.items.behaviors.TurbineRotorBehavior;
 import net.minecraft.item.ItemStack;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import gregtech.api.unification.material.Material;
@@ -16,6 +18,7 @@ import gregtech.api.unification.ore.OrePrefix;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.api.utils.TKCYAValues;
 import tekcays_addon.common.items.TKCYAMetaItems;
+import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 
 
 import static gregtech.api.GTValues.LV;
@@ -75,11 +78,14 @@ public class TKCYAPartsRecipeHandler {
     }
 
     public static void processElectrode(OrePrefix electrodePrefix, Material material, IngotProperty property) {
+        ItemStack electrodeStack = TKCYAMetaItems.ELECTRODE.getStackForm();
+        //noinspection ConstantConditions
+        ElectrodeBehavior.getInstanceFor(electrodeStack).setPartMaterial(electrodeStack, material);
 
         LASER_ENGRAVER_RECIPES.recipeBuilder()
                 .input(stickLong, material)
                 .notConsumable(lens, Materials.Glass)
-                .output(electrodePrefix, material, 1)
+                .outputs(electrodeStack)
                 .duration((int) material.getMass())
                 .EUt(24)
                 .buildAndRegister();

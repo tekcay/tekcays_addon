@@ -27,7 +27,7 @@ public class TKCYAOrePrefix {
 
     // Others
 
-    public static final OrePrefix electrode = new OrePrefix("electrode", M * 1, null, TKCYAMaterialIconType.electrode, ENABLE_UNIFICATION, mat -> mat.hasFlags(GENERATE_ELECTRODE));
+    public static final OrePrefix electrode = new OrePrefix("electrode", M * 1, null, TKCYAMaterialIconType.electrode, ENABLE_UNIFICATION, null);
 
 
 }

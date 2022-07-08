@@ -4,15 +4,11 @@ import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.items.metaitem.stats.IItemDurabilityManager;
 import gregtech.api.items.metaitem.stats.IItemMaxStackSizeProvider;
 import gregtech.api.unification.material.Material;
-import gregtech.api.unification.material.properties.PropertyKey;
-import gregtech.api.unification.material.properties.ToolProperty;
 import gregtech.common.items.behaviors.AbstractMaterialPartBehavior;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.List;
 
 public class ElectrodeBehavior extends AbstractMaterialPartBehavior implements IItemMaxStackSizeProvider {
 
@@ -20,8 +16,7 @@ public class ElectrodeBehavior extends AbstractMaterialPartBehavior implements I
     @Override
     public int getPartMaxDurability(ItemStack itemStack) {
         Material material = getPartMaterial(itemStack);
-        ToolProperty property = material.getProperty(PropertyKey.TOOL);
-        return property == null ? -1 : 800 * (int) Math.pow(property.getToolDurability(), 0.65);
+        return 1000 * (int) material.getMass();
     }
 
     public int getElectrodeDurabilityPercent(ItemStack itemStack) {
@@ -36,12 +31,6 @@ public class ElectrodeBehavior extends AbstractMaterialPartBehavior implements I
         } else {
             setPartDamage(itemStack, resultDamage);
         }
-    }
-
-    @Override
-    public void addInformation(ItemStack stack, List<String> lines) {
-        super.addInformation(stack, lines);
-        lines.add(I18n.format("metaitem.tool.electrode.durability", getPartMaxDurability(stack)));
     }
 
     @Override
