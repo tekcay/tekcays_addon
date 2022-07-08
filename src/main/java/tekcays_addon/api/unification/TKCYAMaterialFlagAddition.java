@@ -11,6 +11,7 @@ import java.util.List;
 
 import static gregtech.api.unification.material.Materials.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.Ceramic;
+import static tekcays_addon.api.unification.material.info.TKCYAMaterialFlags.GENERATE_ELECTRODE;
 
 public class TKCYAMaterialFlagAddition {
 
@@ -28,6 +29,12 @@ public class TKCYAMaterialFlagAddition {
             for (Material m : MOLD_MATERIALS) {
                 m.addFlags(TKCYAMaterialFlags.GENERATE_MOLDS);
             }
+        }
+
+        if (TKCYAConfigHolder.miscOverhaul.enableElectrolysisOverhaul) {
+            Gold.addFlags(GENERATE_ELECTRODE);
+            Platinum.addFlags(GENERATE_ELECTRODE);
+            Copper.addFlags(GENERATE_ELECTRODE);
         }
 
 

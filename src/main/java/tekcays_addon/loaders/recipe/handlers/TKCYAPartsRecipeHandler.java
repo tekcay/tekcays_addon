@@ -77,7 +77,8 @@ public class TKCYAPartsRecipeHandler {
     public static void processElectrode(OrePrefix electrodePrefix, Material material, IngotProperty property) {
 
         LASER_ENGRAVER_RECIPES.recipeBuilder()
-                .input(moldStickLong, material)
+                .input(stickLong, material)
+                .notConsumable(lens, Materials.Glass)
                 .output(electrodePrefix, material, 1)
                 .duration((int) material.getMass())
                 .EUt(24)

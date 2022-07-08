@@ -111,6 +111,7 @@ metaitem.mica_insulator.foil.name=Mica Insulator Foil
 metaitem.gas_collector.name=Gas Collector
 metaitem.electrode.name=%s Electrode
 metaitem.electrode.tooltip=For electrolysis
+metaitem.tool.electrode.durability=§fDurability: §a%,d / %,d
 
 item.mica_pulp.dust=Mica Based Pulp
 

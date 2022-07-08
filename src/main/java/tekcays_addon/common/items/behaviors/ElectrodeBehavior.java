@@ -7,10 +7,12 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.api.unification.material.properties.ToolProperty;
 import gregtech.common.items.behaviors.AbstractMaterialPartBehavior;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class ElectrodeBehavior extends AbstractMaterialPartBehavior implements IItemMaxStackSizeProvider {
 
@@ -34,6 +36,12 @@ public class ElectrodeBehavior extends AbstractMaterialPartBehavior implements I
         } else {
             setPartDamage(itemStack, resultDamage);
         }
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, List<String> lines) {
+        super.addInformation(stack, lines);
+        lines.add(I18n.format("metaitem.tool.electrode.durability", getPartMaxDurability(stack)));
     }
 
     @Override
