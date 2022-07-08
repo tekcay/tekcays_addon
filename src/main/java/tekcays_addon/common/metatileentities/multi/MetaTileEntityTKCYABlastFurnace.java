@@ -56,7 +56,7 @@ import static tekcays_addon.api.utils.TKCYAValues.*;
 public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergyController {
 
 
-    private boolean canAchieveTargetTemp, hasEnoughGas, hasEnoughItem;
+    private boolean canAchieveTargetTemp, hasEnoughGas, hasEnoughItem, hasAcceptedFluid, hasAcceptedItem;
     private int temp, targetTemp, increaseTemp;
     private int height, hasGasOutputHatchInt;
     private FluidTankList airOrFlueGasImport;
@@ -89,6 +89,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         inputGasFluidStack = new ArrayList<>();
         inputItemSlot = 0;
         itemHeatingValue = 0;
+        hasAcceptedFluid = false;
+        hasAcceptedItem = false;
         hasEnoughGas = false;
         hasEnoughItem = false;
     }
@@ -103,21 +105,30 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         TKCYALog.logger.info("itemMultiplier = " + inputItemMultiplier);
         TKCYALog.logger.info("fluidMultiplier = " + inputFluidMultiplier);
 
+        ///// Case: No fuel or not enough fuel, and temp can be decreased
+        if (temp - increaseTemp >= 300 && (!hasAcceptedFluid || !hasAcceptedItem || !hasEnoughInputGas(temp) || !hasEnoughInputItem(temp))) {
+            canAchieveTargetTemp = false;
+            if (getOffsetTimer() % 20 == 0) {
+                setTemp(temp - increaseTemp);
+            }
+            hasEnoughGas = hasEnoughInputGas(temp);
+            hasEnoughItem = hasEnoughInputItem(temp);
+            return;
+        }
+
+        ///// Case: temp > targetTemp and has fuel
         if (temp >= targetTemp && hasEnoughInputGas(temp) && hasEnoughInputItem(temp)) {
             canAchieveTargetTemp = true;
             if (getOffsetTimer() % 20 == 0) {
                 drainGas(temp);
                 drainItem(temp);
             }
-        }
-        
-        if (temp - increaseTemp >= 300 && (!hasEnoughInputGas(temp) || !hasEnoughInputItem(temp))) {
-            canAchieveTargetTemp = false;
-            if (getOffsetTimer() % 20 == 0) {
-                setTemp(temp - increaseTemp);
-            }
+            hasEnoughGas = hasEnoughInputGas(temp);
+            hasEnoughItem = hasEnoughInputItem(temp);
+            return;
         }
 
+        ///// Case: temp can be increased
         if (canHeatUp()) {
              canAchieveTargetTemp = true;
             if (getOffsetTimer() % 20 == 0) {
@@ -125,10 +136,9 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 drainItem(temp + increaseTemp);
                 setTemp(temp + increaseTemp);
             }
+            hasEnoughGas = hasEnoughInputGas(temp);
+            hasEnoughItem = hasEnoughInputItem(temp);
         }
-
-        hasEnoughGas = hasEnoughInputGas(temp);
-        hasEnoughItem = hasEnoughInputItem(temp);
     }
 
 
@@ -168,11 +178,13 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                     //Checks if there is enough to be consummed. Else it will check another tank.
                     if (fluidTank.getFluid().amount < getTemperatureGasConsumption(temp)) break;
                     fluidToDrain = fluidTank.getFluid();
+                    hasAcceptedFluid = true;
                     return true;
                     //inputGasFluidStack.add(fluidTank.getFluid());
                 }
             }
         }
+        hasAcceptedFluid = false;
         return false;
         //return inputGasFluidStack.isEmpty();
     }
@@ -185,10 +197,12 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 if (ModHandler.getFuelValue(input) > 0) {
                     inputItemSlot = i;
                     inputItemStack = stack;
+                    hasAcceptedItem = true;
                     return true;
                 }
             }
         }
+        hasAcceptedItem = false;
         return false;
     }
 
@@ -221,8 +235,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
 
     private boolean hasEnoughInputGas(int temperature) {
-        //if (!hasAcceptedFluid()) return false;
-
+        if (!hasAcceptedFluid) return false;
         return fluidToDrain.amount >= getTemperatureGasConsumption(temperature);
 
         /*
@@ -238,8 +251,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
     private boolean hasEnoughInputItem(int temperature) {
-        //return hasAcceptedItem() || itemHeatingValue >= getTemperatureItemConsumption(temperature);
-        return itemHeatingValue >= getTemperatureItemConsumption(temperature);
+        return hasAcceptedItem || itemHeatingValue >= getTemperatureItemConsumption(temperature);
     }
 
     public int getTemperatureGasConsumption(int temperature) {
