@@ -19,13 +19,10 @@ import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -65,10 +62,11 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     private IItemHandlerModifiable coalOrCokeImport;
     private int inputItemSlot, itemHeatingValue;
 
+   private int inputFluidMultiplier, inputItemMultiplier;
 
 
-    private int inputFluidMultiplier, inputItemMultiplier;
-    private List<FluidStack> inputGasFluidStack = new ArrayList<>();
+
+    private List<FluidStack> inputGasFluidStack;
     private FluidStack fluidToDrain;
     private ItemStack inputItemStack;
 
@@ -87,6 +85,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         temp = 300;
         inputFluidMultiplier = 0;
         inputItemMultiplier = 0;
+        inputGasFluidStack = new ArrayList<>();
         inputItemSlot = 0;
         itemHeatingValue = 0;
         hasEnoughGas = false;
@@ -130,6 +129,13 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         hasEnoughItem = hasEnoughInputItem(temp);
     }
 
+
+    /**
+     * Gets the multiplier related to the {@code FluidStack} and the {@code ItemStack} that are present in the
+     * corresponding inputs, provided they are considered as fuels.
+     * <br /><br />
+     *
+     */
     public void setMultiplier() {
 
         if (!hasAcceptedFluid() || !hasAcceptedItem()) return;
@@ -153,7 +159,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
         for (IFluidTank fluidTank : airOrFlueGasImport.getFluidTanks()) {
 
-            for (Fluid fluid : ACCEPTED_INPUT_FLUIDS) {
+            for (Fluid fluid : getGasCostMap().keySet()) { //ACCEPTED_INPUT_FLUIDS
                 if (MiscMethods.isSameFluid(fluidTank.getFluid(), fluid)) {
                     inputGasFluidStack.add(fluidTank.getFluid());
                 }
@@ -166,7 +172,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
         for (int i = 0;  i < coalOrCokeImport.getSlots(); i++) {
             ItemStack input = coalOrCokeImport.getStackInSlot(i);
-            for (ItemStack stack : ACCEPTED_INPUT_ITEMS) {
+            for (ItemStack stack : getItemCostMap().keySet()) {  //ACCEPTED_INPUT_ITEMS
                 if (ModHandler.getFuelValue(input) > 0) {
                     inputItemSlot = i;
                     inputItemStack = stack;
@@ -181,6 +187,14 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         return temp > 300 && hasEnoughInputGas(temp) && hasEnoughInputItem(temp);
     }
 
+    /**
+     * Checks if the current temperature {@code temp} can be increased by {@code increaseTemp} without getting
+     * greater than the target temperature {@code targetTemp}.
+     * <br /><br />
+     * Also checks if there is enough gas and item to increase the temperature by calling both {@code hasEnoughInputGas}
+     * and {@code hasEnoughInputItem}.
+     * @return {@code true} if ALL those conditions are met.
+     */
     public boolean canHeatUp() {
         return temp <= targetTemp - increaseTemp
                 && hasEnoughInputGas(temp + increaseTemp)
@@ -223,7 +237,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
     public int getTemperatureGasConsumption(int temperature) {
-        return inputFluidMultiplier * (temperature - 300) * height + 1 ; //TODO formula for consumption
+        return setMultiplier()[0] * (temperature - 300) * height + 1 ; //TODO formula for consumption
     }
 
     public int getTemperatureItemConsumption(int temperature) {
@@ -232,7 +246,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
 
     private void drainGas(int temperature) {
-
         airOrFlueGasImport.drain(new FluidStack(getFluidToDrain().getFluid(), getTemperatureGasConsumption(temperature)), true);
     }
     

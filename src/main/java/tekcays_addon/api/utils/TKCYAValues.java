@@ -30,35 +30,21 @@ public class TKCYAValues {
     // For the New Blast Furnace
     //////////////////
 
-    public static final Fluid[] ACCEPTED_INPUT_FLUIDS = {Materials.Air.getFluid(), TKCYAMaterials.HotFlueGas.getFluid()};
-    public static final ItemStack[] ACCEPTED_INPUT_ITEMS = {OreDictUnifier.get(gem, Materials.Charcoal), OreDictUnifier.get(gem, Materials.Coal), OreDictUnifier.get(gem, Materials.Coke)};
-    public static final int[] ACCEPTED_INPUT_FLUIDS_MULTIPLIER = {10, 1};
-    public static final int[] ACCEPTED_INPUT_ITEMS_MULTIPLIER = {2, 2, 1};
+    private static final Map<Fluid, Integer> GAS_COST_MAP = new TreeMap<>() {{
+        put(Materials.Air.getFluid(), 10);
+        put(TKCYAMaterials.HotFlueGas.getFluid(), 1);
 
-    private static final Map<Fluid, Integer> GAS_COST_MAP = new TreeMap<>();
-    private static final Map<ItemStack, Integer> ITEM_COST_MAP = new TreeMap<>();
+    }};
+    private static final Map<ItemStack, Integer> ITEM_COST_MAP = new TreeMap<>() {{
+        put(OreDictUnifier.get(gem, Materials.Charcoal), 2);
+        put(OreDictUnifier.get(gem, Materials.Coal), 2);
+        put(OreDictUnifier.get(gem, Materials.Coke), 1);
 
+    }};
 
-    public static void setGasCostMap() {
-
-        if (ACCEPTED_INPUT_FLUIDS.length != ACCEPTED_INPUT_FLUIDS_MULTIPLIER.length) return;
-
-        for (int i = 0; i < ACCEPTED_INPUT_FLUIDS.length; i++) {
-            GAS_COST_MAP.put(ACCEPTED_INPUT_FLUIDS[i], ACCEPTED_INPUT_FLUIDS_MULTIPLIER[i]);
-        }
-    }
 
     public static Map<Fluid, Integer> getGasCostMap() {
         return GAS_COST_MAP;
-    }
-
-    public static void setItemCostMap() {
-
-        if (ACCEPTED_INPUT_ITEMS.length != ACCEPTED_INPUT_ITEMS_MULTIPLIER.length) return;
-
-        for (int i = 0; i < ACCEPTED_INPUT_ITEMS.length; i++) {
-            ITEM_COST_MAP.put(ACCEPTED_INPUT_ITEMS[i], ACCEPTED_INPUT_ITEMS_MULTIPLIER[i]);
-        }
     }
 
     public static Map<ItemStack, Integer> getItemCostMap() {

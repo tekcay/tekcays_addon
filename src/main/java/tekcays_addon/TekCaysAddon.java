@@ -31,9 +31,6 @@ public class TekCaysAddon {
         TKCYAMetaItems.init();
         TKCYAMetaTileEntities.init();
 
-        TKCYAValues.setGasCostMap();
-        TKCYAValues.setItemCostMap();
-
         proxy.preLoad();
     }
 }
