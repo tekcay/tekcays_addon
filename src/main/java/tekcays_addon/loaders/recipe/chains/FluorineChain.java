@@ -1,11 +1,15 @@
 package tekcays_addon.loaders.recipe.chains;
 
-import static gregtech.api.GTValues.VA;
-import static gregtech.api.GTValues.LV;
+import net.minecraft.item.ItemStack;
+import tekcays_addon.common.items.TKCYAMetaItems;
+import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
+
+import static gregtech.api.GTValues.*;
 import static gregtech.api.recipes.RecipeMaps.CHEMICAL_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.Materials.Water;
 import static gregtech.api.unification.ore.OrePrefix.dust;
+import static tekcays_addon.api.recipes.TKCYARecipeMaps.ELECTROLYSIS;
 import static tekcays_addon.api.unification.TKCYAMaterials.*;
 
 public class FluorineChain {
@@ -73,17 +77,20 @@ public class FluorineChain {
                 .EUt(VA[LV])
                 .buildAndRegister();
 
-        /*
+        ItemStack electrodeStack = TKCYAMetaItems.ELECTRODE.getStackForm();
+
+        ElectrodeBehavior.getInstanceFor(electrodeStack).setPartMaterial(electrodeStack, Gold);
+
+
         // KF.HF(l) + electrode + LiF -> H2 + F2
-        CHEMICAL_RECIPES.recipeBuilder() //TODO NewElectrolyzer
+        ELECTROLYSIS.recipeBuilder() //TODO NewElectrolyzer
                 .notConsumable(dust, LithiumFluoride, 1)
-                .inputs(ore:electrodeMaterial)
+                .notConsumable(electrodeStack)
                 .fluidInputs(PotassiumBifluoride.getFluid(1000))
                 .fluidOutputs(Hydrogen.getFluid(1000), Fluorine.getFluid(1000))
                 .duration(80)
                 .EUt(VA[HV])
                 .buildAndRegister();
-         */
     }
 
 }

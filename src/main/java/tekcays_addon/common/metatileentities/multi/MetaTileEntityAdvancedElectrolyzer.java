@@ -6,15 +6,14 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.recipes.RecipeMaps;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing.MetalCasingType;
 import gregtech.common.blocks.MetaBlocks;
-import gregtech.common.items.behaviors.TurbineRotorBehavior;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 
@@ -25,7 +24,7 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
     private ItemStack electrodeStack;
 
     public MetaTileEntityAdvancedElectrolyzer(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, RecipeMaps.VACUUM_RECIPES);
+        super(metaTileEntityId, TKCYARecipeMaps.ELECTROLYSIS);
     }
 
     @Override
@@ -69,8 +68,6 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
 
         if (electrodeStack == null) return null;
         ItemStack stack = electrodeStack;
-        if (stack.isEmpty())
-            return null;
 
         return ElectrodeBehavior.getInstanceFor(stack);
     }
