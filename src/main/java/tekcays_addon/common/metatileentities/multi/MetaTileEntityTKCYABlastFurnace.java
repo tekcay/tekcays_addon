@@ -1,6 +1,5 @@
 package tekcays_addon.common.metatileentities.multi;
 
-import gregtech.api.GTValues;
 import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.capability.impl.ItemHandlerList;
 import gregtech.api.metatileentity.MetaTileEntity;
@@ -13,8 +12,6 @@ import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.ModHandler;
 import gregtech.api.recipes.Recipe;
-import gregtech.api.unification.OreDictUnifier;
-import gregtech.api.unification.material.Materials;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.ConfigHolder;
@@ -45,20 +42,17 @@ import tekcays_addon.api.metatileentity.mutiblock.RecipeMapMultiblockNoEnergyCon
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.recipes.builders.TemperatureRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.api.utils.MiscMethods;
-import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
-import static gregtech.api.unification.ore.OrePrefix.gem;
 import static gregtech.api.util.RelativeDirection.*;
+import static tekcays_addon.api.utils.TKCYAValues.*;
 
 
 public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergyController {
@@ -72,12 +66,9 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     private int inputItemSlot, itemHeatingValue;
 
 
-    private final Fluid[] ACCEPTED_INPUT_FLUIDS = {Materials.Air.getFluid(), TKCYAMaterials.HotFlueGas.getFluid()};
-    private final ItemStack[] ACCEPTED_INPUT_ITEMS = {OreDictUnifier.get(gem, Materials.Charcoal), OreDictUnifier.get(gem, Materials.Coal), OreDictUnifier.get(gem, Materials.Coke)};
-    private final int[] ACCEPTED_INPUT_FLUIDS_MULTIPLIER = {10, 1};
-    private final int[] ACCEPTED_INPUT_ITEMS_MULTIPLIER = {2, 2, 1};
+
     private int inputFluidMultiplier, inputItemMultiplier;
-    private List<FluidStack> inputGasFluidStack;
+    private List<FluidStack> inputGasFluidStack = new ArrayList<>();
     private FluidStack fluidToDrain;
     private ItemStack inputItemStack;
 
@@ -144,7 +135,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         if (!hasAcceptedFluid() || !hasAcceptedItem()) return;
 
         getGasCostMap().entrySet().stream()
-                .filter(e -> MiscMethods.isSameFluid(fluidToDrain, e.getKey()))
+                .filter(e -> MiscMethods.isSameFluid(getFluidToDrain(), e.getKey()))
                 .forEach(e -> inputFluidMultiplier = e.getValue());
 
         getItemCostMap().entrySet().stream()
@@ -152,31 +143,13 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 .forEach(e -> inputItemMultiplier = e.getValue());
     }
 
-    public Map<Fluid, Integer> getGasCostMap() {
 
-        Map<Fluid, Integer> gasCostMap = new HashMap<>();
-
-        if (ACCEPTED_INPUT_FLUIDS.length != ACCEPTED_INPUT_FLUIDS_MULTIPLIER.length) return gasCostMap;
-
-        for (int i = 0; i < ACCEPTED_INPUT_FLUIDS.length; i++) {
-            gasCostMap.put(ACCEPTED_INPUT_FLUIDS[i], ACCEPTED_INPUT_FLUIDS_MULTIPLIER[i]);
-        }
-        return gasCostMap;
-    }
-
-    public Map<ItemStack, Integer> getItemCostMap() {
-
-        Map<ItemStack, Integer> itemCostMap = new HashMap<>();
-
-        if (ACCEPTED_INPUT_ITEMS.length != ACCEPTED_INPUT_ITEMS_MULTIPLIER.length) return itemCostMap;
-
-        for (int i = 0; i < ACCEPTED_INPUT_ITEMS.length; i++) {
-            itemCostMap.put(ACCEPTED_INPUT_ITEMS[i], ACCEPTED_INPUT_ITEMS_MULTIPLIER[i]);
-        }
-        return itemCostMap;
-    }
 
     private boolean hasAcceptedFluid() {
+
+        if (!inputGasFluidStack.isEmpty()) {
+            inputGasFluidStack.clear();
+        }
 
         for (IFluidTank fluidTank : airOrFlueGasImport.getFluidTanks()) {
 
@@ -186,7 +159,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 }
             }
         }
-        return inputGasFluidStack.size() > 1;
+        return inputGasFluidStack.isEmpty();
     }
 
     private boolean hasAcceptedItem() {
@@ -223,13 +196,22 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         return false;
     }
 
+    public void setFluidToDrain(FluidStack fs) {
+        this.fluidToDrain = fs;
+    }
+
+    public FluidStack getFluidToDrain() {
+        return fluidToDrain;
+    }
+
+
 
     private boolean hasEnoughInputGas(int temperature) {
         if (!hasAcceptedFluid()) return false;
 
         for (FluidStack fs : inputGasFluidStack) {
             if (fs.amount >= getTemperatureGasConsumption(temperature)) {
-                fluidToDrain = fs;
+                setFluidToDrain(fs);
                 return true;
             }
         }
@@ -251,7 +233,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     private void drainGas(int temperature) {
 
-        airOrFlueGasImport.drain(new FluidStack(fluidToDrain.getFluid(), getTemperatureGasConsumption(temperature)), true);
+        airOrFlueGasImport.drain(new FluidStack(getFluidToDrain().getFluid(), getTemperatureGasConsumption(temperature)), true);
     }
     
     private void drainItem(int temperature) {
@@ -316,7 +298,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
             if (canAchieveTargetTemp) {
 
-                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4", getTemperatureGasConsumption(temp), fluidToDrain.getLocalizedName()));
+                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4", getTemperatureGasConsumption(temp), getFluidToDrain().getLocalizedName()));
             } else {
                 textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.5"));
             }

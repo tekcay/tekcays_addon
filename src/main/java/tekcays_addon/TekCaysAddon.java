@@ -1,6 +1,7 @@
 package tekcays_addon;
 
 import tekcays_addon.api.utils.TKCYALog;
+import tekcays_addon.api.utils.TKCYAValues;
 import tekcays_addon.common.CommonProxy;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.items.TKCYAMetaItems;
@@ -29,6 +30,9 @@ public class TekCaysAddon {
         TKCYAMetaBlocks.init();
         TKCYAMetaItems.init();
         TKCYAMetaTileEntities.init();
+
+        TKCYAValues.setGasCostMap();
+        TKCYAValues.setItemCostMap();
 
         proxy.preLoad();
     }
