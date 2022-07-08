@@ -3,6 +3,7 @@ package tekcays_addon.api.utils;
 import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Materials;
+import jdk.nashorn.internal.ir.annotations.Immutable;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import tekcays_addon.api.unification.TKCYAMaterials;
@@ -10,7 +11,10 @@ import tekcays_addon.api.unification.TKCYAMaterials;
 import static gregtech.api.unification.ore.OrePrefix.gem;
 import static gregtech.common.items.MetaItems.*;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TKCYAValues {
 
@@ -30,17 +34,35 @@ public class TKCYAValues {
     // For the New Blast Furnace
     //////////////////
 
-    private static final Map<Fluid, Integer> GAS_COST_MAP = new HashMap<>() {{
+    /*
+    private static final Map<Fluid, Integer> GAS_COST_MAP = new HashMap<>(){{
         put(Materials.Air.getFluid(), 10);
         put(TKCYAMaterials.HotFlueGas.getFluid(), 1);
-
     }};
-    private static final Map<ItemStack, Integer> ITEM_COST_MAP = new HashMap<>() {{
+    
+    private static final Map<ItemStack, Integer> ITEM_COST_MAP = new HashMap<>(){{
         put(OreDictUnifier.get(gem, Materials.Charcoal), 2);
         put(OreDictUnifier.get(gem, Materials.Coal), 2);
         put(OreDictUnifier.get(gem, Materials.Coke), 1);
-
     }};
+
+     */
+
+    
+
+
+    private static final Map<Fluid, Integer> GAS_COST_MAP = Stream.of(new Object[][] {
+            {Materials.Air.getFluid(), 10},
+            {TKCYAMaterials.HotFlueGas.getFluid(), 1},
+    }).collect(Collectors.toMap(data -> (Fluid) data[0], data -> (Integer) data[1]));
+
+    private static final Map<ItemStack, Integer> ITEM_COST_MAP = Stream.of(new Object[][] {
+            {OreDictUnifier.get(gem, Materials.Charcoal), 2},
+            {OreDictUnifier.get(gem, Materials.Coal), 2},
+            {OreDictUnifier.get(gem, Materials.Coke), 1},
+    }).collect(Collectors.toMap(data -> (ItemStack) data[0], data -> (Integer) data[1]));
+
+
 
 
     /**
