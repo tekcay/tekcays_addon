@@ -22,7 +22,6 @@ public class TKCYAEventHandlers {
 
             TKCYAOrePrefixAdditions.moldsInit();
             TKCYAOrePrefixAdditions.moldsTooltip();
-            TKCYAOrePrefixAdditions.electrodeInit();
         }
     }
 

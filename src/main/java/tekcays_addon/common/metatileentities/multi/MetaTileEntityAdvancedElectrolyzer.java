@@ -18,6 +18,7 @@ import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockController {
 
