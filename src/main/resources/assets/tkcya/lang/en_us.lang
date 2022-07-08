@@ -102,10 +102,15 @@ material.hydrogen_iodine=Hydrogen Iodine
 # fluids
 tkcya.fluid.molten=Molten %s
 
+
+#MetaItems
+
 metaitem.mica.sheet.name=Mica Based Sheet
 metaitem.mica_insulator.sheet.name=Mica Insulator Sheet
 metaitem.mica_insulator.foil.name=Mica Insulator Foil
 metaitem.gas_collector.name=Gas Collector
+metaitem.electrode.name=%s Electrode
+metaitem.electrode.tooltip=For electrolysis
 
 item.mica_pulp.dust=Mica Based Pulp
 
