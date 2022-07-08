@@ -60,6 +60,12 @@ public class JEIRemovals implements IModPlugin { {
             ingredientBlacklist.addIngredientToBlacklist(LARGE_GAS_TURBINE.getStackForm());
         }
 
+        if (TKCYAConfigHolder.miscOverhaul.enableElectrolysisOverhaul) {
+            for (int i = GTValues.LV; i < GTValues.UV; i++) {
+                ingredientBlacklist.addIngredientToBlacklist(ELECTROLYZER[i].getStackForm());
+            }
+        }
+
 
         if (TKCYAConfigHolder.miscOverhaul.disableHighTierMachines) {
 

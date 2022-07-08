@@ -39,6 +39,9 @@ public class TKCYAConfigHolder {
         @Config.Comment({"Components can not be made in shaped recipe", "Default: true"})
         public boolean disableComponentsShapesRecipes = true;
 
+        @Config.Comment({"Removes most electrolysis recipes and replaces the GTCEu Electrolyzer with a new one", "Default: true"})
+        public boolean enableElectrolysisOverhaul = true;
+
     }
 
 

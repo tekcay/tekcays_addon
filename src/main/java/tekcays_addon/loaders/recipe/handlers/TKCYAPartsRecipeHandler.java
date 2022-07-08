@@ -2,6 +2,8 @@ package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.GTValues;
 import gregtech.api.recipes.GTRecipeHandler;
+import gregtech.api.recipes.RecipeMap;
+import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.properties.IngotProperty;
@@ -29,6 +31,12 @@ public class TKCYAPartsRecipeHandler {
     public static void initFoil() {
 
         foil.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processFoil);
+
+    }
+
+    public static void initElectrode() {
+
+        electrode.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processElectrode);
 
     }
 
@@ -64,6 +72,16 @@ public class TKCYAPartsRecipeHandler {
             .duration((int) material.getMass())
             .EUt(24)
             .buildAndRegister();
+    }
+
+    public static void processElectrode(OrePrefix electrodePrefix, Material material, IngotProperty property) {
+
+        LASER_ENGRAVER_RECIPES.recipeBuilder()
+                .input(moldStickLong, material)
+                .output(electrodePrefix, material, 1)
+                .duration((int) material.getMass())
+                .EUt(24)
+                .buildAndRegister();
     }
 
 
