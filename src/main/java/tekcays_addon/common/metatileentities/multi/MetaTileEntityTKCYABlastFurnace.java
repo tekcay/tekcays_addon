@@ -85,7 +85,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         temp = 300;
         inputFluidMultiplier = 0;
         inputItemMultiplier = 0;
-        inputGasFluidStack = new ArrayList<>();
         inputItemSlot = 0;
         itemHeatingValue = 0;
         fluidHeatingValue = 0;
@@ -164,13 +163,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     private boolean hasAcceptedFluid() {
 
-        /*
-        if (!inputGasFluidStack.isEmpty()) {
-            inputGasFluidStack.clear();
-        }
-
-         */
-
         for (IFluidTank fluidTank : airOrFlueGasImport.getFluidTanks()) {
 
             for (Fluid fluid : getGasCostMap().keySet()) { //ACCEPTED_INPUT_FLUIDS
@@ -183,7 +175,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         }
         hasAcceptedFluid = false;
         return false;
-        //return inputGasFluidStack.isEmpty();
     }
 
     private boolean hasAcceptedItem() {
@@ -234,17 +225,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     private boolean hasEnoughInputGas(int temperature) {
         if (!hasAcceptedFluid) return false;
         return fluidToDrain.amount >= getTemperatureGasConsumption(temperature) || fluidHeatingValue >= getTemperatureGasConsumption(temperature);
-
-        /*
-        for (FluidStack fs : inputGasFluidStack) {
-            if (fs.amount >= getTemperatureGasConsumption(temperature)) {
-                fluidToDrain = fs;
-                return true;
-            }
-        }
-        return false;
-
-         */
+        //return fluidHeatingValue >= getTemperatureGasConsumption(temperature);
     }
 
     private boolean hasEnoughInputItem(int temperature) {
@@ -262,26 +243,25 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     private void drainGas(int temperature) {
         int consum = getTemperatureGasConsumption(temperature);
-        if (fluidToDrain.amount < consum) {
-            if (fluidHeatingValue < consum) {
+        if (fluidToDrain.amount >= consum) {
+            airOrFlueGasImport.drain(new FluidStack(fluidToDrain.getFluid(), consum), true);
 
-                int toDrain = airOrFlueGasImport.drain(fluidToDrain, false).amount;
-                airOrFlueGasImport.drain(fluidToDrain, true);
-                fluidHeatingValue = consum - toDrain;
+        } else if (fluidHeatingValue < consum) {
 
-            } else fluidHeatingValue -= consum;
+            int toDrain = airOrFlueGasImport.drain(fluidToDrain, false).amount;
+            airOrFlueGasImport.drain(fluidToDrain, true);
+            fluidHeatingValue = consum - toDrain;
 
-        } else airOrFlueGasImport.drain(new FluidStack(fluidToDrain.getFluid(), consum), true);
+        } else fluidHeatingValue -= consum;
     }
     
     private void drainItem(int temperature) {
-        if (itemHeatingValue < getTemperatureItemConsumption(temperature)) {
+        int consum = getTemperatureItemConsumption(temperature);
+        if (itemHeatingValue < consum) {
             ItemStack stack = coalOrCokeImport.getStackInSlot(inputItemSlot);
             stack.shrink(1);
-            itemHeatingValue += 1000 - getTemperatureItemConsumption(temperature);
-        } else {
-            itemHeatingValue -= getTemperatureItemConsumption(temperature);
-        }
+            itemHeatingValue += 1000 - consum;
+        } else itemHeatingValue -= consum;
     }
 
     public boolean getHasGasOutputHatch() {
