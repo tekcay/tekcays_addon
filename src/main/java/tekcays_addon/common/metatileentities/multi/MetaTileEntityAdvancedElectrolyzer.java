@@ -24,6 +24,10 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
 
     private ItemStack electrodeStack;
 
+    //TODO Overclock based on size
+    //TODO Temperature logic, based on electricity
+    //TODO Add Aluminium and Zinc Chains as electrolysis is available
+
     public MetaTileEntityAdvancedElectrolyzer(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.ELECTROLYSIS);
     }
@@ -34,7 +38,7 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
+    protected BlockPattern createStructurePattern() { //TODO MutiblockStructure
         return FactoryBlockPattern.start()
                 .aisle("XXX", "XXX", "XXX")
                 .aisle("XXX", "X#X", "XXX")
