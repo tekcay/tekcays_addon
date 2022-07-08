@@ -152,22 +152,29 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
 
-
     private boolean hasAcceptedFluid() {
 
+        /*
         if (!inputGasFluidStack.isEmpty()) {
             inputGasFluidStack.clear();
         }
+
+         */
 
         for (IFluidTank fluidTank : airOrFlueGasImport.getFluidTanks()) {
 
             for (Fluid fluid : getGasCostMap().keySet()) { //ACCEPTED_INPUT_FLUIDS
                 if (MiscMethods.isSameFluid(fluidTank.getFluid(), fluid)) {
-                    inputGasFluidStack.add(fluidTank.getFluid());
+                    //Checks if there is enough to be consummed. Else it will check another tank.
+                    if (fluidTank.getFluid().amount < getTemperatureGasConsumption(temp)) break;
+                    fluidToDrain = fluidTank.getFluid();
+                    return true;
+                    //inputGasFluidStack.add(fluidTank.getFluid());
                 }
             }
         }
-        return inputGasFluidStack.isEmpty();
+        return false;
+        //return inputGasFluidStack.isEmpty();
     }
 
     private boolean hasAcceptedItem() {
@@ -216,6 +223,9 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     private boolean hasEnoughInputGas(int temperature) {
         //if (!hasAcceptedFluid()) return false;
 
+        return fluidToDrain.amount >= getTemperatureGasConsumption(temperature);
+
+        /*
         for (FluidStack fs : inputGasFluidStack) {
             if (fs.amount >= getTemperatureGasConsumption(temperature)) {
                 fluidToDrain = fs;
@@ -223,6 +233,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             }
         }
         return false;
+
+         */
     }
 
     private boolean hasEnoughInputItem(int temperature) {
