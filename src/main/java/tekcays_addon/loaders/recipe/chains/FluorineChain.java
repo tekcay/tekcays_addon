@@ -83,7 +83,7 @@ public class FluorineChain {
 
 
         // KF.HF(l) + electrode + LiF -> H2 + F2
-        ELECTROLYSIS.recipeBuilder() //TODO NewElectrolyzer
+        ELECTROLYSIS.recipeBuilder()
                 .notConsumable(dust, LithiumFluoride, 1)
                 .notConsumable(electrodeStack)
                 .fluidInputs(PotassiumBifluoride.getFluid(1000))

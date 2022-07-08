@@ -62,6 +62,7 @@ public class TKCYARecipeLoader {
 
         if (miscOverhaul.enableElectrolysisOverhaul) {
             TKCYAPartsRecipeHandler.initElectrode();
+            ElectrolysisHandler.init();
             GTRecipeHandler.removeAllRecipes(RecipeMaps.ELECTROLYZER_RECIPES);
         }
 
