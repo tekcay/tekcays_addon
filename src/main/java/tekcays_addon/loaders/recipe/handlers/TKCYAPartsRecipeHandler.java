@@ -27,6 +27,7 @@ import static gregtech.api.recipes.RecipeMaps.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static tekcays_addon.api.unification.TKCYAMaterialFlagAddition.MOLD_MATERIALS;
 import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
+import static tekcays_addon.api.utils.TKCYAValues.ELECTRODE_MATERIALS;
 import static tekcays_addon.loaders.recipe.handlers.TKCYACastingTableRecipeHandler.MOLD_PRODUCTION;
 
 public class TKCYAPartsRecipeHandler {
@@ -39,8 +40,20 @@ public class TKCYAPartsRecipeHandler {
 
     public static void initElectrode() {
 
-        electrode.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processElectrode);
+        for (Material m : ELECTRODE_MATERIALS) {
 
+            ItemStack electrodeStack = TKCYAMetaItems.ELECTRODE.getStackForm();
+
+            ElectrodeBehavior.getInstanceFor(electrodeStack).setPartMaterial(electrodeStack, m);
+
+            LASER_ENGRAVER_RECIPES.recipeBuilder()
+                    .input(stickLong, m)
+                    .notConsumable(lens, Materials.Glass)
+                    .outputs(electrodeStack)
+                    .duration((int) m.getMass())
+                    .EUt(24)
+                    .buildAndRegister();
+        }
     }
 
     public static void initPolarizing(){
@@ -76,21 +89,6 @@ public class TKCYAPartsRecipeHandler {
             .EUt(24)
             .buildAndRegister();
     }
-
-    public static void processElectrode(OrePrefix electrodePrefix, Material material, IngotProperty property) {
-        ItemStack electrodeStack = TKCYAMetaItems.ELECTRODE.getStackForm();
-        //noinspection ConstantConditions
-        ElectrodeBehavior.getInstanceFor(electrodeStack).setPartMaterial(electrodeStack, material);
-
-        LASER_ENGRAVER_RECIPES.recipeBuilder()
-                .input(stickLong, material)
-                .notConsumable(lens, Materials.Glass)
-                .outputs(electrodeStack)
-                .duration((int) material.getMass())
-                .EUt(24)
-                .buildAndRegister();
-    }
-
 
     public static void processPolarizing(OrePrefix polarizingPrefix, Material material, IngotProperty property) {
 

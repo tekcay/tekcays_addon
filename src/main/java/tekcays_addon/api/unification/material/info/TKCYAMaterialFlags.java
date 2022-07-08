@@ -11,10 +11,6 @@ public class TKCYAMaterialFlags {
             .requireFlags(GENERATE_PLATE)
             .build();
 
-    public static final MaterialFlag GENERATE_ELECTRODE= new MaterialFlag.Builder("electrode")
-            .requireFlags(GENERATE_LONG_ROD)
-            .build();
-
 }
 
 

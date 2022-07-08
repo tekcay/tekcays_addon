@@ -23,6 +23,4 @@ public class TKCYAMaterialIconType {
 
     // Others
 
-    public static final MaterialIconType electrode = new MaterialIconType("electrode");
-
 }
