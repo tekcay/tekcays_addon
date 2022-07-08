@@ -77,7 +77,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     private final int[] ACCEPTED_INPUT_FLUIDS_MULTIPLIER = {10, 1};
     private final int[] ACCEPTED_INPUT_ITEMS_MULTIPLIER = {2, 2, 1};
     private int inputFluidMultiplier, inputItemMultiplier;
-    private FluidStack inputGasFluidStack;
+    private List<FluidStack> inputGasFluidStack;
+    private FluidStack fluidToDrain;
     private ItemStack inputItemStack;
 
     public void setIncreaseTemp() {
@@ -143,7 +144,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         if (!hasAcceptedFluid() || !hasAcceptedItem()) return;
 
         getGasCostMap().entrySet().stream()
-                .filter(e -> MiscMethods.isSameFluid(inputGasFluidStack, e.getKey()))
+                .filter(e -> MiscMethods.isSameFluid(fluidToDrain, e.getKey()))
                 .forEach(e -> inputFluidMultiplier = e.getValue());
 
         getItemCostMap().entrySet().stream()
@@ -181,12 +182,11 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
             for (Fluid fluid : ACCEPTED_INPUT_FLUIDS) {
                 if (MiscMethods.isSameFluid(fluidTank.getFluid(), fluid)) {
-                    inputGasFluidStack = fluidTank.getFluid();
-                    return true;
+                    inputGasFluidStack.add(fluidTank.getFluid());
                 }
             }
         }
-        return false;
+        return inputGasFluidStack.size() > 1;
     }
 
     private boolean hasAcceptedItem() {
@@ -224,10 +224,16 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
 
-
     private boolean hasEnoughInputGas(int temperature) {
         if (!hasAcceptedFluid()) return false;
-        return inputGasFluidStack.amount >= getTemperatureGasConsumption(temperature);
+
+        for (FluidStack fs : inputGasFluidStack) {
+            if (fs.amount >= getTemperatureGasConsumption(temperature)) {
+                fluidToDrain = fs;
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean hasEnoughInputItem(int temperature) {
@@ -235,16 +241,17 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
     public int getTemperatureGasConsumption(int temperature) {
-        return inputFluidMultiplier * (temperature - 300) * height ; //TODO formula for consumption
+        return inputFluidMultiplier * (temperature - 300) * height + 1 ; //TODO formula for consumption
     }
 
     public int getTemperatureItemConsumption(int temperature) {
-        return inputItemMultiplier * (temperature - 300) * height ; //TODO formula for consumption
+        return inputItemMultiplier * (temperature - 300) * height + 1 ; //TODO formula for consumption
     }
 
 
     private void drainGas(int temperature) {
-        airOrFlueGasImport.drain(new FluidStack(inputGasFluidStack.getFluid(), getTemperatureGasConsumption(temperature)), true);
+
+        airOrFlueGasImport.drain(new FluidStack(fluidToDrain.getFluid(), getTemperatureGasConsumption(temperature)), true);
     }
     
     private void drainItem(int temperature) {
@@ -309,7 +316,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
             if (canAchieveTargetTemp) {
 
-                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4", getTemperatureGasConsumption(temp), inputGasFluidStack.getLocalizedName()));
+                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4", getTemperatureGasConsumption(temp), fluidToDrain.getLocalizedName()));
             } else {
                 textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.5"));
             }
@@ -527,6 +534,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     }
 
+    /*
     ////////////////
     //Added particles/muffler effect if no gas recovery, code from GTCEu's PBF
     /////////////////
@@ -542,6 +550,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         }
     }
 
+
     private void pollutionParticles() {
         BlockPos pos = this.getPos();
         EnumFacing facing = this.getFrontFacing().getOpposite();
@@ -552,6 +561,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         float ySpd = facing.getYOffset() * 0.1F + 0.2F + 0.1F * GTValues.RNG.nextFloat();
         runMufflerEffect(xPos, yPos, zPos, 0, ySpd, 0);
     }
+
+     */
 
 
 }
