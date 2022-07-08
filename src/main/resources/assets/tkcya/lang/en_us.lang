@@ -110,6 +110,11 @@ metaitem.gas_collector.name=Gas Collector
 item.mica_pulp.dust=Mica Based Pulp
 
 # Ore Prefixes
+
+#Others
+item.material.oreprefix.electrode=%s Electrode
+
+## Molds
 item.material.oreprefix.moldEmpty=%s Mold Empty
 item.material.oreprefix.moldIngot=%s Mold Ingot
 item.material.oreprefix.moldPlate=%s Mold Plate

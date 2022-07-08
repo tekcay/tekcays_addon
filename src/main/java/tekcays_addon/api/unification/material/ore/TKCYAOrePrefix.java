@@ -3,11 +3,9 @@ package tekcays_addon.api.unification.material.ore;
 import gregtech.api.unification.ore.OrePrefix;
 import tekcays_addon.api.unification.material.info.TKCYAMaterialIconType;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static gregtech.api.GTValues.M;
 import static gregtech.api.unification.ore.OrePrefix.Flags.ENABLE_UNIFICATION;
+import static tekcays_addon.api.unification.material.info.TKCYAMaterialFlags.GENERATE_ELECTRODE;
 import static tekcays_addon.api.unification.material.info.TKCYAMaterialFlags.GENERATE_MOLDS;
 
 public class TKCYAOrePrefix {
@@ -26,6 +24,12 @@ public class TKCYAOrePrefix {
     public static final OrePrefix moldRing = new OrePrefix("moldRing", M * 4, null, TKCYAMaterialIconType.moldRing, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
     public static final OrePrefix moldRotor = new OrePrefix("moldRotor", M * 4, null, TKCYAMaterialIconType.moldRotor, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
     public static final OrePrefix moldCasing = new OrePrefix("moldCasing", M * 4, null, TKCYAMaterialIconType.moldCasing, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
+
+    // Others
+
+    public static final OrePrefix electrode = new OrePrefix("electrode", M * 1, null, TKCYAMaterialIconType.electrode, ENABLE_UNIFICATION, mat -> mat.hasFlags(GENERATE_ELECTRODE));
+
+
 }
 
 

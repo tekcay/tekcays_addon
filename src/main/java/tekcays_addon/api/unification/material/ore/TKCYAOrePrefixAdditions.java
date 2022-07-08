@@ -54,4 +54,10 @@ public class TKCYAOrePrefixAdditions {
 
 
     }
+
+    public static void electrodeInit() {
+
+        MetaItems.addOrePrefix(TKCYAOrePrefix.electrode);
+
+    }
 }
