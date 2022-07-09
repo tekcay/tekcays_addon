@@ -36,7 +36,7 @@ public class TKCYAValues {
         ingot, plate, plateDouble, stick, stickLong, bolt, screw, ring, rotor, spring, springSmall, gear, gearSmall, frameGt, block};
 
    public static final Material[] ELECTRODE_MATERIALS = new Material[]{
-           Gold, Copper, Platinum, Carbon, Steel};
+           Gold, Copper, Platinum, Carbon, Steel, Iridium};
 
 }
 
