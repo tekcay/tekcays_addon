@@ -9,6 +9,7 @@ import static gregtech.api.unification.ore.OrePrefix.*;
 
 
 import static gregtech.common.items.MetaItems.*;
+import static tekcays_addon.api.unification.TKCYAMaterials.Ceramic;
 
 import java.util.*;
 
@@ -25,6 +26,8 @@ public class TKCYAValues {
     public static final MetaItem.MetaValueItem[] ELECTRIC_PUMPS = new MetaItem.MetaValueItem[]{
             ELECTRIC_PUMP_LV, ELECTRIC_PUMP_MV, ELECTRIC_PUMP_HV, ELECTRIC_PUMP_EV, ELECTRIC_PUMP_IV,
             ELECTRIC_PUMP_LuV, ELECTRIC_PUMP_ZPM};
+
+    public static final Material[] MOLD_MATERIALS = new Material[]{Steel, Tungsten, Carbon, Ceramic};
 
     public static final OrePrefix[] POLARIZING_PREFIXES = new OrePrefix[]{
         stick, stickLong, plate, ingot, plateDense, rotor, bolt, screw, wireFine, foil, dust, ring};

@@ -10,8 +10,8 @@ import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
 import static net.minecraft.init.Blocks.IRON_BARS;
-import static tekcays_addon.api.unification.TKCYAMaterialFlagAddition.MOLD_MATERIALS;
 import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
+import static tekcays_addon.api.utils.TKCYAValues.MOLD_MATERIALS;
 
 public class ShapedCraftingRecipes{
 

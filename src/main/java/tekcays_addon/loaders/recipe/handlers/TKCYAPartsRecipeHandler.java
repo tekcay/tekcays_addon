@@ -25,9 +25,9 @@ import static gregtech.api.GTValues.LV;
 import static gregtech.api.GTValues.VA;
 import static gregtech.api.recipes.RecipeMaps.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
-import static tekcays_addon.api.unification.TKCYAMaterialFlagAddition.MOLD_MATERIALS;
 import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
 import static tekcays_addon.api.utils.TKCYAValues.ELECTRODE_MATERIALS;
+import static tekcays_addon.api.utils.TKCYAValues.MOLD_MATERIALS;
 import static tekcays_addon.loaders.recipe.handlers.TKCYACastingTableRecipeHandler.MOLD_PRODUCTION;
 
 public class TKCYAPartsRecipeHandler {
