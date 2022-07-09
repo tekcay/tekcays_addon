@@ -20,7 +20,7 @@ public class TKCYAMaterialFlagAddition {
         Materials.Titanium.addFlags(MaterialFlags.GENERATE_FOIL);
 
         // For electrode
-        Carbon.addFlags(MaterialFlags.GENERATE_LONG_ROD, MaterialFlags.NO_UNIFICATION);
+        Carbon.addFlags(MaterialFlags.GENERATE_LONG_ROD, MaterialFlags.NO_SMELTING, MaterialFlags.NO_SMASHING);
 
         //Molds
         if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {

@@ -19,10 +19,12 @@ import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockController {
 
-    private ItemStack electrodeStack;
+    private List<ItemStack> electrodeList;
 
     //TODO Overclock based on size
     //TODO Temperature logic, based on electricity
@@ -61,25 +63,20 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
             }
     }
 
-    private ItemStack getElectrodeStack() {
+    private List<ItemStack> getElectrodeStack() {
+        List<ItemStack> list = new ArrayList<>();
         for (int i = 0; i < inputInventory.getSlots(); i++) {
             if (inputInventory.isItemValid(i, TKCYAMetaItems.ELECTRODE.getStackForm()))
-                return electrodeStack = inputInventory.getStackInSlot(i);
-        } return null;
-    }
-
-    @Nullable
-    private ElectrodeBehavior getElectrodeBehavior() {
-
-        if (electrodeStack == null) return null;
-        ItemStack stack = electrodeStack;
-
-        return ElectrodeBehavior.getInstanceFor(stack);
+                list.add(inputInventory.getStackInSlot(i));
+        } return electrodeList = list;
     }
 
     private void damageElectrode (int damageAmount) {
-        if (electrodeStack == null) return;
-        getElectrodeBehavior().applyElectrodeDamage(electrodeStack, damageAmount);
+        if (electrodeList.isEmpty()) return;
+
+        for (ItemStack electrodeStack : electrodeList) {
+            ElectrodeBehavior.getInstanceFor(electrodeStack).applyElectrodeDamage(electrodeStack, damageAmount);
+        }
     }
 
     @Override

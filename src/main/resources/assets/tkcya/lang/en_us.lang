@@ -37,7 +37,7 @@ tkcya.machine.casting_table.name=Casting Table
 tkcya.machine.electric_pressure_blast_furnace.name=Electric Pressure Blast Furnace
 tkcya.machine.primitive_bath.name=Primitive Bath
 tkcya.machine.crystallizer.name=Crystallizer
-tkcya.machine.advanced_electrolizer.name=Advanced Electrolyzer
+tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer
 
 
 # multiblock descriptions
