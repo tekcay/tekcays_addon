@@ -1,6 +1,8 @@
 package tekcays_addon.loaders.recipe.chains;
 
 import net.minecraft.item.ItemStack;
+import tekcays_addon.common.blocks.TKCYAMetaBlocks;
+import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 
@@ -92,6 +94,7 @@ public class FluorineChain {
                 .input(dustTiny, LithiumFluoride, 1)
                 .notConsumable(electrodeCarbon)
                 .notConsumable(electrodeSteel)
+                .notConsumable(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.MONEL_CASING))
                 .fluidInputs(PotassiumBifluoride.getFluid(1000))
                 .fluidOutputs(Hydrogen.getFluid(1000), Fluorine.getFluid(1000))
                 .duration(80)

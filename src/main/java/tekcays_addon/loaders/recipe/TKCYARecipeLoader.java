@@ -66,6 +66,7 @@ public class TKCYARecipeLoader {
             GTRecipeHandler.removeAllRecipes(RecipeMaps.ELECTROLYZER_RECIPES);
         }
 
+        CasingsLoader.init();
         ChemicalChains.init();
         MineralChains.init();
 
