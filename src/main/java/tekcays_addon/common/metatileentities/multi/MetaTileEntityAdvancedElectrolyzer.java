@@ -6,14 +6,17 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.unification.material.Materials;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing.MetalCasingType;
 import gregtech.common.blocks.MetaBlocks;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 
@@ -32,6 +35,8 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
 
     public MetaTileEntityAdvancedElectrolyzer(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.ELECTROLYSIS);
+
+        electrodeList = new ArrayList<>();
     }
 
     @Override
@@ -54,30 +59,28 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
     @Override
     public void updateFormedValid() {
         super.updateFormedValid();
-        getElectrodeStack();
 
         if (this.isActive()) {
 
-            if (getOffsetTimer() % 20 == 0)
+            if (getOffsetTimer() % 20 == 0) {
                 damageElectrode(20);
             }
-    }
-
-    private List<ItemStack> getElectrodeStack() {
-        List<ItemStack> list = new ArrayList<>();
-        for (int i = 0; i < inputInventory.getSlots(); i++) {
-            if (inputInventory.isItemValid(i, TKCYAMetaItems.ELECTRODE.getStackForm()))
-                list.add(inputInventory.getStackInSlot(i));
-        } return electrodeList = list;
-    }
-
-    private void damageElectrode (int damageAmount) {
-        if (electrodeList.isEmpty()) return;
-
-        for (ItemStack electrodeStack : electrodeList) {
-            ElectrodeBehavior.getInstanceFor(electrodeStack).applyElectrodeDamage(electrodeStack, damageAmount);
         }
     }
+
+    private void damageElectrode(int damageAmount) {
+        for (int i = 0; i < inputInventory.getSlots(); i++) {
+            ItemStack electrodeStack;
+
+            if (inputInventory.isItemValid(i, TKCYAMetaItems.ELECTRODE.getStackForm())) {
+                electrodeStack = inputInventory.getStackInSlot(i);
+                ElectrodeBehavior behavior = ElectrodeBehavior.getInstanceFor(electrodeStack);
+                if (behavior == null) continue;
+                behavior.applyElectrodeDamage(electrodeStack, damageAmount);
+            }
+        }
+    }
+
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
