@@ -27,8 +27,6 @@ import java.util.List;
 
 public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockController {
 
-    private List<ItemStack> electrodeList;
-
     //TODO Overclock based on size
     //TODO Temperature logic, based on electricity
     //TODO Add Aluminium and Zinc Chains as electrolysis is available
@@ -36,7 +34,6 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
     public MetaTileEntityAdvancedElectrolyzer(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.ELECTROLYSIS);
 
-        electrodeList = new ArrayList<>();
     }
 
     @Override
