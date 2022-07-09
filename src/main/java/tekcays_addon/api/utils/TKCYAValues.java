@@ -1,8 +1,10 @@
 package tekcays_addon.api.utils;
 
 import gregtech.api.items.metaitem.MetaItem;
+import gregtech.api.unification.material.Material;
 import gregtech.api.unification.ore.OrePrefix;
 
+import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 
 
@@ -30,4 +32,8 @@ public class TKCYAValues {
     public static final OrePrefix[] STEEL_TO_GALVANIZED_OREPREFIXES = new OrePrefix[]{
         ingot, plate, plateDouble, stick, stickLong, bolt, screw, ring, rotor, spring, springSmall, gear, gearSmall, frameGt, block};
 
+   public static final Material[] ELECTRODE_MATERIALS = new Material[]{
+           Gold, Copper, Platinum};
+
 }
+

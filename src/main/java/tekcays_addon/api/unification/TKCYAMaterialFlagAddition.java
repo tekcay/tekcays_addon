@@ -29,7 +29,5 @@ public class TKCYAMaterialFlagAddition {
                 m.addFlags(TKCYAMaterialFlags.GENERATE_MOLDS);
             }
         }
-
-
     }
 }

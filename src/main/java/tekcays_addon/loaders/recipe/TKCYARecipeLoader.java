@@ -60,6 +60,12 @@ public class TKCYARecipeLoader {
             RecipesRemovalHandler.shapedComponentsRecipes();
         }
 
+        if (miscOverhaul.enableElectrolysisOverhaul) {
+            TKCYAPartsRecipeHandler.initElectrode();
+            ElectrolysisHandler.init();
+            GTRecipeHandler.removeAllRecipes(RecipeMaps.ELECTROLYZER_RECIPES);
+        }
+
         ChemicalChains.init();
         MineralChains.init();
 
