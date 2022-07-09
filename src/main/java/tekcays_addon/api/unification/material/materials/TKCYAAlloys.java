@@ -23,11 +23,11 @@ public class TKCYAAlloys {
                 .color(0xf5f8fa).iconSet(METALLIC)
                 .build();
 
-        Monel = new Material.Builder(24202, "galvanized_steel")
-                .ingot(1)
+        Monel = new Material.Builder(24202, "monel")
+                .ingot(1).fluid()
+                .fluidTemp(1573)
                 .flags(EXT2_METAL, GENERATE_ROTOR, GENERATE_SMALL_GEAR, GENERATE_SPRING,
-                        GENERATE_SPRING_SMALL, GENERATE_FRAME, GENERATE_GEAR,
-                        NO_UNIFICATION, NO_SMELTING, DISABLE_DECOMPOSITION)
+                        GENERATE_SPRING_SMALL, GENERATE_FRAME, GENERATE_GEAR, DISABLE_DECOMPOSITION)
                 .components(Nickel, 7, Copper, 3)
                 .color(0xc1b8a8).iconSet(METALLIC)
                 .build();

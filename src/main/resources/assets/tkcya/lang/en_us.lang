@@ -96,7 +96,12 @@ material.hydrogen_iodide=Hydrogen Iodide
 
 
 fluid.fuel.tooltip=To be used in the fuel consuming machines
+
+##Alloys
 material.galvanized_steel=Galvanized Steel
+material.monel=Monel
+
+
 material.hydrogen_fluorine=Hydrogen Fluorine
 material.hydrogen_chlorine=Hydrogen Chlorine
 material.hydrogen_bromine=Hydrogen Bromine
