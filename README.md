@@ -1,6 +1,6 @@
 # TeK_CaY's Addon (TKCYA)
 
-**TKCYZ** adds new machines, multiblocks, mechanics and chains to **GregTech Community Edition Unofficial**.
+**TKCYA** adds new machines, multiblocks, mechanics and chains to **GregTech Community Edition Unofficial**.
 
 
 TKCYA requires [**GregTech CE: Unofficial**](https://github.com/GregTechCEu/GregTech) and [**CodeChickenLib**](https://www.curseforge.com/minecraft/mc-mods/codechicken-lib-1-8).
