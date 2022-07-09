@@ -1,6 +1,7 @@
 package tekcays_addon.api.unification.material.properties;
 
 import gregtech.api.unification.material.properties.FluidProperty;
+import gregtech.api.unification.material.properties.IngotProperty;
 import gregtech.api.unification.material.properties.PropertyKey;
 import net.minecraftforge.fluids.Fluid;
 
@@ -21,6 +22,10 @@ public class TKCYAPropertyAddition {
 
         Phosphorus.setProperty(PropertyKey.FLUID, new FluidProperty());
         Phosphorus.getProperty(PropertyKey.FLUID).setFluidTemperature(860);
+
+        //For electrodes
+
+        Carbon.setProperty(PropertyKey.INGOT, new IngotProperty());
 
     }
 }

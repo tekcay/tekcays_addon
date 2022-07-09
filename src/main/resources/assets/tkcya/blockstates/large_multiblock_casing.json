@@ -8,6 +8,12 @@
   },
   "variants": {
     "variant": {
+      "monel_casing": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/casings/large_multiblock_casing/monel_casing"
+        }
+      },
       "macerator_casing": {
         "model": "minecraft:cube_all",
         "textures": {

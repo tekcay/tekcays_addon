@@ -70,6 +70,7 @@ public class TKCYAMaterials {
      */
 
     public static Material GalvanizedSteel;
+    public static Material Monel;
 
 
 

@@ -1,12 +1,11 @@
 package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.unification.material.Materials;
+import gregtech.api.unification.ore.OrePrefix;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 
-import static gregtech.api.unification.material.Materials.Gold;
 import static gregtech.api.unification.material.Materials.Platinum;
 import static tekcays_addon.api.recipes.TKCYARecipeMaps.ELECTROLYSIS;
 
@@ -16,13 +15,31 @@ public class ElectrolysisHandler {
 
         //H2O -> H2 + O2
 
-        ItemStack electrodeStack = TKCYAMetaItems.ELECTRODE.getStackForm();
+        ItemStack electrodePlatinum = TKCYAMetaItems.ELECTRODE.getStackForm();
 
-        ElectrodeBehavior.getInstanceFor(electrodeStack).setPartMaterial(electrodeStack, Platinum);
+        ElectrodeBehavior.getInstanceFor(electrodePlatinum).setPartMaterial(electrodePlatinum, Platinum);
 
         ELECTROLYSIS.recipeBuilder()
-                .notConsumable(electrodeStack)
-                .notConsumable(Materials.Water.getFluid(), 1000)
+                .notConsumable(electrodePlatinum)
+                .notConsumable(Materials.SulfuricAcid.getFluid(), 1000)
+                .fluidInputs(Materials.Water.getFluid(1000))
+                .fluidOutputs(Materials.Hydrogen.getFluid(2000), Materials.Oxygen.getFluid(1000))
+                .duration(100)
+                .EUt(120)
+                .buildAndRegister();
+
+        ELECTROLYSIS.recipeBuilder()
+                .notConsumable(electrodePlatinum)
+                .notConsumable(OrePrefix.dust, Materials.Potash, 1)
+                .fluidInputs(Materials.Water.getFluid(1000))
+                .fluidOutputs(Materials.Hydrogen.getFluid(2000), Materials.Oxygen.getFluid(1000))
+                .duration(100)
+                .EUt(120)
+                .buildAndRegister();
+
+        ELECTROLYSIS.recipeBuilder()
+                .notConsumable(electrodePlatinum)
+                .notConsumable(OrePrefix.dust, Materials.SodiumHydroxide, 1)
                 .fluidInputs(Materials.Water.getFluid(1000))
                 .fluidOutputs(Materials.Hydrogen.getFluid(2000), Materials.Oxygen.getFluid(1000))
                 .duration(100)

@@ -22,14 +22,13 @@ import javax.annotation.Nullable;
 
 public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockController {
 
-    private ItemStack electrodeStack;
-
     //TODO Overclock based on size
     //TODO Temperature logic, based on electricity
     //TODO Add Aluminium and Zinc Chains as electrolysis is available
 
     public MetaTileEntityAdvancedElectrolyzer(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.ELECTROLYSIS);
+
     }
 
     @Override
@@ -52,35 +51,28 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
     @Override
     public void updateFormedValid() {
         super.updateFormedValid();
-        getElectrodeStack();
 
         if (this.isActive()) {
 
-            if (getOffsetTimer() % 20 == 0)
+            if (getOffsetTimer() % 20 == 0) {
                 damageElectrode(20);
             }
+        }
     }
 
-    private ItemStack getElectrodeStack() {
+    private void damageElectrode(int damageAmount) {
         for (int i = 0; i < inputInventory.getSlots(); i++) {
-            if (inputInventory.isItemValid(i, TKCYAMetaItems.ELECTRODE.getStackForm()))
-                return electrodeStack = inputInventory.getStackInSlot(i);
-        } return null;
+            ItemStack electrodeStack;
+
+            if (inputInventory.isItemValid(i, TKCYAMetaItems.ELECTRODE.getStackForm())) {
+                electrodeStack = inputInventory.getStackInSlot(i);
+                ElectrodeBehavior behavior = ElectrodeBehavior.getInstanceFor(electrodeStack);
+                if (behavior == null) continue;
+                behavior.applyElectrodeDamage(electrodeStack, damageAmount);
+            }
+        }
     }
 
-    @Nullable
-    private ElectrodeBehavior getElectrodeBehavior() {
-
-        if (electrodeStack == null) return null;
-        ItemStack stack = electrodeStack;
-
-        return ElectrodeBehavior.getInstanceFor(stack);
-    }
-
-    private void damageElectrode (int damageAmount) {
-        if (electrodeStack == null) return;
-        getElectrodeBehavior().applyElectrodeDamage(electrodeStack, damageAmount);
-    }
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {

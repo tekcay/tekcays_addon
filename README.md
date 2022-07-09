@@ -1,9 +1,19 @@
-# TeK_CaY's Addon
+# TeK_CaY's Addon (TKCYA)
 
-**TeK_CaY's Addon** adds new machines, multiblocks, mechanics and chains to **GregTech Community Edition Unofficial**.
+**TKCYA** adds new machines, multiblocks, mechanics and chains to **GregTech Community Edition Unofficial**.
 
 
-TeK_CaY's Addon requires [**GregTech CE: Unofficial**](https://github.com/GregTechCEu/GregTech) and [**CodeChickenLib**](https://www.curseforge.com/minecraft/mc-mods/codechicken-lib-1-8).
+TKCYA requires [**GregTech CE: Unofficial**](https://github.com/GregTechCEu/GregTech) and [**CodeChickenLib**](https://www.curseforge.com/minecraft/mc-mods/codechicken-lib-1-8).
+
+## Content:
+* Magntic overhaul : magnetic materials are made with magnetite in a new 2-slots polarizer
+* Electrolysis overhaul : most recipes were removed, replaced by new ones that need electrodes which take damage
+
+### Chains:
+* Wire coils from Mica ([**Gregicality Legacy**](https://github.com/GregTechCEu/gregicality-legacy))
+* Fluorine from Fluorite
+* Gold (on-going)
+* Aluminium from Bauxite ([**Gregicality Legacy**](https://github.com/GregTechCEu/gregicality-legacy))
 
 ## Credits: 
 * [**Gregicality Legacy**](https://github.com/GregTechCEu/gregicality-legacy) for mica foil, insulator textures and their recipes.

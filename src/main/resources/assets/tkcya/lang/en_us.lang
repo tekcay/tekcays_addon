@@ -37,7 +37,7 @@ tkcya.machine.casting_table.name=Casting Table
 tkcya.machine.electric_pressure_blast_furnace.name=Electric Pressure Blast Furnace
 tkcya.machine.primitive_bath.name=Primitive Bath
 tkcya.machine.crystallizer.name=Crystallizer
-tkcya.machine.advanced_electrolizer.name=Advanced Electrolyzer
+tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer
 
 
 # multiblock descriptions
@@ -50,6 +50,7 @@ tkcya.multiblock.alloying_crucible.description=A multiblock for alloying molten 
 # hatches
 
 # casings
+tile.large_multiblock_casing.monel_casing.name=Monel Casing
 
 
 
@@ -95,7 +96,12 @@ material.hydrogen_iodide=Hydrogen Iodide
 
 
 fluid.fuel.tooltip=To be used in the fuel consuming machines
+
+##Alloys
 material.galvanized_steel=Galvanized Steel
+material.monel=Monel
+
+
 material.hydrogen_fluorine=Hydrogen Fluorine
 material.hydrogen_chlorine=Hydrogen Chlorine
 material.hydrogen_bromine=Hydrogen Bromine
