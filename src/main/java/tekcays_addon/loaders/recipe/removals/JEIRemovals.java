@@ -66,6 +66,15 @@ public class JEIRemovals implements IModPlugin { {
             }
         }
 
+        if (TKCYAConfigHolder.miscOverhaul.enableDrumsOverhaul) {
+            ingredientBlacklist.addIngredientToBlacklist(WOODEN_DRUM.getStackForm());
+            ingredientBlacklist.addIngredientToBlacklist(BRONZE_DRUM.getStackForm());
+            ingredientBlacklist.addIngredientToBlacklist(STEEL_DRUM.getStackForm());
+            ingredientBlacklist.addIngredientToBlacklist(ALUMINIUM_DRUM.getStackForm());
+            ingredientBlacklist.addIngredientToBlacklist(STAINLESS_STEEL_DRUM.getStackForm());
+
+        }
+
 
         if (TKCYAConfigHolder.miscOverhaul.disableHighTierMachines) {
 

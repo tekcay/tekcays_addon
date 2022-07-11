@@ -1,10 +1,11 @@
 package tekcays_addon.loaders.recipe.chains;
 
-public class ChemicalChains {
+public class PolymersChain {
 
     public static void init() {
-    FluorineChain.init();
-    PolymersChain.init();
+
+        //TODO make chains/reaction for HDPE and PP
+
     }
 
 }
