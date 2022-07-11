@@ -3,6 +3,7 @@ package tekcays_addon.loaders.recipe.removals;
 import gregtech.api.GTValues;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
+import gregtech.api.recipes.ModHandler;
 import gregtech.common.metatileentities.MetaTileEntities;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
@@ -82,7 +83,10 @@ public class JEIRemovals implements IModPlugin { {
         }
 
         if (TKCYAConfigHolder.storageOverhaul.removeOPTanks) {
-            ingredientBlacklist.addIngredientToBlacklist(QUANTUM_TANK);
+            for (int i = GTValues.LV; i < QUANTUM_TANK.length; i++) {
+                ingredientBlacklist.addIngredientToBlacklist(QUANTUM_TANK[i]);
+                ingredientBlacklist.addIngredientToBlacklist(QUANTUM_CHEST[i]);
+            }
         }
 
 
