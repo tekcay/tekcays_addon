@@ -117,6 +117,7 @@ public class TKCYAMetaTileEntityMultiblockTank extends MultiblockWithDisplayBase
         if (material.equals(Materials.TreatedWood)) return Textures.WOOD_WALL;
         if (material.equals(Materials.Steel)) return TKCYATextures.STEEL_GT;
         if (material.equals(TKCYAMaterials.GalvanizedSteel)) return TKCYATextures.WHITE_GT;
+        if (material.equals(Materials.StainlessSteel)) return TKCYATextures.STAINLESS_STEEL_GT;
         return null;
     }
 

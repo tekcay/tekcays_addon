@@ -57,6 +57,10 @@ public class TKCYAMetaTileEntities {
     public static TKCYAMetaTileEntityMultiblockTank WOODEN_TANK;
     public static TKCYAMetaTileEntityMultiblockTank STEEL_TANK;
     public static TKCYAMetaTileEntityMultiblockTank GALVANIZED_STEEL_TANK;
+    public static TKCYAMetaTileEntityMultiblockTank STAINLESS_STEEL_TANK;
+    public static TKCYAMetaTileEntityTankValve STEEL_TANK_VALVE;
+    public static TKCYAMetaTileEntityTankValve GALVANIZED_STEEL_TANK_VALVE;
+    public static TKCYAMetaTileEntityTankValve STAINLESS_STEEL_TANK_VALVE;
 
 
 
@@ -145,6 +149,22 @@ public class TKCYAMetaTileEntities {
                     TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL),
                     STEEL_TANK_VALVE,
                     250000));
+
+            STAINLESS_STEEL_TANK = registerMetaTileEntity(11043, new TKCYAMetaTileEntityMultiblockTank(tkcyaId("multiblock.tank.galvanized_steel"),
+                    Materials.StainlessSteel,
+                    TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.STAINLESS_STEEL_WALL),
+                    STEEL_TANK_VALVE,
+                    250000));
+
+
+            STEEL_TANK_VALVE = registerMetaTileEntity(11045, new TKCYAMetaTileEntityTankValve(tkcyaId("multiblock.valve.steel"),
+                    Materials.Steel));
+
+            GALVANIZED_STEEL_TANK_VALVE = registerMetaTileEntity(11046, new TKCYAMetaTileEntityTankValve(tkcyaId("multiblock.valve.galvanized_steel"),
+                    TKCYAMaterials.GalvanizedSteel));
+
+            STAINLESS_STEEL_TANK_VALVE = registerMetaTileEntity(11047, new TKCYAMetaTileEntityTankValve(tkcyaId("multiblock.valve.stainless_steel"),
+                    Materials.StainlessSteel));
 
 
         }

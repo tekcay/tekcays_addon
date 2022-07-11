@@ -46,6 +46,7 @@ public class TKCYATextures {
     //GT6 style
     public static SimpleOverlayRenderer STEEL_GT;
     public static SimpleOverlayRenderer WHITE_GT;
+    public static SimpleOverlayRenderer STAINLESS_STEEL_GT;
 
 
     public static void preInit() {
@@ -73,5 +74,6 @@ public class TKCYATextures {
         //GT6 Style
         STEEL_GT = new SimpleOverlayRenderer("steel_gt");
         WHITE_GT = new SimpleOverlayRenderer("white_gt");
+        STAINLESS_STEEL_GT = new SimpleOverlayRenderer("stainless_steel_gt");
     }
 }
