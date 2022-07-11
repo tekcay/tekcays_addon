@@ -126,22 +126,17 @@ public class TKCYAMetaTileEntities {
         }
 
         if (TKCYAConfigHolder.miscOverhaul.enableMultiblockTanksOverhaul) {
-            /*
+
             WOODEN_TANK = registerMetaTileEntity(11040, new TKCYAMetaTileEntityMultiblockTank(tkcyaId("multiblock.tank.wood"),
                             Materials.TreatedWood,
                             MetaBlocks.STEAM_CASING.getState(BlockSteamCasing.SteamCasingType.WOOD_WALL),
                             WOODEN_TANK_VALVE,
-                            null,
                             250000));
-
-             */
-
 
             STEEL_TANK = registerMetaTileEntity(11041, new TKCYAMetaTileEntityMultiblockTank(tkcyaId("multiblock.tank.steel"),
                     Materials.Steel,
                     TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.STEEL_WALL),
                     STEEL_TANK_VALVE,
-                    TKCYATextures.STEEL_GT, //STEEL_GT
                     250000));
 
 
@@ -149,7 +144,6 @@ public class TKCYAMetaTileEntities {
                     TKCYAMaterials.GalvanizedSteel,
                     TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL),
                     STEEL_TANK_VALVE,
-                    TKCYATextures.WHITE_GT,
                     250000));
 
 
