@@ -7,6 +7,8 @@ import codechicken.lib.vec.Matrix4;
 import gregtech.api.capability.impl.FilteredFluidHandler;
 import gregtech.api.capability.impl.FluidHandlerProxy;
 import gregtech.api.capability.impl.FluidTankList;
+import gregtech.api.fluids.MaterialFluid;
+import gregtech.api.fluids.fluidType.FluidTypes;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.LabelWidget;
@@ -70,8 +72,12 @@ public class TKCYAMetaTileEntityMultiblockTank extends MultiblockWithDisplayBase
     @Nonnull
     private List<FluidTank> makeFluidTanks() { //TODO
         List<FluidTank> fluidTankList = new ArrayList<>(1);
+        FluidPipeProperties pipeProperties = material.getProperty(PropertyKey.FLUID_PIPE);
         fluidTankList.add(new FilteredFluidHandler(capacity).setFillPredicate(
-                fluidStack -> (!fluidStack.getFluid().isGaseous() && fluidStack.getFluid().getTemperature() <= 325)
+                //fluidStack -> (!fluidStack.getFluid().isGaseous() && fluidStack.getFluid().getTemperature() <= 325)
+                fluidStack -> ((fluidStack.getFluid().isGaseous() && pipeProperties.isGasProof() && fluidStack.getFluid().getTemperature() < material.getFluid().getTemperature())
+                || ((((MaterialFluid) fluidStack.getFluid()).getFluidType().equals(FluidTypes.ACID) && pipeProperties.isAcidProof()) && fluidStack.getFluid().getTemperature() < material.getFluid().getTemperature())
+                || (((MaterialFluid) fluidStack.getFluid()).getFluidType().equals(FluidTypes.PLASMA) && pipeProperties.isPlasmaProof()))
         ));
         return fluidTankList;
     }
