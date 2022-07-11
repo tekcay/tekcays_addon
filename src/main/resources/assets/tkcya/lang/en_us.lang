@@ -48,7 +48,7 @@ tkcya.multiblock.alloying_crucible.description=A multiblock for alloying molten 
 # multiblock tank
 
 tkcya.machine.multiblock.tank.wood.name=Wooden Tank
-tkcya.machine.multiblock.steel.wood.name=Wooden Steel
+tkcya.machine.multiblock.steel.steel.name=Steel Tank
 
 # drums
 tkcya.machine.drum.wood.name=Wooden Drum
