@@ -45,6 +45,9 @@ public class TKCYAConfigHolder {
         @Config.Comment({"Drums can handle smaller volume, but can me made from more materials."})
         public boolean enableDrumsOverhaul = true;
 
+        @Config.Comment({"Multiblock Tanks can handle smaller volume, but can me made from more materials."})
+        public boolean enableMultiblockTanksOverhaul = true;
+
     }
 
 
