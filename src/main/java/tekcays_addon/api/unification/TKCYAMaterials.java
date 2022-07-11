@@ -19,13 +19,14 @@ public class TKCYAMaterials {
         // 24101-24200
         TKCYAMiscMaterials.init();
 
-        // Alloys 24201-24300
+        // Alloys 24201-24299
         TKCYAAlloys.init();
 
-        // Second Degree 3020-3039
+        // Second Degree 24300-24699
         TKCYAOrganicCompounds.init();
 
-
+        // Second Degree 24700-24800
+        TKCYAPolymers.init();
 
         // Flags
         TKCYAMaterialFlagAddition.init();
@@ -71,6 +72,13 @@ public class TKCYAMaterials {
 
     public static Material GalvanizedSteel;
     public static Material Monel;
+
+    /**
+     * Alloys
+     */
+
+    public static Material HighDensityPolyethylene;
+    public static Material Polypropylene;
 
 
 

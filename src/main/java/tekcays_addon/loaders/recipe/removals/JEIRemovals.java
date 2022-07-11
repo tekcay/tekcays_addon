@@ -3,6 +3,7 @@ package tekcays_addon.loaders.recipe.removals;
 import gregtech.api.GTValues;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
+import gregtech.api.recipes.ModHandler;
 import gregtech.common.metatileentities.MetaTileEntities;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
@@ -63,6 +64,28 @@ public class JEIRemovals implements IModPlugin { {
         if (TKCYAConfigHolder.miscOverhaul.enableElectrolysisOverhaul) {
             for (int i = GTValues.LV; i < GTValues.UV; i++) {
                 ingredientBlacklist.addIngredientToBlacklist(ELECTROLYZER[i].getStackForm());
+            }
+        }
+
+        if (TKCYAConfigHolder.storageOverhaul.enableDrumsOverhaul) {
+            ingredientBlacklist.addIngredientToBlacklist(WOODEN_DRUM.getStackForm());
+            ingredientBlacklist.addIngredientToBlacklist(BRONZE_DRUM.getStackForm());
+            ingredientBlacklist.addIngredientToBlacklist(STEEL_DRUM.getStackForm());
+            ingredientBlacklist.addIngredientToBlacklist(ALUMINIUM_DRUM.getStackForm());
+            ingredientBlacklist.addIngredientToBlacklist(STAINLESS_STEEL_DRUM.getStackForm());
+        }
+
+        if (TKCYAConfigHolder.storageOverhaul.enableMultiblockTanksOverhaul) {
+            ingredientBlacklist.addIngredientToBlacklist(STEEL_TANK.getStackForm());
+            ingredientBlacklist.addIngredientToBlacklist(WOODEN_TANK.getStackForm());
+
+            ingredientBlacklist.addIngredientToBlacklist(STEEL_TANK_VALVE.getStackForm());
+        }
+
+        if (TKCYAConfigHolder.storageOverhaul.removeOPTanks) {
+            for (int i = 0; i < QUANTUM_TANK.length; i++) {
+                ingredientBlacklist.addIngredientToBlacklist(QUANTUM_TANK[i].getStackForm());
+                ingredientBlacklist.addIngredientToBlacklist(QUANTUM_CHEST[i].getStackForm());
             }
         }
 

@@ -45,12 +45,37 @@ tkcya.multiblock.primitive_melter.description=A multiblock for melting ores and 
 tkcya.multiblock.electric_melter.description=A multiblock for melting ores and pure materials using electricity
 tkcya.multiblock.alloying_crucible.description=A multiblock for alloying molten metals
 
+# multiblock tank
 
+tkcya.machine.multiblock.tank.wood.name=Wooden Tank
+tkcya.machine.multiblock.tank.steel.name=Steel Tank
+tkcya.machine.multiblock.tank.galvanized_steel.name=Galvanized Steel Tank
+tkcya.machine.multiblock.tank.stainless_steel.name=Stainless Steel Tank
 
-# hatches
+# Tank valves
+
+tkcya.machine.multiblock.valve.steel.name=Steel Tank Valve
+tkcya.machine.multiblock.valve.galvanized_steel.name=Galvanized Steel Tank Valve
+tkcya.machine.multiblock.valve.stainless_steel.name=Stainless Steel Tank Valve
+
+# drums
+tkcya.machine.drum.wood.name=Wooden Drum
+tkcya.machine.drum.bronze.name=Bronze Drum
+tkcya.machine.drum.steel.name=Steel Drum
+tkcya.machine.drum.aluminium.name=Aluminium Drum
+tkcya.machine.drum.galvanized_steel.name=Galvanized Steel Drum
+tkcya.machine.drum.stainless_steel.name=Stainless Steel Drum
+tkcya.machine.drum.polytetrafluoroethylene.name=Teflon Drum
+tkcya.machine.drum.polypropylene.name=Polypropylene Drum
+tkcya.machine.drum.high_density_polyethylene.name=HDPE Drum
 
 # casings
 tile.large_multiblock_casing.monel_casing.name=Monel Casing
+
+# walls
+tile.large_multiblock_casing.steel_wall.name=Steel Wall
+tile.large_multiblock_casing.galvanized_steel_wall.name=Galvanized Steel Wall
+tile.large_multiblock_casing.stainless_steel_wall.name=Stainless Steel Wall
 
 
 
@@ -100,6 +125,10 @@ fluid.fuel.tooltip=To be used in the fuel consuming machines
 ##Alloys
 material.galvanized_steel=Galvanized Steel
 material.monel=Monel
+
+##Polymers
+material.high_density_polyethylene=High Density Polyethylene (HDPE)
+material.polypropylene=Polypropylene
 
 
 material.hydrogen_fluorine=Hydrogen Fluorine

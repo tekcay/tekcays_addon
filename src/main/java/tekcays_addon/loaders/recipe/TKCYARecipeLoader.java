@@ -1,6 +1,7 @@
 package tekcays_addon.loaders.recipe;
 
 import gregtech.api.recipes.GTRecipeHandler;
+import gregtech.api.recipes.ModHandler;
 import gregtech.api.recipes.RecipeMaps;
 import tekcays_addon.loaders.recipe.chains.*;
 import tekcays_addon.loaders.recipe.handlers.*;
@@ -64,6 +65,18 @@ public class TKCYARecipeLoader {
             TKCYAPartsRecipeHandler.initElectrode();
             ElectrolysisHandler.init();
             GTRecipeHandler.removeAllRecipes(RecipeMaps.ELECTROLYZER_RECIPES);
+        }
+
+        if (storageOverhaul.enableDrumsOverhaul) {
+            RecipesRemovalHandler.removeDrums();
+            ShapedCraftingRecipes.drums();
+            AssemblerRecipeHandler.drums();
+        }
+
+        if (storageOverhaul.enableMultiblockTanksOverhaul) {
+            RecipesRemovalHandler.removeTanksAndValves();
+            ShapedCraftingRecipes.tanksAndValves();
+            AssemblerRecipeHandler.walls();
         }
 
         CasingsLoader.init();
