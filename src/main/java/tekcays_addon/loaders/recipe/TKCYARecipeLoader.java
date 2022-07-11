@@ -66,6 +66,11 @@ public class TKCYARecipeLoader {
             GTRecipeHandler.removeAllRecipes(RecipeMaps.ELECTROLYZER_RECIPES);
         }
 
+        if (miscOverhaul.enableDrumsOverhaul) {
+            ShapedCraftingRecipes.drums();
+            AssemblerRecipeHandler.drums();
+        }
+
         CasingsLoader.init();
         ChemicalChains.init();
         MineralChains.init();

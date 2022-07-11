@@ -3,9 +3,13 @@ package tekcays_addon.loaders.recipe;
 import gregtech.api.recipes.ModHandler;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
+import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
+import gregtech.api.unification.stack.UnificationEntry;
 import gregtech.common.blocks.BlockMachineCasing;
 import gregtech.common.blocks.MetaBlocks;
+import gregtech.common.items.MetaItems;
+import gregtech.common.metatileentities.MetaTileEntities;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
@@ -50,6 +54,12 @@ public class ShapedCraftingRecipes{
     public static void gasCollector() {
         ModHandler.addShapedRecipe("gas_collector_MetaItem", TKCYAMetaItems.GAS_COLLECTOR.getStackForm(),
                 "SSS", "SwS", "SSS", 'S', IRON_BARS);
+    }
+
+    public static void drums() {
+
+        ModHandler.addShapedRecipe(true, "wooden_barrel", MetaTileEntities.WOODEN_DRUM.getStackForm(), "rSs", "PRP", "PRP", 'S', MetaItems.STICKY_RESIN.getStackForm(), 'P', "plankWood", 'R', new UnificationEntry(OrePrefix.stickLong, Materials.Iron));
+        ModHandler.addShapedRecipe(true, "bronze_drum", MetaTileEntities.BRONZE_DRUM.getStackForm(), " h ", "PRP", "PRP", 'P', new UnificationEntry(OrePrefix.plate, Materials.Bronze), 'R', new UnificationEntry(OrePrefix.stickLong, Materials.Bronze));
     }
 
 }
