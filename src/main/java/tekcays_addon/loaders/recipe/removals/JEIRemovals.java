@@ -83,7 +83,7 @@ public class JEIRemovals implements IModPlugin { {
         }
 
         if (TKCYAConfigHolder.storageOverhaul.removeOPTanks) {
-            for (int i = GTValues.LV; i < QUANTUM_TANK.length; i++) {
+            for (int i = 0; i < QUANTUM_TANK.length; i++) {
                 ingredientBlacklist.addIngredientToBlacklist(QUANTUM_TANK[i].getStackForm());
                 ingredientBlacklist.addIngredientToBlacklist(QUANTUM_CHEST[i].getStackForm());
             }

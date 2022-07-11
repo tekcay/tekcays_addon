@@ -95,9 +95,9 @@ public class AssemblerRecipeHandler {
     }
 
     public static void walls() {
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(plate, Steel, 4).outputs(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.STEEL_WALL)).duration(200).circuitMeta(4).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(plate, StainlessSteel, 4).outputs(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.STAINLESS_STEEL_WALL)).duration(200).circuitMeta(4).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(plate, GalvanizedSteel, 4).outputs(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL)).duration(200).circuitMeta(4).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(plate, Steel, 4).outputs(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.STEEL_WALL)).duration(200).circuitMeta(8).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(plate, StainlessSteel, 4).outputs(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.STAINLESS_STEEL_WALL)).duration(200).circuitMeta(8).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(plate, GalvanizedSteel, 4).outputs(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL)).duration(200).circuitMeta(8).buildAndRegister();
 
     }
 
