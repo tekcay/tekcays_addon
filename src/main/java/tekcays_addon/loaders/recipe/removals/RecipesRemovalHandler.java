@@ -113,7 +113,6 @@ public class RecipesRemovalHandler {
     }
 
     public static void removeShapedTreatedWoodRecipe(){
-
         ModHandler.removeRecipes(OreDictUnifier.get(OrePrefix.plank, TreatedWood));
     }
 
