@@ -76,6 +76,7 @@ public class TKCYARecipeLoader {
         if (storageOverhaul.enableMultiblockTanksOverhaul) {
             RecipesRemovalHandler.removeTanksAndValves();
             ShapedCraftingRecipes.tanksAndValves();
+            AssemblerRecipeHandler.walls();
         }
 
         CasingsLoader.init();

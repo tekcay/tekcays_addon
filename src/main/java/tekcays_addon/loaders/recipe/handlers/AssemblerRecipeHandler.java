@@ -6,6 +6,8 @@ import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.blocks.BlockMachineCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
+import tekcays_addon.common.blocks.TKCYAMetaBlocks;
+import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
@@ -89,6 +91,13 @@ public class AssemblerRecipeHandler {
         ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Polytetrafluoroethylene, 2).input(plate, Polytetrafluoroethylene, 4).outputs(TKCYAMetaTileEntities.POLYTETRAFLUOROETHYLENE_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
         ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Polypropylene, 2).input(plate, Polypropylene, 4).outputs(TKCYAMetaTileEntities.POLYPROPYLENE_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
         ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, HighDensityPolyethylene, 2).input(plate, HighDensityPolyethylene, 4).outputs(TKCYAMetaTileEntities.HIGH_DENSITY_POLYETHYLENE_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
+
+    }
+
+    public static void walls() {
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(plate, Steel, 4).outputs(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.STEEL_WALL)).duration(200).circuitMeta(4).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(plate, StainlessSteel, 4).outputs(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.STAINLESS_STEEL_WALL)).duration(200).circuitMeta(4).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(plate, GalvanizedSteel, 4).outputs(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL)).duration(200).circuitMeta(4).buildAndRegister();
 
     }
 
