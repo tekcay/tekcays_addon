@@ -42,6 +42,9 @@ public class TKCYAConfigHolder {
         @Config.Comment({"Removes most electrolysis recipes and replaces the GTCEu Electrolyzer with a new one", "Default: true"})
         public boolean enableElectrolysisOverhaul = true;
 
+        @Config.Comment({"Drums can handle smaller volume, but can me made from more materials."})
+        public boolean enableDrumsOverhaul = true;
+
     }
 
 

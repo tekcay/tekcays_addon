@@ -1,13 +1,16 @@
 package tekcays_addon.common.metatileentities;
 
 import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
+import gregtech.api.unification.material.Materials;
 import gregtech.api.util.GTUtility;
+import gregtech.common.metatileentities.storage.MetaTileEntityDrum;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.TekCaysAddon;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
 
 import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.metatileentities.multi.*;
 import tekcays_addon.common.metatileentities.steam.SteamCooler;
@@ -32,6 +35,16 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityPrimitiveBath PRIMITIVE_BATH;
     public static MetaTileEntityCrystallizer CRYSTALLIZER;
     public static MetaTileEntityAdvancedElectrolyzer ADVANCED_ELECTROLYZER;
+
+    // Drums
+    public static MetaTileEntityDrum WOODEN_DRUM;
+    public static MetaTileEntityDrum BRONZE_DRUM;
+    public static MetaTileEntityDrum STEEL_DRUM;
+    public static MetaTileEntityDrum ALUMINIUM_DRUM;
+
+    public static MetaTileEntityDrum GALVANIZED_STEEL_DRUM;
+    public static MetaTileEntityDrum STAINLESS_STEEL_DRUM;
+    public static MetaTileEntityDrum POLYTETRAFLUOROETHYLENE_DRUM;
 
 
 
@@ -87,6 +100,17 @@ public class TKCYAMetaTileEntities {
         if (TKCYAConfigHolder.miscOverhaul.enableElectrolysisOverhaul) {
             ADVANCED_ELECTROLYZER = registerMetaTileEntity(11025, new MetaTileEntityAdvancedElectrolyzer(tkcyaId("advanced_electrolyzer")));
         }
+
+
+
+        WOODEN_DRUM = registerMetaTileEntity(11026, new MetaTileEntityDrum(tkcyaId("drum.wood"), Materials.Wood, 4000));
+        BRONZE_DRUM = registerMetaTileEntity(11027, new MetaTileEntityDrum(tkcyaId("drum.bronze"), Materials.Bronze, 8000));
+        STEEL_DRUM = registerMetaTileEntity(11028, new MetaTileEntityDrum(tkcyaId("drum.steel"), Materials.Steel, 16000));
+        ALUMINIUM_DRUM = registerMetaTileEntity(11029, new MetaTileEntityDrum(tkcyaId("drum.aluminium"), Materials.Aluminium, 16000));
+        GALVANIZED_STEEL_DRUM= registerMetaTileEntity(11029, new MetaTileEntityDrum(tkcyaId("drum.galvanized_steel"), TKCYAMaterials.GalvanizedSteel, 16000));
+        STAINLESS_STEEL_DRUM = registerMetaTileEntity(11030, new MetaTileEntityDrum(tkcyaId("drum.stainless_steel"), Materials.StainlessSteel, 16000));
+        POLYTETRAFLUOROETHYLENE_DRUM = registerMetaTileEntity(11031, new MetaTileEntityDrum(tkcyaId("drum.polytetrafluoroethylene"), Materials.Polytetrafluoroethylene, 16000))
+
 
 
     }
