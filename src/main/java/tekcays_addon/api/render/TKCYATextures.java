@@ -71,7 +71,7 @@ public class TKCYATextures {
         STEAM_CASING = new SimpleOverlayRenderer("casings/large_multiblock_casing/steam_casing");
 
         //GT6 Style
-        STEEL_GT = new SimpleOverlayRenderer("gt6_style/steel_gt");
-        WHITE_GT = new SimpleOverlayRenderer("gt6_style/white_gt");
+        STEEL_GT = new SimpleOverlayRenderer("steel_gt");
+        WHITE_GT = new SimpleOverlayRenderer("white_gt");
     }
 }

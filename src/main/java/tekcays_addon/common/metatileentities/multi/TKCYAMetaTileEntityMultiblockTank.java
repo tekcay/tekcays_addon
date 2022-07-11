@@ -18,12 +18,10 @@ import gregtech.api.metatileentity.multiblock.MultiblockWithDisplayBase;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.unification.material.Material;
+import gregtech.api.unification.material.Materials;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
-import gregtech.common.blocks.BlockMetalCasing;
-import gregtech.common.blocks.BlockSteamCasing;
-import gregtech.common.blocks.MetaBlocks;
-import gregtech.common.metatileentities.MetaTileEntities;
+import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,6 +31,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidTank;
+import tekcays_addon.api.render.TKCYATextures;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -44,10 +43,10 @@ public class TKCYAMetaTileEntityMultiblockTank extends MultiblockWithDisplayBase
     private final Material material;
     private final IBlockState iBlockState;
     private final MetaTileEntity valve;
-    private final ICubeRenderer texture;
+    private final SimpleOverlayRenderer texture;
     private final int capacity;
 
-    public TKCYAMetaTileEntityMultiblockTank(ResourceLocation metaTileEntityId, Material material, IBlockState iBlockState, MetaTileEntity valve, ICubeRenderer texture, int capacity) {
+    public TKCYAMetaTileEntityMultiblockTank(ResourceLocation metaTileEntityId, Material material, IBlockState iBlockState, MetaTileEntity valve, SimpleOverlayRenderer texture, int capacity) {
         super(metaTileEntityId);
         this.material = material;
         this.iBlockState = iBlockState;
@@ -105,6 +104,7 @@ public class TKCYAMetaTileEntityMultiblockTank extends MultiblockWithDisplayBase
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
+        //if (material.equals(Materials.TreatedWood)) return Textures.WOOD_WALL;
         return texture;
     }
 
@@ -130,14 +130,15 @@ public class TKCYAMetaTileEntityMultiblockTank extends MultiblockWithDisplayBase
                 .bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 0);
     }
 
-    /*
+/*
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
         getFrontOverlay().renderSided(getFrontFacing(), renderState, translation, pipeline);
     }
 
-     */
+ */
+
 
     @Nonnull
     @Override
