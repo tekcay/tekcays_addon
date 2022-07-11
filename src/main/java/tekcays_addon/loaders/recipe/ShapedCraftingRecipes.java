@@ -63,19 +63,60 @@ public class ShapedCraftingRecipes{
 
     public static void drums() {
 
-        ModHandler.addShapedRecipe(true, "drum_wood", TKCYAMetaTileEntities.WOODEN_DRUM.getStackForm(), "rSs", "PRP", "PRP", 'S', MetaItems.STICKY_RESIN.getStackForm(), 'P', "plankWood", 'R', new UnificationEntry(OrePrefix.stickLong, Materials.Iron));
-        ModHandler.addShapedRecipe(true, "drum_bronze", TKCYAMetaTileEntities.BRONZE_DRUM.getStackForm(), " w ", "PRP", "PRP", 'P', new UnificationEntry(OrePrefix.plate, Materials.Bronze), 'R', new UnificationEntry(OrePrefix.stickLong, Materials.Bronze));
+        ModHandler.addShapedRecipe(true, "drum_wood", TKCYAMetaTileEntities.WOODEN_DRUM.getStackForm(),
+                "rSs", "PRP", "PRP",
+                'S', MetaItems.STICKY_RESIN.getStackForm(),
+                'P', "plankWood", 'R', new UnificationEntry(OrePrefix.stickLong, Materials.Iron));
+
+        ModHandler.addShapedRecipe(true, "drum_bronze", TKCYAMetaTileEntities.BRONZE_DRUM.getStackForm(),
+                " w ", "PRP", "PRP",
+                'P', new UnificationEntry(OrePrefix.plate, Materials.Bronze),
+                'R', new UnificationEntry(OrePrefix.stickLong, Materials.Bronze));
 
     }
 
     public static void tanksAndValves() {
 
-        ModHandler.addShapedRecipe(true, "wood_tank", TKCYAMetaTileEntities.WOODEN_TANK.getStackForm(), " R ", "rCs", " R ", 'R', new UnificationEntry(OrePrefix.ring, Materials.Lead), 'C', MetaBlocks.STEAM_CASING.getItemVariant(WOOD_WALL));
-        ModHandler.addShapedRecipe(true, "steel_tank", TKCYAMetaTileEntities.STEEL_TANK.getStackForm(), " R ", "hCw", " R ", 'R', new UnificationEntry(OrePrefix.ring, Materials.Steel), 'C', TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.STEEL_WALL));
-        ModHandler.addShapedRecipe(true, "galvanized_steel_tank", TKCYAMetaTileEntities.GALVANIZED_STEEL_TANK.getStackForm(), " R ", "hCw", " R ", 'R', new UnificationEntry(OrePrefix.ring, TKCYAMaterials.GalvanizedSteel), 'C', TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL));
+        ModHandler.addShapedRecipe(true, "wood_tank", TKCYAMetaTileEntities.WOODEN_TANK.getStackForm(),
+                " R ", "rCs", " R ",
+                'R', new UnificationEntry(OrePrefix.ring, Materials.Lead),
+                'C', MetaBlocks.STEAM_CASING.getItemVariant(WOOD_WALL));
 
-        //ModHandler.addShapedRecipe(true, "wood_tank_valve", TKCYAMetaTileEntities.WOODEN_TANK_VALVE.getStackForm(), " R ", "rCs", " O ", 'O', new UnificationEntry(OrePrefix.rotor, Materials.Lead), 'R', new UnificationEntry(OrePrefix.ring, Materials.Lead), 'C', MetaBlocks.STEAM_CASING.getItemVariant(WOOD_WALL));
-        //ModHandler.addShapedRecipe(true, "steel_tank_valve", TKCYAMetaTileEntities.STEEL_TANK_VALVE.getStackForm(), " R ", "hCw", " O ", 'O', new UnificationEntry(OrePrefix.rotor, Materials.Steel), 'R', new UnificationEntry(OrePrefix.ring, Materials.Steel), 'C', MetaBlocks.METAL_CASING.getItemVariant(STEEL_SOLID));
+        ModHandler.addShapedRecipe(true, "steel_tank", TKCYAMetaTileEntities.STEEL_TANK.getStackForm(),
+                " R ", "hCw", " R ",
+                'R', new UnificationEntry(OrePrefix.ring, Materials.Steel),
+                'C', TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.STEEL_WALL));
+
+        ModHandler.addShapedRecipe(true, "stainless_steel_tank", TKCYAMetaTileEntities.STAINLESS_STEEL_TANK.getStackForm(),
+                " R ", "hCw", " R ",
+                'R', new UnificationEntry(OrePrefix.ring, Materials.StainlessSteel),
+                'C', TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.STAINLESS_STEEL_WALL));
+
+        ModHandler.addShapedRecipe(true, "galvanized_steel_tank", TKCYAMetaTileEntities.GALVANIZED_STEEL_TANK.getStackForm(),
+                " R ", "hCw", " R ",
+                'R', new UnificationEntry(OrePrefix.ring, TKCYAMaterials.GalvanizedSteel),
+                'C', TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL));
+
+
+
+        ModHandler.addShapedRecipe(true, "tank_valve.steel", TKCYAMetaTileEntities.STEEL_TANK_VALVE.getStackForm(),
+                " R ", "hCw", " O ",
+                'O', new UnificationEntry(OrePrefix.rotor, Materials.Steel),
+                'R', new UnificationEntry(OrePrefix.ring, Materials.Steel), 'C', TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.STEEL_WALL));
+
+        ModHandler.addShapedRecipe(true, "tank_valve.stainless_steel",
+                TKCYAMetaTileEntities.STAINLESS_STEEL_TANK_VALVE.getStackForm(),
+                " R ", "hCw", " O ",
+                'O', new UnificationEntry(OrePrefix.rotor, Materials.StainlessSteel),
+                'R', new UnificationEntry(OrePrefix.ring, Materials.StainlessSteel),
+                'C', TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.STAINLESS_STEEL_WALL));
+
+        ModHandler.addShapedRecipe(true, "tank_valve.stainless_steel",
+                TKCYAMetaTileEntities.GALVANIZED_STEEL_TANK_VALVE.getStackForm(),
+                " R ", "hCw", " O ",
+                'O', new UnificationEntry(OrePrefix.rotor, TKCYAMaterials.GalvanizedSteel),
+                'R', new UnificationEntry(OrePrefix.ring, TKCYAMaterials.GalvanizedSteel),
+                'C', TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL));
 
 
 

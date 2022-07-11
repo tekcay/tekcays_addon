@@ -26,6 +26,7 @@ import gregtech.api.unification.material.properties.FluidPipeProperties;
 import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
+import gregtech.common.metatileentities.MetaTileEntities;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,6 +42,7 @@ import net.minecraftforge.fluids.FluidTank;
 import org.lwjgl.input.Keyboard;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -51,14 +53,12 @@ public class TKCYAMetaTileEntityMultiblockTank extends MultiblockWithDisplayBase
 
     private final Material material;
     private final IBlockState iBlockState;
-    private final MetaTileEntity valve;
     private final int capacity;
 
-    public TKCYAMetaTileEntityMultiblockTank(ResourceLocation metaTileEntityId, Material material, IBlockState iBlockState, MetaTileEntity valve, int capacity) {
+    public TKCYAMetaTileEntityMultiblockTank(ResourceLocation metaTileEntityId, Material material, IBlockState iBlockState, int capacity) {
         super(metaTileEntityId);
         this.material = material;
         this.iBlockState = iBlockState;
-        this.valve = valve;
         this.capacity = capacity;
         initializeAbilities();
     }
@@ -84,7 +84,7 @@ public class TKCYAMetaTileEntityMultiblockTank extends MultiblockWithDisplayBase
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new TKCYAMetaTileEntityMultiblockTank(metaTileEntityId, material, iBlockState, valve, capacity);
+        return new TKCYAMetaTileEntityMultiblockTank(metaTileEntityId, material, iBlockState, capacity);
     }
 
     @Override
@@ -109,7 +109,11 @@ public class TKCYAMetaTileEntityMultiblockTank extends MultiblockWithDisplayBase
     }
 
     private MetaTileEntity getValve() {
-        return valve;
+        if (material.equals(Materials.TreatedWood)) return MetaTileEntities.WOODEN_TANK_VALVE;
+        if (material.equals(Materials.Steel)) return TKCYAMetaTileEntities.STEEL_TANK_VALVE;
+        if (material.equals(TKCYAMaterials.GalvanizedSteel)) return TKCYAMetaTileEntities.GALVANIZED_STEEL_TANK_VALVE;
+        if (material.equals(Materials.StainlessSteel)) return TKCYAMetaTileEntities.STAINLESS_STEEL_TANK_VALVE;
+        return null;
     }
 
     @Override

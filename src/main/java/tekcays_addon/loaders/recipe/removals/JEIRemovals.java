@@ -66,16 +66,23 @@ public class JEIRemovals implements IModPlugin { {
             }
         }
 
-        if (TKCYAConfigHolder.miscOverhaul.enableDrumsOverhaul) {
+        if (TKCYAConfigHolder.storageOverhaul.enableDrumsOverhaul) {
             ingredientBlacklist.addIngredientToBlacklist(WOODEN_DRUM.getStackForm());
             ingredientBlacklist.addIngredientToBlacklist(BRONZE_DRUM.getStackForm());
             ingredientBlacklist.addIngredientToBlacklist(STEEL_DRUM.getStackForm());
             ingredientBlacklist.addIngredientToBlacklist(ALUMINIUM_DRUM.getStackForm());
             ingredientBlacklist.addIngredientToBlacklist(STAINLESS_STEEL_DRUM.getStackForm());
+        }
 
+        if (TKCYAConfigHolder.storageOverhaul.enableMultiblockTanksOverhaul) {
             ingredientBlacklist.addIngredientToBlacklist(STEEL_TANK.getStackForm());
             ingredientBlacklist.addIngredientToBlacklist(WOODEN_TANK.getStackForm());
 
+            ingredientBlacklist.addIngredientToBlacklist(STEEL_TANK_VALVE.getStackForm());
+        }
+
+        if (TKCYAConfigHolder.storageOverhaul.removeOPTanks) {
+            ingredientBlacklist.addIngredientToBlacklist(QUANTUM_TANK);
         }
 
 

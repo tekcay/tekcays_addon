@@ -66,10 +66,15 @@ public class TKCYARecipeLoader {
             GTRecipeHandler.removeAllRecipes(RecipeMaps.ELECTROLYZER_RECIPES);
         }
 
-        if (miscOverhaul.enableDrumsOverhaul) {
-            RecipesRemovalHandler.removeDrumsAndTanks();
+        if (storageOverhaul.enableDrumsOverhaul) {
+            RecipesRemovalHandler.removeDrums();
             ShapedCraftingRecipes.drums();
             AssemblerRecipeHandler.drums();
+        }
+
+        if (storageOverhaul.enableMultiblockTanksOverhaul) {
+            RecipesRemovalHandler.removeTanksAndValves();
+            ShapedCraftingRecipes.tanksAndValves();
         }
 
         CasingsLoader.init();

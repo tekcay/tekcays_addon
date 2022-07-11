@@ -18,6 +18,10 @@ public class TKCYAConfigHolder {
     @Config.Comment("Config options applying to all TKCYA Multiblocks")
     @Config.Name("Melting overhaul")
     public static EnergyOverhaul energyOverhaul = new EnergyOverhaul();
+    @Config.Comment("Config options applying to all TKCYA Multiblocks")
+    @Config.Name("Storage overhaul")
+    public static StorageOverhaul storageOverhaul = new StorageOverhaul();
+
 
     public static class MiscOverhaul {
 
@@ -42,11 +46,7 @@ public class TKCYAConfigHolder {
         @Config.Comment({"Removes most electrolysis recipes and replaces the GTCEu Electrolyzer with a new one", "Default: true"})
         public boolean enableElectrolysisOverhaul = true;
 
-        @Config.Comment({"Drums can handle smaller volume, but can me made from more materials."})
-        public boolean enableDrumsOverhaul = true;
 
-        @Config.Comment({"Multiblock Tanks can handle smaller volume, but can me made from more materials."})
-        public boolean enableMultiblockTanksOverhaul = true;
 
     }
 
@@ -73,6 +73,18 @@ public class TKCYAConfigHolder {
 
         @Config.Comment({"Gas are burned in the large boilers", "Default: true"})
         public boolean disableGasTurbinesOverhaul = true;
+
+    }
+
+    public static class StorageOverhaul {
+        @Config.Comment({"Drums can handle smaller volume, but can me made from more materials."})
+        public boolean enableDrumsOverhaul = true;
+
+        @Config.Comment({"Multiblock Tanks can handle smaller volume, but can me made from more materials."})
+        public boolean enableMultiblockTanksOverhaul = true;
+
+        @Config.Comment({"Remove SuperTanks and Quantum Tanks"})
+        public boolean removeOPTanks = true;
 
     }
 }

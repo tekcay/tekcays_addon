@@ -119,13 +119,16 @@ public class RecipesRemovalHandler {
         ModHandler.removeRecipes(OreDictUnifier.get(OrePrefix.plank, TreatedWood));
     }
 
-    public static void removeDrumsAndTanks(){
+    public static void removeDrums(){
         ModHandler.removeRecipes(MetaTileEntities.WOODEN_DRUM.getStackForm());
         ModHandler.removeRecipes(MetaTileEntities.BRONZE_DRUM.getStackForm());
+    }
 
+    public static void removeTanksAndValves() {
         ModHandler.removeRecipes(MetaTileEntities.WOODEN_TANK.getStackForm());
         ModHandler.removeRecipes(MetaTileEntities.STEEL_TANK.getStackForm());
 
+        ModHandler.removeRecipes(MetaTileEntities.STEEL_TANK_VALVE.getStackForm());
     }
 
 
