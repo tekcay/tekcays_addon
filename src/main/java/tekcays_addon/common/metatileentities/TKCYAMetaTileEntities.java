@@ -141,11 +141,12 @@ public class TKCYAMetaTileEntities {
                     250000));
 
             GALVANIZED_STEEL_TANK = registerMetaTileEntity(11042, new TKCYAMetaTileEntityMultiblockTank(tkcyaId("multiblock.tank.galvanized_steel"),
-                    Materials.Steel,
+                    TKCYAMaterials.GalvanizedSteel,
                     TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL),
                     STEEL_TANK_VALVE,
                     TKCYATextures.WHITE_GT,
                     250000));
+
         }
 
     }

@@ -130,11 +130,14 @@ public class TKCYAMetaTileEntityMultiblockTank extends MultiblockWithDisplayBase
                 .bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 0);
     }
 
+    /*
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
         getFrontOverlay().renderSided(getFrontFacing(), renderState, translation, pipeline);
     }
+
+     */
 
     @Nonnull
     @Override

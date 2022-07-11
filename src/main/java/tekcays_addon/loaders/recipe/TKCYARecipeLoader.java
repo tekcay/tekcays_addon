@@ -67,6 +67,7 @@ public class TKCYARecipeLoader {
         }
 
         if (miscOverhaul.enableDrumsOverhaul) {
+            RecipesRemovalHandler.removeDrumsAndTanks();
             ShapedCraftingRecipes.drums();
             AssemblerRecipeHandler.drums();
         }

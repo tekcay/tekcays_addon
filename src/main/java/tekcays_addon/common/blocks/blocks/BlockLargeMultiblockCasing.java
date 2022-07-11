@@ -47,7 +47,7 @@ public class BlockLargeMultiblockCasing extends VariantBlock<BlockLargeMultibloc
         MONEL_CASING("monel_casing"),
 
         STEEL_WALL("steel_wall"),
-        GALVANIZED_STEEL_WALL("galvanizd_steel_wall");
+        GALVANIZED_STEEL_WALL("galvanized_steel_wall");
 
         private final String name;
 

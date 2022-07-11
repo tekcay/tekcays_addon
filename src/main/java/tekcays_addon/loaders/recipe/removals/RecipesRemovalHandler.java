@@ -11,8 +11,10 @@ import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.blocks.BlockMachineCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
+import gregtech.common.metatileentities.MetaTileEntities;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.Mod;
 
 import static gregtech.api.unification.material.Materials.*;
 
@@ -109,11 +111,20 @@ public class RecipesRemovalHandler {
         ModHandler.removeRecipes(MetaItems.ROBOT_ARM_IV.getStackForm());
         ModHandler.removeRecipes(MetaItems.FLUID_REGULATOR_IV.getStackForm());
         ModHandler.removeRecipes(MetaItems.CONVEYOR_MODULE_IV.getStackForm());
-        
+
     }
 
     public static void removeShapedTreatedWoodRecipe(){
         ModHandler.removeRecipes(OreDictUnifier.get(OrePrefix.plank, TreatedWood));
+    }
+
+    public static void removeDrumsAndTanks(){
+        ModHandler.removeRecipes(MetaTileEntities.WOODEN_DRUM.getStackForm());
+        ModHandler.removeRecipes(MetaTileEntities.BRONZE_DRUM.getStackForm());
+
+        ModHandler.removeRecipes(MetaTileEntities.WOODEN_TANK.getStackForm());
+        ModHandler.removeRecipes(MetaTileEntities.STEEL_TANK.getStackForm());
+
     }
 
 

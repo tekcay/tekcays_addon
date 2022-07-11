@@ -8,6 +8,18 @@
   },
   "variants": {
     "variant": {
+      "steel_wall": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/casings/large_multiblock_casing/steel_wall"
+        }
+      },
+      "galvanized_steel_wall": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/casings/large_multiblock_casing/galvanized_steel_wall"
+        }
+      },
       "monel_casing": {
         "model": "minecraft:cube_all",
         "textures": {
