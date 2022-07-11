@@ -73,6 +73,9 @@ public class JEIRemovals implements IModPlugin { {
             ingredientBlacklist.addIngredientToBlacklist(ALUMINIUM_DRUM.getStackForm());
             ingredientBlacklist.addIngredientToBlacklist(STAINLESS_STEEL_DRUM.getStackForm());
 
+            ingredientBlacklist.addIngredientToBlacklist(STEEL_TANK.getStackForm());
+            ingredientBlacklist.addIngredientToBlacklist(WOODEN_TANK.getStackForm());
+
         }
 
 

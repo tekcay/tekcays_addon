@@ -17,6 +17,8 @@ import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.common.TKCYAConfigHolder;
+import tekcays_addon.common.blocks.TKCYAMetaBlocks;
+import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.metatileentities.multi.*;
 import tekcays_addon.common.metatileentities.steam.SteamCooler;
 
@@ -54,6 +56,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityDrum HIGH_DENSITY_POLYETHYLENE_DRUM;
     public static TKCYAMetaTileEntityMultiblockTank WOODEN_TANK;
     public static TKCYAMetaTileEntityMultiblockTank STEEL_TANK;
+    public static TKCYAMetaTileEntityMultiblockTank GALVANIZED_STEEL_TANK;
 
 
 
@@ -132,12 +135,18 @@ public class TKCYAMetaTileEntities {
 
             STEEL_TANK = registerMetaTileEntity(11041, new TKCYAMetaTileEntityMultiblockTank(tkcyaId("multiblock.tank.steel"),
                     Materials.Steel,
-                    MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.STEEL_SOLID),
+                    TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.STEEL_WALL),
                     STEEL_TANK_VALVE,
-                    Textures.SOLID_STEEL_CASING,
+                    TKCYATextures.STEEL_GT,
+                    250000));
+
+            GALVANIZED_STEEL_TANK = registerMetaTileEntity(11042, new TKCYAMetaTileEntityMultiblockTank(tkcyaId("multiblock.tank.galvanized_steel"),
+                    Materials.Steel,
+                    TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL),
+                    STEEL_TANK_VALVE,
+                    TKCYATextures.WHITE_GT,
                     250000));
         }
-
 
     }
 
