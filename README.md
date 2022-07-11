@@ -8,6 +8,7 @@ TKCYA requires [**GregTech CE: Unofficial**](https://github.com/GregTechCEu/Greg
 ## Content:
 * Magntic overhaul : magnetic materials are made with magnetite in a new 2-slots polarizer
 * Electrolysis overhaul : most recipes were removed, replaced by new ones that need electrodes which take damage
+* Storage overhaul : all of the quantum chest and tanks/super tanks are gone, and drums and multiblock tanks are nerfed. Multiblock tanks follow drum behavior and can only handle specific fluid depending upon the material they are made of. More drums and multiblock tanks can be made, e.g. in Galvanized Steel.
 
 ### Chains:
 * Wire coils from Mica ([**Gregicality Legacy**](https://github.com/GregTechCEu/gregicality-legacy))
