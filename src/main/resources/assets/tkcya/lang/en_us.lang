@@ -47,7 +47,16 @@ tkcya.multiblock.alloying_crucible.description=A multiblock for alloying molten 
 
 
 
-# hatches
+# drums
+tkcya.drum.wood=Wooden Drum
+tkcya.drum.bronze=Bronze Drum
+tkcya.drum.steel=Steel Drum
+tkcya.drum.aluminium=Aluminium Drum
+tkcya.drum.galvanized_steel=Galvanized Steel Drum
+tkcya.drum.stainless_steel=Stainless Steel Drum
+tkcya.drum.polytetrafluoroethylene=Teflon Drum
+tkcya.drum.polypropylene=Polypropylene Drum
+tkcya.drum.high_density_polyethylene=HDPE Drum
 
 # casings
 tile.large_multiblock_casing.monel_casing.name=Monel Casing
@@ -100,6 +109,10 @@ fluid.fuel.tooltip=To be used in the fuel consuming machines
 ##Alloys
 material.galvanized_steel=Galvanized Steel
 material.monel=Monel
+
+##Polymers
+material.high_density_polyethylene=High Density Polyethylene (HDPE)
+material.polypropylene=Polypropylene
 
 
 material.hydrogen_fluorine=Hydrogen Fluorine
