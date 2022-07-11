@@ -45,21 +45,24 @@ tkcya.multiblock.primitive_melter.description=A multiblock for melting ores and 
 tkcya.multiblock.electric_melter.description=A multiblock for melting ores and pure materials using electricity
 tkcya.multiblock.alloying_crucible.description=A multiblock for alloying molten metals
 
+# multiblock tank
 
+tkcya.machine.multiblock.tank.wood.name=Wooden Tank
+tkcya.machine.multiblock.steel.wood.name=Wooden Steel
 
 # drums
-tkcya.drum.wood=Wooden Drum
-tkcya.drum.bronze=Bronze Drum
-tkcya.drum.steel=Steel Drum
-tkcya.drum.aluminium=Aluminium Drum
-tkcya.drum.galvanized_steel=Galvanized Steel Drum
-tkcya.drum.stainless_steel=Stainless Steel Drum
-tkcya.drum.polytetrafluoroethylene=Teflon Drum
-tkcya.drum.polypropylene=Polypropylene Drum
-tkcya.drum.high_density_polyethylene=HDPE Drum
+tkcya.machine.drum.wood.name=Wooden Drum
+tkcya.machine.drum.bronze.name=Bronze Drum
+tkcya.machine.drum.steel.name=Steel Drum
+tkcya.machine.drum.aluminium.name=Aluminium Drum
+tkcya.machine.drum.galvanized_steel.name=Galvanized Steel Drum
+tkcya.machine.drum.stainless_steel.name=Stainless Steel Drum
+tkcya.machine.drum.polytetrafluoroethylene.name=Teflon Drum
+tkcya.machine.drum.polypropylene.name=Polypropylene Drum
+tkcya.machine.drum.high_density_polyethylene.name=HDPE Drum
 
 # casings
-tile.large_multiblock_casing.monel_casing.name=Monel Casing
+tile.large_multiblock_casing.monel_casing.name.name=Monel Casing
 
 
 

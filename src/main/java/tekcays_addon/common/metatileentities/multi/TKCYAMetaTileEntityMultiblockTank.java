@@ -67,7 +67,7 @@ public class TKCYAMetaTileEntityMultiblockTank extends MultiblockWithDisplayBase
     private List<FluidTank> makeFluidTanks() { //TODO
         List<FluidTank> fluidTankList = new ArrayList<>(1);
         fluidTankList.add(new FilteredFluidHandler(capacity).setFillPredicate(
-                fluidStack -> isMetal || (!fluidStack.getFluid().isGaseous() && fluidStack.getFluid().getTemperature() <= 325)
+                fluidStack -> (!fluidStack.getFluid().isGaseous() && fluidStack.getFluid().getTemperature() <= 325)
         ));
         return fluidTankList;
     }

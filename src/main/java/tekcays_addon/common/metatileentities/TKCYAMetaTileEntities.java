@@ -134,7 +134,7 @@ public class TKCYAMetaTileEntities {
                     Materials.Steel,
                     MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.STEEL_SOLID),
                     STEEL_TANK_VALVE,
-                    Textures.WOOD_WALL,
+                    Textures.SOLID_STEEL_CASING,
                     250000));
         }
 
