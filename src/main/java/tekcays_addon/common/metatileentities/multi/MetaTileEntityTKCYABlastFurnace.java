@@ -83,13 +83,18 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         this.recipeMapWorkable = new TKCYABlastFurnaceLogic(this);
 
         temp = 300;
+
         inputFluidMultiplier = 0;
         inputItemMultiplier = 0;
+
         inputItemSlot = 0;
+
         itemHeatingValue = 0;
         fluidHeatingValue = 0;
+
         hasAcceptedFluid = false;
         hasAcceptedItem = false;
+
         hasEnoughGas = false;
         hasEnoughItem = false;
     }
@@ -182,7 +187,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         for (int i = 0;  i < coalOrCokeImport.getSlots(); i++) {
             ItemStack input = coalOrCokeImport.getStackInSlot(i);
             for (ItemStack stack : getItemCostMap().keySet()) {  //ACCEPTED_INPUT_ITEMS
-                if (ModHandler.getFuelValue(input) > 0) {
+                if (ModHandler.getFuelValue(input) > 0) { //TODO lacks a condition to check if input = stack
                     inputItemSlot = i;
                     inputItemStack = stack;
                     hasAcceptedItem = true;
@@ -225,7 +230,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     private boolean hasEnoughInputGas(int temperature) {
         if (!hasAcceptedFluid) return false;
         return fluidToDrain.amount >= getTemperatureGasConsumption(temperature) || fluidHeatingValue >= getTemperatureGasConsumption(temperature);
-        //return fluidHeatingValue >= getTemperatureGasConsumption(temperature);
     }
 
     private boolean hasEnoughInputItem(int temperature) {
