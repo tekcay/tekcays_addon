@@ -68,6 +68,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     private IFluidTank tankToDrain;
 
     private ItemStack inputItemStack;
+    private int gasConsum, itemConsum;
 
     public void setIncreaseTemp() {
         increaseTemp = 5;
@@ -122,6 +123,9 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             TKCYALog.logger.info("fluidToDrain = " + tankToDrain.getFluid().getLocalizedName());
         }
 
+        TKCYALog.logger.info("FluidHeatingValue = " + fluidHeatingValue);
+        TKCYALog.logger.info("ItemHeatingValue = " + itemHeatingValue);
+
 
         ///// Case: No fuel or not enough fuel, and temp can be decreased
         if (temp - increaseTemp >= 300 && !hasBothFluidAndItemFuel) {
@@ -135,19 +139,16 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         ///// Case: temp > targetTemp and has fuel
         if (temp >= targetTemp && hasBothFluidAndItemFuel) {
             canAchieveTargetTemp = true;
-            int consum;
 
             if (getOffsetTimer() % 20 == 0) {
 
                 //Gas
-                consum = getTemperatureGasConsumption(temp);
-                if (hasEnoughGas) drainGas(temp);
-                else fluidHeatingValue -= consum;
+                if (hasEnoughGas) drainGas(temp + increaseTemp);
+                else fluidHeatingValue -= gasConsum;
 
                 //Item
-                consum = getTemperatureItemConsumption(temp);
-                if (hasAcceptedItem) drainItem(temp);
-                else itemHeatingValue -= consum;
+                if (hasAcceptedItem) drainItem(temp + increaseTemp);
+                else itemHeatingValue -= itemConsum;
             }
             return;
         }
@@ -156,19 +157,16 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
         ///// Case: temp can be increased
         if (hasBothFluidAndItemFuel) {
-            int consum;
             canAchieveTargetTemp = true;
             if (getOffsetTimer() % 20 == 0) {
 
                 //Gas
-                consum = getTemperatureGasConsumption(temp + increaseTemp);
                 if (hasEnoughGas) drainGas(temp + increaseTemp);
-                else fluidHeatingValue -= consum;
+                else fluidHeatingValue -= gasConsum;
 
                 //Item
-                consum = getTemperatureItemConsumption(temp + increaseTemp);
                 if (hasAcceptedItem) drainItem(temp + increaseTemp);
-                else itemHeatingValue -= consum;
+                else itemHeatingValue -= itemConsum;
 
                 setTemp(temp + increaseTemp);
             }
@@ -177,26 +175,29 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     private void checkConditions(int temperature) {
 
+        gasConsum = getTemperatureGasConsumption(temperature);
+        itemConsum = getTemperatureItemConsumption(temperature);
+
         if (hasAcceptedFluid) {
             setFluidMultiplier();
-            hasEnoughGas = hasEnoughInputGas(temperature);
+            hasEnoughGas = tankToDrain.getFluidAmount() >= gasConsum;
         } else {
             doConvertRemainingGas();
-            hasEnoughFluidHeatingValue = hasEnoughFluidHeatingValue(temperature);
+            hasEnoughFluidHeatingValue = fluidHeatingValue >= gasConsum;
         }
 
         if (hasAcceptedItem) {
             setItemMultiplier();
             hasEnoughItem = true;
-        } else hasEnoughItemHeatingValue = hasEnoughItemHeatingValue(temperature);
+        } else hasEnoughItemHeatingValue = itemHeatingValue >= itemConsum;
 
         hasBothFluidAndItemFuel = hasBothFluidAndItemFuel();
     }
 
 
-    /** //TODO Update
-     * Gets the multiplier related to the {@code FluidStack} and the {@code ItemStack} that are present in the
-     * corresponding inputs, provided they are considered as fuels.
+    /**
+     * Gets the multiplier related to the {@code FluidStack} that is present in the
+     * corresponding input, provided it is considered as a fuel.
      * <br /><br />
      *
      */
@@ -206,6 +207,12 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 .forEach(e -> inputFluidMultiplier = e.getValue());
     }
 
+    /**
+     * Gets the multiplier related to the {@code FluidStack} that is present in the
+     * corresponding input, provided it is considered as a fuel.
+     * <br /><br />
+     *
+     */
     public void setItemMultiplier() {
         getItemCostMap().entrySet().stream()
                 .filter(e -> inputItemStack.isItemEqual(e.getKey()))
@@ -218,7 +225,9 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         for (IFluidTank fluidTank : airOrFlueGasImport.getFluidTanks()) {
 
             for (Fluid fluid : getGasCostMap().keySet()) { //ACCEPTED_INPUT_FLUIDS
-                if (fluidTank.getFluid().getFluid().equals(fluid)) {
+                FluidStack fs = fluidTank.getFluid();
+                if (fs == null) continue;
+                if (fs.getFluid().equals(fluid)) {
                     tankToDrain = fluidTank;
                     hasAcceptedFluid = true;
                     return true;
@@ -259,20 +268,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             if (input.isItemEqual((TKCYAMetaItems.GAS_COLLECTOR).getStackForm())) return true;
         }
         return false;
-    }
-
-
-    private boolean hasEnoughInputGas(int temperature) {
-        if (!hasAcceptedFluid) return false;
-        return tankToDrain.getFluidAmount() >= getTemperatureGasConsumption(temperature);
-    }
-
-    private boolean hasEnoughFluidHeatingValue(int temperature) {
-        return fluidHeatingValue >= getTemperatureGasConsumption(temperature);
-    }
-
-    private boolean hasEnoughItemHeatingValue(int temperature) {
-        return itemHeatingValue >= getTemperatureItemConsumption(temperature);
     }
 
     private void doConvertRemainingGas() {
