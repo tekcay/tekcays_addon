@@ -38,7 +38,6 @@ import tekcays_addon.api.metatileentity.mutiblock.RecipeMapMultiblockNoEnergyCon
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.recipes.builders.TemperatureRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.api.utils.MiscMethods;
 import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
@@ -112,21 +111,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         hasAcceptedFluid = hasAcceptedFluid();
         hasAcceptedItem = hasAcceptedItem();
 
-        if (hasAcceptedFluid) {
-            setFluidMultiplier();
-            hasEnoughGas = hasEnoughInputGas(temp);
-        } else {
-            doConvertRemainingGas();
-            hasEnoughFluidHeatingValue = hasEnoughFluidHeatingValue(temp);
-        }
-
-        if (hasAcceptedItem) {
-            setItemMultiplier();
-            hasEnoughItem = true;
-        } else hasEnoughItemHeatingValue = hasEnoughItemHeatingValue(temp);
-
-        hasBothFluidAndItemFuel = hasBothFluidAndItemFuel();
-
+        checkConditions(temp);
 
         TKCYALog.logger.info("itemMultiplier = " + inputItemMultiplier);
         if (inputItemStack != null) {
@@ -167,22 +152,46 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             return;
         }
 
+        checkConditions(temp + increaseTemp);
 
         ///// Case: temp can be increased
         if (hasBothFluidAndItemFuel) {
-            int consum = getTemperatureGasConsumption(temp + increaseTemp);
+            int consum;
             canAchieveTargetTemp = true;
             if (getOffsetTimer() % 20 == 0) {
-                if (tankToDrain.getFluidAmount() >= consum) drainGas(temp + increaseTemp);
-                if (fluidHeatingValue >= consum) fluidHeatingValue -= consum;
-                if (tankToDrain.getFluidAmount() + fluidHeatingValue >= consum)
 
-                    drainItem(temp + increaseTemp);
+                //Gas
+                consum = getTemperatureGasConsumption(temp + increaseTemp);
+                if (hasEnoughGas) drainGas(temp + increaseTemp);
+                else fluidHeatingValue -= consum;
+
+                //Item
+                consum = getTemperatureItemConsumption(temp + increaseTemp);
+                if (hasAcceptedItem) drainItem(temp + increaseTemp);
+                else itemHeatingValue -= consum;
+
                 setTemp(temp + increaseTemp);
             }
         }
     }
 
+    private void checkConditions(int temperature) {
+
+        if (hasAcceptedFluid) {
+            setFluidMultiplier();
+            hasEnoughGas = hasEnoughInputGas(temperature);
+        } else {
+            doConvertRemainingGas();
+            hasEnoughFluidHeatingValue = hasEnoughFluidHeatingValue(temperature);
+        }
+
+        if (hasAcceptedItem) {
+            setItemMultiplier();
+            hasEnoughItem = true;
+        } else hasEnoughItemHeatingValue = hasEnoughItemHeatingValue(temperature);
+
+        hasBothFluidAndItemFuel = hasBothFluidAndItemFuel();
+    }
 
 
     /** //TODO Update
