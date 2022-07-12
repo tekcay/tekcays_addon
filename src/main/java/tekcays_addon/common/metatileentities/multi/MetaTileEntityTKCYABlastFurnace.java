@@ -470,7 +470,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         super.writeToNBT(data);
         data.setInteger("temp", this.temp);
-        /*
         data.setInteger("targetTemp", this.targetTemp);
         data.setBoolean("canAchieveTargetTemp", this.canAchieveTargetTemp);
         data.setBoolean("hasEnoughGas", this.hasEnoughGas);
@@ -478,8 +477,9 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         data.setBoolean("hasBothFluidAndItemFuel", this.hasBothFluidAndItemFuel);
         data.setBoolean("hasAcceptedFluid", this.hasAcceptedFluid);
         data.setBoolean("hasAcceptedItem", this.hasAcceptedItem);
+        data.setBoolean("hasEnoughFluidHeatingValue", this.hasEnoughFluidHeatingValue);
+        data.setBoolean("hasEnoughItemHeatingValue", this.hasEnoughItemHeatingValue);
 
-         */
         return data;
     }
 
@@ -504,39 +504,54 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     public void readFromNBT(NBTTagCompound data) {
         super.readFromNBT(data);
         this.temp = data.getInteger("temp");
-        /*
+
         this.targetTemp = data.getInteger("targetTemp");
         this.canAchieveTargetTemp = data.getBoolean("canAchieveTargetTemp");
         this.hasEnoughGas = data.getBoolean("hasEnoughGas");
         this.hasEnoughItem = data.getBoolean("hasEnoughItem");
 
-         */
+        this.hasBothFluidAndItemFuel = data.getBoolean("hasBothFluidAndItemFuel");
+        this.hasAcceptedFluid = data.getBoolean("hasAcceptedFluid");
+        this.hasAcceptedItem = data.getBoolean("hasAcceptedItem");
+        this.hasEnoughFluidHeatingValue = data.getBoolean("hasEnoughFluidHeatingValue");
+        this.hasEnoughItemHeatingValue = data.getBoolean("hasEnoughItemHeatingValue");
+
     }
 
     @Override
     public void writeInitialSyncData(PacketBuffer buf) {
         super.writeInitialSyncData(buf);
         buf.writeInt(this.temp);
-        /*
+
         buf.writeInt(this.targetTemp);
         buf.writeBoolean(this.canAchieveTargetTemp);
         buf.writeBoolean(this.hasEnoughGas);
         buf.writeBoolean(this.hasEnoughItem);
+        buf.writeBoolean(this.hasBothFluidAndItemFuel);
+        buf.writeBoolean(this.hasAcceptedFluid);
+        buf.writeBoolean(this.hasAcceptedItem);
+        buf.writeBoolean(this.hasEnoughFluidHeatingValue);
+        buf.writeBoolean(this.hasEnoughItemHeatingValue);
 
-         */
     }
 
     @Override
     public void receiveInitialSyncData(PacketBuffer buf) {
         super.receiveInitialSyncData(buf);
         this.temp = buf.readInt();
-        /*
+
         this.targetTemp = buf.readInt();
         this.canAchieveTargetTemp = buf.readBoolean();
         this.hasEnoughGas = buf.readBoolean();
-        this.hasEnoughItem= buf.readBoolean();
+        this.hasEnoughItem = buf.readBoolean();
 
-         */
+        this.hasBothFluidAndItemFuel = buf.readBoolean();
+        this.hasAcceptedFluid = buf.readBoolean();
+        this.hasAcceptedItem = buf.readBoolean();
+        this.hasEnoughFluidHeatingValue = buf.readBoolean();
+        this.hasEnoughItemHeatingValue = buf.readBoolean();
+
+
     }
 
     @Override
