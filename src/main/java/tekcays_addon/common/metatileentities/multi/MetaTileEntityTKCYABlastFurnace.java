@@ -56,7 +56,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
 
     private boolean canAchieveTargetTemp;
-    private boolean hasEnoughItem, hasEnoughGas;
+    private boolean hasEnoughGas;
     private boolean hasEnoughFluidHeatingValue, hasEnoughItemHeatingValue;
     private boolean hasAcceptedFluid, hasAcceptedItem, hasBothFluidAndItemFuel;
     private boolean hasSensor, hasGasCollectorItem;
@@ -101,7 +101,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         hasBothFluidAndItemFuel = false;
 
         hasEnoughGas = false;
-        hasEnoughItem = false;
 
         hasEnoughFluidHeatingValue = false;
         hasEnoughItemHeatingValue = false;
@@ -138,8 +137,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 if (hasGasCollectorItem) fillOutputTank();
 
                 //Item
-                if (hasEnoughItemHeatingValue) itemHeatingValue -= itemConsum;
-                else drainItem();
+                if (hasEnoughItemHeatingValue) drainItem();
 
                 setTemp(temp + increaseTemp);
             }
@@ -174,8 +172,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 if (hasGasCollectorItem) fillOutputTank();
 
                 //Item
-                if (hasEnoughItemHeatingValue) itemHeatingValue -= itemConsum;
-                else drainItem();
+                if (hasEnoughItemHeatingValue) drainItem();
             }
             return;
         }
@@ -193,8 +190,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 if (hasGasCollectorItem) fillOutputTank();
 
                 //Item
-                if (hasEnoughItemHeatingValue) itemHeatingValue -= itemConsum;
-                else drainItem();
+                if (hasEnoughItemHeatingValue) drainItem();
             }
         }
     }
@@ -217,12 +213,10 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             }
         }
 
-        if (hasAcceptedItem) {
-            setItemMultiplier();
-            hasEnoughItem = true;
-        } else hasEnoughItemHeatingValue = itemHeatingValue >= itemConsum;
+        if (hasAcceptedItem) setItemMultiplier();
+        else hasEnoughItemHeatingValue = itemHeatingValue >= itemConsum;
 
-        if (!hasEnoughItemHeatingValue) {
+        if (!hasEnoughItemHeatingValue && hasAcceptedItem) {
             doConvertItemToHeatingValue();
             hasEnoughItemHeatingValue = itemHeatingValue >= itemConsum;
         }
@@ -293,7 +287,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     public boolean hasBothFluidAndItemFuel() {
         return ((hasEnoughGas || hasEnoughFluidHeatingValue)
-                && (hasEnoughItem || hasEnoughItemHeatingValue));
+                && (hasAcceptedItem || hasEnoughItemHeatingValue));
     }
 
     private boolean hasGasCollectorItem() {
@@ -425,7 +419,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
             ///////////If not enough input item
 
-            if (!hasEnoughItem)
+            if (!hasAcceptedItem)
                 textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.7")
                         .setStyle(new Style().setColor(TextFormatting.RED)));
         }
@@ -531,7 +525,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         data.setInteger("targetTemp", this.targetTemp);
         data.setBoolean("canAchieveTargetTemp", this.canAchieveTargetTemp);
         data.setBoolean("hasEnoughGas", this.hasEnoughGas);
-        data.setBoolean("hasEnoughItem", this.hasEnoughItem);
         data.setBoolean("hasBothFluidAndItemFuel", this.hasBothFluidAndItemFuel);
         data.setBoolean("hasAcceptedFluid", this.hasAcceptedFluid);
         data.setBoolean("hasAcceptedItem", this.hasAcceptedItem);
@@ -566,7 +559,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         this.targetTemp = data.getInteger("targetTemp");
         this.canAchieveTargetTemp = data.getBoolean("canAchieveTargetTemp");
         this.hasEnoughGas = data.getBoolean("hasEnoughGas");
-        this.hasEnoughItem = data.getBoolean("hasEnoughItem");
 
         this.hasBothFluidAndItemFuel = data.getBoolean("hasBothFluidAndItemFuel");
         this.hasAcceptedFluid = data.getBoolean("hasAcceptedFluid");
@@ -584,7 +576,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         buf.writeInt(this.targetTemp);
         buf.writeBoolean(this.canAchieveTargetTemp);
         buf.writeBoolean(this.hasEnoughGas);
-        buf.writeBoolean(this.hasEnoughItem);
         buf.writeBoolean(this.hasBothFluidAndItemFuel);
         buf.writeBoolean(this.hasAcceptedFluid);
         buf.writeBoolean(this.hasAcceptedItem);
@@ -601,7 +592,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         this.targetTemp = buf.readInt();
         this.canAchieveTargetTemp = buf.readBoolean();
         this.hasEnoughGas = buf.readBoolean();
-        this.hasEnoughItem = buf.readBoolean();
 
         this.hasBothFluidAndItemFuel = buf.readBoolean();
         this.hasAcceptedFluid = buf.readBoolean();
