@@ -161,7 +161,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             }
             return;
 
-            ///// Case: No fuel or not enough fuel to increase, but enough for the current temp
+        ///// Case: No fuel or not enough fuel to increase, but enough for the current temp
         } else if (temp - increaseTemp >= 300 && hasEnoughFluidHeatingValue) {
 
             if (getOffsetTimer() % 20 == 0) {
@@ -180,8 +180,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             return;
         }
 
-        ///// Case: temp > targetTemp and has fuel
-        if (temp >= targetTemp && hasBothFluidAndItemFuel) {
+        ///// Case: (temp > targetTemp OR increaseTemp exceed target) AND has fuel
+        if ((temp >= targetTemp || temp + increaseTemp > targetTemp) && hasBothFluidAndItemFuel) {
             TKCYALog.logger.info(" temp > targetTemp and has fuel");
             canAchieveTargetTemp = true;
 
@@ -212,7 +212,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             setFluidMultiplier();
             hasEnoughGas = tankToDrain.getFluidAmount() >= gasConsum;
             if (!hasEnoughGas && !hasEnoughFluidHeatingValue) {
-                doConvertRemainingGas();
+                doConvertRemainingGasToHeatingValue();
                 hasEnoughFluidHeatingValue = fluidHeatingValue >= gasConsum;
             }
         }
@@ -222,6 +222,11 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             hasEnoughItem = true;
         } else hasEnoughItemHeatingValue = itemHeatingValue >= itemConsum;
 
+        if (!hasEnoughItemHeatingValue) {
+            doConvertItemToHeatingValue();
+            hasEnoughItemHeatingValue = itemHeatingValue >= itemConsum;
+        }
+        
         hasBothFluidAndItemFuel = hasBothFluidAndItemFuel();
     }
 
@@ -309,10 +314,16 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         return false;
     }
 
-    private void doConvertRemainingGas() {
+    private void doConvertRemainingGasToHeatingValue() {
         int toDrain = tankToDrain.getFluidAmount();
         tankToDrain.drain(toDrain, true);
         fluidHeatingValue += toDrain;
+    }
+
+    private void doConvertItemToHeatingValue() {
+        ItemStack stack = coalOrCokeImport.getStackInSlot(inputItemSlot);
+        stack.shrink(1);
+        itemHeatingValue += 1000 - itemConsum;
     }
 
 
@@ -333,11 +344,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
     
     private void drainItem() {
-        if (itemHeatingValue < itemConsum) {
-            ItemStack stack = coalOrCokeImport.getStackInSlot(inputItemSlot);
-            stack.shrink(1);
-            itemHeatingValue += 1000 - itemConsum;
-        } else itemHeatingValue -= itemConsum;
+        itemHeatingValue -= itemConsum;
     }
 
     public boolean getHasGasOutputHatch() {
