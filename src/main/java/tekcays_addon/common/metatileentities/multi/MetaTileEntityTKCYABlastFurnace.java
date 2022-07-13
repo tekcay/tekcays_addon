@@ -137,7 +137,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 if (hasGasCollectorItem) fillOutputTank();
 
                 //Item
-                if (hasEnoughItemHeatingValue) drainItem();
+                itemHeatingValue -= itemConsum;
 
                 setTemp(temp + increaseTemp);
             }
@@ -172,7 +172,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 if (hasGasCollectorItem) fillOutputTank();
 
                 //Item
-                if (hasEnoughItemHeatingValue) drainItem();
+                itemHeatingValue -= itemConsum;
             }
             return;
         }
@@ -190,7 +190,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 if (hasGasCollectorItem) fillOutputTank();
 
                 //Item
-                if (hasEnoughItemHeatingValue) drainItem();
+                itemHeatingValue -= itemConsum;
             }
         }
     }
@@ -216,7 +216,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         if (hasAcceptedItem) setItemMultiplier();
         else hasEnoughItemHeatingValue = itemHeatingValue >= itemConsum;
 
-        if (!hasEnoughItemHeatingValue && hasAcceptedItem) {
+        if (hasAcceptedItem && !hasEnoughItemHeatingValue) {
             doConvertItemToHeatingValue();
             hasEnoughItemHeatingValue = itemHeatingValue >= itemConsum;
         }
@@ -287,7 +287,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     public boolean hasBothFluidAndItemFuel() {
         return ((hasEnoughGas || hasEnoughFluidHeatingValue)
-                && (hasAcceptedItem || hasEnoughItemHeatingValue));
+                && hasEnoughItemHeatingValue);
     }
 
     private boolean hasGasCollectorItem() {
@@ -317,7 +317,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     private void doConvertItemToHeatingValue() {
         ItemStack stack = coalOrCokeImport.getStackInSlot(inputItemSlot);
         stack.shrink(1);
-        itemHeatingValue += 1000 - itemConsum;
+        itemHeatingValue += 1000;
     }
 
 
@@ -337,10 +337,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         airGasImport.drain(new FluidStack(tankToDrain.getFluid(), gasConsum), true);
     }
     
-    private void drainItem() {
-        itemHeatingValue -= itemConsum;
-    }
-
     public boolean getHasGasOutputHatch() {
         return hasGasOutputHatchInt == 1;
     }
