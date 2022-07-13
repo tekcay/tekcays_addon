@@ -16,6 +16,7 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.common.ConfigHolder;
 import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
+import gregtech.common.items.MetaItems;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -112,78 +113,96 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         hasAcceptedFluid = hasAcceptedFluid();
         hasAcceptedItem = hasAcceptedItem();
 
+        checkConditions(temp + increaseTemp);
+
+        TKCYALog.logger.info("hasBothFluidAndItemFuel = " + hasBothFluidAndItemFuel);
+        TKCYALog.logger.info("hasEnoughGas = " + hasEnoughGas);
+        TKCYALog.logger.info("hasEnoughFluidHeatingValue = " + hasEnoughFluidHeatingValue);
+
+        ///// Case: temp can be increased
+        if (temp + increaseTemp < targetTemp && hasBothFluidAndItemFuel) {
+            TKCYALog.logger.info("Case: temp can be increased");
+            canAchieveTargetTemp = true;
+            if (getOffsetTimer() % 20 == 0) {
+
+                //Gas
+                if (hasEnoughGas) drainGas();
+                else fluidHeatingValue -= gasConsum;
+
+                //Item
+                if (hasAcceptedItem) drainItem();
+                else itemHeatingValue -= itemConsum;
+
+                setTemp(temp + increaseTemp);
+            }
+            return;
+        }
+
         checkConditions(temp);
 
-        TKCYALog.logger.info("itemMultiplier = " + inputItemMultiplier);
-        if (inputItemStack != null) {
-            TKCYALog.logger.info("inputItemStack = " + inputItemStack.getDisplayName());
-        }
-        TKCYALog.logger.info("fluidMultiplier = " + inputFluidMultiplier);
-        if (tankToDrain.getFluidAmount() != 0) {
-            TKCYALog.logger.info("fluidToDrain = " + tankToDrain.getFluid().getLocalizedName());
-        }
-
-        TKCYALog.logger.info("FluidHeatingValue = " + fluidHeatingValue);
-        TKCYALog.logger.info("ItemHeatingValue = " + itemHeatingValue);
-
+        TKCYALog.logger.info("hasBothFluidAndItemFuel = " + hasBothFluidAndItemFuel);
+        TKCYALog.logger.info("hasEnoughGas = " + hasEnoughGas);
+        TKCYALog.logger.info("hasEnoughFluidHeatingValue = " + hasEnoughFluidHeatingValue);
 
         ///// Case: No fuel or not enough fuel, and temp can be decreased
         if (temp - increaseTemp >= 300 && !hasBothFluidAndItemFuel) {
+            TKCYALog.logger.info("Case: No fuel or not enough fuel, and temp can be decreased");
             canAchieveTargetTemp = false;
             if (getOffsetTimer() % 20 == 0) {
                 setTemp(temp - increaseTemp);
+            }
+            return;
+
+            ///// Case: No fuel or not enough fuel to increase, but enough for the current temp
+        } else if (temp - increaseTemp >= 300 && hasEnoughFluidHeatingValue) {
+
+            if (getOffsetTimer() % 20 == 0) {
+
+                canAchieveTargetTemp = false;
+
+                //Gas
+                if (hasEnoughGas) drainGas();
+                else fluidHeatingValue -= gasConsum;
+
+                //Item
+                if (hasAcceptedItem) drainItem();
+                else itemHeatingValue -= itemConsum;
             }
             return;
         }
 
         ///// Case: temp > targetTemp and has fuel
         if (temp >= targetTemp && hasBothFluidAndItemFuel) {
+            TKCYALog.logger.info(" temp > targetTemp and has fuel");
             canAchieveTargetTemp = true;
 
             if (getOffsetTimer() % 20 == 0) {
 
                 //Gas
-                if (hasEnoughGas) drainGas(temp + increaseTemp);
+                if (hasEnoughGas) drainGas();
                 else fluidHeatingValue -= gasConsum;
 
                 //Item
-                if (hasAcceptedItem) drainItem(temp + increaseTemp);
+                if (hasAcceptedItem) drainItem();
                 else itemHeatingValue -= itemConsum;
-            }
-            return;
-        }
-
-        checkConditions(temp + increaseTemp);
-
-        ///// Case: temp can be increased
-        if (hasBothFluidAndItemFuel) {
-            canAchieveTargetTemp = true;
-            if (getOffsetTimer() % 20 == 0) {
-
-                //Gas
-                if (hasEnoughGas) drainGas(temp + increaseTemp);
-                else fluidHeatingValue -= gasConsum;
-
-                //Item
-                if (hasAcceptedItem) drainItem(temp + increaseTemp);
-                else itemHeatingValue -= itemConsum;
-
-                setTemp(temp + increaseTemp);
             }
         }
     }
+
 
     private void checkConditions(int temperature) {
 
         gasConsum = getTemperatureGasConsumption(temperature);
         itemConsum = getTemperatureItemConsumption(temperature);
+        hasEnoughFluidHeatingValue = fluidHeatingValue >= gasConsum;
 
         if (hasAcceptedFluid) {
             setFluidMultiplier();
             hasEnoughGas = tankToDrain.getFluidAmount() >= gasConsum;
-        } else {
-            doConvertRemainingGas();
-            hasEnoughFluidHeatingValue = fluidHeatingValue >= gasConsum;
+            if (!hasEnoughGas && !hasEnoughFluidHeatingValue) {
+                doConvertRemainingGas();
+                hasEnoughFluidHeatingValue = fluidHeatingValue >= gasConsum;
+            }
         }
 
         if (hasAcceptedItem) {
@@ -203,7 +222,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
      */
     public void setFluidMultiplier() {
         getGasCostMap().entrySet().stream()
-                .filter(e -> tankToDrain.getFluid().getFluid().equals(e.getKey()))
+                .filter(e -> (tankToDrain.getFluid() != null) && tankToDrain.getFluid().getFluid().equals(e.getKey()))
                 .forEach(e -> inputFluidMultiplier = e.getValue());
     }
 
@@ -256,9 +275,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
     public boolean hasBothFluidAndItemFuel() {
-        return ((hasAcceptedFluid || hasAcceptedItem)
-                || (hasEnoughGas || hasEnoughItem)
-                || (hasEnoughFluidHeatingValue || hasEnoughItemHeatingValue));
+        return ((hasEnoughGas || hasEnoughFluidHeatingValue)
+                && (hasEnoughItem || hasEnoughItemHeatingValue));
     }
 
     private boolean hasGasCollectorItem() {
@@ -266,6 +284,15 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         for (int i = 0;  i < coalOrCokeImport.getSlots(); i++) {
             ItemStack input = coalOrCokeImport.getStackInSlot(i);
             if (input.isItemEqual((TKCYAMetaItems.GAS_COLLECTOR).getStackForm())) return true;
+        }
+        return false;
+    }
+
+    private boolean hasSensor() {
+
+        for (int i = 0;  i < coalOrCokeImport.getSlots(); i++) {
+            ItemStack input = coalOrCokeImport.getStackInSlot(i);
+            if (input.isItemEqual((MetaItems.SENSOR_LV).getStackForm())) return true;
         }
         return false;
     }
@@ -286,18 +313,16 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
 
-    private void drainGas(int temperature) {
-        int consum = getTemperatureGasConsumption(temperature);
-            airOrFlueGasImport.drain(new FluidStack(tankToDrain.getFluid(), consum), true);
+    private void drainGas() {
+        airOrFlueGasImport.drain(new FluidStack(tankToDrain.getFluid(), gasConsum), true);
     }
     
-    private void drainItem(int temperature) {
-        int consum = getTemperatureItemConsumption(temperature);
-        if (itemHeatingValue < consum) {
+    private void drainItem() {
+        if (itemHeatingValue < itemConsum) {
             ItemStack stack = coalOrCokeImport.getStackInSlot(inputItemSlot);
             stack.shrink(1);
-            itemHeatingValue += 1000 - consum;
-        } else itemHeatingValue -= consum;
+            itemHeatingValue += 1000 - itemConsum;
+        } else itemHeatingValue -= itemConsum;
     }
 
     public boolean getHasGasOutputHatch() {
@@ -353,7 +378,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
             if (canAchieveTargetTemp) {
 
-                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4", getTemperatureGasConsumption(temp), tankToDrain.getFluid().getLocalizedName()));
+                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4",
+                        gasConsum, tankToDrain.getFluid() != null ? tankToDrain.getFluid().getLocalizedName() : ""));
             } else {
                 textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.5"));
             }
@@ -362,6 +388,12 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
             textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.6", targetTemp));
 
+            ///////////If there is sensor (for debugging mainly)
+
+            if (hasSensor()) {
+                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.8", fluidHeatingValue));
+                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.9", itemConsum));
+            }
 
             ///////////If not enough input gas
 

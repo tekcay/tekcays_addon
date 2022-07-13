@@ -157,6 +157,10 @@ tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.5=Consumption: 0 L/t.
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.6=Target temperature: §a%d K§7.
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.7=Not enough solid fuel
 
+#For debugging
+tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.8=Stored heat from gas: %d
+tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.9=Stored heat from solid: %d
+
 tekcays_addon.recipe.tkcya_blast_furnace_temperature=Temperature: %dK
 
 tekcays_addon.multiblock.electric_converter.tooltip.1=Temperature: §a%d K§7.
