@@ -17,6 +17,13 @@ public class TKCYAMiscMaterials {
                 .color(0xe08b41)
                 .build();
 
+        HotAir = new Material.Builder(24102, "very_hot_air")
+                .fluid(FluidTypes.GAS)
+                .fluidTemp(1800)
+                .components(Materials.Air, 1)
+                .color(0xf56342
+                .build();
+
     }
 
 }

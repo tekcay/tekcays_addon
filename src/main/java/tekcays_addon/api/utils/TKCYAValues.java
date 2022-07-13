@@ -34,32 +34,15 @@ public class TKCYAValues {
     // For the New Blast Furnace
     //////////////////
 
-    /*
-    private static final Map<Fluid, Integer> GAS_COST_MAP = new HashMap<>(){{
-        put(Materials.Air.getFluid(), 10);
-        put(TKCYAMaterials.HotFlueGas.getFluid(), 1);
-    }};
-    
-    private static final Map<ItemStack, Integer> ITEM_COST_MAP = new HashMap<>(){{
-        put(OreDictUnifier.get(gem, Materials.Charcoal), 2);
-        put(OreDictUnifier.get(gem, Materials.Coal), 2);
-        put(OreDictUnifier.get(gem, Materials.Coke), 1);
-    }};
-
-     */
-
-    
-
-
     private static final Map<Fluid, Integer> GAS_COST_MAP = Stream.of(new Object[][] {
-            {Materials.Air.getFluid(), 10},
-            {TKCYAMaterials.HotFlueGas.getFluid(), 1},
+            {Materials.Air.getFluid(), 1},
+            {TKCYAMaterials.VeryHotAir.getFluid(), 10},
     }).collect(Collectors.toMap(data -> (Fluid) data[0], data -> (Integer) data[1]));
 
     private static final Map<ItemStack, Integer> ITEM_COST_MAP = Stream.of(new Object[][] {
-            {OreDictUnifier.get(gem, Materials.Charcoal), 2},
-            {OreDictUnifier.get(gem, Materials.Coal), 2},
-            {OreDictUnifier.get(gem, Materials.Coke), 1},
+            {OreDictUnifier.get(gem, Materials.Charcoal), 1},
+            {OreDictUnifier.get(gem, Materials.Coal), 1},
+            {OreDictUnifier.get(gem, Materials.Coke), 2},
     }).collect(Collectors.toMap(data -> (ItemStack) data[0], data -> (Integer) data[1]));
 
 
@@ -69,7 +52,7 @@ public class TKCYAValues {
      * @return a {@code Map} with every gas ({@code Fluid}) accepted as fuel in {@code MetaTileEntityTKCYABlastFurnace} as the
      * {@code key} and the corresponding multiplier ({@code int}) and the {@code value}.
      * <br /><br />
-     * The higher the multiplier, the faster the gas is consummed.
+     * The higher the multiplier, the higher the increasing temperature step.
      * <br /><br />
      * {@code .keySet()} return all the accepted fluids ({@code Fluid[]}).
      * <br /><br />
@@ -83,7 +66,7 @@ public class TKCYAValues {
      * @return a {@code Map} with every stack ({@code ItemStack}) accepted as fuel in {@code MetaTileEntityTKCYABlastFurnace} as the
      * {@code key} and the corresponding multiplier ({@code int}) and the {@code value}.
      * <br /><br />
-     * The higher the multiplier, the faster the item is consummed.
+     * The higher the multiplier, the higher the increasing temperature step.
      * <br /><br />
      * {@code .keySet()} return all the accepted items ({@code ItemStack[]}).
      * <br /><br />

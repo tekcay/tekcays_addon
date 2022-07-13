@@ -72,7 +72,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     private int gasConsum, itemConsum;
 
     public void setIncreaseTemp() {
-        increaseTemp = 5;
+        increaseTemp = 1 + inputItemMultiplier * inputFluidMultiplier;
     }
 
     public void setTargetTemp() {
@@ -305,11 +305,11 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
 
     public int getTemperatureGasConsumption(int temperature) {
-        return inputFluidMultiplier * (temperature - 300) * height + 1 ; //TODO formula for consumption
+        return (int) (Math.log(temperature - 300) * (0.9f * height + 0.1) + 1 ); //TODO formula for consumption
     }
 
     public int getTemperatureItemConsumption(int temperature) {
-        return inputItemMultiplier * (temperature - 300) * height + 1 ; //TODO formula for consumption
+        return (temperature - 300) * height + 1 ; //TODO formula for consumption
     }
 
 
