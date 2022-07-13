@@ -39,6 +39,7 @@ import tekcays_addon.api.metatileentity.mutiblock.RecipeMapMultiblockNoEnergyCon
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.recipes.builders.TemperatureRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
@@ -58,6 +59,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     private boolean hasEnoughItem, hasEnoughGas;
     private boolean hasEnoughFluidHeatingValue, hasEnoughItemHeatingValue;
     private boolean hasAcceptedFluid, hasAcceptedItem, hasBothFluidAndItemFuel;
+    private boolean hasSensor, hasGasCollectorItem;
+
     private int temp, targetTemp, increaseTemp;
     private int height, hasGasOutputHatchInt;
     private FluidTankList airOrFlueGasImport;
@@ -110,6 +113,9 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         setIncreaseTemp();
         setTargetTemp();
 
+        hasSensor = hasSensor();
+        hasGasCollectorItem = hasGasCollectorItem();
+
         hasAcceptedFluid = hasAcceptedFluid();
         hasAcceptedItem = hasAcceptedItem();
 
@@ -128,6 +134,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 //Gas
                 if (hasEnoughGas) drainGas();
                 else fluidHeatingValue -= gasConsum;
+
+                if (hasGasCollectorItem) fillOutputTank();
 
                 //Item
                 if (hasAcceptedItem) drainItem();
@@ -163,6 +171,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 //Gas
                 if (hasEnoughGas) drainGas();
                 else fluidHeatingValue -= gasConsum;
+                if (hasGasCollectorItem) fillOutputTank();
 
                 //Item
                 if (hasAcceptedItem) drainItem();
@@ -181,6 +190,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 //Gas
                 if (hasEnoughGas) drainGas();
                 else fluidHeatingValue -= gasConsum;
+                if (hasGasCollectorItem) fillOutputTank();
 
                 //Item
                 if (hasAcceptedItem) drainItem();
@@ -188,6 +198,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             }
         }
     }
+
+
 
 
     private void checkConditions(int temperature) {
@@ -312,6 +324,9 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         return (temperature - 300) * height + 1 ; //TODO formula for consumption
     }
 
+    private void fillOutputTank() {
+        exportFluids.fill(new FluidStack(TKCYAMaterials.HotFlueGas.getFluid(), gasConsum), true);
+    }
 
     private void drainGas() {
         airOrFlueGasImport.drain(new FluidStack(tankToDrain.getFluid(), gasConsum), true);
@@ -390,7 +405,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
             ///////////If there is sensor (for debugging mainly)
 
-            if (hasSensor()) {
+            if (hasSensor) {
                 textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.8", fluidHeatingValue));
                 textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.9", itemConsum));
             }

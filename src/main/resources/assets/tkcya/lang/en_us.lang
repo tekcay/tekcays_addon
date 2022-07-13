@@ -85,6 +85,7 @@ material.flue_gas=Flue Gas
 
 ##Misc
 material.hot_air=Hot Air
+material.very_hot_air=Very Hot Air
 
 fluid.fuel.tooltip=To be used in the fuel consuming machines
 
