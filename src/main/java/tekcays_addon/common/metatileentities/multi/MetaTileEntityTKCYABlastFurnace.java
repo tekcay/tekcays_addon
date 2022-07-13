@@ -63,7 +63,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     private int temp, targetTemp, increaseTemp;
     private int height, hasGasOutputHatchInt;
-    private FluidTankList airOrFlueGasImport;
+    private FluidTankList airGasImport;
     private IItemHandlerModifiable coalOrCokeImport;
     private int inputItemSlot, itemHeatingValue, fluidHeatingValue;
 
@@ -138,8 +138,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 if (hasGasCollectorItem) fillOutputTank();
 
                 //Item
-                if (hasAcceptedItem) drainItem();
-                else itemHeatingValue -= itemConsum;
+                if (hasEnoughItemHeatingValue) itemHeatingValue -= itemConsum;
+                else drainItem();
 
                 setTemp(temp + increaseTemp);
             }
@@ -174,8 +174,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 if (hasGasCollectorItem) fillOutputTank();
 
                 //Item
-                if (hasAcceptedItem) drainItem();
-                else itemHeatingValue -= itemConsum;
+                if (hasEnoughItemHeatingValue) itemHeatingValue -= itemConsum;
+                else drainItem();
             }
             return;
         }
@@ -193,8 +193,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 if (hasGasCollectorItem) fillOutputTank();
 
                 //Item
-                if (hasAcceptedItem) drainItem();
-                else itemHeatingValue -= itemConsum;
+                if (hasEnoughItemHeatingValue) itemHeatingValue -= itemConsum;
+                else drainItem();
             }
         }
     }
@@ -253,7 +253,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     private boolean hasAcceptedFluid() {
 
-        for (IFluidTank fluidTank : airOrFlueGasImport.getFluidTanks()) {
+        for (IFluidTank fluidTank : airGasImport.getFluidTanks()) {
 
             for (Fluid fluid : getGasCostMap().keySet()) { //ACCEPTED_INPUT_FLUIDS
                 FluidStack fs = fluidTank.getFluid();
@@ -325,11 +325,11 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
     private void fillOutputTank() {
-        exportFluids.fill(new FluidStack(TKCYAMaterials.HotFlueGas.getFluid(), gasConsum), true);
+        outputFluidInventory.fill(new FluidStack(TKCYAMaterials.HotFlueGas.getFluid(), gasConsum), true);
     }
 
     private void drainGas() {
-        airOrFlueGasImport.drain(new FluidStack(tankToDrain.getFluid(), gasConsum), true);
+        airGasImport.drain(new FluidStack(tankToDrain.getFluid(), gasConsum), true);
     }
     
     private void drainItem() {
@@ -613,13 +613,13 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     @Override
     public void initializeAbilities() {
-        this.airOrFlueGasImport = new FluidTankList(true, getAbilities(MultiblockAbility.IMPORT_FLUIDS));
+        this.airGasImport = new FluidTankList(true, getAbilities(MultiblockAbility.IMPORT_FLUIDS));
         this.coalOrCokeImport = new ItemHandlerList(getAbilities(MultiblockAbility.IMPORT_ITEMS));
         this.outputFluidInventory = new FluidTankList(true, getAbilities(MultiblockAbility.EXPORT_FLUIDS));
     }
 
     private void resetTileAbilities() {
-        this.airOrFlueGasImport = new FluidTankList(true);
+        this.airGasImport = new FluidTankList(true);
         this.coalOrCokeImport = new ItemStackHandler(0);
         this.outputFluidInventory = new FluidTankList(true);
     }
