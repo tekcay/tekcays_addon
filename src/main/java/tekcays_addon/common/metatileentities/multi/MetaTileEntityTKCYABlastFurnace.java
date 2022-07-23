@@ -63,16 +63,16 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     private int temp, targetTemp, increaseTemp;
     private int height, hasGasOutputHatchInt;
+
     private FluidTankList airGasImport;
     private IItemHandlerModifiable coalOrCokeImport;
     private int inputItemSlot, itemHeatingValue, fluidHeatingValue;
-
-   private int inputFluidMultiplier, inputItemMultiplier;
-
+    private int inputFluidMultiplier, inputItemMultiplier;
     private IFluidTank tankToDrain;
 
     private ItemStack inputItemStack;
     private int gasConsum, itemConsum;
+    private final int baseSolidFuelHeatingValue = 2000;
 
     public void setIncreaseTemp() {
         increaseTemp = 1 + inputItemMultiplier * inputFluidMultiplier;
@@ -214,7 +214,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         }
 
         if (hasAcceptedItem) setItemMultiplier();
-        else hasEnoughItemHeatingValue = itemHeatingValue >= itemConsum;
+        //else
+        hasEnoughItemHeatingValue = itemHeatingValue >= itemConsum;
 
         if (hasAcceptedItem && !hasEnoughItemHeatingValue) {
             doConvertItemToHeatingValue();
@@ -317,7 +318,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     private void doConvertItemToHeatingValue() {
         ItemStack stack = coalOrCokeImport.getStackInSlot(inputItemSlot);
         stack.shrink(1);
-        itemHeatingValue += 1000;
+        itemHeatingValue += baseSolidFuelHeatingValue;
     }
 
 
@@ -404,7 +405,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
             if (hasSensor) {
                 textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.8", fluidHeatingValue));
-                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.9", itemConsum));
+                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.9", itemHeatingValue));
             }
 
             ///////////If not enough input gas
