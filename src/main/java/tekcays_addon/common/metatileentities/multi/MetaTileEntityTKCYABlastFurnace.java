@@ -120,10 +120,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
         checkConditions(temp + increaseTemp);
 
-        TKCYALog.logger.info("hasBothFluidAndItemFuel = " + hasBothFluidAndItemFuel);
-        TKCYALog.logger.info("hasEnoughGas = " + hasEnoughGas);
-        TKCYALog.logger.info("hasEnoughFluidHeatingValue = " + hasEnoughFluidHeatingValue);
-
         ///// Case: temp can be increased
         if (temp + increaseTemp < targetTemp && hasBothFluidAndItemFuel) {
             TKCYALog.logger.info("Case: temp can be increased");
@@ -146,13 +142,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
         checkConditions(temp);
 
-        TKCYALog.logger.info("hasBothFluidAndItemFuel = " + hasBothFluidAndItemFuel);
-        TKCYALog.logger.info("hasEnoughGas = " + hasEnoughGas);
-        TKCYALog.logger.info("hasEnoughFluidHeatingValue = " + hasEnoughFluidHeatingValue);
-
         ///// Case: No fuel or not enough fuel, and temp can be decreased
         if (temp - increaseTemp >= 300 && !hasBothFluidAndItemFuel) {
-            TKCYALog.logger.info("Case: No fuel or not enough fuel, and temp can be decreased");
             canAchieveTargetTemp = false;
             if (getOffsetTimer() % 20 == 0) {
                 setTemp(temp - increaseTemp);
@@ -179,7 +170,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
         ///// Case: (temp > targetTemp OR increaseTemp exceed target) AND has fuel
         if ((temp >= targetTemp || temp + increaseTemp > targetTemp) && hasBothFluidAndItemFuel) {
-            TKCYALog.logger.info(" temp > targetTemp and has fuel");
             canAchieveTargetTemp = true;
 
             if (getOffsetTimer() % 20 == 0) {
@@ -214,7 +204,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         }
 
         if (hasAcceptedItem) setItemMultiplier();
-        //else
+
         hasEnoughItemHeatingValue = itemHeatingValue >= itemConsum;
 
         if (hasAcceptedItem && !hasEnoughItemHeatingValue) {
@@ -318,7 +308,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     private void doConvertItemToHeatingValue() {
         ItemStack stack = coalOrCokeImport.getStackInSlot(inputItemSlot);
         stack.shrink(1);
-        itemHeatingValue += baseSolidFuelHeatingValue;
+        itemHeatingValue += baseSolidFuelHeatingValue * inputItemMultiplier;
     }
 
 
@@ -327,7 +317,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
     public int getTemperatureItemConsumption(int temperature) {
-        return (temperature - 300) * height + 1 ; //TODO formula for consumption
+        return (int) (1 + (0.9f * height + 0.1) * Math.exp((temperature - 300)/250.0f)); //TODO formula for consumption
     }
 
     private void fillOutputTank() {
