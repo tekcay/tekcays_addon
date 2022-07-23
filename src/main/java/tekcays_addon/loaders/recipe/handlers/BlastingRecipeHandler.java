@@ -14,6 +14,21 @@ public class BlastingRecipeHandler {
 
         //Pig Iron
 
+        ////From Limonite
+        BLASTING_RECIPES.recipeBuilder()
+                .setTemp(1800)
+                .input(OrePrefix.dust, Materials.YellowLimonite)
+                .fluidOutputs(TKCYAMaterials.PigIron.getFluid(GTValues.L))
+                .duration(200)
+                .buildAndRegister();
+
+        BLASTING_RECIPES.recipeBuilder()
+                .setTemp(1800)
+                .input(OrePrefix.dust, Materials.BrownLimonite)
+                .fluidOutputs(TKCYAMaterials.PigIron.getFluid(GTValues.L))
+                .duration(200)
+                .buildAndRegister();
+
         ////From BandedIron
         BLASTING_RECIPES.recipeBuilder()
                 .setTemp(1800)

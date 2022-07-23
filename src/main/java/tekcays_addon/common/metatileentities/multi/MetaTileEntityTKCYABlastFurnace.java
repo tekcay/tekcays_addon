@@ -90,7 +90,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
         inputFluidMultiplier = 0;
         inputItemMultiplier = 0;
-
         inputItemSlot = 0;
 
         itemHeatingValue = 0;
@@ -122,7 +121,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
         ///// Case: temp can be increased
         if (temp + increaseTemp < targetTemp && hasBothFluidAndItemFuel) {
-            TKCYALog.logger.info("Case: temp can be increased");
             canAchieveTargetTemp = true;
             if (getOffsetTimer() % 20 == 0) {
 
@@ -313,11 +311,11 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
 
     public int getTemperatureGasConsumption(int temperature) {
-        return (int) (Math.log(temperature - 300) * (0.9f * height + 0.1) + 1 ); //TODO formula for consumption
+        return (int) (Math.log(temperature - 300) * (0.9f * height + 0.1) + 1 );
     }
 
     public int getTemperatureItemConsumption(int temperature) {
-        return (int) (1 + (0.9f * height + 0.1) * Math.exp((temperature - 300)/250.0f)); //TODO formula for consumption
+        return (int) (1 + (0.9f * height + 0.1) * Math.exp((temperature - 300)/400.0f));
     }
 
     private void fillOutputTank() {
@@ -334,6 +332,9 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
+        TKCYALog.logger.info("TEST");
+        TKCYALog.logger.info("temp = " + temp);
+        TKCYALog.logger.info("recipeTemp = " + recipe.getProperty(TemperatureRecipeBuilder.TemperatureProperty.getInstance(), 0));
         return temp >= recipe.getProperty(TemperatureRecipeBuilder.TemperatureProperty.getInstance(), 0);
     }
 
@@ -406,7 +407,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
             ///////////If not enough input item
 
-            if (!hasAcceptedItem)
+            if (!hasEnoughItemHeatingValue)
                 textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.7")
                         .setStyle(new Style().setColor(TextFormatting.RED)));
         }
@@ -631,6 +632,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
 
     }
+
+
 
     /*
     ////////////////
