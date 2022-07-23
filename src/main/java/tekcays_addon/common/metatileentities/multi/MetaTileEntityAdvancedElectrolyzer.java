@@ -6,6 +6,7 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.recipes.Recipe;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing.MetalCasingType;
@@ -13,6 +14,8 @@ import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import tekcays_addon.api.capability.impl.MultiblockNoEnergyRecipeLogic;
+import tekcays_addon.api.metatileentity.mutiblock.RecipeMapMultiblockNoEnergyController;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
@@ -22,13 +25,13 @@ import javax.annotation.Nullable;
 
 public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockController {
 
-    //TODO Overclock based on size
+    //TODO Proper blocks and textures
     //TODO Temperature logic, based on electricity
     //TODO Add Aluminium and Zinc Chains as electrolysis is available
 
     public MetaTileEntityAdvancedElectrolyzer(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.ELECTROLYSIS);
-
+        this.recipeMapWorkable = new AdvancedElectrolyzerLogic(this);
     }
 
     @Override
@@ -88,4 +91,23 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
     protected ICubeRenderer getFrontOverlay() {
         return Textures.VACUUM_FREEZER_OVERLAY;
     }
+
+    ////////////////
+    //Remove overlocking
+    /////////////////
+
+    private static class AdvancedElectrolyzerLogic extends MultiblockNoEnergyRecipeLogic {
+
+        public AdvancedElectrolyzerLogic(RecipeMapMultiblockNoEnergyController tileEntity) {
+            super(tileEntity);
+        }
+
+        @Override
+        protected int[] calculateOverclock(Recipe recipe) {
+            return new int[]{0, recipe.getDuration()};
+        }
+
+
+    }
+
 }
