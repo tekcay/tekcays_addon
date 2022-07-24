@@ -1,7 +1,5 @@
 package tekcays_addon.api.utils;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
 import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
@@ -11,9 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import gregtech.api.unification.ore.OrePrefix;
-import gregtech.client.renderer.ICubeRenderer;
-import gregtech.client.renderer.texture.Textures;
-import tekcays_addon.api.render.TKCYATextures;
 
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
@@ -21,10 +16,7 @@ import static gregtech.api.unification.ore.OrePrefix.*;
 import static gregtech.api.unification.ore.OrePrefix.gem;
 import static gregtech.common.items.MetaItems.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.Ceramic;
-import static tekcays_addon.api.unification.TKCYAMaterials.GalvanizedSteel;
 
-import jdk.nashorn.internal.ir.annotations.Immutable;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
