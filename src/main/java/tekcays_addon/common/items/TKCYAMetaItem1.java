@@ -1,7 +1,10 @@
 package tekcays_addon.common.items;
 
 import gregtech.api.items.metaitem.StandardMetaItem;
+import gregtech.common.items.behaviors.TurbineRotorBehavior;
+import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 
+import static gregtech.common.items.MetaItems.TURBINE_ROTOR;
 import static tekcays_addon.common.items.TKCYAMetaItems.*;
 
 public class TKCYAMetaItem1 extends StandardMetaItem {
@@ -17,6 +20,7 @@ public class TKCYAMetaItem1 extends StandardMetaItem {
         MICA_INSULATOR_SHEET = addItem(1, "mica_insulator.sheet");
         MICA_INSULATOR_FOIL = addItem(2, "mica_insulator.foil");
         GAS_COLLECTOR = addItem(3, "gas_collector");
+        ELECTRODE = addItem(4, "electrode").addComponents(new ElectrodeBehavior());
 
     }
 }

@@ -16,6 +16,8 @@ public final class TKCYAMetaItems {
     public static MetaItem<?>.MetaValueItem MICA_INSULATOR_FOIL;
     public static MetaItem<?>.MetaValueItem GAS_COLLECTOR;
 
+    public static MetaItem<?>.MetaValueItem ELECTRODE;
+
 
     public static void init() {
         TKCYAMetaItem1 metaItem1 = new TKCYAMetaItem1();

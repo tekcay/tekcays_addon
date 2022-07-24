@@ -1,14 +1,24 @@
 package tekcays_addon.common.metatileentities;
 
 import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
+import gregtech.api.unification.material.Materials;
 import gregtech.api.util.GTUtility;
+import gregtech.client.renderer.texture.Textures;
+import gregtech.common.blocks.BlockMetalCasing;
+import gregtech.common.blocks.BlockSteamCasing;
+import gregtech.common.blocks.MetaBlocks;
+import gregtech.common.metatileentities.MetaTileEntities;
+import gregtech.common.metatileentities.storage.MetaTileEntityDrum;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.TekCaysAddon;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
 
 import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.common.TKCYAConfigHolder;
+import tekcays_addon.common.blocks.TKCYAMetaBlocks;
+import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.metatileentities.multi.*;
 import tekcays_addon.common.metatileentities.steam.SteamCooler;
 
@@ -31,10 +41,27 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityConverter ELECTRIC_CONVERTER;
     public static MetaTileEntityPrimitiveBath PRIMITIVE_BATH;
     public static MetaTileEntityTKCYABlastFurnace TKCYA_BLAST_FURNACE;
+    public static MetaTileEntityCrystallizer CRYSTALLIZER;
+    public static MetaTileEntityAdvancedElectrolyzer ADVANCED_ELECTROLYZER;
 
+    // Drums
+    public static MetaTileEntityDrum WOODEN_DRUM;
+    public static MetaTileEntityDrum BRONZE_DRUM;
+    public static MetaTileEntityDrum STEEL_DRUM;
+    public static MetaTileEntityDrum ALUMINIUM_DRUM;
 
-
-
+    public static MetaTileEntityDrum GALVANIZED_STEEL_DRUM;
+    public static MetaTileEntityDrum STAINLESS_STEEL_DRUM;
+    public static MetaTileEntityDrum POLYTETRAFLUOROETHYLENE_DRUM;
+    public static MetaTileEntityDrum POLYPROPYLENE_DRUM;
+    public static MetaTileEntityDrum HIGH_DENSITY_POLYETHYLENE_DRUM;
+    public static TKCYAMetaTileEntityMultiblockTank WOODEN_TANK;
+    public static TKCYAMetaTileEntityMultiblockTank STEEL_TANK;
+    public static TKCYAMetaTileEntityMultiblockTank GALVANIZED_STEEL_TANK;
+    public static TKCYAMetaTileEntityMultiblockTank STAINLESS_STEEL_TANK;
+    public static TKCYAMetaTileEntityTankValve STEEL_TANK_VALVE;
+    public static TKCYAMetaTileEntityTankValve GALVANIZED_STEEL_TANK_VALVE;
+    public static TKCYAMetaTileEntityTankValve STAINLESS_STEEL_TANK_VALVE;
 
     public static void init() {
 
@@ -79,18 +106,67 @@ public class TKCYAMetaTileEntities {
             PRIMITIVE_BATH = registerMetaTileEntity(11024, new MetaTileEntityPrimitiveBath(tkcyaId("primitive_bath")));
         }
 
+        if (TKCYAConfigHolder.meltingOverhaul.enableBouleCrystallization) {
+            CRYSTALLIZER = registerMetaTileEntity(11024, new MetaTileEntityCrystallizer(tkcyaId("crystallizer")));
+        }
+
+        if (TKCYAConfigHolder.miscOverhaul.enableElectrolysisOverhaul) {
+            ADVANCED_ELECTROLYZER = registerMetaTileEntity(11025, new MetaTileEntityAdvancedElectrolyzer(tkcyaId("advanced_electrolyzer")));
+        }
+
+        if (TKCYAConfigHolder.storageOverhaul.enableDrumsOverhaul) {
+            WOODEN_DRUM = registerMetaTileEntity(11026, new MetaTileEntityDrum(tkcyaId("drum.wood"), Materials.Wood, 4000));
+            BRONZE_DRUM = registerMetaTileEntity(11027, new MetaTileEntityDrum(tkcyaId("drum.bronze"), Materials.Bronze, 8000));
+            STEEL_DRUM = registerMetaTileEntity(11028, new MetaTileEntityDrum(tkcyaId("drum.steel"), Materials.Steel, 16000));
+            ALUMINIUM_DRUM = registerMetaTileEntity(11029, new MetaTileEntityDrum(tkcyaId("drum.aluminium"), Materials.Aluminium, 16000));
+            GALVANIZED_STEEL_DRUM = registerMetaTileEntity(11030, new MetaTileEntityDrum(tkcyaId("drum.galvanized_steel"), TKCYAMaterials.GalvanizedSteel, 16000));
+            STAINLESS_STEEL_DRUM = registerMetaTileEntity(11031, new MetaTileEntityDrum(tkcyaId("drum.stainless_steel"), Materials.StainlessSteel, 16000));
+            POLYTETRAFLUOROETHYLENE_DRUM = registerMetaTileEntity(11032, new MetaTileEntityDrum(tkcyaId("drum.polytetrafluoroethylene"), Materials.Polytetrafluoroethylene, 16000));
+            POLYPROPYLENE_DRUM = registerMetaTileEntity(11033, new MetaTileEntityDrum(tkcyaId("drum.polypropylene"), TKCYAMaterials.Polypropylene, 16000));
+            HIGH_DENSITY_POLYETHYLENE_DRUM = registerMetaTileEntity(11034, new MetaTileEntityDrum(tkcyaId("drum.high_density_polyethylene"), TKCYAMaterials.HighDensityPolyethylene, 16000));
+        }
+
+        if (TKCYAConfigHolder.storageOverhaul.enableMultiblockTanksOverhaul) {
+
+            WOODEN_TANK = registerMetaTileEntity(11040, new TKCYAMetaTileEntityMultiblockTank(tkcyaId("multiblock.tank.wood"),
+                            Materials.TreatedWood,
+                            MetaBlocks.STEAM_CASING.getState(BlockSteamCasing.SteamCasingType.WOOD_WALL),
+                            250000));
+
+            STEEL_TANK = registerMetaTileEntity(11041, new TKCYAMetaTileEntityMultiblockTank(tkcyaId("multiblock.tank.steel"),
+                    Materials.Steel,
+                    TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.STEEL_WALL),
+                    250000));
+
+
+            GALVANIZED_STEEL_TANK = registerMetaTileEntity(11042, new TKCYAMetaTileEntityMultiblockTank(tkcyaId("multiblock.tank.galvanized_steel"),
+                    TKCYAMaterials.GalvanizedSteel,
+                    TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL),
+                    250000));
+
+            STAINLESS_STEEL_TANK = registerMetaTileEntity(11043, new TKCYAMetaTileEntityMultiblockTank(tkcyaId("multiblock.tank.stainless_steel"),
+                    Materials.StainlessSteel,
+                    TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.STAINLESS_STEEL_WALL),
+                    250000));
+
+
+            STEEL_TANK_VALVE = registerMetaTileEntity(11045, new TKCYAMetaTileEntityTankValve(tkcyaId("multiblock.valve.steel"),
+                    Materials.Steel));
+
+            GALVANIZED_STEEL_TANK_VALVE = registerMetaTileEntity(11046, new TKCYAMetaTileEntityTankValve(tkcyaId("multiblock.valve.galvanized_steel"),
+                    TKCYAMaterials.GalvanizedSteel));
+
+            STAINLESS_STEEL_TANK_VALVE = registerMetaTileEntity(11047, new TKCYAMetaTileEntityTankValve(tkcyaId("multiblock.valve.stainless_steel"),
+                    Materials.StainlessSteel));
+
+
+        }
 
     }
 
     private static ResourceLocation tkcyaId(String name) {
         return new ResourceLocation(TekCaysAddon.MODID, name);
     }
-
-
-
-
-
-
 
 
 }

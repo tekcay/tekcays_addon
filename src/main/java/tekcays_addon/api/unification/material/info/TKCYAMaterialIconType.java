@@ -20,4 +20,7 @@ public class TKCYAMaterialIconType {
     public static final MaterialIconType moldRotor = new MaterialIconType("moldRotor");
     public static final MaterialIconType moldCasing = new MaterialIconType("moldCasing");
 
+
+    // Others
+
 }

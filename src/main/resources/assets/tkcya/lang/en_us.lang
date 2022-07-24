@@ -36,6 +36,8 @@ tkcya.machine.casting_table.name=Casting Table
 tkcya.machine.electric_converter.name=Electric Converter
 tkcya.machine.primitive_bath.name=Primitive Bath
 tkcya.machine.tkcya_blast_furnace.name=Blast Furnace
+tkcya.machine.crystallizer.name=Crystallizer
+tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer
 
 
 # multiblock descriptions
@@ -43,11 +45,37 @@ tkcya.multiblock.primitive_melter.description=A multiblock for melting ores and 
 tkcya.multiblock.electric_melter.description=A multiblock for melting ores and pure materials using electricity
 tkcya.multiblock.alloying_crucible.description=A multiblock for alloying molten metals
 
+# multiblock tank
 
+tkcya.machine.multiblock.tank.wood.name=Wooden Tank
+tkcya.machine.multiblock.tank.steel.name=Steel Tank
+tkcya.machine.multiblock.tank.galvanized_steel.name=Galvanized Steel Tank
+tkcya.machine.multiblock.tank.stainless_steel.name=Stainless Steel Tank
 
-# hatches
+# Tank valves
+
+tkcya.machine.multiblock.valve.steel.name=Steel Tank Valve
+tkcya.machine.multiblock.valve.galvanized_steel.name=Galvanized Steel Tank Valve
+tkcya.machine.multiblock.valve.stainless_steel.name=Stainless Steel Tank Valve
+
+# drums
+tkcya.machine.drum.wood.name=Wooden Drum
+tkcya.machine.drum.bronze.name=Bronze Drum
+tkcya.machine.drum.steel.name=Steel Drum
+tkcya.machine.drum.aluminium.name=Aluminium Drum
+tkcya.machine.drum.galvanized_steel.name=Galvanized Steel Drum
+tkcya.machine.drum.stainless_steel.name=Stainless Steel Drum
+tkcya.machine.drum.polytetrafluoroethylene.name=Teflon Drum
+tkcya.machine.drum.polypropylene.name=Polypropylene Drum
+tkcya.machine.drum.high_density_polyethylene.name=HDPE Drum
 
 # casings
+tile.large_multiblock_casing.monel_casing.name=Monel Casing
+
+# walls
+tile.large_multiblock_casing.steel_wall.name=Steel Wall
+tile.large_multiblock_casing.galvanized_steel_wall.name=Galvanized Steel Wall
+tile.large_multiblock_casing.stainless_steel_wall.name=Stainless Steel Wall
 
 
 
@@ -62,6 +90,8 @@ recipemap.primitive_bath.name=Bath
 recipemap.electric_casting_table.name=Casting
 recipemap.blasting.name=Blasting
 recipemap.converting.name=Converting
+recipemap.crystallization.name=Crystallization
+recipemap.electrolysis.name=Electrolysis
 
 # Materials
 
@@ -70,7 +100,6 @@ material.unpure_steel=Unpure Steel
 material.unpure_copper=Unpure Copper
 material.unpure_tin=Unpure Tin
 material.unpure_iron=Unpure Iron
-
 
 ##Alloys/Intermediates
 material.galvanized_steel=Galvanized Steel
@@ -89,6 +118,33 @@ material.very_hot_air=Very Hot Air
 
 fluid.fuel.tooltip=To be used in the fuel consuming machines
 
+material.precious_metal=Precious Metal
+material.gold_alloy=Gold Alloy
+
+## FluorideChain
+material.potassium_bifluoride=Potassium Bifluoride
+material.fluorite=Fluorite
+material.calcium_sulfonate=Calcium Sulfonate
+material.lithium_fluoride=Lithium Fluoride
+material.sodium_fluoride=Sodium Fluoride
+material.potassium_fluoride=Potassium Fluoride
+material.lithium_hydroxide=Lithium Hydroxide
+material.hydrogen_fluoride=Hydrogen Fluoride
+material.hydrogen_chloride=Hydrogen Chloride
+material.hydrogen_bromide=Hydrogen Bromide
+material.hydrogen_iodide=Hydrogen Iodide
+
+
+fluid.fuel.tooltip=To be used in the fuel consuming machines
+
+##Alloys
+material.galvanized_steel=Galvanized Steel
+material.monel=Monel
+
+##Polymers
+material.high_density_polyethylene=High Density Polyethylene (HDPE)
+material.polypropylene=Polypropylene
+
 material.hydrogen_fluorine=Hydrogen Fluorine
 material.hydrogen_chlorine=Hydrogen Chlorine
 material.hydrogen_bromine=Hydrogen Bromine
@@ -97,19 +153,23 @@ material.hydrogen_iodine=Hydrogen Iodine
 # fluids
 tkcya.fluid.molten=Molten %s
 
-
-
-
 #MetaItems
 
 metaitem.mica.sheet.name=Mica Based Sheet
 metaitem.mica_insulator.sheet.name=Mica Insulator Sheet
 metaitem.mica_insulator.foil.name=Mica Insulator Foil
 metaitem.gas_collector.name=Gas Collector
+metaitem.electrode.name=%s Electrode
+metaitem.electrode.tooltip=For electrolysis
 
 item.mica_pulp.dust=Mica Based Pulp
 
 # Ore Prefixes
+
+#Others
+item.material.oreprefix.electrode=%s Electrode
+
+## Molds
 item.material.oreprefix.moldEmpty=%s Mold Empty
 item.material.oreprefix.moldIngot=%s Mold Ingot
 item.material.oreprefix.moldPlate=%s Mold Plate

@@ -43,6 +43,11 @@ public class TKCYATextures {
     public static SimpleOverlayRenderer ATOMIC_CASING;
     public static SimpleOverlayRenderer STEAM_CASING;
 
+    //GT6 style
+    public static SimpleOverlayRenderer STEEL_GT;
+    public static SimpleOverlayRenderer WHITE_GT;
+    public static SimpleOverlayRenderer STAINLESS_STEEL_GT;
+
 
     public static void preInit() {
         // Simple Machines
@@ -65,5 +70,10 @@ public class TKCYATextures {
         ENGRAVER_CASING = new SimpleOverlayRenderer("casings/large_multiblock_casing/engraver_casing");
         ATOMIC_CASING = new SimpleOverlayRenderer("casings/large_multiblock_casing/atomic_casing");
         STEAM_CASING = new SimpleOverlayRenderer("casings/large_multiblock_casing/steam_casing");
+
+        //GT6 Style
+        STEEL_GT = new SimpleOverlayRenderer("steel_gt");
+        WHITE_GT = new SimpleOverlayRenderer("white_gt");
+        STAINLESS_STEEL_GT = new SimpleOverlayRenderer("stainless_steel_gt");
     }
 }

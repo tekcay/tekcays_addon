@@ -8,82 +8,28 @@
   },
   "variants": {
     "variant": {
-      "macerator_casing": {
+      "stainless_steel_wall": {
         "model": "minecraft:cube_all",
         "textures": {
-          "all": "gregtech:blocks/casings/large_multiblock_casing/macerator_casing"
+          "all": "gregtech:blocks/casings/large_multiblock_casing/stainless_steel_wall"
         }
       },
-      "blast_casing": {
+      "steel_wall": {
         "model": "minecraft:cube_all",
         "textures": {
-          "all": "gregtech:blocks/casings/large_multiblock_casing/blast_casing"
+          "all": "gregtech:blocks/casings/large_multiblock_casing/steel_wall"
         }
       },
-      "assembler_casing": {
+      "galvanized_steel_wall": {
         "model": "minecraft:cube_all",
         "textures": {
-          "all": "gregtech:blocks/casings/large_multiblock_casing/assembler_casing"
+          "all": "gregtech:blocks/casings/large_multiblock_casing/galvanized_steel_wall"
         }
       },
-      "stress_proof_casing": {
+      "monel_casing": {
         "model": "minecraft:cube_all",
         "textures": {
-          "all": "gregtech:blocks/casings/large_multiblock_casing/stress_proof_casing"
-        }
-      },
-      "corrosion_proof_casing": {
-        "model": "minecraft:cube_all",
-        "textures": {
-          "all": "gregtech:blocks/casings/large_multiblock_casing/corrosion_proof_casing"
-        }
-      },
-      "vibration_safe_casing": {
-        "model": "minecraft:cube_all",
-        "textures": {
-          "all": "gregtech:blocks/casings/large_multiblock_casing/vibration_safe_casing"
-        }
-      },
-      "watertight_casing": {
-        "model": "minecraft:cube_all",
-        "textures": {
-          "all": "gregtech:blocks/casings/large_multiblock_casing/watertight_casing"
-        }
-      },
-      "cutter_casing": {
-        "model": "minecraft:cube_all",
-        "textures": {
-          "all": "gregtech:blocks/casings/large_multiblock_casing/cutter_casing"
-        }
-      },
-      "nonconducting_casing": {
-        "model": "minecraft:cube_all",
-        "textures": {
-          "all": "gregtech:blocks/casings/large_multiblock_casing/nonconducting_casing"
-        }
-      },
-      "mixer_casing": {
-        "model": "minecraft:cube_all",
-        "textures": {
-          "all": "gregtech:blocks/casings/large_multiblock_casing/mixer_casing"
-        }
-      },
-      "engraver_casing": {
-        "model": "minecraft:cube_all",
-        "textures": {
-          "all": "gregtech:blocks/casings/large_multiblock_casing/engraver_casing"
-        }
-      },
-      "atomic_casing": {
-        "model": "minecraft:cube_all",
-        "textures": {
-          "all": "gregtech:blocks/casings/large_multiblock_casing/atomic_casing"
-        }
-      },
-      "steam_casing": {
-        "model": "minecraft:cube_all",
-        "textures": {
-          "all": "gregtech:blocks/casings/large_multiblock_casing/steam_casing"
+          "all": "gregtech:blocks/casings/large_multiblock_casing/monel_casing"
         }
       }
     }

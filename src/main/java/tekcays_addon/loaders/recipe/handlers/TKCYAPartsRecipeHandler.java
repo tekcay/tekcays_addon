@@ -2,27 +2,32 @@ package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.GTValues;
 import gregtech.api.recipes.GTRecipeHandler;
+import gregtech.api.recipes.RecipeMap;
+import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.properties.IngotProperty;
 import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.common.items.MetaItems;
+import gregtech.common.items.behaviors.TurbineRotorBehavior;
 import net.minecraft.item.ItemStack;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import tekcays_addon.api.unification.TKCYAMaterials;
-import tekcays_addon.common.items.TKCYAMetaItem1;
+import tekcays_addon.api.utils.TKCYAValues;
 import tekcays_addon.common.items.TKCYAMetaItems;
+import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 
 
 import static gregtech.api.GTValues.LV;
 import static gregtech.api.GTValues.VA;
 import static gregtech.api.recipes.RecipeMaps.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
-import static tekcays_addon.api.unification.TKCYAMaterialFlagAddition.MOLD_MATERIALS;
 import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
+import static tekcays_addon.api.utils.TKCYAValues.ELECTRODE_MATERIALS;
+import static tekcays_addon.api.utils.TKCYAValues.MOLD_MATERIALS;
 import static tekcays_addon.loaders.recipe.handlers.TKCYACastingTableRecipeHandler.MOLD_PRODUCTION;
 
 public class TKCYAPartsRecipeHandler {
@@ -33,13 +38,27 @@ public class TKCYAPartsRecipeHandler {
 
     }
 
-    private static final OrePrefix[] POLARIZING_PREFIXES = new OrePrefix[]{
-        OrePrefix.stick, OrePrefix.stickLong, OrePrefix.plate, OrePrefix.ingot, OrePrefix.plateDense, OrePrefix.rotor,
-        OrePrefix.bolt, OrePrefix.screw, OrePrefix.wireFine, OrePrefix.foil, OrePrefix.dust, OrePrefix.ring};
+    public static void initElectrode() {
+
+        for (Material m : ELECTRODE_MATERIALS) {
+
+            ItemStack electrodeStack = TKCYAMetaItems.ELECTRODE.getStackForm();
+
+            ElectrodeBehavior.getInstanceFor(electrodeStack).setPartMaterial(electrodeStack, m);
+
+            LASER_ENGRAVER_RECIPES.recipeBuilder()
+                    .input(stickLong, m)
+                    .notConsumable(lens, Materials.Glass)
+                    .outputs(electrodeStack)
+                    .duration((int) m.getMass())
+                    .EUt(24)
+                    .buildAndRegister();
+        }
+    }
 
     public static void initPolarizing(){
 
-        for (OrePrefix orePrefix : POLARIZING_PREFIXES) {
+        for (OrePrefix orePrefix : TKCYAValues.POLARIZING_PREFIXES) {
             orePrefix.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processPolarizing);
         }
     }
@@ -70,7 +89,6 @@ public class TKCYAPartsRecipeHandler {
             .EUt(24)
             .buildAndRegister();
     }
-
 
     public static void processPolarizing(OrePrefix polarizingPrefix, Material material, IngotProperty property) {
 
@@ -131,7 +149,7 @@ public class TKCYAPartsRecipeHandler {
                         .buildAndRegister();
 
 
-                //When using a gas colletor, it outputs Hot Air
+                //When using a gas collector, it outputs Hot Air
 
                 TKCYARecipeMaps.ELECTRIC_CASTING_RECIPES.recipeBuilder()
                         .fluidInputs(material.getFluid((int) (prefix.getMaterialAmount(material) * GTValues.L / GTValues.M)), Materials.Air.getFluid(material.getFluid().getTemperature()))

@@ -1,6 +1,7 @@
 package tekcays_addon.common;
 
 import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.api.unification.material.ore.TKCYAOrePrefix;
 import tekcays_addon.api.unification.material.ore.TKCYAOrePrefixAdditions;
 import tekcays_addon.api.unification.material.properties.TKCYAPropertyAddition;
 import tekcays_addon.TekCaysAddon;
