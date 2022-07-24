@@ -2,12 +2,10 @@ package tekcays_addon.common.metatileentities.multi;
 
 import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.capability.impl.ItemHandlerList;
-import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
@@ -37,16 +35,17 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.ItemStackHandler;
+import tekcays_addon.api.capability.impl.MultiblockNoEnergyRecipeLogic;
 import tekcays_addon.api.metatileentity.mutiblock.RecipeMapMultiblockNoEnergyController;
 import tekcays_addon.api.pattern.TKCYATraceabilityPredicate;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.recipes.builders.MelterRecipeBuilder;
+import tekcays_addon.api.recipes.builders.TemperatureRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.utils.MiscMethods;
+import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nullable;
 import javax.annotation.Nonnull;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -59,7 +58,7 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockNoEnergyControl
 
     public MetaTileEntityFuelMelter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.MELTER_RECIPES);
-        //this.recipeMapWorkable = new FuelMelterLogic(this);
+        this.recipeMapWorkable = new FuelMelterLogic(this);
 
         temp = 300;
     }
@@ -71,8 +70,8 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockNoEnergyControl
         hasEnoughFuel = drainFuel();
 
         if (getOffsetTimer() % 20 == 0 && !recipeMapWorkable.isActive()) {
-            stepTowardsTargetTemp(getFuelAmount());        }
-        else if (temp >= targetTemp) {
+            stepTowardsTargetTemp(getFuelAmount());
+        } else if (temp >= targetTemp) {
             canAchieveTargetTemp = true;
         }
     }
@@ -110,7 +109,7 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockNoEnergyControl
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        return temp >= recipe.getProperty(MelterRecipeBuilder.TemperatureProperty.getInstance(), 0);
+        return temp >= recipe.getProperty(TemperatureRecipeBuilder.TemperatureProperty.getInstance(), 0);
     }
 
 
@@ -408,9 +407,9 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockNoEnergyControl
 
 
 
-    private static class FuelMelterLogic extends MultiblockRecipeLogic {
+    private static class FuelMelterLogic extends MultiblockNoEnergyRecipeLogic {
 
-        public FuelMelterLogic(RecipeMapMultiblockController tileEntity) {
+        public FuelMelterLogic(RecipeMapMultiblockNoEnergyController tileEntity) {
             super(tileEntity);
         }
 

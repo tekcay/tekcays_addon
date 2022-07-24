@@ -61,6 +61,11 @@ public class TKCYARecipeLoader {
             RecipesRemovalHandler.shapedComponentsRecipes();
         }
 
+        if (meltingOverhaul.enableBlastingOverhaul) {
+            ConvertingRecipeHandler.init();
+            BlastingRecipeHandler.init();
+        }
+
         if (miscOverhaul.enableElectrolysisOverhaul) {
             TKCYAPartsRecipeHandler.initElectrode();
             ElectrolysisHandler.init();
@@ -82,7 +87,6 @@ public class TKCYARecipeLoader {
         CasingsLoader.init();
         ChemicalChains.init();
         MineralChains.init();
-
     }
 
 

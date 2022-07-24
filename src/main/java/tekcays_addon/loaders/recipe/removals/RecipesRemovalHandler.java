@@ -76,6 +76,13 @@ public class RecipesRemovalHandler {
         //LV Machine Casing
         ModHandler.removeRecipes(MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.LV));
 
+        //ULV Machine Casing
+        ModHandler.removeRecipes(MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.ULV));
+
+        //ULV Machine Hull
+        ModHandler.removeRecipes(MetaTileEntities.HULL[0].getStackForm());
+
+
         //LV Motor
         ModHandler.removeRecipes(MetaItems.ELECTRIC_MOTOR_LV.getStackForm());
         //LV Piston

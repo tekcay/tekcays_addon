@@ -42,12 +42,16 @@ public class TKCYAMaterials {
     public static Material Ceramic;
     public static Material MicaPulp;
     public static Material Fuel;
+    public static Material HotFlueGas;
+    public static Material FlueGas;
 
     /**
      * Misc
      */
 
     public static Material HotAir;
+    public static Material VeryHotAir;
+
     public static Material PreciousMetal;
     public static Material GoldAlloy;
 
@@ -65,21 +69,20 @@ public class TKCYAMaterials {
     public static Material HydrogenBromide;
     public static Material HydrogenIodide;
 
-
     /**
      * Alloys
      */
 
     public static Material GalvanizedSteel;
+    public static Material PigIron;
     public static Material Monel;
 
     /**
-     * Alloys
+     * Polymers
      */
 
     public static Material HighDensityPolyethylene;
     public static Material Polypropylene;
-
 
 
 }

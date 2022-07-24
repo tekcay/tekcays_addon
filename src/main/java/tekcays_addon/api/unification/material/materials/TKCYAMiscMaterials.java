@@ -21,7 +21,13 @@ public class TKCYAMiscMaterials {
                 .color(0xe08b41)
                 .build();
 
-        PreciousMetal = new Material.Builder(24102, "precious_metal")
+        VeryHotAir = new Material.Builder(24102, "very_hot_air")
+                .fluid(FluidTypes.GAS)
+                .fluidTemp(1800)
+                .components(Materials.Air, 1)
+                .color(0xf56342)
+
+        PreciousMetal = new Material.Builder(24104, "precious_metal")
                 .dust().ore().fluid()
                 .fluidTemp(1337)
                 .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
@@ -32,7 +38,7 @@ public class TKCYAMiscMaterials {
                 .build();
         PreciousMetal.setFormula("Au?");
 
-        GoldAlloy = new Material.Builder(24103, "gold_alloy")
+        GoldAlloy = new Material.Builder(24105, "gold_alloy")
                 .ingot().fluid()
                 .fluidTemp(1000) //TODO
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)

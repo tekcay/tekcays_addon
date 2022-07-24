@@ -2,6 +2,7 @@ package tekcays_addon;
 
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import tekcays_addon.api.utils.TKCYALog;
+import tekcays_addon.api.utils.TKCYAValues;
 import tekcays_addon.api.worldgen.TKCYAWorldGenRegistry;
 import tekcays_addon.common.CommonProxy;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;

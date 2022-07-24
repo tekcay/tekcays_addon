@@ -1,10 +1,10 @@
 package tekcays_addon.api.unification.material.materials;
 
+import gregtech.api.fluids.fluidType.FluidTypes;
 import gregtech.api.unification.material.Material;
 
-import static gregtech.api.unification.material.info.MaterialIconSet.SAND;
+import static gregtech.api.unification.material.info.MaterialIconSet.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.*;
-import static gregtech.api.unification.material.info.MaterialIconSet.DULL;
 
 public class TKCYANoFormulaMaterials {
 
@@ -24,7 +24,20 @@ public class TKCYANoFormulaMaterials {
 
         Fuel = new Material.Builder(24003, "fuel")
                 .fluid()
+                .fluidTemp(298)
                 .color(0xf6ad30)
+                .build();
+
+        HotFlueGas = new Material.Builder(24004, "hot_flue_gas")
+                .fluid(FluidTypes.GAS)
+                .fluidTemp(1800)
+                .color(0x69605f)
+                .build();
+
+        FlueGas = new Material.Builder(24005, "flue_gas")
+                .fluid(FluidTypes.GAS)
+                .fluidTemp(298)
+                .color(0x7a7372)
                 .build();
     }
 
