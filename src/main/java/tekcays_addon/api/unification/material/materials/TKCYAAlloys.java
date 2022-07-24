@@ -30,6 +30,7 @@ public class TKCYAAlloys {
                 .flags(NO_UNIFICATION, NO_SMELTING, DISABLE_DECOMPOSITION)
                 .components(Iron, 50, Carbon, 1)
                 .color(0xe7ada0).iconSet(DULL)
+                .build();
 
         Monel = new Material.Builder(24203, "monel")
                 .ingot(1).fluid()

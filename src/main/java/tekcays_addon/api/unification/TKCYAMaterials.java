@@ -52,11 +52,11 @@ public class TKCYAMaterials {
     public static Material HotAir;
     public static Material VeryHotAir;
 
+    //GoldChain
     public static Material PreciousMetal;
     public static Material GoldAlloy;
 
     //FluorideChain
-
     public static Material PotassiumBifluoride;
     public static Material Fluorite;
     public static Material CalciumSulfonate;

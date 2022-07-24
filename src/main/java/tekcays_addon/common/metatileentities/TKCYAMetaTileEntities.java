@@ -106,10 +106,6 @@ public class TKCYAMetaTileEntities {
             PRIMITIVE_BATH = registerMetaTileEntity(11024, new MetaTileEntityPrimitiveBath(tkcyaId("primitive_bath")));
         }
 
-        if (TKCYAConfigHolder.meltingOverhaul.enableBouleCrystallization) {
-            CRYSTALLIZER = registerMetaTileEntity(11024, new MetaTileEntityCrystallizer(tkcyaId("crystallizer")));
-        }
-
         if (TKCYAConfigHolder.miscOverhaul.enableElectrolysisOverhaul) {
             ADVANCED_ELECTROLYZER = registerMetaTileEntity(11025, new MetaTileEntityAdvancedElectrolyzer(tkcyaId("advanced_electrolyzer")));
         }
@@ -160,6 +156,10 @@ public class TKCYAMetaTileEntities {
                     Materials.StainlessSteel));
 
 
+        }
+
+        if (TKCYAConfigHolder.meltingOverhaul.enableBouleCrystallization) {
+            CRYSTALLIZER = registerMetaTileEntity(11050, new MetaTileEntityCrystallizer(tkcyaId("crystallizer")));
         }
 
     }
