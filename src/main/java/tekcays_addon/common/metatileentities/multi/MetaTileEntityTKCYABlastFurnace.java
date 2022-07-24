@@ -332,9 +332,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        TKCYALog.logger.info("TEST");
-        TKCYALog.logger.info("temp = " + temp);
-        TKCYALog.logger.info("recipeTemp = " + recipe.getProperty(TemperatureRecipeBuilder.TemperatureProperty.getInstance(), 0));
         return temp >= recipe.getProperty(TemperatureRecipeBuilder.TemperatureProperty.getInstance(), 0);
     }
 
