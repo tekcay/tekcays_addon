@@ -26,6 +26,7 @@ public class TKCYAMiscMaterials {
                 .fluidTemp(1800)
                 .components(Materials.Air, 1)
                 .color(0xf56342)
+                .build();
 
         PreciousMetal = new Material.Builder(24104, "precious_metal")
                 .dust().ore().fluid()
