@@ -34,13 +34,11 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.capability.impl.MultiParallelLogic;
-import tekcays_addon.api.capability.impl.MultiblockNoEnergyRecipeLogic;
 import tekcays_addon.api.metatileentity.mutiblock.RecipeMapMultiblockNoEnergyController;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.recipes.builders.TemperatureRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.unification.TKCYAMaterials;
-import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
 import javax.annotation.Nonnull;
@@ -67,7 +65,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     private int hasGasOutputHatchInt;
 
      */
-    private int temp, targetTemp, increaseTemp;
+    private int temp, targetTemp, increaseTemp, runningRecipeTemp;
     public int height;
     private int inputItemSlot, itemHeatingValue, fluidHeatingValue;
     private int inputFluidMultiplier, inputItemMultiplier;
@@ -116,6 +114,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         super.updateFormedValid();
         setIncreaseTemp();
         setTargetTemp();
+
+        if (temp < runningRecipeTemp) this.recipeMapWorkable.invalidate();
 
         hasSensor = hasSensor();
         hasGasCollectorItem = hasGasCollectorItem();
@@ -201,9 +201,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             }
         }
     }
-
-
-
 
     private void checkConditions(int temperature) {
 
@@ -354,7 +351,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        return temp >= recipe.getProperty(TemperatureRecipeBuilder.TemperatureProperty.getInstance(), 0);
+        runningRecipeTemp = recipe.getProperty(TemperatureRecipeBuilder.TemperatureProperty.getInstance(), 0);
+        return temp >= runningRecipeTemp;
     }
 
 
@@ -633,27 +631,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         this.inputFluidInventory = new FluidTankList(true);
         this.inputInventory = new ItemStackHandler(0);
         this.outputFluidInventory = new FluidTankList(true);
-    }
-
-
-    ////////////////
-    //Remove overlocking
-    /////////////////
-
-    /*
-
-    private static class TKCYABlastFurnaceLogic extends MultiblockNoEnergyRecipeLogic {
-
-        public TKCYABlastFurnaceLogic(RecipeMapMultiblockNoEnergyController tileEntity) {
-            super(tileEntity);
-        }
-
-        @Override
-        protected int[] calculateOverclock(Recipe recipe) {
-            return new int[]{0, recipe.getDuration()};
-        }
-
-
     }
 
 
