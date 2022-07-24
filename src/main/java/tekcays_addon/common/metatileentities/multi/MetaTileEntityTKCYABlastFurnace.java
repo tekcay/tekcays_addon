@@ -32,7 +32,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
-import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.capability.impl.MultiblockNoEnergyRecipeLogic;
 import tekcays_addon.api.metatileentity.mutiblock.RecipeMapMultiblockNoEnergyController;
@@ -65,7 +64,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     private int height, hasGasOutputHatchInt;
 
     private FluidTankList airGasImport;
-    private IItemHandlerModifiable coalOrCokeImport;
     private int inputItemSlot, itemHeatingValue, fluidHeatingValue;
     private int inputFluidMultiplier, inputItemMultiplier;
     private IFluidTank tankToDrain;
@@ -259,8 +257,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     private boolean hasAcceptedItem() {
 
-        for (int i = 0;  i < coalOrCokeImport.getSlots(); i++) {
-            ItemStack input = coalOrCokeImport.getStackInSlot(i);
+        for (int i = 0;  i < inputInventory.getSlots(); i++) {
+            ItemStack input = inputInventory.getStackInSlot(i);
             for (ItemStack stack : getItemCostMap().keySet()) {  //ACCEPTED_INPUT_ITEMS
                 if (input.isItemEqual(stack)) { //&&  ModHandler.getFuelValue(input) > 0
                     inputItemSlot = i;
@@ -281,8 +279,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     private boolean hasGasCollectorItem() {
 
-        for (int i = 0;  i < coalOrCokeImport.getSlots(); i++) {
-            ItemStack input = coalOrCokeImport.getStackInSlot(i);
+        for (int i = 0;  i < inputInventory.getSlots(); i++) {
+            ItemStack input = inputInventory.getStackInSlot(i);
             if (input.isItemEqual((TKCYAMetaItems.GAS_COLLECTOR).getStackForm())) return true;
         }
         return false;
@@ -290,8 +288,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     private boolean hasSensor() {
 
-        for (int i = 0;  i < coalOrCokeImport.getSlots(); i++) {
-            ItemStack input = coalOrCokeImport.getStackInSlot(i);
+        for (int i = 0;  i < inputInventory.getSlots(); i++) {
+            ItemStack input = inputInventory.getStackInSlot(i);
             if (input.isItemEqual((MetaItems.SENSOR_LV).getStackForm())) return true;
         }
         return false;
@@ -304,7 +302,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
     private void doConvertItemToHeatingValue() {
-        ItemStack stack = coalOrCokeImport.getStackInSlot(inputItemSlot);
+        ItemStack stack = inputInventory.getStackInSlot(inputItemSlot);
         stack.shrink(1);
         itemHeatingValue += baseSolidFuelHeatingValue * inputItemMultiplier;
     }
@@ -586,7 +584,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
 
     }
-
+    
     @Override
     public int getLightValueForPart(IMultiblockPart sourcePart) {
         return sourcePart == null && temp > 300 ? 15 : 0;
@@ -596,13 +594,13 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     @Override
     public void initializeAbilities() {
         this.airGasImport = new FluidTankList(true, getAbilities(MultiblockAbility.IMPORT_FLUIDS));
-        this.coalOrCokeImport = new ItemHandlerList(getAbilities(MultiblockAbility.IMPORT_ITEMS));
+        this.inputInventory = new ItemHandlerList(getAbilities(MultiblockAbility.IMPORT_ITEMS));
         this.outputFluidInventory = new FluidTankList(true, getAbilities(MultiblockAbility.EXPORT_FLUIDS));
     }
 
     private void resetTileAbilities() {
         this.airGasImport = new FluidTankList(true);
-        this.coalOrCokeImport = new ItemStackHandler(0);
+        this.inputInventory = new ItemStackHandler(0);
         this.outputFluidInventory = new FluidTankList(true);
     }
 
