@@ -33,12 +33,14 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.ItemStackHandler;
+import tekcays_addon.api.capability.impl.MultiParallelLogic;
 import tekcays_addon.api.capability.impl.MultiblockNoEnergyRecipeLogic;
 import tekcays_addon.api.metatileentity.mutiblock.RecipeMapMultiblockNoEnergyController;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.recipes.builders.TemperatureRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
 import javax.annotation.Nonnull;
@@ -66,9 +68,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
      */
     private int temp, targetTemp, increaseTemp;
-    private int height;
-
-    private FluidTankList airGasImport;
+    public int height;
     private int inputItemSlot, itemHeatingValue, fluidHeatingValue;
     private int inputFluidMultiplier, inputItemMultiplier;
     private IFluidTank tankToDrain;
@@ -87,7 +87,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     public MetaTileEntityTKCYABlastFurnace(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.BLASTING_RECIPES);
-        this.recipeMapWorkable = new TKCYABlastFurnaceLogic(this);
+        this.recipeMapWorkable = new MultiParallelLogic(this);
 
         temp = 300;
 
@@ -260,7 +260,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     private boolean hasAcceptedFluid() {
 
-        for (IFluidTank fluidTank : airGasImport.getFluidTanks()) {
+        for (IFluidTank fluidTank : inputFluidInventory.getFluidTanks()) {
 
             for (Fluid fluid : getGasCostMap().keySet()) { //ACCEPTED_INPUT_FLUIDS
                 FluidStack fs = fluidTank.getFluid();
@@ -342,7 +342,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
     private void drainGas() {
-        airGasImport.drain(new FluidStack(tankToDrain.getFluid(), gasConsum), true);
+        inputFluidInventory.drain(new FluidStack(tankToDrain.getFluid(), gasConsum), true);
     }
 
     /*Particle
@@ -522,6 +522,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         super.formStructure(context);
         initializeAbilities();
         this.height = context.getOrDefault("blastFurnaceHeight", 1);
+        this.recipeMapWorkable.setParallelLimit(height);
         //Particle
         //this.hasGasOutputHatchInt = context.getOrDefault("blastFurnaceHasGasOutput", 1);
     }
@@ -623,13 +624,13 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     @Override
     public void initializeAbilities() {
-        this.airGasImport = new FluidTankList(true, getAbilities(MultiblockAbility.IMPORT_FLUIDS));
+        this.inputFluidInventory = new FluidTankList(true, getAbilities(MultiblockAbility.IMPORT_FLUIDS));
         this.inputInventory = new ItemHandlerList(getAbilities(MultiblockAbility.IMPORT_ITEMS));
         this.outputFluidInventory = new FluidTankList(true, getAbilities(MultiblockAbility.EXPORT_FLUIDS));
     }
 
     private void resetTileAbilities() {
-        this.airGasImport = new FluidTankList(true);
+        this.inputFluidInventory = new FluidTankList(true);
         this.inputInventory = new ItemStackHandler(0);
         this.outputFluidInventory = new FluidTankList(true);
     }
@@ -639,15 +640,12 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     //Remove overlocking
     /////////////////
 
+    /*
+
     private static class TKCYABlastFurnaceLogic extends MultiblockNoEnergyRecipeLogic {
 
         public TKCYABlastFurnaceLogic(RecipeMapMultiblockNoEnergyController tileEntity) {
             super(tileEntity);
-        }
-
-        @Override
-        public int getParallelLimit() {
-            return ((MetaTileEntityTKCYABlastFurnace) this.getMetaTileEntity()).height;
         }
 
         @Override
