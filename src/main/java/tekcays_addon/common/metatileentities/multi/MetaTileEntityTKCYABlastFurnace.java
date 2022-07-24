@@ -1,6 +1,5 @@
 package tekcays_addon.common.metatileentities.multi;
 
-import gregtech.api.GTValues;
 import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.capability.impl.ItemHandlerList;
 import gregtech.api.metatileentity.MetaTileEntity;
@@ -23,9 +22,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -42,7 +39,6 @@ import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.recipes.builders.TemperatureRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.unification.TKCYAMaterials;
-import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
 import javax.annotation.Nonnull;
@@ -61,10 +57,16 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     private boolean hasEnoughGas;
     private boolean hasEnoughFluidHeatingValue, hasEnoughItemHeatingValue;
     private boolean hasAcceptedFluid, hasAcceptedItem, hasBothFluidAndItemFuel;
-    private boolean hasSensor, hasGasCollectorItem, isHeating;
+    private boolean hasSensor, hasGasCollectorItem;
 
+    /* Particles
+
+    private boolean is Heating;
+    private int hasGasOutputHatchInt;
+
+     */
     private int temp, targetTemp, increaseTemp;
-    private int height, hasGasOutputHatchInt;
+    private int height;
 
     private FluidTankList airGasImport;
     private int inputItemSlot, itemHeatingValue, fluidHeatingValue;
