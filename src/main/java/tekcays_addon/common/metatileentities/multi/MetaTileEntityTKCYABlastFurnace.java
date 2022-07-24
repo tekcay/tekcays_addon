@@ -1,5 +1,6 @@
 package tekcays_addon.common.metatileentities.multi;
 
+import gregtech.api.GTValues;
 import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.capability.impl.ItemHandlerList;
 import gregtech.api.metatileentity.MetaTileEntity;
@@ -22,7 +23,9 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -58,7 +61,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     private boolean hasEnoughGas;
     private boolean hasEnoughFluidHeatingValue, hasEnoughItemHeatingValue;
     private boolean hasAcceptedFluid, hasAcceptedItem, hasBothFluidAndItemFuel;
-    private boolean hasSensor, hasGasCollectorItem;
+    private boolean hasSensor, hasGasCollectorItem, isHeating;
 
     private int temp, targetTemp, increaseTemp;
     private int height, hasGasOutputHatchInt;
@@ -101,6 +104,9 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
         hasEnoughFluidHeatingValue = false;
         hasEnoughItemHeatingValue = false;
+
+        //Particle
+        //isHeating = false;
     }
 
     @Override
@@ -116,6 +122,15 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         hasAcceptedItem = hasAcceptedItem();
 
         checkConditions(temp + increaseTemp);
+
+        /*Particle
+        if (isHeating && getHasGasOutputHatch()) {
+            if (getWorld().isRemote) {
+                pollutionParticles();
+            }
+        }
+
+         */
 
         ///// Case: temp can be increased
         if (temp + increaseTemp < targetTemp && hasBothFluidAndItemFuel) {
@@ -152,6 +167,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             if (getOffsetTimer() % 20 == 0) {
 
                 canAchieveTargetTemp = false;
+                //Particle
+                //isHeating = true;
 
                 //Gas
                 if (hasEnoughGas) drainGas();
@@ -167,6 +184,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         ///// Case: (temp > targetTemp OR increaseTemp exceed target) AND has fuel
         if ((temp >= targetTemp || temp + increaseTemp > targetTemp) && hasBothFluidAndItemFuel) {
             canAchieveTargetTemp = true;
+            //Particle
+            //isHeating = true;
 
             if (getOffsetTimer() % 20 == 0) {
 
@@ -323,10 +342,13 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     private void drainGas() {
         airGasImport.drain(new FluidStack(tankToDrain.getFluid(), gasConsum), true);
     }
-    
+
+    /*Particle
     public boolean getHasGasOutputHatch() {
         return hasGasOutputHatchInt == 1;
     }
+
+     */
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
@@ -431,7 +453,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 .aisle("#YSY#", "Y###Y", "Y###Y", "Y###Y", "#YYY#")
                 .aisle("#YYY#", "Y###Y", "Y#I#Y", "Y###Y", "#YYY#").setRepeatable(1, 11)
                 .aisle("#YYY#", "YOOOY", "YOOOY", "YOOOY", "#YYY#")
-                .aisle("#####", "#####", "##C##", "#####", "#####").setRepeatable(0, 1)
+                //Particle
+                //.aisle("#####", "#####", "##C##", "#####", "#####").setRepeatable(0, 1)
                 .where('S', selfPredicate())
                 .where('Y', states(getCasingState()))
                 .where('X', states(getCasingState())
@@ -441,7 +464,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                         .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMaxGlobalLimited(2))
                         .or(abilities(MultiblockAbility.IMPORT_ITEMS).setMinGlobalLimited(1,1).setMaxGlobalLimited(2)))
                 .where('I', heightIndicatorPredicate())
-                .where('C', fluidOutputHatchPredicate())
+                //Particle
+                //.where('C', fluidOutputHatchPredicate())
                 .where('#', air())
                 .build();
 
@@ -478,6 +502,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         });
     }
 
+    /* Particle
     public static TraceabilityPredicate fluidOutputHatchPredicate() {
         return new TraceabilityPredicate((blockWorldState) -> {
             if (abilities(MultiblockAbility.EXPORT_FLUIDS).test(blockWorldState)) {
@@ -488,12 +513,15 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         });
     }
 
+     */
+
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
         initializeAbilities();
         this.height = context.getOrDefault("blastFurnaceHeight", 1);
-        this.hasGasOutputHatchInt = context.getOrDefault("blastFurnaceHasGasOutput", 1);
+        //Particle
+        //this.hasGasOutputHatchInt = context.getOrDefault("blastFurnaceHasGasOutput", 1);
     }
 
     @Override
@@ -629,22 +657,12 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
 
-
     /*
+
     ////////////////
     //Added particles/muffler effect if no gas recovery, code from GTCEu's PBF
     /////////////////
 
-    @Override
-    public void update() {
-        super.update();
-
-        if (isHeating() && !getHasGasOutputHatch()) {
-            if (getWorld().isRemote) {
-                pollutionParticles();
-            }
-        }
-    }
 
 
     private void pollutionParticles() {
@@ -659,7 +677,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     }
 
      */
-
 
 }
 
