@@ -1,6 +1,7 @@
 package tekcays_addon.common;
 
 import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.api.unification.material.ore.OreDictAdditions;
 import tekcays_addon.api.unification.material.ore.TKCYAOrePrefix;
 import tekcays_addon.api.unification.material.ore.TKCYAOrePrefixAdditions;
 import tekcays_addon.api.unification.material.properties.TKCYAPropertyAddition;
@@ -17,11 +18,14 @@ public class TKCYAEventHandlers {
     public static void registerMaterials(GregTechAPI.MaterialEvent event) {
         TKCYAMaterials.init();
         TKCYAPropertyAddition.init();
+        OreDictAdditions.misc();
+        TKCYAOrePrefixAdditions.miscInit();
 
         if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
-
             TKCYAOrePrefixAdditions.moldsInit();
             TKCYAOrePrefixAdditions.moldsTooltip();
+
+
         }
     }
 

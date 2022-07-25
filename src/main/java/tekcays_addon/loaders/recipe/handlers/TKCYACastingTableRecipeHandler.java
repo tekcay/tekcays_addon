@@ -1,12 +1,24 @@
 package tekcays_addon.loaders.recipe.handlers;
 
+import gregtech.api.unification.OreDictUnifier;
+import gregtech.api.unification.material.Material;
+import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.api.unification.ore.OrePrefix;
 
+import gregtech.common.blocks.BlockMachineCasing;
+import gregtech.common.blocks.MetaBlocks;
+import gregtech.common.items.MetaItems;
+import net.minecraftforge.oredict.OreDictionary;
+import tekcays_addon.api.unification.material.ore.OreDictAdditions;
 import tekcays_addon.api.unification.material.ore.TKCYAOrePrefix;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
+import static tekcays_addon.api.unification.TKCYAMaterials.GalvanizedSteel;
+import static tekcays_addon.api.utils.TKCYAValues.MOLD_MATERIALS;
 
 
 public class TKCYACastingTableRecipeHandler {
@@ -28,14 +40,26 @@ public class TKCYACastingTableRecipeHandler {
         //MOLD_PRODUCTION.put(OrePrefix.casing, TKCYAOrePrefix.moldCasing);
         MOLD_PRODUCTION.put(OrePrefix.rotor, TKCYAOrePrefix.moldRotor);
         MOLD_PRODUCTION.put(OrePrefix.ring, TKCYAOrePrefix.moldRing);
-
-
+        MOLD_PRODUCTION.put(OrePrefix.block, TKCYAOrePrefix.moldBlock);
 
         MOLD_PRODUCTION.keySet().forEach(prefix ->
         prefix.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processCasting));
 
+    }
 
+    public static void misc() {
 
+        //Phenolic Circuit Board
+        for (Material m : MOLD_MATERIALS) {
+            ASSEMBLER_RECIPES.recipeBuilder()
+                    .input(OrePrefix.dust, Materials.Wood)
+                    .fluidInputs(Materials.Glue.getFluid(50))
+                    .notConsumable(TKCYAOrePrefix.moldPlate, m)
+                    .output(MetaItems.PHENOLIC_BOARD)
+                    .duration(30)
+                    .EUt(7)
+                    .buildAndRegister();
+        }
     }
     
 }

@@ -1,10 +1,10 @@
 package tekcays_addon.loaders.recipe;
 
 import gregtech.api.recipes.GTRecipeHandler;
-import gregtech.api.recipes.ModHandler;
 import gregtech.api.recipes.RecipeMaps;
 import tekcays_addon.loaders.recipe.chains.*;
 import tekcays_addon.loaders.recipe.handlers.*;
+import tekcays_addon.loaders.recipe.removals.ItemsRemovalHandler;
 import tekcays_addon.loaders.recipe.removals.RecipesRemovalHandler;
 
 import static tekcays_addon.common.TKCYAConfigHolder.*;
@@ -36,9 +36,12 @@ public class TKCYARecipeLoader {
 
         if (meltingOverhaul.enableCastingOverhaul) {
             GasCollectorRecipeHandler.init();
+            GlassHandler.init();
             ShapedCraftingRecipes.molds();
             ShapedCraftingRecipes.gasCollector();
             TKCYAPartsRecipeHandler.processMolds();
+            ItemsRemovalHandler.molds();
+            RecipesRemovalHandler.removeMoldsAndUsage();
         }
 
         if (energyOverhaul.disableGasTurbinesOverhaul) {
@@ -109,6 +112,7 @@ public class TKCYARecipeLoader {
 
         if (meltingOverhaul.enableCastingOverhaul) {
             TKCYACastingTableRecipeHandler.init();
+            TKCYACastingTableRecipeHandler.misc();
         }
 
     }

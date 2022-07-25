@@ -1,10 +1,12 @@
 package tekcays_addon.api.unification.material.ore;
 
+import gregtech.api.unification.material.MarkerMaterials;
 import gregtech.api.unification.ore.OrePrefix;
 import tekcays_addon.api.unification.material.info.TKCYAMaterialIconType;
 
 import static gregtech.api.GTValues.M;
 import static gregtech.api.unification.ore.OrePrefix.Flags.ENABLE_UNIFICATION;
+import static gregtech.api.unification.ore.OrePrefix.Flags.SELF_REFERENCING;
 import static tekcays_addon.api.unification.material.info.TKCYAMaterialFlags.GENERATE_MOLDS;
 
 public class TKCYAOrePrefix {
@@ -26,7 +28,10 @@ public class TKCYAOrePrefix {
     public static final OrePrefix moldBottle = new OrePrefix("moldBottle", M * 4, null, TKCYAMaterialIconType.moldBottle, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
     public static final OrePrefix moldBlock = new OrePrefix("moldBlock", M * 4, null, TKCYAMaterialIconType.moldBlock, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
 
+
     // Others
+
+    public static final OrePrefix bottleGlass = new OrePrefix("bottleGlass", -1, MarkerMaterials.Color.Colorless, null, SELF_REFERENCING, null);
 
 }
 

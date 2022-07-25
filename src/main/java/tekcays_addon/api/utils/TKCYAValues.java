@@ -16,6 +16,7 @@ import static gregtech.api.unification.ore.OrePrefix.*;
 import static gregtech.api.unification.ore.OrePrefix.gem;
 import static gregtech.common.items.MetaItems.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.Ceramic;
+import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -82,6 +83,8 @@ public class TKCYAValues {
     }
 
     public static final Material[] MOLD_MATERIALS = new Material[]{Steel, Tungsten, Carbon, Ceramic};
+    public static final OrePrefix[] MOLDS = new OrePrefix[]{moldEmpty, moldIngot, moldPlate, moldStick, moldStickLong, moldGear,
+            moldGearSmall, moldBolt, moldBall, moldCylinder, moldRing, moldRotor, moldCasing, moldBottle, moldBlock};
 
     public static final OrePrefix[] POLARIZING_PREFIXES = new OrePrefix[]{
         stick, stickLong, plate, ingot, plateDense, rotor, bolt, screw, wireFine, foil, dust, ring};
@@ -91,7 +94,6 @@ public class TKCYAValues {
 
    public static final Material[] ELECTRODE_MATERIALS = new Material[]{
            Gold, Copper, Platinum, Carbon, Steel, Iridium};
-
 
 }
 
