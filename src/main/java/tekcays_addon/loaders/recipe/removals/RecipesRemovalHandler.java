@@ -1,5 +1,6 @@
 package tekcays_addon.loaders.recipe.removals;
 
+import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.recipes.GTRecipeHandler;
 import gregtech.api.recipes.ModHandler;
 import gregtech.api.recipes.RecipeMaps;
@@ -14,8 +15,6 @@ import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.Mod;
-import tekcays_addon.api.utils.TKCYALog;
 
 import static gregtech.api.unification.material.Materials.*;
 
@@ -30,6 +29,7 @@ public class RecipesRemovalHandler {
                     OreDictUnifier.get(OrePrefix.plate, Steel, 8),
                     IntCircuitIngredient.getIntegratedCircuit(8)},
             new FluidStack[] {});
+
 
         //LV Motor
         GTRecipeHandler.removeRecipesByInputs(RecipeMaps.ASSEMBLER_RECIPES,
@@ -137,6 +137,36 @@ public class RecipesRemovalHandler {
 
         ModHandler.removeRecipes(MetaTileEntities.STEEL_TANK_VALVE.getStackForm());
     }
+
+    public static void removeMoldsAndUsage() {
+
+        for (MetaItem.MetaValueItem mvi : MetaItems.SHAPE_MOLDS) {
+            if (mvi.isItemEqual(MetaItems.SHAPE_EMPTY.getStackForm())) continue;
+            ModHandler.removeRecipes(mvi.getStackForm());
+        }
+
+        GTRecipeHandler.removeRecipesByInputs(RecipeMaps.ASSEMBLER_RECIPES,
+                new ItemStack[] {
+                        OreDictUnifier.get(OrePrefix.dust, Wood),
+                        MetaItems.SHAPE_MOLD_PLATE.getStackForm()},
+                new FluidStack[] {Glue.getFluid(50)});
+
+        GTRecipeHandler.removeRecipesByInputs(RecipeMaps.FORMING_PRESS_RECIPES,
+                new ItemStack[] {
+                        OreDictUnifier.get(OrePrefix.dust, Glass),
+                        MetaItems.SHAPE_MOLD_BALL.getStackForm()},
+                new FluidStack[] {});
+
+        GTRecipeHandler.removeRecipesByInputs(RecipeMaps.FORMING_PRESS_RECIPES,
+                new ItemStack[] {
+                        OreDictUnifier.get(OrePrefix.dust, Glass),
+                        MetaItems.SHAPE_MOLD_BLOCK.getStackForm()},
+                new FluidStack[] {});
+
+
+    }
+
+
 
 
 }

@@ -21,8 +21,6 @@ public class TKCYAAlloyingCrucibleRecipeHandler {
 
     public static void init() {
 
-        TKCYALog.logger.info("is it logged ? " + GregTechAPI.MATERIAL_REGISTRY.getNameForObject(TKCYAMaterials.GoldAlloy));
-
         for (Material material : GregTechAPI.MATERIAL_REGISTRY) {
             if (!material.hasProperty(PropertyKey.FLUID)) continue;
             if (material.getFluid().getTemperature() <= 300) continue;

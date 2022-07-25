@@ -20,6 +20,15 @@ public class TKCYAOrePrefixAdditions {
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldRing);
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldRotor);
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldCasing);
+        MetaItems.addOrePrefix(TKCYAOrePrefix.moldBottle);
+        MetaItems.addOrePrefix(TKCYAOrePrefix.moldBlock);
+
+    }
+
+    public static void miscInit(){
+
+        MetaItems.addOrePrefix(TKCYAOrePrefix.bottleGlass);
+
     }
 
 

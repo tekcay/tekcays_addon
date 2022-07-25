@@ -183,6 +183,8 @@ item.material.oreprefix.moldCylinder=%s Mold Cylinder
 item.material.oreprefix.moldRotor=%s Mold Rotor
 item.material.oreprefix.moldRing=%s Mold Ring
 item.material.oreprefix.moldCasing=%s Mold Casing
+item.material.oreprefix.moldBottle=%s Mold Bottle
+item.material.oreprefix.moldBlock=%s Mold Block
 
 
 tekcays_addon.multiblock.electric_melter.tooltip.1=Temperature: §a%d K§7.
