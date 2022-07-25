@@ -23,6 +23,8 @@ public class TKCYAOrePrefix {
     public static final OrePrefix moldRing = new OrePrefix("moldRing", M * 4, null, TKCYAMaterialIconType.moldRing, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
     public static final OrePrefix moldRotor = new OrePrefix("moldRotor", M * 4, null, TKCYAMaterialIconType.moldRotor, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
     public static final OrePrefix moldCasing = new OrePrefix("moldCasing", M * 4, null, TKCYAMaterialIconType.moldCasing, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
+    public static final OrePrefix moldBottle = new OrePrefix("moldBottle", M * 4, null, TKCYAMaterialIconType.moldBottle, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
+    public static final OrePrefix moldBlock = new OrePrefix("moldBlock", M * 4, null, TKCYAMaterialIconType.moldBlock, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_MOLDS));
 
     // Others
 

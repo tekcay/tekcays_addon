@@ -1,17 +1,15 @@
 package tekcays_addon.api.unification;
 
-import gregtech.api.unification.material.Material;
-import gregtech.api.unification.material.Materials;
 
+import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.info.MaterialFlags;
-import tekcays_addon.api.utils.TKCYALog;
-import tekcays_addon.common.TKCYAConfigHolder;
+
 
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.Ceramic;
 import static tekcays_addon.api.unification.material.info.TKCYAMaterialFlags.GENERATE_MOLDS;
-import static tekcays_addon.api.utils.TKCYAValues.MOLD_MATERIALS;
+
 
 public class TKCYAMaterialFlagAddition {
 

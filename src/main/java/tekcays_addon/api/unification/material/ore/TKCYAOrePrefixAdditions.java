@@ -20,6 +20,8 @@ public class TKCYAOrePrefixAdditions {
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldRing);
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldRotor);
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldCasing);
+        MetaItems.addOrePrefix(TKCYAOrePrefix.moldBottle);
+        MetaItems.addOrePrefix(TKCYAOrePrefix.moldBlock);
     }
 
 
