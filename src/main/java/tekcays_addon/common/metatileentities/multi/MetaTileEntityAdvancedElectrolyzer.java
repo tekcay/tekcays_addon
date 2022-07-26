@@ -14,27 +14,26 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing.MetalCasingType;
 import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
-import tekcays_addon.api.capability.impl.MultiblockNoEnergyRecipeLogic;
-import tekcays_addon.api.metatileentity.mutiblock.RecipeMapMultiblockNoEnergyController;
+import net.minecraft.world.World;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockController {
 
     List<CountableIngredient> inputs;
-    HashSet<Ingredient> currentRecipeNonConsummIngredient = new HashSet<>();
-    HashSet<Ingredient> nonConsummInInventory = new HashSet<>();
+    List<ItemStack> electrodeInInventory = new ArrayList<>();
+    HashSet<String> currentRecipeNonConsummIngredient = new HashSet<>();
+    HashSet<String> nonConsummInInventory = new HashSet<>();
 
     //TODO Proper blocks and textures
     //TODO Temperature logic, based on electricity
@@ -62,14 +61,19 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
                 .build();
     }
 
-    public void getCurrentRecipeElectrodes() {
+    public void getCurrentRecipeNonConsummables() {
 
         currentRecipeNonConsummIngredient.clear();
         for (CountableIngredient ingredient : inputs) {
-            if (!ingredient.isNonConsumable()) continue;
-            Ingredient ing = ingredient.getIngredient();
 
-            currentRecipeNonConsummIngredient.add(ing);
+            if (!ingredient.isNonConsumable()) continue;
+            ItemStack[] stack = ingredient.getIngredient().getMatchingStacks();
+
+            currentRecipeNonConsummIngredient.add(stack[0].getDisplayName());
+
+            //if (!stack.isItemStackDamageable()) continue;
+
+            //currentRecipeNonConsummIngredient.add(stack);
         }
     }
 
@@ -78,13 +82,27 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
         nonConsummInInventory.clear();
         for (int i = 0; i < inputInventory.getSlots(); i++) {
             ItemStack stack = inputInventory.getStackInSlot(i);
-            if (stack == null) continue;
-            nonConsummInInventory.add(Ingredient.fromStacks(stack));
+            if (stack == null || stack.getDisplayName().startsWith("Air")) continue;
+            nonConsummInInventory.add(stack.getDisplayName());
         }
     }
 
+    private void getElectrodeFromInventory() {
 
+        electrodeInInventory.clear();
 
+        for (int i = 0; i < inputInventory.getSlots(); i++) {
+            ItemStack electrodeStack;
+
+            if (inputInventory.isItemValid(i, TKCYAMetaItems.ELECTRODE.getStackForm())) {
+                electrodeStack = inputInventory.getStackInSlot(i);
+
+                ElectrodeBehavior behavior = ElectrodeBehavior.getInstanceFor(electrodeStack);
+                if (behavior == null) continue;
+                electrodeInInventory.add(electrodeStack);
+            }
+        }
+    }
 
 
     @Override
@@ -92,10 +110,13 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
         super.updateFormedValid();
 
         if (this.isActive()) {
-            getCurrentRecipeElectrodes();
+            getCurrentRecipeNonConsummables();
             getCurrentInventory();
+            //getElectrodeFromInventory();
 
-            if (!nonConsummInInventory.containsAll(currentRecipeNonConsummIngredient)) this.causeMaintenanceProblems();
+            //if (!currentRecipeNonConsummIngredient.stream().allMatch(nonConsummInInventory::contains)) this.causeMaintenanceProblems();
+
+            if (!nonConsummInInventory.containsAll(currentRecipeNonConsummIngredient)) this.doExplosion(1);
 
             if (getOffsetTimer() % 20 == 0) {
                 damageElectrode(20);
@@ -160,6 +181,16 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
         }
 
 
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
+        super.addInformation(stack, player, tooltip, advanced);
+
+        tooltip.add(I18n.format("tekcays_addon.machine.advanced_electrolyzer.tooltip.1"));
+        tooltip.add(I18n.format("tekcays_addon.machine.advanced_electrolyzer.tooltip.2"));
+        tooltip.add(I18n.format("tekcays_addon.machine.advanced_electrolyzer.tooltip.3"));
+        tooltip.add(I18n.format("tekcays_addon.machine.advanced_electrolyzer.tooltip.4"));
     }
 
 }
