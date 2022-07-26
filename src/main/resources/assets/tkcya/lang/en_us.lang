@@ -113,6 +113,8 @@ material.mica_pulp=Mica Based
 material.fuel=Burnable Fuel
 material.hot_flue_gas=Hot Flue Gas
 material.flue_gas=Flue Gas
+material.melon_oil=Melon Oil
+material.pumpkin_oil=Pumpkin Oil
 
 ##Misc
 material.hot_air=Hot Air

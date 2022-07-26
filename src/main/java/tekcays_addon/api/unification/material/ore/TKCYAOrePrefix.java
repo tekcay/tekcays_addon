@@ -32,7 +32,6 @@ public class TKCYAOrePrefix {
     // Others
 
     public static final OrePrefix bottleGlass = new OrePrefix("bottleGlass", -1, MarkerMaterials.Color.Colorless, null, SELF_REFERENCING, null);
-    public static final OrePrefix seed = new OrePrefix("seed", -1, MarkerMaterials.Color.Colorless, null, SELF_REFERENCING, null);
 
 }
 
