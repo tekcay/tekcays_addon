@@ -44,6 +44,8 @@ public class TKCYAMaterials {
     public static Material Fuel;
     public static Material HotFlueGas;
     public static Material FlueGas;
+    public static Material MelonOil;
+    public static Material PumpkinOil;
 
     /**
      * Misc

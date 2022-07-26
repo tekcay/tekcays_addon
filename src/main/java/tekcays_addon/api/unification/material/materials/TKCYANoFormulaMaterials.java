@@ -39,6 +39,19 @@ public class TKCYANoFormulaMaterials {
                 .fluidTemp(298)
                 .color(0x7a7372)
                 .build();
+
+        MelonOil = new Material.Builder(24006, "melon_oil")
+                .fluid()
+                .fluidTemp(298)
+                .color(0xc68479)
+                .build();
+
+        PumpkinOil = new Material.Builder(24007, "pumpkin_oil")
+                .fluid()
+                .fluidTemp(298)
+                .color(0xc6c079)
+                .build();
+
     }
 
 }

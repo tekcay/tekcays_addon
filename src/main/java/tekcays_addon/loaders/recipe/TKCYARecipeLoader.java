@@ -35,6 +35,7 @@ public class TKCYARecipeLoader {
         }
 
         if (meltingOverhaul.enableCastingOverhaul) {
+            FermentationHandler.init();
             GasCollectorRecipeHandler.init();
             GlassHandler.init();
             ShapedCraftingRecipes.molds();
