@@ -23,19 +23,13 @@ public class BlockLargeMultiblockCasing extends VariantBlock<BlockLargeMultibloc
         setDefaultState(getState(CasingType.MONEL_CASING));
     }
 
-    @Override
-    public boolean canCreatureSpawn(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EntityLiving.SpawnPlacementType type) {
-        return false;
-    }
-
     public enum CasingType implements IStringSerializable {
 
         MONEL_CASING("monel_casing"),
 
         STEEL_WALL("steel_wall"),
         GALVANIZED_STEEL_WALL("galvanized_steel_wall"),
-        STAINLESS_STEEL_WALL("stainless_steel_wall"),
-        STRONG_BRICK("strong_brick");
+        STAINLESS_STEEL_WALL("stainless_steel_wall");
 
         private final String name;
 

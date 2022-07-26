@@ -8,28 +8,28 @@
   },
   "variants": {
     "variant": {
-      "stainless_steel_wall": {
+      "brick": {
         "model": "minecraft:cube_all",
         "textures": {
-          "all": "gregtech:blocks/casings/large_multiblock_casing/stainless_steel_wall"
+          "all": "gregtech:blocks/casings/block_brick/brick"
         }
       },
-      "steel_wall": {
+      "reinforced_brick": {
         "model": "minecraft:cube_all",
         "textures": {
-          "all": "gregtech:blocks/casings/large_multiblock_casing/steel_wall"
+          "all": "gregtech:blocks/casings/block_brick/reinforced_brick"
         }
       },
-      "galvanized_steel_wall": {
+      "fireclay_brick": {
         "model": "minecraft:cube_all",
         "textures": {
-          "all": "gregtech:blocks/casings/large_multiblock_casing/galvanized_steel_wall"
+          "all": "gregtech:blocks/casings/block_brick/fireclay_brick"
         }
       },
-      "monel_casing": {
+      "strong_brick": {
         "model": "minecraft:cube_all",
         "textures": {
-          "all": "gregtech:blocks/casings/large_multiblock_casing/monel_casing"
+          "all": "gregtech:blocks/casings/block_brick/strong_brick"
         }
       }
     }
