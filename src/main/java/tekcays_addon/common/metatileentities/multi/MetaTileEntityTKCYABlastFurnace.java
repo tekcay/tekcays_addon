@@ -13,11 +13,9 @@ import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
+import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import gregtech.common.ConfigHolder;
-import gregtech.common.blocks.BlockMetalCasing;
-import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -35,10 +33,12 @@ import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.capability.impl.MultiParallelLogic;
 import tekcays_addon.api.metatileentity.mutiblock.RecipeMapMultiblockNoEnergyController;
+import tekcays_addon.api.pattern.TKCYATraceabilityPredicate;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.recipes.builders.TemperatureRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
 import javax.annotation.Nonnull;
@@ -53,6 +53,7 @@ import static tekcays_addon.api.utils.TKCYAValues.*;
 public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergyController {
 
 
+    private SimpleOverlayRenderer texture;
     private boolean canAchieveTargetTemp;
     private boolean hasEnoughGas;
     private boolean hasEnoughFluidHeatingValue, hasEnoughItemHeatingValue;
@@ -79,13 +80,18 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         increaseTemp = 1 + inputItemMultiplier * inputFluidMultiplier;
     }
 
+    /*
     public void setTargetTemp() {
         targetTemp = 2000;
     }
 
+     */
+
     public MetaTileEntityTKCYABlastFurnace(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.BLASTING_RECIPES);
         this.recipeMapWorkable = new MultiParallelLogic(this);
+
+        texture = BlockBrick.BrickType.BRICK.getTexture();
 
         temp = 300;
 
@@ -113,7 +119,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     protected void updateFormedValid() {
         super.updateFormedValid();
         setIncreaseTemp();
-        setTargetTemp();
 
         if (temp < runningRecipeTemp) this.recipeMapWorkable.invalidate();
 
@@ -430,14 +435,9 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         }
     }
 
-
-    protected IBlockState getCasingState() {
-        return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.PRIMITIVE_BRICKS);
-    }
-
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
-        return Textures.PRIMITIVE_BRICKS;
+        return this.texture;
     }
 
     @Override
@@ -456,11 +456,11 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
                 //Particle
                 //.aisle("#####", "#####", "##C##", "#####", "#####").setRepeatable(0, 1)
                 .where('S', selfPredicate())
-                .where('Y', states(getCasingState()))
-                .where('X', states(getCasingState())
+                .where('Y', TKCYATraceabilityPredicate.BLOCK_BRICKS.get())
+                .where('X', TKCYATraceabilityPredicate.BLOCK_BRICKS.get()
                         .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1))
                         .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setExactLimit(1)))
-                .where('O', states(getCasingState())
+                .where('O', TKCYATraceabilityPredicate.BLOCK_BRICKS.get()
                         .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMaxGlobalLimited(2))
                         .or(abilities(MultiblockAbility.IMPORT_ITEMS).setMinGlobalLimited(1,1).setMaxGlobalLimited(2)))
                 .where('I', heightIndicatorPredicate())
@@ -486,7 +486,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     public void invalidateStructure() {
         setTemp(300);
         setIncreaseTemp();
-        setTargetTemp();
+        //setTargetTemp();
         super.invalidateStructure();
         resetTileAbilities();
     }
@@ -521,6 +521,13 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         initializeAbilities();
         this.height = context.getOrDefault("blastFurnaceHeight", 1);
         this.recipeMapWorkable.setParallelLimit(height);
+
+        Object type = context.get("CoilType");
+        if (type instanceof BlockBrick.BrickType) {
+            this.targetTemp = ((BlockBrick.BrickType) type).getBrickTemperature();
+            this.texture = ((BlockBrick.BrickType) type).getTexture();
+        } else
+            this.targetTemp = BlockBrick.BrickType.BRICK.getBrickTemperature();
         //Particle
         //this.hasGasOutputHatchInt = context.getOrDefault("blastFurnaceHasGasOutput", 1);
     }
