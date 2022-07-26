@@ -28,6 +28,9 @@ public class TKCYATextures {
     // From MC
     public static SimpleOverlayRenderer MC_BRICK;
 
+    //Bricks
+    public static SimpleOverlayRenderer BRICK_GRAY;
+
     // Casings
     public static SimpleOverlayRenderer MACERATOR_CASING;
     public static SimpleOverlayRenderer BLAST_CASING;
@@ -55,6 +58,9 @@ public class TKCYATextures {
 
         //From MC
         MC_BRICK = new SimpleOverlayRenderer("mc_brick");
+
+        //Bricks
+        BRICK_GRAY = new SimpleOverlayRenderer("brick_gray");
 
         // Casings
         MACERATOR_CASING = new SimpleOverlayRenderer("casings/large_multiblock_casing/macerator_casing");

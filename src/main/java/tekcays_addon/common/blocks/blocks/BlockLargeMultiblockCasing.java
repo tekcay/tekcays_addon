@@ -20,7 +20,7 @@ public class BlockLargeMultiblockCasing extends VariantBlock<BlockLargeMultibloc
         setResistance(10.0f);
         setSoundType(SoundType.METAL);
         setHarvestLevel("pickaxe", 2);
-        setDefaultState(getState(CasingType.MACERATOR_CASING));
+        setDefaultState(getState(CasingType.MONEL_CASING));
     }
 
     @Override
@@ -30,13 +30,12 @@ public class BlockLargeMultiblockCasing extends VariantBlock<BlockLargeMultibloc
 
     public enum CasingType implements IStringSerializable {
 
-        MACERATOR_CASING("macerator_casing"),
-
         MONEL_CASING("monel_casing"),
 
         STEEL_WALL("steel_wall"),
         GALVANIZED_STEEL_WALL("galvanized_steel_wall"),
-        STAINLESS_STEEL_WALL("stainless_steel_wall");
+        STAINLESS_STEEL_WALL("stainless_steel_wall"),
+        STRONG_BRICK("strong_brick");
 
         private final String name;
 

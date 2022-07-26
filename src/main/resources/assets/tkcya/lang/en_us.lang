@@ -73,6 +73,9 @@ tkcya.machine.drum.high_density_polyethylene.name=HDPE Drum
 # casings
 tile.large_multiblock_casing.monel_casing.name=Monel Casing
 
+# bricks
+tile.large_multiblock_casing.strong_brick.name=Strong Brick
+
 # walls
 tile.large_multiblock_casing.steel_wall.name=Steel Wall
 tile.large_multiblock_casing.galvanized_steel_wall.name=Galvanized Steel Wall

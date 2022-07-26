@@ -26,6 +26,12 @@
           "all": "gregtech:blocks/casings/large_multiblock_casing/galvanized_steel_wall"
         }
       },
+      "strong_brick": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/casings/large_multiblock_casing/strong_brick"
+        }
+      },
       "monel_casing": {
         "model": "minecraft:cube_all",
         "textures": {
