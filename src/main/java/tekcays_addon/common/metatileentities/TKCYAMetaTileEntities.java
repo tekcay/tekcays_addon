@@ -34,6 +34,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityPrimitiveMelter PRIMITIVE_MELTER;
     public static MetaTileEntityElectricMelter ELECTRIC_MELTER;
     public static MetaTileEntityFuelMelter FUEL_MELTER;
+    public static MetaTileEntityPrimitiveFermenter PRIMITIVE_FERMENTER;
     public static MetaTileEntityAlloyingCrucible ALLOYING_CRUCIBLE;
     public static MetaTileEntityCastingTable CASTING_TABLE;
     public static SteamCooler STEAM_COOLER_BRONZE;
@@ -79,6 +80,7 @@ public class TKCYAMetaTileEntities {
             PRIMITIVE_MELTER = registerMetaTileEntity(11010, new MetaTileEntityPrimitiveMelter(tkcyaId("primitive_melter")));
             ELECTRIC_MELTER = registerMetaTileEntity(11011, new MetaTileEntityElectricMelter(tkcyaId("electric_melter")));
             FUEL_MELTER = registerMetaTileEntity(11012, new MetaTileEntityFuelMelter(tkcyaId("fuel_melter")));
+            PRIMITIVE_FERMENTER = registerMetaTileEntity(11051, new MetaTileEntityPrimitiveFermenter(tkcyaId("primitive_fermenter")));
         }
 
         if (TKCYAConfigHolder.meltingOverhaul.enableAlloyingOverhaul) {
