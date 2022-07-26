@@ -3,6 +3,7 @@ package tekcays_addon.loaders.recipe;
 import gregtech.api.recipes.ModHandler;
 import gregtech.api.unification.material.MarkerMaterials;
 import gregtech.api.unification.stack.UnificationEntry;
+import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
 import gregtech.loaders.recipe.MetaTileEntityLoader;
@@ -35,8 +36,8 @@ public class TKCYAMetaTileEntityLoader {
 
             ModHandler.addShapedRecipe(true, "casting_table", CASTING_TABLE.getStackForm(),
                     "PPP", "PhP", "PPP", 'P', MetaItems.COKE_OVEN_BRICK);
-            ModHandler.addShapedRecipe(true, "primitive_fermenter_controller", PRIMITIVE_FERMENTER.getStackForm(),
-                    " h ", " P ", " w ", 'P', WOOD_WALL);
+            ModHandler.addShapedRecipe(true, "primitive_fermenter", PRIMITIVE_FERMENTER.getStackForm(),
+                    " h ", " P ", " w ", 'P', MetaBlocks.STEAM_CASING.getItemVariant(WOOD_WALL));
         }
 
         if (TKCYAConfigHolder.miscOverhaul.enableMagneticOverhaul) {
