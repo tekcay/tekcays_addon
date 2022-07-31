@@ -104,7 +104,6 @@ public class TKCYARecipeLoader {
             TKCYAMeltingRecipeHandler.init();
             if (meltingOverhaul.enableBouleCrystallization) {
                 CrystallizerHandler.boules();
-                CrystallizerHandler.polymers();
             }
         }
 

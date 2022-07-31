@@ -68,7 +68,7 @@ public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<PrimitiveRecipeBuilder> CRYSTALLIZATION = new RecipeMap<>(
-            "crystallization", 0, 0, 1, 1, 1, 3, 0, 0, new PrimitiveRecipeBuilder(), false);
+            "crystallization", 0, 1, 1, 1, 1, 3, 0, 0, new PrimitiveRecipeBuilder(), false);
 
 
     @ZenProperty

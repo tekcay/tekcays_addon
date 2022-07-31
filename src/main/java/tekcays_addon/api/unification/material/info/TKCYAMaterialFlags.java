@@ -11,7 +11,6 @@ public class TKCYAMaterialFlags {
             .build();
 
     public static final MaterialFlag POLYMER = new MaterialFlag.Builder("polymer")
-            .requireFlags(GENERATE_PLATE)
             .build();
 
 }

@@ -39,7 +39,7 @@ public class TKCYAValues {
             ELECTRIC_PUMP_LV, ELECTRIC_PUMP_MV, ELECTRIC_PUMP_HV, ELECTRIC_PUMP_EV, ELECTRIC_PUMP_IV,
             ELECTRIC_PUMP_LuV, ELECTRIC_PUMP_ZPM};
 
-    public static final List<Material> GTCEu_POLYMERS = new ArrayList<>(){{
+    public static final List<Material> GTCEu_POLYMERS = new ArrayList<Material>(){{
         add(Polybenzimidazole);
         add(Polycaprolactam);
         add(Polydimethylsiloxane);
@@ -51,7 +51,7 @@ public class TKCYAValues {
         add(Polyethylene);
     }};
 
-    public static final List<Material> POLYMERS = new ArrayList<>(){{
+    public static final List<Material> POLYMERS = new ArrayList<Material>(){{
             add(HighDensityPolyethylene);
             add(Polypropylene);
             addAll(GTCEu_POLYMERS);
