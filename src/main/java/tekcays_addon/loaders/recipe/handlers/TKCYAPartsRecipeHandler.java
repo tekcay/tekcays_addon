@@ -25,6 +25,7 @@ import static gregtech.api.GTValues.LV;
 import static gregtech.api.GTValues.VA;
 import static gregtech.api.recipes.RecipeMaps.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
+import static tekcays_addon.api.unification.material.info.TKCYAMaterialFlags.POLYMER;
 import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
 import static tekcays_addon.api.utils.TKCYAValues.ELECTRODE_MATERIALS;
 import static tekcays_addon.api.utils.TKCYAValues.MOLD_MATERIALS;
@@ -122,6 +123,7 @@ public class TKCYAPartsRecipeHandler {
 
         for (Material m : MOLD_MATERIALS) {
             if (!material.hasProperty(PropertyKey.FLUID)) continue;
+            if (material.hasFlags(POLYMER)) continue; //Polymers are made in the crystallizer
             if (m.getFluid().getTemperature() > material.getFluid().getTemperature()) { //Compares temperatures of the mold material w/ and the fluid material
 
                 TKCYARecipeMaps.CASTING_TABLE_RECIPES.recipeBuilder()

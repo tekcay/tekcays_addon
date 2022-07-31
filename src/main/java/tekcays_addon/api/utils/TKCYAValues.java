@@ -15,9 +15,12 @@ import static gregtech.api.unification.ore.OrePrefix.*;
 
 import static gregtech.api.unification.ore.OrePrefix.gem;
 import static gregtech.common.items.MetaItems.*;
-import static tekcays_addon.api.unification.TKCYAMaterials.Ceramic;
+import static tekcays_addon.api.unification.TKCYAMaterials.*;
 import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -36,9 +39,25 @@ public class TKCYAValues {
             ELECTRIC_PUMP_LV, ELECTRIC_PUMP_MV, ELECTRIC_PUMP_HV, ELECTRIC_PUMP_EV, ELECTRIC_PUMP_IV,
             ELECTRIC_PUMP_LuV, ELECTRIC_PUMP_ZPM};
 
-    public static final Material[] GTCEu_POLYMERS = new Material[]{
-            Polybenzimidazole, Polycaprolactam, Polydimethylsiloxane, PolyphenyleneSulfide, Polytetrafluoroethylene, PolyvinylAcetate,
-            PolyvinylButyral, PolyvinylChloride, Polyethylene};
+    public static final List<Material> GTCEu_POLYMERS = new ArrayList<>(){{
+        add(Polybenzimidazole);
+        add(Polycaprolactam);
+        add(Polydimethylsiloxane);
+        add(PolyphenyleneSulfide);
+        add(Polytetrafluoroethylene);
+        add(PolyvinylAcetate);
+        add(PolyvinylButyral);
+        add(PolyvinylChloride);
+        add(Polyethylene);
+    }};
+
+    public static final List<Material> POLYMERS = new ArrayList<>(){{
+            add(HighDensityPolyethylene);
+            add(Polypropylene);
+            addAll(GTCEu_POLYMERS);
+        }};
+
+
 
     //////////////////
     // For the New Blast Furnace
