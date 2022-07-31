@@ -9,6 +9,7 @@ import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import static gregtech.api.GTValues.L;
 import static gregtech.api.recipes.RecipeMaps.EXTRACTOR_RECIPES;
 import static gregtech.api.unification.ore.OrePrefix.*;
+import static tekcays_addon.api.unification.material.info.TKCYAMaterialFlags.POLYMER;
 
 public class TKCYAMeltingRecipeHandler {
 
@@ -18,6 +19,7 @@ public class TKCYAMeltingRecipeHandler {
             if (!material.hasProperty(PropertyKey.DUST)) continue;
             if (!material.hasProperty(PropertyKey.FLUID)) continue;
             if (material.getFluid().getTemperature() <= 300) continue;
+            if (material.hasFlag(POLYMER)) continue;
             registerMeltingRecipes(material);
 
         }

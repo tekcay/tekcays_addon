@@ -1,15 +1,11 @@
 package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.GTValues;
-import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
-import gregtech.api.unification.ore.OrePrefix;
+
 import gregtech.common.items.MetaItems;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.utils.TKCYALog;
 
-import static tekcays_addon.api.utils.TKCYAValues.*;
-import static tekcays_addon.loaders.recipe.handlers.TKCYACastingTableRecipeHandler.MOLD_PRODUCTION;
 
 public class CrystallizerHandler {
 
