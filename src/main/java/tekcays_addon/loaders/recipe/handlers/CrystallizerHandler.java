@@ -2,8 +2,10 @@ package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.GTValues;
 import gregtech.api.unification.material.Materials;
+
 import gregtech.common.items.MetaItems;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
+
 
 public class CrystallizerHandler {
 
@@ -17,7 +19,5 @@ public class CrystallizerHandler {
                 .buildAndRegister();
 
     }
-
-
 
 }

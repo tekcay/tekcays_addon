@@ -16,6 +16,7 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.api.utils.TKCYAValues;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
@@ -25,6 +26,7 @@ import static gregtech.api.GTValues.LV;
 import static gregtech.api.GTValues.VA;
 import static gregtech.api.recipes.RecipeMaps.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
+import static tekcays_addon.api.unification.material.info.TKCYAMaterialFlags.POLYMER;
 import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
 import static tekcays_addon.api.utils.TKCYAValues.ELECTRODE_MATERIALS;
 import static tekcays_addon.api.utils.TKCYAValues.MOLD_MATERIALS;
@@ -122,7 +124,21 @@ public class TKCYAPartsRecipeHandler {
 
         for (Material m : MOLD_MATERIALS) {
             if (!material.hasProperty(PropertyKey.FLUID)) continue;
-            if (m.getFluid().getTemperature() > material.getFluid().getTemperature()) { //Compares temperatures of the mold material w/ and the fluid material
+
+            int fluidInputs = (int) (prefix.getMaterialAmount(material) * GTValues.L / GTValues.M);
+
+            //Polymers are made in the crystallizer
+            if (material.hasFlags(POLYMER)) {
+
+                TKCYARecipeMaps.CRYSTALLIZATION.recipeBuilder()
+                        .fluidInputs(material.getFluid(fluidInputs))
+                        .notConsumable(MOLD_PRODUCTION.get(prefix), m)
+                        .output(prefix, material)
+                        .duration(material.getFluid().getTemperature() * fluidInputs / 273)
+                        .buildAndRegister();
+
+            }
+            else if (m.getFluid().getTemperature() > material.getFluid().getTemperature()) { //Compares temperatures of the mold material w/ and the fluid material
 
                 TKCYARecipeMaps.CASTING_TABLE_RECIPES.recipeBuilder()
                         .fluidInputs(material.getFluid((int) (prefix.getMaterialAmount(material) * GTValues.L / GTValues.M)))
@@ -134,14 +150,14 @@ public class TKCYAPartsRecipeHandler {
                 //Air Cooled
 
                 TKCYARecipeMaps.CASTING_TABLE_RECIPES.recipeBuilder()
-                        .fluidInputs(material.getFluid((int) (prefix.getMaterialAmount(material) * GTValues.L / GTValues.M)), Materials.Air.getFluid(material.getFluid().getTemperature()))
+                        .fluidInputs(material.getFluid(fluidInputs), Materials.Air.getFluid(material.getFluid().getTemperature()))
                         .notConsumable(MOLD_PRODUCTION.get(prefix), m)
                         .output(prefix, material)
                         .duration((int) (0.8 * prefix.getMaterialAmount(material) * material.getFluid().getTemperature() / GTValues.M))
                         .buildAndRegister();
 
                 TKCYARecipeMaps.ELECTRIC_CASTING_RECIPES.recipeBuilder()
-                        .fluidInputs(material.getFluid((int) (prefix.getMaterialAmount(material) * GTValues.L / GTValues.M)), Materials.Air.getFluid(material.getFluid().getTemperature()))
+                        .fluidInputs(material.getFluid(fluidInputs), Materials.Air.getFluid(material.getFluid().getTemperature()))
                         .notConsumable(MOLD_PRODUCTION.get(prefix), m)
                         .output(prefix, material)
                         .duration((int) (0.6 * prefix.getMaterialAmount(material) * material.getFluid().getTemperature() / GTValues.M))
@@ -152,7 +168,7 @@ public class TKCYAPartsRecipeHandler {
                 //When using a gas collector, it outputs Hot Air
 
                 TKCYARecipeMaps.ELECTRIC_CASTING_RECIPES.recipeBuilder()
-                        .fluidInputs(material.getFluid((int) (prefix.getMaterialAmount(material) * GTValues.L / GTValues.M)), Materials.Air.getFluid(material.getFluid().getTemperature()))
+                        .fluidInputs(material.getFluid(fluidInputs), Materials.Air.getFluid(material.getFluid().getTemperature()))
                         .notConsumable(MOLD_PRODUCTION.get(prefix), m)
                         .notConsumable(TKCYAMetaItems.GAS_COLLECTOR)
                         .output(prefix, material)
@@ -164,7 +180,7 @@ public class TKCYAPartsRecipeHandler {
             } else { //Otherwise, it burns the mold
 
                 TKCYARecipeMaps.CASTING_TABLE_RECIPES.recipeBuilder()
-                        .fluidInputs(material.getFluid((int) (prefix.getMaterialAmount(material) * GTValues.L / GTValues.M)))
+                        .fluidInputs(material.getFluid(fluidInputs))
                         .input(MOLD_PRODUCTION.get(prefix), m)
                         .output(dust, Materials.Ash)
                         .duration(20)

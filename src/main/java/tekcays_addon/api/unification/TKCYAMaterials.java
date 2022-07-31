@@ -30,6 +30,8 @@ public class TKCYAMaterials {
 
         // Flags
         TKCYAMaterialFlagAddition.init();
+        TKCYAMaterialFlagAddition.polymersInit();
+
     }
 
 
