@@ -36,6 +36,10 @@ public class TKCYAValues {
             ELECTRIC_PUMP_LV, ELECTRIC_PUMP_MV, ELECTRIC_PUMP_HV, ELECTRIC_PUMP_EV, ELECTRIC_PUMP_IV,
             ELECTRIC_PUMP_LuV, ELECTRIC_PUMP_ZPM};
 
+    public static final Material[] GTCEu_POLYMERS = new Material[]{
+            Polybenzimidazole, Polycaprolactam, Polydimethylsiloxane, PolyphenyleneSulfide, Polytetrafluoroethylene, PolyvinylAcetate,
+    PolyvinylButyral, PolyvinylChloride, Polyethylene};
+
     //////////////////
     // For the New Blast Furnace
     //////////////////
