@@ -38,7 +38,7 @@ public class TKCYAValues {
 
     public static final Material[] GTCEu_POLYMERS = new Material[]{
             Polybenzimidazole, Polycaprolactam, Polydimethylsiloxane, PolyphenyleneSulfide, Polytetrafluoroethylene, PolyvinylAcetate,
-    PolyvinylButyral, PolyvinylChloride, Polyethylene};
+            PolyvinylButyral, PolyvinylChloride, Polyethylene};
 
     //////////////////
     // For the New Blast Furnace

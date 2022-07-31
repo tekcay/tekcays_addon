@@ -1,20 +1,21 @@
 package tekcays_addon.api.unification;
 
 
+import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.info.MaterialFlags;
+import tekcays_addon.api.utils.TKCYALog;
 
 
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.Ceramic;
 import static tekcays_addon.api.unification.material.info.TKCYAMaterialFlags.GENERATE_MOLDS;
+import static tekcays_addon.api.unification.material.info.TKCYAMaterialFlags.POLYMER;
+import static tekcays_addon.api.utils.TKCYAValues.GTCEu_POLYMERS;
 
 
 public class TKCYAMaterialFlagAddition {
-
-
-
 
     public static void init() {
 
@@ -37,7 +38,19 @@ public class TKCYAMaterialFlagAddition {
         Tungsten.addFlags(GENERATE_MOLDS);
         Carbon.addFlags(GENERATE_MOLDS);
 
+    }
 
+    public static void polymersInit() {
+
+        Polybenzimidazole.addFlags(POLYMER);
+        Polycaprolactam.addFlags(POLYMER);
+        Polydimethylsiloxane.addFlags(POLYMER);
+        PolyphenyleneSulfide.addFlags(POLYMER);
+        Polytetrafluoroethylene.addFlags(POLYMER);
+        PolyvinylAcetate.addFlags(POLYMER);
+        PolyvinylButyral.addFlags(POLYMER);
+        PolyvinylChloride.addFlags(POLYMER);
+        Polyethylene.addFlags(POLYMER);
 
     }
 }
