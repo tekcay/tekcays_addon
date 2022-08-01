@@ -33,6 +33,10 @@ public class TKCYAValues {
     public static final String GCYS_MODID = "gcys";
     public static final String GCYM_MODID = "gcym";
 
+    //Simple Values
+
+    public static final float CLEANROOM_MULTIPLIER = 1.2f;
+
     //Lists/Arrays
 
     public static final MetaItem.MetaValueItem[] ELECTRIC_PUMPS = new MetaItem.MetaValueItem[]{

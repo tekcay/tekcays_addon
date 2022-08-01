@@ -91,6 +91,8 @@ public class TKCYARecipeLoader {
         CasingsLoader.init();
         ChemicalChains.init();
         MineralChains.init();
+        PolymerHandler.init();
+        GTCEuRequireCleanRoomHandler.init();
     }
 
 
