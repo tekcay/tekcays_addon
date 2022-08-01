@@ -3,7 +3,6 @@ package tekcays_addon.common.blocks.blocks;
 import gregtech.api.block.VariantBlock;
 import gregtech.api.block.VariantItemBlock;
 import gregtech.api.unification.material.Material;
-import gregtech.api.unification.material.Materials;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -14,7 +13,6 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import tekcays_addon.api.render.TKCYATextures;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,7 +26,7 @@ public class BlockBrick extends VariantBlock<BlockBrick.BrickType> {
         setHardness(5.0f);
         setResistance(10.0f);
         setSoundType(SoundType.METAL);
-        setHarvestLevel("wrench", 2);
+        setHarvestLevel("pickaxe", 1);
         setDefaultState(getState(BrickType.BRICK));
     }
 
@@ -47,22 +45,18 @@ public class BlockBrick extends VariantBlock<BlockBrick.BrickType> {
 
     public enum BrickType implements IStringSerializable {
 
-        BRICK("brick", 1200, Materials.Cupronickel, TKCYATextures.BRICK),
-        REINFORCED_BRICK("reinforced_brick", 2700, Materials.Kanthal, TKCYATextures.REINFORCED_BRICK),
-        FIRECLAY_BRICK("fireclay_brick", 3600, Materials.Fireclay, TKCYATextures.FIRECLAY_BRICK),
-        STRONG_BRICK("strong_brick", 5000, Materials.Nichrome, TKCYATextures.STRONG_BRICK);
+        BRICK("brick", 1200),
+        REINFORCED_BRICK("reinforced_brick", 2000),
+        FIRECLAY_BRICK("fireclay_brick", 3600),
+        STRONG_BRICK("strong_brick", 5000);
 
 
         private final String name;
         private final int brickTemperature;
-        private final Material material;
-        private final SimpleOverlayRenderer texture;
 
-        BrickType(String name, int brickTemperature, Material material, SimpleOverlayRenderer texture) {
+        BrickType(String name, int brickTemperature) {
             this.name = name;
             this.brickTemperature = brickTemperature;
-            this.material = material;
-            this.texture = texture;
         }
 
         @Nonnull
@@ -73,11 +67,6 @@ public class BlockBrick extends VariantBlock<BlockBrick.BrickType> {
 
         public int getBrickTemperature() {
             return brickTemperature;
-        }
-        public SimpleOverlayRenderer getTexture() { return texture; }
-
-        public Material getMaterial() {
-            return material;
         }
 
     }
