@@ -12,7 +12,6 @@ import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
 import gregtech.client.renderer.ICubeRenderer;
-import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import gregtech.common.ConfigHolder;
 import gregtech.common.items.MetaItems;
 import net.minecraft.block.state.IBlockState;
@@ -364,7 +363,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.1"));
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.2"));
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.3"));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.4"));
+        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.4", targetTemp));
     }
 
     @Override

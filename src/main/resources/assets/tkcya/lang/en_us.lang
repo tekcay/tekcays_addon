@@ -36,7 +36,11 @@ tkcya.machine.alloying_crucible.name=Alloying Crucible
 tkcya.machine.casting_table.name=Casting Table
 tkcya.machine.electric_converter.name=Electric Converter
 tkcya.machine.primitive_bath.name=Primitive Bath
-tkcya.machine.tkcya_blast_furnace.name=Blast Furnace
+tkcya.machine.brick_blast_furnace.name=Brick Blast Furnace
+tkcya.machine.fireclay_brick_blast_furnace.name=Fireclay Brick Blast Furnace
+tkcya.machine.reinforced_brick_blast_furnace.name=Reinforced Brick Blast Furnace
+tkcya.machine.strong_brick_blast_furnace.name=Strong Brick Blast Furnace
+
 tkcya.machine.crystallizer.name=Crystallizer
 tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer
 
@@ -80,7 +84,7 @@ tile.block_brick.fireclay_brick.name=Fireclay Brick
 tile.block_brick.strong_brick.name=Strong Brick
 
 ## tooltips
-tile.block_brick.tooltip_heat=Base Heat Capacity: §e%,d K
+tile.block_brick.tooltip_heat=Max temperature: §e%,d K
 
 # walls
 tile.large_multiblock_casing.steel_wall.name=Steel Wall
@@ -222,9 +226,9 @@ tekcays_addon.multiblock.fuel_melter.tooltip.5=Target temperature: §a%d K§7.
 tekcays_addon.recipe.melter_temperature=Temperature: %dK
 
 tekcays_addon.machine.tkcya_blast_furnace.tooltip.1=Only runs recipes if the required temperature is set.
-tekcays_addon.machine.tkcya_blast_furnace.tooltip.2=The §aL§7 per tick required is exponentially related to the current temperature.
-tekcays_addon.machine.tkcya_blast_furnace.tooltip.3=The target temperature is set by the coils.
-tekcays_addon.machine.tkcya_blast_furnace.tooltip.4=The temperature increasing speed is set by the fireboxes.
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.2=Requires air and coal.
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.3=The temperature increasing speed can be improved by using hot air and coke.
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.4=Max temperature: §e%,d K.
 
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.1=Temperature: §a%d K§7.
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.2=Not enough gas
