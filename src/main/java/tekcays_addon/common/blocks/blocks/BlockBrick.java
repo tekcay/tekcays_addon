@@ -1,6 +1,6 @@
 package tekcays_addon.common.blocks.blocks;
 
-import gregtech.api.block.VariantActiveBlock;
+import gregtech.api.block.VariantBlock;
 import gregtech.api.block.VariantItemBlock;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
@@ -14,15 +14,13 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Keyboard;
 import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BlockBrick extends VariantActiveBlock<BlockBrick.BrickType> {
+public class BlockBrick extends VariantBlock<BlockBrick.BrickType> {
 
     public BlockBrick() {
         super(net.minecraft.block.material.Material.IRON);

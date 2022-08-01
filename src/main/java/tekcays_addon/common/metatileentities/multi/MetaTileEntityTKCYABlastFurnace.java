@@ -437,7 +437,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
-        return this.texture;
+        return Textures.PRIMITIVE_BRICKS;
     }
 
     @Override
@@ -522,7 +522,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         this.height = context.getOrDefault("blastFurnaceHeight", 1);
         this.recipeMapWorkable.setParallelLimit(height);
 
-        Object type = context.get("CoilType");
+        Object type = context.get("BrickType");
         if (type instanceof BlockBrick.BrickType) {
             this.targetTemp = ((BlockBrick.BrickType) type).getBrickTemperature();
             this.texture = ((BlockBrick.BrickType) type).getTexture();
