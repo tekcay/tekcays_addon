@@ -12,6 +12,7 @@ import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
 import gregtech.client.renderer.ICubeRenderer;
+import gregtech.client.renderer.texture.Textures;
 import gregtech.common.ConfigHolder;
 import gregtech.common.items.MetaItems;
 import net.minecraft.block.state.IBlockState;
@@ -364,6 +365,8 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.2"));
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.3"));
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.4", targetTemp));
+        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.5"));
+        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.6"));
     }
 
     @Override
@@ -443,18 +446,11 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     @Override
     protected ICubeRenderer getFrontOverlay() {
-        return TKCYATextures.ELECTRIC_MELTER_OVERLAY;
+        return Textures.COKE_OVEN_OVERLAY;
     }
 
     protected IBlockState getCasingState() {
         return iBlockState;
-
-        /*
-        if (brick.equals(BlockBrick.BrickType.BRICK)) return TKCYAMetaBlocks.BLOCK_BRICK.getState(BlockBrick.BrickType.BRICK);
-        //return TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
-        return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.PRIMITIVE_BRICKS);
-
-         */
     }
 
     @Override
