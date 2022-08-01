@@ -18,6 +18,7 @@ import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
+import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.metatileentities.multi.*;
 import tekcays_addon.common.metatileentities.steam.SteamCooler;
@@ -41,9 +42,16 @@ public class TKCYAMetaTileEntities {
     public static SteamCooler STEAM_COOLER_STEEL;
     public static MetaTileEntityConverter ELECTRIC_CONVERTER;
     public static MetaTileEntityPrimitiveBath PRIMITIVE_BATH;
-    public static MetaTileEntityTKCYABlastFurnace TKCYA_BLAST_FURNACE;
     public static MetaTileEntityCrystallizer CRYSTALLIZER;
     public static MetaTileEntityAdvancedElectrolyzer ADVANCED_ELECTROLYZER;
+
+    //Blast Furnaces
+    public static MetaTileEntityTKCYABlastFurnace BRICK_BLAST_FURNACE;
+    public static MetaTileEntityTKCYABlastFurnace FIRECLAY_BRICK_BLAST_FURNACE;
+    public static MetaTileEntityTKCYABlastFurnace REINFORCED_BRICK_BLAST_FURNACE;
+    public static MetaTileEntityTKCYABlastFurnace STRONG_BRICK_BLAST_FURNACE;
+
+
 
     // Drums
     public static MetaTileEntityDrum WOODEN_DRUM;
@@ -56,6 +64,8 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityDrum POLYTETRAFLUOROETHYLENE_DRUM;
     public static MetaTileEntityDrum POLYPROPYLENE_DRUM;
     public static MetaTileEntityDrum HIGH_DENSITY_POLYETHYLENE_DRUM;
+
+    //Tanks
     public static TKCYAMetaTileEntityMultiblockTank WOODEN_TANK;
     public static TKCYAMetaTileEntityMultiblockTank STEEL_TANK;
     public static TKCYAMetaTileEntityMultiblockTank GALVANIZED_STEEL_TANK;
@@ -80,7 +90,7 @@ public class TKCYAMetaTileEntities {
             PRIMITIVE_MELTER = registerMetaTileEntity(11010, new MetaTileEntityPrimitiveMelter(tkcyaId("primitive_melter")));
             ELECTRIC_MELTER = registerMetaTileEntity(11011, new MetaTileEntityElectricMelter(tkcyaId("electric_melter")));
             FUEL_MELTER = registerMetaTileEntity(11012, new MetaTileEntityFuelMelter(tkcyaId("fuel_melter")));
-            PRIMITIVE_FERMENTER = registerMetaTileEntity(11051, new MetaTileEntityPrimitiveFermenter(tkcyaId("primitive_fermenter")));
+            PRIMITIVE_FERMENTER = registerMetaTileEntity(11056, new MetaTileEntityPrimitiveFermenter(tkcyaId("primitive_fermenter")));
         }
 
         if (TKCYAConfigHolder.meltingOverhaul.enableAlloyingOverhaul) {
@@ -101,7 +111,11 @@ public class TKCYAMetaTileEntities {
 
         if (TKCYAConfigHolder.meltingOverhaul.enableBlastingOverhaul) {
             ELECTRIC_CONVERTER = registerMetaTileEntity(11022, new MetaTileEntityConverter(tkcyaId("electric_converter")));
-            TKCYA_BLAST_FURNACE = registerMetaTileEntity(11023, new MetaTileEntityTKCYABlastFurnace(tkcyaId("tkcya_blast_furnace")));
+
+            BRICK_BLAST_FURNACE = registerMetaTileEntity(11051, new MetaTileEntityTKCYABlastFurnace(tkcyaId("brick_blast_furnace"), BlockBrick.BrickType.BRICK));
+            FIRECLAY_BRICK_BLAST_FURNACE = registerMetaTileEntity(11052, new MetaTileEntityTKCYABlastFurnace(tkcyaId("fireclay_brick_blast_furnace"), BlockBrick.BrickType.FIRECLAY_BRICK));
+            REINFORCED_BRICK_BLAST_FURNACE = registerMetaTileEntity(11053, new MetaTileEntityTKCYABlastFurnace(tkcyaId("reinforced_brick_blast_furnace"), BlockBrick.BrickType.REINFORCED_BRICK));
+            STRONG_BRICK_BLAST_FURNACE = registerMetaTileEntity(11054, new MetaTileEntityTKCYABlastFurnace(tkcyaId("strong_brick_blast_furnace"), BlockBrick.BrickType.STRONG_BRICK));
         }
 
         if (TKCYAConfigHolder.miscOverhaul.enableGalvanizedSteel) {

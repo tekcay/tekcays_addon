@@ -20,17 +20,10 @@ public class BlockLargeMultiblockCasing extends VariantBlock<BlockLargeMultibloc
         setResistance(10.0f);
         setSoundType(SoundType.METAL);
         setHarvestLevel("pickaxe", 2);
-        setDefaultState(getState(CasingType.MACERATOR_CASING));
-    }
-
-    @Override
-    public boolean canCreatureSpawn(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EntityLiving.SpawnPlacementType type) {
-        return false;
+        setDefaultState(getState(CasingType.MONEL_CASING));
     }
 
     public enum CasingType implements IStringSerializable {
-
-        MACERATOR_CASING("macerator_casing"),
 
         MONEL_CASING("monel_casing"),
 

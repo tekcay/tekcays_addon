@@ -1,5 +1,6 @@
 package tekcays_addon.common.blocks;
 
+import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.Block;
@@ -18,15 +19,20 @@ public class TKCYAMetaBlocks {
     }
 
     public static BlockLargeMultiblockCasing LARGE_MULTIBLOCK_CASING;
+    public static BlockBrick BLOCK_BRICK;
 
     public static void init() {
         LARGE_MULTIBLOCK_CASING = new BlockLargeMultiblockCasing();
         LARGE_MULTIBLOCK_CASING.setRegistryName("large_multiblock_casing");
+
+        BLOCK_BRICK = new BlockBrick();
+        BLOCK_BRICK.setRegistryName("block_brick");
     }
 
     @SideOnly(Side.CLIENT)
     public static void registerItemModels() {
         registerItemModel(LARGE_MULTIBLOCK_CASING);
+        registerItemModel(BLOCK_BRICK);
     }
 
     @SideOnly(Side.CLIENT)
