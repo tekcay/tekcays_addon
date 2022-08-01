@@ -21,6 +21,9 @@ public class TKCYAConfigHolder {
     @Config.Comment("Config options applying to all TKCYA Multiblocks")
     @Config.Name("Storage overhaul")
     public static StorageOverhaul storageOverhaul = new StorageOverhaul();
+    @Config.Comment("Distillation overhaul")
+    @Config.Name("Distillation overhaul")
+    public static DistillationOverhaul distillationOverhaul = new DistillationOverhaul();
 
 
     public static class MiscOverhaul {
@@ -86,5 +89,10 @@ public class TKCYAConfigHolder {
         @Config.Comment({"Remove SuperTanks and Quantum Tanks"})
         public boolean removeOPTanks = true;
 
+    }
+
+    public static class DistillationOverhaul {
+        @Config.Comment({"Replaces GTCEu Distillation Tower by a new that works differently."})
+        public boolean enableDistillationOverhaul = true;
     }
 }

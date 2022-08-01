@@ -65,6 +65,15 @@ public class TKCYAValues {
         }};
 
 
+    //////////////////
+    // For the New Distillation Tower
+    //////////////////
+
+    private static final Map<Fluid, Integer> FLUID_BP = Stream.of(new Object[][] {
+            {Materials.Air.getFluid(), 1},
+            {TKCYAMaterials.VeryHotAir.getFluid(), 10},
+    }).collect(Collectors.toMap(data -> (Fluid) data[0], data -> (Integer) data[1]));
+
 
     //////////////////
     // For the New Blast Furnace
