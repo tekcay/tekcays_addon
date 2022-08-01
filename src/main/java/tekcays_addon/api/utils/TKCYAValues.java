@@ -35,6 +35,9 @@ public class TKCYAValues {
 
     //Simple Values
 
+    /**
+     * Improves the yield by {20%}.
+     */
     public static final float CLEANROOM_MULTIPLIER = 1.2f;
 
     //Lists/Arrays

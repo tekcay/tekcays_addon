@@ -1,5 +1,6 @@
 package tekcays_addon.loaders.recipe.handlers;
 
+import gregtech.api.metatileentity.multiblock.CleanroomType;
 import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import tekcays_addon.api.utils.TKCYAValues;
 
@@ -20,7 +21,7 @@ public class GTCEuRequireCleanRoomHandler {
                 .fluidInputs(Oxygen.getFluid(1000))
                 .fluidInputs(Ethylene.getFluid(144))
                 .fluidOutputs(Polyethylene.getFluid((int) (216 * TKCYAValues.CLEANROOM_MULTIPLIER)))
-                .cleanroom()
+                .cleanroom(CleanroomType.CLEANROOM)
                 .duration(160).EUt(VA[LV]).buildAndRegister();
 
         LARGE_CHEMICAL_RECIPES.recipeBuilder()
@@ -37,7 +38,7 @@ public class GTCEuRequireCleanRoomHandler {
                 .fluidInputs(Ethylene.getFluid(2160))
                 .fluidInputs(TitaniumTetrachloride.getFluid(100))
                 .fluidOutputs(Polyethylene.getFluid((int) (4320 * TKCYAValues.CLEANROOM_MULTIPLIER)))
-                .cleanroom()
+                .cleanroom(CleanroomType.CLEANROOM)
                 .duration(800).EUt(VA[LV]).buildAndRegister();
         
         //Polyvinylchloride
@@ -47,7 +48,7 @@ public class GTCEuRequireCleanRoomHandler {
                 .fluidInputs(Oxygen.getFluid(1000))
                 .fluidInputs(VinylChloride.getFluid(144))
                 .fluidOutputs(PolyvinylChloride.getFluid((int) (216 * TKCYAValues.CLEANROOM_MULTIPLIER)))
-                .cleanroom()
+                .cleanroom(CleanroomType.CLEANROOM)
                 .duration(160).EUt(VA[LV]).buildAndRegister();
 
         LARGE_CHEMICAL_RECIPES.recipeBuilder()
@@ -56,7 +57,7 @@ public class GTCEuRequireCleanRoomHandler {
                 .fluidInputs(VinylChloride.getFluid(2160))
                 .fluidInputs(TitaniumTetrachloride.getFluid(100))
                 .fluidOutputs(PolyvinylChloride.getFluid((int) (3240 * TKCYAValues.CLEANROOM_MULTIPLIER)))
-                .cleanroom()
+                .cleanroom(CleanroomType.CLEANROOM)
                 .duration(800).EUt(VA[LV]).buildAndRegister();
 
         LARGE_CHEMICAL_RECIPES.recipeBuilder()
@@ -65,7 +66,7 @@ public class GTCEuRequireCleanRoomHandler {
                 .fluidInputs(VinylChloride.getFluid(2160))
                 .fluidInputs(TitaniumTetrachloride.getFluid(100))
                 .fluidOutputs(PolyvinylChloride.getFluid((int) (4320 * TKCYAValues.CLEANROOM_MULTIPLIER)))
-                .cleanroom()
+                .cleanroom(CleanroomType.CLEANROOM)
                 .duration(800).EUt(VA[LV]).buildAndRegister();
         
         //PTFE
@@ -75,7 +76,7 @@ public class GTCEuRequireCleanRoomHandler {
                 .fluidInputs(Oxygen.getFluid(1000))
                 .fluidInputs(Tetrafluoroethylene.getFluid(144))
                 .fluidOutputs(Polytetrafluoroethylene.getFluid((int) (216 * TKCYAValues.CLEANROOM_MULTIPLIER)))
-                .cleanroom()
+                .cleanroom(CleanroomType.CLEANROOM)
                 .duration(160).EUt(VA[LV]).buildAndRegister();
 
         LARGE_CHEMICAL_RECIPES.recipeBuilder()
@@ -84,7 +85,7 @@ public class GTCEuRequireCleanRoomHandler {
                 .fluidInputs(Tetrafluoroethylene.getFluid(2160))
                 .fluidInputs(TitaniumTetrachloride.getFluid(100))
                 .fluidOutputs(Polytetrafluoroethylene.getFluid((int) (3240 * TKCYAValues.CLEANROOM_MULTIPLIER)))
-                .cleanroom()
+                .cleanroom(CleanroomType.CLEANROOM)
                 .duration(800).EUt(VA[LV]).buildAndRegister();
 
         LARGE_CHEMICAL_RECIPES.recipeBuilder()
@@ -93,7 +94,7 @@ public class GTCEuRequireCleanRoomHandler {
                 .fluidInputs(Tetrafluoroethylene.getFluid(2160))
                 .fluidInputs(TitaniumTetrachloride.getFluid(100))
                 .fluidOutputs(Polytetrafluoroethylene.getFluid((int) (4320 * TKCYAValues.CLEANROOM_MULTIPLIER)))
-                .cleanroom()
+                .cleanroom(CleanroomType.CLEANROOM)
                 .duration(800).EUt(VA[LV]).buildAndRegister();
 
     }

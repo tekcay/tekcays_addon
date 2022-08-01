@@ -1,5 +1,6 @@
 package tekcays_addon.loaders.recipe.handlers;
 
+import gregtech.api.metatileentity.multiblock.CleanroomType;
 import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import tekcays_addon.api.utils.TKCYAValues;
 
@@ -54,7 +55,7 @@ public class PolymerHandler {
                 .fluidInputs(Oxygen.getFluid(1000))
                 .fluidInputs(Propene.getFluid(144))
                 .fluidOutputs(Polypropylene.getFluid((int) (215 * TKCYAValues.CLEANROOM_MULTIPLIER)))
-                .cleanroom()
+                .cleanroom(CleanroomType.CLEANROOM)
                 .duration(160).EUt(VA[LV]).buildAndRegister();
 
         LARGE_CHEMICAL_RECIPES.recipeBuilder()
@@ -63,7 +64,7 @@ public class PolymerHandler {
                 .fluidInputs(Propene.getFluid(2160))
                 .fluidInputs(TitaniumTetrachloride.getFluid(100))
                 .fluidOutputs(Polypropylene.getFluid((int) (3240 * TKCYAValues.CLEANROOM_MULTIPLIER)))
-                .cleanroom()
+                .cleanroom(CleanroomType.CLEANROOM)
                 .duration(800).EUt(VA[LV]).buildAndRegister();
 
         LARGE_CHEMICAL_RECIPES.recipeBuilder()
@@ -72,7 +73,7 @@ public class PolymerHandler {
                 .fluidInputs(Propene.getFluid(2160))
                 .fluidInputs(TitaniumTetrachloride.getFluid(100))
                 .fluidOutputs(Polypropylene.getFluid((int) (4320 * TKCYAValues.CLEANROOM_MULTIPLIER)))
-                .cleanroom()
+                .cleanroom(CleanroomType.CLEANROOM)
                 .duration(800).EUt(VA[LV]).buildAndRegister();
 
         //HDPE
@@ -114,7 +115,7 @@ public class PolymerHandler {
                 .fluidInputs(Oxygen.getFluid(1000))
                 .fluidInputs(Ethylene.getFluid(144 * 4))
                 .fluidOutputs(HighDensityPolyethylene.getFluid((int) (215 * TKCYAValues.CLEANROOM_MULTIPLIER)))
-                .cleanroom()
+                .cleanroom(CleanroomType.CLEANROOM)
                 .duration(160).EUt(VA[LV]).buildAndRegister();
 
         LARGE_CHEMICAL_RECIPES.recipeBuilder()
@@ -123,7 +124,7 @@ public class PolymerHandler {
                 .fluidInputs(Ethylene.getFluid(2160 * 4))
                 .fluidInputs(TitaniumTetrachloride.getFluid(100))
                 .fluidOutputs(HighDensityPolyethylene.getFluid((int) (3240 * TKCYAValues.CLEANROOM_MULTIPLIER)))
-                .cleanroom()
+                .cleanroom(CleanroomType.CLEANROOM)
                 .duration(800).EUt(VA[LV]).buildAndRegister();
 
         LARGE_CHEMICAL_RECIPES.recipeBuilder()
@@ -132,7 +133,7 @@ public class PolymerHandler {
                 .fluidInputs(Ethylene.getFluid(2160 * 4))
                 .fluidInputs(TitaniumTetrachloride.getFluid(100))
                 .fluidOutputs(HighDensityPolyethylene.getFluid((int) (4320 * TKCYAValues.CLEANROOM_MULTIPLIER)))
-                .cleanroom()
+                .cleanroom(CleanroomType.CLEANROOM)
                 .duration(800).EUt(VA[LV]).buildAndRegister();
         
         
