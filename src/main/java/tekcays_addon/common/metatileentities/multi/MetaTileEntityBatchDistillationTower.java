@@ -84,11 +84,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         increaseTemp = 1;
     }
 
-
-
-
-
-
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
@@ -301,6 +296,8 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         super.writeToNBT(data);
         data.setInteger("temp", this.temp);
         data.setInteger("targetTemp", this.targetTemp);
+        data.setInteger("bp", bp);
+        data.setInteger("toFill", toFill);
         data.setBoolean("hasEnoughEnergy", this.hasEnoughEnergy);
         return data;
     }
@@ -319,6 +316,8 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         super.readFromNBT(data);
         this.temp = data.getInteger("temp");
         this.targetTemp = data.getInteger("targetTemp");
+        bp = data.getInteger("bp");
+        toFill = data.getInteger("toFill");
         this.hasEnoughEnergy = data.getBoolean("hasEnoughEnergy");
     }
 
@@ -327,6 +326,8 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         super.writeInitialSyncData(buf);
         buf.writeInt(this.temp);
         buf.writeInt(this.targetTemp);
+        buf.writeInt(bp);
+        buf.writeInt(toFill);
         buf.writeBoolean(this.hasEnoughEnergy);
     }
 
@@ -335,6 +336,8 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         super.receiveInitialSyncData(buf);
         this.temp = buf.readInt();
         this.targetTemp = buf.readInt();
+        bp = buf.readInt();
+        toFill = buf.readInt();
         this.hasEnoughEnergy = buf.readBoolean();
     }
 }
