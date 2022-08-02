@@ -52,6 +52,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     private List<FluidStack> toDistill = new ArrayList<>();
     private Map<Integer, FluidStack> toDistillBP = new TreeMap<>();
     private int temp, targetTemp, increaseTemp;
+    private int bp, toFill;
     private int outputRate, energyCost, parallel;
 
     private boolean hasEnoughEnergy;
@@ -62,6 +63,8 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         outputRate = 0;
         targetTemp = 0;
         energyCost = 0;
+        bp = 0;
+        toFill = 0;
     }
 
     @Override
@@ -94,75 +97,84 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     public void updateFormedValid() {
         super.updateFormedValid();
 
-        FluidStack inputFluidStack = inputFluidInventory.getTankAt(0).getFluid();
+        if (toDistillBP.isEmpty()) {
 
-        if (inputFluidStack == null) return;
+            FluidStack inputFluidStack = inputFluidInventory.getTankAt(0).getFluid();
 
-        for (FluidStack fs : NEW_DISTILLATION_RECIPES.keySet()) {
+            if (inputFluidStack == null) return;
 
-            if (!inputFluidStack.getFluid().equals(fs.getFluid())) continue;
+            for (FluidStack fs : NEW_DISTILLATION_RECIPES.keySet()) {
 
-            int test = inputFluidStack.amount % fs.amount;
+                if (!inputFluidStack.getFluid().equals(fs.getFluid())) continue;
 
-            parallel = (inputFluidStack.amount - test) / fs.amount;
-            FluidStack toDrain = new FluidStack(fs.getFluid(), fs.amount * parallel);
-            inputFluidInventory.drain(toDrain, true);
-            //this.recipeMapWorkable.isActive();
+                int test = inputFluidStack.amount % fs.amount;
+
+                parallel = (inputFluidStack.amount - test) / fs.amount;
+                FluidStack toDrain = new FluidStack(fs.getFluid(), fs.amount * parallel);
+                inputFluidInventory.drain(toDrain, true);
+
+                //this.recipeMapWorkable.isActive();
+            }
+
+            DistillationMethods.setToDistillBP(distillate, toDistillBP);
+
         }
 
-        DistillationMethods.setToDistillBP(distillate, toDistillBP);
+        bp = new ArrayList<>(toDistillBP.keySet()).get(0);
+        toFill = toDistillBP.get(bp).amount;
 
-        if (toDistillBP.isEmpty()) return;
+        TKCYALog.logger.info("bp = " + bp);
+        //Not hot enough to boil first product
+        if (temp < bp) {
+            TKCYALog.logger.info("does it go here3");
 
-        for (int bp : toDistillBP.keySet()) {
-
-            TKCYALog.logger.info("bp = " + bp);
-            //Hot enough to boil first product
-            while (temp < bp) {
+            if (getOffsetTimer() % 20 == 0) {
+                TKCYALog.logger.info("does it go here2");
 
                 energyCost = temperatureEnergyCostBatchDistillationTower(temp + increaseTemp);
                 hasEnoughEnergy = enoughEnergyToDrain(energyContainer, energyCost);
 
+                if (hasEnoughEnergy) {
+
+                    TKCYALog.logger.info("does it go here");
+                    drainEnergy(energyContainer, energyCost);
+                    setTemp(Math.min(temp + increaseTemp, bp));
+                    TKCYALog.logger.info("temp = " + temp);
+
+                } else setTemp(Math.max(temp - increaseTemp, 300));
+            }
+                //if (!hasEnoughEnergy && temp == 300) break;
+        }
+
+        //Placed here in case of interrupted process
+
+        TKCYALog.logger.info("toFill = " + toFill);
+
+        //Hot enough to boil product
+        if (temp == bp) {
+
+            hasEnoughEnergy = enoughEnergyToDrain(energyContainer, energyCost);
+
+            if (toFill > 0 && hasEnoughEnergy) {
+
                 if (getOffsetTimer() % 20 == 0) {
 
-                    if (hasEnoughEnergy) {
+                    Fluid fluid = toDistillBP.get(bp).getFluid();
 
-                        TKCYALog.logger.info("does it go here");
-                        drainEnergy(energyContainer, energyCost);
-                        setTemp(Math.min(temp + increaseTemp, bp));
-                        TKCYALog.logger.info("temp = " + temp);
-
-                    } else setTemp(Math.max(temp - increaseTemp, 300));
-                }
-                if (temp == 300) break;
-            }
-
-            //Placed here in case of interrupted process
-            int toFill = toDistillBP.get(bp).amount;
-            TKCYALog.logger.info("toFill = " + toFill);
-
-            //Hot enough to boil product
-            while (temp == bp) {
-
-                Fluid fluid = toDistillBP.get(bp).getFluid();
-                while (toFill > 0 && hasEnoughEnergy) {
-
-                    if (getOffsetTimer() % 20 == 0) {
-
-                        if (toFill - outputRate >= 0) {
-                            outputFluidInventory.fill(new FluidStack(fluid, outputRate), true);
-                            toFill -= outputRate;
-                        } else {
-                            outputFluidInventory.fill(new FluidStack(fluid, toFill), true);
-                            toFill = 0;
-                        }
+                    if (toFill - outputRate >= 0) {
+                        outputFluidInventory.fill(new FluidStack(fluid, outputRate), true);
+                        toFill -= outputRate;
+                    } else {
+                        outputFluidInventory.fill(new FluidStack(fluid, toFill), true);
+                        toFill = 0;
+                        toDistillBP.remove(bp);
                     }
-                    hasEnoughEnergy = enoughEnergyToDrain(energyContainer, energyCost);
                 }
             }
-
-
         }
+
+
+
     }
 
 
