@@ -54,6 +54,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     private Map<Integer, FluidStack> toDistillBP = new TreeMap<>();
     private int temp, targetTemp, increaseTemp;
     private int outputRate, energyCost, parallel;
+    private int bp, toFill;
 
     private boolean hasEnoughEnergy;
 
@@ -82,6 +83,14 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
     public void setIncreaseTemp() {
         increaseTemp = 1;
+    }
+
+    public void setBp() {
+        bp = new ArrayList<>(toDistillBP.keySet()).get(0);
+    }
+
+    public void setToFill() {
+        toFill = toDistillBP.get(bp).amount;
     }
 
     @Override
@@ -116,15 +125,15 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
             }
 
             DistillationMethods.setToDistillBP(distillate, toDistillBP);
-            setBp(toDistillBP);
-            setToFill(toDistillBP);
+            setBp();
+            setToFill();
 
         }
 
         if (toFill == 0) {
             toDistillBP.remove(bp);
-            setBp(toDistillBP);
-            setToFill(toDistillBP);
+            setBp();
+            setToFill();
         }
 
 
@@ -296,8 +305,9 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         super.writeToNBT(data);
         data.setInteger("temp", this.temp);
         data.setInteger("targetTemp", this.targetTemp);
-        data.setInteger("bp", bp);
-        data.setInteger("toFill", toFill);
+        data.setInteger("bp", this.bp);
+        data.setInteger("toFill", this.toFill);
+        data.setInteger("energyCost", this.energyCost);
         data.setBoolean("hasEnoughEnergy", this.hasEnoughEnergy);
         return data;
     }
@@ -316,8 +326,9 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         super.readFromNBT(data);
         this.temp = data.getInteger("temp");
         this.targetTemp = data.getInteger("targetTemp");
-        bp = data.getInteger("bp");
-        toFill = data.getInteger("toFill");
+        this.bp = data.getInteger("bp");
+        this.toFill = data.getInteger("toFill");
+        this.energyCost = data.getInteger("energyCost");
         this.hasEnoughEnergy = data.getBoolean("hasEnoughEnergy");
     }
 
@@ -326,8 +337,9 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         super.writeInitialSyncData(buf);
         buf.writeInt(this.temp);
         buf.writeInt(this.targetTemp);
-        buf.writeInt(bp);
-        buf.writeInt(toFill);
+        buf.writeInt(this.bp);
+        buf.writeInt(this.toFill);
+        buf.writeInt(this.energyCost);
         buf.writeBoolean(this.hasEnoughEnergy);
     }
 
@@ -336,8 +348,9 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         super.receiveInitialSyncData(buf);
         this.temp = buf.readInt();
         this.targetTemp = buf.readInt();
-        bp = buf.readInt();
-        toFill = buf.readInt();
+        this.bp = buf.readInt();
+        this.toFill = buf.readInt();
+        this.energyCost = buf.readInt();
         this.hasEnoughEnergy = buf.readBoolean();
     }
 }
