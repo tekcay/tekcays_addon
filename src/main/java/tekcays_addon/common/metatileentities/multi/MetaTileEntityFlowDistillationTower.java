@@ -7,7 +7,6 @@ import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.recipes.CountableIngredient;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.client.renderer.ICubeRenderer;
@@ -29,32 +28,31 @@ import java.util.function.Function;
 
 import static gregtech.api.util.RelativeDirection.*;
 
-public class MetaTileEntityAdvancedDistillationTower extends RecipeMapMultiblockController {
+public class MetaTileEntityFlowDistillationTower extends RecipeMapMultiblockController {
 
-    private List<CountableIngredient> inputs = new ArrayList<>();
+    private List<FluidStack> inputs = new ArrayList<>();
     private List<FluidStack> outputs = new ArrayList<>();
+    private List<FluidStack> toDistill = new ArrayList<>();
     private int temp;
     private int targetTemp;
 
-    public MetaTileEntityAdvancedDistillationTower(ResourceLocation metaTileEntityId) {
+    public MetaTileEntityFlowDistillationTower(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, RecipeMaps.DISTILLATION_RECIPES);
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTileEntityAdvancedDistillationTower(metaTileEntityId);
+        return new MetaTileEntityFlowDistillationTower(metaTileEntityId);
     }
 
     @Override
     public void updateFormedValid() {
         super.updateFormedValid();
 
-        //targetTemp = inputs.get(0).getIngredient()  //TODO method to return a `FluidStack`
-        if (temp < targetTemp) {
-            temp += 5;
-        }
 
     }
+
+
 
 
 
@@ -98,8 +96,9 @@ public class MetaTileEntityAdvancedDistillationTower extends RecipeMapMultiblock
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        inputs = recipe.getInputs();
+        inputs = recipe.getFluidInputs();
         outputs = recipe.getAllFluidOutputs(-1);
+
         return true;
     }
 

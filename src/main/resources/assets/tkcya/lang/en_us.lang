@@ -36,13 +36,20 @@ tkcya.machine.alloying_crucible.name=Alloying Crucible
 tkcya.machine.casting_table.name=Casting Table
 tkcya.machine.electric_converter.name=Electric Converter
 tkcya.machine.primitive_bath.name=Primitive Bath
+tkcya.machine.crystallizer.name=Crystallizer
+tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer
+
+## distillation towers
+tkcya.machine.batch_distillation_tower.name=Batch Distillation Tower
+tkcya.machine.flow_distillation_tower.name=Flow Distillation Tower
+
+## blast furnace
 tkcya.machine.brick_blast_furnace.name=Brick Blast Furnace
 tkcya.machine.fireclay_brick_blast_furnace.name=Fireclay Brick Blast Furnace
 tkcya.machine.reinforced_brick_blast_furnace.name=Reinforced Brick Blast Furnace
 tkcya.machine.strong_brick_blast_furnace.name=Strong Brick Blast Furnace
 
-tkcya.machine.crystallizer.name=Crystallizer
-tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer
+
 
 
 # multiblock descriptions
@@ -238,6 +245,9 @@ tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4=Consumption: %d L/t of %s
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.5=Consumption: 0 L/t.
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.6=Target temperature: §a%d K§7.
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.7=Not enough solid fuel
+
+tkcya.multiblock.distillation_tower_temperature=Temperature: §a%d K§7.
+tkcya.multiblock.distillation_tower_energy_cost=Consumption: %d EU/t.
 
 #For debugging
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.8=Stored heat from gas: %d

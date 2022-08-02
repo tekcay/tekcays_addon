@@ -41,6 +41,8 @@ import com.google.common.collect.Lists;
 import javax.annotation.Nullable;
 import javax.annotation.Nonnull;
 
+import static tekcays_addon.api.capability.impl.MultiblocksMethods.temperatureEnergyCostElectricMelter;
+
 public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController{
 
     private int temp, targetTemp, increaseTemp;
@@ -85,14 +87,12 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController{
             canAchieveTargetTemp = true;
         }
     }
-    public int temperatureEnergyCost(int temp) {
-        return temp <= 300 ? 0 : (int) Math.exp(((double) temp - 100) / 100);  // (int) (1.5 * Math.pow(10, -10) * Math.pow(temp, 3.6) + 10)
-    }
+
     private void stepTowardsTargetTemp() {
         canAchieveTargetTemp = true;
 
         if (temp >= targetTemp) return;
-        if (getEnergy() >= temperatureEnergyCost(temp + increaseTemp)  && hasEnoughEnergy) {
+        if (getEnergy() >= temperatureEnergyCostElectricMelter(temp + increaseTemp)  && hasEnoughEnergy) {
             setTemp(temp + increaseTemp);
         } else {
             canAchieveTargetTemp = false;
@@ -101,8 +101,10 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController{
 
     private boolean drainEnergy() {
 
-        if (getEnergy() != 0 && getEnergy() >= temperatureEnergyCost(temp)) {
-            energyImport.removeEnergy(temperatureEnergyCost(temp));
+        int cost = temperatureEnergyCostElectricMelter(temp);
+
+        if (getEnergy() != 0 && getEnergy() >= cost) {
+            energyImport.removeEnergy(cost);
             return true;
         }
         if (temp - increaseTemp < 300) return false;
@@ -181,9 +183,9 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController{
 
             ///////////EU/t consumption
 
-            if (getEnergy() > temperatureEnergyCost(this.temp)) {
+            if (getEnergy() >temperatureEnergyCostElectricMelter(this.temp)) {
 
-                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_melter.tooltip.4", temperatureEnergyCost(temp)));
+                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_melter.tooltip.4", temperatureEnergyCostElectricMelter(temp)));
             } else {
                 textList.add(new TextComponentTranslation("tekcays_addon.multiblock.electric_melter.tooltip.4", 0));
             }
