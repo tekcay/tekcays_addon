@@ -42,6 +42,7 @@ import java.util.*;
 import java.util.function.Function;
 
 import static gregtech.api.util.RelativeDirection.*;
+import static tekcays_addon.api.capability.impl.DistillationMethods.*;
 import static tekcays_addon.api.capability.impl.MultiblocksMethods.*;
 import static tekcays_addon.api.utils.TKCYAValues.NEW_DISTILLATION_RECIPES;
 
@@ -52,7 +53,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     private List<FluidStack> toDistill = new ArrayList<>();
     private Map<Integer, FluidStack> toDistillBP = new TreeMap<>();
     private int temp, targetTemp, increaseTemp;
-    private int bp, toFill;
     private int outputRate, energyCost, parallel;
 
     private boolean hasEnoughEnergy;
@@ -83,6 +83,10 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     public void setIncreaseTemp() {
         increaseTemp = 1;
     }
+
+
+
+
 
 
     @Override
@@ -117,11 +121,18 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
             }
 
             DistillationMethods.setToDistillBP(distillate, toDistillBP);
+            setBp(toDistillBP);
+            setToFill(toDistillBP);
 
         }
 
-        bp = new ArrayList<>(toDistillBP.keySet()).get(0);
-        toFill = toDistillBP.get(bp).amount;
+        if (toFill == 0) {
+            toDistillBP.remove(bp);
+            setBp(toDistillBP);
+            setToFill(toDistillBP);
+        }
+
+
 
         TKCYALog.logger.info("bp = " + bp);
         //Not hot enough to boil first product
@@ -167,7 +178,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                     } else {
                         outputFluidInventory.fill(new FluidStack(fluid, toFill), true);
                         toFill = 0;
-                        toDistillBP.remove(bp);
                     }
                 }
             }
