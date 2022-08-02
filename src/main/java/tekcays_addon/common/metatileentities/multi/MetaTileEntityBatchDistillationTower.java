@@ -12,7 +12,6 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.recipes.Recipe;
-import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.sound.GTSounds;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
@@ -43,6 +42,7 @@ import java.util.function.Function;
 
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.capability.impl.MultiblocksMethods.*;
+import static tekcays_addon.api.utils.TKCYAValues.NEW_DISTILLATION_RECIPES;
 
 public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockController {
 
@@ -51,7 +51,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     private List<FluidStack> toDistill = new ArrayList<>();
     private Map<Integer, FluidStack> toDistillBP = new TreeMap<>();
     private int temp, targetTemp, increaseTemp;
-    private int outputRate, energyCost;
+    private int outputRate, energyCost, parallel;
 
     private boolean hasEnoughEnergy;
 
@@ -87,6 +87,20 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     @Override
     public void updateFormedValid() {
         super.updateFormedValid();
+
+        if (inputFluidInventory.getFluidTanks().isEmpty()) return;
+        for (FluidStack fs : NEW_DISTILLATION_RECIPES.keySet()) {
+
+            FluidStack inputFluidStack = inputFluidInventory.getTankAt(0).getFluid();
+
+            if (!inputFluidStack.isFluidEqual(fs)) continue;
+
+            int test = inputFluidStack.amount % fs.amount;
+
+            parallel = (inputFluidStack.amount - test) / fs.amount;
+            FluidStack toDrain = new FluidStack(fs.getFluid(), fs.amount * parallel);
+            inputFluidInventory.drain(toDrain, true);
+        }
 
         DistillationMethods.setToDistillBP(distillate, toDistillBP);
 
@@ -132,7 +146,10 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
             //Not hot enough to boil first product
             if (temp < bp) {
-                drainEnergy(energyContainer, energyCost);
+                if (getOffsetTimer() % 20 == 0) {
+                    drainEnergy(energyContainer, energyCost);
+                    setTemp(Math.min(temp + increaseTemp, bp));
+                }
             }
 
 
@@ -158,10 +175,11 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
             if (stackInTank != null && stackInTank.amount > 0) {
                 TextComponentTranslation fluidName = new TextComponentTranslation(stackInTank.getFluid().getUnlocalizedName(stackInTank));
                 textList.add(new TextComponentTranslation("gregtech.multiblock.distillation_tower.distilling_fluid", fluidName));
+                textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.parallel", parallel));
 
             }
-            textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower_temperature", temp));
-            textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower_energy_cost", energyCost));
+            textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.temperature", temp));
+            textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.energy_cost", energyCost));
         }
         super.addDisplayText(textList);
     }
