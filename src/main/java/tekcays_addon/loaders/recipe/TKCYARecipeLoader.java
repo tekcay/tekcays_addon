@@ -88,6 +88,10 @@ public class TKCYARecipeLoader {
             AssemblerRecipeHandler.walls();
         }
 
+        if (distillationOverhaul.enableDistillationOverhaul) {
+            DistillationHandler.init();
+        }
+
         CasingsLoader.init();
         ChemicalChains.init();
         MineralChains.init();

@@ -1,6 +1,7 @@
 package tekcays_addon.api.capability.impl;
 
 import net.minecraftforge.fluids.FluidStack;
+import tekcays_addon.api.utils.TKCYALog;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,10 @@ public class DistillationMethods {
      */
     public static void setToDistillBP(List<FluidStack> distillate, Map<Integer, FluidStack> map) {
         for (FluidStack fs : distillate) {
+
+            TKCYALog.logger.info("Fluid : " + fs.getFluid().getUnlocalizedName());
+            TKCYALog.logger.info("bp : " + FLUID_BP.get(fs.getFluid()));
+
             map.put(FLUID_BP.get(fs.getFluid()), fs);
         }
     }

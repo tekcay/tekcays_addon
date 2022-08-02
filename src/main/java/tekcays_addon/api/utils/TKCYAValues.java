@@ -7,9 +7,11 @@ import gregtech.api.unification.material.Materials;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import gregtech.api.unification.ore.OrePrefix;
 
+import static gregtech.api.recipes.RecipeMaps.DISTILLATION_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 
@@ -74,9 +76,19 @@ public class TKCYAValues {
             {AceticAcid.getFluid(), 118 + 273},
             {Acetone.getFluid(), 56 + 273},
             {Ethanol.getFluid(), 78 + 273},
+            {Methanol.getFluid(), 65 + 273},
             {MethylAcetate.getFluid(), 57 + 273},
             {Water.getFluid(), 373},
     }).collect(Collectors.toMap(data -> (Fluid) data[0], data -> (Integer) data[1]));
+
+    public static final Map<FluidStack, FluidStack[]> NEW_DISTILLATION_RECIPES = Stream.of(new Object[][] {
+        {WoodVinegar.getFluid(1000), new FluidStack[] {
+            AceticAcid.getFluid(100), Water.getFluid(500), Ethanol.getFluid(10),
+            Methanol.getFluid(300), MethylAcetate.getFluid(10)}},
+        }).collect(Collectors.toMap(data -> (FluidStack) data[0], data -> (FluidStack[]) data[1]));
+
+
+
 
 
     //////////////////

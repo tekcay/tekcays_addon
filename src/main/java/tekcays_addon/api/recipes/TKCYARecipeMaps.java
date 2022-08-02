@@ -76,4 +76,9 @@ public class TKCYARecipeMaps {
             "electrolysis", 0, 4, 0, 1, 1, 3, 0, 3, new SimpleRecipeBuilder(), false)
             .setSound(GTSounds.ELECTROLYZER);
 
+    @ZenProperty
+    public static final RecipeMap<TemperatureRecipeBuilder> DISTILLATION = new RecipeMap<>(
+            "distillation", 0, 0, 0, 1, 1, 1, 1, 12, new TemperatureRecipeBuilder(), false);
+
+
 }

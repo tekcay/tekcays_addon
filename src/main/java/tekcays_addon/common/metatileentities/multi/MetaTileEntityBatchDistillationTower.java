@@ -1,6 +1,5 @@
 package tekcays_addon.common.metatileentities.multi;
 
-import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.capability.impl.EnergyContainerList;
 import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.capability.impl.ItemHandlerList;
@@ -30,7 +29,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.capability.impl.DistillationMethods;
-import tekcays_addon.api.capability.impl.MultiblocksMethods;
+import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
@@ -44,7 +43,6 @@ import java.util.function.Function;
 
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.capability.impl.MultiblocksMethods.*;
-import static tekcays_addon.api.utils.TKCYAValues.FLUID_BP;
 
 public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockController {
 
@@ -58,10 +56,11 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     private boolean hasEnoughEnergy;
 
     public MetaTileEntityBatchDistillationTower(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, RecipeMaps.DISTILLATION_RECIPES);
+        super(metaTileEntityId, TKCYARecipeMaps.DISTILLATION);
         temp = 300;
         outputRate = 0;
         targetTemp = 0;
+        energyCost = 0;
     }
 
     @Override
@@ -89,6 +88,9 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     public void updateFormedValid() {
         super.updateFormedValid();
 
+        DistillationMethods.setToDistillBP(distillate, toDistillBP);
+
+        if (toDistillBP.isEmpty()) return;
 
         for (int bp : toDistillBP.keySet()) {
             //Placed here in case of interrupted process
@@ -156,9 +158,10 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
             if (stackInTank != null && stackInTank.amount > 0) {
                 TextComponentTranslation fluidName = new TextComponentTranslation(stackInTank.getFluid().getUnlocalizedName(stackInTank));
                 textList.add(new TextComponentTranslation("gregtech.multiblock.distillation_tower.distilling_fluid", fluidName));
-                textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower_temperature", temp));
-                textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower_energy_cost", energyCost));
+
             }
+            textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower_temperature", temp));
+            textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower_energy_cost", energyCost));
         }
         super.addDisplayText(textList);
     }
@@ -188,8 +191,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
         inputs = recipe.getFluidInputs();
         distillate = recipe.getAllFluidOutputs(-1);
-        DistillationMethods.setToDistillBP(distillate, toDistillBP);
-        return true;
+        return false;
     }
 
     @Override
@@ -253,7 +255,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         super.writeToNBT(data);
         data.setInteger("temp", this.temp);
         data.setInteger("targetTemp", this.targetTemp);
-        data.setBoolean("canAchieveTargetTemp", this.canAchieveTargetTemp);
         data.setBoolean("hasEnoughEnergy", this.hasEnoughEnergy);
         return data;
     }
@@ -272,7 +273,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         super.readFromNBT(data);
         this.temp = data.getInteger("temp");
         this.targetTemp = data.getInteger("targetTemp");
-        this.canAchieveTargetTemp = data.getBoolean("canAchieveTargetTemp");
         this.hasEnoughEnergy = data.getBoolean("hasEnoughEnergy");
     }
 
@@ -281,7 +281,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         super.writeInitialSyncData(buf);
         buf.writeInt(this.temp);
         buf.writeInt(this.targetTemp);
-        buf.writeBoolean(this.canAchieveTargetTemp);
         buf.writeBoolean(this.hasEnoughEnergy);
     }
 
@@ -290,7 +289,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         super.receiveInitialSyncData(buf);
         this.temp = buf.readInt();
         this.targetTemp = buf.readInt();
-        this.canAchieveTargetTemp = buf.readBoolean();
         this.hasEnoughEnergy = buf.readBoolean();
     }
 }

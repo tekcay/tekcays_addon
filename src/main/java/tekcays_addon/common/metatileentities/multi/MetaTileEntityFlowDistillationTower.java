@@ -20,6 +20,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fluids.FluidStack;
+import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class MetaTileEntityFlowDistillationTower extends RecipeMapMultiblockCont
     private int targetTemp;
 
     public MetaTileEntityFlowDistillationTower(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, RecipeMaps.DISTILLATION_RECIPES);
+        super(metaTileEntityId, TKCYARecipeMaps.DISTILLATION);
     }
 
     @Override
