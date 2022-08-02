@@ -1,7 +1,6 @@
 package tekcays_addon.api.capability.impl;
 
 import gregtech.api.capability.IEnergyContainer;
-import gregtech.api.metatileentity.MetaTileEntity;
 
 public class MultiblocksMethods {
 
@@ -17,7 +16,7 @@ public class MultiblocksMethods {
 
 
     public static int temperatureEnergyCostBatchDistillationTower(int temp) {
-        return temp <= 300 ? 0 : (int) Math.exp(((double) temp - 100) / 100);  // (int) (1.5 * Math.pow(10, -10) * Math.pow(temp, 3.6) + 10)
+        return temp <= 300 ? 0 : temp - 300;  // (int) (1.5 * Math.pow(10, -10) * Math.pow(temp, 3.6) + 10)
     }
 
     public static boolean enoughEnergyToDrain(IEnergyContainer energyContainer, int cost) {
