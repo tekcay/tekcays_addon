@@ -15,7 +15,6 @@ import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.sound.GTSounds;
 import gregtech.client.renderer.ICubeRenderer;
-import gregtech.client.renderer.texture.Textures;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
@@ -56,6 +55,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     private int outputRate, energyCost, parallel;
     private int bp, toFill;
     private int height;
+    private final int duration = 20;
 
     private boolean hasEnoughEnergy;
 
@@ -138,34 +138,22 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
             setToFill();
         }
 
-
-
-        TKCYALog.logger.info("bp = " + bp);
         //Not hot enough to boil first product
         if (temp < bp) {
-            TKCYALog.logger.info("does it go here3");
 
-            if (getOffsetTimer() % 20 == 0) {
-                TKCYALog.logger.info("does it go here2");
+            if (getOffsetTimer() % (int) (duration * parallel - 0.2f * Math.pow(height, 1.7)) == 0) {
 
                 energyCost = temperatureEnergyCostBatchDistillationTower(temp + increaseTemp);
                 hasEnoughEnergy = enoughEnergyToDrain(energyContainer, energyCost);
 
                 if (hasEnoughEnergy) {
-
-                    TKCYALog.logger.info("does it go here");
                     drainEnergy(energyContainer, energyCost);
                     setTemp(Math.min(temp + increaseTemp, bp));
-                    TKCYALog.logger.info("temp = " + temp);
 
                 } else setTemp(Math.max(temp - increaseTemp, 300));
             }
-                //if (!hasEnoughEnergy && temp == 300) break;
         }
 
-        //Placed here in case of interrupted process
-
-        TKCYALog.logger.info("toFill = " + toFill);
 
         //Hot enough to boil product
         if (temp == bp) {
@@ -174,7 +162,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
             if (toFill > 0 && hasEnoughEnergy) {
 
-                if (getOffsetTimer() % 20 == 0) {
+                if (getOffsetTimer() % (int) (duration * parallel - 0.2f * Math.pow(height, 1.7)) == 0) {
 
                     Fluid fluid = toDistillBP.get(bp).getFluid();
 
