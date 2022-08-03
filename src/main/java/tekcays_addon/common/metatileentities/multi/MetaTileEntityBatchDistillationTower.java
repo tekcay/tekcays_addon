@@ -11,11 +11,11 @@ import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.sound.GTSounds;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
-import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiFluidHatch;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
@@ -55,6 +55,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     private int temp, targetTemp, increaseTemp;
     private int outputRate, energyCost, parallel;
     private int bp, toFill;
+    private int height;
 
     private boolean hasEnoughEnergy;
 
@@ -97,6 +98,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
         initializeAbilities();
+        this.height = context.getOrDefault("DTHeight", 1);
         setOutputRate();
         setIncreaseTemp();
     }
@@ -219,21 +221,21 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
+                .aisle("HHH", "HHH", "HHH")
                 .aisle("YSY", "YYY", "YYY")
                 .aisle("XXX", "X#X", "XXX").setRepeatable(1, 11)
-                .aisle("XXX", "XXX", "XXX")
+                .aisle("AAA", "AAA", "AAA")
+                .where('H', states(getHeatAcceptorState()))
+                .where('X', states(getCasingState()))
                 .where('S', selfPredicate())
                 .where('Y', states(getCasingState())
                         .or(abilities(MultiblockAbility.EXPORT_ITEMS).setMaxGlobalLimited(1))
                         .or(abilities(MultiblockAbility.INPUT_ENERGY).setMinGlobalLimited(1).setMaxGlobalLimited(3))
-                        .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1)))
-                .where('X', states(getCasingState())
-                        .or(metaTileEntities(MultiblockAbility.REGISTRY.get(MultiblockAbility.EXPORT_FLUIDS).stream()
-                                .filter(mte->!(mte instanceof MetaTileEntityMultiFluidHatch))
-                                .toArray(MetaTileEntity[]::new))
-                                .setMinLayerLimited(1).setMaxLayerLimited(1))
+                        .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1))
                         .or(autoAbilities(true, false)))
-                .where('#', air())
+                .where('A', states(getCasingState())
+                        .or(abilities(MultiblockAbility.EXPORT_FLUIDS)))
+                .where('#', heightIndicatorPredicate())
                 .build();
     }
 
@@ -242,6 +244,16 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         inputs = recipe.getFluidInputs();
         distillate = recipe.getAllFluidOutputs(-1);
         return false;
+    }
+
+    public static TraceabilityPredicate heightIndicatorPredicate() {
+        return new TraceabilityPredicate((blockWorldState) -> {
+            if (air().test(blockWorldState)) {
+                blockWorldState.getMatchContext().increment("DTHeight", 1);
+                return true;
+            } else
+                return false;
+        });
     }
 
     @Override
@@ -256,6 +268,10 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
     protected IBlockState getCasingState() {
         return TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL);
+    }
+
+    protected IBlockState getHeatAcceptorState() {
+        return TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.HEAT_ACCEPTOR);
     }
 
     @Nonnull
