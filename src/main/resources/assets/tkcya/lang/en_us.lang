@@ -84,6 +84,9 @@ tkcya.machine.drum.high_density_polyethylene.name=HDPE Drum
 # casings
 tile.large_multiblock_casing.monel_casing.name=Monel Casing
 
+# misc
+tile.large_multiblock_casing.heat_acceptor.name=Heat Acceptor
+
 # bricks
 tile.block_brick.brick.name=Brick
 tile.block_brick.reinforced_brick.name=Reinforced Brick
@@ -114,6 +117,7 @@ recipemap.blasting.name=Blasting
 recipemap.converting.name=Converting
 recipemap.crystallization.name=Crystallization
 recipemap.electrolysis.name=Electrolysis
+recipemap.distillation.name=Distillation
 
 # Materials
 

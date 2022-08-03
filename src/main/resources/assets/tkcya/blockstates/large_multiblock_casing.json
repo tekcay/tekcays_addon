@@ -31,6 +31,14 @@
         "textures": {
           "all": "gregtech:blocks/casings/large_multiblock_casing/monel_casing"
         }
+      },
+      "heat_acceptor": {
+        "model": "gregtech:cube_bottom_top_tintindex",
+        "textures": {
+          "bottom": "gregtech:blocks/casings/misc/heat_acceptor_topbottom",
+          "top": "gregtech:blocks/casings/misc/heat_acceptor_topbottom",
+          "side": "gregtech:blocks/casings/misc/heat_acceptor_side"
+        }
       }
     }
   }
