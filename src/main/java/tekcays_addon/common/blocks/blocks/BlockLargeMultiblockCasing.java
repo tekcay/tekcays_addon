@@ -26,8 +26,8 @@ public class BlockLargeMultiblockCasing extends VariantBlock<BlockLargeMultibloc
     public enum CasingType implements IStringSerializable {
 
         MONEL_CASING("monel_casing"),
+        BATCH_DISTILLATION_TOWER_CASING("batch_distillation_tower_casing"),
         HEAT_ACCEPTOR("heat_acceptor"),
-
         STEEL_WALL("steel_wall"),
         GALVANIZED_STEEL_WALL("galvanized_steel_wall"),
         STAINLESS_STEEL_WALL("stainless_steel_wall");

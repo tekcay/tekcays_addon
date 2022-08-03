@@ -20,10 +20,12 @@ public class TKCYATextures {
 
     public static OrientedOverlayRenderer CASTING_TABLE_OVERLAY = new OrientedOverlayRenderer("machines/casting_table", FRONT);
 
-    //MeltingOverhaul
+    //Multiblocks
     public static OrientedOverlayRenderer PRIMITIVE_MELTER_OVERLAY = new OrientedOverlayRenderer("multiblocks/primitive", FRONT);
     public static OrientedOverlayRenderer ELECTRIC_MELTER_OVERLAY = new OrientedOverlayRenderer("multiblocks/electric_melter", FRONT);
     public static OrientedOverlayRenderer ALLOYING_CRUCIBLE_OVERLAY = new OrientedOverlayRenderer("multiblocks/primitive", FRONT);
+    public static OrientedOverlayRenderer BATCH_DISTILLATION_TOWER_OVERLAY = new OrientedOverlayRenderer("multiblocks/batch_distillation_tower", FRONT);
+
 
     // Bricks
     public static SimpleOverlayRenderer BRICK;
@@ -34,8 +36,9 @@ public class TKCYATextures {
 
     //GT6 style
     public static SimpleOverlayRenderer STEEL_GT;
-    public static SimpleOverlayRenderer WHITE_GT;
     public static SimpleOverlayRenderer STAINLESS_STEEL_GT;
+    public static SimpleOverlayRenderer WHITE_GT;
+    public static SimpleOverlayRenderer WHITE_GT_STRIPE;
 
 
     public static void preInit() {
@@ -52,7 +55,9 @@ public class TKCYATextures {
 
         //GT6 Style
         STEEL_GT = new SimpleOverlayRenderer("steel_gt");
-        WHITE_GT = new SimpleOverlayRenderer("white_gt");
         STAINLESS_STEEL_GT = new SimpleOverlayRenderer("stainless_steel_gt");
+        WHITE_GT = new SimpleOverlayRenderer("white_gt");
+        WHITE_GT_STRIPE = new SimpleOverlayRenderer("white_gt_stripe");
+
     }
 }

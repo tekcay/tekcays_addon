@@ -83,6 +83,7 @@ tkcya.machine.drum.high_density_polyethylene.name=HDPE Drum
 
 # casings
 tile.large_multiblock_casing.monel_casing.name=Monel Casing
+tile.large_multiblock_casing.batch_distillation_tower_casing.name=Batch Distillation Tower Casing
 
 # misc
 tile.large_multiblock_casing.heat_acceptor.name=Heat Acceptor

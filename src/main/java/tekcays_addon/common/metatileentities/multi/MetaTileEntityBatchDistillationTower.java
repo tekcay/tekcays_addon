@@ -234,7 +234,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                         .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1))
                         .or(autoAbilities(true, false)))
                 .where('A', states(getCasingState())
-                        .or(abilities(MultiblockAbility.EXPORT_FLUIDS)))
+                        .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMinGlobalLimited(1)))
                 .where('#', heightIndicatorPredicate())
                 .build();
     }
@@ -263,11 +263,11 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
-        return TKCYATextures.WHITE_GT;
+        return TKCYATextures.WHITE_GT_STRIPE;
     }
 
     protected IBlockState getCasingState() {
-        return TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL);
+        return TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.BATCH_DISTILLATION_TOWER_CASING);
     }
 
     protected IBlockState getHeatAcceptorState() {
@@ -277,7 +277,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     @Nonnull
     @Override
     protected ICubeRenderer getFrontOverlay() {
-        return Textures.DISTILLATION_TOWER_OVERLAY;
+        return TKCYATextures.BATCH_DISTILLATION_TOWER_OVERLAY;
     }
 
     @Override

@@ -32,6 +32,14 @@
           "all": "gregtech:blocks/casings/large_multiblock_casing/monel_casing"
         }
       },
+      "batch_distillation_tower_casing": {
+        "model": "gregtech:cube_bottom_top_tintindex",
+        "textures": {
+          "top": "gregtech:blocks/casings/large_multiblock_casing/batch_distillation_tower_casing_top",
+          "bottom": "gregtech:blocks/casings/large_multiblock_casing/batch_distillation_tower_casing_top",
+          "side": "gregtech:blocks/casings/large_multiblock_casing/batch_distillation_tower_casing_side"
+        }
+      },
       "heat_acceptor": {
         "model": "gregtech:cube_bottom_top_tintindex",
         "textures": {
