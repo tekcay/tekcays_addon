@@ -26,10 +26,8 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.ItemStackHandler;
-import tekcays_addon.api.capability.impl.DistillationMethods;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 
@@ -47,9 +45,6 @@ import static tekcays_addon.api.utils.TKCYAValues.NEW_DISTILLATION_RECIPES;
 
 public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockController {
 
-    private List<FluidStack> inputs = new ArrayList<>();
-    private List<FluidStack> distillate = new ArrayList<>();
-    private List<FluidStack> toDistill = new ArrayList<>();
     private Map<Integer, FluidStack> toDistillBP = new TreeMap<>();
     private int temp, targetTemp, increaseTemp;
     private int outputRate, energyCost, parallel;
@@ -126,7 +121,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                 //this.recipeMapWorkable.isActive();
             }
 
-            DistillationMethods.setToDistillBP(distillate, toDistillBP);
+            setToDistillBP(NEW_DISTILLATION_RECIPES.get(inputFluidStack), toDistillBP);
             setBp();
             setToFill();
 
@@ -229,8 +224,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        inputs = recipe.getFluidInputs();
-        distillate = recipe.getAllFluidOutputs(-1);
         return false;
     }
 
