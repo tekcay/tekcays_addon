@@ -13,21 +13,25 @@ import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
+import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import gregtech.api.sound.GTSounds;
 import gregtech.client.renderer.ICubeRenderer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 
@@ -35,8 +39,8 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
-import java.util.function.Function;
 
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.capability.impl.DistillationMethods.*;
@@ -46,11 +50,26 @@ import static tekcays_addon.api.utils.TKCYAValues.NEW_DISTILLATION_RECIPES;
 public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockController {
 
     private Map<Integer, FluidStack> toDistillBP = new TreeMap<>();
+    private FluidStack fluidToDistill;
+    /**
+     * represents the current {@code Fluid} fraction that is handled.
+     */
+    private Fluid fraction;
+    /**
+     * represents the next {@code Fluid} fraction to come.
+     */
+    private Fluid nextFraction;
+    /**
+     * represents the index of the current fraction in {@code toDistillBP} map.
+     */
+    private int fractionIndex;
     private int temp, targetTemp, increaseTemp;
     private int outputRate, energyCost, parallel;
-    private int bp, toFill;
+    private int bp, nextbp, toFill;
     private int height;
     private final int duration = 20;
+    private boolean recipeAcquired, isTheLastFraction;
+
 
     private boolean hasEnoughEnergy;
 
@@ -62,31 +81,13 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         energyCost = 0;
         bp = 0;
         toFill = 0;
+        fractionIndex = 0;
+        recipeAcquired = false;
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityBatchDistillationTower(metaTileEntityId);
-    }
-
-    public void setOutputRate() {
-        outputRate = 1;
-    }
-
-    public void setTemp(int temperature) {
-        temp = temperature;
-    }
-
-    public void setIncreaseTemp() {
-        increaseTemp = 1;
-    }
-
-    public void setBp() {
-        bp = new ArrayList<>(toDistillBP.keySet()).get(0);
-    }
-
-    public void setToFill() {
-        toFill = toDistillBP.get(bp).amount;
     }
 
     @Override
@@ -102,36 +103,37 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     public void updateFormedValid() {
         super.updateFormedValid();
 
-        if (toDistillBP.isEmpty()) {
+        if (toDistillBP.isEmpty() && recipeAcquired) {
 
-            FluidStack inputFluidStack = inputFluidInventory.getTankAt(0).getFluid();
+        }
 
-            if (inputFluidStack == null) return;
+        if (toDistillBP.isEmpty() && this.isBlockRedstonePowered() && !recipeAcquired) {
+
+            fluidToDistill = inputFluidInventory.getTankAt(0).getFluid();
+
+            if (fluidToDistill == null) return;
 
             for (FluidStack fs : NEW_DISTILLATION_RECIPES.keySet()) {
 
-                if (!inputFluidStack.getFluid().equals(fs.getFluid())) continue;
+                if (!fluidToDistill.getFluid().equals(fs.getFluid())) continue;
 
-                int test = inputFluidStack.amount % fs.amount;
+                int test = fluidToDistill.amount % fs.amount;
 
-                parallel = (inputFluidStack.amount - test) / fs.amount;
+                parallel = (fluidToDistill.amount - test) / fs.amount;
                 FluidStack toDrain = new FluidStack(fs.getFluid(), fs.amount * parallel);
                 inputFluidInventory.drain(toDrain, true);
-
-                //this.recipeMapWorkable.isActive();
             }
 
-            setToDistillBP(NEW_DISTILLATION_RECIPES.get(inputFluidStack), toDistillBP);
+            setToDistillBP(NEW_DISTILLATION_RECIPES.get(fluidToDistill), toDistillBP);
+            fractionIndex = 0;
             setBp();
             setToFill();
-
+            setFraction();
+            isItTheLastFraction();
+            recipeAcquired = true;
         }
 
-        if (toFill == 0) {
-            toDistillBP.remove(bp);
-            setBp();
-            setToFill();
-        }
+        isItTheLastFraction();
 
         //Not hot enough to boil first product
         if (temp < bp) {
@@ -149,52 +151,132 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
             }
         }
 
-
         //Hot enough to boil product
-        if (temp == bp) {
+        if (temp > 300 && temp == bp) {
 
             hasEnoughEnergy = enoughEnergyToDrain(energyContainer, energyCost);
 
             if (toFill > 0 && hasEnoughEnergy) {
 
+                setNextFraction();
+
+
                 if (getOffsetTimer() % (int) (duration * parallel - 0.2f * Math.pow(height, 1.7)) == 0) {
 
-                    Fluid fluid = toDistillBP.get(bp).getFluid();
-
-                    if (toFill - outputRate >= 0) {
-                        outputFluidInventory.fill(new FluidStack(fluid, outputRate), true);
+                    if (toFill - outputRate > 0) {
+                        outputFluidInventory.fill(new FluidStack(fraction, outputRate), true);
                         toFill -= outputRate;
                     } else {
-                        outputFluidInventory.fill(new FluidStack(fluid, toFill), true);
+                        outputFluidInventory.fill(new FluidStack(fraction, toFill), true);
                         toFill = 0;
+                        fractionIndex ++;
                     }
                 }
             }
         }
 
+        if (!toDistillBP.isEmpty() && !isTheLastFraction) {
+            //setNextFraction();
+            if (toFill == 0) {
+                setBp();
+                setToFill();
+                setFraction();
+            }
+        }
 
-
+        if (!toDistillBP.isEmpty() && isTheLastFraction) reset();
     }
 
+    public void setOutputRate() {
+        outputRate = 1;
+    }
 
+    public void setTemp(int temperature) {
+        temp = temperature;
+    }
 
+    public void setIncreaseTemp() {
+        increaseTemp = 1;
+    }
+
+    public void setBp() {
+        bp = new ArrayList<>(toDistillBP.keySet()).get(fractionIndex);
+    }
+
+    public void setToFill() {
+        toFill = toDistillBP.get(bp).amount;
+    }
+
+    private void isItTheLastFraction() {
+        isTheLastFraction =  fractionIndex == toDistillBP.size();
+    }
+
+    private void setFraction() {
+        fraction = toDistillBP.get(bp).getFluid();
+    }
+
+    private void setNextFraction() {
+        nextbp = new ArrayList<>(toDistillBP.keySet()).get(fractionIndex + 1);
+        nextFraction = toDistillBP.get(nextbp).getFluid();
+    }
+
+    private boolean hasCircuit1() {
+
+        for (int i = 0;  i < inputInventory.getSlots(); i++) {
+            ItemStack input = inputInventory.getStackInSlot(i);
+            if (input.isItemEqual((IntCircuitIngredient.getIntegratedCircuit(1)))) return true;
+        }
+        return false;
+    }
+
+    public void reset() {
+
+        toDistillBP.clear();
+        outputRate = 0;
+        targetTemp = 0;
+        energyCost = 0;
+        bp = 0;
+        toFill = 0;
+        fractionIndex = 0;
+        recipeAcquired = false;
+
+    }
 
 
     @Override
-    protected Function<BlockPos, Integer> multiblockPartSorter() {
-        return BlockPos::getY; // todo this needs to be "relative up" with Freedom Wrench
-    }
+    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
+        super.addInformation(stack, player, tooltip, advanced);
+
+        tooltip.add(I18n.format("tkcya.machine.batch_distillation_tower.tooltip.1"));
+        tooltip.add(I18n.format("tkcya.machine.batch_distillation_tower.tooltip.2"));
+        tooltip.add(I18n.format("tkcya.machine.batch_distillation_tower.tooltip.3"));
+        tooltip.add(I18n.format("tkcya.machine.batch_distillation_tower.tooltip.4"));
+        tooltip.add(I18n.format("tkcya.machine.batch_distillation_tower.tooltip.5"));
+
+   }
 
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
         if (isStructureFormed()) {
-            FluidStack stackInTank = importFluids.drain(Integer.MAX_VALUE, false);
-            if (stackInTank != null && stackInTank.amount > 0) {
-                TextComponentTranslation fluidName = new TextComponentTranslation(stackInTank.getFluid().getUnlocalizedName(stackInTank));
-                textList.add(new TextComponentTranslation("gregtech.multiblock.distillation_tower.distilling_fluid", fluidName));
-                textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.parallel", parallel));
 
+            if (inputInventory.getSlots() != 0 && hasCircuit1()) {
+
+                if (fluidToDistill != null) {
+                    textList.add(new TextComponentTranslation("gregtech.multiblock.distillation_tower.distilling_fluid", fluidToDistill.getLocalizedName()));
+                }
+
+                if (fraction != null && temp == bp) {
+                    textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.boiling", new FluidStack(fraction, 1).getLocalizedName(), toFill));
+                    if (nextFraction != null) {
+                        textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.next_fraction", new FluidStack(nextFraction, 1).getLocalizedName(), nextbp));
+                    }
+                }
+
+                if (fraction != null && temp < bp) {
+                    textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.next_fraction", new FluidStack(fraction, 1).getLocalizedName(), bp));
+                }
             }
+            textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.parallel", parallel));
             textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.temperature", temp));
             textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.energy_cost", energyCost));
         }
@@ -215,6 +297,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                         .or(abilities(MultiblockAbility.EXPORT_ITEMS).setMaxGlobalLimited(1))
                         .or(abilities(MultiblockAbility.INPUT_ENERGY).setMinGlobalLimited(1).setMaxGlobalLimited(3))
                         .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1))
+                        .or(abilities(MultiblockAbility.IMPORT_ITEMS).setMaxGlobalLimited(1))
                         .or(autoAbilities(true, false)))
                 .where('A', states(getCasingState())
                         .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMinGlobalLimited(1)))
@@ -237,10 +320,13 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         });
     }
 
+    /*
     @Override
     protected boolean allowSameFluidFillForOutputs() {
         return false;
     }
+
+     */
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
@@ -295,6 +381,8 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
 
 
+
+
     ////Data
 
     @Override
@@ -303,9 +391,11 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         data.setInteger("temp", this.temp);
         data.setInteger("targetTemp", this.targetTemp);
         data.setInteger("bp", this.bp);
+        data.setInteger("fractionIndex", this.fractionIndex);
         data.setInteger("toFill", this.toFill);
         data.setInteger("energyCost", this.energyCost);
         data.setBoolean("hasEnoughEnergy", this.hasEnoughEnergy);
+        data.setBoolean("recipeAcquired", this.recipeAcquired);
         return data;
     }
 
@@ -324,9 +414,11 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         this.temp = data.getInteger("temp");
         this.targetTemp = data.getInteger("targetTemp");
         this.bp = data.getInteger("bp");
+        this.fractionIndex = data.getInteger("fractionIndex");
         this.toFill = data.getInteger("toFill");
         this.energyCost = data.getInteger("energyCost");
         this.hasEnoughEnergy = data.getBoolean("hasEnoughEnergy");
+        this.recipeAcquired = data.getBoolean("recipeAcquired");
     }
 
     @Override
@@ -335,9 +427,11 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         buf.writeInt(this.temp);
         buf.writeInt(this.targetTemp);
         buf.writeInt(this.bp);
+        buf.writeInt(this.fractionIndex);
         buf.writeInt(this.toFill);
         buf.writeInt(this.energyCost);
         buf.writeBoolean(this.hasEnoughEnergy);
+        buf.writeBoolean(this.recipeAcquired);
     }
 
     @Override
@@ -346,8 +440,10 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         this.temp = buf.readInt();
         this.targetTemp = buf.readInt();
         this.bp = buf.readInt();
+        this.fractionIndex = buf.readInt();
         this.toFill = buf.readInt();
         this.energyCost = buf.readInt();
         this.hasEnoughEnergy = buf.readBoolean();
+        this.recipeAcquired = buf.readBoolean();
     }
 }

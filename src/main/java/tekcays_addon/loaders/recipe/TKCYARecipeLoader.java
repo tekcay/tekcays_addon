@@ -89,7 +89,9 @@ public class TKCYARecipeLoader {
         }
 
         if (distillationOverhaul.enableDistillationOverhaul) {
-            DistillationHandler.init();
+            DistillationHandler.initJEI();
+            DistillationHandler.fluidWithPropertiesInit();
+            DistillationHandler.initBackEnd();
         }
 
         CasingsLoader.init();

@@ -251,10 +251,6 @@ tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.5=Consumption: 0 L/t.
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.6=Target temperature: §a%d K§7.
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.7=Not enough solid fuel
 
-tkcya.multiblock.distillation_tower.parallel=Parallel: §a%d K§7.
-tkcya.multiblock.distillation_tower.temperature=Temperature: §a%d K§7.
-tkcya.multiblock.distillation_tower.energy_cost=Consumption: %d EU/t.
-
 #For debugging
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.8=Stored heat from gas: %d
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.9=Stored heat from solid: %d
@@ -280,7 +276,17 @@ tekcays_addon.machine.advanced_electrolyzer.tooltip.2=Requires two electrodes, a
 tekcays_addon.machine.advanced_electrolyzer.tooltip.3=Electrodes takes damage during recipe running.
 tekcays_addon.machine.advanced_electrolyzer.tooltip.4=Removal of the electrode causes explosion!
 
+tkcya.machine.batch_distillation_tower.tooltip.1=Needs a redstone signal to start working.
+tkcya.machine.batch_distillation_tower.tooltip.2=Only runs recipes if the boiling point temperature of the next fraction is set.
+tkcya.machine.batch_distillation_tower.tooltip.3=Can run multiple recipes at a time.
+tkcya.machine.batch_distillation_tower.tooltip.4=The separation time can be decreased by adding more floors to the structure.
+tkcya.machine.batch_distillation_tower.tooltip.5=A programmed circuit with config 1 in import bus enables more informations display.
 
+tkcya.multiblock.distillation_tower.parallel=Parallel: %d
+tkcya.multiblock.distillation_tower.temperature=Temperature: §a%d K§7.
+tkcya.multiblock.distillation_tower.energy_cost=Consumption: %d EU/t.
+tkcya.multiblock.distillation_tower.next_fraction=Next: %s, %d K
+tkcya.multiblock.distillation_tower.boiling=Current: %s, %d L
 
 
 

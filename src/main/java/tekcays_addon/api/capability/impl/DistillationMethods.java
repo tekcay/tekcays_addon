@@ -14,7 +14,7 @@ public class DistillationMethods {
 
 
     /**
-     * @return A sorted {@code Map<Integer, FluidStack} with the {@code Integer} being the boiling point of the corresponding {@code FluidStack}.
+     * @return A sorted {@code Map<Integer, FluidStack>} with the {@code Integer} being the boiling point of the corresponding {@code FluidStack}.
      */
     public static void setToDistillBP(FluidStack[] distillate, Map<Integer, FluidStack> map) {
         for (FluidStack fs : distillate) {
