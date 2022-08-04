@@ -21,9 +21,9 @@ public class FluidWithProperties {
 
 
 
-    private String name;
-    private Fluid fluid;
-    private int boilingPoint;
+    private final String name;
+    private final Fluid fluid;
+    private final int boilingPoint;
     private int meltingPoint;
     public FluidWithProperties(String name, Fluid fluid, int boilingPoint, int meltingPoint) {
         this.name = name;

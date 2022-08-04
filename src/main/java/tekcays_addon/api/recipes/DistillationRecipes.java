@@ -15,13 +15,13 @@ public class DistillationRecipes {
     public static final DistillationRecipes WOOD_VINEGAR = new DistillationRecipes(WoodVinegar.getLocalizedName(), WoodVinegar.getFluid(1000),
             new FluidStack[] {
             AceticAcid.getFluid(100), Water.getFluid(500), Ethanol.getFluid(10),
-            Methanol.getFluid(300), MethylAcetate.getFluid(10)});
+            Methanol.getFluid(300), MethylAcetate.getFluid(10), Acetone.getFluid(50)});
 
 
-    public String fluidStackInputLocalizedName;
-    public FluidStack fluidStackInput;
-    public FluidStack[] fluidStackOutput;
-    public Map<Integer, FluidStack> output;
+    private final String fluidStackInputLocalizedName;
+    private final FluidStack fluidStackInput;
+    private FluidStack[] fluidStackOutput;
+    private Map<Integer, FluidStack> output;
     public DistillationRecipes(String fluidStackInputLocalizedName, FluidStack fluidStackInput, FluidStack[] fluidStackOutput) {
         this.fluidStackInputLocalizedName = fluidStackInputLocalizedName;
         this.fluidStackInput = fluidStackInput;

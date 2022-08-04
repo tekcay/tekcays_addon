@@ -103,25 +103,17 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         setIncreaseTemp();
     }
 
-    /*
-    @Override
-    public void update() {
-        if (hasEnoughEnergy) GTSoundManager.startTileSound(GTSounds.FURNACE.getSoundName(), 1.0F, this.getPos());
-        else GTSoundManager.stopTileSound(this.getPos());
-    }
-
-     */
-
     @Override
     public void updateFormedValid() {
         super.updateFormedValid();
 
-        if (hasEnoughEnergy) GTSoundManager.startTileSound(GTSounds.FURNACE.getSoundName(), 1.0F, this.getPos());
+
+        if (hasEnoughEnergy && getOffsetTimer() % 80 == 0) GTSoundManager.startTileSound(GTSounds.FURNACE.getSoundName(), 1.0F, this.getPos());
         else GTSoundManager.stopTileSound(this.getPos());
 
         if (toDistillBP.isEmpty() && recipeAcquired) {
             setToDistillBP(TKCYA_DISTILLATION_RECIPES.get(distillationRecipesIndex).getFluidStackOutput(), toDistillBP);
-            setBp(); //TODO remove bp from NBT
+            setBp();
             setFraction();
         }
 
@@ -156,6 +148,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
             setFraction();
             isItTheLastFraction();
             recipeAcquired = true;
+            this.markDirty();
         }
 
         isItTheLastFraction();
@@ -206,6 +199,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
             setBp();
             setToFill();
             setFraction();
+            this.markDirty();
         }
 
 
@@ -413,13 +407,10 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         super.writeToNBT(data);
         data.setInteger("temp", this.temp);
-        //data.setInteger("bp", this.bp);
         data.setInteger("fractionIndex", this.fractionIndex);
         data.setInteger("toFill", this.toFill);
-        //data.setInteger("energyCost", this.energyCost); //TODO to remove
         data.setInteger("parallel", this.parallel);
         data.setInteger("distillationRecipesIndex", this.distillationRecipesIndex);
-        //data.setBoolean("hasEnoughEnergy", this.hasEnoughEnergy); //TODO to remove
         data.setBoolean("recipeAcquired", this.recipeAcquired);
         return data;
     }
@@ -437,13 +428,10 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     public void readFromNBT(NBTTagCompound data) {
         super.readFromNBT(data);
         this.temp = data.getInteger("temp");
-        //this.bp = data.getInteger("bp");
         this.fractionIndex = data.getInteger("fractionIndex");
         this.toFill = data.getInteger("toFill");
-        //this.energyCost = data.getInteger("energyCost");
         this.parallel = data.getInteger("parallel");
         this.distillationRecipesIndex = data.getInteger("distillationRecipesIndex");
-        //this.hasEnoughEnergy = data.getBoolean("hasEnoughEnergy");
         this.recipeAcquired = data.getBoolean("recipeAcquired");
 
     }
@@ -452,13 +440,10 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     public void writeInitialSyncData(PacketBuffer buf) {
         super.writeInitialSyncData(buf);
         buf.writeInt(this.temp);
-        //buf.writeInt(this.bp);
         buf.writeInt(this.fractionIndex);
         buf.writeInt(this.toFill);
-        //buf.writeInt(this.energyCost);
         buf.writeInt(this.parallel);
         buf.writeInt(this.distillationRecipesIndex);
-        //buf.writeBoolean(this.hasEnoughEnergy);
         buf.writeBoolean(this.recipeAcquired);
     }
 
@@ -466,13 +451,10 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     public void receiveInitialSyncData(PacketBuffer buf) {
         super.receiveInitialSyncData(buf);
         this.temp = buf.readInt();
-        //this.bp = buf.readInt();
         this.fractionIndex = buf.readInt();
         this.toFill = buf.readInt();
-        //this.energyCost = buf.readInt();
         this.parallel = buf.readInt();
         this.distillationRecipesIndex = buf.readInt();
-        //this.hasEnoughEnergy = buf.readBoolean();
         this.recipeAcquired = buf.readBoolean();
 
     }
