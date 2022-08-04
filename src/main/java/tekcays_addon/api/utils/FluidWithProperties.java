@@ -21,10 +21,10 @@ public class FluidWithProperties {
 
 
 
-    public String name;
-    public Fluid fluid;
-    public int boilingPoint;
-    public int meltingPoint;
+    private String name;
+    private Fluid fluid;
+    private int boilingPoint;
+    private int meltingPoint;
     public FluidWithProperties(String name, Fluid fluid, int boilingPoint, int meltingPoint) {
         this.name = name;
         this.fluid = fluid;

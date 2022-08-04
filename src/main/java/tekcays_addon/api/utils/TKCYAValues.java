@@ -67,28 +67,6 @@ public class TKCYAValues {
         }};
 
 
-    //////////////////
-    // For the New Distillation Tower
-    //////////////////
-
-    public static final Map<Fluid, Integer> FLUID_BP = Stream.of(new Object[][] {
-            {Materials.Air.getFluid(), 1},
-            {AceticAcid.getFluid(), 118 + 273},
-            {Acetone.getFluid(), 56 + 273},
-            {Ethanol.getFluid(), 78 + 273},
-            {Methanol.getFluid(), 65 + 273},
-            {MethylAcetate.getFluid(), 57 + 273},
-            {Water.getFluid(), 373},
-    }).collect(Collectors.toMap(data -> (Fluid) data[0], data -> (Integer) data[1]));
-
-    public static final Map<FluidStack, FluidStack[]> NEW_DISTILLATION_RECIPES = Stream.of(new Object[][] {
-        {WoodVinegar.getFluid(1000), new FluidStack[] {
-            AceticAcid.getFluid(100), Water.getFluid(500), Ethanol.getFluid(10),
-            Methanol.getFluid(300), MethylAcetate.getFluid(10)}},
-        }).collect(Collectors.toMap(data -> (FluidStack) data[0], data -> (FluidStack[]) data[1]));
-
-
-
 
 
 
