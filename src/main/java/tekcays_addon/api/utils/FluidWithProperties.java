@@ -7,7 +7,7 @@ import java.util.List;
 
 import static gregtech.api.unification.material.Materials.*;
 
-public class FluidWithProperties {
+public class FluidWithProperties { //TODO add more Fluids
 
     public static final List<FluidWithProperties> FLUID_WITH_PROPERTIES = new ArrayList<>();
 

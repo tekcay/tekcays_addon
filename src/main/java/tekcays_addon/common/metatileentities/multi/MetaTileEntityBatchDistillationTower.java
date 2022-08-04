@@ -1,5 +1,6 @@
 package tekcays_addon.common.metatileentities.multi;
 
+import gregtech.api.capability.impl.AbstractRecipeLogic;
 import gregtech.api.capability.impl.EnergyContainerList;
 import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.capability.impl.ItemHandlerList;
@@ -14,7 +15,6 @@ import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.ingredients.IntCircuitIngredient;
-import gregtech.api.sound.GTSoundManager;
 import gregtech.api.sound.GTSounds;
 import gregtech.client.renderer.ICubeRenderer;
 import net.minecraft.block.state.IBlockState;
@@ -107,17 +107,13 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     public void updateFormedValid() {
         super.updateFormedValid();
 
-
-        if (hasEnoughEnergy && getOffsetTimer() % 80 == 0) GTSoundManager.startTileSound(GTSounds.FURNACE.getSoundName(), 1.0F, this.getPos());
-        else GTSoundManager.stopTileSound(this.getPos());
-
         if (toDistillBP.isEmpty() && recipeAcquired) {
             setToDistillBP(TKCYA_DISTILLATION_RECIPES.get(distillationRecipesIndex).getFluidStackOutput(), toDistillBP);
             setBp();
             setFraction();
         }
 
-        if (toDistillBP.isEmpty() && this.isBlockRedstonePowered() && !recipeAcquired) {
+        if (toDistillBP.isEmpty() && this.isBlockRedstonePowered() && !recipeAcquired) { //TODO only works if fluid is the tank(0)gi
 
             fluidToDistill = inputFluidInventory.getTankAt(0).getFluid();
 
@@ -315,7 +311,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                         .or(abilities(MultiblockAbility.EXPORT_ITEMS).setMaxGlobalLimited(1))
                         .or(abilities(MultiblockAbility.INPUT_ENERGY).setMinGlobalLimited(1).setMaxGlobalLimited(3))
                         .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1))
-                        .or(abilities(MultiblockAbility.IMPORT_ITEMS).setMaxGlobalLimited(1))
+                        .or(abilities(MultiblockAbility.IMPORT_ITEMS).setMaxGlobalLimited(1).setPreviewCount(1),)
                         .or(autoAbilities(true, false)))
                 .where('A', states(getCasingState())
                         .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMinGlobalLimited(1)))
@@ -338,13 +334,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         });
     }
 
-    /*
-    @Override
-    protected boolean allowSameFluidFillForOutputs() {
-        return false;
-    }
-
-     */
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {

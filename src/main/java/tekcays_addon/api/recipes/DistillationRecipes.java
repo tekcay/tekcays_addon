@@ -9,7 +9,7 @@ import java.util.Map;
 import static gregtech.api.unification.material.Materials.*;
 
 
-public class DistillationRecipes {
+public class DistillationRecipes { //TODO add GTCEu recipes in there
 
     public static final List<DistillationRecipes> TKCYA_DISTILLATION_RECIPES = new ArrayList<>();
     public static final DistillationRecipes WOOD_VINEGAR = new DistillationRecipes(WoodVinegar.getLocalizedName(), WoodVinegar.getFluid(1000),
