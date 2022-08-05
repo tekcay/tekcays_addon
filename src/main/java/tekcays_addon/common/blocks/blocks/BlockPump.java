@@ -69,5 +69,10 @@ public class BlockPump extends VariantBlock<BlockPump.PumpType> {
             return targetVacuum;
         }
 
+        @Override
+        public int getTier() {
+            return this.ordinal();
+        }
+
     }
 }

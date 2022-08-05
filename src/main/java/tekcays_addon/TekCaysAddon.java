@@ -1,10 +1,13 @@
 package tekcays_addon;
 
+import gregtech.common.blocks.BlockWireCoil;
+import gregtech.common.blocks.MetaBlocks;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.api.worldgen.TKCYAWorldGenRegistry;
 import tekcays_addon.common.CommonProxy;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
+import tekcays_addon.common.blocks.blocks.BlockPump;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 import gregtech.api.GTValues;
@@ -13,6 +16,9 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.io.IOException;
+
+import static gregtech.api.GregTechAPI.HEATING_COILS;
+import static tekcays_addon.api.utils.TKCYAValues.PUMP_MACHINES;
 
 @Mod(   modid        = TekCaysAddon.MODID,
         name         = TekCaysAddon.NAME,
@@ -33,6 +39,12 @@ public class TekCaysAddon {
         TKCYAMetaBlocks.init();
         TKCYAMetaItems.init();
         TKCYAMetaTileEntities.init();
+
+        /* Start Pump Machine Registration */
+        for (BlockPump.PumpType type : BlockPump.PumpType.values()) {
+            PUMP_MACHINES.put(TKCYAMetaBlocks.PUMP_MACHINE.getState(type), type);
+        }
+
 
         proxy.preLoad();
     }

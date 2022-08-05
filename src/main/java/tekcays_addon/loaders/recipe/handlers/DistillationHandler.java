@@ -72,6 +72,10 @@ public class DistillationHandler {
         FLUID_WITH_PROPERTIES.add(OIL_HEAVY);
         FLUID_WITH_PROPERTIES.add(OIL_LIGHT);
         FLUID_WITH_PROPERTIES.add(RAW_OIL);
+        FLUID_WITH_PROPERTIES.add(SULFURIC_GAS);
+        FLUID_WITH_PROPERTIES.add(SULFURIC_NAPHTHA);
+        FLUID_WITH_PROPERTIES.add(SULFURIC_LIGHT_FUEL);
+        FLUID_WITH_PROPERTIES.add(SULFURIC_HEAVY_FUEL);
     }
 
     public static void initBackEnd() {

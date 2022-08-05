@@ -21,6 +21,10 @@ public class FluidWithProperties { //TODO add more Fluids
     public static final FluidWithProperties OIL_LIGHT = new FluidWithProperties(OilLight.getLocalizedName(), OilLight.getFluid(), 800);
     public static final FluidWithProperties OIL_HEAVY = new FluidWithProperties(OilHeavy.getLocalizedName(), OilHeavy.getFluid(), 800);
     public static final FluidWithProperties RAW_OIL = new FluidWithProperties(RawOil.getLocalizedName(), RawOil.getFluid(), 800);
+    public static final FluidWithProperties SULFURIC_GAS = new FluidWithProperties(SulfuricGas.getLocalizedName(), SulfuricGas.getFluid(), 313);
+    public static final FluidWithProperties SULFURIC_NAPHTHA = new FluidWithProperties(SulfuricNaphtha.getLocalizedName(), SulfuricNaphtha.getFluid(), 600);
+    public static final FluidWithProperties SULFURIC_LIGHT_FUEL = new FluidWithProperties(SulfuricLightFuel.getLocalizedName(), SulfuricLightFuel.getFluid(), 500);
+    public static final FluidWithProperties SULFURIC_HEAVY_FUEL = new FluidWithProperties(SulfuricHeavyFuel.getLocalizedName(), SulfuricHeavyFuel.getFluid(), 800);
 
 
 

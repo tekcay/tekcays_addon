@@ -31,9 +31,11 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.block.IPumpMachineBlockStats;
+import tekcays_addon.api.pattern.TKCYATraceabilityPredicate;
 import tekcays_addon.api.recipes.DistillationRecipes;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 
@@ -48,7 +50,6 @@ import java.util.*;
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.capability.impl.DistillationMethods.*;
 import static tekcays_addon.api.capability.impl.MultiblocksMethods.*;
-import static tekcays_addon.api.pattern.TKCYATraceabilityPredicate.pumpMachine;
 import static tekcays_addon.api.recipes.DistillationRecipes.TKCYA_DISTILLATION_RECIPES;
 
 public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockController {
@@ -112,6 +113,9 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         setOutputRate();
         setIncreaseTemp();
 
+
+
+        /*
         Object type = context.get("PumpType");
         if (type instanceof IPumpMachineBlockStats) {
             this.targetPressure = ((IPumpMachineBlockStats) type).getTargetVacuum();
@@ -119,6 +123,12 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
             this.targetPressure = 0;
         }
 
+         */
+
+    }
+
+    public static TraceabilityPredicate pumpMachine() {
+        return TKCYATraceabilityPredicate.PUMP_MACHINE.get();
     }
 
     @Override
@@ -131,7 +141,10 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
             setFraction();
         }
 
-        if (toDistillBP.isEmpty() && this.isBlockRedstonePowered() && !recipeAcquired && getOffsetTimer() % 20 == 0) {
+        TKCYALog.logger.info("parallelOUT = " + parallel);
+        TKCYALog.logger.info("toDistillBP sizeOUT = " + toDistillBP.size());
+
+        if (toDistillBP.isEmpty() && this.isBlockRedstonePowered() && !recipeAcquired) {
 
             for (IFluidTank fluidTank : inputFluidInventory.getFluidTanks()) {
                 fluidToDistill = fluidTank.getFluid();
@@ -150,12 +163,17 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                     //Evaluates how many recipes can be run at once
                     parallel = (fluidToDistill.amount - test) / inputFluidStackRecipe.amount;
 
-                    //Parallel = 0 means not enough fluid to run any recipe, so it skips to the next recipe
+                    TKCYALog.logger.info("parallel = " + parallel);
+
+                    //Parallel = 0 means not enough fluid to run any recipe, so it skips to the next distillationRecipe
                     if (parallel == 0) continue;
 
                     FluidStack toDrain = new FluidStack(inputFluidStackRecipe.getFluid(), inputFluidStackRecipe.amount * parallel);
                     inputFluidInventory.drain(toDrain, true);
                     setToDistillBP(distillationRecipes.getFluidStackOutput(), toDistillBP);
+
+                    TKCYALog.logger.info("toDistillBP size = " + toDistillBP.size());
+
                     pumpType = distillationRecipes.getPumpType();
                     recipeAcquired = true;
                     break;
@@ -431,9 +449,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         super.invalidateStructure();
         resetTileAbilities();
     }
-
-
-
 
 
     ////Data
