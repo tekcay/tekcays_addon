@@ -95,14 +95,21 @@ tile.block_brick.fireclay_brick.name=Fireclay Brick
 tile.block_brick.strong_brick.name=Strong Brick
 
 # pump_machine
-tile.pump_machine.pump_machine_lv.name=Pump Machine LV
-tile.pump_machine.pump_machine_mv.name=Pump Machine MV
-tile.pump_machine.pump_machine_hv.name=Pump Machine HV
-tile.pump_machine.pump_machine_ev.name=Pump Machine EV
+tile.pump_machine.pump_machine_lv.name=Vacuum Pump Machine LV
+tile.pump_machine.pump_machine_mv.name=Vacuum Pump Machine MV
+tile.pump_machine.pump_machine_hv.name=Vacuum Pump Machine HV
+tile.pump_machine.pump_machine_ev.name=Vacuum Pump Machine EV
+
+# compressor_machine
+tile.compressor_machine.compressor_machine_lv.name=Pompressor Machine LV
+tile.compressor_machine.compressor_machine_mv.name=Compressor Machine MV
+tile.compressor_machine.compressor_machine_hv.name=Compressor Machine HV
+tile.compressor_machine.compressor_machine_ev.name=Compressor Machine EV
 
 ## tooltips
 tile.block_brick.tooltip_heat=Max temperature: §e%,d K
-tile.pump_machine.tooltip_targetPressure=Max pressure: §e%,d Pa
+tile.pump_machine.tooltip_targetVacuum=Max vacuum: §e%,d Pa
+tile.compressor_machine.tooltip_targetPressure=Max pressure: §e%,d bar
 
 # walls
 tile.large_multiblock_casing.steel_wall.name=Steel Wall

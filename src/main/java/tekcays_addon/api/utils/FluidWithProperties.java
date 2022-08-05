@@ -17,6 +17,10 @@ public class FluidWithProperties { //TODO add more Fluids
     public static final FluidWithProperties METHANOL = new FluidWithProperties(Methanol.getLocalizedName(), Methanol.getFluid(), 334, 175);
     public static final FluidWithProperties METHYL_ACETATE = new FluidWithProperties(MethylAcetate.getLocalizedName(), MethylAcetate.getFluid(), 330, 175);
     public static final FluidWithProperties WATER = new FluidWithProperties(Water.getLocalizedName(), Water.getFluid(), 373, 273);
+    public static final FluidWithProperties OIL = new FluidWithProperties(Oil.getLocalizedName(), Oil.getFluid(), 800);
+    public static final FluidWithProperties OIL_LIGHT = new FluidWithProperties(OilLight.getLocalizedName(), OilLight.getFluid(), 800);
+    public static final FluidWithProperties OIL_HEAVY = new FluidWithProperties(OilHeavy.getLocalizedName(), OilHeavy.getFluid(), 800);
+    public static final FluidWithProperties RAW_OIL = new FluidWithProperties(RawOil.getLocalizedName(), RawOil.getFluid(), 800);
 
 
 

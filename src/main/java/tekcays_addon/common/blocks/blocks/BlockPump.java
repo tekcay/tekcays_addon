@@ -38,7 +38,7 @@ public class BlockPump extends VariantBlock<BlockPump.PumpType> {
         IBlockState stackState = itemBlock.getBlockState(itemStack);
         PumpType pumpType = getState(stackState);
 
-        lines.add(I18n.format("tile.pump_machine.tooltip_targetPressure", pumpType.targetPressure));
+        lines.add(I18n.format("tile.pump_machine.tooltip_targetVacuum", pumpType.targetVacuum));
     }
 
     public enum PumpType implements IStringSerializable {
@@ -50,11 +50,11 @@ public class BlockPump extends VariantBlock<BlockPump.PumpType> {
 
 
         private final String name;
-        private final int targetPressure;
+        private final int targetVacuum;
 
-        PumpType(String name, int targetPressure) {
+        PumpType(String name, int targetVacuum) {
             this.name = name;
-            this.targetPressure = targetPressure;
+            this.targetVacuum = targetVacuum;
         }
 
         @Nonnull
@@ -63,8 +63,8 @@ public class BlockPump extends VariantBlock<BlockPump.PumpType> {
             return this.name;
         }
 
-        public int getTargetPressure() {
-            return targetPressure;
+        public int getTargetVacuum() {
+            return targetVacuum;
         }
 
     }

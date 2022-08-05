@@ -78,7 +78,7 @@ public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<PrimitiveRecipeBuilder> DISTILLATION = new RecipeMap<>(
-            "distillation", 0, 0, 0, 1, 1, 1, 1, 12, new PrimitiveRecipeBuilder(), false);
+            "distillation", 0, 1, 0, 1, 1, 1, 1, 12, new PrimitiveRecipeBuilder(), false);
 
 
 }
