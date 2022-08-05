@@ -104,24 +104,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         setIncreaseTemp();
     }
 
-    private boolean hasAcceptedFluid() {
-
-        for (IFluidTank fluidTank : inputFluidInventory.getFluidTanks()) {
-
-            for (Fluid fluid : getGasCostMap().keySet()) { //ACCEPTED_INPUT_FLUIDS
-                FluidStack fs = fluidTank.getFluid();
-                if (fs == null) continue;
-                if (fs.getFluid().equals(fluid)) {
-                    tankToDrain = fluidTank;
-                    hasAcceptedFluid = true;
-                    return true;
-                }
-            }
-        }
-        hasAcceptedFluid = false;
-        return false;
-    }
-
     @Override
     public void updateFormedValid() {
         super.updateFormedValid();
@@ -178,7 +160,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
             if (getOffsetTimer() % (int) (duration * parallel - 0.2f * Math.pow(height, 1.7)) == 0) {
 
-                energyCost = temperatureEnergyCostBatchDistillationTower(temp + increaseTemp);
+                energyCost = (int) (temperatureEnergyCostBatchDistillationTower(temp + increaseTemp) * 0.8f * parallel);
                 hasEnoughEnergy = enoughEnergyToDrain(energyContainer, energyCost);
 
                 if (hasEnoughEnergy) {
@@ -192,9 +174,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         //Hot enough to boil product
         if (temp > 300 && temp == bp) {
 
-            //This line is for world-reloading, when energyCost it reset to 0;
-            if (energyCost == 0) energyCost = temperatureEnergyCostBatchDistillationTower(temp + increaseTemp);
-
+            energyCost = (int) (temperatureEnergyCostBatchDistillationTower(temp + increaseTemp) * 0.8f * parallel);
             hasEnoughEnergy = enoughEnergyToDrain(energyContainer, energyCost);
 
             if (toFill > 0 && hasEnoughEnergy) {
@@ -335,7 +315,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                         .or(abilities(MultiblockAbility.EXPORT_ITEMS).setMaxGlobalLimited(1))
                         .or(abilities(MultiblockAbility.INPUT_ENERGY).setMinGlobalLimited(1).setMaxGlobalLimited(3))
                         .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1))
-                        .or(abilities(MultiblockAbility.IMPORT_ITEMS).setMaxGlobalLimited(1).setPreviewCount(1),)
+                        .or(abilities(MultiblockAbility.IMPORT_ITEMS).setMaxGlobalLimited(1).setPreviewCount(1))
                         .or(autoAbilities(true, false)))
                 .where('A', states(getCasingState())
                         .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMinGlobalLimited(1)))

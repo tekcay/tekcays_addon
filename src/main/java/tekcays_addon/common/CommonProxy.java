@@ -44,6 +44,7 @@ public class CommonProxy {
 
         registry.register(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING);
         registry.register(TKCYAMetaBlocks.BLOCK_BRICK);
+        registry.register(TKCYAMetaBlocks.PUMP_MACHINE);
     }
 
 
@@ -54,6 +55,7 @@ public class CommonProxy {
 
         registry.register(createItemBlock(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING, VariantItemBlock::new));
         registry.register(createItemBlock(TKCYAMetaBlocks.BLOCK_BRICK, VariantItemBlock::new));
+        registry.register(createItemBlock(TKCYAMetaBlocks.PUMP_MACHINE, VariantItemBlock::new));
     }
 
     private static <T extends Block> ItemBlock createItemBlock(T block, Function<T, ItemBlock> producer) {
