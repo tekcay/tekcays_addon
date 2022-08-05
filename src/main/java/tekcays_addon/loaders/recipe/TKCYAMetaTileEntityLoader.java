@@ -7,6 +7,7 @@ import gregtech.api.unification.stack.UnificationEntry;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
+import gregtech.loaders.recipe.CraftingComponent;
 import gregtech.loaders.recipe.MetaTileEntityLoader;
 import tekcays_addon.common.TKCYAConfigHolder;
 import gregicality.multiblocks.common.metatileentities.GCYMMetaTileEntities;
@@ -71,37 +72,37 @@ public class TKCYAMetaTileEntityLoader {
         if (TKCYAConfigHolder.distillationOverhaul.enableDistillationOverhaul) {
             ModHandler.addShapedRecipe(true, "pump_machine_lv", TKCYAMetaBlocks.PUMP_MACHINE.getItemVariant(BlockPump.PumpType.PUMP_MACHINE_LV),
                     "CBC", "PHP", "MRM",
-                    'C', new UnificationEntry(circuit, MarkerMaterials.Tier.LV),
-                    'B', MetaItems.FLUID_REGULATOR_LV,
-                    'M', MetaItems.ELECTRIC_MOTOR_LV,
-                    'H', MetaTileEntities.HULL[1],
+                    'C', CIRCUIT.getIngredient(LV),
+                    'B', MetaItems.FLUID_REGULATOR_LV.getStackForm(),
+                    'M', MetaItems.ELECTRIC_MOTOR_LV.getStackForm(),
+                    'H', MetaTileEntities.HULL[1].getStackForm(),
                     'P', new UnificationEntry(pipeNormalFluid, TinAlloy),
                     'R', new UnificationEntry(rotor, Steel));
 
             ModHandler.addShapedRecipe(true, "pump_machine_mv", TKCYAMetaBlocks.PUMP_MACHINE.getItemVariant(BlockPump.PumpType.PUMP_MACHINE_MV),
                     "CBC", "PHP", "MRM",
-                    'C', new UnificationEntry(circuit, MarkerMaterials.Tier.MV),
-                    'B', MetaItems.FLUID_REGULATOR_MV,
-                    'M', MetaItems.ELECTRIC_MOTOR_MV,
-                    'H', MetaTileEntities.HULL[2],
+                    'C', CIRCUIT.getIngredient(MV),
+                    'B', MetaItems.FLUID_REGULATOR_MV.getStackForm(),
+                    'M', MetaItems.ELECTRIC_MOTOR_MV.getStackForm(),
+                    'H', MetaTileEntities.HULL[2].getStackForm(),
                     'P', new UnificationEntry(pipeNormalFluid, GalvanizedSteel),
                     'R', new UnificationEntry(rotor, GalvanizedSteel));
 
             ModHandler.addShapedRecipe(true, "pump_machine_hv", TKCYAMetaBlocks.PUMP_MACHINE.getItemVariant(BlockPump.PumpType.PUMP_MACHINE_HV),
                     "CBC", "PHP", "MRM",
-                    'C', new UnificationEntry(circuit, MarkerMaterials.Tier.HV),
-                    'B', MetaItems.FLUID_REGULATOR_HV,
-                    'M', MetaItems.ELECTRIC_MOTOR_HV,
-                    'H', MetaTileEntities.HULL[3],
+                    'C', CIRCUIT.getIngredient(HV),
+                    'B', MetaItems.FLUID_REGULATOR_HV.getStackForm(),
+                    'M', MetaItems.ELECTRIC_MOTOR_HV.getStackForm(),
+                    'H', MetaTileEntities.HULL[3].getStackForm(),
                     'P', new UnificationEntry(pipeNormalFluid, StainlessSteel),
                     'R', new UnificationEntry(rotor, Monel));
 
             ModHandler.addShapedRecipe(true, "pump_machine_ev", TKCYAMetaBlocks.PUMP_MACHINE.getItemVariant(BlockPump.PumpType.PUMP_MACHINE_EV),
                     "CBC", "PHP", "MRM",
-                    'C', new UnificationEntry(circuit, MarkerMaterials.Tier.EV),
-                    'B', MetaItems.FLUID_REGULATOR_EV,
-                    'M', MetaItems.ELECTRIC_MOTOR_EV,
-                    'H', MetaTileEntities.HULL[4],
+                    'C', CIRCUIT.getIngredient(EV),
+                    'B', MetaItems.FLUID_REGULATOR_EV.getStackForm(),
+                    'M', MetaItems.ELECTRIC_MOTOR_EV.getStackForm(),
+                    'H', MetaTileEntities.HULL[4].getStackForm(),
                     'P', new UnificationEntry(pipeNormalFluid, Titanium),
                     'R', new UnificationEntry(rotor, StainlessSteel));
         }
