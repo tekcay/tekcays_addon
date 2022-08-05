@@ -160,7 +160,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
             if (getOffsetTimer() % (int) (duration * parallel - 0.2f * Math.pow(height, 1.7)) == 0) {
 
-                energyCost = (int) (temperatureEnergyCostBatchDistillationTower(temp + increaseTemp) * 0.8f * parallel);
+                energyCost = (int) (temperatureEnergyCostBatchDistillationTower(temp + increaseTemp) * 1.2f * parallel);
                 hasEnoughEnergy = enoughEnergyToDrain(energyContainer, energyCost);
 
                 if (hasEnoughEnergy) {
@@ -174,7 +174,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         //Hot enough to boil product
         if (temp > 300 && temp == bp) {
 
-            energyCost = (int) (temperatureEnergyCostBatchDistillationTower(temp + increaseTemp) * 0.8f * parallel);
+            energyCost = (int) (temperatureEnergyCostBatchDistillationTower(temp + increaseTemp) * 1.2f * parallel);
             hasEnoughEnergy = enoughEnergyToDrain(energyContainer, energyCost);
 
             if (toFill > 0 && hasEnoughEnergy) {

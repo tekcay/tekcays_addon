@@ -9,9 +9,11 @@
   "variants": {
     "variant": {
       "brick": {
-        "model": "minecraft:cube_all",
+        "model": "gregtech:cube_bottom_top_tintindex",
         "textures": {
-          "all": "gregtech:blocks/pump_machine/pump_machine_lv"
+          "top": "gregtech:blocks/pump_machine/pump_machine_lv_other",
+          "bottom": "gregtech:blocks/pump_machine/pump_machine_lv_other",
+          "side": "gregtech:blocks/pump_machine/pump_machine_lv_front"
         }
       },
       "reinforced_brick": {
