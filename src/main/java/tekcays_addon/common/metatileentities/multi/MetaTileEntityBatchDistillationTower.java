@@ -1,6 +1,5 @@
 package tekcays_addon.common.metatileentities.multi;
 
-import gregtech.api.capability.impl.AbstractRecipeLogic;
 import gregtech.api.capability.impl.EnergyContainerList;
 import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.capability.impl.ItemHandlerList;
@@ -29,6 +28,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.recipes.DistillationRecipes;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
@@ -47,6 +47,7 @@ import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.capability.impl.DistillationMethods.*;
 import static tekcays_addon.api.capability.impl.MultiblocksMethods.*;
 import static tekcays_addon.api.recipes.DistillationRecipes.TKCYA_DISTILLATION_RECIPES;
+import static tekcays_addon.api.utils.TKCYAValues.getGasCostMap;
 
 public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockController {
 
@@ -103,6 +104,24 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         setIncreaseTemp();
     }
 
+    private boolean hasAcceptedFluid() {
+
+        for (IFluidTank fluidTank : inputFluidInventory.getFluidTanks()) {
+
+            for (Fluid fluid : getGasCostMap().keySet()) { //ACCEPTED_INPUT_FLUIDS
+                FluidStack fs = fluidTank.getFluid();
+                if (fs == null) continue;
+                if (fs.getFluid().equals(fluid)) {
+                    tankToDrain = fluidTank;
+                    hasAcceptedFluid = true;
+                    return true;
+                }
+            }
+        }
+        hasAcceptedFluid = false;
+        return false;
+    }
+
     @Override
     public void updateFormedValid() {
         super.updateFormedValid();
@@ -113,29 +132,34 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
             setFraction();
         }
 
-        if (toDistillBP.isEmpty() && this.isBlockRedstonePowered() && !recipeAcquired) { //TODO only works if fluid is the tank(0)gi
+        if (toDistillBP.isEmpty() && this.isBlockRedstonePowered() && !recipeAcquired) {
 
-            fluidToDistill = inputFluidInventory.getTankAt(0).getFluid();
+            for (IFluidTank fluidTank : inputFluidInventory.getFluidTanks()) {
+                fluidToDistill = fluidTank.getFluid();
+                if (fluidToDistill == null) continue;
 
-            if (fluidToDistill == null) return;
+                distillationRecipesIndex = -1;
 
-            distillationRecipesIndex = -1;
+                for (DistillationRecipes distillationRecipes : TKCYA_DISTILLATION_RECIPES) {
 
-            for (DistillationRecipes distillationRecipes : TKCYA_DISTILLATION_RECIPES) {
+                    distillationRecipesIndex++;
+                    FluidStack inputFluidStackRecipe = distillationRecipes.getFluidStackInput();
+                    if (!fluidToDistill.isFluidEqual(inputFluidStackRecipe)) continue;
 
-                distillationRecipesIndex ++;
+                    int test = fluidToDistill.amount % inputFluidStackRecipe.amount;
 
-                FluidStack inputFluidStackRecipe = distillationRecipes.getFluidStackInput();
+                    //Evaluates how many recipes can be run at once
+                    parallel = (fluidToDistill.amount - test) / inputFluidStackRecipe.amount;
 
-                if (!fluidToDistill.isFluidEqual(inputFluidStackRecipe)) continue;
+                    //Parallel = 0 means not enough fluid to run any recipe, so it skips to the next recipe
+                    if (parallel == 0) continue;
 
-                int test = fluidToDistill.amount % inputFluidStackRecipe.amount;
-
-                parallel = (fluidToDistill.amount - test) / inputFluidStackRecipe.amount;
-                FluidStack toDrain = new FluidStack(inputFluidStackRecipe.getFluid(), inputFluidStackRecipe.amount * parallel);
-                inputFluidInventory.drain(toDrain, true);
-
-                setToDistillBP(distillationRecipes.getFluidStackOutput(), toDistillBP);
+                    FluidStack toDrain = new FluidStack(inputFluidStackRecipe.getFluid(), inputFluidStackRecipe.amount * parallel);
+                    inputFluidInventory.drain(toDrain, true);
+                    setToDistillBP(distillationRecipes.getFluidStackOutput(), toDistillBP);
+                    break;
+                }
+                if (parallel != 0) break;
             }
 
             fractionIndex = 0;
