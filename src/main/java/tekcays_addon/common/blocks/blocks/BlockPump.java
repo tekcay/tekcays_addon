@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BlockPump extends VariantBlock<BlockPump.BrickType> {
+public class BlockPump extends VariantBlock<BlockPump.PumpType> {
 
     public BlockPump() {
         super(net.minecraft.block.material.Material.IRON);
@@ -25,7 +25,7 @@ public class BlockPump extends VariantBlock<BlockPump.BrickType> {
         setResistance(10.0f);
         setSoundType(SoundType.METAL);
         setHarvestLevel("wrench", 1);
-        setDefaultState(getState(BrickType.BRICK));
+        setDefaultState(getState(PumpType.PUMP_MACHINE_LV));
     }
 
     @Override
@@ -34,17 +34,17 @@ public class BlockPump extends VariantBlock<BlockPump.BrickType> {
         super.addInformation(itemStack, worldIn, lines, tooltipFlag);
 
         // noinspection rawtypes, unchecked
-        VariantItemBlock itemBlock = (VariantItemBlock<BrickType, BlockPump>) itemStack.getItem();
+        VariantItemBlock itemBlock = (VariantItemBlock<PumpType, BlockPump>) itemStack.getItem();
         IBlockState stackState = itemBlock.getBlockState(itemStack);
-        BrickType brickType = getState(stackState);
+        PumpType pumpType = getState(stackState);
 
-        lines.add(I18n.format("tile.pump_machine.tooltip_heat", brickType.targetPressure));
+        lines.add(I18n.format("tile.pump_machine.tooltip_targetPressure", pumpType.targetPressure));
     }
 
-    public enum BrickType implements IStringSerializable {
+    public enum PumpType implements IStringSerializable {
 
         PUMP_MACHINE_LV("pump_machine_lv", 10000),
-        PUMP_MACHINE_MV("pump_machine_v", 5000),
+        PUMP_MACHINE_MV("pump_machine_mv", 5000),
         PUMP_MACHINE_HV("pump_machine_hv", 2500),
         PUMP_MACHINE_EV("pump_machine_ev", 1500);
 
@@ -52,7 +52,7 @@ public class BlockPump extends VariantBlock<BlockPump.BrickType> {
         private final String name;
         private final int targetPressure;
 
-        BrickType(String name, int targetPressure) {
+        PumpType(String name, int targetPressure) {
             this.name = name;
             this.targetPressure = targetPressure;
         }

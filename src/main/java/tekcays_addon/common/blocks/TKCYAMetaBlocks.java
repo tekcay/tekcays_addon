@@ -31,7 +31,7 @@ public class TKCYAMetaBlocks {
         BLOCK_BRICK.setRegistryName("block_brick");
 
         PUMP_MACHINE = new BlockPump();
-        PUMP_MACHINE.setRegistryName("block_brick");
+        PUMP_MACHINE.setRegistryName("pump_machine");
     }
 
     @SideOnly(Side.CLIENT)

@@ -8,30 +8,36 @@
   },
   "variants": {
     "variant": {
-      "brick": {
+      "pump_machine_lv": {
         "model": "gregtech:cube_bottom_top_tintindex",
         "textures": {
           "top": "gregtech:blocks/pump_machine/pump_machine_lv_other",
           "bottom": "gregtech:blocks/pump_machine/pump_machine_lv_other",
-          "side": "gregtech:blocks/pump_machine/pump_machine_lv_front"
+          "side": "gregtech:blocks/pump_machine/pump_machine_lv_side"
         }
       },
-      "reinforced_brick": {
-        "model": "minecraft:cube_all",
+      "pump_machine_mv": {
+        "model": "gregtech:cube_bottom_top_tintindex",
         "textures": {
-          "all": "gregtech:blocks/pump_machine/pump_machine_mv"
+          "top": "gregtech:blocks/pump_machine/pump_machine_mv_other",
+          "bottom": "gregtech:blocks/pump_machine/pump_machine_mv_other",
+          "side": "gregtech:blocks/pump_machine/pump_machine_mv_side"
         }
       },
-      "fireclay_brick": {
-        "model": "minecraft:cube_all",
+      "pump_machine_hv": {
+        "model": "gregtech:cube_bottom_top_tintindex",
         "textures": {
-          "all": "gregtech:blocks/pump_machine/pump_machine_hv"
+          "top": "gregtech:blocks/pump_machine/pump_machine_hv_other",
+          "bottom": "gregtech:blocks/pump_machine/pump_machine_hv_other",
+          "side": "gregtech:blocks/pump_machine/pump_machine_hv_side"
         }
       },
-      "strong_brick": {
-        "model": "minecraft:cube_all",
+      "pump_machine_ev": {
+        "model": "gregtech:cube_bottom_top_tintindex",
         "textures": {
-          "all": "gregtech:blocks/pump_machine/pump_machine_ev"
+          "top": "gregtech:blocks/pump_machine/pump_machine_ev_other",
+          "bottom": "gregtech:blocks/pump_machine/pump_machine_ev_other",
+          "side": "gregtech:blocks/pump_machine/pump_machine_ev_side"
         }
       }
     }
