@@ -30,6 +30,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.ItemStackHandler;
+import tekcays_addon.api.block.IPumpMachineBlockStats;
 import tekcays_addon.api.recipes.DistillationRecipes;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.render.TKCYATextures;
@@ -38,6 +39,7 @@ import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 
 import java.util.List;
 import com.google.common.collect.Lists;
+import tekcays_addon.common.blocks.blocks.BlockPump;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -46,12 +48,19 @@ import java.util.*;
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.capability.impl.DistillationMethods.*;
 import static tekcays_addon.api.capability.impl.MultiblocksMethods.*;
+import static tekcays_addon.api.pattern.TKCYATraceabilityPredicate.pumpMachine;
 import static tekcays_addon.api.recipes.DistillationRecipes.TKCYA_DISTILLATION_RECIPES;
-import static tekcays_addon.api.utils.TKCYAValues.getGasCostMap;
 
 public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockController {
 
-    private Map<Integer, FluidStack> toDistillBP = new TreeMap<>();
+    /**
+     * A {@code Map} containing all the {@code FluidStack}s of the current recipe as {@code value} and their corresponding boiling point
+     * as their corresponding {@code key}.
+     * <br /><br />
+     * Using a {@code TreeMap} enables auto-sorting of the output following their boiling point,
+     * so the lower boiling-point {@code FluidStack} will be passed first.
+     */
+    private final Map<Integer, FluidStack> toDistillBP = new TreeMap<>();
     private FluidStack fluidToDistill;
     /**
      * represents the current {@code Fluid} fraction that is handled.
@@ -75,8 +84,8 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
      * Useful to remember the current recipe
      */
     private int distillationRecipesIndex;
-
-
+    private static BlockPump.PumpType pumpType;
+    private int targetPressure;
     private boolean hasEnoughEnergy;
 
     public MetaTileEntityBatchDistillationTower(ResourceLocation metaTileEntityId) {
@@ -102,6 +111,14 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         this.height = context.getOrDefault("DTHeight", 1);
         setOutputRate();
         setIncreaseTemp();
+
+        Object type = context.get("PumpType");
+        if (type instanceof IPumpMachineBlockStats) {
+            this.targetPressure = ((IPumpMachineBlockStats) type).getTargetVacuum();
+        } else {
+            this.targetPressure = 0;
+        }
+
     }
 
     @Override
@@ -114,7 +131,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
             setFraction();
         }
 
-        if (toDistillBP.isEmpty() && this.isBlockRedstonePowered() && !recipeAcquired) {
+        if (toDistillBP.isEmpty() && this.isBlockRedstonePowered() && !recipeAcquired && getOffsetTimer() % 20 == 0) {
 
             for (IFluidTank fluidTank : inputFluidInventory.getFluidTanks()) {
                 fluidToDistill = fluidTank.getFluid();
@@ -139,18 +156,21 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                     FluidStack toDrain = new FluidStack(inputFluidStackRecipe.getFluid(), inputFluidStackRecipe.amount * parallel);
                     inputFluidInventory.drain(toDrain, true);
                     setToDistillBP(distillationRecipes.getFluidStackOutput(), toDistillBP);
+                    pumpType = distillationRecipes.getPumpType();
+                    recipeAcquired = true;
                     break;
                 }
-                if (parallel != 0) break;
+                if (!recipeAcquired) return;
             }
 
-            fractionIndex = 0;
-            setBp();
-            setToFill();
-            setFraction();
-            isItTheLastFraction();
-            recipeAcquired = true;
-            this.markDirty();
+            if (recipeAcquired) {
+                fractionIndex = 0;
+                setBp();
+                setToFill();
+                setFraction();
+                isItTheLastFraction();
+                this.markDirty();
+            }
         }
 
         isItTheLastFraction();
@@ -195,6 +215,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
             }
         }
 
+        // When a fraction process is complete, but there is another one to come
         if (!toDistillBP.isEmpty() && !isTheLastFraction && toFill == 0) {
             setBp();
             setToFill();
@@ -202,8 +223,8 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
             this.markDirty();
         }
 
-
-        if (!toDistillBP.isEmpty() && isTheLastFraction) reset();
+        // When the last fraction process is complete, reset.
+        if (!toDistillBP.isEmpty() && isTheLastFraction && toFill == 0) reset();
     }
 
     public void setOutputRate() {
@@ -297,6 +318,12 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
             textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.parallel", parallel));
             textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.temperature", temp));
             textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.energy_cost", energyCost));
+
+            if (pumpType != null) {
+                if (pumpType.getTargetVacuum() != targetPressure) {
+                    textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.needs_pump"));
+                }
+            }
         }
         super.addDisplayText(textList);
     }
@@ -307,7 +334,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                 .aisle("HHH", "HHH", "HHH")
                 .aisle("YSY", "YYY", "YYY")
                 .aisle("XXX", "X#X", "XXX").setRepeatable(1, 11)
-                .aisle("AAA", "AAA", "AAA")
+                .aisle("APA", "AAA", "AAA")
                 .where('H', states(getHeatAcceptorState()))
                 .where('X', states(getCasingState()))
                 .where('S', selfPredicate())
@@ -320,6 +347,8 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                 .where('A', states(getCasingState())
                         .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMinGlobalLimited(1)))
                 .where('#', heightIndicatorPredicate())
+                .where('P', pumpMachine()
+                        .or(states(getCasingState())))
                 .build();
     }
 
@@ -337,6 +366,19 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                 return false;
         });
     }
+
+    /*
+    public static TraceabilityPredicate pumpIndicatorPredicate() {
+        return new TraceabilityPredicate((blockWorldState) -> {
+            if (pumpIndicatorPredicate().test(blockWorldState)) {
+                blockWorldState.getMatchContext().increment("DTPump", 1);
+                return true;
+            } else
+                return false;
+        });
+    }
+
+     */
 
 
     @Override

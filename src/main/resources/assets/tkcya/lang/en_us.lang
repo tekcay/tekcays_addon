@@ -299,6 +299,7 @@ tkcya.multiblock.distillation_tower.temperature=Temperature: §a%d K§7.
 tkcya.multiblock.distillation_tower.energy_cost=Consumption: %d EU/t.
 tkcya.multiblock.distillation_tower.next_fraction=Next: %s, %d K
 tkcya.multiblock.distillation_tower.boiling=Current: %s, %d L
+tkcya.multiblock.distillation_tower.needs_pump=§cThis fluid needs a pump to be distilled!§r
 
 
 

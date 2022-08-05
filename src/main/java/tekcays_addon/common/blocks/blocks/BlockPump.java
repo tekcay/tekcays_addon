@@ -11,6 +11,7 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import tekcays_addon.api.block.IPumpMachineBlockStats;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -41,7 +42,7 @@ public class BlockPump extends VariantBlock<BlockPump.PumpType> {
         lines.add(I18n.format("tile.pump_machine.tooltip_targetVacuum", pumpType.targetVacuum));
     }
 
-    public enum PumpType implements IStringSerializable {
+    public enum PumpType implements IStringSerializable, IPumpMachineBlockStats {
 
         PUMP_MACHINE_LV("pump_machine_lv", 10000),
         PUMP_MACHINE_MV("pump_machine_mv", 5000),
@@ -60,9 +61,10 @@ public class BlockPump extends VariantBlock<BlockPump.PumpType> {
         @Nonnull
         @Override
         public String getName() {
-            return this.name;
+            return name;
         }
 
+        @Override
         public int getTargetVacuum() {
             return targetVacuum;
         }

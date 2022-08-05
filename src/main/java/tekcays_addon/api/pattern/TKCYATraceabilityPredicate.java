@@ -10,6 +10,7 @@ import net.minecraft.block.state.IBlockState;
 import org.apache.commons.lang3.ArrayUtils;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
+import tekcays_addon.common.blocks.blocks.BlockPump;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -24,7 +25,7 @@ public class TKCYATraceabilityPredicate extends TraceabilityPredicate {
         if ((blockState.getBlock() instanceof BlockFireboxCasing)) {
             BlockFireboxCasing blockFireboxCasing = (BlockFireboxCasing) blockState.getBlock();
             BlockFireboxCasing.FireboxCasingType fireboxCasingType = blockFireboxCasing.getState(blockState);
-            Object currentfireboxType = blockWorldState.getMatchContext().getOrPut("fireboxType", fireboxCasingType);
+            Object currentfireboxType = blockWorldState.getMatchContext().getOrPut("FireboxType", fireboxCasingType);
             if (!currentfireboxType.toString().equals(fireboxCasingType.getName())) {
                 blockWorldState.setError(new PatternStringError("gregtech.multiblock.pattern.error.coils"));
                 return false;
@@ -44,7 +45,7 @@ public class TKCYATraceabilityPredicate extends TraceabilityPredicate {
         if ((blockState.getBlock() instanceof BlockBrick)) {
             BlockBrick blockBrick = (BlockBrick) blockState.getBlock();
             BlockBrick.BrickType brickType = blockBrick.getState(blockState);
-            Object currentfireboxType = blockWorldState.getMatchContext().getOrPut("brickType", brickType);
+            Object currentfireboxType = blockWorldState.getMatchContext().getOrPut("BrickType", brickType);
             if (!currentfireboxType.toString().equals(brickType.getName())) {
                 blockWorldState.setError(new PatternStringError("tkcya.multiblock.pattern.error.bricks"));
                 return false;
@@ -56,6 +57,29 @@ public class TKCYATraceabilityPredicate extends TraceabilityPredicate {
     }, () -> ArrayUtils.addAll(
             Arrays.stream(BlockBrick.BrickType.values()).map(type -> new BlockInfo(TKCYAMetaBlocks.BLOCK_BRICK.getState(type), null)).toArray(BlockInfo[]::new)))
             .addTooltips("tkcya.multiblock.pattern.error.bricks");
+
+
+    public static Supplier<TraceabilityPredicate> PUMP_MACHINE = () -> new TraceabilityPredicate(blockWorldState -> {
+        IBlockState blockState = blockWorldState.getBlockState();
+        if ((blockState.getBlock() instanceof BlockPump)) {
+            BlockPump blockPump = (BlockPump) blockState.getBlock();
+            BlockPump.PumpType pumpType = blockPump.getState(blockState);
+            Object currentpumpType = blockWorldState.getMatchContext().getOrPut("PumpType", pumpType);
+            if (!currentpumpType.toString().equals(pumpType.getName())) {
+                blockWorldState.setError(new PatternStringError("tkcya.multiblock.pattern.error.bricks"));
+                return false;
+            }
+            blockWorldState.getMatchContext().getOrPut("VABlock", new LinkedList<>()).add(blockWorldState.getPos());
+            return true;
+        }
+        return false;
+    }, () -> ArrayUtils.addAll(
+            Arrays.stream(BlockPump.PumpType.values()).map(type -> new BlockInfo(TKCYAMetaBlocks.PUMP_MACHINE.getState(type), null)).toArray(BlockInfo[]::new)))
+            .addTooltips("tkcya.multiblock.pattern.error.bricks");
+
+    public static TraceabilityPredicate pumpMachine() {
+        return TKCYATraceabilityPredicate.PUMP_MACHINE.get();
+    }
     
     
 }
