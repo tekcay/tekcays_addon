@@ -44,17 +44,19 @@ public class BlockPump extends VariantBlock<BlockPump.PumpType> {
 
     public enum PumpType implements IStringSerializable, IPumpMachineBlockStats {
 
-        PUMP_MACHINE_LV("pump_machine_lv", 10000),
-        PUMP_MACHINE_MV("pump_machine_mv", 5000),
-        PUMP_MACHINE_HV("pump_machine_hv", 2500),
-        PUMP_MACHINE_EV("pump_machine_ev", 1500);
+        PUMP_MACHINE_LV("pump_machine_lv", "Pump Machine LV", 10000),
+        PUMP_MACHINE_MV("pump_machine_mv", "Pump Machine MV", 5000),
+        PUMP_MACHINE_HV("pump_machine_hv", "Pump Machine HV", 2500),
+        PUMP_MACHINE_EV("pump_machine_ev", "Pump Machine EV", 1500);
 
 
         private final String name;
+        private final String localizedName;
         private final int targetVacuum;
 
-        PumpType(String name, int targetVacuum) {
+        PumpType(String name, String localizedName, int targetVacuum) {
             this.name = name;
+            this.localizedName = localizedName;
             this.targetVacuum = targetVacuum;
         }
 
@@ -62,6 +64,12 @@ public class BlockPump extends VariantBlock<BlockPump.PumpType> {
         @Override
         public String getName() {
             return name;
+        }
+
+        @Nonnull
+        @Override
+        public String getLocalizedName() {
+            return localizedName;
         }
 
         @Override

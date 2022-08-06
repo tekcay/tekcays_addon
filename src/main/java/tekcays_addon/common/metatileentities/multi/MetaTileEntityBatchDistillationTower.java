@@ -38,6 +38,7 @@ import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 
 import java.util.List;
 import com.google.common.collect.Lists;
+import tekcays_addon.common.blocks.blocks.BlockPump;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -86,7 +87,8 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     private int distillationRecipesIndex;
     private int requiredVacuum;
     private int targetVacuum;
-    private boolean hasEnoughEnergy;
+    private boolean hasEnoughEnergy, wrongPump;
+    private BlockPump.PumpType requiredPumpType;
 
     public MetaTileEntityBatchDistillationTower(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.DISTILLATION);
@@ -97,6 +99,8 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         toFill = 0;
         fractionIndex = 0;
         recipeAcquired = false;
+        hasEnoughEnergy = false;
+        wrongPump = false;
     }
 
     @Override
@@ -112,7 +116,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         this.targetVacuum = context.getOrDefault("TargetVacuum", DEFAULT_PRESSURE);
         setOutputRate();
         setIncreaseTemp();
-
     }
 
     @Override
@@ -125,9 +128,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
             setBp();
             setFraction();
         }
-
-        TKCYALog.logger.info("parallelOUT = " + parallel);
-        TKCYALog.logger.info("toDistillBP sizeOUT = " + toDistillBP.size());
 
         if (toDistillBP.isEmpty() && this.isBlockRedstonePowered() && !recipeAcquired) {
 
@@ -142,16 +142,21 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                     distillationRecipesIndex++;
                     FluidStack inputFluidStackRecipe = distillationRecipes.getFluidStackInput();
 
-                    TKCYALog.logger.info("inputFluidStackRecipe = " + inputFluidStackRecipe.getLocalizedName() + " vs " + fluidToDistill.getLocalizedName());
-
                     if (!fluidToDistill.isFluidEqual(inputFluidStackRecipe)) continue;
+
+                    //Checks if the recipe needs vacuum
+                    requiredPumpType = distillationRecipes.getPumpType();
+                    requiredVacuum = requiredPumpType.getTargetVacuum();
+
+                    if (requiredVacuum != targetVacuum) {
+                        wrongPump = true;
+                        continue;
+                    }
 
                     int test = fluidToDistill.amount % inputFluidStackRecipe.amount;
 
                     //Evaluates how many recipes can be run at once
                     parallel = (fluidToDistill.amount - test) / inputFluidStackRecipe.amount;
-
-                    TKCYALog.logger.info("parallel = " + parallel);
 
                     //Parallel = 0 means not enough fluid to run any recipe, so it skips to the next distillationRecipe
                     if (parallel == 0) continue;
@@ -162,7 +167,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
                     TKCYALog.logger.info("toDistillBP size = " + toDistillBP.size());
 
-                    requiredVacuum = distillationRecipes.getPumpType().getTargetVacuum();
                     recipeAcquired = true;
                     break;
                 }
@@ -331,9 +335,9 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                 textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.targetVacuum", targetVacuum));
             }
 
-            if (requiredVacuum != 0) {
+            if (requiredVacuum != DEFAULT_PRESSURE) {
                 if (requiredVacuum != targetVacuum) {
-                    textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.needs_pump"));
+                    textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.needs_pump", requiredPumpType.getLocalizedName()));
                 }
             }
         }

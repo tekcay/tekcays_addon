@@ -17,6 +17,12 @@ public interface IPumpMachineBlockStats {
     String getName();
 
     /**
+     * @return The Localized Name of the Pump Machine
+     */
+    @Nonnull
+    String getLocalizedName();
+
+    /**
      * @return the vacuum the Pump Machine can reach
      */
     int getTargetVacuum();
