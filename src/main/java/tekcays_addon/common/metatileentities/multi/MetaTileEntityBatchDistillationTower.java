@@ -29,8 +29,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.ItemStackHandler;
-import tekcays_addon.api.recipes.DistillationRecipes;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
@@ -49,7 +47,7 @@ import static tekcays_addon.api.capability.impl.DistillationMethods.*;
 import static tekcays_addon.api.capability.impl.MultiblocksMethods.*;
 import static tekcays_addon.api.pattern.TKCYATraceabilityPredicate.heightIndicatorPredicate;
 import static tekcays_addon.api.pattern.TKCYATraceabilityPredicate.pumpMachinePredicate;
-import static tekcays_addon.api.recipes.DistillationRecipes.TKCYA_DISTILLATION_RECIPES;
+import static tekcays_addon.api.recipes.TKCYARecipeMaps.DISTILLATION;
 import static tekcays_addon.api.utils.TKCYAValues.DEFAULT_PRESSURE;
 
 public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockController {
@@ -81,17 +79,15 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     private int height;
     private final int duration = 20;
     private boolean recipeAcquired, isTheLastFraction;
-    /**
-     * Useful to remember the current recipe
-     */
-    private int distillationRecipesIndex;
     private int requiredVacuum;
     private int targetVacuum;
     private boolean hasEnoughEnergy, wrongPump;
     private BlockPump.PumpType requiredPumpType;
+    private Recipe recipe;
+    private String fluidToDistillName;
 
     public MetaTileEntityBatchDistillationTower(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.DISTILLATION);
+        super(metaTileEntityId, DISTILLATION);
         temp = 300;
         outputRate = 0;
         energyCost = 0;
@@ -124,7 +120,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
         //Used when joining a world with an ongoing recipe
         if (toDistillBP.isEmpty() && recipeAcquired) {
-            setToDistillBP(TKCYA_DISTILLATION_RECIPES.get(distillationRecipesIndex).getFluidStackOutput(), toDistillBP);
+            setToDistillBP(getRecipeFromFluidName(fluidToDistillName, DISTILLATION).getFluidOutputs(), toDistillBP);
             setBp();
             setFraction();
         }
@@ -135,18 +131,19 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                 fluidToDistill = fluidTank.getFluid();
                 if (fluidToDistill == null) continue;
 
-                distillationRecipesIndex = -1;
+                for (Recipe recipe : DISTILLATION.getRecipeList()) {
 
-                for (DistillationRecipes distillationRecipes : TKCYA_DISTILLATION_RECIPES) {
-
-                    distillationRecipesIndex++;
-                    FluidStack inputFluidStackRecipe = distillationRecipes.getFluidStackInput();
+                    //As there will always be one fluid input, .get(0) is enough
+                    FluidStack inputFluidStackRecipe = recipe.getFluidInputs().get(0);
 
                     if (!fluidToDistill.isFluidEqual(inputFluidStackRecipe)) continue;
 
-                    //Checks if the recipe needs vacuum
-                    requiredPumpType = distillationRecipes.getPumpType();
-                    requiredVacuum = requiredPumpType.getTargetVacuum();
+                    //Checks if the recipe needs a pump
+                    if (recipe.getInputs().isEmpty()) continue;
+
+                    requiredPumpType = getPumpTypeFromName(recipe.getInputs().get(0).getIngredient().getMatchingStacks().getUnlocalizedName());
+
+                    requiredVacuum = requiredPumpType != null ? requiredPumpType.getTargetVacuum() : DEFAULT_PRESSURE;
 
                     if (requiredVacuum != targetVacuum) {
                         wrongPump = true;
@@ -163,13 +160,14 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
                     FluidStack toDrain = new FluidStack(inputFluidStackRecipe.getFluid(), inputFluidStackRecipe.amount * parallel);
                     inputFluidInventory.drain(toDrain, true);
-                    setToDistillBP(distillationRecipes.getFluidStackOutput(), toDistillBP);
+                    setToDistillBP(recipe.getAllFluidOutputs(-1), toDistillBP);
 
                     TKCYALog.logger.info("toDistillBP size = " + toDistillBP.size());
-
+                    fluidToDistillName = fluidToDistill.getUnlocalizedName();
                     recipeAcquired = true;
                     break;
                 }
+
                 if (!recipeAcquired) return;
             }
 
@@ -434,8 +432,8 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         data.setInteger("fractionIndex", this.fractionIndex);
         data.setInteger("toFill", this.toFill);
         data.setInteger("parallel", this.parallel);
-        data.setInteger("distillationRecipesIndex", this.distillationRecipesIndex);
         data.setBoolean("recipeAcquired", this.recipeAcquired);
+        data.setString("fluidToDistillName", this.fluidToDistillName);
         return data;
     }
 
@@ -455,8 +453,8 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         this.fractionIndex = data.getInteger("fractionIndex");
         this.toFill = data.getInteger("toFill");
         this.parallel = data.getInteger("parallel");
-        this.distillationRecipesIndex = data.getInteger("distillationRecipesIndex");
-        this.recipeAcquired = data.getBoolean("recipeAcquired");
+         this.recipeAcquired = data.getBoolean("recipeAcquired");
+        this.fluidToDistillName = data.getString("fluidToDistillName");
 
     }
 
@@ -467,8 +465,8 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         buf.writeInt(this.fractionIndex);
         buf.writeInt(this.toFill);
         buf.writeInt(this.parallel);
-        buf.writeInt(this.distillationRecipesIndex);
         buf.writeBoolean(this.recipeAcquired);
+        buf.writeString(this.fluidToDistillName);
     }
 
     @Override
@@ -478,8 +476,8 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         this.fractionIndex = buf.readInt();
         this.toFill = buf.readInt();
         this.parallel = buf.readInt();
-        this.distillationRecipesIndex = buf.readInt();
         this.recipeAcquired = buf.readBoolean();
+        this.fluidToDistillName = buf.readStringFromBuffer(30);
 
     }
 }
