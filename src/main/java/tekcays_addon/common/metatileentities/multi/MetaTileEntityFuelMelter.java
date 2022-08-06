@@ -199,10 +199,6 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockNoEnergyControl
         return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.INVAR_HEATPROOF);
     }
 
-    public static TraceabilityPredicate firebox() {
-        return TKCYATraceabilityPredicate.FIREBOX_CASINGS.get();
-    }
-
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
         return Textures.HEAT_PROOF_CASING;
@@ -223,7 +219,6 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockNoEnergyControl
                 .where('S', selfPredicate())
                 .where('X', states(getCasingState()).setMinGlobalLimited(4)
                         .or(autoAbilities(false, true, true, false, false, true, false)))
-                //.where('I', abilities(MultiblockAbility.IMPORT_FLUIDS))
                 .where('M', abilities(MultiblockAbility.MUFFLER_HATCH))
                 .where('F', states(getCasingState()).setMinGlobalLimited(7) //firebox())
                                 .or(abilities(MultiblockAbility.IMPORT_FLUIDS)))

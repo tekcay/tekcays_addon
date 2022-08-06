@@ -1,16 +1,12 @@
 package tekcays_addon.api.utils;
 
-import gregtech.api.block.IHeatingCoilBlockStats;
 import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import tekcays_addon.api.block.IPumpMachineBlockStats;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import gregtech.api.unification.ore.OrePrefix;
 
@@ -23,7 +19,6 @@ import static tekcays_addon.api.unification.TKCYAMaterials.*;
 import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -43,12 +38,9 @@ public class TKCYAValues {
      * Improves the yield by {20%}.
      */
     public static final float CLEANROOM_MULTIPLIER = 1.2f;
+    public static final int DEFAULT_PRESSURE = 101325;
 
     //Lists/Arrays
-
-    public static final Map<IBlockState, IPumpMachineBlockStats> PUMP_MACHINES = new HashMap<>();
-
-    //Object2ObjectOpenHashMap
 
     public static final MetaItem.MetaValueItem[] ELECTRIC_PUMPS = new MetaItem.MetaValueItem[]{
             ELECTRIC_PUMP_LV, ELECTRIC_PUMP_MV, ELECTRIC_PUMP_HV, ELECTRIC_PUMP_EV, ELECTRIC_PUMP_IV,

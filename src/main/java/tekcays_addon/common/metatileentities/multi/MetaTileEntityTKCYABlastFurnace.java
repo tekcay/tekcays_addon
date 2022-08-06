@@ -47,6 +47,7 @@ import java.util.List;
 
 
 import static gregtech.api.util.RelativeDirection.*;
+import static tekcays_addon.api.pattern.TKCYATraceabilityPredicate.heightIndicatorPredicate;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
 
@@ -497,16 +498,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         resetTileAbilities();
     }
 
-    // This function is highly useful for detecting the length of this multiblock.
-    public static TraceabilityPredicate heightIndicatorPredicate() {
-        return new TraceabilityPredicate((blockWorldState) -> {
-            if (air().test(blockWorldState)) {
-                blockWorldState.getMatchContext().increment("blastFurnaceHeight", 1);
-                return true;
-            } else
-                return false;
-        });
-    }
 
     /* Particle
     public static TraceabilityPredicate fluidOutputHatchPredicate() {
@@ -525,7 +516,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
         initializeAbilities();
-        this.height = context.getOrDefault("blastFurnaceHeight", 1);
+        this.height = context.getOrDefault("height", 1);
         this.recipeMapWorkable.setParallelLimit(height);
 
         /*

@@ -11,7 +11,6 @@ import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
-import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import gregtech.api.sound.GTSounds;
@@ -30,8 +29,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.ItemStackHandler;
-import tekcays_addon.api.block.IPumpMachineBlockStats;
-import tekcays_addon.api.pattern.TKCYATraceabilityPredicate;
 import tekcays_addon.api.recipes.DistillationRecipes;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.render.TKCYATextures;
@@ -41,7 +38,6 @@ import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 
 import java.util.List;
 import com.google.common.collect.Lists;
-import tekcays_addon.common.blocks.blocks.BlockPump;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -50,7 +46,10 @@ import java.util.*;
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.capability.impl.DistillationMethods.*;
 import static tekcays_addon.api.capability.impl.MultiblocksMethods.*;
+import static tekcays_addon.api.pattern.TKCYATraceabilityPredicate.heightIndicatorPredicate;
+import static tekcays_addon.api.pattern.TKCYATraceabilityPredicate.pumpMachinePredicate;
 import static tekcays_addon.api.recipes.DistillationRecipes.TKCYA_DISTILLATION_RECIPES;
+import static tekcays_addon.api.utils.TKCYAValues.DEFAULT_PRESSURE;
 
 public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockController {
 
@@ -85,8 +84,8 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
      * Useful to remember the current recipe
      */
     private int distillationRecipesIndex;
-    private static BlockPump.PumpType pumpType;
-    private int targetPressure;
+    private int requiredVacuum;
+    private int targetVacuum;
     private boolean hasEnoughEnergy;
 
     public MetaTileEntityBatchDistillationTower(ResourceLocation metaTileEntityId) {
@@ -110,31 +109,17 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         super.formStructure(context);
         initializeAbilities();
         this.height = context.getOrDefault("DTHeight", 1);
+        this.targetVacuum = context.getOrDefault("TargetVacuum", DEFAULT_PRESSURE);
         setOutputRate();
         setIncreaseTemp();
 
-
-
-        /*
-        Object type = context.get("PumpType");
-        if (type instanceof IPumpMachineBlockStats) {
-            this.targetPressure = ((IPumpMachineBlockStats) type).getTargetVacuum();
-        } else {
-            this.targetPressure = 0;
-        }
-
-         */
-
-    }
-
-    public static TraceabilityPredicate pumpMachine() {
-        return TKCYATraceabilityPredicate.PUMP_MACHINE.get();
     }
 
     @Override
     public void updateFormedValid() {
         super.updateFormedValid();
 
+        //Used when joining a world with an ongoing recipe
         if (toDistillBP.isEmpty() && recipeAcquired) {
             setToDistillBP(TKCYA_DISTILLATION_RECIPES.get(distillationRecipesIndex).getFluidStackOutput(), toDistillBP);
             setBp();
@@ -174,7 +159,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
                     TKCYALog.logger.info("toDistillBP size = " + toDistillBP.size());
 
-                    pumpType = distillationRecipes.getPumpType();
+                    requiredVacuum = distillationRecipes.getPumpType().getTargetVacuum();
                     recipeAcquired = true;
                     break;
                 }
@@ -337,8 +322,12 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
             textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.temperature", temp));
             textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.energy_cost", energyCost));
 
-            if (pumpType != null) {
-                if (pumpType.getTargetVacuum() != targetPressure) {
+            if (targetVacuum < DEFAULT_PRESSURE) {
+                textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.targetVacuum", targetVacuum));
+            }
+
+            if (requiredVacuum != 0) {
+                if (requiredVacuum != targetVacuum) {
                     textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.needs_pump"));
                 }
             }
@@ -351,8 +340,9 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
                 .aisle("HHH", "HHH", "HHH")
                 .aisle("YSY", "YYY", "YYY")
+                .aisle("XXX", "XAX", "XXX").setRepeatable(4)
                 .aisle("XXX", "X#X", "XXX").setRepeatable(1, 11)
-                .aisle("APA", "AAA", "AAA")
+                .aisle("EPE", "EEE", "EEE")
                 .where('H', states(getHeatAcceptorState()))
                 .where('X', states(getCasingState()))
                 .where('S', selfPredicate())
@@ -362,11 +352,12 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                         .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1))
                         .or(abilities(MultiblockAbility.IMPORT_ITEMS).setMaxGlobalLimited(1).setPreviewCount(1))
                         .or(autoAbilities(true, false)))
-                .where('A', states(getCasingState())
+                .where('E', states(getCasingState())
                         .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMinGlobalLimited(1)))
+                .where('A', air())
                 .where('#', heightIndicatorPredicate())
-                .where('P', pumpMachine()
-                        .or(states(getCasingState())))
+                .where('P', states(getCasingState())
+                        .or(pumpMachinePredicate()))
                 .build();
     }
 
@@ -374,30 +365,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
         return false;
     }
-
-    public static TraceabilityPredicate heightIndicatorPredicate() {
-        return new TraceabilityPredicate((blockWorldState) -> {
-            if (air().test(blockWorldState)) {
-                blockWorldState.getMatchContext().increment("DTHeight", 1);
-                return true;
-            } else
-                return false;
-        });
-    }
-
-    /*
-    public static TraceabilityPredicate pumpIndicatorPredicate() {
-        return new TraceabilityPredicate((blockWorldState) -> {
-            if (pumpIndicatorPredicate().test(blockWorldState)) {
-                blockWorldState.getMatchContext().increment("DTPump", 1);
-                return true;
-            } else
-                return false;
-        });
-    }
-
-     */
-
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
