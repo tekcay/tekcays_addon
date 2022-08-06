@@ -1,5 +1,7 @@
 package tekcays_addon.loaders.recipe.handlers;
 
+import gregtech.api.recipes.RecipeMaps;
+import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockPump;
 
@@ -20,6 +22,7 @@ public class DistillationHandler {
                 .fluidOutputs(Methanol.getFluid(300))
                 .fluidOutputs(Acetone.getFluid(50))
                 .fluidOutputs(MethylAcetate.getFluid(10))
+                .minSeparationFactor(10)
                 .duration(40)
                 .buildAndRegister();
 
@@ -30,6 +33,7 @@ public class DistillationHandler {
                 .fluidOutputs(SulfuricLightFuel.getFluid(50))
                 .fluidOutputs(SulfuricNaphtha.getFluid(20))
                 .fluidOutputs(SulfuricGas.getFluid(60))
+                .minSeparationFactor(5)
                 .duration(20).buildAndRegister();
 
         DISTILLATION.recipeBuilder()
@@ -39,6 +43,7 @@ public class DistillationHandler {
                 .fluidOutputs(SulfuricLightFuel.getFluid(20))
                 .fluidOutputs(SulfuricNaphtha.getFluid(30))
                 .fluidOutputs(SulfuricGas.getFluid(240))
+                .minSeparationFactor(5)
                 .duration(20).buildAndRegister();
 
         DISTILLATION.recipeBuilder()
@@ -48,6 +53,7 @@ public class DistillationHandler {
                 .fluidOutputs(SulfuricLightFuel.getFluid(45))
                 .fluidOutputs(SulfuricNaphtha.getFluid(15))
                 .fluidOutputs(SulfuricGas.getFluid(60))
+                .minSeparationFactor(5)
                 .duration(20).EUt(288).buildAndRegister();
 
         DISTILLATION.recipeBuilder()
@@ -57,6 +63,7 @@ public class DistillationHandler {
                 .fluidOutputs(SulfuricLightFuel.getFluid(50))
                 .fluidOutputs(SulfuricNaphtha.getFluid(20))
                 .fluidOutputs(SulfuricGas.getFluid(60))
+                .minSeparationFactor(5)
                 .duration(20).buildAndRegister();
 
     }

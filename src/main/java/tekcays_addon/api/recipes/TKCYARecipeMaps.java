@@ -77,8 +77,9 @@ public class TKCYARecipeMaps {
             .setSound(GTSounds.ELECTROLYZER);
 
     @ZenProperty
-    public static final RecipeMap<PrimitiveRecipeBuilder> DISTILLATION = new RecipeMap<>(
-            "distillation", 0, 1, 0, 1, 1, 1, 1, 12, new PrimitiveRecipeBuilder(), false);
+    public static final RecipeMap<SeparationFactorRecipeBuilder> DISTILLATION = new RecipeMap<>(
+            "distillation", 0, 1, 0, 1, 1, 1, 1, 12, new SeparationFactorRecipeBuilder(), false)
+            .setSound(GTSounds.FURNACE);
 
 
 }
