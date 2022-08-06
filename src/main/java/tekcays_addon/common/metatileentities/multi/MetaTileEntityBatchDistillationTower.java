@@ -141,6 +141,9 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
                     distillationRecipesIndex++;
                     FluidStack inputFluidStackRecipe = distillationRecipes.getFluidStackInput();
+
+                    TKCYALog.logger.info("inputFluidStackRecipe = " + inputFluidStackRecipe.getLocalizedName() + " vs " + fluidToDistill.getLocalizedName());
+
                     if (!fluidToDistill.isFluidEqual(inputFluidStackRecipe)) continue;
 
                     int test = fluidToDistill.amount % inputFluidStackRecipe.amount;
@@ -181,7 +184,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         //Not hot enough to boil first product
         if (temp < bp) {
 
-            if (getOffsetTimer() % (int) (duration * parallel - 0.2f * Math.pow(height, 1.7)) == 0) {
+            if (getOffsetTimer() % (int) (duration * parallel - 0.2f * Math.pow(height, 1.7)) == 0) { //TODO
 
                 energyCost = (int) (temperatureEnergyCostBatchDistillationTower(temp + increaseTemp) * 1.2f * parallel);
                 hasEnoughEnergy = enoughEnergyToDrain(energyContainer, energyCost);
@@ -204,7 +207,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
                 setNextFraction();
 
-                if (getOffsetTimer() % (int) (duration * parallel - 0.2f * Math.pow(height, 1.7)) == 0) {
+                if (getOffsetTimer() % (int) (duration * parallel - 0.2f * Math.pow(height, 1.7)) == 0) { //TODO
 
                     if (toFill - outputRate > 0) {
                         outputFluidInventory.fill(new FluidStack(fraction, outputRate), true);
@@ -301,6 +304,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     protected void addDisplayText(List<ITextComponent> textList) {
         if (isStructureFormed()) {
 
+            //ExtraFluidInformations
             if (inputInventory.getSlots() != 0 && hasCircuit1()) {
 
                 if (fluidToDistill != null) {
@@ -318,6 +322,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                     textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.next_fraction", new FluidStack(fraction, 1).getLocalizedName(), bp));
                 }
             }
+
             textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.parallel", parallel));
             textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.temperature", temp));
             textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.energy_cost", energyCost));

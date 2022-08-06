@@ -39,6 +39,18 @@ public class TKCYAValues {
      */
     public static final float CLEANROOM_MULTIPLIER = 1.2f;
     public static final int DEFAULT_PRESSURE = 101325;
+    /**
+     * One second in {@code tick}s.
+     */
+    public static final int SECOND = 20;
+    /**
+     * One minute in {@code tick}s.
+     */
+    public static final int MINUTE = 1200;
+    /**
+     * One hour in {@code tick}s.
+     */
+    public static final int HOUR = 72000;
 
     //Lists/Arrays
 

@@ -24,17 +24,17 @@ public class DistillationRecipes { //TODO add GTCEu recipes in there
                     SulfuricGas.getFluid(60), SulfuricNaphtha.getFluid(20), SulfuricLightFuel.getFluid(50),
                     SulfuricHeavyFuel.getFluid(15)}, PUMP_MACHINE_HV);
 
-    public static final DistillationRecipes D_OIL_LIGHT = new DistillationRecipes(Oil.getLocalizedName(), Oil.getFluid(150),
+    public static final DistillationRecipes D_OIL_LIGHT = new DistillationRecipes(Oil.getLocalizedName(), OilLight.getFluid(150),
             new FluidStack[] {
                     SulfuricGas.getFluid(240), SulfuricNaphtha.getFluid(30), SulfuricLightFuel.getFluid(20),
                     SulfuricHeavyFuel.getFluid(10)}, PUMP_MACHINE_HV);
 
-    public static final DistillationRecipes D_OIL_HEAVY = new DistillationRecipes(Oil.getLocalizedName(), Oil.getFluid(100),
+    public static final DistillationRecipes D_OIL_HEAVY = new DistillationRecipes(Oil.getLocalizedName(), OilHeavy.getFluid(100),
             new FluidStack[] {
                     SulfuricGas.getFluid(60), SulfuricNaphtha.getFluid(15), SulfuricLightFuel.getFluid(45),
                     SulfuricHeavyFuel.getFluid(250)}, PUMP_MACHINE_HV);
 
-    public static final DistillationRecipes D_RAW_OIL = new DistillationRecipes(Oil.getLocalizedName(), Oil.getFluid(100),
+    public static final DistillationRecipes D_RAW_OIL = new DistillationRecipes(Oil.getLocalizedName(), RawOil.getFluid(100),
             new FluidStack[] {
                     SulfuricGas.getFluid(60), SulfuricNaphtha.getFluid(20), SulfuricLightFuel.getFluid(50),
                     SulfuricHeavyFuel.getFluid(15)}, PUMP_MACHINE_HV);
