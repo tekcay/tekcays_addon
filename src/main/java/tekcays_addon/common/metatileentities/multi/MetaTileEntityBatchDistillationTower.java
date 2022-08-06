@@ -335,10 +335,8 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                 textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.targetVacuum", targetVacuum));
             }
 
-            if (requiredVacuum != DEFAULT_PRESSURE) {
-                if (requiredVacuum != targetVacuum) {
-                    textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.needs_pump", requiredPumpType.getLocalizedName()));
-                }
+            if (this.isBlockRedstonePowered() && requiredVacuum != DEFAULT_PRESSURE && requiredVacuum != targetVacuum) {
+                textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.needs_pump", "A " + requiredPumpType.getLocalizedName() + " is required!"));
             }
         }
         super.addDisplayText(textList);
