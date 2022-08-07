@@ -61,7 +61,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
      * so the lower boiling-point {@code FluidStack} will be passed first.
      */
     private final Map<Integer, FluidStack> toDistillBP = new TreeMap<>();
-    private FluidStack fluidToDistill;
+    private FluidStack fluidToDistill, toDrain;
     /**
      * represents the current {@code Fluid} fraction that is handled.
      */
@@ -124,7 +124,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         //Used when joining a world with an ongoing recipe
         if (toDistillBP.isEmpty() && recipeAcquired) {
             recipe = getRecipeFromFluidName(fluidToDistillName);
-            fluidToDistill = recipe.getFluidInputs().get(0);
+            toDrain = recipe.getFluidInputs().get(0);
             setToDistillBP(recipe.getFluidOutputs(), toDistillBP);
             requiredPumpType = getPumpTypeFromIngredient(recipe.getInputs().get(0));
             requiredVacuum = requiredPumpType != null ? requiredPumpType.getTargetVacuum() : DEFAULT_PRESSURE;
@@ -167,7 +167,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                     //Parallel = 0 means not enough fluid to run any recipe, so it skips to the next distillationRecipe
                     if (parallel == 0) continue;
 
-                    FluidStack toDrain = new FluidStack(inputFluidStackRecipe.getFluid(), inputFluidStackRecipe.amount * parallel);
+                    toDrain = new FluidStack(inputFluidStackRecipe.getFluid(), inputFluidStackRecipe.amount * parallel);
                     inputFluidInventory.drain(toDrain, true);
                     setToDistillBP(recipe.getAllFluidOutputs(-1), toDistillBP);
 
@@ -196,7 +196,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
             if (getOffsetTimer() % SECOND == 0) {
 
-                energyCost = (int) (temperatureEnergyCostBatchDistillationTower(temp + increaseTemp) * Math.pow(fluidToDistill.amount * parallel, 0.9) * Math.pow(height, 1.7));
+                energyCost = (int) (temperatureEnergyCostBatchDistillationTower(temp + increaseTemp) * Math.pow(toDrain.amount * parallel, 0.9) * Math.pow(height, 1.7));
                 hasEnoughEnergy = enoughEnergyToDrain(energyContainer, energyCost);
 
                 if (hasEnoughEnergy) {
@@ -210,7 +210,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         //Hot enough to boil product
         if (temp > 300 && temp == bp) {
 
-            energyCost = (int) (temperatureEnergyCostBatchDistillationTower(temp) * Math.pow(fluidToDistill.amount * parallel, 0.9) * Math.pow(height, 1.7));
+            energyCost = (int) (temperatureEnergyCostBatchDistillationTower(temp) * Math.pow(toDrain.amount * parallel, 0.9) * Math.pow(height, 1.7));
             hasEnoughEnergy = enoughEnergyToDrain(energyContainer, energyCost);
 
             if (toFill > 0 && hasEnoughEnergy) {
@@ -291,6 +291,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         tooltip.add(I18n.format("tkcya.machine.batch_distillation_tower.tooltip.3"));
         tooltip.add(I18n.format("tkcya.machine.batch_distillation_tower.tooltip.4"));
         tooltip.add(I18n.format("tkcya.machine.batch_distillation_tower.tooltip.5"));
+        tooltip.add(I18n.format("tkcya.machine.batch_distillation_tower.tooltip.6"));
 
    }
 

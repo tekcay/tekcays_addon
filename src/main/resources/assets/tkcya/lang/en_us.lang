@@ -291,9 +291,10 @@ tekcays_addon.machine.advanced_electrolyzer.tooltip.4=Removal of the electrode c
 
 tkcya.machine.batch_distillation_tower.tooltip.1=Needs a redstone signal to start working.
 tkcya.machine.batch_distillation_tower.tooltip.2=Only runs recipes if the boiling point temperature of the next fraction is set.
-tkcya.machine.batch_distillation_tower.tooltip.3=Can run multiple recipes at a time.
-tkcya.machine.batch_distillation_tower.tooltip.4=The separation time can be decreased by adding more floors to the structure.
-tkcya.machine.batch_distillation_tower.tooltip.5=A programmed circuit with config 1 in import bus enables more informations display.
+tkcya.machine.batch_distillation_tower.tooltip.3=Can run multiple recipes at a time but at the cost of energy cost.
+tkcya.machine.batch_distillation_tower.tooltip.4=The §aSeparation Factor§7 is determined by the height of the tower.
+tkcya.machine.batch_distillation_tower.tooltip.5=A §aPump Machine§7 can be added to the structure in order to lower the boiling point. It must be placed adjacent to the §aOutput Hatch§7 and on the same face of the §aController§7.
+tkcya.machine.batch_distillation_tower.tooltip.6=A programmed circuit with config 1 in import bus enables more informations display.
 
 tkcya.multiblock.distillation_tower.parallel=Parallel: %d
 tkcya.multiblock.distillation_tower.temperature=Temperature: §a%d K§7.
