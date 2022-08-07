@@ -28,17 +28,17 @@ public class DistillationMethods {
     public static void setToDistillBP(List<FluidStack> distillate, Map<Integer, FluidStack> map) {
         for (FluidStack fs : distillate) {
             for (FluidWithProperties fluidWithProperties : FLUID_WITH_PROPERTIES) {
-                if (!fs.getLocalizedName().equals(fluidWithProperties.getName())) continue;
+                if (!fs.getUnlocalizedName().equals(fluidWithProperties.getName())) continue;
                 map.put(fluidWithProperties.getBoilingPoint(), fs);
             }
         }
     }
 
-    public static void setToDistillBP(FluidStack[] distillate, Map<Integer, FluidStack> map) {
+    public static void setToDistillBP(FluidStack input, List<FluidStack> distillate, Map<Integer, FluidStack> map) {
         for (FluidStack fs : distillate) {
             for (FluidWithProperties fluidWithProperties : FLUID_WITH_PROPERTIES) {
-                if (!fs.getLocalizedName().equals(fluidWithProperties.getName())) continue;
-                map.put(fluidWithProperties.getBoilingPoint(), fs);
+                if (!fs.getUnlocalizedName().equals(fluidWithProperties.getName())) continue;
+                map.put(fluidWithProperties.getBoilingPoint(), new FluidStack(input, input.amount % distillate.size()));
             }
         }
     }
@@ -103,7 +103,7 @@ public class DistillationMethods {
     /**
      * Checks if the recipe has an input and thus requires a pump
      * @param recipe
-     * @return
+     * @return {@code boolean}
      */
     public static boolean isPumpRequired(Recipe recipe) {
         return  !recipe.getInputs().isEmpty();
