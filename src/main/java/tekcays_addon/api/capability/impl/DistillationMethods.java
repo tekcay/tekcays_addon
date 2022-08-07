@@ -106,7 +106,8 @@ public class DistillationMethods {
      * @return {@code boolean}
      */
     public static boolean isPumpRequired(Recipe recipe) {
-        return  !recipe.getInputs().isEmpty();
+        if (recipe == null) return false;
+        return !recipe.getInputs().isEmpty();
     }
 
 

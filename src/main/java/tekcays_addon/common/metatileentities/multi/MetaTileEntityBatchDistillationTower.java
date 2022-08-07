@@ -218,7 +218,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         }
 
         //Not hot enough to boil first product
-        if (temp < bp) {
+        if (recipeAcquired && temp < bp) {
 
             if (getOffsetTimer() % SECOND == 0) {
 
@@ -236,7 +236,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         }
 
         //Hot enough to boil product
-        if (temp > 300 && temp == bp) {
+        if (recipeAcquired && temp > 300 && temp == bp) {
 
             energyCost = isPumpRequired(currentRecipe) ?
                     (int) (Math.pow(height, 1.7) * (requiredPumpType.getVoltage() + temperatureEnergyCostBatchDistillationTower(temp) * Math.pow(toDrain.amount * parallel, 0.9)  / 1000))
