@@ -6,18 +6,15 @@ import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
-import tekcays_addon.api.recipes.DistillationRecipes;
 import tekcays_addon.api.utils.FluidWithProperties;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockPump;
-import tekcays_addon.common.metatileentities.multi.MetaTileEntityBatchDistillationTower;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static tekcays_addon.common.metatileentities.multi.MetaTileEntityBatchDistillationTower.bp;
-import static tekcays_addon.api.recipes.DistillationRecipes.TKCYA_DISTILLATION_RECIPES;
 import static tekcays_addon.api.recipes.TKCYARecipeMaps.DISTILLATION;
 import static tekcays_addon.api.utils.FluidWithProperties.FLUID_WITH_PROPERTIES;
 
@@ -45,21 +42,9 @@ public class DistillationMethods {
         }
     }
 
-    /**
-     * @param fluid the {@code LocalizedName} of the {@code Fluid} that was distilled.
-     * @return the previous {@code DistillationRecipes}.
-     */
-
-    public static DistillationRecipes getDistillationRecipe(String fluid) {
-        for (DistillationRecipes distillationRecipes : TKCYA_DISTILLATION_RECIPES) {
-            if (!distillationRecipes.getFluidStackInput().getLocalizedName().equals(fluid)) continue;
-            return distillationRecipes;
-        }
-        return null;
-    }
 
     /**
-     * @param unlocalizedName name of the pump machine, e.g. {@code pump_machine_lv}.
+     * @param countableIngredient the required Pump Machine.
      * @return the corresponding {@code PumpType}.
      */
 

@@ -1,12 +1,9 @@
 package tekcays_addon.loaders.recipe.handlers;
 
-import gregtech.api.recipes.RecipeMaps;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockPump;
 
 import static gregtech.api.unification.material.Materials.*;
-import static tekcays_addon.api.recipes.DistillationRecipes.*;
 import static tekcays_addon.api.recipes.TKCYARecipeMaps.DISTILLATION;
 import static tekcays_addon.api.utils.FluidWithProperties.*;
 
@@ -85,12 +82,5 @@ public class DistillationHandler {
         FLUID_WITH_PROPERTIES.add(SULFURIC_HEAVY_FUEL);
     }
 
-    public static void initBackEnd() {
-        TKCYA_DISTILLATION_RECIPES.add(D_WOOD_VINEGAR);
-        TKCYA_DISTILLATION_RECIPES.add(D_OIL);
-        TKCYA_DISTILLATION_RECIPES.add(D_OIL_LIGHT);
-        TKCYA_DISTILLATION_RECIPES.add(D_OIL_HEAVY);
-        TKCYA_DISTILLATION_RECIPES.add(D_RAW_OIL);
-    }
 
 }
