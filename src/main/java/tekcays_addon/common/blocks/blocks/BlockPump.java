@@ -46,21 +46,23 @@ public class BlockPump extends VariantBlock<BlockPump.PumpType> {
 
     public enum PumpType implements IStringSerializable, IPumpMachineBlockStats {
 
-        PUMP_MACHINE_LV("pump_machine_lv", "Pump Machine LV", 10000),
-        PUMP_MACHINE_MV("pump_machine_mv", "Pump Machine MV", 5000),
-        PUMP_MACHINE_HV("pump_machine_hv", "Pump Machine HV", 2500),
-        PUMP_MACHINE_EV("pump_machine_ev", "Pump Machine EV", 1500);
+        PUMP_MACHINE_LV("pump_machine_lv", "Pump Machine LV", 10000, 32),
+        PUMP_MACHINE_MV("pump_machine_mv", "Pump Machine MV", 5000, 128),
+        PUMP_MACHINE_HV("pump_machine_hv", "Pump Machine HV", 2500, 512),
+        PUMP_MACHINE_EV("pump_machine_ev", "Pump Machine EV", 1500, 2048);
 
 
 
         private final String name;
         private final String localizedName;
         private final int targetVacuum;
+        private final int voltage;
 
-        PumpType(String name, String localizedName, int targetVacuum) {
+        PumpType(String name, String localizedName, int targetVacuum, int voltage) {
             this.name = name;
             this.localizedName = localizedName;
             this.targetVacuum = targetVacuum;
+            this.voltage = voltage;
         }
 
         @Nonnull
@@ -81,8 +83,8 @@ public class BlockPump extends VariantBlock<BlockPump.PumpType> {
         }
 
         @Override
-        public int getTier() {
-            return this.ordinal();
+        public int getVoltage() {
+            return voltage;
         }
 
 

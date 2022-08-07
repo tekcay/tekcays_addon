@@ -28,9 +28,9 @@ public interface IPumpMachineBlockStats {
     int getTargetVacuum();
 
     /**
-     * @return the tier of the pump
+     * @return the required voltage to run the pump
      */
-    int getTier();
+    int getVoltage();
 
 
 }

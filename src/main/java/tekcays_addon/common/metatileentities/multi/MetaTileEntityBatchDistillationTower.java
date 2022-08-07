@@ -85,7 +85,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     private int targetVacuum;
     private boolean hasEnoughEnergy, wrongPump;
     private BlockPump.PumpType requiredPumpType;
-    private Recipe recipe;
+    private Recipe currentRecipe;
     private String fluidToDistillName;
 
     public MetaTileEntityBatchDistillationTower(ResourceLocation metaTileEntityId) {
@@ -123,17 +123,16 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
         //Used when joining a world with an ongoing recipe
         if (toDistillBP.isEmpty() && recipeAcquired) {
-            recipe = getRecipeFromFluidName(fluidToDistillName);
+            currentRecipe = getRecipeFromFluidName(fluidToDistillName);
 
             //As there will always be one input, .get(0) is enough
-            toDrain = recipe.getFluidInputs().get(0);
-            setToDistillBP(recipe.getFluidOutputs(), toDistillBP);
+            toDrain = currentRecipe.getFluidInputs().get(0);
+            setToDistillBP(currentRecipe.getFluidOutputs(), toDistillBP);
             setBp(toDistillBP, fractionIndex);
             setFraction();
 
-            //Check if the recipe has an input and thus requires a pump
-            if (!recipe.getInputs().isEmpty()) {
-                requiredPumpType = getPumpTypeFromIngredient(recipe.getInputs().get(0));
+            if (isPumpRequired(currentRecipe)) {
+                requiredPumpType = getPumpTypeFromIngredient(currentRecipe.getInputs().get(0));
             }
             requiredVacuum = requiredPumpType != null ? requiredPumpType.getTargetVacuum() : DEFAULT_PRESSURE;
         }
@@ -152,8 +151,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
                     if (!fluidToDistill.isFluidEqual(inputFluidStackRecipe)) continue;
 
-                    //Checks if the recipe needs a pump
-                    if (!recipe.getInputs().isEmpty()) {
+                    if (isPumpRequired(recipe)) {
 
                         //As there will always be one input, .get(0) is enough
                         requiredPumpType = getPumpTypeFromIngredient(recipe.getInputs().get(0));
@@ -164,7 +162,10 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                             //Stops here as it needs structure invalidation to install a pump block
                             break;
                         }
-                    } else requiredVacuum = DEFAULT_PRESSURE;
+                    } else {
+                        requiredPumpType = null;
+                        requiredVacuum = DEFAULT_PRESSURE;
+                    }
 
                     int test = fluidToDistill.amount % inputFluidStackRecipe.amount;
 
@@ -179,6 +180,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                     setToDistillBP(recipe.getAllFluidOutputs(-1), toDistillBP);
                     fluidToDistillName = fluidToDistill.getUnlocalizedName();
                     recipeAcquired = true;
+                    currentRecipe = recipe;
                     break;
                 }
 
@@ -188,9 +190,11 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
             if (recipeAcquired) {
                 fractionIndex = 0;
                 setBp(toDistillBP, fractionIndex);
-
                 setToFill();
                 setFraction();
+                if (isPumpRequired(currentRecipe)) {
+                    bp = getBpAtPressure(bp, requiredVacuum);
+                }
                 isItTheLastFraction();
                 this.markDirty();
             }
@@ -203,7 +207,9 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
             if (getOffsetTimer() % SECOND == 0) {
 
-                energyCost = (int) (temperatureEnergyCostBatchDistillationTower(temp + increaseTemp) * Math.pow(toDrain.amount * parallel, 0.9) * Math.pow(height, 1.7) / 1000);
+                energyCost = currentRecipe.getInputs().isEmpty() ?
+                        (int) (Math.pow(height, 1.7) * temperatureEnergyCostBatchDistillationTower(temp + increaseTemp) * Math.pow(toDrain.amount * parallel, 0.9) / 1000)
+                        : (int) (Math.pow(height, 1.7) * (requiredPumpType.getVoltage() + temperatureEnergyCostBatchDistillationTower(temp) * Math.pow(toDrain.amount * parallel, 0.9)  / 1000));
                 hasEnoughEnergy = enoughEnergyToDrain(energyContainer, energyCost);
 
                 if (hasEnoughEnergy) {
@@ -217,7 +223,9 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         //Hot enough to boil product
         if (temp > 300 && temp == bp) {
 
-            energyCost = (int) (temperatureEnergyCostBatchDistillationTower(temp) * Math.pow(toDrain.amount * parallel, 0.9) * Math.pow(height, 1.7) / 1000);
+            energyCost = currentRecipe.getInputs().isEmpty() ?
+                    (int) (Math.pow(height, 1.7) * temperatureEnergyCostBatchDistillationTower(temp) * Math.pow(toDrain.amount * parallel, 0.9) / 1000)
+                    : (int) (Math.pow(height, 1.7) * (requiredPumpType.getVoltage() + temperatureEnergyCostBatchDistillationTower(temp) * Math.pow(toDrain.amount * parallel, 0.9)  / 1000));
             hasEnoughEnergy = enoughEnergyToDrain(energyContainer, energyCost);
 
             if (toFill > 0 && hasEnoughEnergy) {
@@ -243,6 +251,9 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
             setBp(toDistillBP, fractionIndex);
             setToFill();
             setFraction();
+            if (isPumpRequired(currentRecipe)) {
+                bp = getBpAtPressure(bp, requiredVacuum);
+            }
             this.markDirty();
         }
 

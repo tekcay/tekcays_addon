@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static tekcays_addon.api.utils.TKCYAValues.DEFAULT_PRESSURE;
 import static tekcays_addon.common.metatileentities.multi.MetaTileEntityBatchDistillationTower.bp;
 import static tekcays_addon.api.recipes.TKCYARecipeMaps.DISTILLATION;
 import static tekcays_addon.api.utils.FluidWithProperties.FLUID_WITH_PROPERTIES;
@@ -85,6 +86,27 @@ public class DistillationMethods {
 
     public static void setBp(Map<Integer, FluidStack> map, int index) {
         bp = new ArrayList<>(map.keySet()).get(index);
+    }
+
+    /**
+     * Calculates a boiling point for a given pressure.
+     * @param bp boiling point in Kelvin at {@code DEFAULT_PRESSURE}, i.e. atmospheric pressure.
+     * @param pressure in Pascal, e.g. set by a {@code BlockPump}.
+     * @return
+     */
+    public static int getBpAtPressure(int bp, int pressure) {
+        int bpAtPressure = (int) (1 / ( (1 / bp) -  Math.log((double) pressure / DEFAULT_PRESSURE) / 4890));
+        return Math.max(bpAtPressure, 300);
+    }
+
+
+    /**
+     * Checks if the recipe has an input and thus requires a pump
+     * @param recipe
+     * @return
+     */
+    public static boolean isPumpRequired(Recipe recipe) {
+        return  !recipe.getInputs().isEmpty();
     }
 
 
