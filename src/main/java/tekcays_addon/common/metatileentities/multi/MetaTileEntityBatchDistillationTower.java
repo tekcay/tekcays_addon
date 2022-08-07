@@ -123,7 +123,10 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
         //Used when joining a world with an ongoing recipe
         if (toDistillBP.isEmpty() && recipeAcquired) {
-            setToDistillBP(getRecipeFromFluidName(fluidToDistillName).getFluidOutputs(), toDistillBP);
+            recipe = getRecipeFromFluidName(fluidToDistillName);
+            setToDistillBP(recipe.getFluidOutputs(), toDistillBP);
+            requiredPumpType = getPumpTypeFromIngredient(recipe.getInputs().get(0));
+            requiredVacuum = requiredPumpType != null ? requiredPumpType.getTargetVacuum() : DEFAULT_PRESSURE;
             setBp(toDistillBP, fractionIndex);
             setFraction();
         }
