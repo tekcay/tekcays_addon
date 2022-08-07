@@ -49,6 +49,7 @@ import static tekcays_addon.api.pattern.TKCYATraceabilityPredicate.heightIndicat
 import static tekcays_addon.api.pattern.TKCYATraceabilityPredicate.pumpMachinePredicate;
 import static tekcays_addon.api.recipes.TKCYARecipeMaps.DISTILLATION;
 import static tekcays_addon.api.utils.TKCYAValues.DEFAULT_PRESSURE;
+import static tekcays_addon.api.utils.TKCYAValues.SECOND;
 
 public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockController {
 
@@ -78,7 +79,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     public static int bp;
     private int nextbp, toFill;
     private int height, separationFactor;
-    private final int duration = 20;
     private boolean recipeAcquired, isTheLastFraction;
     private int requiredVacuum;
     private int targetVacuum;
@@ -151,9 +151,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                         requiredPumpType = getPumpTypeFromIngredient(recipe.getInputs().get(0));
                         requiredVacuum = requiredPumpType != null ? requiredPumpType.getTargetVacuum() : DEFAULT_PRESSURE;
 
-                        TKCYALog.logger.info("requiredVacuum = " + requiredVacuum);
-                        TKCYALog.logger.info("targetVacuum = " + targetVacuum);
-
                         if (requiredVacuum != targetVacuum) {
                             wrongPump = true;
                             //Stops here as it needs structure invalidation to install a pump block
@@ -173,7 +170,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                     inputFluidInventory.drain(toDrain, true);
                     setToDistillBP(recipe.getAllFluidOutputs(-1), toDistillBP);
 
-                    TKCYALog.logger.info("toDistillBP size = " + toDistillBP.size());
                     fluidToDistillName = fluidToDistill.getUnlocalizedName();
                     recipeAcquired = true;
                     break;
@@ -197,9 +193,9 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         //Not hot enough to boil first product
         if (temp < bp) {
 
-            if (getOffsetTimer() % (int) (duration * parallel - 0.2f * Math.pow(height, 1.7)) == 0) { //TODO
+            if (getOffsetTimer() % SECOND == 0) {
 
-                energyCost = (int) (temperatureEnergyCostBatchDistillationTower(temp + increaseTemp) * 1.2f * parallel);
+                energyCost = (int) (temperatureEnergyCostBatchDistillationTower(temp + increaseTemp) * Math.pow(parallel, 0.9) * Math.pow(height, 1.7));
                 hasEnoughEnergy = enoughEnergyToDrain(energyContainer, energyCost);
 
                 if (hasEnoughEnergy) {
@@ -213,14 +209,14 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         //Hot enough to boil product
         if (temp > 300 && temp == bp) {
 
-            energyCost = (int) (temperatureEnergyCostBatchDistillationTower(temp + increaseTemp) * 1.2f * parallel);
+            energyCost = (int) (temperatureEnergyCostBatchDistillationTower(temp) * Math.pow(parallel, 0.9) * Math.pow(height, 1.7));
             hasEnoughEnergy = enoughEnergyToDrain(energyContainer, energyCost);
 
             if (toFill > 0 && hasEnoughEnergy) {
 
                 setNextFraction();
 
-                if (getOffsetTimer() % (int) (duration * parallel - 0.2f * Math.pow(height, 1.7)) == 0) { //TODO
+                if (getOffsetTimer() % SECOND == 0) {
 
                     if (toFill - outputRate > 0) {
                         outputFluidInventory.fill(new FluidStack(fraction, outputRate), true);
@@ -255,7 +251,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     }
 
     public void setIncreaseTemp() {
-        increaseTemp = 1;
+        increaseTemp = 1 ;
     }
 
     public void setToFill() {
