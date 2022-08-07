@@ -42,6 +42,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
+import static gregtech.api.unification.material.Materials.OilHeavy;
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.capability.impl.DistillationMethods.*;
 import static tekcays_addon.api.capability.impl.MultiblocksMethods.*;
@@ -92,7 +93,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         temp = 300;
         outputRate = 0;
         energyCost = 0;
-        bp = 0;
         toFill = 0;
         fractionIndex = 0;
         fluidToDistillName ="";
@@ -124,14 +124,21 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         //Used when joining a world with an ongoing recipe
         if (toDistillBP.isEmpty() && recipeAcquired) {
             recipe = getRecipeFromFluidName(fluidToDistillName);
+
+            //As there will always be one input, .get(0) is enough
             toDrain = recipe.getFluidInputs().get(0);
             setToDistillBP(recipe.getFluidOutputs(), toDistillBP);
-            requiredPumpType = getPumpTypeFromIngredient(recipe.getInputs().get(0));
-            requiredVacuum = requiredPumpType != null ? requiredPumpType.getTargetVacuum() : DEFAULT_PRESSURE;
             setBp(toDistillBP, fractionIndex);
             setFraction();
+
+            //Check if the recipe has an input and thus requires a pump
+            if (!recipe.getInputs().isEmpty()) {
+                requiredPumpType = getPumpTypeFromIngredient(recipe.getInputs().get(0));
+            }
+            requiredVacuum = requiredPumpType != null ? requiredPumpType.getTargetVacuum() : DEFAULT_PRESSURE;
         }
 
+        //First start of the machine, requires a redstone signal
         if (toDistillBP.isEmpty() && this.isBlockRedstonePowered() && !recipeAcquired) {
 
             for (IFluidTank fluidTank : inputFluidInventory.getFluidTanks()) {
@@ -170,7 +177,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                     toDrain = new FluidStack(inputFluidStackRecipe.getFluid(), inputFluidStackRecipe.amount * parallel);
                     inputFluidInventory.drain(toDrain, true);
                     setToDistillBP(recipe.getAllFluidOutputs(-1), toDistillBP);
-
                     fluidToDistillName = fluidToDistill.getUnlocalizedName();
                     recipeAcquired = true;
                     break;
@@ -182,6 +188,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
             if (recipeAcquired) {
                 fractionIndex = 0;
                 setBp(toDistillBP, fractionIndex);
+
                 setToFill();
                 setFraction();
                 isItTheLastFraction();
@@ -196,7 +203,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
             if (getOffsetTimer() % SECOND == 0) {
 
-                energyCost = (int) (temperatureEnergyCostBatchDistillationTower(temp + increaseTemp) * Math.pow(toDrain.amount * parallel, 0.9) * Math.pow(height, 1.7));
+                energyCost = (int) (temperatureEnergyCostBatchDistillationTower(temp + increaseTemp) * Math.pow(toDrain.amount * parallel, 0.9) * Math.pow(height, 1.7) / 1000);
                 hasEnoughEnergy = enoughEnergyToDrain(energyContainer, energyCost);
 
                 if (hasEnoughEnergy) {
@@ -210,7 +217,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         //Hot enough to boil product
         if (temp > 300 && temp == bp) {
 
-            energyCost = (int) (temperatureEnergyCostBatchDistillationTower(temp) * Math.pow(toDrain.amount * parallel, 0.9) * Math.pow(height, 1.7));
+            energyCost = (int) (temperatureEnergyCostBatchDistillationTower(temp) * Math.pow(toDrain.amount * parallel, 0.9) * Math.pow(height, 1.7) / 1000);
             hasEnoughEnergy = enoughEnergyToDrain(energyContainer, energyCost);
 
             if (toFill > 0 && hasEnoughEnergy) {
@@ -297,6 +304,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
+
         if (isStructureFormed()) {
 
             //ExtraFluidInformations
@@ -459,7 +467,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         buf.writeInt(this.toFill);
         buf.writeInt(this.parallel);
         buf.writeBoolean(this.recipeAcquired);
-        //buf.writeBytes(this.fluidToDistillName.getBytes());
     }
 
     @Override
@@ -470,7 +477,5 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         this.toFill = buf.readInt();
         this.parallel = buf.readInt();
         this.recipeAcquired = buf.readBoolean();
-        //this.fluidToDistillName = buf.readByteArray().toString();
-
     }
 }

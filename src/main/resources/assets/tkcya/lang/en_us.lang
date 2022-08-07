@@ -258,11 +258,11 @@ tekcays_addon.machine.tkcya_blast_furnace.tooltip.5=Gas collector in the input b
 tekcays_addon.machine.tkcya_blast_furnace.tooltip.6=LV Sensor in the input displays stored heat (mainly for debug purpose)
 
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.1=Temperature: §a%d K§7.
-tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.2=Not enough gas
+tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.2=Not enough gas!
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4=Consumption: %d L/t of %s.
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.5=Consumption: 0 L/t.
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.6=Target temperature: §a%d K§7.
-tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.7=Not enough solid fuel
+tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.7=Not enough solid fuel!
 
 #For debugging
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.8=Stored heat from gas: %d
@@ -275,7 +275,7 @@ tekcays_addon.multiblock.electric_converter.tooltip.7=Pressure: §a%s bar§7.
 tekcays_addon.multiblock.electric_converter.tooltip.2=Not enough energy can be input to reach the target!
 tekcays_addon.multiblock.electric_converter.tooltip.4=Consumption: %d EU/t.
 tekcays_addon.multiblock.electric_converter.tooltip.5=Target temperature: §a%d K§7.
-tekcays_addon.multiblock.electric_converter.tooltip.6=Target pressure: §a%s bar§7.
+tekcays_addon.multiblock.electric_converter.tooltip.6=Target pressure: §a%s bar.
 
 tekcays_addon.machine.electric_converter.tooltip.1=Only runs recipes if the required temperature and pressure are set.
 tekcays_addon.machine.electric_converter.tooltip.2=The §aEU§7 per tick required is exponentially related to the current temperature and pressure.
@@ -292,8 +292,8 @@ tekcays_addon.machine.advanced_electrolyzer.tooltip.4=Removal of the electrode c
 tkcya.machine.batch_distillation_tower.tooltip.1=Needs a redstone signal to start working.
 tkcya.machine.batch_distillation_tower.tooltip.2=Only runs recipes if the boiling point temperature of the next fraction is set.
 tkcya.machine.batch_distillation_tower.tooltip.3=Can run multiple recipes at a time but at the cost of energy cost.
-tkcya.machine.batch_distillation_tower.tooltip.4=The §aSeparation Factor§7 is determined by the height of the tower.
-tkcya.machine.batch_distillation_tower.tooltip.5=A §aPump Machine§7 can be added to the structure in order to lower the boiling point. It must be placed adjacent to the §aOutput Hatch§7 and on the same face of the §aController§7.
+tkcya.machine.batch_distillation_tower.tooltip.4=The §eSeparation Factor§7 is determined by the height of the tower.
+tkcya.machine.batch_distillation_tower.tooltip.5=A §ePump Machine§7 can be added to the structure in order to lower the boiling point. It must be placed adjacent to the §eOutput Hatch§7 and on the same face of the §eController§7.
 tkcya.machine.batch_distillation_tower.tooltip.6=A programmed circuit with config 1 in import bus enables more informations display.
 
 tkcya.multiblock.distillation_tower.parallel=Parallel: %d
