@@ -15,6 +15,7 @@ import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import gregtech.api.sound.GTSounds;
 import gregtech.client.renderer.ICubeRenderer;
+import gregtech.common.metatileentities.MetaTileEntities;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -33,7 +34,6 @@ import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
-//Needed  for getMatchingStacks()
 
 import java.util.List;
 import com.google.common.collect.Lists;
@@ -140,15 +140,17 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                     if (!fluidToDistill.isFluidEqual(inputFluidStackRecipe)) continue;
 
                     //Checks if the recipe needs a pump
-                    if (recipe.getInputs().isEmpty()) continue;
+                    if (!recipe.getInputs().isEmpty()) {
 
-                    //As there will always be one input, .get(0) is enough
-                    requiredPumpType = getPumpTypeFromIngredient(recipe.getInputs().get(0));
-                    requiredVacuum = requiredPumpType != null ? requiredPumpType.getTargetVacuum() : DEFAULT_PRESSURE;
+                        //As there will always be one input, .get(0) is enough
+                        requiredPumpType = getPumpTypeFromIngredient(recipe.getInputs().get(0));
+                        requiredVacuum = requiredPumpType != null ? requiredPumpType.getTargetVacuum() : DEFAULT_PRESSURE;
 
-                    if (requiredVacuum != targetVacuum) {
-                        wrongPump = true;
-                        continue;
+                        if (requiredVacuum != targetVacuum) {
+                            wrongPump = true;
+                            //Stops here as it needs structure invalidation to install a pump block
+                            break;
+                        }
                     }
 
                     int test = fluidToDistill.amount % inputFluidStackRecipe.amount;
@@ -345,7 +347,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
                 .aisle("HHH", "HHH", "HHH")
-                .aisle("YSY", "YYY", "YYY")
+                .aisle("ISF", "YYY", "YYY")
                 .aisle("XXX", "XAX", "XXX").setRepeatable(4)
                 .aisle("XXX", "X#X", "XXX").setRepeatable(1, 11)
                 .aisle("EPE", "EEE", "EEE")
@@ -355,9 +357,9 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                 .where('Y', states(getCasingState())
                         .or(abilities(MultiblockAbility.EXPORT_ITEMS).setMaxGlobalLimited(1))
                         .or(abilities(MultiblockAbility.INPUT_ENERGY).setMinGlobalLimited(1).setMaxGlobalLimited(3))
-                        .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1))
-                        .or(abilities(MultiblockAbility.IMPORT_ITEMS).setMaxGlobalLimited(1).setPreviewCount(1))
                         .or(autoAbilities(true, false)))
+                .where('F', metaTileEntities(MetaTileEntities.FLUID_IMPORT_HATCH[0]))
+                .where('I', metaTileEntities(MetaTileEntities.ITEM_IMPORT_BUS[0]))
                 .where('E', states(getCasingState())
                         .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMinGlobalLimited(1)))
                 .where('A', air())
@@ -467,7 +469,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         buf.writeInt(this.toFill);
         buf.writeInt(this.parallel);
         buf.writeBoolean(this.recipeAcquired);
-        buf.writeString(this.fluidToDistillName);
         buf.writeBytes(this.fluidToDistillName.getBytes());
     }
 
