@@ -12,7 +12,6 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.recipes.Recipe;
-import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import gregtech.api.sound.GTSounds;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.common.metatileentities.MetaTileEntities;
@@ -76,8 +75,9 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     private int fractionIndex;
     private int temp, increaseTemp;
     private int outputRate, energyCost, parallel;
-    private int bp, nextbp, toFill;
-    private int height;
+    public static int bp;
+    private int nextbp, toFill;
+    private int height, separationFactor;
     private final int duration = 20;
     private boolean recipeAcquired, isTheLastFraction;
     private int requiredVacuum;
@@ -95,6 +95,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         bp = 0;
         toFill = 0;
         fractionIndex = 0;
+        fluidToDistillName ="";
         recipeAcquired = false;
         hasEnoughEnergy = false;
         wrongPump = false;
@@ -111,6 +112,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         initializeAbilities();
         this.height = context.getOrDefault("DTHeight", 1);
         this.targetVacuum = context.getOrDefault("TargetVacuum", DEFAULT_PRESSURE);
+        this.separationFactor = getSeparationFactor(height);
         setOutputRate();
         setIncreaseTemp();
     }
@@ -122,7 +124,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         //Used when joining a world with an ongoing recipe
         if (toDistillBP.isEmpty() && recipeAcquired) {
             setToDistillBP(getRecipeFromFluidName(fluidToDistillName).getFluidOutputs(), toDistillBP);
-            setBp();
+            setBp(toDistillBP, fractionIndex);
             setFraction();
         }
 
@@ -146,12 +148,15 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                         requiredPumpType = getPumpTypeFromIngredient(recipe.getInputs().get(0));
                         requiredVacuum = requiredPumpType != null ? requiredPumpType.getTargetVacuum() : DEFAULT_PRESSURE;
 
+                        TKCYALog.logger.info("requiredVacuum = " + requiredVacuum);
+                        TKCYALog.logger.info("targetVacuum = " + targetVacuum);
+
                         if (requiredVacuum != targetVacuum) {
                             wrongPump = true;
                             //Stops here as it needs structure invalidation to install a pump block
                             break;
                         }
-                    }
+                    } else requiredVacuum = DEFAULT_PRESSURE;
 
                     int test = fluidToDistill.amount % inputFluidStackRecipe.amount;
 
@@ -176,7 +181,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
             if (recipeAcquired) {
                 fractionIndex = 0;
-                setBp();
+                setBp(toDistillBP, fractionIndex);
                 setToFill();
                 setFraction();
                 isItTheLastFraction();
@@ -228,7 +233,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
         // When a fraction process is complete, but there is another one to come
         if (!toDistillBP.isEmpty() && !isTheLastFraction && toFill == 0) {
-            setBp();
+            setBp(toDistillBP, fractionIndex);
             setToFill();
             setFraction();
             this.markDirty();
@@ -250,10 +255,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         increaseTemp = 1;
     }
 
-    public void setBp() {
-        bp = new ArrayList<>(toDistillBP.keySet()).get(fractionIndex);
-    }
-
     public void setToFill() {
         toFill = toDistillBP.get(bp).amount;
     }
@@ -271,17 +272,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         nextFraction = toDistillBP.get(nextbp).getFluid();
     }
 
-    private boolean hasCircuit1() {
-
-        for (int i = 0;  i < inputInventory.getSlots(); i++) {
-            ItemStack input = inputInventory.getStackInSlot(i);
-            if (input.isItemEqual((IntCircuitIngredient.getIntegratedCircuit(1)))) return true;
-        }
-        return false;
-    }
-
     public void reset() {
-
         toDistillBP.clear();
         outputRate = 0;
         energyCost = 0;
@@ -289,9 +280,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         toFill = 0;
         fractionIndex = 0;
         recipeAcquired = false;
-
     }
-
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
@@ -310,7 +299,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         if (isStructureFormed()) {
 
             //ExtraFluidInformations
-            if (inputInventory.getSlots() != 0 && hasCircuit1()) {
+            if (inputInventory.getSlots() != 0 && hasCircuit1(inputInventory)) {
 
                 if (fluidToDistill != null) {
                     textList.add(new TextComponentTranslation("gregtech.multiblock.distillation_tower.distilling_fluid", fluidToDistill.getLocalizedName()));
@@ -348,8 +337,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
                 .aisle("HHH", "HHH", "HHH")
                 .aisle("ISF", "YYY", "YYY")
-                .aisle("XXX", "XAX", "XXX").setRepeatable(4)
-                .aisle("XXX", "X#X", "XXX").setRepeatable(1, 11)
+                .aisle("XXX", "X#X", "XXX").setRepeatable(1, 14)
                 .aisle("EPE", "EEE", "EEE")
                 .where('H', states(getHeatAcceptorState()))
                 .where('X', states(getCasingState()))
@@ -362,7 +350,6 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
                 .where('I', metaTileEntities(MetaTileEntities.ITEM_IMPORT_BUS[0]))
                 .where('E', states(getCasingState())
                         .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMinGlobalLimited(1)))
-                .where('A', air())
                 .where('#', heightIndicatorPredicate())
                 .where('P', states(getCasingState())
                         .or(pumpMachinePredicate()))
@@ -428,6 +415,8 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
     ////Data
 
+
+
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         super.writeToNBT(data);
@@ -469,7 +458,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         buf.writeInt(this.toFill);
         buf.writeInt(this.parallel);
         buf.writeBoolean(this.recipeAcquired);
-        buf.writeBytes(this.fluidToDistillName.getBytes());
+        //buf.writeBytes(this.fluidToDistillName.getBytes());
     }
 
     @Override
@@ -480,7 +469,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
         this.toFill = buf.readInt();
         this.parallel = buf.readInt();
         this.recipeAcquired = buf.readBoolean();
-        this.fluidToDistillName = buf.readByteArray().toString();
+        //this.fluidToDistillName = buf.readByteArray().toString();
 
     }
 }

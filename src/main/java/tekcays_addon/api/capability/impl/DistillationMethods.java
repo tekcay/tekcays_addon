@@ -2,15 +2,21 @@ package tekcays_addon.api.capability.impl;
 
 import gregtech.api.recipes.CountableIngredient;
 import gregtech.api.recipes.Recipe;
+import gregtech.api.recipes.ingredients.IntCircuitIngredient;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import tekcays_addon.api.recipes.DistillationRecipes;
 import tekcays_addon.api.utils.FluidWithProperties;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockPump;
+import tekcays_addon.common.metatileentities.multi.MetaTileEntityBatchDistillationTower;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static tekcays_addon.common.metatileentities.multi.MetaTileEntityBatchDistillationTower.bp;
 import static tekcays_addon.api.recipes.DistillationRecipes.TKCYA_DISTILLATION_RECIPES;
 import static tekcays_addon.api.recipes.TKCYARecipeMaps.DISTILLATION;
 import static tekcays_addon.api.utils.FluidWithProperties.FLUID_WITH_PROPERTIES;
@@ -77,6 +83,23 @@ public class DistillationMethods {
             if (recipe.getFluidInputs().get(0).getUnlocalizedName().equals(unlocalizedName)) return recipe;
         }
         return null;
+    }
+
+    public static boolean hasCircuit1(IItemHandlerModifiable iItemHandlerModifiable) {
+        for (int i = 0;  i < iItemHandlerModifiable.getSlots(); i++) {
+            ItemStack input = iItemHandlerModifiable.getStackInSlot(i);
+            if (input.isItemEqual((IntCircuitIngredient.getIntegratedCircuit(1)))) return true;
+        }
+        return false;
+    }
+
+
+    public static int getSeparationFactor(int height) {
+        return height;
+    }
+
+    public static void setBp(Map<Integer, FluidStack> map, int index) {
+        bp = new ArrayList<>(map.keySet()).get(index);
     }
 
 
