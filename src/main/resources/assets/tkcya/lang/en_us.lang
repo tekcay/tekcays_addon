@@ -203,6 +203,31 @@ metaitem.gas_collector.name=Gas Collector
 metaitem.electrode.name=%s Electrode
 metaitem.electrode.tooltip=For electrolysis
 
+metaitem.bubble_cap.steel.name=Bubble Cap Steel
+metaitem.bubble_cap.galvanized_steel.name=Bubble Cap Galvanized Steel
+metaitem.bubble_cap.stainless_steel.name=Bubble Cap Stainless Steel
+metaitem.micro_bubble_cap.steel.name=Micro Bubble Cap Steel
+metaitem.micro_bubble_cap.galvanized_steel.name=Micro Bubble Cap Galvanized Steel
+metaitem.micro_bubble_cap.stainless_steel.name=Micro Bubble Cap Stainless Steel
+metaitem.nano_bubble_cap.steel.name=Nano Bubble Cap Steel
+metaitem.nano_bubble_cap.galvanized_steel.name=Nano Bubble Cap Galvanized Steel
+metaitem.nano_bubble_cap.stainless_steel.name=Nano Bubble Cap Stainless Steel
+
+
+metaitem.distillation_tray.steel=Distillation Tray Steel
+metaitem.distillation_tray.galvanized_steel=Distillation Tray Galvanized Steel
+metaitem.distillation_tray.stainless_steel=Distillation Tray Stainless Steel
+metaitem.thin_distillation_tray.steel=Thin Distillation Tray Steel
+metaitem.thin_distillation_tray.galvanized_steel=Thin Distillation Tray Galvanized Steel
+metaitem.thin_distillation_tray.stainless_steel=Thin Distillation Tray Stainless Steel
+metaitem.advanced_distillation_tray.steel=Advanced Distillation Tray Steel
+metaitem.advanced_distillation_tray.galvanized_steel=Advanced Distillation Tray Galvanized Steel
+metaitem.advanced_distillation_tray.stainless_steel=Advanced Distillation Tray Stainless Steel
+metaitem.dense_distillation_tray.steel=Dense Distillation Tray Steel
+metaitem.dense_distillation_tray.galvanized_steel=Dense Distillation Tray Galvanized Steel
+metaitem.dense_distillation_tray.stainless_steel=Dense Distillation Tray Stainless Steel
+
+
 item.mica_pulp.dust=Mica Based Pulp
 
 # Ore Prefixes

@@ -12,6 +12,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import tekcays_addon.common.blocks.blocks.BlockPump;
+import tekcays_addon.common.blocks.blocks.BlockDistillationTrays;
 
 public class TKCYAMetaBlocks {
 
@@ -22,6 +23,7 @@ public class TKCYAMetaBlocks {
     public static BlockLargeMultiblockCasing LARGE_MULTIBLOCK_CASING;
     public static BlockBrick BLOCK_BRICK;
     public static BlockPump PUMP_MACHINE;
+    public static BlockDistillationTrays DISTILLATION_TRAYS;
 
     public static void init() {
         LARGE_MULTIBLOCK_CASING = new BlockLargeMultiblockCasing();
@@ -32,6 +34,9 @@ public class TKCYAMetaBlocks {
 
         PUMP_MACHINE = new BlockPump();
         PUMP_MACHINE.setRegistryName("pump_machine");
+
+        DISTILLATION_TRAYS = new BlockDistillationTrays();
+        DISTILLATION_TRAYS.setRegistryName("distillation_trays");
     }
 
     @SideOnly(Side.CLIENT)
@@ -39,6 +44,7 @@ public class TKCYAMetaBlocks {
         registerItemModel(LARGE_MULTIBLOCK_CASING);
         registerItemModel(BLOCK_BRICK);
         registerItemModel(PUMP_MACHINE);
+        registerItemModel(DISTILLATION_TRAYS);
     }
 
     @SideOnly(Side.CLIENT)

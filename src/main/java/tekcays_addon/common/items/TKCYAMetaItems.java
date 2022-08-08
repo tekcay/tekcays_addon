@@ -15,8 +15,28 @@ public final class TKCYAMetaItems {
     public static MetaItem<?>.MetaValueItem MICA_INSULATOR_SHEET;
     public static MetaItem<?>.MetaValueItem MICA_INSULATOR_FOIL;
     public static MetaItem<?>.MetaValueItem GAS_COLLECTOR;
-
     public static MetaItem<?>.MetaValueItem ELECTRODE;
+    public static MetaItem<?>.MetaValueItem BUBBLE_CAP_STEEL;
+    public static MetaItem<?>.MetaValueItem BUBBLE_CAP_GALVANIZED_STEEL;
+    public static MetaItem<?>.MetaValueItem BUBBLE_CAP_STAINLESS_STEEL;
+    public static MetaItem<?>.MetaValueItem MICRO_BUBBLE_CAP_STEEL;
+    public static MetaItem<?>.MetaValueItem MICRO_BUBBLE_CAP_GALVANIZED_STEEL;
+    public static MetaItem<?>.MetaValueItem MICRO_BUBBLE_CAP_STAINLESS_STEEL;
+    public static MetaItem<?>.MetaValueItem NANO_BUBBLE_CAP_STEEL;
+    public static MetaItem<?>.MetaValueItem NANO_BUBBLE_CAP_GALVANIZED_STEEL;
+    public static MetaItem<?>.MetaValueItem NANO_BUBBLE_CAP_STAINLESS_STEEL;
+    public static MetaItem<?>.MetaValueItem DISTILLATION_TRAY_STEEL;
+    public static MetaItem<?>.MetaValueItem DISTILLATION_TRAY_GALVANIZED_STEEL;
+    public static MetaItem<?>.MetaValueItem DISTILLATION_TRAY_STAINLESS_STEEL;
+    public static MetaItem<?>.MetaValueItem THIN_DISTILLATION_TRAY_STEEL;
+    public static MetaItem<?>.MetaValueItem THIN_DISTILLATION_TRAY_GALVANIZED_STEEL;
+    public static MetaItem<?>.MetaValueItem THIN_DISTILLATION_TRAY_STAINLESS_STEEL;
+    public static MetaItem<?>.MetaValueItem ADVANCED_DISTILLATION_TRAY_STEEL;
+    public static MetaItem<?>.MetaValueItem ADVANCED_DISTILLATION_TRAY_GALVANIZED_STEEL;
+    public static MetaItem<?>.MetaValueItem ADVANCED_DISTILLATION_TRAY_STAINLESS_STEEL;
+    public static MetaItem<?>.MetaValueItem DENSE_DISTILLATION_TRAY_STEEL;
+    public static MetaItem<?>.MetaValueItem DENSE_DISTILLATION_TRAY_GALVANIZED_STEEL;
+    public static MetaItem<?>.MetaValueItem DENSE_DISTILLATION_TRAY_STAINLESS_STEEL;
 
 
     public static void init() {
