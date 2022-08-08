@@ -31,6 +31,7 @@ import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.recipes.builders.SeparationFactorRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 
@@ -242,7 +243,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
 
             if (toFill > 0 && hasEnoughEnergy) {
 
-                setNextFraction();
+                if (!isTheLastFraction) setNextFraction();
 
                 if (getOffsetTimer() % SECOND == 0) {
 
@@ -288,7 +289,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
     }
 
     private void isItTheLastFraction() {
-        isTheLastFraction =  fractionIndex == toDistillBP.size();
+        isTheLastFraction =  fractionIndex - 1 == toDistillBP.size();
     }
 
     private void setFraction() {

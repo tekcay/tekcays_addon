@@ -214,18 +214,18 @@ metaitem.nano_bubble_cap.galvanized_steel.name=Nano Bubble Cap Galvanized Steel
 metaitem.nano_bubble_cap.stainless_steel.name=Nano Bubble Cap Stainless Steel
 
 
-metaitem.distillation_tray.steel=Distillation Tray Steel
-metaitem.distillation_tray.galvanized_steel=Distillation Tray Galvanized Steel
-metaitem.distillation_tray.stainless_steel=Distillation Tray Stainless Steel
-metaitem.thin_distillation_tray.steel=Thin Distillation Tray Steel
-metaitem.thin_distillation_tray.galvanized_steel=Thin Distillation Tray Galvanized Steel
-metaitem.thin_distillation_tray.stainless_steel=Thin Distillation Tray Stainless Steel
-metaitem.advanced_distillation_tray.steel=Advanced Distillation Tray Steel
-metaitem.advanced_distillation_tray.galvanized_steel=Advanced Distillation Tray Galvanized Steel
-metaitem.advanced_distillation_tray.stainless_steel=Advanced Distillation Tray Stainless Steel
-metaitem.dense_distillation_tray.steel=Dense Distillation Tray Steel
-metaitem.dense_distillation_tray.galvanized_steel=Dense Distillation Tray Galvanized Steel
-metaitem.dense_distillation_tray.stainless_steel=Dense Distillation Tray Stainless Steel
+metaitem.distillation_tray.steel.name=Distillation Tray Steel
+metaitem.distillation_tray.galvanized_steel.name=Distillation Tray Galvanized Steel
+metaitem.distillation_tray.stainless_steel.name=Distillation Tray Stainless Steel
+metaitem.thin_distillation_tray.steel.name=Thin Distillation Tray Steel
+metaitem.thin_distillation_tray.galvanized_steel.name=Thin Distillation Tray Galvanized Steel
+metaitem.thin_distillation_tray.stainless_steel.name=Thin Distillation Tray Stainless Steel
+metaitem.advanced_distillation_tray.steel.name=Advanced Distillation Tray Steel
+metaitem.advanced_distillation_tray.galvanized_steel.name=Advanced Distillation Tray Galvanized Steel
+metaitem.advanced_distillation_tray.stainless_steel.name=Advanced Distillation Tray Stainless Steel
+metaitem.dense_distillation_tray.steel.name=Dense Distillation Tray Steel
+metaitem.dense_distillation_tray.galvanized_steel.name=Dense Distillation Tray Galvanized Steel
+metaitem.dense_distillation_tray.stainless_steel.name=Dense Distillation Tray Stainless Steel
 
 
 item.mica_pulp.dust=Mica Based Pulp
