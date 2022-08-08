@@ -30,10 +30,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.recipes.builders.SeparationFactorRecipeBuilder;
-import tekcays_addon.api.recipes.builders.TemperatureRecipeBuilder;
-import tekcays_addon.api.recipes.recipeproperties.SeparationFactorProperty;
 import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 
@@ -334,10 +331,12 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapMultiblockCon
             //ExtraFluidInformations
             if (inputInventory.getSlots() != 0 && hasCircuit1(inputInventory)) {
 
+                //Name of the current fraction
                 if (fluidToDistill != null) {
                     textList.add(new TextComponentTranslation("gregtech.multiblock.distillation_tower.distilling_fluid", fluidToDistill.getLocalizedName()));
                 }
 
+                //Name of the next fraction, with its volume and its bp
                 if (fraction != null && temp == bp) {
                     textList.add(new TextComponentTranslation("tkcya.multiblock.distillation_tower.boiling", new FluidStack(fraction, 1).getLocalizedName(), toFill));
                     if (nextFraction != null) {
