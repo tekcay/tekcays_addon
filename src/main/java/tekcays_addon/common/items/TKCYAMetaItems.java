@@ -28,9 +28,6 @@ public final class TKCYAMetaItems {
     public static MetaItem<?>.MetaValueItem DISTILLATION_TRAY_STEEL;
     public static MetaItem<?>.MetaValueItem DISTILLATION_TRAY_GALVANIZED_STEEL;
     public static MetaItem<?>.MetaValueItem DISTILLATION_TRAY_STAINLESS_STEEL;
-    public static MetaItem<?>.MetaValueItem THIN_DISTILLATION_TRAY_STEEL;
-    public static MetaItem<?>.MetaValueItem THIN_DISTILLATION_TRAY_GALVANIZED_STEEL;
-    public static MetaItem<?>.MetaValueItem THIN_DISTILLATION_TRAY_STAINLESS_STEEL;
     public static MetaItem<?>.MetaValueItem ADVANCED_DISTILLATION_TRAY_STEEL;
     public static MetaItem<?>.MetaValueItem ADVANCED_DISTILLATION_TRAY_GALVANIZED_STEEL;
     public static MetaItem<?>.MetaValueItem ADVANCED_DISTILLATION_TRAY_STAINLESS_STEEL;

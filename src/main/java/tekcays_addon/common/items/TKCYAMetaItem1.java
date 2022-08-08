@@ -42,10 +42,6 @@ public class TKCYAMetaItem1 extends StandardMetaItem {
         DISTILLATION_TRAY_GALVANIZED_STEEL = addItem(15, "distillation_tray.galvanized_steel").addComponents(new TraysStats(GalvanizedSteel, 8, 100));
         DISTILLATION_TRAY_STAINLESS_STEEL = addItem(16, "distillation_tray.stainless_steel").addComponents(new TraysStats(StainlessSteel, 6, 100));
 
-        THIN_DISTILLATION_TRAY_STEEL = addItem(17, "thin_distillation_tray.steel").addComponents(new TraysStats(Steel, 5, 100));
-        THIN_DISTILLATION_TRAY_GALVANIZED_STEEL = addItem(18, "thin_distillation_tray.galvanized_steel").addComponents(new TraysStats(GalvanizedSteel, 8, 100));
-        THIN_DISTILLATION_TRAY_STAINLESS_STEEL = addItem(19, "thin_distillation_tray.stainless_steel").addComponents(new TraysStats(StainlessSteel, 6, 100));
-
         ADVANCED_DISTILLATION_TRAY_STEEL = addItem(20, "advanced_distillation_tray.steel").addComponents(new TraysStats(Steel, 5, 150));
         ADVANCED_DISTILLATION_TRAY_GALVANIZED_STEEL = addItem(21, "advanced_distillation_tray.galvanized_steel").addComponents(new TraysStats(GalvanizedSteel, 8, 150));
         ADVANCED_DISTILLATION_TRAY_STAINLESS_STEEL = addItem(22, "advanced_distillation_tray.stainless_steel").addComponents(new TraysStats(StainlessSteel, 6, 150));
