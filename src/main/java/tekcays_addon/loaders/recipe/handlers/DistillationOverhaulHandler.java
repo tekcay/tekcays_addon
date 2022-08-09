@@ -7,9 +7,17 @@ import static gregtech.api.unification.material.Materials.*;
 import static tekcays_addon.api.recipes.TKCYARecipeMaps.DISTILLATION;
 import static tekcays_addon.api.utils.FluidWithProperties.*;
 
-public class DistillationHandler {
+public class DistillationOverhaulHandler {
 
-    public static void initJEI() {
+    public static void init() {
+        distillationRecipes();
+        fluidWithPropertiesInit();
+        bubbleCapsRecipes();
+        distillationTraysRecipes();
+        distillationTraysBlockRecipes();
+    }
+
+    public static void distillationRecipes() {
 
         DISTILLATION.recipeBuilder()
                 .fluidInputs(WoodVinegar.getFluid(1000))
@@ -80,6 +88,18 @@ public class DistillationHandler {
         FLUID_WITH_PROPERTIES.add(SULFURIC_NAPHTHA);
         FLUID_WITH_PROPERTIES.add(SULFURIC_LIGHT_FUEL);
         FLUID_WITH_PROPERTIES.add(SULFURIC_HEAVY_FUEL);
+    }
+
+    public static void bubbleCapsRecipes() {
+
+    }
+
+    public static void distillationTraysRecipes() {
+
+    }
+
+    public static void distillationTraysBlockRecipes() {
+
     }
 
 

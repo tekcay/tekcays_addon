@@ -204,6 +204,7 @@ metaitem.electrode.name=%s Electrode
 metaitem.electrode.tooltip=For electrolysis
 
 metaitem.bubble_cap.steel.name=Bubble Cap Steel
+metaitem.bubble_cap.steel.toolip=A basic Bubble Cap for distillation trays
 metaitem.bubble_cap.galvanized_steel.name=Bubble Cap Galvanized Steel
 metaitem.bubble_cap.stainless_steel.name=Bubble Cap Stainless Steel
 metaitem.micro_bubble_cap.steel.name=Micro Bubble Cap Steel
