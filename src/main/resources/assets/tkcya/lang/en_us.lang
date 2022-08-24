@@ -153,8 +153,13 @@ material.hydrogen_bromide=Hydrogen Bromide
 material.hydrogen_iodide=Hydrogen Iodide
 
 ##ZincChain
+material.iron_sulfate=Iron Sulfate
+material.zinc_sulfate=Zinc Sulfate
 material.zinc_leaching_solution=Zinc Leaching Solution
 material.zinc_leaching_residue=Zinc Leaching Residue
+material.tannic_acid=Tannic Acid
+material.germanic_acid_solution=Germanic Acid Solution
+
 
 
 ##Alloys

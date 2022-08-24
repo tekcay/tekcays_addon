@@ -137,28 +137,55 @@ public class TKCYAMiscMaterials {
 
         //Zinc chain
 
-        ZincSulfate = new Material.Builder(24130, "zinc_sulfate")
+        IronSulfate = new Material.Builder(24130, "iron_sulfate")
+                .dust()
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .color(Iron.getMaterialRGB() + Sulfur.getMaterialRGB() + Oxygen.getMaterialRGB() / 3)
+                .components(Iron, 1, Sulfur, 1, Oxygen, 4)
+                .build();
+
+        ZincSulfate = new Material.Builder(24131, "zinc_sulfate")
                 .dust()
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .color(Zinc.getMaterialRGB() + Sulfur.getMaterialRGB() + Oxygen.getMaterialRGB() / 3)
                 .components(Zinc, 1, Sulfur, 1, Oxygen, 4)
                 .build();
 
-        ZincLeachingSolution = new Material.Builder(24131, "zinc_leaching_solution")
+        ZincLeachingSolution = new Material.Builder(24132, "zinc_leaching_solution")
                 .fluid(FluidTypes.ACID)
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .color(Germanium.getMaterialRGB() + Oxygen.getMaterialRGB() + Zinc.getMaterialRGB() / 3)
-                .components(Zinc, 1)
                 .build();
         ZincLeachingSolution.setFormula("Zn?");
 
-        ZincLeachingResidue = new Material.Builder(24132, "zinc_leaching_residue")
+        ZincLeachingResidue = new Material.Builder(24133, "zinc_leaching_residue")
                 .fluid(FluidTypes.ACID)
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .color(Germanium.getMaterialRGB() + Oxygen.getMaterialRGB() / 2)
-                .components(Germanium, 1)
                 .build();
         ZincLeachingResidue.setFormula("Ge?");
+
+        GermanicAcidSolution = new Material.Builder(24134, "germanic_acid_solution")
+                .fluid(FluidTypes.ACID)
+                .color(Germanium.getMaterialRGB() + SulfuricAcid.getMaterialRGB() / 2)
+                .build();
+        GermanicAcidSolution.setFormula("H4GeO4");
+
+        TannicAcid = new Material.Builder(24135, "tannic_acid")
+                .fluid(FluidTypes.ACID)
+                .color(554242)
+                .build();
+        TannicAcid.setFormula("C76H52O46");
+
+        GermaniumChloride = new Material.Builder(24136, "germanium_chloride")
+                .dust()
+                .color(Germanium.getMaterialRGB() + Chlorine.getMaterialRGB() * 4 / 5)
+                .build();
+        GermaniumChloride.setFormula("GeCl4");
+
+        GermaniumOxide = new Material.Builder(24137, "germanium_oxide")
+                .dust()
+                .color(Germanium.getMaterialRGB() + Oxygen.getMaterialRGB() * 2 / 3)
+                .build();
+        GermaniumOxide.setFormula("GeO2");
 
     }
 
