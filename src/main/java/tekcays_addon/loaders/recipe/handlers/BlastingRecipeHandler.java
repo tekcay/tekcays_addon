@@ -44,6 +44,16 @@ public class BlastingRecipeHandler {
                 .fluidOutputs(TKCYAMaterials.PigIron.getFluid(3 * GTValues.L))
                 .duration(200)
                 .buildAndRegister();
+
+        //Tin
+
+        ////From Cassiterite
+        BLASTING_RECIPES.recipeBuilder()
+                .setTemp(1200)
+                .input(OrePrefix.dust, Materials.Cassiterite)
+                .fluidOutputs(Materials.Tin.getFluid(GTValues.L))
+                .duration(200)
+                .buildAndRegister();
     }
 
 }
