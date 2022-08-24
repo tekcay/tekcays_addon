@@ -27,6 +27,8 @@ public class TKCYAMaterialFlagAddition {
         YellowLimonite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
         BandedIron.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
         Magnetite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
+        Cassiterite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
+        Sphalerite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
 
         // For electrode
         Carbon.addFlags(MaterialFlags.GENERATE_LONG_ROD, MaterialFlags.NO_SMELTING, MaterialFlags.NO_SMASHING);
