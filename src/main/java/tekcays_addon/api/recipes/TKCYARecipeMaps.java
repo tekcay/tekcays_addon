@@ -78,7 +78,6 @@ public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<PrimitiveRecipeBuilder> FILTRATION = new RecipeMap<>(
-            "filter", 1, 1, 1, 1, 1, 1, 1, 1, new PrimitiveRecipeBuilder(), false)
-            .setSound(GTSounds.CHEMICAL_REACTOR);
+            "filtration", 1, 1, 1, 1, 1, 1, 1, 1, new PrimitiveRecipeBuilder(), false);
 
 }

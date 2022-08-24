@@ -65,24 +65,24 @@ public class MetaTileEntityFilter extends RecipeMapPrimitiveMultiblockController
                 .shouldColor(false)
                 .widget(new LabelWidget(5, 5, getMetaFullName()))
 
-                .widget(new SlotWidget(importItems, 0, 52, 38, true, true)
+                .widget(new SlotWidget(importItems, 0, 50, 10, true, true)
                         .setBackgroundTexture(GuiTextures.SLOT))
 
-                .widget(new TankWidget(importFluids.getTankAt(0), 77, 50, 18, 18)
+                .widget(new TankWidget(importFluids.getTankAt(0), 80, 10, 18, 18)
                         .setBackgroundTexture(GuiTextures.FLUID_SLOT)
                         .setAlwaysShowFull(true)
                         .setContainerClicking(true, true))
 
-                .widget(new RecipeProgressWidget(recipeMapWorkable::getProgressPercent, 59, 39, 20, 15,
-                        GuiTextures.PROGRESS_BAR_BATH, ProgressWidget.MoveType.VERTICAL_DOWNWARDS, TKCYARecipeMaps.FILTRATION))
+                .widget(new RecipeProgressWidget(recipeMapWorkable::getProgressPercent, 65, 35, 18, 18,
+                        GuiTextures.PROGRESS_BAR_SIFT, ProgressWidget.MoveType.VERTICAL_DOWNWARDS, TKCYARecipeMaps.FILTRATION))
 
-                .widget(new SlotWidget(exportItems, 0, 52, 20, true, false)
+                .widget(new SlotWidget(exportItems, 0, 50, 60, true, false)
                         .setBackgroundTexture(GuiTextures.SLOT))
 
-                .widget(new TankWidget(exportFluids.getTankAt(1), 77, 20, 18, 18)
+                .widget(new TankWidget(exportFluids.getTankAt(0), 80, 60, 18, 18)
                         .setBackgroundTexture(GuiTextures.FLUID_SLOT)
                         .setAlwaysShowFull(true)
-                        .setContainerClicking(true, true))
+                        .setContainerClicking(false, true))
 
                 .bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 0);
     }

@@ -179,7 +179,7 @@ public class TKCYAMetaTileEntities {
             CRYSTALLIZER = registerMetaTileEntity(11050, new MetaTileEntityCrystallizer(tkcyaId("crystallizer")));
         }
 
-        FILTER = registerMetaTileEntity(11051, new MetaTileEntityFilter(tkcyaId("filter")));
+        FILTER = registerMetaTileEntity(11055, new MetaTileEntityFilter(tkcyaId("filter")));
 
     }
 

@@ -20,6 +20,7 @@ import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.api.utils.TKCYAValues;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
+import tekcays_addon.common.items.behaviors.FilterBehavior;
 
 
 import static gregtech.api.GTValues.LV;
@@ -63,7 +64,7 @@ public class TKCYAPartsRecipeHandler {
 
             ItemStack filterStack = TKCYAMetaItems.FILTER.getStackForm();
 
-            ElectrodeBehavior.getInstanceFor(filterStack).setPartMaterial(filterStack, m);
+            FilterBehavior.getInstanceFor(filterStack).setPartMaterial(filterStack, m);
 
             LASER_ENGRAVER_RECIPES.recipeBuilder()
                     .input(plate, m)

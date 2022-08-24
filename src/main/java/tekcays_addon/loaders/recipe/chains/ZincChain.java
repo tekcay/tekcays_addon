@@ -19,7 +19,7 @@ public class ZincChain {
                 .buildAndRegister();
 
         // ZnO + 2H2SO4 = ZnSO4 + ZincLeachingResidue [Contains: (H2O)(H2SO4)]
-        FILTRATION.recipeBuilder().duration(40).EUt(480)
+        FILTRATION.recipeBuilder().duration(200)
                 .fluidInputs(ZincLeachingSolution.getFluid(1000))
                 .notConsumable(filterStainlessSteel)
                 .output(dustSmall, Zinc)
