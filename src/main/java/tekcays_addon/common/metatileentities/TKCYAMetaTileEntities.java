@@ -44,6 +44,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityPrimitiveBath PRIMITIVE_BATH;
     public static MetaTileEntityCrystallizer CRYSTALLIZER;
     public static MetaTileEntityAdvancedElectrolyzer ADVANCED_ELECTROLYZER;
+    public static MetaTileEntityFilter FILTER;
 
     //Blast Furnaces
     public static MetaTileEntityTKCYABlastFurnace BRICK_BLAST_FURNACE;
@@ -177,6 +178,8 @@ public class TKCYAMetaTileEntities {
         if (TKCYAConfigHolder.meltingOverhaul.enableBouleCrystallization) {
             CRYSTALLIZER = registerMetaTileEntity(11050, new MetaTileEntityCrystallizer(tkcyaId("crystallizer")));
         }
+
+        FILTER = registerMetaTileEntity(11051, new MetaTileEntityFilter(tkcyaId("filter")));
 
     }
 

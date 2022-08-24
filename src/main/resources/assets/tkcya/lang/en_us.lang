@@ -43,6 +43,7 @@ tkcya.machine.strong_brick_blast_furnace.name=Strong Brick Blast Furnace
 
 tkcya.machine.crystallizer.name=Crystallizer
 tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer
+tkcya.machine.filter.name=Filter
 
 
 # multiblock descriptions
@@ -107,6 +108,7 @@ recipemap.blasting.name=Blasting
 recipemap.converting.name=Converting
 recipemap.crystallization.name=Crystallization
 recipemap.electrolysis.name=Electrolysis
+recipemap.filtration.name=Filtration
 
 # Materials
 
@@ -117,7 +119,6 @@ material.unpure_tin=Unpure Tin
 material.unpure_iron=Unpure Iron
 
 ##Alloys/Intermediates
-material.galvanized_steel=Galvanized Steel
 material.pig_iron=Pig Iron
 
 ##NoFormula
@@ -151,8 +152,10 @@ material.hydrogen_chloride=Hydrogen Chloride
 material.hydrogen_bromide=Hydrogen Bromide
 material.hydrogen_iodide=Hydrogen Iodide
 
+##ZincChain
+material.zinc_leaching_solution=Zinc Leaching Solution
+material.zinc_leaching_residue=Zinc Leaching Residue
 
-fluid.fuel.tooltip=To be used in the fuel consuming machines
 
 ##Alloys
 material.galvanized_steel=Galvanized Steel
@@ -176,8 +179,12 @@ metaitem.mica.sheet.name=Mica Based Sheet
 metaitem.mica_insulator.sheet.name=Mica Insulator Sheet
 metaitem.mica_insulator.foil.name=Mica Insulator Foil
 metaitem.gas_collector.name=Gas Collector
+
+#Damageable Items
 metaitem.electrode.name=%s Electrode
 metaitem.electrode.tooltip=For electrolysis
+metaitem.filter.name=%s Filter
+metaitem.filter.tooltip=For filtration duh
 
 item.mica_pulp.dust=Mica Based Pulp
 

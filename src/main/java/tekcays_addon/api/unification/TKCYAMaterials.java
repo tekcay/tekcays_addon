@@ -72,6 +72,9 @@ public class TKCYAMaterials {
     public static Material HydrogenChloride;
     public static Material HydrogenBromide;
     public static Material HydrogenIodide;
+    public static Material ZincSulfate;
+    public static Material ZincLeachingSolution;
+    public static Material ZincLeachingResidue;
 
     /**
      * Alloys

@@ -56,36 +56,42 @@ public class TKCYAMiscMaterials {
         PotassiumBifluoride = new Material.Builder(24114, "potassium_bifluoride")
                 .ingot().fluid(FluidTypes.ACID)
                 .fluidTemp(512)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .color(0xFF6400).iconSet(MaterialIconSet.DULL)
                 .components(Potassium, 1, Hydrogen, 1, Fluorine, 2)
                 .build();
 
         Fluorite = new Material.Builder(24115, "fluorite")
                 .dust().ore()
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .color(0x009933).iconSet(MaterialIconSet.BRIGHT)
                 .components(Calcium, 1, Fluorine, 2)
                 .build();
 
         CalciumSulfonate = new Material.Builder(24116, "calcium_sulfonate")
                 .dust()
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .color(0xFF6400).iconSet(MaterialIconSet.BRIGHT)
                 .components(Calcium, 1, Sulfur, 1, Oxygen, 4)
                 .build();
 
         LithiumFluoride = new Material.Builder(24117, "lithium_fluoride")
                 .dust()
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .color(0x757575).iconSet(MaterialIconSet.DULL)
                 .components(Lithium, 1, Fluorine, 1)
                 .build();
 
         SodiumFluoride = new Material.Builder(24118, "sodium_fluoride")
                 .dust()
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .color(Sodium.getMaterialRGB() + Fluorine.getMaterialRGB() / 2).iconSet(MaterialIconSet.DULL)
                 .components(Sodium, 1, Fluorine, 1)
                 .build();
 
         PotassiumFluoride = new Material.Builder(24119, "potassium_fluoride")
                 .dust()
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .color(0xFDFDFD).iconSet(MaterialIconSet.DULL)
                 .components(Potassium, 1, Fluorine, 1)
                 .build();
@@ -93,33 +99,66 @@ public class TKCYAMiscMaterials {
 
         LithiumHydroxide = new Material.Builder(24120, "lithium_hydroxide")
                 .dust()
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .color(Lithium.getMaterialRGB() + Oxygen.getMaterialRGB() + Hydrogen.getMaterialRGB() / 3).iconSet(MaterialIconSet.DULL)
                 .components(Lithium, 1, Oxygen, 1, Hydrogen, 1)
                 .build();
 
         HydrogenFluoride = new Material.Builder(24121, "hydrogen_fluoride")
                 .fluid(FluidTypes.ACID)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .color(Hydrogen.getMaterialRGB() + Fluorine.getMaterialRGB() / 2)
                 .components(Hydrogen, 1, Fluorine, 1)
                 .build();
 
         HydrogenChloride = new Material.Builder(24122, "hydrogen_chloride")
                 .fluid(FluidTypes.ACID)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .color(Hydrogen.getMaterialRGB() + Chlorine.getMaterialRGB() / 2)
                 .components(Hydrogen, 1, Chlorine, 1)
                 .build();
 
         HydrogenBromide = new Material.Builder(24123, "hydrogen_bromide")
                 .fluid(FluidTypes.ACID)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .color(Hydrogen.getMaterialRGB() + Bromine.getMaterialRGB() / 2)
                 .components(Hydrogen, 1, Bromine, 1)
                 .build();
 
         HydrogenIodide = new Material.Builder(24124, "hydrogen_iodide")
                 .fluid(FluidTypes.ACID)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .color(Hydrogen.getMaterialRGB() + Iodine.getMaterialRGB() / 2)
                 .components(Hydrogen, 1, Iodine, 1)
                 .build();
+
+
+        //FREE IDs
+
+        //Zinc chain
+
+        ZincSulfate = new Material.Builder(24130, "zinc_sulfate")
+                .dust()
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .color(Zinc.getMaterialRGB() + Sulfur.getMaterialRGB() + Oxygen.getMaterialRGB() / 3)
+                .components(Zinc, 1, Sulfur, 1, Oxygen, 4)
+                .build();
+
+        ZincLeachingSolution = new Material.Builder(24131, "zinc_leaching_solution")
+                .fluid(FluidTypes.ACID)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .color(Germanium.getMaterialRGB() + Oxygen.getMaterialRGB() + Zinc.getMaterialRGB() / 3)
+                .components(Zinc, 1)
+                .build();
+        ZincLeachingSolution.setFormula("Zn?");
+
+        ZincLeachingResidue = new Material.Builder(24132, "zinc_leaching_residue")
+                .fluid(FluidTypes.ACID)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .color(Germanium.getMaterialRGB() + Oxygen.getMaterialRGB() / 2)
+                .components(Germanium, 1)
+                .build();
+        ZincLeachingResidue.setFormula("Ge?");
 
     }
 
