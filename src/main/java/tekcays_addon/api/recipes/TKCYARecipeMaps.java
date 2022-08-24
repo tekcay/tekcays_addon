@@ -1,6 +1,7 @@
 package tekcays_addon.api.recipes;
 
 import crafttweaker.annotations.ZenRegister;
+import gregicality.science.api.recipes.builders.TemperaturePressureRecipeBuilder;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.widgets.ProgressWidget;
 import gregtech.api.recipes.RecipeMap;
@@ -29,8 +30,8 @@ public class TKCYARecipeMaps {
             .setSound(GTSounds.ARC);
 
     @ZenProperty
-    public static final RecipeMap<TemperatureRecipeBuilder> MELTER_RECIPES = new RecipeMap<>(
-            "primitive_melter", 1, 1, 0, 0, 0, 0, 1, 1, new TemperatureRecipeBuilder(), false)
+    public static final RecipeMap<TKCYATemperatureRecipeBuilder> MELTER_RECIPES = new RecipeMap<>(
+            "primitive_melter", 1, 1, 0, 0, 0, 0, 1, 1, new TKCYATemperatureRecipeBuilder(), false)
             .setSound(GTSounds.FURNACE);
 
     @ZenProperty
@@ -57,8 +58,8 @@ public class TKCYARecipeMaps {
             .setSound(GTSounds.COOLING);
 
     @ZenProperty
-    public static final RecipeMap<TemperatureRecipeBuilder> BLASTING_RECIPES = new RecipeMap<>(
-            "blasting", 1, 1, 0, 0, 0, 1, 1, 2, new TemperatureRecipeBuilder(), false)
+    public static final RecipeMap<TKCYATemperatureRecipeBuilder> BLASTING_RECIPES = new RecipeMap<>(
+            "blasting", 1, 1, 0, 0, 0, 1, 1, 2, new TKCYATemperatureRecipeBuilder(), false)
             .setSound(GTSounds.FURNACE);
 
     @ZenProperty

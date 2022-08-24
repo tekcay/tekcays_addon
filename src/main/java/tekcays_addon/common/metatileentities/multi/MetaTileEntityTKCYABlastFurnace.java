@@ -34,7 +34,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.capability.impl.MultiParallelLogic;
 import tekcays_addon.api.metatileentity.mutiblock.RecipeMapMultiblockNoEnergyController;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.recipes.builders.TemperatureRecipeBuilder;
+import tekcays_addon.api.recipes.builders.TKCYATemperatureRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
@@ -352,7 +352,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        runningRecipeTemp = recipe.getProperty(TemperatureRecipeBuilder.TemperatureProperty.getInstance(), 0);
+        runningRecipeTemp = recipe.getProperty(TKCYATemperatureRecipeBuilder.TemperatureProperty.getInstance(), 0);
         return temp >= runningRecipeTemp;
     }
 

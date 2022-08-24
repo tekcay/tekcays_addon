@@ -7,8 +7,8 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.recipes.CountableIngredient;
 import gregtech.api.recipes.Recipe;
+import gregtech.api.recipes.ingredients.GTRecipeInput;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing.MetalCasingType;
@@ -19,8 +19,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 
@@ -30,7 +28,7 @@ import java.util.*;
 
 public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockController {
 
-    List<CountableIngredient> inputs;
+    List<GTRecipeInput> inputs;
     List<ItemStack> electrodeInInventory = new ArrayList<>();
     HashSet<String> currentRecipeNonConsummIngredient = new HashSet<>();
     HashSet<String> nonConsummInInventory = new HashSet<>();
@@ -64,10 +62,10 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
     public void getCurrentRecipeNonConsummables() {
 
         currentRecipeNonConsummIngredient.clear();
-        for (CountableIngredient ingredient : inputs) {
+        for (GTRecipeInput gtRecipeInput : inputs) {
 
-            if (!ingredient.isNonConsumable()) continue;
-            ItemStack[] stack = ingredient.getIngredient().getMatchingStacks();
+            if (!gtRecipeInput.isNonConsumable()) continue;
+            ItemStack[] stack = gtRecipeInput.getInputStacks();
 
             currentRecipeNonConsummIngredient.add(stack[0].getDisplayName());
 

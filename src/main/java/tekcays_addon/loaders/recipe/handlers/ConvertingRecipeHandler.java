@@ -13,8 +13,8 @@ public class ConvertingRecipeHandler {
 
         //Steel
         CONVERTING_RECIPES.recipeBuilder()
-                .setTemp(1800)
-                .setPressure(5)
+                .temperature(1800)
+                .pressure(50_132_500D)
                 .fluidInputs(Materials.Oxygen.getFluid(3000))
                 .fluidInputs(TKCYAMaterials.PigIron.getFluid(GTValues.L))
                 .fluidOutputs(Materials.Steel.getFluid(GTValues.L))
