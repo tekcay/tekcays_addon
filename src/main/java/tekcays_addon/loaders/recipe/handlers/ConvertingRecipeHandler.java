@@ -11,6 +11,7 @@ public class ConvertingRecipeHandler {
     public static void init() {
 
 
+        /*
         //Steel
         CONVERTING_RECIPES.recipeBuilder()
                 .temperature(1800)
@@ -20,6 +21,8 @@ public class ConvertingRecipeHandler {
                 .fluidOutputs(Materials.Steel.getFluid(GTValues.L))
                 .duration(200)
                 .buildAndRegister();
+
+         */
     }
 
 }
