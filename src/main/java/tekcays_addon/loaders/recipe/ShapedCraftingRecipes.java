@@ -30,7 +30,7 @@ public class ShapedCraftingRecipes{
 
             ModHandler.addShapedRecipe("mold_empty" + m.getUnlocalizedName(), OreDictUnifier.get(moldEmpty, m),
                     "hf", "PP", "PP", 'P', new UnificationEntry(plate, m));
-            ModHandler.addShapedRecipe("mold_rotor" + m.getUnlocalizedName(), OreDictUnifier.get(moldEmpty, m),
+            ModHandler.addShapedRecipe("mold_rotor" + m.getUnlocalizedName(), OreDictUnifier.get(moldRotor, m),
                     "  h", " S ", "   ", 'S', new UnificationEntry(moldEmpty, m));
             ModHandler.addShapedRecipe("mold_gear_small" + m.getUnlocalizedName(), OreDictUnifier.get(moldGearSmall, m),
                     "   ", " S ", "h  ", 'S', new UnificationEntry(moldEmpty, m));
@@ -52,8 +52,7 @@ public class ShapedCraftingRecipes{
                     "   ", " S ", "  h", 'S', new UnificationEntry(moldEmpty, m));
             ModHandler.addShapedRecipe("mold_ring" + m.getUnlocalizedName(), OreDictUnifier.get(moldRing, m),
                     "   ", " S ", " x ", 'S', new UnificationEntry(moldEmpty, m));
-            ModHandler.addShapedRecipe("mold_rotor" + m.getUnlocalizedName(), OreDictUnifier.get(moldRotor, m),
-                    "  h", " S ", "   ", 'S', new UnificationEntry(moldEmpty, m));
+
         
         }
     }

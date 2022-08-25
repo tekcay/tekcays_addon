@@ -1,19 +1,16 @@
 package tekcays_addon.api.unification;
 
 
-import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.info.MaterialFlags;
-import tekcays_addon.api.utils.TKCYALog;
 
 
+import static gregicality.science.api.unification.materials.GCYSMaterials.ZincOxide;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.Ceramic;
 import static tekcays_addon.api.unification.material.info.TKCYAMaterialFlags.GENERATE_MOLDS;
 import static tekcays_addon.api.unification.material.info.TKCYAMaterialFlags.POLYMER;
-import static tekcays_addon.api.utils.TKCYAValues.GTCEu_POLYMERS;
-
 
 public class TKCYAMaterialFlagAddition {
 
@@ -32,7 +29,7 @@ public class TKCYAMaterialFlagAddition {
 
         //For Zinc chain
         Sphalerite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
-        Zincite.addFlags(DISABLE_DECOMPOSITION);
+        ZincOxide.addFlags(DISABLE_DECOMPOSITION);
 
         // For electrode
         Carbon.addFlags(MaterialFlags.GENERATE_LONG_ROD, MaterialFlags.NO_SMELTING, MaterialFlags.NO_SMASHING);
