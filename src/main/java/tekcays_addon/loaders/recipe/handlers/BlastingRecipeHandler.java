@@ -33,7 +33,7 @@ public class BlastingRecipeHandler {
         BLASTING_RECIPES.recipeBuilder()
                 .setTemp(1800)
                 .input(OrePrefix.dust, Materials.Hematite)
-                .fluidOutputs(TKCYAMaterials.PigIron.getFluid(2 * GTValues.L))
+                .fluidOutputs(TKCYAMaterials.PigIron.getFluid(GTValues.L / 2))
                 .duration(200)
                 .buildAndRegister();
 
@@ -41,9 +41,20 @@ public class BlastingRecipeHandler {
         BLASTING_RECIPES.recipeBuilder()
                 .setTemp(1800)
                 .input(OrePrefix.dust, Materials.Magnetite)
-                .fluidOutputs(TKCYAMaterials.PigIron.getFluid(3 * GTValues.L))
+                .fluidOutputs(TKCYAMaterials.PigIron.getFluid(GTValues.L / 3))
                 .duration(200)
                 .buildAndRegister();
+
+        //Tin
+
+        ////From Cassiterite
+        BLASTING_RECIPES.recipeBuilder()
+                .setTemp(1200)
+                .input(OrePrefix.dust, Materials.Cassiterite)
+                .fluidOutputs(Materials.Tin.getFluid(GTValues.L))
+                .duration(200)
+                .buildAndRegister();
+
     }
 
 }

@@ -125,5 +125,8 @@ public class TKCYAValues {
    public static final Material[] ELECTRODE_MATERIALS = new Material[]{
            Gold, Copper, Platinum, Carbon, Steel, Iridium};
 
+    public static final Material[] FILTER_MATERIALS = new Material[]{
+            Steel, StainlessSteel};
+
 }
 

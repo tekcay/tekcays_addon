@@ -5,6 +5,7 @@ import gregtech.api.recipes.crafttweaker.MetaItemBracketHandler;
 import net.minecraftforge.fml.common.Loader;
 import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
+import tekcays_addon.loaders.DamageableItemsLoader;
 import tekcays_addon.loaders.recipe.TKCYARecipeLoader;
 import tekcays_addon.TekCaysAddon;
 import gregtech.api.block.VariantItemBlock;
@@ -69,6 +70,8 @@ public class CommonProxy {
         // Main recipe registration
         // This is called AFTER GregTech registers recipes, so
         // anything here is safe to call removals in
+        DamageableItemsLoader.initElectrodes();
+        DamageableItemsLoader.initFilters();
         TKCYARecipeLoader.load();
     }
 

@@ -27,6 +27,12 @@ public class TKCYAMaterialFlagAddition {
         YellowLimonite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
         Hematite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
         Magnetite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
+        Cassiterite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
+
+
+        //For Zinc chain
+        Sphalerite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
+        Zincite.addFlags(DISABLE_DECOMPOSITION);
 
         // For electrode
         Carbon.addFlags(MaterialFlags.GENERATE_LONG_ROD, MaterialFlags.NO_SMELTING, MaterialFlags.NO_SMASHING);

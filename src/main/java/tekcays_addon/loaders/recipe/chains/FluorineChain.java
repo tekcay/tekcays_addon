@@ -1,10 +1,8 @@
 package tekcays_addon.loaders.recipe.chains;
 
-import net.minecraft.item.ItemStack;
+
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
-import tekcays_addon.common.items.TKCYAMetaItems;
-import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 
 import static gregtech.api.GTValues.*;
 import static gregtech.api.recipes.RecipeMaps.CHEMICAL_RECIPES;
@@ -14,6 +12,7 @@ import static gregtech.api.unification.ore.OrePrefix.dust;
 import static gregtech.api.unification.ore.OrePrefix.dustTiny;
 import static tekcays_addon.api.recipes.TKCYARecipeMaps.ELECTROLYSIS;
 import static tekcays_addon.api.unification.TKCYAMaterials.*;
+import static tekcays_addon.loaders.DamageableItemsLoader.*;
 
 public class FluorineChain {
 
@@ -80,13 +79,6 @@ public class FluorineChain {
                 .EUt(VA[LV])
                 .buildAndRegister();
 
-        ItemStack electrodeCarbon = TKCYAMetaItems.ELECTRODE.getStackForm();
-
-        ElectrodeBehavior.getInstanceFor(electrodeCarbon).setPartMaterial(electrodeCarbon, Carbon);
-
-        ItemStack electrodeSteel = TKCYAMetaItems.ELECTRODE.getStackForm();
-
-        ElectrodeBehavior.getInstanceFor(electrodeSteel).setPartMaterial(electrodeSteel, Steel);
 
 
         // KF.HF(l) + electrode + LiF -> H2 + F2  //TODO 70-130 °C

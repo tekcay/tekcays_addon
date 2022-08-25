@@ -20,6 +20,7 @@ import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.api.utils.TKCYAValues;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
+import tekcays_addon.common.items.behaviors.FilterBehavior;
 
 
 import static gregtech.api.GTValues.LV;
@@ -28,8 +29,7 @@ import static gregtech.api.recipes.RecipeMaps.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static tekcays_addon.api.unification.material.info.TKCYAMaterialFlags.POLYMER;
 import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
-import static tekcays_addon.api.utils.TKCYAValues.ELECTRODE_MATERIALS;
-import static tekcays_addon.api.utils.TKCYAValues.MOLD_MATERIALS;
+import static tekcays_addon.api.utils.TKCYAValues.*;
 import static tekcays_addon.loaders.recipe.handlers.TKCYACastingTableRecipeHandler.MOLD_PRODUCTION;
 
 public class TKCYAPartsRecipeHandler {
@@ -52,6 +52,24 @@ public class TKCYAPartsRecipeHandler {
                     .input(stickLong, m)
                     .notConsumable(lens, Materials.Glass)
                     .outputs(electrodeStack)
+                    .duration((int) m.getMass())
+                    .EUt(24)
+                    .buildAndRegister();
+        }
+    }
+
+    public static void initFilter() {
+
+        for (Material m : FILTER_MATERIALS) {
+
+            ItemStack filterStack = TKCYAMetaItems.FILTER.getStackForm();
+
+            FilterBehavior.getInstanceFor(filterStack).setPartMaterial(filterStack, m);
+
+            LASER_ENGRAVER_RECIPES.recipeBuilder()
+                    .input(plate, m)
+                    .notConsumable(lens, Materials.Glass)
+                    .outputs(filterStack)
                     .duration((int) m.getMass())
                     .EUt(24)
                     .buildAndRegister();

@@ -92,6 +92,7 @@ public class TKCYARecipeLoader {
             AssemblerRecipeHandler.walls();
         }
 
+        TKCYAPartsRecipeHandler.initFilter();
         CasingsLoader.init();
         ChemicalChains.init();
         MineralChains.init();

@@ -1,6 +1,10 @@
 package tekcays_addon.common.items;
 
 import gregtech.api.items.metaitem.MetaItem;
+import net.minecraft.item.ItemStack;
+import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
+
+import static gregtech.api.unification.material.Materials.*;
 
 
 public final class TKCYAMetaItems {
@@ -16,12 +20,15 @@ public final class TKCYAMetaItems {
     public static MetaItem<?>.MetaValueItem MICA_INSULATOR_FOIL;
     public static MetaItem<?>.MetaValueItem GAS_COLLECTOR;
 
+    //Damageable items
     public static MetaItem<?>.MetaValueItem ELECTRODE;
+    public static MetaItem<?>.MetaValueItem FILTER;
 
 
     public static void init() {
         TKCYAMetaItem1 metaItem1 = new TKCYAMetaItem1();
         metaItem1.setRegistryName("meta_item_1");
+
     }
 
 

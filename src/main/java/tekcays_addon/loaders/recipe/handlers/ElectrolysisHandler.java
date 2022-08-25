@@ -2,12 +2,9 @@ package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
-import net.minecraft.item.ItemStack;
-import tekcays_addon.common.items.TKCYAMetaItems;
-import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 
-import static gregtech.api.unification.material.Materials.Platinum;
 import static tekcays_addon.api.recipes.TKCYARecipeMaps.ELECTROLYSIS;
+import static tekcays_addon.loaders.DamageableItemsLoader.electrodePlatinum;
 
 public class ElectrolysisHandler {
 
@@ -15,9 +12,6 @@ public class ElectrolysisHandler {
 
         //H2O -> H2 + O2
 
-        ItemStack electrodePlatinum = TKCYAMetaItems.ELECTRODE.getStackForm();
-
-        ElectrodeBehavior.getInstanceFor(electrodePlatinum).setPartMaterial(electrodePlatinum, Platinum);
 
         ELECTROLYSIS.recipeBuilder()
                 .notConsumable(electrodePlatinum)
