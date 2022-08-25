@@ -21,7 +21,7 @@
         "primary": "ore:chalcopyrite"
       },
       {
-        "secondary": "ore:banded_iron"
+        "secondary": "ore:hematite"
       },
       {
         "between": "ore:pyrite"
