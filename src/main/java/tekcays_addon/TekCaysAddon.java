@@ -17,7 +17,7 @@ import java.io.IOException;
 @Mod(   modid        = TekCaysAddon.MODID,
         name         = TekCaysAddon.NAME,
         version      = TekCaysAddon.VERSION,
-        dependencies = GTValues.MOD_VERSION_DEP)
+        dependencies = GTValues.MOD_VERSION_DEP + "required-after:gcym")
 public class TekCaysAddon {
 
     public static final String MODID = "tkcya";

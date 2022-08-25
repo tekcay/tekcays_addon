@@ -40,7 +40,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityCastingTable CASTING_TABLE;
     public static SteamCooler STEAM_COOLER_BRONZE;
     public static SteamCooler STEAM_COOLER_STEEL;
-    public static MetaTileEntityConverter ELECTRIC_CONVERTER;
+    //public static MetaTileEntityConverter ELECTRIC_CONVERTER;
     public static MetaTileEntityPrimitiveBath PRIMITIVE_BATH;
     public static MetaTileEntityCrystallizer CRYSTALLIZER;
     public static MetaTileEntityAdvancedElectrolyzer ADVANCED_ELECTROLYZER;
@@ -110,8 +110,11 @@ public class TKCYAMetaTileEntities {
 
         }
 
+
         if (TKCYAConfigHolder.meltingOverhaul.enableBlastingOverhaul) {
-            ELECTRIC_CONVERTER = registerMetaTileEntity(11022, new MetaTileEntityConverter(tkcyaId("electric_converter")));
+            //ELECTRIC_CONVERTER = registerMetaTileEntity(11022, new MetaTileEntityConverter(tkcyaId("electric_converter")));
+
+
 
             BRICK_BLAST_FURNACE = registerMetaTileEntity(11051, new MetaTileEntityTKCYABlastFurnace(tkcyaId("brick_blast_furnace"), BlockBrick.BrickType.BRICK));
             FIRECLAY_BRICK_BLAST_FURNACE = registerMetaTileEntity(11052, new MetaTileEntityTKCYABlastFurnace(tkcyaId("fireclay_brick_blast_furnace"), BlockBrick.BrickType.FIRECLAY_BRICK));

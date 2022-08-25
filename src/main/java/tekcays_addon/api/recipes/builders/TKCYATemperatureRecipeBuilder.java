@@ -3,8 +3,8 @@ package tekcays_addon.api.recipes.builders;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMap;
-import gregtech.api.recipes.recipeproperties.PrimitiveProperty;
 import gregtech.api.recipes.recipeproperties.RecipeProperty;
+import gregtech.api.recipes.recipeproperties.RecipePropertyStorage;
 import gregtech.api.util.EnumValidationResult;
 import gregtech.api.util.GTLog;
 import gregtech.api.util.ValidationResult;
@@ -12,61 +12,67 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class TemperaturePressureRecipeBuilder extends RecipeBuilder<TemperaturePressureRecipeBuilder> {
+public class TKCYATemperatureRecipeBuilder extends RecipeBuilder<TKCYATemperatureRecipeBuilder> {
 
-    private int temp, pressure;
+    private int temp;
 
-    public TemperaturePressureRecipeBuilder() {
+    public TKCYATemperatureRecipeBuilder() {
     }
 
-    public TemperaturePressureRecipeBuilder(Recipe recipe, RecipeMap<TemperaturePressureRecipeBuilder> recipeMap) {
+    public TKCYATemperatureRecipeBuilder(Recipe recipe, RecipeMap<TKCYATemperatureRecipeBuilder> recipeMap) {
         super(recipe, recipeMap);
         this.temp = recipe.getRecipePropertyStorage().getRecipePropertyValue(TemperatureProperty.getInstance(), 0);
-        this.pressure= recipe.getRecipePropertyStorage().getRecipePropertyValue(PressureProperty.getInstance(), 0);
     }
 
-    public TemperaturePressureRecipeBuilder(RecipeBuilder<TemperaturePressureRecipeBuilder> recipeBuilder) {
+    public TKCYATemperatureRecipeBuilder(RecipeBuilder<TKCYATemperatureRecipeBuilder> recipeBuilder) {
         super(recipeBuilder);
     }
 
     @Override
-    public TemperaturePressureRecipeBuilder copy() {
-        return new TemperaturePressureRecipeBuilder(this);
+    public TKCYATemperatureRecipeBuilder copy() {
+        return new TKCYATemperatureRecipeBuilder(this);
     }
 
-    public TemperaturePressureRecipeBuilder setTemp(int temperature) {
+    public TKCYATemperatureRecipeBuilder setTemp(int temperature) {
         this.temp = temperature;
-        return this;
-    }
-
-    public TemperaturePressureRecipeBuilder setPressure(int pressure) {
-        this.pressure = pressure;
         return this;
     }
 
     @Override
     public ValidationResult<Recipe> build() {
+        if (this.recipePropertyStorage == null) this.recipePropertyStorage = new RecipePropertyStorage();
+        if (this.recipePropertyStorage.hasRecipeProperty(TemperatureProperty.getInstance())) {
+            if (this.recipePropertyStorage.getRecipePropertyValue(TemperatureProperty.getInstance(), 300) <= 0) {
+                this.recipePropertyStorage.store(TemperatureProperty.getInstance(), 300);
+            }
+        } else {
+            this.recipePropertyStorage.store(TemperatureProperty.getInstance(), 300);
+        }
+
+        return super.build();
+    }
+    
+    
+    /*
+    @Override
+    public ValidationResult<Recipe> build() {
         this.EUt(1); // Allow parallelization to not / by zero
         Recipe recipe = new Recipe(inputs, outputs, chancedOutputs, fluidInputs, fluidOutputs,
-                duration, EUt, hidden, false);
+                duration, EUt, hidden, false, recipePropertyStorage);
         if (!recipe.getRecipePropertyStorage().store(TemperatureProperty.getInstance(), temp)
-                || !recipe.getRecipePropertyStorage().store(PressureProperty.getInstance(), pressure)
                 || !recipe.getRecipePropertyStorage().store(PrimitiveProperty.getInstance(), true)) {
             return ValidationResult.newResult(EnumValidationResult.INVALID, recipe);
         }
 
         return ValidationResult.newResult(finalizeAndValidate(), recipe);
     }
+    
+     */
 
     @Override
     protected EnumValidationResult finalizeAndValidate() {
         if (this.temp <= 300) {
             GTLog.logger.error("Temperature cannot be less or equal to 300", new IllegalArgumentException());
-            this.recipeStatus = EnumValidationResult.INVALID;
-        }
-
-        if (this.pressure < 0) {
-            GTLog.logger.error("Pressure cannot be negative", new IllegalArgumentException());
             this.recipeStatus = EnumValidationResult.INVALID;
         }
 
@@ -87,34 +93,7 @@ public class TemperaturePressureRecipeBuilder extends RecipeBuilder<TemperatureP
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
                 .append(TemperatureProperty.getInstance().getKey(), temp)
-                .append(PressureProperty.getInstance().getKey(), pressure)
                 .toString();
-    }
-
-    public static class PressureProperty extends RecipeProperty<Integer> {
-
-        private static final String KEY = "pressure";
-
-        private static PressureProperty INSTANCE;
-
-
-        protected PressureProperty() {
-            super(KEY, Integer.class);
-        }
-
-        public static PressureProperty getInstance() {
-            if (INSTANCE == null) {
-                INSTANCE = new PressureProperty();
-            }
-
-            return INSTANCE;
-        }
-
-        @Override
-        public void drawInfo(Minecraft minecraft, int x, int y, int color, Object value) {
-            minecraft.fontRenderer.drawString(I18n.format("tekcays_addon.recipe.blasting_pressure",
-                    value), x, y, color);
-        }
     }
 
     public static class TemperatureProperty extends RecipeProperty<Integer> {
@@ -138,7 +117,7 @@ public class TemperaturePressureRecipeBuilder extends RecipeBuilder<TemperatureP
 
         @Override
         public void drawInfo(Minecraft minecraft, int x, int y, int color, Object value) {
-            minecraft.fontRenderer.drawString(I18n.format("tekcays_addon.recipe.blasting_temperature",
+            minecraft.fontRenderer.drawString(I18n.format("tekcays_addon.recipe.melter_temperature",
                     value), x, y, color);
         }
     }

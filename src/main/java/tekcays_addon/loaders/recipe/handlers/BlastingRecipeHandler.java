@@ -32,7 +32,7 @@ public class BlastingRecipeHandler {
         ////From BandedIron
         BLASTING_RECIPES.recipeBuilder()
                 .setTemp(1800)
-                .input(OrePrefix.dust, Materials.BandedIron)
+                .input(OrePrefix.dust, Materials.Hematite)
                 .fluidOutputs(TKCYAMaterials.PigIron.getFluid(GTValues.L / 2))
                 .duration(200)
                 .buildAndRegister();
