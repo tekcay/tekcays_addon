@@ -52,7 +52,7 @@ public class TKCYAPartsRecipeHandler {
                     .input(stickLong, m)
                     .notConsumable(lens, Materials.Glass)
                     .outputs(electrodeStack)
-                    .duration((int) m.getMass())
+                    .duration((int) m.getMass() * 5)
                     .EUt(24)
                     .buildAndRegister();
         }
@@ -70,7 +70,7 @@ public class TKCYAPartsRecipeHandler {
                     .input(plate, m)
                     .notConsumable(lens, Materials.Glass)
                     .outputs(filterStack)
-                    .duration((int) m.getMass())
+                    .duration((int) m.getMass() * 30)
                     .EUt(24)
                     .buildAndRegister();
         }
