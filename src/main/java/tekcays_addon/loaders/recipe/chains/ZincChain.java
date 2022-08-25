@@ -36,6 +36,7 @@ public class ZincChain {
                 .input(dust, ZincSulfate)
                 .output(dust, Zinc)
                 .fluidOutputs(Oxygen.getFluid(500), SulfuricAcid.getFluid(1000))
+                .EUt(100)
                 .buildAndRegister();
 
 
