@@ -2,6 +2,8 @@ package tekcays_addon.loaders.recipe.handlers;
 
 
 import gregtech.api.GregTechAPI;
+import gregtech.api.recipes.ingredients.GTRecipeFluidInput;
+import gregtech.api.recipes.ingredients.GTRecipeInput;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.api.unification.stack.MaterialStack;
@@ -32,7 +34,7 @@ public class TKCYAAlloyingCrucibleRecipeHandler {
 
     public static void register(Material material) {
 
-        Collection<FluidStack> f = new ArrayList<>();
+        Collection<GTRecipeInput> f = new ArrayList<>();
         boolean containsCarbon = false;
         int outputMultiplier = 0;
 
@@ -44,7 +46,7 @@ public class TKCYAAlloyingCrucibleRecipeHandler {
             if (ms.material == Carbon) {
                 containsCarbon = true;
             } else {
-                f.add(ms.material.getFluid((int) ms.amount * L));
+                f.add(GTRecipeFluidInput.getOrCreate(ms.material.getFluid(), ((int) ms.amount * L)));
             }
         }
 

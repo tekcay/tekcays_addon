@@ -32,7 +32,7 @@ import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.recipes.builders.TemperatureRecipeBuilder;
+import tekcays_addon.api.recipes.builders.TKCYATemperatureRecipeBuilder;
 import tekcays_addon.api.render.TKCYATextures;
 
 import java.util.List;
@@ -116,7 +116,7 @@ public class MetaTileEntityElectricMelter extends RecipeMapMultiblockController{
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        return temp >= recipe.getProperty(TemperatureRecipeBuilder.TemperatureProperty.getInstance(), 0);
+        return temp >= recipe.getProperty(TKCYATemperatureRecipeBuilder.TemperatureProperty.getInstance(), 0);
     }
 
 

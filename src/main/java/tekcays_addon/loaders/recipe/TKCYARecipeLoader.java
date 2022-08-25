@@ -73,7 +73,11 @@ public class TKCYARecipeLoader {
         if (miscOverhaul.enableElectrolysisOverhaul) {
             TKCYAPartsRecipeHandler.initElectrode();
             ElectrolysisHandler.init();
-            GTRecipeHandler.removeAllRecipes(RecipeMaps.ELECTROLYZER_RECIPES);
+            //TODO : creates an issue with GCYS removing recipe
+            /**
+             * {@link gregicality.science.loaders.recipe.oreprocessing.PlatinumGroupProcessing}
+             */
+            //GTRecipeHandler.removeAllRecipes(RecipeMaps.ELECTROLYZER_RECIPES);
         }
 
         if (storageOverhaul.enableDrumsOverhaul) {
