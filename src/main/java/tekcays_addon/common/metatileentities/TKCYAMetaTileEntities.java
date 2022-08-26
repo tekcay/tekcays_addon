@@ -45,6 +45,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityCrystallizer CRYSTALLIZER;
     public static MetaTileEntityAdvancedElectrolyzer ADVANCED_ELECTROLYZER;
     public static MetaTileEntityFilter FILTER;
+    public static MetaTileEntityPressurizedCrackingUnit PRESSURIZED_CRACKING_UNIT;
 
     //Blast Furnaces
     public static MetaTileEntityTKCYABlastFurnace BRICK_BLAST_FURNACE;
@@ -183,6 +184,10 @@ public class TKCYAMetaTileEntities {
         }
 
         FILTER = registerMetaTileEntity(11055, new MetaTileEntityFilter(tkcyaId("filter")));
+
+        if (TKCYAConfigHolder.crackingOverhaul.enableCrackingOverhaul) {
+            PRESSURIZED_CRACKING_UNIT = registerMetaTileEntity(11056, new MetaTileEntityPressurizedCrackingUnit(tkcyaId("pressurized_cracking_unit")));
+        }
 
     }
 
