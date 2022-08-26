@@ -16,14 +16,16 @@ import gregtech.api.recipes.ingredients.GTRecipeInput;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.api.utils.TKCYALog;
+import tekcays_addon.common.items.behaviors.FilterBehavior;
 
 import javax.annotation.Nonnull;
 
 import java.util.HashSet;
-import java.util.List;
 
 import static tekcays_addon.api.capability.impl.DamageItemsLogic.*;
 
@@ -53,19 +55,14 @@ public class MetaTileEntityFilter extends RecipeMapPrimitiveMultiblockController
     public void updateFormedValid() {
         super.updateFormedValid();
 
-        if (!this.isActive()) return;
+        ItemStack filterStack = importItems.extractItem(0,1,true);
+        FilterBehavior behavior = FilterBehavior.getInstanceFor(filterStack);
+        if (behavior == null) return;
 
-        List<GTRecipeInput> inputs = this.recipeMapWorkable.getPreviousRecipe().getInputs();
-
-        getCurrentRecipeNonConsummables(currentRecipeNonConsummIngredient, inputs);
-        getCurrentInventory(nonConsummInInventory, importItems);
-        //getElectrodeFromInventory();
-        //if (!currentRecipeNonConsummIngredient.stream().allMatch(nonConsummInInventory::contains)) this.causeMaintenanceProblems();
-
-        if (!doesInventoryContainDamageableItems(nonConsummInInventory, currentRecipeNonConsummIngredient)) this.doExplosion(1);
+        if (!this.recipeMapWorkable.isActive()) return;
 
         if (getOffsetTimer() % 20 == 0) {
-            applyDamage(importItems, 20);
+            behavior.applyFilterDamage(filterStack, 20);
         }
     }
 

@@ -81,6 +81,7 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
     public void updateFormedValid() {
         super.updateFormedValid();
 
+        if (!this.recipeMapWorkable.isActive()) return;
         if (inputs == null) return;
 
         getCurrentRecipeNonConsummables(currentRecipeNonConsummIngredient, inputs);

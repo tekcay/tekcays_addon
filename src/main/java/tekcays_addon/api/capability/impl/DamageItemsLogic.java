@@ -3,6 +3,7 @@ package tekcays_addon.api.capability.impl;
 import gregtech.api.recipes.ingredients.GTRecipeInput;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 import tekcays_addon.common.items.behaviors.FilterBehavior;
@@ -27,6 +28,22 @@ public class DamageItemsLogic {
         }
     }
 
+    /**
+     * For MTE that only has one Item slot.
+     * @param currentRecipeNonConsummIngredient
+     * @param inputs
+     */
+    public static void getCurrentRecipeNonConsummables(HashSet<String> currentRecipeNonConsummIngredient, ItemStack inputs) {
+
+        currentRecipeNonConsummIngredient.clear();
+        if (!inputs.isItemStackDamageable()) return;
+        currentRecipeNonConsummIngredient.add(inputs.getDisplayName());
+
+            //if (!stack.isItemStack ..Damageable()) continue;
+            //currentRecipeNonConsummIngredient.add(stack);
+
+    }
+
     public static void getCurrentInventory(HashSet<String> nonConsummInInventory, IItemHandlerModifiable inputInventory) {
 
         nonConsummInInventory.clear();
@@ -46,14 +63,6 @@ public class DamageItemsLogic {
                 ElectrodeBehavior behavior = ElectrodeBehavior.getInstanceFor(electrodeStack);
                 if (behavior == null) continue;
                 behavior.applyElectrodeDamage(electrodeStack, damageAmount);
-            }
-
-            if (inputInventory.isItemValid(i, TKCYAMetaItems.FILTER.getStackForm())) {
-                ItemStack filterStack = inputInventory.getStackInSlot(i);
-
-                FilterBehavior behavior = FilterBehavior.getInstanceFor(filterStack);
-                if (behavior == null) continue;
-                behavior.applyFilterDamage(filterStack, damageAmount);
             }
         }
     }
