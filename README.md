@@ -3,7 +3,7 @@
 **TKCYA** adds new machines, multiblocks, mechanics and chains to **GregTech Community Edition Unofficial**.
 
 
-TKCYA requires [**GregTech CE: Unofficial**](https://github.com/GregTechCEu/GregTech), [**Gregicality: Science (GCYS)**](https://github.com/GregTechCEu/gregicality-science), [Gregicality: Multiblocks**](https://github.com/GregTechCEu/gregicality-multiblocks) and [**CodeChickenLib**](https://www.curseforge.com/minecraft/mc-mods/codechicken-lib-1-8).
+TKCYA requires [**GregTech CE: Unofficial (GTCEu) **](https://github.com/GregTechCEu/GregTech), [**Gregicality: Science (GCYS) **](https://github.com/GregTechCEu/gregicality-science), [Gregicality: Multiblocks**](https://github.com/GregTechCEu/gregicality-multiblocks) and [**CodeChickenLib**](https://www.curseforge.com/minecraft/mc-mods/codechicken-lib-1-8).
 
 ## Content (configurable):
 * Magnetic overhaul: magnetic materials are made with magnetite in a new 2-slots polarizer
