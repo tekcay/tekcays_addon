@@ -86,8 +86,6 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
 
         getCurrentRecipeNonConsummables(currentRecipeNonConsummIngredient, inputs);
         getCurrentInventory(nonConsummInInventory, inputInventory);
-        //getElectrodeFromInventory();
-        //if (!currentRecipeNonConsummIngredient.stream().allMatch(nonConsummInInventory::contains)) this.causeMaintenanceProblems();
 
         if (!doesInventoryContainDamageableItems(nonConsummInInventory, currentRecipeNonConsummIngredient)) this.doExplosion(1);
 

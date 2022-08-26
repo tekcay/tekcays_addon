@@ -12,7 +12,6 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.RecipeMapPrimitiveMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.recipes.ingredients.GTRecipeInput;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,14 +24,8 @@ import tekcays_addon.common.items.behaviors.FilterBehavior;
 
 import javax.annotation.Nonnull;
 
-import java.util.HashSet;
-
-import static tekcays_addon.api.capability.impl.DamageItemsLogic.*;
-
 public class MetaTileEntityFilter extends RecipeMapPrimitiveMultiblockController {
 
-    private final HashSet<String> currentRecipeNonConsummIngredient = new HashSet<>();
-    private final HashSet<String> nonConsummInInventory = new HashSet<>();
 
     public MetaTileEntityFilter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.FILTRATION);
@@ -55,12 +48,16 @@ public class MetaTileEntityFilter extends RecipeMapPrimitiveMultiblockController
     public void updateFormedValid() {
         super.updateFormedValid();
 
-        ItemStack filterStack = importItems.extractItem(0,1,true);
+        ItemStack filterStack = importItems.getStackInSlot(0);
+        if (filterStack.getDisplayName().equals("Air")) {
+            this.recipeMapWorkable.setWorkingEnabled(false);
+            //this.recipeMapWorkable.invalidateOutputs();
+            return;
+        } else this.recipeMapWorkable.setWorkingEnabled(true);
+
         FilterBehavior behavior = FilterBehavior.getInstanceFor(filterStack);
         if (behavior == null) return;
-
         if (!this.recipeMapWorkable.isActive()) return;
-
         if (getOffsetTimer() % 20 == 0) {
             behavior.applyFilterDamage(filterStack, 20);
         }
@@ -77,9 +74,6 @@ public class MetaTileEntityFilter extends RecipeMapPrimitiveMultiblockController
         super.renderMetaTileEntity(renderState, translation, pipeline);
         getFrontOverlay().renderOrientedState(renderState, translation, pipeline, getFrontFacing(), recipeMapWorkable.isActive(), recipeMapWorkable.isWorkingEnabled());
     }
-
-
-
 
     @Override
     protected ModularUI.Builder createUITemplate(EntityPlayer entityPlayer) {
@@ -112,7 +106,7 @@ public class MetaTileEntityFilter extends RecipeMapPrimitiveMultiblockController
     @Nonnull
     @Override
     protected ICubeRenderer getFrontOverlay() {
-        return Textures.PRIMITIVE_BLAST_FURNACE_OVERLAY;
+        return Textures.SIFTER_OVERLAY;
     }
 
     @Override

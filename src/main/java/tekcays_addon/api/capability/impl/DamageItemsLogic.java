@@ -3,10 +3,8 @@ package tekcays_addon.api.capability.impl;
 import gregtech.api.recipes.ingredients.GTRecipeInput;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
-import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
-import tekcays_addon.common.items.behaviors.FilterBehavior;
 
 import java.util.HashSet;
 import java.util.List;
@@ -38,10 +36,6 @@ public class DamageItemsLogic {
         currentRecipeNonConsummIngredient.clear();
         if (!inputs.isItemStackDamageable()) return;
         currentRecipeNonConsummIngredient.add(inputs.getDisplayName());
-
-            //if (!stack.isItemStack ..Damageable()) continue;
-            //currentRecipeNonConsummIngredient.add(stack);
-
     }
 
     public static void getCurrentInventory(HashSet<String> nonConsummInInventory, IItemHandlerModifiable inputInventory) {
