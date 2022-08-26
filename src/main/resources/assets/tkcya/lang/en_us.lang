@@ -36,7 +36,7 @@ tkcya.machine.alloying_crucible.name=Alloying Crucible
 tkcya.machine.casting_table.name=Casting Table
 tkcya.machine.electric_converter.name=Electric Converter
 tkcya.machine.primitive_bath.name=Primitive Bath
-tkcya.machine.pressurized_cracking_unit=High Pressure Cracking Unit
+tkcya.machine.pressurized_cracking_unit.name=High Pressure Cracking Unit
 
 #Blast Furnaces
 tkcya.machine.brick_blast_furnace.name=Brick Blast Furnace
