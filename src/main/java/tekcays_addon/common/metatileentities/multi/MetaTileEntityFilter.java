@@ -12,6 +12,7 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.RecipeMapPrimitiveMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.recipes.ingredients.GTRecipeInput;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,9 +22,15 @@ import tekcays_addon.api.render.TKCYATextures;
 
 import javax.annotation.Nonnull;
 
+import java.util.HashSet;
+import java.util.List;
+
+import static tekcays_addon.api.capability.impl.DamageItemsLogic.*;
+
 public class MetaTileEntityFilter extends RecipeMapPrimitiveMultiblockController {
 
-    private boolean boostAllowed;
+    private final HashSet<String> currentRecipeNonConsummIngredient = new HashSet<>();
+    private final HashSet<String> nonConsummInInventory = new HashSet<>();
 
     public MetaTileEntityFilter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.FILTRATION);
@@ -43,6 +50,26 @@ public class MetaTileEntityFilter extends RecipeMapPrimitiveMultiblockController
     }
 
     @Override
+    public void updateFormedValid() {
+        super.updateFormedValid();
+
+        if (!this.isActive()) return;
+
+        List<GTRecipeInput> inputs = this.recipeMapWorkable.getPreviousRecipe().getInputs();
+
+        getCurrentRecipeNonConsummables(currentRecipeNonConsummIngredient, inputs);
+        getCurrentInventory(nonConsummInInventory, importItems);
+        //getElectrodeFromInventory();
+        //if (!currentRecipeNonConsummIngredient.stream().allMatch(nonConsummInInventory::contains)) this.causeMaintenanceProblems();
+
+        if (!doesInventoryContainDamageableItems(nonConsummInInventory, currentRecipeNonConsummIngredient)) this.doExplosion(1);
+
+        if (getOffsetTimer() % 20 == 0) {
+            applyDamage(importItems, 20);
+        }
+    }
+
+    @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
         return TKCYATextures.STEEL_GT;
     }
@@ -54,10 +81,8 @@ public class MetaTileEntityFilter extends RecipeMapPrimitiveMultiblockController
         getFrontOverlay().renderOrientedState(renderState, translation, pipeline, getFrontFacing(), recipeMapWorkable.isActive(), recipeMapWorkable.isWorkingEnabled());
     }
 
-    @Override
-    public int getLightValueForPart(IMultiblockPart sourcePart) {
-        return sourcePart == null && recipeMapWorkable.isActive() ? 15 : 0;
-    }
+
+
 
     @Override
     protected ModularUI.Builder createUITemplate(EntityPlayer entityPlayer) {

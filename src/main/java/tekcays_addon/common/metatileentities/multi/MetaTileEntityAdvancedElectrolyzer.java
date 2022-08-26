@@ -30,16 +30,12 @@ import java.util.*;
 
 public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockController {
 
-    private List<GTRecipeInput> inputs;
+    private List<GTRecipeInput> inputs = new ArrayList<>();
     private final List<ItemStack> electrodeInInventory = new ArrayList<>();
     private final HashSet<String> currentRecipeNonConsummIngredient = new HashSet<>();
     private final HashSet<String> nonConsummInInventory = new HashSet<>();
 
-
-
     //TODO Proper blocks and textures
-    //TODO Temperature logic, based on electricity
-    //TODO Add Aluminium and Zinc Chains as electrolysis is available
 
     public MetaTileEntityAdvancedElectrolyzer(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.ELECTROLYSIS);
@@ -85,17 +81,17 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
     public void updateFormedValid() {
         super.updateFormedValid();
 
-        if (this.isActive()) {
-            getCurrentRecipeNonConsummables(currentRecipeNonConsummIngredient, inputs);
-            getCurrentInventory(nonConsummInInventory, inputInventory);
-            //getElectrodeFromInventory();
-            //if (!currentRecipeNonConsummIngredient.stream().allMatch(nonConsummInInventory::contains)) this.causeMaintenanceProblems();
+        if (inputs == null) return;
 
-            if (!doesInventoryContainRequiredItem(nonConsummInInventory, currentRecipeNonConsummIngredient)) this.doExplosion(1);
+        getCurrentRecipeNonConsummables(currentRecipeNonConsummIngredient, inputs);
+        getCurrentInventory(nonConsummInInventory, inputInventory);
+        //getElectrodeFromInventory();
+        //if (!currentRecipeNonConsummIngredient.stream().allMatch(nonConsummInInventory::contains)) this.causeMaintenanceProblems();
 
-            if (getOffsetTimer() % 20 == 0) {
-                applyDamage(inputInventory, 20);
-            }
+        if (!doesInventoryContainDamageableItems(nonConsummInInventory, currentRecipeNonConsummIngredient)) this.doExplosion(1);
+
+        if (getOffsetTimer() % 20 == 0) {
+            applyDamage(inputInventory, 20);
         }
     }
 

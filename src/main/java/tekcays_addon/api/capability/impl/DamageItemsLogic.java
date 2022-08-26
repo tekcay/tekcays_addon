@@ -58,7 +58,7 @@ public class DamageItemsLogic {
         }
     }
 
-    public static boolean doesInventoryContainRequiredItem(HashSet<String> nonConsummInInventory, HashSet<String> currentRecipeNonConsummIngredient) {
+    public static boolean doesInventoryContainDamageableItems(HashSet<String> nonConsummInInventory, HashSet<String> currentRecipeNonConsummIngredient) {
         return nonConsummInInventory.containsAll(currentRecipeNonConsummIngredient);
     }
 
