@@ -124,7 +124,6 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
         return true;
     }
 
-
     ////////////////
     //Remove overlocking
     /////////////////
@@ -139,12 +138,10 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
         protected int[] calculateOverclock(Recipe recipe) {
             return new int[]{0, recipe.getDuration()};
         }
-
-
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
+    public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
 
         tooltip.add(I18n.format("tekcays_addon.machine.advanced_electrolyzer.tooltip.1"));
@@ -152,5 +149,7 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
         tooltip.add(I18n.format("tekcays_addon.machine.advanced_electrolyzer.tooltip.3"));
         tooltip.add(I18n.format("tekcays_addon.machine.advanced_electrolyzer.tooltip.4"));
     }
+
+
 
 }
