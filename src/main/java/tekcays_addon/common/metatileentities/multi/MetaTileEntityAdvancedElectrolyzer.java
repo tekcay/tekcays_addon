@@ -22,6 +22,8 @@ import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 
+import static tekcays_addon.api.capability.impl.DamageItemsLogic.*;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
@@ -30,8 +32,8 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
 
     List<GTRecipeInput> inputs;
     List<ItemStack> electrodeInInventory = new ArrayList<>();
-    HashSet<String> currentRecipeNonConsummIngredient = new HashSet<>();
-    HashSet<String> nonConsummInInventory = new HashSet<>();
+
+
 
     //TODO Proper blocks and textures
     //TODO Temperature logic, based on electricity
@@ -59,31 +61,7 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
                 .build();
     }
 
-    public void getCurrentRecipeNonConsummables() {
 
-        currentRecipeNonConsummIngredient.clear();
-        for (GTRecipeInput gtRecipeInput : inputs) {
-
-            if (!gtRecipeInput.isNonConsumable()) continue;
-            ItemStack[] stack = gtRecipeInput.getInputStacks();
-
-            currentRecipeNonConsummIngredient.add(stack[0].getDisplayName());
-
-            //if (!stack.isItemStackDamageable()) continue;
-
-            //currentRecipeNonConsummIngredient.add(stack);
-        }
-    }
-
-    public void getCurrentInventory() {
-
-        nonConsummInInventory.clear();
-        for (int i = 0; i < inputInventory.getSlots(); i++) {
-            ItemStack stack = inputInventory.getStackInSlot(i);
-            if (stack == null || stack.getDisplayName().startsWith("Air")) continue;
-            nonConsummInInventory.add(stack.getDisplayName());
-        }
-    }
 
     private void getElectrodeFromInventory() {
 
@@ -108,34 +86,18 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
         super.updateFormedValid();
 
         if (this.isActive()) {
-            getCurrentRecipeNonConsummables();
-            getCurrentInventory();
+            getCurrentRecipeNonConsummables(inputs);
+            getCurrentInventory(inputInventory);
             //getElectrodeFromInventory();
-
             //if (!currentRecipeNonConsummIngredient.stream().allMatch(nonConsummInInventory::contains)) this.causeMaintenanceProblems();
 
-            if (!nonConsummInInventory.containsAll(currentRecipeNonConsummIngredient)) this.doExplosion(1);
+            if (!doesInventoryContainRequiredItem()) this.doExplosion(1);
 
             if (getOffsetTimer() % 20 == 0) {
-                damageElectrode(20);
+                applyDamage(inputInventory, 20);
             }
         }
     }
-
-    private void damageElectrode(int damageAmount) {
-        for (int i = 0; i < inputInventory.getSlots(); i++) {
-            ItemStack electrodeStack;
-
-            if (inputInventory.isItemValid(i, TKCYAMetaItems.ELECTRODE.getStackForm())) {
-                electrodeStack = inputInventory.getStackInSlot(i);
-
-                ElectrodeBehavior behavior = ElectrodeBehavior.getInstanceFor(electrodeStack);
-                if (behavior == null) continue;
-                behavior.applyElectrodeDamage(electrodeStack, damageAmount);
-            }
-        }
-    }
-
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
