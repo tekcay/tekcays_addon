@@ -30,8 +30,10 @@ import java.util.*;
 
 public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockController {
 
-    List<GTRecipeInput> inputs;
-    List<ItemStack> electrodeInInventory = new ArrayList<>();
+    private List<GTRecipeInput> inputs;
+    private final List<ItemStack> electrodeInInventory = new ArrayList<>();
+    private final HashSet<String> currentRecipeNonConsummIngredient = new HashSet<>();
+    private final HashSet<String> nonConsummInInventory = new HashSet<>();
 
 
 
@@ -61,8 +63,6 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
                 .build();
     }
 
-
-
     private void getElectrodeFromInventory() {
 
         electrodeInInventory.clear();
@@ -86,12 +86,12 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
         super.updateFormedValid();
 
         if (this.isActive()) {
-            getCurrentRecipeNonConsummables(inputs);
-            getCurrentInventory(inputInventory);
+            getCurrentRecipeNonConsummables(currentRecipeNonConsummIngredient, inputs);
+            getCurrentInventory(nonConsummInInventory, inputInventory);
             //getElectrodeFromInventory();
             //if (!currentRecipeNonConsummIngredient.stream().allMatch(nonConsummInInventory::contains)) this.causeMaintenanceProblems();
 
-            if (!doesInventoryContainRequiredItem()) this.doExplosion(1);
+            if (!doesInventoryContainRequiredItem(nonConsummInInventory, currentRecipeNonConsummIngredient)) this.doExplosion(1);
 
             if (getOffsetTimer() % 20 == 0) {
                 applyDamage(inputInventory, 20);

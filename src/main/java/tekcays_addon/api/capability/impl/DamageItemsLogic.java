@@ -12,10 +12,7 @@ import java.util.List;
 
 public class DamageItemsLogic {
 
-    public static final HashSet<String> currentRecipeNonConsummIngredient = new HashSet<>();
-    public static final HashSet<String> nonConsummInInventory = new HashSet<>();
-
-    public static void getCurrentRecipeNonConsummables(List<GTRecipeInput> inputs) {
+    public static void getCurrentRecipeNonConsummables(HashSet<String> currentRecipeNonConsummIngredient, List<GTRecipeInput> inputs) {
 
         currentRecipeNonConsummIngredient.clear();
         for (GTRecipeInput gtRecipeInput : inputs) {
@@ -30,7 +27,7 @@ public class DamageItemsLogic {
         }
     }
 
-    public static void getCurrentInventory(IItemHandlerModifiable inputInventory) {
+    public static void getCurrentInventory(HashSet<String> nonConsummInInventory, IItemHandlerModifiable inputInventory) {
 
         nonConsummInInventory.clear();
         for (int i = 0; i < inputInventory.getSlots(); i++) {
@@ -61,7 +58,7 @@ public class DamageItemsLogic {
         }
     }
 
-    public static boolean doesInventoryContainRequiredItem() {
+    public static boolean doesInventoryContainRequiredItem(HashSet<String> nonConsummInInventory, HashSet<String> currentRecipeNonConsummIngredient) {
         return nonConsummInInventory.containsAll(currentRecipeNonConsummIngredient);
     }
 
