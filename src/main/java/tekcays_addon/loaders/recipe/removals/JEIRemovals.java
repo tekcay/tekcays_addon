@@ -89,6 +89,10 @@ public class JEIRemovals implements IModPlugin { {
             }
         }
 
+        if (TKCYAConfigHolder.crackingOverhaul.enableCrackingOverhaul) {
+            ingredientBlacklist.addIngredientToBlacklist(CRACKER.getStackForm());
+        }
+
 
         if (TKCYAConfigHolder.miscOverhaul.disableHighTierMachines) {
 

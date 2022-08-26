@@ -36,6 +36,9 @@ tkcya.machine.alloying_crucible.name=Alloying Crucible
 tkcya.machine.casting_table.name=Casting Table
 tkcya.machine.electric_converter.name=Electric Converter
 tkcya.machine.primitive_bath.name=Primitive Bath
+tkcya.machine.pressurized_cracking_unit.name=High Pressure Cracking Unit
+
+#Blast Furnaces
 tkcya.machine.brick_blast_furnace.name=Brick Blast Furnace
 tkcya.machine.fireclay_brick_blast_furnace.name=Fireclay Brick Blast Furnace
 tkcya.machine.reinforced_brick_blast_furnace.name=Reinforced Brick Blast Furnace
@@ -109,6 +112,7 @@ recipemap.converting.name=Converting
 recipemap.crystallization.name=Crystallization
 recipemap.electrolysis.name=Electrolysis
 recipemap.filtration.name=Filtration
+recipemap.pressure_cracking.name=Cracking
 
 # Materials
 

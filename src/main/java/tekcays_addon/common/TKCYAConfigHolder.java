@@ -16,6 +16,10 @@ public class TKCYAConfigHolder {
     public static MeltingOverhaul meltingOverhaul = new MeltingOverhaul();
 
     @Config.Comment("Config options applying to all TKCYA Multiblocks")
+    @Config.Name("Cracking overhaul")
+    public static CrackingOverhaul crackingOverhaul = new CrackingOverhaul();
+
+    @Config.Comment("Config options applying to all TKCYA Multiblocks")
     @Config.Name("Melting overhaul")
     public static EnergyOverhaul energyOverhaul = new EnergyOverhaul();
     @Config.Comment("Config options applying to all TKCYA Multiblocks")
@@ -47,6 +51,13 @@ public class TKCYAConfigHolder {
         public boolean enableElectrolysisOverhaul = true;
 
 
+
+    }
+
+    public static class CrackingOverhaul {
+
+        @Config.Comment({"Cracking now requires pressure", "Default: true"})
+        public boolean enableCrackingOverhaul = true;
 
     }
 

@@ -4,7 +4,7 @@ import gregtech.api.recipes.GTRecipeHandler;
 import gregtech.api.recipes.RecipeMaps;
 import tekcays_addon.loaders.recipe.chains.*;
 import tekcays_addon.loaders.recipe.handlers.*;
-import tekcays_addon.loaders.recipe.removals.ItemsRemovalHandler;
+import tekcays_addon.loaders.ItemsRemovalHandler;
 import tekcays_addon.loaders.recipe.removals.RecipesRemovalHandler;
 
 import static tekcays_addon.common.TKCYAConfigHolder.*;
@@ -68,6 +68,10 @@ public class TKCYARecipeLoader {
         if (meltingOverhaul.enableBlastingOverhaul) {
             ConvertingRecipeHandler.init();
             BlastingRecipeHandler.init();
+        }
+
+        if (crackingOverhaul.enableCrackingOverhaul) {
+            PressureCrackingHandler.init();
         }
 
         if (miscOverhaul.enableElectrolysisOverhaul) {
