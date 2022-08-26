@@ -1,5 +1,9 @@
 package tekcays_addon.loaders.recipe.chains;
 
+import gregtech.api.recipes.ingredients.GTRecipeItemInput;
+import gregtech.api.recipes.ingredients.nbtmatch.NBTCondition;
+import gregtech.api.recipes.ingredients.nbtmatch.NBTMatcher;
+
 import static gregicality.science.api.unification.materials.GCYSMaterials.ZincOxide;
 import static gregtech.api.recipes.RecipeMaps.CHEMICAL_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
@@ -24,15 +28,16 @@ public class ZincChain {
         // ZnO + 2H2SO4 = ZnSO4 + ZincLeachingResidue [Contains: (H2O)(H2SO4)]
         FILTRATION.recipeBuilder().duration(200)
                 .fluidInputs(ZincLeachingSolution.getFluid(1000))
-                .notConsumable(filterStainlessSteel)
+                .inputNBT(GTRecipeItemInput.getOrCreate(filterStainlessSteel).setNonConsumable(), NBTMatcher.ANY, NBTCondition.ANY)
                 .output(dustSmall, Zinc)
                 .fluidOutputs(ZincLeachingResidue.getFluid(1000))
                 .buildAndRegister();
 
+
         // ZnSO4 + H2O -> Zn + 1/2 O2 + H2SO4
         ELECTROLYSIS.recipeBuilder().duration(200)
                 .fluidInputs(Water.getFluid(1000))
-                .notConsumable(electrodeAluminium)
+                .inputNBT(GTRecipeItemInput.getOrCreate(electrodeAluminium).setNonConsumable(), NBTMatcher.ANY, NBTCondition.ANY)
                 .input(dust, ZincSulfate)
                 .output(dust, Zinc)
                 .fluidOutputs(Oxygen.getFluid(500), SulfuricAcid.getFluid(1000))

@@ -1,5 +1,8 @@
 package tekcays_addon.loaders.recipe.handlers;
 
+import gregtech.api.recipes.ingredients.GTRecipeItemInput;
+import gregtech.api.recipes.ingredients.nbtmatch.NBTCondition;
+import gregtech.api.recipes.ingredients.nbtmatch.NBTMatcher;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 
@@ -14,7 +17,7 @@ public class ElectrolysisHandler {
 
 
         ELECTROLYSIS.recipeBuilder()
-                .notConsumable(electrodePlatinum)
+                .inputNBT(GTRecipeItemInput.getOrCreate(electrodePlatinum).setNonConsumable(), NBTMatcher.ANY, NBTCondition.ANY)
                 .notConsumable(Materials.SulfuricAcid.getFluid(), 1000)
                 .fluidInputs(Materials.DistilledWater.getFluid(1000))
                 .fluidOutputs(Materials.Hydrogen.getFluid(2000), Materials.Oxygen.getFluid(1000))
@@ -23,7 +26,7 @@ public class ElectrolysisHandler {
                 .buildAndRegister();
 
         ELECTROLYSIS.recipeBuilder()
-                .notConsumable(electrodePlatinum)
+                .inputNBT(GTRecipeItemInput.getOrCreate(electrodePlatinum).setNonConsumable(), NBTMatcher.ANY, NBTCondition.ANY)
                 .notConsumable(OrePrefix.dust, Materials.Potash, 1)
                 .fluidInputs(Materials.DistilledWater.getFluid(1000))
                 .fluidOutputs(Materials.Hydrogen.getFluid(2000), Materials.Oxygen.getFluid(1000))
@@ -32,7 +35,7 @@ public class ElectrolysisHandler {
                 .buildAndRegister();
 
         ELECTROLYSIS.recipeBuilder()
-                .notConsumable(electrodePlatinum)
+                .inputNBT(GTRecipeItemInput.getOrCreate(electrodePlatinum).setNonConsumable(), NBTMatcher.ANY, NBTCondition.ANY)
                 .notConsumable(OrePrefix.dust, Materials.SodiumHydroxide, 1)
                 .fluidInputs(Materials.DistilledWater.getFluid(1000))
                 .fluidOutputs(Materials.Hydrogen.getFluid(2000), Materials.Oxygen.getFluid(1000))

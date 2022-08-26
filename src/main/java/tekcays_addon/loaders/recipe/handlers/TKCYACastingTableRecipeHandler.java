@@ -1,23 +1,16 @@
 package tekcays_addon.loaders.recipe.handlers;
 
-import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.api.unification.ore.OrePrefix;
-
-import gregtech.common.blocks.BlockMachineCasing;
-import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
-import net.minecraftforge.oredict.OreDictionary;
-import tekcays_addon.api.unification.material.ore.OreDictAdditions;
 import tekcays_addon.api.unification.material.ore.TKCYAOrePrefix;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
-import static tekcays_addon.api.unification.TKCYAMaterials.GalvanizedSteel;
 import static tekcays_addon.api.utils.TKCYAValues.MOLD_MATERIALS;
 
 

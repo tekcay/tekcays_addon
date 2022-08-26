@@ -274,7 +274,7 @@ tekcays_addon.recipe.blasting_pressure=Pressure: %d bar
 tekcays_addon.machine.advanced_electrolyzer.tooltip.1=Performs electrolysis of chemicals in solution.
 tekcays_addon.machine.advanced_electrolyzer.tooltip.2=Requires two electrodes, a cathode and an anode, to perform its recipes.
 tekcays_addon.machine.advanced_electrolyzer.tooltip.3=Electrodes takes damage during recipe running.
-tekcays_addon.machine.advanced_electrolyzer.tooltip.4=Removal of the electrode causes explosion!
+tekcays_addon.machine.advanced_electrolyzer.tooltip.4=Removal of the electrode while a recipe is running  will cause explosion!
 
 
 

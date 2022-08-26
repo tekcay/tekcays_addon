@@ -1,6 +1,8 @@
 package tekcays_addon.loaders;
 
+import gregtech.api.unification.ore.OrePrefix;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 import tekcays_addon.common.items.behaviors.FilterBehavior;
@@ -28,6 +30,7 @@ public class DamageableItemsLoader {
         ElectrodeBehavior.getInstanceFor(electrodePlatinum).setPartMaterial(electrodePlatinum, Platinum);
         ElectrodeBehavior.getInstanceFor(electrodeZinc).setPartMaterial(electrodeZinc, Zinc);
         ElectrodeBehavior.getInstanceFor(electrodeAluminium).setPartMaterial(electrodeAluminium, Aluminium);
+        //
     }
 
     public static void initFilters() {

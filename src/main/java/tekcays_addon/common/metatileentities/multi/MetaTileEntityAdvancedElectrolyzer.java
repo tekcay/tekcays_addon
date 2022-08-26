@@ -22,20 +22,20 @@ import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 
+import static tekcays_addon.api.capability.impl.DamageItemsLogic.*;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
 public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockController {
 
-    List<GTRecipeInput> inputs;
-    List<ItemStack> electrodeInInventory = new ArrayList<>();
-    HashSet<String> currentRecipeNonConsummIngredient = new HashSet<>();
-    HashSet<String> nonConsummInInventory = new HashSet<>();
+    private List<GTRecipeInput> inputs = new ArrayList<>();
+    private final List<ItemStack> electrodeInInventory = new ArrayList<>();
+    private final HashSet<String> currentRecipeNonConsummIngredient = new HashSet<>();
+    private final HashSet<String> nonConsummInInventory = new HashSet<>();
 
     //TODO Proper blocks and textures
-    //TODO Temperature logic, based on electricity
-    //TODO Add Aluminium and Zinc Chains as electrolysis is available
 
     public MetaTileEntityAdvancedElectrolyzer(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.ELECTROLYSIS);
@@ -57,32 +57,6 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
                 .where('X', states(getCasingState()).setMinGlobalLimited(14).or(autoAbilities()))
                 .where('#', air())
                 .build();
-    }
-
-    public void getCurrentRecipeNonConsummables() {
-
-        currentRecipeNonConsummIngredient.clear();
-        for (GTRecipeInput gtRecipeInput : inputs) {
-
-            if (!gtRecipeInput.isNonConsumable()) continue;
-            ItemStack[] stack = gtRecipeInput.getInputStacks();
-
-            currentRecipeNonConsummIngredient.add(stack[0].getDisplayName());
-
-            //if (!stack.isItemStackDamageable()) continue;
-
-            //currentRecipeNonConsummIngredient.add(stack);
-        }
-    }
-
-    public void getCurrentInventory() {
-
-        nonConsummInInventory.clear();
-        for (int i = 0; i < inputInventory.getSlots(); i++) {
-            ItemStack stack = inputInventory.getStackInSlot(i);
-            if (stack == null || stack.getDisplayName().startsWith("Air")) continue;
-            nonConsummInInventory.add(stack.getDisplayName());
-        }
     }
 
     private void getElectrodeFromInventory() {
@@ -107,35 +81,18 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
     public void updateFormedValid() {
         super.updateFormedValid();
 
-        if (this.isActive()) {
-            getCurrentRecipeNonConsummables();
-            getCurrentInventory();
-            //getElectrodeFromInventory();
+        if (!this.recipeMapWorkable.isActive()) return;
+        if (inputs == null) return;
 
-            //if (!currentRecipeNonConsummIngredient.stream().allMatch(nonConsummInInventory::contains)) this.causeMaintenanceProblems();
+        getCurrentRecipeNonConsummables(currentRecipeNonConsummIngredient, inputs);
+        getCurrentInventory(nonConsummInInventory, inputInventory);
 
-            if (!nonConsummInInventory.containsAll(currentRecipeNonConsummIngredient)) this.doExplosion(1);
+        if (!doesInventoryContainDamageableItems(nonConsummInInventory, currentRecipeNonConsummIngredient)) this.doExplosion(1);
 
-            if (getOffsetTimer() % 20 == 0) {
-                damageElectrode(20);
-            }
+        if (getOffsetTimer() % 20 == 0) {
+            applyDamage(inputInventory, 20);
         }
     }
-
-    private void damageElectrode(int damageAmount) {
-        for (int i = 0; i < inputInventory.getSlots(); i++) {
-            ItemStack electrodeStack;
-
-            if (inputInventory.isItemValid(i, TKCYAMetaItems.ELECTRODE.getStackForm())) {
-                electrodeStack = inputInventory.getStackInSlot(i);
-
-                ElectrodeBehavior behavior = ElectrodeBehavior.getInstanceFor(electrodeStack);
-                if (behavior == null) continue;
-                behavior.applyElectrodeDamage(electrodeStack, damageAmount);
-            }
-        }
-    }
-
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
@@ -162,7 +119,6 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
         return true;
     }
 
-
     ////////////////
     //Remove overlocking
     /////////////////
@@ -177,12 +133,10 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
         protected int[] calculateOverclock(Recipe recipe) {
             return new int[]{0, recipe.getDuration()};
         }
-
-
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
+    public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
 
         tooltip.add(I18n.format("tekcays_addon.machine.advanced_electrolyzer.tooltip.1"));
@@ -190,5 +144,7 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
         tooltip.add(I18n.format("tekcays_addon.machine.advanced_electrolyzer.tooltip.3"));
         tooltip.add(I18n.format("tekcays_addon.machine.advanced_electrolyzer.tooltip.4"));
     }
+
+
 
 }

@@ -127,7 +127,7 @@ public class MetaTileEntityFuelMelter extends RecipeMapMultiblockNoEnergyControl
 
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
+    public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
 
         tooltip.add(I18n.format("tekcays_addon.machine.fuel_melter.tooltip.1"));

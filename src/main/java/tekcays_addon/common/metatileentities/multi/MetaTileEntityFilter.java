@@ -15,15 +15,17 @@ import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.api.utils.TKCYALog;
+import tekcays_addon.common.items.behaviors.FilterBehavior;
 
 import javax.annotation.Nonnull;
 
 public class MetaTileEntityFilter extends RecipeMapPrimitiveMultiblockController {
 
-    private boolean boostAllowed;
 
     public MetaTileEntityFilter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.FILTRATION);
@@ -43,6 +45,25 @@ public class MetaTileEntityFilter extends RecipeMapPrimitiveMultiblockController
     }
 
     @Override
+    public void updateFormedValid() {
+        super.updateFormedValid();
+
+        ItemStack filterStack = importItems.getStackInSlot(0);
+        if (filterStack.getDisplayName().equals("Air")) {
+            this.recipeMapWorkable.setWorkingEnabled(false);
+            //this.recipeMapWorkable.invalidateOutputs();
+            return;
+        } else this.recipeMapWorkable.setWorkingEnabled(true);
+
+        FilterBehavior behavior = FilterBehavior.getInstanceFor(filterStack);
+        if (behavior == null) return;
+        if (!this.recipeMapWorkable.isActive()) return;
+        if (getOffsetTimer() % 20 == 0) {
+            behavior.applyFilterDamage(filterStack, 20);
+        }
+    }
+
+    @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
         return TKCYATextures.STEEL_GT;
     }
@@ -52,11 +73,6 @@ public class MetaTileEntityFilter extends RecipeMapPrimitiveMultiblockController
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
         getFrontOverlay().renderOrientedState(renderState, translation, pipeline, getFrontFacing(), recipeMapWorkable.isActive(), recipeMapWorkable.isWorkingEnabled());
-    }
-
-    @Override
-    public int getLightValueForPart(IMultiblockPart sourcePart) {
-        return sourcePart == null && recipeMapWorkable.isActive() ? 15 : 0;
     }
 
     @Override
@@ -90,7 +106,7 @@ public class MetaTileEntityFilter extends RecipeMapPrimitiveMultiblockController
     @Nonnull
     @Override
     protected ICubeRenderer getFrontOverlay() {
-        return Textures.PRIMITIVE_BLAST_FURNACE_OVERLAY;
+        return Textures.SIFTER_OVERLAY;
     }
 
     @Override
