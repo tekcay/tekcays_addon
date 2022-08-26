@@ -186,7 +186,7 @@ public class TKCYAMetaTileEntities {
         FILTER = registerMetaTileEntity(11055, new MetaTileEntityFilter(tkcyaId("filter")));
 
         if (TKCYAConfigHolder.crackingOverhaul.enableCrackingOverhaul) {
-            PRESSURIZED_CRACKING_UNIT = registerMetaTileEntity(11056, new MetaTileEntityPressurizedCrackingUnit(tkcyaId("pressurized_cracking_unit")));
+            PRESSURIZED_CRACKING_UNIT = registerMetaTileEntity(11057, new MetaTileEntityPressurizedCrackingUnit(tkcyaId("pressurized_cracking_unit")));
         }
 
     }

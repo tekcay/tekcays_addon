@@ -83,7 +83,7 @@ public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<TemperaturePressureRecipeBuilder> PRESSURE_CRACKING = new RecipeMap<>(
-            "pressure_cracking", 1, 1, 1, 1, 1, 1, 1, 1, new TemperaturePressureRecipeBuilder(), false)
+            "pressure_cracking", 1, 2, 0, 0, 1, 2, 1, 2, new TemperaturePressureRecipeBuilder(), false)
             .setSound(GTSounds.COMPRESSOR);
 
 

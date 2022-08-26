@@ -112,7 +112,7 @@ recipemap.converting.name=Converting
 recipemap.crystallization.name=Crystallization
 recipemap.electrolysis.name=Electrolysis
 recipemap.filtration.name=Filtration
-recipemap.pressure_cracking=Cracking
+recipemap.pressure_cracking.name=Cracking
 
 # Materials
 

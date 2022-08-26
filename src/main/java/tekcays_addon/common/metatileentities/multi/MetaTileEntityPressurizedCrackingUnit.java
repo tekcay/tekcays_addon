@@ -22,6 +22,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,7 +33,7 @@ public class MetaTileEntityPressurizedCrackingUnit extends PressureMultiblockCon
     private int coilTier;
 
     public MetaTileEntityPressurizedCrackingUnit(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, RecipeMaps.CRACKING_RECIPES);
+        super(metaTileEntityId, TKCYARecipeMaps.PRESSURE_CRACKING);
         this.recipeMapWorkable = new CrackingUnitWorkableHandler(this);
     }
 
@@ -71,7 +72,7 @@ public class MetaTileEntityPressurizedCrackingUnit extends PressureMultiblockCon
     }
 
     @Override
-    public void addInformation(@NonNull ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("gregtech.machine.cracker.tooltip.1"));
     }
