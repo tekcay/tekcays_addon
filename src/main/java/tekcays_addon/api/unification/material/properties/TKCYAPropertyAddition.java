@@ -27,5 +27,11 @@ public class TKCYAPropertyAddition {
 
         Carbon.setProperty(PropertyKey.INGOT, new IngotProperty());
 
+        FerriteMixture.setProperty(PropertyKey.FLUID, new FluidProperty());
+        FerriteMixture.getProperty(PropertyKey.FLUID).setFluidTemperature(1400);
+
+        TitaniumTrifluoride.setProperty(PropertyKey.FLUID, new FluidProperty());
+        TitaniumTrifluoride.getProperty(PropertyKey.FLUID).setFluidTemperature(1470);
+
     }
 }

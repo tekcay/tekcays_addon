@@ -54,7 +54,7 @@ public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<TemperaturePressureRecipeBuilder> CONVERTING_RECIPES = new RecipeMap<>(
-            "converting", 0, 1, 0, 1, 1, 2, 0, 1, new TemperaturePressureRecipeBuilder(), false)
+            "converting", 0, 2, 0, 2, 1, 4, 1, 2, new TemperaturePressureRecipeBuilder(), false)
             .setSound(GTSounds.COOLING);
 
     @ZenProperty
