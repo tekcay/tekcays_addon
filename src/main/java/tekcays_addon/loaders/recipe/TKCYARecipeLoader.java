@@ -66,7 +66,7 @@ public class TKCYARecipeLoader {
         }
 
         if (meltingOverhaul.enableBlastingOverhaul) {
-            ConvertingRecipeHandler.init();
+            ConverterHandler.init();
             BlastingRecipeHandler.init();
         }
 
