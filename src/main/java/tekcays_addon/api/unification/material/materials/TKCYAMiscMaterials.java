@@ -105,28 +105,28 @@ public class TKCYAMiscMaterials {
                 .build();
 
         HydrogenFluoride = new Material.Builder(24121, "hydrogen_fluoride")
-                .fluid(FluidTypes.ACID)
+                .fluid(FluidTypes.GAS)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .color(Hydrogen.getMaterialRGB() + Fluorine.getMaterialRGB() / 2)
                 .components(Hydrogen, 1, Fluorine, 1)
                 .build();
 
         HydrogenChloride = new Material.Builder(24122, "hydrogen_chloride")
-                .fluid(FluidTypes.ACID)
+                .fluid(FluidTypes.GAS)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .color(Hydrogen.getMaterialRGB() + Chlorine.getMaterialRGB() / 2)
                 .components(Hydrogen, 1, Chlorine, 1)
                 .build();
 
         HydrogenBromide = new Material.Builder(24123, "hydrogen_bromide")
-                .fluid(FluidTypes.ACID)
+                .fluid(FluidTypes.GAS)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .color(Hydrogen.getMaterialRGB() + Bromine.getMaterialRGB() / 2)
                 .components(Hydrogen, 1, Bromine, 1)
                 .build();
 
         HydrogenIodide = new Material.Builder(24124, "hydrogen_iodide")
-                .fluid(FluidTypes.ACID)
+                .fluid(FluidTypes.GAS)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .color(Hydrogen.getMaterialRGB() + Iodine.getMaterialRGB() / 2)
                 .components(Hydrogen, 1, Iodine, 1)
