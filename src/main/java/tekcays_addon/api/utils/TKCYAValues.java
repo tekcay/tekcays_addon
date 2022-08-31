@@ -40,6 +40,11 @@ public class TKCYAValues {
      */
     public static final float CLEANROOM_MULTIPLIER = 1.2f;
 
+    //Heat
+
+    public static final int MIN_HEAT = 0;
+    public static final int MAX_HEAT = 10000;
+
     //Lists/Arrays
 
     public static final MetaItem.MetaValueItem[] ELECTRIC_PUMPS = new MetaItem.MetaValueItem[]{
