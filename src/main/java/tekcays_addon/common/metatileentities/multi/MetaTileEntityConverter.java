@@ -67,8 +67,8 @@ public class MetaTileEntityConverter extends PressureMultiblockController implem
             textList.add(new TextComponentTranslation("gregtech.multiblock.blast_furnace.max_temperature",
                     new TextComponentTranslation(GTUtility.formatNumbers(blastFurnaceTemperature) + "K").setStyle(new Style().setColor(TextFormatting.RED))));
             double pressure = this.getPressureContainer().getPressure();
-            if (pressure > 100000) textList.add(new TextComponentTranslation("tkcya.machine.converter.text.pressure.kPa", String.format("%.3f", pressure/1000D) + " kPa"));
-            if (pressure > 1000000) textList.add(new TextComponentTranslation("tkcya.machine.converter.text.pressure.MPa", String.format("%.3f", pressure/1000000D) + " MPa"));
+            if (pressure > 100000) textList.add(new TextComponentTranslation("tkcya.machine.text.pressure", String.format("%.3f", pressure/1000D) + " kPa"));
+            if (pressure > 1000000) textList.add(new TextComponentTranslation("tkcya.machine.text.pressure", String.format("%.3f", pressure/1000000D) + " MPa"));
         }
         super.addDisplayText(textList);
     }
