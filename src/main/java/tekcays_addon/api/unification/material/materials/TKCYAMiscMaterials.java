@@ -209,6 +209,18 @@ public class TKCYAMiscMaterials {
                 .color(0x91a95e)
                 .build();
 
+        Arsenopyrite = new Material.Builder(24140, "arsenopyrite")
+                .dust().ore()
+                .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .blastTemp(1200)
+                .components(Iron, 1, Arsenic, 1, Sulfur, 1)
+                .iconSet(DULL)
+                .color(0x91a95e)
+                .build();
+
+
+
 
     }
 

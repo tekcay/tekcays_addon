@@ -88,7 +88,7 @@ public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<TemperaturePressureRecipeBuilder> ROASTING = new RecipeMap<>(
-            "roasting", 1, 2, 0, 4, 1, 1, 1, 2, new TemperaturePressureRecipeBuilder(), false)
+            "roasting", 1, 2, 0, 4, 1, 1, 0, 2, new TemperaturePressureRecipeBuilder(), false)
             .setSound(GTSounds.FURNACE);
 
 

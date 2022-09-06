@@ -86,6 +86,7 @@ public class TKCYAMaterials {
     //More roastable
     public static Material Kesterite;
     public static Material Stannite;
+    public static Material Arsenopyrite;
 
 
     /**
