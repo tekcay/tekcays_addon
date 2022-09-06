@@ -37,6 +37,7 @@ tkcya.machine.casting_table.name=Casting Table
 tkcya.machine.converter.name=Converter
 tkcya.machine.primitive_bath.name=Primitive Bath
 tkcya.machine.pressurized_cracking_unit.name=High Pressure Cracking Unit
+tkcya.machine.roasting_oven.name=Roasting Oven
 
 #Blast Furnaces
 tkcya.machine.brick_blast_furnace.name=Brick Blast Furnace
@@ -113,6 +114,7 @@ recipemap.crystallization.name=Crystallization
 recipemap.electrolysis.name=Electrolysis
 recipemap.filtration.name=Filtration
 recipemap.pressure_cracking.name=Cracking
+recipemap.roasting.name=Roasting
 
 # Materials
 
@@ -164,6 +166,9 @@ material.zinc_leaching_residue=Zinc Leaching Residue
 material.tannic_acid=Tannic Acid
 material.germanic_acid_solution=Germanic Acid Solution
 
+#MoreRoastable
+material.kesterite=Kesterite
+material.stannite=Stannite
 
 
 ##Alloys

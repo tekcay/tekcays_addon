@@ -5,6 +5,8 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.info.MaterialFlags;
 import gregtech.api.unification.material.info.MaterialIconSet;
+import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.api.unification.material.info.TKCYAMaterialFlags;
 
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialIconSet.*;
@@ -186,6 +188,27 @@ public class TKCYAMiscMaterials {
                 .color(Germanium.getMaterialRGB() + Oxygen.getMaterialRGB() * 2 / 3)
                 .build();
         GermaniumOxide.setFormula("GeO2");
+
+        //More roastable
+        Kesterite = new Material.Builder(24138, "kesterite")
+                .dust().ore()
+                .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .components(Copper, 2, Zinc, 1, Tin, 1, Sulfur, 4)
+                .iconSet(DULL)
+                .color(0x577b5b)
+                .build();
+
+        Stannite = new Material.Builder(24139, "stannite")
+                .dust().ore()
+                .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .blastTemp(1200)
+                .components(Copper, 2, Iron, 1, Tin, 1, Sulfur, 4)
+                .iconSet(DULL)
+                .color(0x91a95e)
+                .build();
+
 
     }
 

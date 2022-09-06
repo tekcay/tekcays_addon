@@ -101,6 +101,7 @@ public class TKCYARecipeLoader {
         ChemicalChains.init();
         MineralChains.init();
         PolymerHandler.init();
+        RoastingHandler.init();
         GTCEuRequireCleanRoomHandler.init();
     }
 
