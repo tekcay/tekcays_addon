@@ -49,7 +49,7 @@ public class BlastingRecipeHandler {
 
         ////From Cassiterite
         BLASTING_RECIPES.recipeBuilder()
-                .setTemp(1200)
+                .setTemp(1500)
                 .input(OrePrefix.dust, Materials.Cassiterite)
                 .fluidOutputs(Materials.Tin.getFluid(GTValues.L))
                 .duration(200)
