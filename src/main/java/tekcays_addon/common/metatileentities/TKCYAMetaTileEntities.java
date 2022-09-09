@@ -21,6 +21,7 @@ import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.metatileentities.multi.*;
+import tekcays_addon.common.metatileentities.single.MetaTileEntityElectricHeater;
 import tekcays_addon.common.metatileentities.steam.SteamCooler;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
@@ -31,6 +32,7 @@ public class TKCYAMetaTileEntities {
     public static SimpleMachineMetaTileEntity[] CLUSTER_MILL = new SimpleMachineMetaTileEntity[5];
     public static SimpleMachineMetaTileEntity[] ADVANCED_POLARIZER = new SimpleMachineMetaTileEntity[5];
     public static SimpleMachineMetaTileEntity[] ELECTRIC_CASTING_TABLE = new SimpleMachineMetaTileEntity[5];
+    public static MetaTileEntityElectricHeater[] ELECTRIC_HEATER = new MetaTileEntityElectricHeater[5];
 
     public static MetaTileEntityPrimitiveMelter PRIMITIVE_MELTER;
     public static MetaTileEntityElectricMelter ELECTRIC_MELTER;
@@ -188,6 +190,12 @@ public class TKCYAMetaTileEntities {
         if (TKCYAConfigHolder.crackingOverhaul.enableCrackingOverhaul) {
             PRESSURIZED_CRACKING_UNIT = registerMetaTileEntity(11057, new MetaTileEntityPressurizedCrackingUnit(tkcyaId("pressurized_cracking_unit")));
         }
+
+        ELECTRIC_HEATER[0] = registerMetaTileEntity(11070, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.lv"), 1));
+        ELECTRIC_HEATER[1] = registerMetaTileEntity(11071, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.mv"), 2));
+        ELECTRIC_HEATER[2] = registerMetaTileEntity(11072, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.hv"), 3));
+        ELECTRIC_HEATER[3] = registerMetaTileEntity(11073, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.ev"), 4));
+        ELECTRIC_HEATER[4] = registerMetaTileEntity(11074, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.iv"), 5));
 
     }
 

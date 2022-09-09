@@ -25,6 +25,12 @@ tkcya.machine.electric_casting_table.iv.tooltip=Air speeds up the recipe by §a4
 
 tkcya.machine.casting_table.tooltip=Air speeds up the recipe by §e20%§7
 
+tkcya.machine.electric_heater.lv.name=Electric Heater LV
+tkcya.machine.electric_heater.mv.name=Electric Heater MV
+tkcya.machine.electric_heater.hv.name=Electric Heater HV
+tkcya.machine.electric_heater.ev.name=Electric Heater EV
+tkcya.machine.electric_heater.iv.name=Electric Heater IV
+
 tkcya.machine.steam_cooler_bronze.name=Steam Cooler
 tkcya.machine.steam_cooler_steel.name=High Pressure Steam Cooler
 
@@ -282,7 +288,10 @@ tekcays_addon.machine.advanced_electrolyzer.tooltip.4=Removal of the electrode w
 
 tkcya.machine.text.pressure=Current pressure: %s
 
-
+#Electric Heater
+tkcya.electric_heater.tooltip.1=For heating.
+tkcya.electric_heater.tooltip.2=Produces §b%sHU§7 per second.
+tkcya.electric_heater.tooltip.3=Outputs on the TOP face.
 
 
 # Errors

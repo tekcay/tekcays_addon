@@ -1,11 +1,9 @@
-package tekcays_addon.common.metatileentities.steam.single;
+package tekcays_addon.common.metatileentities.single;
 
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.ColourMultiplier;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregicality.science.api.GCYSValues;
-import gregicality.science.api.utils.GCYSUtility;
 import gregicality.science.api.utils.NumberFormattingUtil;
 import gregtech.api.GTValues;
 import gregtech.api.capability.GregtechTileCapabilities;
@@ -28,6 +26,8 @@ import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.impl.HeatContainer;
 
 import org.apache.commons.lang3.ArrayUtils;
+import tekcays_addon.api.utils.TKCYALog;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
@@ -36,11 +36,9 @@ import static net.minecraft.util.EnumFacing.*;
 
 public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implements IActiveOutputSide {
 
-    private final int HEAT_BASE_INCREASE = 16 * getTier();
-    private final long ENERGY_BASE_CONSUMPTION = GTValues.V[getTier()];
+    private final int HEAT_BASE_INCREASE = (int) GTValues.V[getTier()] / 4;
+    private final int ENERGY_BASE_CONSUMPTION = (int) GTValues.V[getTier()];
     private HeatContainer heatContainer;
-    @SuppressWarnings("FieldMayBeFinal")
-    private boolean isHighPressure;
 
     protected EnumFacing outputFacing;
 
@@ -64,8 +62,6 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
         return null;
     }
 
-
-
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
@@ -82,11 +78,15 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
         super.update();
         if (!getWorld().isRemote && getOffsetTimer() % 20 == 0) {
             int currentHeat = heatContainer.getHeat();
+            TKCYALog.logger.info("currentHeat = " + currentHeat);
+            TKCYALog.logger.info("maxHeat = " + heatContainer.getMaxHeat());
             if (currentHeat + HEAT_BASE_INCREASE > heatContainer.getMaxHeat()) return;
+            TKCYALog.logger.info("stored energy = " + energyContainer.getEnergyStored());
+            TKCYALog.logger.info("EU base consumption = " + ENERGY_BASE_CONSUMPTION);
             if (energyContainer.getEnergyStored() < ENERGY_BASE_CONSUMPTION) return;
-
+            TKCYALog.logger.info("got here");
             energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
-            heatContainer.setHeat(currentHeat + HEAT_BASE_INCREASE);
+            heatContainer.setHeat((int) (currentHeat + HEAT_BASE_INCREASE));
 
             TileEntity te = getWorld().getTileEntity(getPos().offset(UP));
             if (te != null) {
@@ -103,21 +103,16 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("gcys.steam_ejector.tooltip.1"));
-        tooltip.add(I18n.format("gcys.steam_ejector.tooltip.2", NumberFormattingUtil.formatDoubleToCompactString(Math.abs(PRESSURE_DECREASE))));
-        tooltip.add(I18n.format("gcys.steam_ejector.tooltip.3", STEAM_CONSUMPTION));
-        if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            tooltip.add(I18n.format("gcys.universal.tooltip.pressure.minimum", NumberFormattingUtil.formatDoubleToCompactString(pressureContainer.getMinPressure()), GCYSValues.PNF[GCYSUtility.getTierByPressure(pressureContainer.getMinPressure())]));
-            tooltip.add(I18n.format("gcys.universal.tooltip.pressure.maximum", NumberFormattingUtil.formatDoubleToCompactString(pressureContainer.getMaxPressure()), GCYSValues.PNF[GCYSUtility.getTierByPressure(pressureContainer.getMaxPressure())]));
-        } else {
-            tooltip.add(I18n.format("gregtech.tooltip.hold_shift"));
-        }
+        tooltip.add(I18n.format("tkcya.electric_heater.tooltip.1"));
+        tooltip.add(I18n.format("tkcya.electric_heater.tooltip.2", NumberFormattingUtil.formatDoubleToCompactString(Math.abs(HEAT_BASE_INCREASE))));
+        tooltip.add(I18n.format("tkcya.electric_heater.tooltip.3"));
+
     }
 
 
     @Override
     @Nullable
-    private <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
+    public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
         if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
             return side == UP ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
         }
@@ -125,6 +120,26 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
             return TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER.cast(heatContainer);
         }
         return super.getCapability(capability, side);
+    }
+
+    @Override
+    public boolean isAutoOutputItems() {
+        return false;
+    }
+
+    @Override
+    public boolean isAutoOutputFluids() {
+        return false;
+    }
+
+    @Override
+    public boolean isAllowInputFromOutputSideItems() {
+        return false;
+    }
+
+    @Override
+    public boolean isAllowInputFromOutputSideFluids() {
+        return false;
     }
 
 }
