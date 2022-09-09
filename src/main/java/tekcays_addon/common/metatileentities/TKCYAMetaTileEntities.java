@@ -21,6 +21,7 @@ import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.metatileentities.multi.*;
+import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityHeatAcceptor;
 import tekcays_addon.common.metatileentities.single.MetaTileEntityElectricHeater;
 import tekcays_addon.common.metatileentities.steam.SteamCooler;
 
@@ -33,6 +34,7 @@ public class TKCYAMetaTileEntities {
     public static SimpleMachineMetaTileEntity[] ADVANCED_POLARIZER = new SimpleMachineMetaTileEntity[5];
     public static SimpleMachineMetaTileEntity[] ELECTRIC_CASTING_TABLE = new SimpleMachineMetaTileEntity[5];
     public static MetaTileEntityElectricHeater[] ELECTRIC_HEATER = new MetaTileEntityElectricHeater[5];
+    public static MetaTileEntityHeatAcceptor[] HEAT_ACCEPTOR = new MetaTileEntityHeatAcceptor[1];
 
     public static MetaTileEntityPrimitiveMelter PRIMITIVE_MELTER;
     public static MetaTileEntityElectricMelter ELECTRIC_MELTER;
@@ -196,6 +198,8 @@ public class TKCYAMetaTileEntities {
         ELECTRIC_HEATER[2] = registerMetaTileEntity(11072, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.hv"), 3));
         ELECTRIC_HEATER[3] = registerMetaTileEntity(11073, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.ev"), 4));
         ELECTRIC_HEATER[4] = registerMetaTileEntity(11074, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.iv"), 5));
+
+        HEAT_ACCEPTOR[0] = registerMetaTileEntity(11075, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.lv"), 1));
 
     }
 
