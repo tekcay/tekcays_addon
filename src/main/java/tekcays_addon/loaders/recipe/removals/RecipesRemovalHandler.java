@@ -20,76 +20,7 @@ import static gregtech.api.unification.material.Materials.*;
 
 public class RecipesRemovalHandler {
 
-    public static void steelRemovalsInit() {
-        // Assembler recipes
 
-        // LV Machine Casing
-        GTRecipeHandler.removeRecipesByInputs(RecipeMaps.ASSEMBLER_RECIPES,
-            new ItemStack[] {
-                    OreDictUnifier.get(OrePrefix.plate, Steel, 8),
-                    IntCircuitIngredient.getIntegratedCircuit(8)},
-            new FluidStack[] {});
-
-
-        //LV Motor
-        GTRecipeHandler.removeRecipesByInputs(RecipeMaps.ASSEMBLER_RECIPES,
-                new ItemStack[] {
-                        OreDictUnifier.get(OrePrefix.stick, Steel, 2),
-                        OreDictUnifier.get(OrePrefix.stick, Materials.SteelMagnetic),
-                        OreDictUnifier.get(OrePrefix.wireGtSingle, Materials.Copper, 4),
-                        OreDictUnifier.get(OrePrefix.cableGtSingle, Materials.Tin, 2)},
-                new FluidStack[] {});
-
-        GTRecipeHandler.removeRecipesByInputs(RecipeMaps.ASSEMBLER_RECIPES,
-                new ItemStack[] {
-                        OreDictUnifier.get(OrePrefix.stick, Iron, 2),
-                        OreDictUnifier.get(OrePrefix.stick, Materials.IronMagnetic),
-                        OreDictUnifier.get(OrePrefix.wireGtSingle, Materials.Copper, 4),
-                        OreDictUnifier.get(OrePrefix.cableGtSingle, Materials.Tin, 2)},
-                new FluidStack[] {});
-
-        //LV Piston
-        GTRecipeHandler.removeRecipesByInputs(RecipeMaps.ASSEMBLER_RECIPES,
-                new ItemStack[] {
-                        OreDictUnifier.get(OrePrefix.stick, Steel, 2),
-                        OreDictUnifier.get(OrePrefix.plate, Steel, 3),
-                        OreDictUnifier.get(OrePrefix.gearSmall, Steel),
-                        OreDictUnifier.get(OrePrefix.cableGtSingle, Materials.Tin, 2),
-                        MetaItems.ELECTRIC_MOTOR_LV.getStackForm()},
-                new FluidStack[] {});
-                
-        //LV Robot Arm
-        GTRecipeHandler.removeRecipesByInputs(RecipeMaps.ASSEMBLER_RECIPES,
-                new ItemStack[] {
-                        OreDictUnifier.get(OrePrefix.stick, Steel, 2),
-                        OreDictUnifier.get(OrePrefix.circuit, MarkerMaterials.Tier.LV),
-                        MetaItems.ELECTRIC_MOTOR_LV.getStackForm(),
-                        MetaItems.ELECTRIC_MOTOR_LV.getStackForm(),
-                        MetaItems.ELECTRIC_PISTON_LV.getStackForm(),
-                        OreDictUnifier.get(OrePrefix.cableGtSingle, Materials.Tin, 3)},
-                new FluidStack[] {});
-
-
-
-        //Shaped recipes
-
-        //LV Machine Casing
-        ModHandler.removeRecipes(MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.LV));
-
-        //ULV Machine Casing
-        ModHandler.removeRecipes(MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.ULV));
-
-        //ULV Machine Hull
-        ModHandler.removeRecipes(MetaTileEntities.HULL[0].getStackForm());
-
-
-        //LV Motor
-        ModHandler.removeRecipes(MetaItems.ELECTRIC_MOTOR_LV.getStackForm());
-        //LV Piston
-        ModHandler.removeRecipes(MetaItems.ELECTRIC_PISTON_LV.getStackForm());
-        //LV Robot Arm
-        ModHandler.removeRecipes(MetaItems.ROBOT_ARM_LV.getStackForm());
-    }
     
     public static void shapedComponentsRecipes() {
         ModHandler.removeRecipes(MetaItems.ELECTRIC_MOTOR_MV.getStackForm());
@@ -126,17 +57,7 @@ public class RecipesRemovalHandler {
         ModHandler.removeRecipes(OreDictUnifier.get(OrePrefix.plank, TreatedWood));
     }
 
-    public static void removeDrums(){
-        ModHandler.removeRecipes(MetaTileEntities.WOODEN_DRUM.getStackForm());
-        ModHandler.removeRecipes(MetaTileEntities.BRONZE_DRUM.getStackForm());
-    }
 
-    public static void removeTanksAndValves() {
-        ModHandler.removeRecipes(MetaTileEntities.WOODEN_TANK.getStackForm());
-        ModHandler.removeRecipes(MetaTileEntities.STEEL_TANK.getStackForm());
-
-        ModHandler.removeRecipes(MetaTileEntities.STEEL_TANK_VALVE.getStackForm());
-    }
 
     public static void removeMoldsAndUsage() {
 
