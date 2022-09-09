@@ -5,14 +5,14 @@ import net.minecraft.client.Minecraft;
 
 import javax.annotation.Nonnull;
 
-public class HeatProperty extends RecipeProperty<Double> {
+public class HeatProperty extends RecipeProperty<Integer> {
 
     public static final String KEY = "heat";
 
     private static HeatProperty INSTANCE;
 
     private HeatProperty() {
-        super(KEY, Double.class);
+        super(KEY, Integer.class);
     }
 
     public static HeatProperty getInstance() {
