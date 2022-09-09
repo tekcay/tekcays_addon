@@ -109,6 +109,7 @@ public class TKCYARecipeLoader {
 
         if (miscOverhaul.enableGalvanizedSteel) {
             BathRecipeHandler.galvanizingSteelInit();
+            ElectrolysisHandler.galvanizing();
         }
 
         if (meltingOverhaul.enableMeltingOverhaul) {

@@ -1,13 +1,9 @@
 package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.GTValues;
-import gregtech.api.items.metaitem.MetaOreDictItem;
 import gregtech.api.recipes.RecipeMaps;
-import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.ore.OrePrefix;
-import gregtech.api.util.OreDictExprFilter;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.api.utils.TKCYAValues;
 
 import static gregtech.api.GTValues.LV;
@@ -22,7 +18,7 @@ public class BathRecipeHandler {
 
             RecipeMaps.CHEMICAL_BATH_RECIPES.recipeBuilder()
                     .input(orePrefix, Steel)
-                    .fluidInputs(Zinc.getFluid((int) (orePrefix.getMaterialAmount(Steel) * GTValues.L / (GTValues.M * 9))))
+                    .fluidInputs(Zinc.getFluid((int) (orePrefix.getMaterialAmount(Steel) * GTValues.L / (GTValues.M * 9)) * 2))
                     .duration((int) (10 + Steel.getMass() * orePrefix.getMaterialAmount(Steel) / GTValues.M))
                     .output(orePrefix, GalvanizedSteel)
                     .EUt((int) GTValues.V[LV])
@@ -30,7 +26,7 @@ public class BathRecipeHandler {
 
             TKCYARecipeMaps.PRIMITIVE_BATH.recipeBuilder()
                     .input(orePrefix, Steel)
-                    .fluidInputs(Zinc.getFluid((int) (orePrefix.getMaterialAmount(Steel) * GTValues.L / (GTValues.M * 9))))
+                    .fluidInputs(Zinc.getFluid((int) (orePrefix.getMaterialAmount(Steel) * GTValues.L / (GTValues.M * 9)) * 2))
                     .output(orePrefix, GalvanizedSteel)
                     .duration((int) (10 + 4 * Steel.getMass() * orePrefix.getMaterialAmount(Steel) / GTValues.M))
                     .buildAndRegister();
