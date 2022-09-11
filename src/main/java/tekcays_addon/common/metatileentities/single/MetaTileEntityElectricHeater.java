@@ -36,11 +36,9 @@ import static net.minecraft.util.EnumFacing.*;
 
 public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implements IActiveOutputSide {
 
-    private final int HEAT_BASE_INCREASE = (int) GTValues.V[getTier()] / 4;
-    private final int ENERGY_BASE_CONSUMPTION = (int) GTValues.V[getTier()];
+    private final int HEAT_BASE_INCREASE = (int) (GTValues.V[getTier()] / 4);
+    private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()]);
     private HeatContainer heatContainer;
-
-    protected EnumFacing outputFacing;
 
     public MetaTileEntityElectricHeater(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
@@ -54,7 +52,7 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
     @Override
     protected void initializeInventory() {
         super.initializeInventory();
-        this.heatContainer = new HeatContainer(this, 0, HEAT_BASE_INCREASE * 1000);
+        this.heatContainer = new HeatContainer(this, 0, 1000);
     }
 
     @Override
@@ -77,16 +75,23 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
     public void update() {
         super.update();
         if (!getWorld().isRemote && getOffsetTimer() % 20 == 0) {
-            int currentHeat = heatContainer.getHeat();
-            TKCYALog.logger.info("currentHeat = " + currentHeat);
-            TKCYALog.logger.info("maxHeat = " + heatContainer.getMaxHeat());
-            if (currentHeat + HEAT_BASE_INCREASE > heatContainer.getMaxHeat()) return;
+            //Redstone stops heating
+            if (this.isBlockRedstonePowered()) return;
+
             TKCYALog.logger.info("stored energy = " + energyContainer.getEnergyStored());
             TKCYALog.logger.info("EU base consumption = " + ENERGY_BASE_CONSUMPTION);
+
             if (energyContainer.getEnergyStored() < ENERGY_BASE_CONSUMPTION) return;
+            int currentHeat = heatContainer.getHeat();
+
+            TKCYALog.logger.info("currentHeat = " + currentHeat);
+            TKCYALog.logger.info("maxHeat = " + heatContainer.getMaxHeat());
+
+            if (currentHeat + HEAT_BASE_INCREASE < heatContainer.getMaxHeat()) heatContainer.setHeat(currentHeat + HEAT_BASE_INCREASE);
+
             TKCYALog.logger.info("got here");
             energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
-            heatContainer.setHeat((int) (currentHeat + HEAT_BASE_INCREASE));
+
 
             TileEntity te = getWorld().getTileEntity(getPos().offset(UP));
             if (te != null) {
