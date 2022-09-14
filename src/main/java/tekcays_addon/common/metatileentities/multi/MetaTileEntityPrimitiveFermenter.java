@@ -15,10 +15,10 @@ import gregtech.common.blocks.BlockSteamCasing;
 import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
-import tekcays_addon.api.metatileentity.mutiblock.RecipeMapMultiblockNoEnergyController;
+import tekcays_addon.api.metatileentity.mutiblock.RecipeMapNoEnergyMultiblockController;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
-public class MetaTileEntityPrimitiveFermenter extends RecipeMapMultiblockNoEnergyController {
+public class MetaTileEntityPrimitiveFermenter extends RecipeMapNoEnergyMultiblockController {
 
     public MetaTileEntityPrimitiveFermenter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.FERMENTATION_RECIPES);

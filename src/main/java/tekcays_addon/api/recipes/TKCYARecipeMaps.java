@@ -30,8 +30,8 @@ public class TKCYARecipeMaps {
             .setSound(GTSounds.ARC);
 
     @ZenProperty
-    public static final RecipeMap<TKCYATemperatureRecipeBuilder> MELTER_RECIPES = new RecipeMap<>(
-            "primitive_melter", 1, 1, 0, 0, 0, 0, 1, 1, new TKCYATemperatureRecipeBuilder(), false)
+    public static final RecipeMap<NoEnergyTemperatureRecipeBuilder> MELTER_RECIPES = new RecipeMap<>(
+            "primitive_melter", 1, 1, 0, 0, 0, 0, 1, 1, new NoEnergyTemperatureRecipeBuilder(), false)
             .setSound(GTSounds.FURNACE);
 
     @ZenProperty
@@ -58,8 +58,8 @@ public class TKCYARecipeMaps {
             .setSound(GTSounds.COOLING);
 
     @ZenProperty
-    public static final RecipeMap<TKCYATemperatureRecipeBuilder> BLASTING_RECIPES = new RecipeMap<>(
-            "blasting", 1, 1, 0, 0, 0, 1, 1, 2, new TKCYATemperatureRecipeBuilder(), false)
+    public static final RecipeMap<NoEnergyTemperatureRecipeBuilder> BLASTING_RECIPES = new RecipeMap<>(
+            "blasting", 1, 3, 0, 0, 0, 1, 1, 2, new NoEnergyTemperatureRecipeBuilder(), false)
             .setSound(GTSounds.FURNACE);
 
     @ZenProperty

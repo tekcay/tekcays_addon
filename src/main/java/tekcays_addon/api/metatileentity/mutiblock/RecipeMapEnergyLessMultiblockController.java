@@ -3,15 +3,18 @@ package tekcays_addon.api.metatileentity.mutiblock;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
+import com.google.common.collect.Lists;
+import gregtech.api.GTValues;
 import gregtech.api.block.VariantActiveBlock;
+import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.capability.IMultipleTankHandler;
+import gregtech.api.capability.impl.EnergyContainerList;
 import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.capability.impl.ItemHandlerList;
 import gregtech.api.gui.Widget;
 import gregtech.api.gui.widgets.AdvancedTextWidget;
 import gregtech.api.metatileentity.IDataInfoProvider;
-import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.metatileentity.multiblock.MultiblockWithDisplayBase;
+import gregtech.api.metatileentity.multiblock.*;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
@@ -20,6 +23,7 @@ import gregtech.api.util.GTUtility;
 import gregtech.common.ConfigHolder;
 import gregtech.common.blocks.BlockFireboxCasing;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
@@ -29,19 +33,21 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
-import tekcays_addon.api.capability.impl.MultiblockNoEnergyRecipeLogic;
+import tekcays_addon.api.capability.impl.EnergyLessMultiblockRecipeLogic;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class RecipeMapMultiblockNoEnergyController extends MultiblockWithDisplayBase implements IDataInfoProvider {
+public abstract class RecipeMapEnergyLessMultiblockController extends MultiblockWithDisplayBase implements IDataInfoProvider, ICleanroomReceiver {
 
     public final RecipeMap<?> recipeMap;
-    protected MultiblockNoEnergyRecipeLogic recipeMapWorkable;
+    protected EnergyLessMultiblockRecipeLogic recipeMapWorkable;
     protected List<BlockPos> variantActiveBlocks;
     protected boolean lastActive;
 
@@ -49,14 +55,21 @@ public abstract class RecipeMapMultiblockNoEnergyController extends MultiblockWi
     protected IItemHandlerModifiable outputInventory;
     protected IMultipleTankHandler inputFluidInventory;
     protected IMultipleTankHandler outputFluidInventory;
+    protected IEnergyContainer energyContainer;
 
     private boolean isDistinct = false;
 
-    public RecipeMapMultiblockNoEnergyController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
+    private ICleanroomProvider cleanroom;
+
+    public RecipeMapEnergyLessMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
         super(metaTileEntityId);
         this.recipeMap = recipeMap;
-        this.recipeMapWorkable = new MultiblockNoEnergyRecipeLogic(this);
+        this.recipeMapWorkable = new EnergyLessMultiblockRecipeLogic(this);
         resetTileAbilities();
+    }
+
+    public IEnergyContainer getEnergyContainer() {
+        return energyContainer;
     }
 
     public IItemHandlerModifiable getInputInventory() {
@@ -75,7 +88,7 @@ public abstract class RecipeMapMultiblockNoEnergyController extends MultiblockWi
         return outputFluidInventory;
     }
 
-    public MultiblockNoEnergyRecipeLogic getRecipeMapWorkable() {
+    public EnergyLessMultiblockRecipeLogic getRecipeMapWorkable() {
         return recipeMapWorkable;
     }
 
@@ -83,7 +96,7 @@ public abstract class RecipeMapMultiblockNoEnergyController extends MultiblockWi
      * Performs extra checks for validity of given recipe before multiblock
      * will start it's processing.
      */
-    public boolean checkRecipe(Recipe recipe, boolean consumeIfSuccess) {
+    public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
         return true;
     }
 
@@ -146,6 +159,7 @@ public abstract class RecipeMapMultiblockNoEnergyController extends MultiblockWi
         this.inputFluidInventory = new FluidTankList(allowSameFluidFillForOutputs(), getAbilities(MultiblockAbility.IMPORT_FLUIDS));
         this.outputInventory = new ItemHandlerList(getAbilities(MultiblockAbility.EXPORT_ITEMS));
         this.outputFluidInventory = new FluidTankList(allowSameFluidFillForOutputs(), getAbilities(MultiblockAbility.EXPORT_FLUIDS));
+        this.energyContainer = new EnergyContainerList(getAbilities(MultiblockAbility.INPUT_ENERGY));
     }
 
     private void resetTileAbilities() {
@@ -153,6 +167,7 @@ public abstract class RecipeMapMultiblockNoEnergyController extends MultiblockWi
         this.inputFluidInventory = new FluidTankList(true);
         this.outputInventory = new ItemStackHandler(0);
         this.outputFluidInventory = new FluidTankList(true);
+        this.energyContainer = new EnergyContainerList(Lists.newArrayList());
     }
 
     protected boolean allowSameFluidFillForOutputs() {
@@ -163,7 +178,14 @@ public abstract class RecipeMapMultiblockNoEnergyController extends MultiblockWi
     protected void addDisplayText(List<ITextComponent> textList) {
         super.addDisplayText(textList);
         if (isStructureFormed()) {
-            if (canBeDistinct()) {
+            IEnergyContainer energyContainer = recipeMapWorkable.getEnergyContainer();
+            if (energyContainer != null && energyContainer.getEnergyCapacity() > 0) {
+                long maxVoltage = Math.max(energyContainer.getInputVoltage(), energyContainer.getOutputVoltage());
+                String voltageName = GTValues.VNF[GTUtility.getTierByVoltage(maxVoltage)];
+                textList.add(new TextComponentTranslation("gregtech.multiblock.max_energy_per_tick", maxVoltage, voltageName));
+            }
+
+            if (canBeDistinct() && inputInventory.getSlots() > 0) {
                 ITextComponent buttonText = new TextComponentTranslation("gregtech.multiblock.universal.distinct");
                 buttonText.appendText(" ");
                 ITextComponent button = AdvancedTextWidget.withButton(isDistinct() ?
@@ -189,6 +211,10 @@ public abstract class RecipeMapMultiblockNoEnergyController extends MultiblockWi
             } else {
                 textList.add(new TextComponentTranslation("gregtech.multiblock.idling"));
             }
+
+            if (recipeMapWorkable.isHasNotEnoughEnergy()) {
+                textList.add(new TextComponentTranslation("gregtech.multiblock.not_enough_energy").setStyle(new Style().setColor(TextFormatting.RED)));
+            }
         }
     }
 
@@ -207,7 +233,7 @@ public abstract class RecipeMapMultiblockNoEnergyController extends MultiblockWi
 
     @Override
     public TraceabilityPredicate autoAbilities() {
-        return autoAbilities(false, true, true, true, true, true, true);
+        return autoAbilities(true, true, true, true, true, true, true);
     }
 
     public TraceabilityPredicate autoAbilities(boolean checkEnergyIn,
@@ -217,7 +243,8 @@ public abstract class RecipeMapMultiblockNoEnergyController extends MultiblockWi
                                                boolean checkFluidIn,
                                                boolean checkFluidOut,
                                                boolean checkMuffler) {
-        TraceabilityPredicate predicate = super.autoAbilities(checkMaintenance, checkMuffler);
+        TraceabilityPredicate predicate = super.autoAbilities(checkMaintenance, checkMuffler)
+                .or(checkEnergyIn ? abilities(MultiblockAbility.INPUT_ENERGY).setMinGlobalLimited(1).setMaxGlobalLimited(3).setPreviewCount(1) : new TraceabilityPredicate());
 
         if (checkItemIn) {
             if (recipeMap.getMinInputs() > 0) {
@@ -286,7 +313,7 @@ public abstract class RecipeMapMultiblockNoEnergyController extends MultiblockWi
     }
 
     public boolean isDistinct() {
-        return isDistinct;
+        return isDistinct && inputInventory.getSlots() > 0;
     }
 
     protected void toggleDistinct() {
@@ -316,6 +343,11 @@ public abstract class RecipeMapMultiblockNoEnergyController extends MultiblockWi
             ));
         }
 
+        list.add(new TextComponentTranslation("behavior.tricorder.energy_container_storage",
+                new TextComponentTranslation(GTUtility.formatNumbers(energyContainer.getEnergyStored())).setStyle(new Style().setColor(TextFormatting.GREEN)),
+                new TextComponentTranslation(GTUtility.formatNumbers(energyContainer.getEnergyCapacity())).setStyle(new Style().setColor(TextFormatting.YELLOW))
+        ));
+
         if (recipeMapWorkable.getRecipeEUt() > 0) {
             list.add(new TextComponentTranslation("behavior.tricorder.workable_consumption",
                     new TextComponentTranslation(GTUtility.formatNumbers(recipeMapWorkable.getRecipeEUt())).setStyle(new Style().setColor(TextFormatting.RED)),
@@ -323,6 +355,10 @@ public abstract class RecipeMapMultiblockNoEnergyController extends MultiblockWi
             ));
         }
 
+        list.add(new TextComponentTranslation("behavior.tricorder.multiblock_energy_input",
+                new TextComponentTranslation(GTUtility.formatNumbers(energyContainer.getInputVoltage())).setStyle(new Style().setColor(TextFormatting.YELLOW)),
+                new TextComponentTranslation(GTValues.VN[GTUtility.getTierByVoltage(energyContainer.getInputVoltage())]).setStyle(new Style().setColor(TextFormatting.YELLOW))
+        ));
 
         if (ConfigHolder.machines.enableMaintenance && hasMaintenanceMechanics()) {
             list.add(new TextComponentTranslation("behavior.tricorder.multiblock_maintenance",
@@ -338,4 +374,19 @@ public abstract class RecipeMapMultiblockNoEnergyController extends MultiblockWi
 
         return list;
     }
+
+    @Nullable
+    @Override
+    public ICleanroomProvider getCleanroom() {
+        return this.cleanroom;
+    }
+
+    @Override
+    public void setCleanroom(ICleanroomProvider provider) {
+        this.cleanroom = provider;
+    }
+
+    public abstract void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced);
+
+
 }
