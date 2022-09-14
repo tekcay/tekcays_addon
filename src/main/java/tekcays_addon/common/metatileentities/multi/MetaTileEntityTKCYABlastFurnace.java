@@ -1,10 +1,8 @@
 package tekcays_addon.common.metatileentities.multi;
 
-import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import gregtech.api.metatileentity.multiblock.*;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
@@ -12,7 +10,6 @@ import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
-import gregtech.common.ConfigHolder;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -25,8 +22,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
-import tekcays_addon.api.metatileentity.mutiblock.RecipeMapEnergyLessMultiblockController;
-import tekcays_addon.api.metatileentity.mutiblock.RecipeMapNoEnergyMultiblockController;
+import tekcays_addon.api.capability.impl.NoEnergyParallelLogic;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.recipes.recipeproperties.NoEnergyTemperatureProperty;
 import tekcays_addon.api.render.TKCYATextures;
@@ -37,9 +33,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
+
 import static gregtech.api.util.RelativeDirection.*;
 
-public class MetaTileEntityTKCYABlastFurnace extends RecipeMapEnergyLessMultiblockController {
+public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockController {
 
     private final BlockBrick.BrickType brick;
     private final IBlockState iBlockState;
@@ -49,17 +46,13 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapEnergyLessMultiblo
         super(metaTileEntityId, TKCYARecipeMaps.BLASTING_RECIPES);
         this.brick = brick;
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
-        //this.recipeMapWorkable = new MultiParallelLogic(this); //TODO to fix parallel not working
+        this.recipeMapWorkable = new TKCYABlastFurnaceLogic(this); //TODO to fix parallel not working
     }
-
-
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
         return brick.getBrickTemperature() >= recipe.getProperty(NoEnergyTemperatureProperty.getInstance(), 0);
     }
-
-
     @Override
     public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
@@ -80,17 +73,15 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapEnergyLessMultiblo
             textList.add((new TextComponentTranslation("gregtech.multiblock.invalid_structure"))
                     .setStyle((new Style()).setColor(TextFormatting.RED).setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
         } else {
-            if (this.hasMaintenanceMechanics() && ConfigHolder.machines.enableMaintenance) {
-                this.addMaintenanceText(textList);
+            if (this.recipeMapWorkable.getParallelLimit() != 1) {
+                textList.add(new TextComponentTranslation("gregtech.multiblock.parallel", this.recipeMapWorkable.getParallelLimit()));
             }
             if (!this.recipeMapWorkable.isWorkingEnabled()) {
                 textList.add(new TextComponentTranslation("gregtech.multiblock.work_paused"));
             } else if (this.recipeMapWorkable.isActive()) {
                 textList.add(new TextComponentTranslation("gregtech.multiblock.running"));
                 int currentProgress = (int) (this.recipeMapWorkable.getProgressPercent() * 100.0D);
-                if (this.recipeMapWorkable.getParallelLimit() != 1) {
-                    textList.add(new TextComponentTranslation("gregtech.multiblock.parallel", this.recipeMapWorkable.getParallelLimit()));
-                }
+
 
                 textList.add(new TextComponentTranslation("gregtech.multiblock.progress", currentProgress));
             } else {
@@ -136,7 +127,6 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapEnergyLessMultiblo
                 .where('S', selfPredicate())
                 .where('Y', states(getCasingState()))
                 .where('X', states(getCasingState())
-                        .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1))
                         .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setExactLimit(1)))
                 .where('O', states(getCasingState())
                         .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMaxGlobalLimited(2))
@@ -182,14 +172,23 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapEnergyLessMultiblo
         super.formStructure(context);
         initializeAbilities();
         this.height = context.getOrDefault("blastFurnaceHeight", 1);
-        this.recipeMapWorkable.setParallelLimit(height);
     }
-
-
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityTKCYABlastFurnace(metaTileEntityId, brick);
+    }
+
+
+    private class TKCYABlastFurnaceLogic extends NoEnergyParallelLogic {
+        public TKCYABlastFurnaceLogic(RecipeMapMultiblockController tileEntity) {
+            super(tileEntity);
+        }
+
+        @Override
+        public int getParallelLimit() {
+            return ((MetaTileEntityTKCYABlastFurnace) this.getMetaTileEntity()).height;
+        }
     }
 
 

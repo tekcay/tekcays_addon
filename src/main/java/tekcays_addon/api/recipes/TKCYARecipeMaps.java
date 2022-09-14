@@ -59,7 +59,7 @@ public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<NoEnergyTemperatureRecipeBuilder> BLASTING_RECIPES = new RecipeMap<>(
-            "blasting", 1, 3, 0, 0, 0, 1, 1, 2, new NoEnergyTemperatureRecipeBuilder(), false)
+            "blasting", 1, 3, 0, 0, 0, 0, 1, 2, new NoEnergyTemperatureRecipeBuilder(), false)
             .setSound(GTSounds.FURNACE);
 
     @ZenProperty

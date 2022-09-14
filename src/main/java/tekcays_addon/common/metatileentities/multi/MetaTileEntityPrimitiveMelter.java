@@ -7,7 +7,6 @@ import gregtech.api.capability.impl.ItemHandlerProxy;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.util.RelativeDirection;
@@ -18,11 +17,11 @@ import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.ItemStackHandler;
-import tekcays_addon.api.metatileentity.mutiblock.RecipeMapNoEnergyMultiblockController;
+import tekcays_addon.api.metatileentity.mutiblock.NoEnergyParallelRecipeMapMultiblockController;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.render.TKCYATextures;
 
-public class MetaTileEntityPrimitiveMelter extends RecipeMapNoEnergyMultiblockController {
+public class MetaTileEntityPrimitiveMelter extends NoEnergyParallelRecipeMapMultiblockController {
 
     public MetaTileEntityPrimitiveMelter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.MELTER_RECIPES);
