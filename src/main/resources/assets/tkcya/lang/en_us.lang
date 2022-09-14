@@ -245,11 +245,16 @@ tekcays_addon.multiblock.fuel_melter.tooltip.5=Target temperature: §a%d K§7.
 tekcays_addon.recipe.melter_temperature=Temperature: %dK
 
 tekcays_addon.machine.tkcya_blast_furnace.tooltip.1=Only runs recipes if the required temperature is set.
-tekcays_addon.machine.tkcya_blast_furnace.tooltip.2=Requires air and coal.
-tekcays_addon.machine.tkcya_blast_furnace.tooltip.3=The temperature increasing speed can be improved by using hot air and coke.
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.2=Can run recipes in parallel.
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.3=Each additional floor increases the parallel limit by §e%s§7.
 tekcays_addon.machine.tkcya_blast_furnace.tooltip.4=Max temperature: §e%,d K.
-tekcays_addon.machine.tkcya_blast_furnace.tooltip.5=Gas collector in the input bus allows hot gases recovery.
-tekcays_addon.machine.tkcya_blast_furnace.tooltip.6=LV Sensor in the input displays stored heat (mainly for debug purpose)
+
+
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.2a=Requires air and coal.
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.3a=The temperature increasing speed can be improved by using hot air and coke.
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.4a=Max temperature: §e%,d K.
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.5a=Gas collector in the input bus allows hot gases recovery.
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.6a=LV Sensor in the input displays stored heat (mainly for debug purpose)
 
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.1=Temperature: §a%d K§7.
 tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.2=Not enough gas

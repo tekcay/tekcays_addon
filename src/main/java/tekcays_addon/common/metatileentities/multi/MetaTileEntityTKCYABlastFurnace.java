@@ -57,13 +57,10 @@ public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlock
     @Override
     public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.1"));
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.2"));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.3"));
+        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.3", "2"));
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.4", brick.getBrickTemperature()));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.5"));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.6"));
     }
 
     @Override
@@ -173,7 +170,7 @@ public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlock
         super.formStructure(context);
         initializeAbilities();
         this.height = context.getOrDefault("blastFurnaceHeight", 1);
-        this.recipeMapWorkable.setParallelLimit(height);
+        this.recipeMapWorkable.setParallelLimit(height * 2);
     }
 
     @Override
