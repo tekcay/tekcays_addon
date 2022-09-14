@@ -6,6 +6,7 @@ import net.minecraft.init.Items;
 import tekcays_addon.api.unification.TKCYAMaterials;
 
 import static tekcays_addon.api.recipes.TKCYARecipeMaps.FERMENTATION_RECIPES;
+import static tekcays_addon.api.utils.TKCYAValues.MINUTE;
 
 
 public class FermentationHandler {
@@ -13,21 +14,21 @@ public class FermentationHandler {
     public static void init() {
 
         FERMENTATION_RECIPES.recipeBuilder()
-                .input(Items.WHEAT_SEEDS, 64)
-                .fluidOutputs(Materials.SeedOil.getFluid(500))
-                .duration(30*60*20) //30 min
+                .input(Items.WHEAT_SEEDS)
+                .fluidOutputs(Materials.SeedOil.getFluid(5))
+                .duration(30 * MINUTE)
                 .buildAndRegister();
 
         FERMENTATION_RECIPES.recipeBuilder()
-                .input(Items.PUMPKIN_SEEDS, 64)
-                .fluidOutputs(TKCYAMaterials.PumpkinOil.getFluid(500))
-                .duration(30*60*20) //30 min
+                .input(Items.PUMPKIN_SEEDS)
+                .fluidOutputs(TKCYAMaterials.PumpkinOil.getFluid(5))
+                .duration(30 * MINUTE)
                 .buildAndRegister();
 
         FERMENTATION_RECIPES.recipeBuilder()
-                .input(Items.MELON_SEEDS, 64)
-                .fluidOutputs(TKCYAMaterials.MelonOil.getFluid(500))
-                .duration(30*60*20) //30 min
+                .input(Items.MELON_SEEDS)
+                .fluidOutputs(TKCYAMaterials.MelonOil.getFluid(5))
+                .duration(30 * MINUTE)
                 .buildAndRegister();
     }
 }

@@ -22,7 +22,8 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
-import tekcays_addon.api.capability.impl.NoEnergyParallelLogic;
+import tekcays_addon.api.capability.impl.NoEnergyMultiblockLogic;
+import tekcays_addon.api.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.recipes.recipeproperties.NoEnergyTemperatureProperty;
 import tekcays_addon.api.render.TKCYATextures;
@@ -36,7 +37,7 @@ import java.util.List;
 
 import static gregtech.api.util.RelativeDirection.*;
 
-public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockController {
+public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlockController {
 
     private final BlockBrick.BrickType brick;
     private final IBlockState iBlockState;
@@ -46,7 +47,7 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockControll
         super(metaTileEntityId, TKCYARecipeMaps.BLASTING_RECIPES);
         this.brick = brick;
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
-        this.recipeMapWorkable = new TKCYABlastFurnaceLogic(this); //TODO to fix parallel not working
+        this.recipeMapWorkable = new NoEnergyMultiblockLogic(this);
     }
 
     @Override
@@ -172,26 +173,13 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockControll
         super.formStructure(context);
         initializeAbilities();
         this.height = context.getOrDefault("blastFurnaceHeight", 1);
+        this.recipeMapWorkable.setParallelLimit(height);
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityTKCYABlastFurnace(metaTileEntityId, brick);
     }
-
-
-    private class TKCYABlastFurnaceLogic extends NoEnergyParallelLogic {
-        public TKCYABlastFurnaceLogic(RecipeMapMultiblockController tileEntity) {
-            super(tileEntity);
-        }
-
-        @Override
-        public int getParallelLimit() {
-            return ((MetaTileEntityTKCYABlastFurnace) this.getMetaTileEntity()).height;
-        }
-    }
-
-
 
 
 }

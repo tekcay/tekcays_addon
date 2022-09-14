@@ -219,6 +219,9 @@ item.material.oreprefix.moldCasing=%s Mold Casing
 item.material.oreprefix.moldBottle=%s Mold Bottle
 item.material.oreprefix.moldBlock=%s Mold Block
 
+#Tooltips
+
+tkcya.machine.primitive_fermenter.tooltip.1=Max Parallel: §e%s§7
 
 tekcays_addon.multiblock.electric_melter.tooltip.1=Temperature: §a%d K§7.
 tekcays_addon.multiblock.electric_melter.tooltip.2=Not enough energy can be input to reach the target!

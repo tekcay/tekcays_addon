@@ -2,13 +2,13 @@ package tekcays_addon.api.capability.impl;
 
 import gregtech.api.GTValues;
 import gregtech.api.capability.impl.MultiblockRecipeLogic;
-import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.recipes.Recipe;
+import tekcays_addon.api.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
 
 
-public class NoEnergyParallelLogic extends MultiblockRecipeLogic {
+public class NoEnergyMultiblockLogic extends MultiblockRecipeLogic {
 
-    public NoEnergyParallelLogic(RecipeMapMultiblockController tileEntity) {
+    public NoEnergyMultiblockLogic(NoEnergyRecipeMapMultiBlockController tileEntity) {
         super(tileEntity);
     }
 
@@ -39,7 +39,7 @@ public class NoEnergyParallelLogic extends MultiblockRecipeLogic {
 
     @Override
     protected long getMaxVoltage() {
-        return GTValues.UIV;
+        return 32;
     }
 
     @Override

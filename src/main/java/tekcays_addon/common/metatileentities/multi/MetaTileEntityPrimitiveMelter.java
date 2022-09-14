@@ -17,14 +17,16 @@ import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.ItemStackHandler;
-import tekcays_addon.api.metatileentity.mutiblock.NoEnergyParallelRecipeMapMultiblockController;
+import tekcays_addon.api.capability.impl.NoEnergyMultiblockLogic;
+import tekcays_addon.api.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.render.TKCYATextures;
 
-public class MetaTileEntityPrimitiveMelter extends NoEnergyParallelRecipeMapMultiblockController {
+public class MetaTileEntityPrimitiveMelter extends NoEnergyRecipeMapMultiBlockController {
 
     public MetaTileEntityPrimitiveMelter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.MELTER_RECIPES);
+        this.recipeMapWorkable = new NoEnergyMultiblockLogic(this);
     }
 
     @Override

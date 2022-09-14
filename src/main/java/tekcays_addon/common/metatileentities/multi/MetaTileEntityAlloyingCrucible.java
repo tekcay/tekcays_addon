@@ -12,14 +12,16 @@ import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
-import tekcays_addon.api.metatileentity.mutiblock.NoEnergyParallelRecipeMapMultiblockController;
+import tekcays_addon.api.capability.impl.NoEnergyMultiblockLogic;
+import tekcays_addon.api.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.render.TKCYATextures;
 
-public class MetaTileEntityAlloyingCrucible extends NoEnergyParallelRecipeMapMultiblockController {
+public class MetaTileEntityAlloyingCrucible extends NoEnergyRecipeMapMultiBlockController {
 
     public MetaTileEntityAlloyingCrucible(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.ALLOYING_CRUCIBLE_RECIPES);
+        this.recipeMapWorkable = new NoEnergyMultiblockLogic(this);
     }
     
     @Override

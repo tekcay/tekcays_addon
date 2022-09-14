@@ -14,14 +14,25 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockSteamCasing;
 import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import tekcays_addon.api.metatileentity.mutiblock.NoEnergyParallelRecipeMapMultiblockController;
+import net.minecraft.world.World;
+import tekcays_addon.api.capability.impl.NoEnergyMultiblockLogic;
+import tekcays_addon.api.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
-public class MetaTileEntityPrimitiveFermenter extends NoEnergyParallelRecipeMapMultiblockController {
+import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+public class MetaTileEntityPrimitiveFermenter extends NoEnergyRecipeMapMultiBlockController {
 
     public MetaTileEntityPrimitiveFermenter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.FERMENTATION_RECIPES);
+        this.recipeMapWorkable = new NoEnergyMultiblockLogic(this);
+        this.recipeMapWorkable.setParallelLimit(32);
     }
 
     @Override
@@ -39,6 +50,11 @@ public class MetaTileEntityPrimitiveFermenter extends NoEnergyParallelRecipeMapM
         return Textures.ASSEMBLER_OVERLAY;
     }
 
+    @Override
+    public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
+        super.addInformation(stack, player, tooltip, advanced);
+        tooltip.add(I18n.format("tkcya.machine.primitive_fermenter.tooltip.1", "32"));
+    }
 
     protected IBlockState getCasingState() {
         return MetaBlocks.STEAM_CASING.getState(BlockSteamCasing.SteamCasingType.WOOD_WALL);
