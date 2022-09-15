@@ -1,5 +1,6 @@
 package tekcays_addon.common.metatileentities.multi;
 
+import gregtech.api.GTValues;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -26,6 +27,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.items.TKCYAMetaItems;
@@ -42,9 +44,11 @@ public class MetaTileEntitySpiralSeparator extends RecipeMapMultiblockController
 
     private int height;
     private final int ENERGY_COST = 120;
+    private boolean isRunning = false;
 
     public MetaTileEntitySpiralSeparator(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.SPIRAL_SEPARATION);
+        isRunning = false;
     }
 
     @Override
@@ -62,7 +66,9 @@ public class MetaTileEntitySpiralSeparator extends RecipeMapMultiblockController
                 .aisle("SSS", "SHS", "SSS").setRepeatable(1, 9)
                 .aisle("CCC", "CIC", "CCC")
                 .where('A', states(getCasingState())
-                        .or(autoAbilities()))
+                        .or(abilities(MultiblockAbility.EXPORT_ITEMS))
+                        .or(abilities(MultiblockAbility.INPUT_ENERGY))
+                        .or(abilities(MultiblockAbility.MAINTENANCE_HATCH)))
                 .where('M', selfPredicate())
                 .where('I', abilities(MultiblockAbility.IMPORT_ITEMS))
                 .where('H', heightIndicatorPredicate())
@@ -116,6 +122,7 @@ public class MetaTileEntitySpiralSeparator extends RecipeMapMultiblockController
         super.formStructure(context);
         initializeAbilities();
         this.height = context.getOrDefault("blastFurnaceHeight", 1);
+        isRunning = false;
     }
 
     @Override
@@ -143,23 +150,28 @@ public class MetaTileEntitySpiralSeparator extends RecipeMapMultiblockController
         if (getOffsetTimer() % 20 != 0) return;
 
         int inputSlot = hasAcceptedItemStackInSlot(TKCYAMetaItems.DUST_MIXTURE.getStackForm(), inputInventory);
-        if (inputSlot == -1) return;
+        if (inputSlot == -1 || isRunning) return;
+
         ItemStack input = inputInventory.getStackInSlot(inputSlot);
         NBTTagCompound nbt = input.getTagCompound();
         List<MaterialStack> list = getMaterialStacksFromString(nbt.getString("Composition"));
-
         List<ItemStack> outputStack = getItemStacksFromMaterialStacks(list, OrePrefix.dust);
 
         //To make sure the energy input hatch is at least MV or LV 4A
-        if (energyContainer.getInputVoltage() < 128 || !(energyContainer.getInputVoltage() == 32 && energyContainer.getInputAmperage() >= 4)) return;
+        //if (energyContainer.getInputVoltage() < 128 || !(energyContainer.getInputVoltage() == 32 && energyContainer.getInputAmperage() >= 4)) return;
+        if (energyContainer.getInputVoltage() < GTValues.V[GTValues.MV]) return;
         if (!hasEnoughEnergy(ENERGY_COST, energyContainer)) return;
         if (!canOutputItem(outputStack, outputInventory)) return;
+        TKCYALog.logger.info("got there");
 
+        if (!isRunning) inputInventory.extractItem(inputSlot, 1, false);
         energyContainer.removeEnergy(ENERGY_COST * 20);
+        isRunning = true;
 
         //It will take 4 seconds to perfom the recipe and thus output the items
-        if (getOffsetTimer() % 80 != 0) return;
+        //if (getOffsetTimer() % 80 != 0) return; //TODO make the recipe last longer
         doOutputItem(outputStack, outputInventory);
+        isRunning = false;
     }
 
 

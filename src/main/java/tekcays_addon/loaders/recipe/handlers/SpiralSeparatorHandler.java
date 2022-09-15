@@ -13,7 +13,7 @@ public class SpiralSeparatorHandler {
         TKCYARecipeMaps.SPIRAL_SEPARATION.recipeBuilder()
                 .inputs(TKCYAMetaItems.DUST_MIXTURE.getStackForm())
                 .output(dust, Stone)
-                .duration(100)
+                .duration(80)
                 .EUt(120)
                 .buildAndRegister();
 

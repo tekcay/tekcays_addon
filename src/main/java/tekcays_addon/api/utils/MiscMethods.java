@@ -7,6 +7,7 @@ import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.MaterialStack;
+import net.minecraft.item.ItemAir;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.Fluid;
@@ -123,10 +124,10 @@ public class MiscMethods {
             stackLeft = stack;
             for (int i = 0; i < outputInventory.getSlots(); i++) {
                 stackLeft = outputInventory.insertItem(i, stackLeft, true);
-                if (stack.isItemEqual(ItemStack.EMPTY)) break;
+                if (stackLeft.getDisplayName().equals("Air")) break;
             }
         }
-        return stackLeft.isItemEqual(ItemStack.EMPTY);
+        return stackLeft.getDisplayName().equals("Air");
     }
 
     public static void doOutputItem(List<ItemStack> toOutput, IItemHandlerModifiable outputInventory) {
@@ -135,7 +136,7 @@ public class MiscMethods {
             ItemStack stackLeft = stack;
             for (int i = 0; i < outputInventory.getSlots(); i++) {
                 stackLeft = outputInventory.insertItem(i, stackLeft, false);
-                if (stackLeft.isItemEqual(ItemStack.EMPTY)) break;
+                if (stackLeft.getDisplayName().equals("Air")) break;
             }
         }
     }
