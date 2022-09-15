@@ -26,5 +26,8 @@ public class TKCYAMetaItem1 extends StandardMetaItem {
         ELECTRODE = addItem(4, "electrode").addComponents(new ElectrodeBehavior());
         FILTER = addItem(5, "filter").addComponents(new FilterBehavior());
 
+        //Mixtures
+        DUST_MIXTURE = addItem(6, "dust_mixture");
+
     }
 }

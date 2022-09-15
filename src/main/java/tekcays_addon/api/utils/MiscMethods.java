@@ -1,13 +1,17 @@
 package tekcays_addon.api.utils;
 
+import gregtech.api.GregTechAPI;
 import gregtech.api.items.metaitem.MetaItem;
+import gregtech.api.unification.material.Material;
+import gregtech.api.unification.material.Materials;
+import gregtech.api.unification.stack.MaterialStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.unification.TKCYAMaterials;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static tekcays_addon.api.utils.TKCYAValues.ELECTRIC_PUMPS;
 
@@ -46,6 +50,39 @@ public class MiscMethods {
             map.put(tier * 10, tier);
         }
         return map;
+    }
+
+    public static Material getMaterialFromUnlocalizedName(String unlocalizedName) {
+        for (Material m : GregTechAPI.MATERIAL_REGISTRY) {
+            if (m.getUnlocalizedName().equals(unlocalizedName)) return m;
+        }
+        return null;
+    }
+
+
+    public static List<MaterialStack> getMaterialStacksFromString(String formula) {
+
+        List<String> compounds = Arrays.asList(formula.split(","));
+        List<MaterialStack> list = new ArrayList<>();
+
+        for (int i = 0; i < compounds.size(); i += 2) {
+            list.add(new MaterialStack(getMaterialFromUnlocalizedName(compounds.get(i)), Integer.parseInt(compounds.get(i + 1))));
+        }
+
+        return list;
+    }
+
+    public static NBTTagCompound writeNBTtoDustMixture(List<MaterialStack> list) {
+        NBTTagCompound nbt = new NBTTagCompound();
+        final StringBuilder composition = new StringBuilder();
+
+        list.forEach(ms -> composition.append(ms.material.getUnlocalizedName())
+                                      .append(",")
+                                      .append(ms.amount)
+                                      .append(","));
+
+        nbt.setString("Composition", composition.toString());
+        return nbt;
     }
 
 

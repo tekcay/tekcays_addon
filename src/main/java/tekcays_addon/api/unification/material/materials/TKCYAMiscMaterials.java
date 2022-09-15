@@ -189,7 +189,7 @@ public class TKCYAMiscMaterials {
                 .build();
         GermaniumOxide.setFormula("GeO2");
 
-        //More roastable
+        //More roastable ores
         Kesterite = new Material.Builder(24138, "kesterite")
                 .dust().ore()
                 .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
@@ -203,7 +203,6 @@ public class TKCYAMiscMaterials {
                 .dust().ore()
                 .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
-                .blastTemp(1200)
                 .components(Copper, 2, Iron, 1, Tin, 1, Sulfur, 4)
                 .iconSet(DULL)
                 .color(0x91a95e)
@@ -213,10 +212,19 @@ public class TKCYAMiscMaterials {
                 .dust().ore()
                 .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
-                .blastTemp(1200)
                 .components(Iron, 1, Arsenic, 1, Sulfur, 1)
                 .iconSet(DULL)
                 .color(0x91a95e)
+                .build();
+
+        //Roasting outputs
+        Cuprite = new Material.Builder(24141, "cuprite")
+                .dust().ore()
+                .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .components(Copper, 2, Oxygen, 1)
+                .iconSet(DULL)
+                .color(Copper.getMaterialRGB() * 2 + Oxygen.getMaterialRGB() / 3)
                 .build();
 
 

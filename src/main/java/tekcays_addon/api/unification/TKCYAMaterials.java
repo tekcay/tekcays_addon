@@ -88,6 +88,10 @@ public class TKCYAMaterials {
     public static Material Stannite;
     public static Material Arsenopyrite;
 
+    //Roasting outputs
+    public static Material Cuprite;
+
+
 
     /**
      * Alloys
