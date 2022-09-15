@@ -64,6 +64,11 @@ public class RoastingRecipeHandlerMethods {
         return componentsNumber;
     }
 
+    /**
+     *
+     * @param material
+     * @return the amount of Sulfur atoms in the material.
+     */
     public static int getAmountSulfur(Material material) {
         for (MaterialStack ms : material.getMaterialComponents()) {
             if (ms.material.equals(Sulfur)) return (int) ms.amount;
