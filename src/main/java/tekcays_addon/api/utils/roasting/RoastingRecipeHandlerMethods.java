@@ -14,6 +14,7 @@ import java.util.List;
 
 import static gregtech.api.unification.material.Materials.Sulfur;
 import static gregtech.api.unification.ore.OrePrefix.dust;
+import static tekcays_addon.api.utils.MiscMethods.getMaterialStackSize;
 import static tekcays_addon.api.utils.MiscMethods.writeNBTtoDustMixture;
 
 public class RoastingRecipeHandlerMethods {

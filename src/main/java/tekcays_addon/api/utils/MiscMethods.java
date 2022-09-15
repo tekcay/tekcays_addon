@@ -1,17 +1,22 @@
 package tekcays_addon.api.utils;
 
 import gregtech.api.GregTechAPI;
+import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.items.metaitem.MetaItem;
+import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
-import gregtech.api.unification.material.Materials;
+import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.MaterialStack;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import tekcays_addon.api.unification.TKCYAMaterials;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static tekcays_addon.api.utils.TKCYAValues.ELECTRIC_PUMPS;
 
@@ -83,6 +88,83 @@ public class MiscMethods {
 
         nbt.setString("Composition", composition.toString());
         return nbt;
+    }
+
+    /**
+     *
+     * @param list
+     * @return the sum of the amount of each {@code MaterialStack}.
+     */
+    public static int getMaterialStackSize(List<MaterialStack> list) {
+        AtomicInteger stackSize = new AtomicInteger();
+        list.forEach(ms -> stackSize.addAndGet((int) ms.amount));
+        return stackSize.get();
+    }
+
+
+    /**
+     *
+     * @param list the {@code List<MaterialStack}s
+     * @param prefix the {@code OrePrefix} to apply to get the output.
+     * @return a {@code List<ItemStack}
+     */
+    public static List<ItemStack> getItemStacksFromMaterialStacks(List<MaterialStack> list, OrePrefix prefix) {
+        List<ItemStack> output = new ArrayList<>();
+        list.forEach(ms -> output.add(OreDictUnifier.get(prefix, ms.material, (int) ms.amount)));
+        return output;
+    }
+
+    public static boolean canOutputItem(List<ItemStack> toOutput, IItemHandlerModifiable outputInventory) {
+        if (toOutput.size() > outputInventory.getSlots()) return false;
+
+        ItemStack stackLeft = toOutput.get(0);
+
+        for (ItemStack stack : toOutput) {
+            stackLeft = stack;
+            for (int i = 0; i < outputInventory.getSlots(); i++) {
+                stackLeft = outputInventory.insertItem(i, stackLeft, true);
+                if (stack.isItemEqual(ItemStack.EMPTY)) break;
+            }
+        }
+        return stackLeft.isItemEqual(ItemStack.EMPTY);
+    }
+
+    public static void doOutputItem(List<ItemStack> toOutput, IItemHandlerModifiable outputInventory) {
+
+        for (ItemStack stack : toOutput) {
+            ItemStack stackLeft = stack;
+            for (int i = 0; i < outputInventory.getSlots(); i++) {
+                stackLeft = outputInventory.insertItem(i, stackLeft, false);
+                if (stackLeft.isItemEqual(ItemStack.EMPTY)) break;
+            }
+        }
+    }
+
+
+    /**
+     *
+     * @param stack
+     * @param inputInventory
+     * @return -1 if not found.
+     */
+    public static int hasAcceptedItemStackInSlot(ItemStack stack, IItemHandlerModifiable inputInventory) {
+        for (int i = 0;  i < inputInventory.getSlots(); i++) {
+            ItemStack input = inputInventory.getStackInSlot(i);
+            if (input.isItemEqual(stack) && input.hasTagCompound()) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Multiplies energyConsumption by 20 as the number of ticks to actualize the multi only once per second.
+     * @param energyConsumption
+     * @param energyContainer
+     * @return
+     */
+    public static boolean hasEnoughEnergy(int energyConsumption, IEnergyContainer energyContainer) {
+        return energyContainer.getEnergyStored() >= (long) energyConsumption * 20;
     }
 
 

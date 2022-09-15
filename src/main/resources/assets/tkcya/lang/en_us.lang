@@ -38,6 +38,7 @@ tkcya.machine.converter.name=Converter
 tkcya.machine.primitive_bath.name=Primitive Bath
 tkcya.machine.pressurized_cracking_unit.name=High Pressure Cracking Unit
 tkcya.machine.roasting_oven.name=Roasting Oven
+tkcya.machine.spiral_separator.name=Spiral Separator
 
 #Blast Furnaces
 tkcya.machine.brick_blast_furnace.name=Brick Blast Furnace
@@ -229,6 +230,10 @@ item.material.oreprefix.moldCasing=%s Mold Casing
 item.material.oreprefix.moldBottle=%s Mold Bottle
 item.material.oreprefix.moldBlock=%s Mold Block
 
+
+
+
+tkcya.machine.height.tooltip=Height: %d
 
 tekcays_addon.multiblock.electric_melter.tooltip.1=Temperature: §a%d K§7.
 tekcays_addon.multiblock.electric_melter.tooltip.2=Not enough energy can be input to reach the target!

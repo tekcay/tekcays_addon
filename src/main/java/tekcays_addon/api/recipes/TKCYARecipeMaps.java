@@ -91,5 +91,10 @@ public class TKCYARecipeMaps {
             "roasting", 1, 2, 0, 4, 1, 1, 0, 2, new TemperaturePressureRecipeBuilder(), false)
             .setSound(GTSounds.FURNACE);
 
+    @ZenProperty
+    public static final RecipeMap<SimpleRecipeBuilder> SPIRAL_SEPARATION = new RecipeMap<>(
+            "spiral_separation", 1, 1, 2, 8, 0, 0, 0, 0, new SimpleRecipeBuilder(), false);
+            //.setSound(GTSounds.MOTOR);
+
 
 }

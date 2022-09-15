@@ -3,11 +3,8 @@ package tekcays_addon.common.metatileentities;
 import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.util.GTUtility;
-import gregtech.client.renderer.texture.Textures;
-import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.BlockSteamCasing;
 import gregtech.common.blocks.MetaBlocks;
-import gregtech.common.metatileentities.MetaTileEntities;
 import gregtech.common.metatileentities.storage.MetaTileEntityDrum;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.TekCaysAddon;
@@ -46,6 +43,8 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityAdvancedElectrolyzer ADVANCED_ELECTROLYZER;
     public static MetaTileEntityFilter FILTER;
     public static MetaTileEntityPressurizedCrackingUnit PRESSURIZED_CRACKING_UNIT;
+    public static MetaTileEntityRoastingOven ROASTING_OVEN;
+    public static MetaTileEntitySpiralSeparator SPIRAL_SEPARATOR;
 
     //Blast Furnaces
     public static MetaTileEntityTKCYABlastFurnace BRICK_BLAST_FURNACE;
@@ -188,6 +187,9 @@ public class TKCYAMetaTileEntities {
         if (TKCYAConfigHolder.crackingOverhaul.enableCrackingOverhaul) {
             PRESSURIZED_CRACKING_UNIT = registerMetaTileEntity(11057, new MetaTileEntityPressurizedCrackingUnit(tkcyaId("pressurized_cracking_unit")));
         }
+
+        ROASTING_OVEN = registerMetaTileEntity(11058, new MetaTileEntityRoastingOven(tkcyaId("roasting_oven")));
+        SPIRAL_SEPARATOR = registerMetaTileEntity(10059, new MetaTileEntitySpiralSeparator(tkcyaId("spiral_separator")));
 
     }
 
