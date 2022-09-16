@@ -37,6 +37,8 @@ tkcya.machine.casting_table.name=Casting Table
 tkcya.machine.converter.name=Converter
 tkcya.machine.primitive_bath.name=Primitive Bath
 tkcya.machine.pressurized_cracking_unit.name=High Pressure Cracking Unit
+tkcya.machine.roasting_oven.name=Roasting Oven
+tkcya.machine.spiral_separator.name=Spiral Separator
 
 #Blast Furnaces
 tkcya.machine.brick_blast_furnace.name=Brick Blast Furnace
@@ -113,6 +115,8 @@ recipemap.crystallization.name=Crystallization
 recipemap.electrolysis.name=Electrolysis
 recipemap.filtration.name=Filtration
 recipemap.pressure_cracking.name=Cracking
+recipemap.roasting.name=Roasting
+recipemap.spiral_separation.name=Spiral Separation
 
 # Materials
 
@@ -169,6 +173,13 @@ material.zinc_leaching_residue=Zinc Leaching Residue
 material.tannic_acid=Tannic Acid
 material.germanic_acid_solution=Germanic Acid Solution
 
+#MoreRoastable
+material.kesterite=Kesterite
+material.stannite=Stannite
+material.aresenopyrite=Arsenopyrite
+
+##RoastingOutput
+material.cuprite=Cuprite
 
 
 ##Alloys
@@ -193,6 +204,7 @@ metaitem.mica.sheet.name=Mica Based Sheet
 metaitem.mica_insulator.sheet.name=Mica Insulator Sheet
 metaitem.mica_insulator.foil.name=Mica Insulator Foil
 metaitem.gas_collector.name=Gas Collector
+metaitem.dust_mixture.name=Dust Mixture
 
 #Damageable Items
 metaitem.electrode.name=%s Electrode
@@ -224,6 +236,12 @@ item.material.oreprefix.moldCasing=%s Mold Casing
 item.material.oreprefix.moldBottle=%s Mold Bottle
 item.material.oreprefix.moldBlock=%s Mold Block
 
+
+
+tkcya.machine.no_overclock.tooltip=No overclock
+tkcya.machine.height.tooltip=Height: %d
+
+tkcya.machine.spiral_separator.tooltip.1=Run §a1§7 parallel recipe per §a2§7 additional floors.
 
 tekcays_addon.multiblock.electric_melter.tooltip.1=Temperature: §a%d K§7.
 tekcays_addon.multiblock.electric_melter.tooltip.2=Not enough energy can be input to reach the target!

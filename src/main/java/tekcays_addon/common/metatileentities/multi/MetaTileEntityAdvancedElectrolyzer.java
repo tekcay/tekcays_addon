@@ -18,6 +18,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import tekcays_addon.api.capability.impl.NoOverclockLogic;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
@@ -39,7 +40,7 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
 
     public MetaTileEntityAdvancedElectrolyzer(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.ELECTROLYSIS);
-        this.recipeMapWorkable = new AdvancedElectrolyzerLogic(this);
+        this.recipeMapWorkable = new NoOverclockLogic(this);
     }
 
     @Override
@@ -119,26 +120,10 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
         return true;
     }
 
-    ////////////////
-    //Remove overlocking
-    /////////////////
-
-    private static class AdvancedElectrolyzerLogic extends MultiblockRecipeLogic {
-
-        public AdvancedElectrolyzerLogic(RecipeMapMultiblockController tileEntity) {
-            super(tileEntity);
-        }
-
-        @Override
-        protected int[] calculateOverclock(Recipe recipe) {
-            return new int[]{0, recipe.getDuration()};
-        }
-    }
-
     @Override
     public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-
+        tooltip.add(I18n.format("tkcya.machine.no_overclock.tooltip"));
         tooltip.add(I18n.format("tekcays_addon.machine.advanced_electrolyzer.tooltip.1"));
         tooltip.add(I18n.format("tekcays_addon.machine.advanced_electrolyzer.tooltip.2"));
         tooltip.add(I18n.format("tekcays_addon.machine.advanced_electrolyzer.tooltip.3"));

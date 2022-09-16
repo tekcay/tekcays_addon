@@ -5,6 +5,8 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.info.MaterialFlags;
 import gregtech.api.unification.material.info.MaterialIconSet;
+import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.api.unification.material.info.TKCYAMaterialFlags;
 
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialIconSet.*;
@@ -206,6 +208,47 @@ public class TKCYAMiscMaterials {
                 .color(Potassium.getMaterialRGB() * 2 + Sulfur.getMaterialRGB() * 2 + Obsidian.getMaterialRGB() * 5 / 9)
                 .build();
         PotassiumMetaBisulfite.setFormula("K2S2O5", true);
+
+        //More roastable ores
+        Kesterite = new Material.Builder(24138, "kesterite")
+                .dust().ore()
+                .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .components(Copper, 2, Zinc, 1, Tin, 1, Sulfur, 4)
+                .iconSet(DULL)
+                .color(0x577b5b)
+                .build();
+
+        Stannite = new Material.Builder(24139, "stannite")
+                .dust().ore()
+                .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .components(Copper, 2, Iron, 1, Tin, 1, Sulfur, 4)
+                .iconSet(DULL)
+                .color(0x91a95e)
+                .build();
+
+        Arsenopyrite = new Material.Builder(24140, "arsenopyrite")
+                .dust().ore()
+                .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .components(Iron, 1, Arsenic, 1, Sulfur, 1)
+                .iconSet(DULL)
+                .color(0x91a95e)
+                .build();
+
+        //Roasting outputs
+        Cuprite = new Material.Builder(24141, "cuprite")
+                .dust().ore()
+                .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .components(Copper, 2, Oxygen, 1)
+                .iconSet(DULL)
+                .color(Copper.getMaterialRGB() * 2 + Oxygen.getMaterialRGB() / 3)
+                .build();
+
+
+
 
     }
 

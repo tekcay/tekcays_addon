@@ -68,6 +68,9 @@ public class TKCYAValues {
     public static final List<FluidStack> MIXTURE_TO_FILTER = new ArrayList<>();
 
 
+    public static final List<ItemStack> DUST_MIXTURE_WITH_NBT = new ArrayList<>();
+
+
 
     //////////////////
     // For the New Blast Furnace
