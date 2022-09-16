@@ -1,7 +1,9 @@
 package tekcays_addon.loaders.recipe.chains;
 
-import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 
+import tekcays_addon.api.unification.TKCYAMaterials;
+
+import static gregicality.science.api.unification.materials.GCYSMaterials.PotassiumHydroxide;
 import static gregtech.api.recipes.RecipeMaps.CHEMICAL_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.dust;
@@ -9,6 +11,15 @@ import static gregtech.api.unification.ore.OrePrefix.dust;
 public class MiscChemicals {
 
     public static void init() {
+
+
+
+        CHEMICAL_RECIPES.recipeBuilder().duration(90).EUt(30)
+                .input(dust, PotassiumHydroxide, 2)
+                .fluidInputs(SulfurDioxide.getFluid(2000))
+                .output(dust, TKCYAMaterials.PotassiumMetaBisulfite)
+                .fluidOutputs(DistilledWater.getFluid(1000))
+                .buildAndRegister();
 
         /*
         //Diethyl ether

@@ -133,15 +133,20 @@ material.hot_flue_gas=Hot Flue Gas
 material.flue_gas=Flue Gas
 material.melon_oil=Melon Oil
 material.pumpkin_oil=Pumpkin Oil
+material.mixture_to_filter=Mixture To Filter
 
 ##Misc
 material.hot_air=Hot Air
 material.very_hot_air=Very Hot Air
+material.potassium_metabisulfite=Potassium MetaBisulfite
 
 fluid.fuel.tooltip=To be used in the fuel consuming machines
 
+##GoldChain
 material.precious_metal=Precious Metal
 material.gold_alloy=Gold Alloy
+material.gold_leach=Gold Leach
+material.copper_leach=Copper Leach
 
 ## FluorideChain
 material.potassium_bifluoride=Potassium Bifluoride
