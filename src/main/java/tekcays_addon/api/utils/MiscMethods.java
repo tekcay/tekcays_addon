@@ -2,6 +2,9 @@ package tekcays_addon.api.utils;
 
 import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.recipes.ingredients.GTRecipeInput;
+import gregtech.api.unification.material.Material;
+import gregtech.api.unification.material.Materials;
+import gregtech.api.unification.stack.MaterialStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.unification.TKCYAMaterials;
@@ -49,6 +52,19 @@ public class MiscMethods {
             map.put(tier * 10, tier);
         }
         return map;
+    }
+
+    /**
+     *
+     * @param m1
+     * @param m2
+     * @return the amount of {@code Material} m2 in {@code Material} m1.
+     */
+    public static int getAmountMaterial(Material m1, Material m2) {
+        for (MaterialStack ms : m1.getMaterialComponents()) {
+            if (ms.material.equals(m2)) return (int) ms.amount;
+        }
+        return 0;
     }
 
 
