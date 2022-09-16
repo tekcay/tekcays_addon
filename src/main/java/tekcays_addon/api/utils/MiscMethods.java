@@ -7,6 +7,8 @@ import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.MaterialStack;
+import gregtech.api.util.GTTransferUtils;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemAir;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -74,7 +76,6 @@ public class MiscMethods {
         for (int i = 0; i < compounds.size(); i += 2) {
             list.add(new MaterialStack(getMaterialFromUnlocalizedName(compounds.get(i)), Integer.parseInt(compounds.get(i + 1))));
         }
-
         return list;
     }
 
@@ -111,34 +112,58 @@ public class MiscMethods {
      */
     public static List<ItemStack> getItemStacksFromMaterialStacks(List<MaterialStack> list, OrePrefix prefix) {
         List<ItemStack> output = new ArrayList<>();
-        list.forEach(ms -> output.add(OreDictUnifier.get(prefix, ms.material, (int) ms.amount)));
+        list.forEach(ms -> output.add(OreDictUnifier.get(prefix, ms.material, (int) (ms.amount))));
         return output;
     }
 
+    /**
+     *
+     * @param list the {@code List<MaterialStack}s
+     * @param prefix the {@code OrePrefix} to apply to get the output.
+     * @param applyMaterialAmount
+     * @return a {@code List<ItemStack}
+     */
+    public static List<ItemStack> getItemStacksFromMaterialStacks(List<MaterialStack> list, OrePrefix prefix, boolean applyMaterialAmount) {
+        List<ItemStack> output = new ArrayList<>();
+        if (applyMaterialAmount) {
+            list.forEach(ms -> output.add(OreDictUnifier.get(prefix, ms.material, (int) (ms.amount * prefix.getMaterialAmount(ms.material)))));
+        } else {
+            list.forEach(ms -> output.add(OreDictUnifier.get(prefix, ms.material, (int) (ms.amount))));
+        }
+        return output;
+    }
+
+    /**
+     * Verifies if there is room in the outputInventory
+     * @param toOutput the {@code List<ItemStack>} that must be output.
+     * @param outputInventory the {@code IItemHandlerModifiable} where to output.
+     * @return {@code true} if it is possible.
+     */
     public static boolean canOutputItem(List<ItemStack> toOutput, IItemHandlerModifiable outputInventory) {
         if (toOutput.size() > outputInventory.getSlots()) return false;
-
         ItemStack stackLeft = toOutput.get(0);
 
         for (ItemStack stack : toOutput) {
             stackLeft = stack;
             for (int i = 0; i < outputInventory.getSlots(); i++) {
                 stackLeft = outputInventory.insertItem(i, stackLeft, true);
-                if (stackLeft.getDisplayName().equals("Air")) break;
+                if (stackLeft.isEmpty()) break;
             }
         }
-        return stackLeft.getDisplayName().equals("Air");
+        return stackLeft.isEmpty();
     }
 
     public static void doOutputItem(List<ItemStack> toOutput, IItemHandlerModifiable outputInventory) {
 
         for (ItemStack stack : toOutput) {
-            ItemStack stackLeft = stack;
             for (int i = 0; i < outputInventory.getSlots(); i++) {
-                stackLeft = outputInventory.insertItem(i, stackLeft, false);
-                if (stackLeft.getDisplayName().equals("Air")) break;
+                if (outputInventory.insertItem(i, stack, false).isEmpty()) break;
+                toOutput.forEach(itemStack -> TKCYALog.logger.info("d : " + itemStack.getCount()));
+                if (stack.isEmpty()) break;
             }
         }
+        toOutput.forEach(itemStack -> TKCYALog.logger.info("e : " + itemStack.getCount()));
+        TKCYALog.logger.info("done");
     }
 
 
@@ -168,6 +193,61 @@ public class MiscMethods {
         return energyContainer.getEnergyStored() >= (long) energyConsumption * 20;
     }
 
+
+    /**
+     *
+     * @param list the {@code List<ItemStack>}
+     * @param divider
+     * @return the desired {@code List<ItemStack>}.
+     * <pre>
+     * If the division is not possible, returns the former {@code List<ItemStack>}.
+     */
+    public static List<ItemStack> divideOutputStack(List<ItemStack> list, int divider) {
+        List<ItemStack> dividedOutputStack = new ArrayList<>();
+        boolean success = true;
+
+        for (ItemStack stack : list) {
+            if (stack.getCount() % divider != 0) return list;
+            dividedOutputStack.add(new ItemStack(stack.getItem(), stack.getCount() / divider));
+        }
+        return dividedOutputStack;
+    }
+
+    public static List<ItemStack> setOutputStackPerSec(IItemHandlerModifiable inputInventory, int inputSlot, OrePrefix prefix) {
+        ItemStack input = inputInventory.getStackInSlot(inputSlot);
+        NBTTagCompound nbt = input.getTagCompound();
+        List<MaterialStack> list = getMaterialStacksFromString(nbt.getString("Composition"));
+        return getItemStacksFromMaterialStacks(list, prefix);
+    }
+
+    public static List<ItemStack> setOutputStackPerSec(String composition, OrePrefix prefix) {
+        List<MaterialStack> list = getMaterialStacksFromString(composition);
+        return getItemStacksFromMaterialStacks(list, prefix);
+    }
+
+    public static String getComposition(IItemHandlerModifiable inputInventory, int inputSlot) {
+        ItemStack input = inputInventory.getStackInSlot(inputSlot);
+        NBTTagCompound nbt = input.getTagCompound();
+        return nbt.getString("Composition");
+    }
+
+
+
+    /**
+     * Check if a multiblock can process by checking if there is enough energy and room in the output.
+     * @param energyContainer
+     * @param requiredVoltage
+     * @param energyCost
+     * @param outputStackPerSec
+     * @param outputInventory
+     * @return true.
+     */
+    public static boolean canDoWork(IEnergyContainer energyContainer, long requiredVoltage, int energyCost, List<ItemStack> outputStackPerSec, IItemHandlerModifiable outputInventory) {
+        if (energyContainer.getInputVoltage() < requiredVoltage) return false;
+        if (!hasEnoughEnergy(energyCost, energyContainer)) return false;
+        return GTTransferUtils.addItemsToItemHandler(outputInventory, true, outputStackPerSec);
+        //return canOutputItem(outputStackPerSec, outputInventory);
+    }
 
 
 }
