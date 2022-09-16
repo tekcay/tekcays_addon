@@ -58,23 +58,7 @@ public class TKCYAPartsRecipeHandler {
         }
     }
 
-    public static void initFilter() {
 
-        for (Material m : FILTER_MATERIALS) {
-
-            ItemStack filterStack = TKCYAMetaItems.FILTER.getStackForm();
-
-            FilterBehavior.getInstanceFor(filterStack).setPartMaterial(filterStack, m);
-
-            LASER_ENGRAVER_RECIPES.recipeBuilder()
-                    .input(plate, m)
-                    .notConsumable(lens, Materials.Glass)
-                    .outputs(filterStack)
-                    .duration((int) m.getMass() * 30)
-                    .EUt(24)
-                    .buildAndRegister();
-        }
-    }
 
     public static void initPolarizing(){
 

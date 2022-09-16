@@ -99,7 +99,6 @@ public class TKCYARecipeLoader {
             StorageOverhaul.removeGTCEuTanksAndValvesRecipe();
         }
 
-        TKCYAPartsRecipeHandler.initFilter();
         CasingsLoader.init();
         ChemicalChains.init();
         MineralChains.init();
@@ -108,6 +107,8 @@ public class TKCYARecipeLoader {
         //MUST BE CALLED AFTER ANY HANDLER THAT GENERATES DUST_MIXTURE !
         SpiralSeparatorHandler.init();
         GTCEuRequireCleanRoomHandler.init();
+        //Must be called in the end
+        FiltrationRecipeHandler.init();
     }
 
 

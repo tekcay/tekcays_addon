@@ -52,6 +52,20 @@ public class TKCYAMiscMaterials {
                 .build();
         GoldAlloy.setFormula("Cu3Au?", true);
 
+        GoldLeach = new Material.Builder(24106, "gold_leach")
+                .dust()
+                .iconSet(SHINY)
+                .color(0xB99023)
+                .build();
+        GoldLeach.setFormula("CuAu?", true);
+
+        CopperLeach = new Material.Builder(24107, "copper_leach")
+                .dust()
+                .iconSet(SHINY)
+                .color(0xB99023)
+                .build();
+        CopperLeach.setFormula("Cu?", true);
+
 
 
         //FluorineChain
@@ -169,25 +183,31 @@ public class TKCYAMiscMaterials {
                 .fluid(FluidTypes.ACID)
                 .color(Germanium.getMaterialRGB() + SulfuricAcid.getMaterialRGB() / 2)
                 .build();
-        GermanicAcidSolution.setFormula("H4GeO4");
+        GermanicAcidSolution.setFormula("H4GeO4", true);
 
         TannicAcid = new Material.Builder(24135, "tannic_acid")
                 .fluid(FluidTypes.ACID)
                 .color(554242)
                 .build();
-        TannicAcid.setFormula("C76H52O46");
+        TannicAcid.setFormula("C76H52O46", true);
 
         GermaniumChloride = new Material.Builder(24136, "germanium_chloride")
                 .dust()
                 .color(Germanium.getMaterialRGB() + Chlorine.getMaterialRGB() * 4 / 5)
                 .build();
-        GermaniumChloride.setFormula("GeCl4");
+        GermaniumChloride.setFormula("GeCl4", true);
 
         GermaniumOxide = new Material.Builder(24137, "germanium_oxide")
                 .dust()
                 .color(Germanium.getMaterialRGB() + Oxygen.getMaterialRGB() * 2 / 3)
                 .build();
-        GermaniumOxide.setFormula("GeO2");
+        GermaniumOxide.setFormula("GeO2", true);
+
+        PotassiumMetaBisulfite = new Material.Builder(24138, "potassium_metabisulfite")
+                .dust()
+                .color(Potassium.getMaterialRGB() * 2 + Sulfur.getMaterialRGB() * 2 + Obsidian.getMaterialRGB() * 5 / 9)
+                .build();
+        PotassiumMetaBisulfite.setFormula("K2S2O5", true);
 
         //More roastable ores
         Kesterite = new Material.Builder(24138, "kesterite")

@@ -48,6 +48,7 @@ public class TKCYAMaterials {
     public static Material FlueGas;
     public static Material MelonOil;
     public static Material PumpkinOil;
+    public static Material MixtureToFilter;
 
     /**
      * Misc
@@ -59,6 +60,8 @@ public class TKCYAMaterials {
     //GoldChain
     public static Material PreciousMetal;
     public static Material GoldAlloy;
+    public static Material GoldLeach;
+    public static Material CopperLeach;
 
     //FluorideChain
     public static Material PotassiumBifluoride;
@@ -83,6 +86,10 @@ public class TKCYAMaterials {
     public static Material GermaniumChloride;
     public static Material GermaniumOxide;
 
+
+    //Misc
+    public static Material PotassiumMetaBisulfite;
+
     //More roastable
     public static Material Kesterite;
     public static Material Stannite;
@@ -90,9 +97,7 @@ public class TKCYAMaterials {
 
     //Roasting outputs
     public static Material Cuprite;
-
-
-
+    
     /**
      * Alloys
      */
