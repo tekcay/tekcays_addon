@@ -1,5 +1,6 @@
 package tekcays_addon.common.metatileentities.multi;
 
+import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -9,14 +10,19 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.pattern.TraceabilityPredicate;
+import gregtech.api.recipes.Recipe;
 import gregtech.api.unification.material.Materials;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
+import tekcays_addon.api.capability.impl.NoOverclockLogic;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
@@ -34,6 +40,7 @@ public class MetaTileEntitySpiralSeparator extends RecipeMapMultiblockController
 
     public MetaTileEntitySpiralSeparator(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.SPIRAL_SEPARATION);
+        this.recipeMapWorkable = new NoOverclockLogic(this);
     }
 
     @Override
@@ -107,6 +114,14 @@ public class MetaTileEntitySpiralSeparator extends RecipeMapMultiblockController
         super.formStructure(context);
         initializeAbilities();
         this.height = context.getOrDefault("spiralHeight", 1);
+        this.recipeMapWorkable.setParallelLimit(height / 2);
+    }
+
+    @Override
+    public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
+        super.addInformation(stack, player, tooltip, advanced);
+        tooltip.add(I18n.format("tkcya.machine.no_overclock.tooltip"));
+        tooltip.add(I18n.format("tkcya.machine.spiral_separator.tooltip.1"));
     }
 
     @Override
@@ -120,5 +135,6 @@ public class MetaTileEntitySpiralSeparator extends RecipeMapMultiblockController
     protected ICubeRenderer getFrontOverlay() {
         return Textures.CRACKING_UNIT_OVERLAY;
     }
+
 
 }

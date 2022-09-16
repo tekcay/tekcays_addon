@@ -116,6 +116,7 @@ recipemap.electrolysis.name=Electrolysis
 recipemap.filtration.name=Filtration
 recipemap.pressure_cracking.name=Cracking
 recipemap.roasting.name=Roasting
+recipemap.spiral_separation.name=Spiral Separation
 
 # Materials
 
@@ -232,8 +233,10 @@ item.material.oreprefix.moldBlock=%s Mold Block
 
 
 
-
+tkcya.machine.no_overclock.tooltip=No overclock
 tkcya.machine.height.tooltip=Height: %d
+
+tkcya.machine.spiral_separator.tooltip.1=Run §a1§7 parallel recipe per §a2§7 additional floors.
 
 tekcays_addon.multiblock.electric_melter.tooltip.1=Temperature: §a%d K§7.
 tekcays_addon.multiblock.electric_melter.tooltip.2=Not enough energy can be input to reach the target!
