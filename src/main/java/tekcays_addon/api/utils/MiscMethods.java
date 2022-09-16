@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static gregtech.api.unification.material.Materials.Air;
 import static tekcays_addon.api.utils.TKCYAValues.ELECTRIC_PUMPS;
 
 public class MiscMethods {
@@ -94,14 +95,38 @@ public class MiscMethods {
 
     /**
      *
-     * @param list
+     * @param list {@code List<MaterialStack>}
      * @return the sum of the amount of each {@code MaterialStack}.
      */
-    public static int getMaterialStackSize(List<MaterialStack> list) {
+    public static int getMaterialStackListSize(List<MaterialStack> list) {
         AtomicInteger stackSize = new AtomicInteger();
         list.forEach(ms -> stackSize.addAndGet((int) ms.amount));
         return stackSize.get();
     }
+
+    /**
+     *
+     * @param list {@code List<FluidStack>}
+     * @return the sum of the amount of each {@code FluidStack}.
+     */
+    public static int getFluidStackListSize(List<FluidStack> list) {
+        AtomicInteger stackSize = new AtomicInteger();
+        list.forEach(stack -> stackSize.addAndGet(stack.amount));
+        return stackSize.get();
+    }
+
+    /**
+     *
+     * @param list {@code List<ItemStack>}
+     * @return the sum of the amount of each {@code ItemStack}.
+     */
+    public static int getItemStackListSize(List<ItemStack> list) {
+        AtomicInteger stackSize = new AtomicInteger();
+        list.forEach(stack -> stackSize.addAndGet((int) stack.getCount()));
+        return stackSize.get();
+    }
+
+
 
 
     /**
@@ -126,7 +151,8 @@ public class MiscMethods {
     public static List<ItemStack> getItemStacksFromMaterialStacks(List<MaterialStack> list, OrePrefix prefix, boolean applyMaterialAmount) {
         List<ItemStack> output = new ArrayList<>();
         if (applyMaterialAmount) {
-            list.forEach(ms -> output.add(OreDictUnifier.get(prefix, ms.material, (int) (ms.amount * prefix.getMaterialAmount(ms.material)))));
+            long materialAmount = OrePrefix.dust.getMaterialAmount(Air) / prefix.getMaterialAmount(Air);
+            list.forEach(ms -> output.add(OreDictUnifier.get(prefix, ms.material, (int) (ms.amount * materialAmount))));
         } else {
             list.forEach(ms -> output.add(OreDictUnifier.get(prefix, ms.material, (int) (ms.amount))));
         }
@@ -220,9 +246,15 @@ public class MiscMethods {
         return getItemStacksFromMaterialStacks(list, prefix);
     }
 
+
     public static List<ItemStack> setOutputStackPerSec(String composition, OrePrefix prefix) {
         List<MaterialStack> list = getMaterialStacksFromString(composition);
         return getItemStacksFromMaterialStacks(list, prefix);
+    }
+
+    public static List<ItemStack> setOutputStack(String composition, OrePrefix prefix) {
+        List<MaterialStack> list = getMaterialStacksFromString(composition);
+        return getItemStacksFromMaterialStacks(list, prefix, true);
     }
 
     public static String getComposition(IItemHandlerModifiable inputInventory, int inputSlot) {

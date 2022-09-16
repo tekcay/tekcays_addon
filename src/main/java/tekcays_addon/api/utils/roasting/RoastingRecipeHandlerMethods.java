@@ -14,8 +14,8 @@ import java.util.List;
 
 import static gregtech.api.unification.material.Materials.Sulfur;
 import static gregtech.api.unification.ore.OrePrefix.dust;
-import static tekcays_addon.api.utils.MiscMethods.getMaterialStackSize;
 import static tekcays_addon.api.utils.MiscMethods.writeNBTtoDustMixture;
+import static tekcays_addon.api.utils.TKCYAValues.DUST_MIXTURE_WITH_NBT;
 
 public class RoastingRecipeHandlerMethods {
 
@@ -99,6 +99,7 @@ public class RoastingRecipeHandlerMethods {
         NBTTagCompound nbt = writeNBTtoDustMixture(outputs);
         ItemStack outputStack = TKCYAMetaItems.DUST_MIXTURE.getStackForm();
         outputStack.setTagCompound(nbt);
+        DUST_MIXTURE_WITH_NBT.add(outputStack);
         return outputStack;
     }
 

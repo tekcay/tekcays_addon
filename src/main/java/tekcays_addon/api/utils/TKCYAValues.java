@@ -65,6 +65,9 @@ public class TKCYAValues {
         }};
 
 
+    public static final List<ItemStack> DUST_MIXTURE_WITH_NBT = new ArrayList<>();
+
+
 
     //////////////////
     // For the New Blast Furnace
