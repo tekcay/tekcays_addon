@@ -83,6 +83,16 @@ public class TKCYAMaterials {
     public static Material GermaniumChloride;
     public static Material GermaniumOxide;
 
+    //More roastable
+    public static Material Kesterite;
+    public static Material Stannite;
+    public static Material Arsenopyrite;
+
+    //Roasting outputs
+    public static Material Cuprite;
+
+
+
     /**
      * Alloys
      */
