@@ -54,7 +54,7 @@ public class ElectrolysisHandler {
                 .fluidInputs(BlueVitriol.getFluid(1000), DistilledWater.getFluid(1000))
                 .fluidOutputs(SulfuricAcid.getFluid(1000))
                 .output(OrePrefix.dust, Copper)
-                .chancedOutput(OrePrefix.dust, ChalcogenAnodeMud, 50, 0)
+                .chancedOutput(OrePrefix.dust, ChalcogenAnodeMud, 500, 0)
                 .duration(100)
                 .EUt(60)
                 .buildAndRegister();
@@ -65,7 +65,7 @@ public class ElectrolysisHandler {
                 .fluidInputs(BlueVitriol.getFluid(1000), DistilledWater.getFluid(1000))
                 .fluidOutputs(SulfuricAcid.getFluid(1000), Oxygen.getFluid(1000))
                 .output(OrePrefix.dust, Copper)
-                .chancedOutput(OrePrefix.dust, ChalcogenAnodeMud, 50, 0)
+                .chancedOutput(OrePrefix.dust, ChalcogenAnodeMud, 500, 0)
                 .duration(100)
                 .EUt(80)
                 .buildAndRegister();

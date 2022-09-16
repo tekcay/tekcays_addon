@@ -99,12 +99,13 @@ public class TKCYARecipeLoader {
             StorageOverhaul.removeGTCEuTanksAndValvesRecipe();
         }
 
-        TKCYAPartsRecipeHandler.initFilter();
         CasingsLoader.init();
         ChemicalChains.init();
         MineralChains.init();
         PolymerHandler.init();
         GTCEuRequireCleanRoomHandler.init();
+        //Must be called in the end
+        FiltrationRecipeHandler.init();
     }
 
 

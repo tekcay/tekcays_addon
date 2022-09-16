@@ -1,14 +1,15 @@
 package tekcays_addon.loaders.recipe.chains;
 
+import gregicality.science.api.recipes.GCYSRecipeMaps;
 import gregtech.api.recipes.ingredients.GTRecipeItemInput;
 import gregtech.api.recipes.ingredients.nbtmatch.NBTCondition;
 import gregtech.api.recipes.ingredients.nbtmatch.NBTMatcher;
-import net.minecraft.nbt.NBTBase;
+import gregtech.api.unification.stack.MaterialStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagString;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.api.utils.MiscMethods;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
 import static gregtech.api.recipes.RecipeMaps.CHEMICAL_RECIPES;
@@ -46,23 +47,17 @@ public class GoldChain {
         // STEP 3
         // Cu3Au?(OH) + HCl -> HAuCl(OH) + Cu3?
 
-        NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setString("Composition", "material.copper_leach,4,material.chloroauric_acid,1000");
-
         CHEMICAL_RECIPES.recipeBuilder().duration(80)
                 .EUt(30)
                 .input(dust, GoldLeach, 4)
                 .fluidInputs(HydrochloricAcid.getFluid(1000))
-                .fluidOutputs(new FluidStack(MixtureToFilter.getFluid(), 1000, nbt))
+                .fluidOutputs(MiscMethods.getMixtureToFilterStack(new MaterialStack(CopperLeach, 4), new MaterialStack(ChloroauricAcid, 1000)))
                 .buildAndRegister();
 
         // STEP 4
         // HAuCl(OH) -> Au + H2O + Cl
 
-        nbt.removeTag("Composition");
-        nbt.setString("Composition", "material.gold,4,material.hydrochloric_acid,4000");
-        FluidStack output = new FluidStack(MixtureToFilter.getFluid(), 1000, nbt);
-        MIXTURE_TO_FILTER.add(output);
+        FluidStack output = MiscMethods.getMixtureToFilterStack(new MaterialStack(Gold, 4), new MaterialStack(HydrochloricAcid, 4000));
 
         TKCYARecipeMaps.ELECTROLYSIS.recipeBuilder().duration(100)
                 .EUt(100)
@@ -82,5 +77,21 @@ public class GoldChain {
                 .fluidOutputs(output)
                 .fluidOutputs(Oxygen.getFluid(1500))
                 .buildAndRegister();
+
+        /* //TODO gets a DUST_MIXTURE
+        // Step 3 recovery
+        // This step does not directly process Chloroauric Acid, and instead is processing
+        // other byproducts from the chain, which are compacted from the older versions of the chain.
+        // Cu3? -> 3Cu + Fe + Ni + Ag + Pb
+        GCYSRecipeMaps.DRYER_RECIPES.recipeBuilder().EUt(30).duration(80)
+                .input(dust, CopperLeach, 4)
+                .output(dust, Copper, 3)
+                .chancedOutput(dust, Lead, 1500, 500)
+                .chancedOutput(dust, Iron, 1200, 400)
+                .chancedOutput(dust, Nickel, 1000, 300)
+                .chancedOutput(dust, Silver, 800, 200)
+                .buildAndRegister();
+
+         */
     }
 }
