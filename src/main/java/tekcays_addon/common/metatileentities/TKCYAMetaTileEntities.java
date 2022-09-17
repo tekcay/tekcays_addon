@@ -45,6 +45,8 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityAdvancedElectrolyzer ADVANCED_ELECTROLYZER;
     public static MetaTileEntityFilter FILTER;
     public static MetaTileEntityPressurizedCrackingUnit PRESSURIZED_CRACKING_UNIT;
+    public static MetaTileEntityRoastingOven ROASTING_OVEN;
+    public static MetaTileEntitySpiralSeparator SPIRAL_SEPARATOR;
 
     //Blast Furnaces
     public static MetaTileEntityTKCYABlastFurnace[] BLAST_FURNACE = new MetaTileEntityTKCYABlastFurnace[BRICKS.size()];
@@ -184,8 +186,8 @@ public class TKCYAMetaTileEntities {
             PRESSURIZED_CRACKING_UNIT = registerMetaTileEntity(11071, new MetaTileEntityPressurizedCrackingUnit(tkcyaId("pressurized_cracking_unit")));
         }
 
-
-
+        ROASTING_OVEN = registerMetaTileEntity(11072, new MetaTileEntityRoastingOven(tkcyaId("roasting_oven")));
+        SPIRAL_SEPARATOR = registerMetaTileEntity(10073, new MetaTileEntitySpiralSeparator(tkcyaId("spiral_separator")));
 
     }
 

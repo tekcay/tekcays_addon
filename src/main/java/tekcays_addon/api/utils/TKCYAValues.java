@@ -7,6 +7,7 @@ import gregtech.api.unification.material.Materials;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import gregtech.api.unification.ore.OrePrefix;
 
@@ -76,6 +77,11 @@ public class TKCYAValues {
             add(Polypropylene);
             addAll(GTCEu_POLYMERS);
         }};
+
+    public static final List<FluidStack> MIXTURE_TO_FILTER = new ArrayList<>();
+
+
+    public static final List<ItemStack> DUST_MIXTURE_WITH_NBT = new ArrayList<>();
 
 
 

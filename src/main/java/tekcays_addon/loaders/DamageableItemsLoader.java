@@ -17,6 +17,8 @@ public class DamageableItemsLoader {
     public static ItemStack electrodePlatinum = TKCYAMetaItems.ELECTRODE.getStackForm();
     public static ItemStack electrodeZinc = TKCYAMetaItems.ELECTRODE.getStackForm();
     public static ItemStack electrodeAluminium = TKCYAMetaItems.ELECTRODE.getStackForm();
+    public static ItemStack electrodeGold = TKCYAMetaItems.ELECTRODE.getStackForm();
+    public static ItemStack electrodeSilver = TKCYAMetaItems.ELECTRODE.getStackForm();
 
     //Filters
     public static ItemStack filterSteel = TKCYAMetaItems.FILTER.getStackForm();
@@ -30,6 +32,8 @@ public class DamageableItemsLoader {
         ElectrodeBehavior.getInstanceFor(electrodePlatinum).setPartMaterial(electrodePlatinum, Platinum);
         ElectrodeBehavior.getInstanceFor(electrodeZinc).setPartMaterial(electrodeZinc, Zinc);
         ElectrodeBehavior.getInstanceFor(electrodeAluminium).setPartMaterial(electrodeAluminium, Aluminium);
+        ElectrodeBehavior.getInstanceFor(electrodeGold).setPartMaterial(electrodeGold, Gold);
+        ElectrodeBehavior.getInstanceFor(electrodeSilver).setPartMaterial(electrodeSilver, Silver);
         //
     }
 

@@ -74,7 +74,7 @@ public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<SimpleRecipeBuilder> ELECTROLYSIS = new RecipeMap<>(
-            "electrolysis", 0, 4, 0, 1, 1, 3, 0, 3, new SimpleRecipeBuilder(), false)
+            "electrolysis", 0, 4, 0, 2, 1, 3, 0, 3, new SimpleRecipeBuilder(), false)
             .setSound(GTSounds.ELECTROLYZER);
 
     @ZenProperty
@@ -85,6 +85,16 @@ public class TKCYARecipeMaps {
     public static final RecipeMap<TemperaturePressureRecipeBuilder> PRESSURE_CRACKING = new RecipeMap<>(
             "pressure_cracking", 1, 2, 0, 0, 1, 2, 1, 2, new TemperaturePressureRecipeBuilder(), false)
             .setSound(GTSounds.COMPRESSOR);
+
+    @ZenProperty
+    public static final RecipeMap<TemperaturePressureRecipeBuilder> ROASTING = new RecipeMap<>(
+            "roasting", 1, 2, 0, 4, 1, 1, 0, 2, new TemperaturePressureRecipeBuilder(), false)
+            .setSound(GTSounds.FURNACE);
+
+    @ZenProperty
+    public static final RecipeMap<SimpleRecipeBuilder> SPIRAL_SEPARATION = new RecipeMap<>(
+            "spiral_separation", 1, 1, 2, 8, 0, 0, 0, 0, new SimpleRecipeBuilder(), false)
+            .setSound(GTSounds.MOTOR);
 
 
 }

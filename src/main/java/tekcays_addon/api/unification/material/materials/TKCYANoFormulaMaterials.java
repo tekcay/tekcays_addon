@@ -52,6 +52,11 @@ public class TKCYANoFormulaMaterials {
                 .color(0xc6c079)
                 .build();
 
+        MixtureToFilter = new Material.Builder(24008, "mixture_to_filter")
+                .fluid()
+                .color(0xc6c079)
+                .build();
+
     }
 
 }

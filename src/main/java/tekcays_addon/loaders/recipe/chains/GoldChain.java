@@ -1,7 +1,28 @@
 package tekcays_addon.loaders.recipe.chains;
 
+import gregicality.science.api.recipes.GCYSRecipeMaps;
+import gregtech.api.recipes.ingredients.GTRecipeItemInput;
+import gregtech.api.recipes.ingredients.nbtmatch.NBTCondition;
+import gregtech.api.recipes.ingredients.nbtmatch.NBTMatcher;
+import gregtech.api.unification.stack.MaterialStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.FluidStack;
+import tekcays_addon.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.api.utils.MiscMethods;
+import tekcays_addon.common.items.TKCYAMetaItems;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static gregtech.api.recipes.RecipeMaps.CHEMICAL_RECIPES;
-import static gregtech.api.unification.ore.OrePrefix.ingot;
+import static gregtech.api.unification.material.Materials.*;
+import static gregtech.api.unification.ore.OrePrefix.*;
+import static tekcays_addon.api.unification.TKCYAMaterials.*;
+import static tekcays_addon.api.utils.TKCYAValues.MIXTURE_TO_FILTER;
+import static tekcays_addon.api.utils.roasting.RoastingRecipeHandlerMethods.getDustMixtureStackWithNBT;
+import static tekcays_addon.loaders.DamageableItemsLoader.electrodeSilver;
+
 
 public class GoldChain {
 
@@ -9,48 +30,63 @@ public class GoldChain {
 
         ////FROM GCYL
 
-        /*
-
         // STEP 2
         // Cu3Au? + HNO3 -> Cu3Au?(OH) + NO2
         CHEMICAL_RECIPES.recipeBuilder().duration(80)
+                .EUt(30)
                 .input(ingot, GoldAlloy, 4)
                 .fluidInputs(NitricAcid.getFluid(1000))
-                .outputs(GoldLeach.getItemStack(4))
+                .output(dust, GoldLeach)
+                .buildAndRegister();
+
+        CHEMICAL_RECIPES.recipeBuilder().duration(80)
+                .EUt(30)
+                .notConsumable(TKCYAMetaItems.GAS_COLLECTOR)
+                .input(ingot, GoldAlloy, 4)
+                .fluidInputs(NitricAcid.getFluid(1000))
+                .output(dust, GoldLeach)
                 .fluidOutputs(NitrogenDioxide.getFluid(1000))
                 .buildAndRegister();
 
         // STEP 3
         // Cu3Au?(OH) + HCl -> HAuCl(OH) + Cu3?
+
         CHEMICAL_RECIPES.recipeBuilder().duration(80)
-                .inputs(GoldLeach.getItemStack(4))
+                .EUt(30)
+                .input(dust, GoldLeach, 4)
                 .fluidInputs(HydrochloricAcid.getFluid(1000))
-                .outputs(CopperLeach.getItemStack(4))
-                .fluidOutputs(ChloroauricAcid.getFluid(1000))
+                .fluidOutputs(MiscMethods.getMixtureToFilterStack(new MaterialStack(CopperLeach, 4), new MaterialStack(ChloroauricAcid, 1000)))
                 .buildAndRegister();
 
         // STEP 4
         // HAuCl(OH) -> Au + H2O + Cl
-        CHEMICAL_RECIPES.recipeBuilder().duration(100)
-                .fluidInputs(ChloroauricAcid.getFluid(1000))
-                .notConsumable(dust, PotassiumMetabisulfite)
-                .output(dust, Gold, 2)
-                .fluidOutputs(Water.getFluid(1000))
-                .fluidOutputs(Chlorine.getFluid(1000))
+
+        FluidStack output = MiscMethods.getMixtureToFilterStack(new MaterialStack(Gold, 4), new MaterialStack(HydrochloricAcid, 4000));
+
+        TKCYARecipeMaps.ELECTROLYSIS.recipeBuilder().duration(100)
+                .EUt(100)
+                .inputNBT(GTRecipeItemInput.getOrCreate(electrodeSilver).setNonConsumable(), NBTMatcher.ANY, NBTCondition.ANY)
+                .fluidInputs(ChloroauricAcid.getFluid(1000), DistilledWater.getFluid(1000))
+                .input(dustTiny, TKCYAMaterials.PotassiumMetaBisulfite)
+                .fluidOutputs(output)
+                .fluidOutputs(Oxygen.getFluid(1500))
                 .buildAndRegister();
 
-        // SIDE INGREDIENTS ============================================================================================
-
-        // NOT CONSUMED INGREDIENT
-        MIXER_RECIPES.recipeBuilder().duration(100).EUt(30)
-                .notConsumable(new IntCircuitIngredient(1))
-                .input(dust, Potassium, 2)
-                .input(dust, Sulfur, 2)
-                .fluidInputs(Oxygen.getFluid(5000))
-                .output(dust, PotassiumMetabisulfite, 9)
+        TKCYARecipeMaps.ELECTROLYSIS.recipeBuilder().duration(100)
+                .EUt(120)
+                .inputNBT(GTRecipeItemInput.getOrCreate(electrodeSilver).setNonConsumable(), NBTMatcher.ANY, NBTCondition.ANY)
+                .fluidInputs(ChloroauricAcid.getFluid(1000), DistilledWater.getFluid(1000))
+                .notConsumable(TKCYAMetaItems.GAS_COLLECTOR)
+                .input(dustTiny, TKCYAMaterials.PotassiumMetaBisulfite)
+                .fluidOutputs(output)
+                .fluidOutputs(Oxygen.getFluid(1500))
                 .buildAndRegister();
 
-         */
+        // Cu3? -> 3Cu + Fe + Ni + Ag + Pb
+        GCYSRecipeMaps.DRYER_RECIPES.recipeBuilder().EUt(30).duration(80)
+                .input(dust, CopperLeach, 4)
+                .outputs(getDustMixtureStackWithNBT(CopperLeach))
+                .buildAndRegister();
 
 
     }
