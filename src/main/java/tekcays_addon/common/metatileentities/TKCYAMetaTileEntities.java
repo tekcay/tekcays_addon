@@ -23,6 +23,7 @@ import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickI
 import tekcays_addon.common.metatileentities.steam.SteamCooler;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
+import static tekcays_addon.api.utils.blastfurnace.BlastFurnaceUtils.BRICKS;
 
 public class TKCYAMetaTileEntities {
 
@@ -45,20 +46,10 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityPressurizedCrackingUnit PRESSURIZED_CRACKING_UNIT;
 
     //Blast Furnaces
-    public static MetaTileEntityTKCYABlastFurnace BRICK_BLAST_FURNACE;
-    public static MetaTileEntityTKCYABlastFurnace FIRECLAY_BRICK_BLAST_FURNACE;
-    public static MetaTileEntityTKCYABlastFurnace REINFORCED_BRICK_BLAST_FURNACE;
-    public static MetaTileEntityTKCYABlastFurnace STRONG_BRICK_BLAST_FURNACE;
-    
-    public static MetaTileEntityBrickFluidHatch BRICK_EXPORT_FLUID_HATCH;
-    public static MetaTileEntityBrickFluidHatch REINFORCED_BRICK_EXPORT_FLUID_HATCH;
-    public static MetaTileEntityBrickFluidHatch FIRECLAY_BRICK_EXPORT_FLUID_HATCH;
-    public static MetaTileEntityBrickFluidHatch STRONG_BRICK_EXPORT_FLUID_HATCH;
+    public static MetaTileEntityTKCYABlastFurnace[] BLAST_FURNACE = new MetaTileEntityTKCYABlastFurnace[BRICKS.size()];
+    public static MetaTileEntityBrickFluidHatch[] BRICK_EXPORT_FLUID_HATCH = new MetaTileEntityBrickFluidHatch[BRICKS.size()];
+    public static MetaTileEntityBrickItemBus[] BRICK_ITEM_BUS = new MetaTileEntityBrickItemBus[BRICKS.size()];
 
-    public static MetaTileEntityBrickItemBus BRICK_IMPORT_ITEM_BUS;
-    public static MetaTileEntityBrickItemBus REINFORCED_BRICK_IMPORT_ITEM_BUS;
-    public static MetaTileEntityBrickItemBus FIRECLAY_BRICK_IMPORT_ITEM_BUS;
-    public static MetaTileEntityBrickItemBus STRONG_BRICK_IMPORT_ITEM_BUS;
 
 
 
@@ -120,22 +111,14 @@ public class TKCYAMetaTileEntities {
         if (TKCYAConfigHolder.meltingOverhaul.enableBlastingOverhaul) {
             CONVERTER = registerMetaTileEntity(11022, new MetaTileEntityConverter(tkcyaId("converter")));
 
-            
+            //id 11051-11063
+            for (int i = 0; i < BRICKS.size(); i++) {
+                BlockBrick.BrickType brick = BRICKS.get(i);
+                BLAST_FURNACE[i] = registerMetaTileEntity(11051 + i, new MetaTileEntityTKCYABlastFurnace(tkcyaId(brick.getName() + "_blast_furnace"), brick));
+                BRICK_EXPORT_FLUID_HATCH[i] = registerMetaTileEntity(11055 + i, new MetaTileEntityBrickFluidHatch(tkcyaId(brick.getName() + "_export_fluid_hatch"), true, brick));
+                BRICK_ITEM_BUS[i] = registerMetaTileEntity(11059 + i, new MetaTileEntityBrickItemBus(tkcyaId(brick.getName() + "_import_item_bus"), false, brick));
+            }
 
-            BRICK_BLAST_FURNACE = registerMetaTileEntity(11051, new MetaTileEntityTKCYABlastFurnace(tkcyaId("brick_blast_furnace"), BlockBrick.BrickType.BRICK));
-            FIRECLAY_BRICK_BLAST_FURNACE = registerMetaTileEntity(11052, new MetaTileEntityTKCYABlastFurnace(tkcyaId("fireclay_brick_blast_furnace"), BlockBrick.BrickType.FIRECLAY_BRICK));
-            REINFORCED_BRICK_BLAST_FURNACE = registerMetaTileEntity(11053, new MetaTileEntityTKCYABlastFurnace(tkcyaId("reinforced_brick_blast_furnace"), BlockBrick.BrickType.REINFORCED_BRICK));
-            STRONG_BRICK_BLAST_FURNACE = registerMetaTileEntity(11054, new MetaTileEntityTKCYABlastFurnace(tkcyaId("strong_brick_blast_furnace"), BlockBrick.BrickType.STRONG_BRICK));
-
-            BRICK_EXPORT_FLUID_HATCH = registerMetaTileEntity(11055, new MetaTileEntityBrickFluidHatch(tkcyaId("brick_export_fluid_hatch"), true, BlockBrick.BrickType.BRICK));
-            FIRECLAY_BRICK_EXPORT_FLUID_HATCH = registerMetaTileEntity(11056, new MetaTileEntityBrickFluidHatch(tkcyaId("fireclay_brick_export_fluid_hatch"), true, BlockBrick.BrickType.FIRECLAY_BRICK));
-            REINFORCED_BRICK_EXPORT_FLUID_HATCH = registerMetaTileEntity(11057, new MetaTileEntityBrickFluidHatch(tkcyaId("reinforced_brick_export_fluid_hatch"), true, BlockBrick.BrickType.REINFORCED_BRICK));
-            STRONG_BRICK_EXPORT_FLUID_HATCH = registerMetaTileEntity(11058, new MetaTileEntityBrickFluidHatch(tkcyaId("strong_brick_export_fluid_hatch"), true, BlockBrick.BrickType.STRONG_BRICK));
-
-            BRICK_IMPORT_ITEM_BUS = registerMetaTileEntity(11059, new MetaTileEntityBrickItemBus(tkcyaId("brick_import_item_bus"), false, BlockBrick.BrickType.BRICK));
-            FIRECLAY_BRICK_IMPORT_ITEM_BUS = registerMetaTileEntity(11060, new MetaTileEntityBrickItemBus(tkcyaId("fireclay_brick_import_item_bus"), false, BlockBrick.BrickType.FIRECLAY_BRICK));
-            REINFORCED_BRICK_IMPORT_ITEM_BUS = registerMetaTileEntity(11061, new MetaTileEntityBrickItemBus(tkcyaId("reinforced_brick_import_item_bus"), false, BlockBrick.BrickType.REINFORCED_BRICK));
-            STRONG_BRICK_IMPORT_ITEM_BUS = registerMetaTileEntity(11062, new MetaTileEntityBrickItemBus(tkcyaId("strong_brick_import_item_bus"), false, BlockBrick.BrickType.STRONG_BRICK));
         }
 
         if (TKCYAConfigHolder.miscOverhaul.enableGalvanizedSteel) {

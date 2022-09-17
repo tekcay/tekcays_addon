@@ -40,6 +40,10 @@ public class MetaTileEntityBrickItemBus extends MetaTileEntityItemBus {
         return new MetaTileEntityBrickItemBus(metaTileEntityId, isExportHatch, brick);
     }
 
+    public BlockBrick.BrickType getBrick() {
+        return this.brick;
+    }
+
     @Override
     public ICubeRenderer getBaseTexture() {
         return getBrickTexture(brick);

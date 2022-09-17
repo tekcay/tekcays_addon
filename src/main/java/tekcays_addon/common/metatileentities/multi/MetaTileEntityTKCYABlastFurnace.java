@@ -123,6 +123,10 @@ public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlock
         return getInputBrickItemBus(brick);
     }
 
+    public BlockBrick.BrickType getBrick() {
+        return this.brick;
+    }
+
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)

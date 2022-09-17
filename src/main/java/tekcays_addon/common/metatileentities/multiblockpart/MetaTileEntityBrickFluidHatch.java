@@ -47,6 +47,10 @@ public class MetaTileEntityBrickFluidHatch extends MetaTileEntityFluidHatch {
         initializeInventory();
     }
 
+    public BlockBrick.BrickType getBrick() {
+        return this.brick;
+    }
+
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityBrickFluidHatch(metaTileEntityId, isExportHatch, brick);

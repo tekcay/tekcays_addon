@@ -117,20 +117,20 @@ public class BlastingRecipeHandler {
 
         //Controller recipes
 
-        ModHandler.addShapedRecipe("brick_blast_furnace", BRICK_BLAST_FURNACE.getStackForm(),
+        ModHandler.addShapedRecipe("brick_blast_furnace", BLAST_FURNACE[0].getStackForm(),
                 "   ", " B ", "   ",
                 'B', TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.BRICK));
 
-        ModHandler.addShapedRecipe("reinforced_brick_blast_furnace", REINFORCED_BRICK_BLAST_FURNACE.getStackForm(),
+        ModHandler.addShapedRecipe("reinforced_brick_blast_furnace", BLAST_FURNACE[1].getStackForm(),
                 " w ", " B ", " h ",
                 'B', TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.REINFORCED_BRICK));
 
-        ModHandler.addShapedRecipe("fireclay_brick_blast_furnace", FIRECLAY_BRICK_BLAST_FURNACE.getStackForm(),
+        ModHandler.addShapedRecipe("fireclay_brick_blast_furnace", BLAST_FURNACE[2].getStackForm(),
                 " w ", " B ", " h ",
                 'B', TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.FIRECLAY_BRICK));
 
         /*
-        ModHandler.addShapedRecipe("strong_brick_blast_furnace", STRONG_BRICK_BLAST_FURNACE.getStackForm(),
+        ModHandler.addShapedRecipe("strong_brick_blast_furnace", BLAST_FURNACE[3].getStackForm(),
                 " w ", "B ", " h ",
                 'B', TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.FIRECLAY_BRICK));
 
