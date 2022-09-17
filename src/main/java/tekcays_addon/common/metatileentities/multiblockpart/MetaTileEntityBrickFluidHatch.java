@@ -1,37 +1,21 @@
 package tekcays_addon.common.metatileentities.multiblockpart;
 
-import codechicken.lib.render.CCRenderState;
-import codechicken.lib.render.pipeline.IVertexOperation;
-import codechicken.lib.vec.Matrix4;
 import gregtech.api.capability.impl.NotifiableFluidTank;
-import gregtech.api.gui.GuiTextures;
-import gregtech.api.gui.ModularUI;
-import gregtech.api.gui.ModularUI.Builder;
-import gregtech.api.gui.widgets.FluidContainerSlotWidget;
-import gregtech.api.gui.widgets.ImageWidget;
-import gregtech.api.gui.widgets.SlotWidget;
-import gregtech.api.gui.widgets.TankWidget;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.client.renderer.ICubeRenderer;
-import gregtech.client.renderer.texture.Textures;
-import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityFluidHatch;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.IFluidTank;
-import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.api.utils.blastfurnace.BlastFurnaceUtils;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static tekcays_addon.api.utils.blastfurnace.BlastFurnaceUtils.getBrickTexture;
+import static tekcays_addon.api.utils.BlastFurnaceUtils.getBrickTexture;
 
 public class MetaTileEntityBrickFluidHatch extends MetaTileEntityFluidHatch {
 

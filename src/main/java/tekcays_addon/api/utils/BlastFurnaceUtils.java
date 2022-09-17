@@ -1,4 +1,4 @@
-package tekcays_addon.api.utils.blastfurnace;
+package tekcays_addon.api.utils;
 
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.client.renderer.ICubeRenderer;
@@ -34,6 +34,13 @@ public class BlastFurnaceUtils {
         return TKCYATextures.BRICK;
     }
 
+    public static TraceabilityPredicate getInputBrickFluidHatch(BlockBrick.BrickType brick) {
+        for (MetaTileEntityBrickFluidHatch mte : BRICK_IMPORT_FLUID_HATCH) {
+            if (mte.getBrick().equals(brick)) return metaTileEntities(mte);
+        }
+        return metaTileEntities(BRICK_IMPORT_FLUID_HATCH[0]);
+    }
+
     public static TraceabilityPredicate getOutputBrickFluidHatch(BlockBrick.BrickType brick) {
         for (MetaTileEntityBrickFluidHatch mte : BRICK_EXPORT_FLUID_HATCH) {
             if (mte.getBrick().equals(brick)) return metaTileEntities(mte);
@@ -41,12 +48,21 @@ public class BlastFurnaceUtils {
         return metaTileEntities(BRICK_EXPORT_FLUID_HATCH[0]);
     }
 
-    public static TraceabilityPredicate getInputBrickItemBus(BlockBrick.BrickType brick) {
-        for (MetaTileEntityBrickItemBus mte : BRICK_ITEM_BUS) {
+    public static TraceabilityPredicate getOutputBrickItemBus(BlockBrick.BrickType brick) {
+        for (MetaTileEntityBrickItemBus mte : BRICK_EXPORT_ITEM_BUS) {
             if (mte.getBrick().equals(brick)) return metaTileEntities(mte);
         }
-        return metaTileEntities(BRICK_ITEM_BUS[0]);
+        return metaTileEntities(BRICK_EXPORT_ITEM_BUS[0]);
     }
+
+    public static TraceabilityPredicate getInputBrickItemBus(BlockBrick.BrickType brick) {
+        for (MetaTileEntityBrickItemBus mte : BRICK_IMPORT_ITEM_BUS) {
+            if (mte.getBrick().equals(brick)) return metaTileEntities(mte);
+        }
+        return metaTileEntities(BRICK_IMPORT_ITEM_BUS[0]);
+    }
+
+
 
     public static TraceabilityPredicate getBrickMuffler(BlockBrick.BrickType brick) {
         for (MetaTileEntityPrimitiveMufflerHatch mte : PRIMITIVE_MUFFLER) {

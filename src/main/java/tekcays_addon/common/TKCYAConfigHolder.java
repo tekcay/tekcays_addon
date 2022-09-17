@@ -50,6 +50,9 @@ public class TKCYAConfigHolder {
         @Config.Comment({"Removes most electrolysis recipes and replaces the GTCEu Electrolyzer with a new one", "Default: true"})
         public boolean enableElectrolysisOverhaul = true;
 
+        @Config.Comment({"Replaces the GTCEu CokeOven with a new one", "Default: true"})
+        public boolean enableCokeOvenOverhaul = true;
+
 
 
     }

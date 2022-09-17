@@ -7,7 +7,6 @@ import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.stack.UnificationEntry;
 import gregtech.common.items.MetaItems;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
@@ -46,6 +45,7 @@ public class BlastingRecipeHandler {
                 .temperature(2 * MINUTE)
                 .input(dust, Materials.Hematite, 5)
                 .input(dust, Materials.Coke, 2)
+                .input(dust, Materials.Stone, 3)
                 .fluidOutputs(TKCYAMaterials.PigIron.getFluid(GTValues.L))
                 .duration(200)
                 .buildAndRegister();
@@ -114,26 +114,51 @@ public class BlastingRecipeHandler {
                 'B', MetaItems.FIRECLAY_BRICK);
          */
 
-        //Item Bus recipes
-        ModHandler.addShapedRecipe("brick_import_item_bus", BRICK_ITEM_BUS[0].getStackForm(),
+        //Import Item Bus recipes
+        ModHandler.addShapedRecipe("brick_import_item_bus", BRICK_IMPORT_ITEM_BUS[0].getStackForm(),
                 "BBB", "BCB", "BBB",
                 'C', "chestWood",
                 'B', new UnificationEntry(ingot, Brick));
 
-        ModHandler.addShapedRecipe("reinforced_brick_import_item_bus", BRICK_ITEM_BUS[1].getStackForm(),
+        ModHandler.addShapedRecipe("reinforced_brick_import_item_bus", BRICK_IMPORT_ITEM_BUS[1].getStackForm(),
                 "OBO", "BCB", "OBO",
                 'C', "chestWood",
                 'B', new UnificationEntry(ingot, Brick),
                 'O', MetaItems.COKE_OVEN_BRICK);
 
-        ModHandler.addShapedRecipe("fireclay_brick_import_item_bus", BRICK_ITEM_BUS[2].getStackForm(),
+        ModHandler.addShapedRecipe("fireclay_brick_import_item_bus", BRICK_IMPORT_ITEM_BUS[2].getStackForm(),
                 "BBB", "BCB", "BBB",
                 'C', "chestWood",
                 'B', MetaItems.FIRECLAY_BRICK);
 
         /*
-        ModHandler.addShapedRecipe("strong_brick_import_item_bus", BRICK_ITEM_BUS[3].getStackForm(),
+        ModHandler.addShapedRecipe("strong_brick_import_item_bus", BRICK_IMPORT_ITEM_BUS[3].getStackForm(),
                 "BBB", "BCB", "BBB",
+                'C', "chestWood",
+                'B', MetaItems.FIRECLAY_BRICK);
+
+         */
+
+        //Export Item Bus recipes
+        ModHandler.addShapedRecipe("brick_export_item_bus", BRICK_EXPORT_ITEM_BUS[0].getStackForm(),
+                "BBB", "BBB", "BCB",
+                'C', "chestWood",
+                'B', new UnificationEntry(ingot, Brick));
+
+        ModHandler.addShapedRecipe("reinforced_brick_export_item_bus", BRICK_EXPORT_ITEM_BUS[1].getStackForm(),
+                "OBO", "BBB", "OCO",
+                'C', "chestWood",
+                'B', new UnificationEntry(ingot, Brick),
+                'O', MetaItems.COKE_OVEN_BRICK);
+
+        ModHandler.addShapedRecipe("fireclay_brick_export_item_bus", BRICK_EXPORT_ITEM_BUS[2].getStackForm(),
+                "BBB", "BBB", "BCB",
+                'C', "chestWood",
+                'B', MetaItems.FIRECLAY_BRICK);
+
+        /*
+        ModHandler.addShapedRecipe("strong_brick_export_item_bus", BRICK_EXPORT_ITEM_BUS[3].getStackForm(),
+                "BBB", "BBB", "BCB",
                 'C', "chestWood",
                 'B', MetaItems.FIRECLAY_BRICK);
 

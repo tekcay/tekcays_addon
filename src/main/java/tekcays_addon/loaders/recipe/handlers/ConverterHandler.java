@@ -8,11 +8,20 @@ import static gregtech.api.GTValues.MV;
 import static gregtech.api.GTValues.VA;
 import static gregtech.api.unification.material.Materials.*;
 import static tekcays_addon.api.recipes.TKCYARecipeMaps.CONVERTING_RECIPES;
+import static tekcays_addon.api.recipes.TKCYARecipeMaps.PRIMITIVE_CONVERTING_RECIPES;
 import static tekcays_addon.api.unification.TKCYAMaterials.*;
 
 public class ConverterHandler {
 
     public static void init() {
+
+        //Primitive converting
+        PRIMITIVE_CONVERTING_RECIPES.recipeBuilder()
+                .fluidInputs(PigIron.getFluid(GTValues.L))
+                .fluidInputs(Air.getFluid(8000))
+                .fluidOutputs(Iron.getFluid(GTValues.L))
+                .duration(200).buildAndRegister();
+
 
         //Steel with Air
         CONVERTING_RECIPES.recipeBuilder()

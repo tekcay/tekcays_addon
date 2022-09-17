@@ -1,40 +1,28 @@
 package tekcays_addon.common.metatileentities.multi;
 
-import gregicality.science.api.GCYSValues;
 import gregicality.science.api.metatileentity.multiblock.PressureMultiblockController;
 import gregicality.science.api.recipes.recipeproperties.PressureProperty;
-import gregicality.science.common.metatileentities.GCYSMetaTileEntities;
 import gregtech.api.GTValues;
-import gregtech.api.GregTechAPI;
 import gregtech.api.block.IHeatingCoilBlockStats;
-import gregtech.api.block.VariantActiveBlock;
 import gregtech.api.capability.IHeatingCoil;
 import gregtech.api.capability.impl.HeatingCoilRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.MultiblockShapeInfo;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.recipes.Recipe;
-import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.recipes.recipeproperties.TemperatureProperty;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
-import gregtech.common.ConfigHolder;
 import gregtech.common.blocks.BlockMetalCasing.MetalCasingType;
 import gregtech.common.blocks.BlockWireCoil.CoilType;
 import gregtech.common.blocks.MetaBlocks;
-import gregtech.common.metatileentities.MetaTileEntities;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
@@ -47,18 +35,18 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class MetaTileEntityConverter extends PressureMultiblockController implements IHeatingCoil {
+public class MetaTileEntityElectricConverter extends PressureMultiblockController implements IHeatingCoil {
 
     private int blastFurnaceTemperature;
 
-    public MetaTileEntityConverter(ResourceLocation metaTileEntityId) {
+    public MetaTileEntityElectricConverter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.CONVERTING_RECIPES);
         this.recipeMapWorkable = new HeatingCoilRecipeLogic(this);
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTileEntityConverter(metaTileEntityId);
+        return new MetaTileEntityElectricConverter(metaTileEntityId);
     }
 
     @Override

@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
-import static tekcays_addon.api.utils.blastfurnace.BlastFurnaceUtils.getBrickTexture;
+import static tekcays_addon.api.utils.BlastFurnaceUtils.getBrickTexture;
 
 public class MetaTileEntityPrimitiveMufflerHatch extends MetaTileEntityMufflerHatch {
 
