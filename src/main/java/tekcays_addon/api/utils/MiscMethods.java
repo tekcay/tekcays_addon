@@ -3,6 +3,10 @@ package tekcays_addon.api.utils;
 import gregtech.api.GregTechAPI;
 import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.items.metaitem.MetaItem;
+import gregtech.api.recipes.ingredients.GTRecipeInput;
+import gregtech.api.unification.material.Material;
+import gregtech.api.unification.material.Materials;
+import gregtech.api.unification.stack.MaterialStack;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.ore.OrePrefix;
@@ -17,8 +21,14 @@ import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+
 
 import static gregtech.api.unification.material.Materials.Air;
 import static tekcays_addon.api.unification.TKCYAMaterials.MixtureToFilter;
@@ -60,7 +70,19 @@ public class MiscMethods {
         }
         return map;
     }
-
+    
+    /**
+     *
+     * @param m1
+     * @param m2
+     * @return the amount of {@code Material} m2 in {@code Material} m1.
+     */
+    public static int getAmountMaterial(Material m1, Material m2) {
+        for (MaterialStack ms : m1.getMaterialComponents()) {
+            if (ms.material.equals(m2)) return (int) ms.amount;
+        }
+        return 0;
+    }
     public static Material getMaterialFromUnlocalizedName(String unlocalizedName) {
         for (Material m : GregTechAPI.MATERIAL_REGISTRY) {
             if (m.getUnlocalizedName().equals(unlocalizedName)) return m;
