@@ -94,6 +94,7 @@ public class BlastingRecipeHandler {
 
         //Hatch recipes
 
+        /*
         ModHandler.addShapedRecipe("brick_blast_furnace_hatch", BRICK_BLAST_FURNACE_HATCH.getStackForm(),
                 "BBB", "B B", "BBB",
                 'B', new UnificationEntry(ingot, Brick));

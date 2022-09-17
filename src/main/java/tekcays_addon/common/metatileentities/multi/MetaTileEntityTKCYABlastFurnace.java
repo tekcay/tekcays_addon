@@ -10,7 +10,6 @@ import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
-import gregtech.common.metatileentities.MetaTileEntities;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -31,14 +30,15 @@ import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
-import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBlastFurnaceHatch;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 
 import static gregtech.api.util.RelativeDirection.*;
+import static tekcays_addon.api.utils.blastfurnace.BlastFurnaceUtils.*;
 
 public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlockController {
 
@@ -93,18 +93,17 @@ public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlock
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
-
-        if (brick.equals(BlockBrick.BrickType.BRICK)) return TKCYATextures.BRICK;
-        if (brick.equals(BlockBrick.BrickType.FIRECLAY_BRICK)) return TKCYATextures.FIRECLAY_BRICK;
-        if (brick.equals(BlockBrick.BrickType.REINFORCED_BRICK)) return TKCYATextures.REINFORCED_BRICK;
-        if (brick.equals(BlockBrick.BrickType.STRONG_BRICK)) return TKCYATextures.STRONG_BRICK;
-
-        return TKCYATextures.BRICK;
+        return getBrickTexture(brick);
     }
 
     @Override
     public boolean hasMaintenanceMechanics() {
         return false;
+    }
+
+    @Override
+    public boolean hasMufflerMechanics() {
+        return true;
     }
 
     @Override
@@ -116,14 +115,12 @@ public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlock
         return iBlockState;
     }
 
-    protected TraceabilityPredicate getHatch() {
+    protected TraceabilityPredicate getOutputFluidHatch(BlockBrick.BrickType brick) {
+        return getOutputBrickFluidHatch(brick);
+    }
 
-        if (brick.equals(BlockBrick.BrickType.BRICK)) return metaTileEntities(TKCYAMetaTileEntities.BRICK_BLAST_FURNACE_HATCH);
-        if (brick.equals(BlockBrick.BrickType.FIRECLAY_BRICK)) return metaTileEntities(TKCYAMetaTileEntities.FIRECLAY_BRICK_BLAST_FURNACE_HATCH);
-        if (brick.equals(BlockBrick.BrickType.REINFORCED_BRICK)) return metaTileEntities(TKCYAMetaTileEntities.REINFORCED_BRICK_BLAST_FURNACE_HATCH);
-        if (brick.equals(BlockBrick.BrickType.STRONG_BRICK)) return metaTileEntities(TKCYAMetaTileEntities.STRONG_BRICK_BLAST_FURNACE_HATCH);
-
-        return metaTileEntities(TKCYAMetaTileEntities.BRICK_BLAST_FURNACE_HATCH);
+    protected TraceabilityPredicate getInputItemBus(BlockBrick.BrickType brick) {
+        return getInputBrickItemBus(brick);
     }
 
     @Override
@@ -131,20 +128,18 @@ public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlock
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
                 .aisle("#YYY#", "YXXXY", "YXXXY", "YXXXY", "#YYY#")
                 .aisle("#YSY#", "Y###Y", "Y###Y", "Y###Y", "#YYY#")
-                .aisle("#YYY#", "Y###Y", "Y#I#Y", "Y###Y", "#YYY#").setRepeatable(1, 11)
-                .aisle("#YYY#", "YOOOY", "YOOOY", "YOOOY", "#YYY#")
-                //Particle
-                //.aisle("#####", "#####", "##C##", "#####", "#####").setRepeatable(0, 1)
+                .aisle("#YYY#", "Y###Y", "Y#H#Y", "Y###Y", "#YYY#").setRepeatable(1, 11)
+                .aisle("#YYY#", "YOOOY", "YOMOY", "YOOOY", "#YYY#")
                 .where('S', selfPredicate())
                 .where('Y', states(getCasingState()))
                 .where('X', states(getCasingState())
-                        .or(getHatch().setMinGlobalLimited(1).setMaxGlobalLimited(2)))
+                        .or(getOutputFluidHatch(brick).setMinGlobalLimited(1).setMaxGlobalLimited(1)))
                 .where('O', states(getCasingState())
-                        .or(getHatch().setMinGlobalLimited(1).setMaxGlobalLimited(2)))
-                .where('I', heightIndicatorPredicate())
+                        .or(getInputItemBus(brick).setMinGlobalLimited(1).setMaxGlobalLimited(2)))
+                .where('H', heightIndicatorPredicate())
+                .where('M', abilities(MultiblockAbility.MUFFLER_HATCH))
                 .where('#', air())
                 .build();
-
     }
 
     @Override
@@ -189,7 +184,6 @@ public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlock
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityTKCYABlastFurnace(metaTileEntityId, brick);
     }
-
 
 }
 

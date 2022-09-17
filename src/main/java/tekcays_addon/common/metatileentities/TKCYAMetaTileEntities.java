@@ -3,11 +3,8 @@ package tekcays_addon.common.metatileentities;
 import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.util.GTUtility;
-import gregtech.client.renderer.texture.Textures;
-import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.BlockSteamCasing;
 import gregtech.common.blocks.MetaBlocks;
-import gregtech.common.metatileentities.MetaTileEntities;
 import gregtech.common.metatileentities.storage.MetaTileEntityDrum;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.TekCaysAddon;
@@ -21,7 +18,8 @@ import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.metatileentities.multi.*;
-import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBlastFurnaceHatch;
+import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickFluidHatch;
+import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickItemBus;
 import tekcays_addon.common.metatileentities.steam.SteamCooler;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
@@ -51,10 +49,16 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityTKCYABlastFurnace FIRECLAY_BRICK_BLAST_FURNACE;
     public static MetaTileEntityTKCYABlastFurnace REINFORCED_BRICK_BLAST_FURNACE;
     public static MetaTileEntityTKCYABlastFurnace STRONG_BRICK_BLAST_FURNACE;
-    public static MetaTileEntityBlastFurnaceHatch BRICK_BLAST_FURNACE_HATCH;
-    public static MetaTileEntityBlastFurnaceHatch FIRECLAY_BRICK_BLAST_FURNACE_HATCH;
-    public static MetaTileEntityBlastFurnaceHatch REINFORCED_BRICK_BLAST_FURNACE_HATCH;
-    public static MetaTileEntityBlastFurnaceHatch STRONG_BRICK_BLAST_FURNACE_HATCH;
+    
+    public static MetaTileEntityBrickFluidHatch BRICK_EXPORT_FLUID_HATCH;
+    public static MetaTileEntityBrickFluidHatch REINFORCED_BRICK_EXPORT_FLUID_HATCH;
+    public static MetaTileEntityBrickFluidHatch FIRECLAY_BRICK_EXPORT_FLUID_HATCH;
+    public static MetaTileEntityBrickFluidHatch STRONG_BRICK_EXPORT_FLUID_HATCH;
+
+    public static MetaTileEntityBrickItemBus BRICK_IMPORT_ITEM_BUS;
+    public static MetaTileEntityBrickItemBus REINFORCED_BRICK_IMPORT_ITEM_BUS;
+    public static MetaTileEntityBrickItemBus FIRECLAY_BRICK_IMPORT_ITEM_BUS;
+    public static MetaTileEntityBrickItemBus STRONG_BRICK_IMPORT_ITEM_BUS;
 
 
 
@@ -116,17 +120,22 @@ public class TKCYAMetaTileEntities {
         if (TKCYAConfigHolder.meltingOverhaul.enableBlastingOverhaul) {
             CONVERTER = registerMetaTileEntity(11022, new MetaTileEntityConverter(tkcyaId("converter")));
 
-
+            
 
             BRICK_BLAST_FURNACE = registerMetaTileEntity(11051, new MetaTileEntityTKCYABlastFurnace(tkcyaId("brick_blast_furnace"), BlockBrick.BrickType.BRICK));
             FIRECLAY_BRICK_BLAST_FURNACE = registerMetaTileEntity(11052, new MetaTileEntityTKCYABlastFurnace(tkcyaId("fireclay_brick_blast_furnace"), BlockBrick.BrickType.FIRECLAY_BRICK));
             REINFORCED_BRICK_BLAST_FURNACE = registerMetaTileEntity(11053, new MetaTileEntityTKCYABlastFurnace(tkcyaId("reinforced_brick_blast_furnace"), BlockBrick.BrickType.REINFORCED_BRICK));
             STRONG_BRICK_BLAST_FURNACE = registerMetaTileEntity(11054, new MetaTileEntityTKCYABlastFurnace(tkcyaId("strong_brick_blast_furnace"), BlockBrick.BrickType.STRONG_BRICK));
 
-            BRICK_BLAST_FURNACE_HATCH = registerMetaTileEntity(11055, new MetaTileEntityBlastFurnaceHatch(tkcyaId("brick_blast_furnace_hatch"), BlockBrick.BrickType.BRICK));
-            FIRECLAY_BRICK_BLAST_FURNACE_HATCH = registerMetaTileEntity(11056, new MetaTileEntityBlastFurnaceHatch(tkcyaId("fireclay_brick_blast_furnace_hatch"), BlockBrick.BrickType.FIRECLAY_BRICK));
-            REINFORCED_BRICK_BLAST_FURNACE_HATCH = registerMetaTileEntity(11057, new MetaTileEntityBlastFurnaceHatch(tkcyaId("reinforced_brick_blast_furnace_hatch"), BlockBrick.BrickType.REINFORCED_BRICK));
-            STRONG_BRICK_BLAST_FURNACE_HATCH = registerMetaTileEntity(11058, new MetaTileEntityBlastFurnaceHatch(tkcyaId("strong_brick_blast_furnace_hatch"), BlockBrick.BrickType.STRONG_BRICK));
+            BRICK_EXPORT_FLUID_HATCH = registerMetaTileEntity(11055, new MetaTileEntityBrickFluidHatch(tkcyaId("brick_export_fluid_hatch"), true, BlockBrick.BrickType.BRICK));
+            FIRECLAY_BRICK_EXPORT_FLUID_HATCH = registerMetaTileEntity(11056, new MetaTileEntityBrickFluidHatch(tkcyaId("fireclay_brick_export_fluid_hatch"), true, BlockBrick.BrickType.FIRECLAY_BRICK));
+            REINFORCED_BRICK_EXPORT_FLUID_HATCH = registerMetaTileEntity(11057, new MetaTileEntityBrickFluidHatch(tkcyaId("reinforced_brick_export_fluid_hatch"), true, BlockBrick.BrickType.REINFORCED_BRICK));
+            STRONG_BRICK_EXPORT_FLUID_HATCH = registerMetaTileEntity(11058, new MetaTileEntityBrickFluidHatch(tkcyaId("strong_brick_export_fluid_hatch"), true, BlockBrick.BrickType.STRONG_BRICK));
+
+            BRICK_IMPORT_ITEM_BUS = registerMetaTileEntity(11059, new MetaTileEntityBrickItemBus(tkcyaId("brick_import_item_bus"), false, BlockBrick.BrickType.BRICK));
+            FIRECLAY_BRICK_IMPORT_ITEM_BUS = registerMetaTileEntity(11060, new MetaTileEntityBrickItemBus(tkcyaId("fireclay_brick_import_item_bus"), false, BlockBrick.BrickType.FIRECLAY_BRICK));
+            REINFORCED_BRICK_IMPORT_ITEM_BUS = registerMetaTileEntity(11061, new MetaTileEntityBrickItemBus(tkcyaId("reinforced_brick_import_item_bus"), false, BlockBrick.BrickType.REINFORCED_BRICK));
+            STRONG_BRICK_IMPORT_ITEM_BUS = registerMetaTileEntity(11062, new MetaTileEntityBrickItemBus(tkcyaId("strong_brick_import_item_bus"), false, BlockBrick.BrickType.STRONG_BRICK));
         }
 
         if (TKCYAConfigHolder.miscOverhaul.enableGalvanizedSteel) {
@@ -189,11 +198,12 @@ public class TKCYAMetaTileEntities {
             CRYSTALLIZER = registerMetaTileEntity(11050, new MetaTileEntityCrystallizer(tkcyaId("crystallizer")));
         }
 
-        FILTER = registerMetaTileEntity(11060, new MetaTileEntityFilter(tkcyaId("filter")));
+        FILTER = registerMetaTileEntity(11070, new MetaTileEntityFilter(tkcyaId("filter")));
 
         if (TKCYAConfigHolder.crackingOverhaul.enableCrackingOverhaul) {
-            PRESSURIZED_CRACKING_UNIT = registerMetaTileEntity(11061, new MetaTileEntityPressurizedCrackingUnit(tkcyaId("pressurized_cracking_unit")));
+            PRESSURIZED_CRACKING_UNIT = registerMetaTileEntity(11071, new MetaTileEntityPressurizedCrackingUnit(tkcyaId("pressurized_cracking_unit")));
         }
+
 
     }
 
