@@ -78,7 +78,7 @@ public class RoastingRecipeHandlerMethods {
     }
 
     /**
-     *
+     * Mainly for the Roasting Oven materials
      * @param material
      * @return the desired {@code ItemStack} with a {@code NBTTagCompound} containing the composition,
      *  <pre>
@@ -102,6 +102,29 @@ public class RoastingRecipeHandlerMethods {
         DUST_MIXTURE_WITH_NBT.add(outputStack);
         return outputStack;
     }
+
+    /**
+     *
+     * @param material
+     * @param outputPrefix to apply material quantity
+     * @return
+     */
+    public static ItemStack getDustMixtureStackWithNBT(Material material, OrePrefix outputPrefix) {
+        List<MaterialStack> outputs = getOutputMaterialStack(material, true);
+        if (outputs.size() == 1) {
+            MaterialStack ms = outputs.get(0);
+            Material m = ms.material;
+            return OreDictUnifier.get(dust, m, (int) (ms.amount * dust.getMaterialAmount(m) / outputPrefix.getMaterialAmount(m)));
+        }
+        NBTTagCompound nbt = writeNBTtoDustMixture(outputs);
+        ItemStack outputStack = TKCYAMetaItems.DUST_MIXTURE.getStackForm();
+        outputStack.setTagCompound(nbt);
+        DUST_MIXTURE_WITH_NBT.add(outputStack);
+        return outputStack;
+    }
+
+
+
 
 
 

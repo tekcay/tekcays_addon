@@ -40,7 +40,7 @@ public class RoastingHandler {
 
         for (RoastableMaterial rm : ROASTABLE_MATERIALS) {
             Material material = rm.getMaterial();
-            ItemStack outputStack = getDustMixtureStackWithNBT(material);
+            ItemStack outputStack = new ItemStack(getDustMixtureStackWithNBT(material).getItem(), 9);
             int fluidAmount = 1000 * getAmountSulfur(material);
             FluidStack sulfurDioxideStack = SulfurDioxide.getFluid(fluidAmount);
             FluidStack oxygenStack = Oxygen.getFluid(fluidAmount * 2);

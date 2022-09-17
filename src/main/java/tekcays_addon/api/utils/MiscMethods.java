@@ -8,14 +8,13 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.MaterialStack;
 import gregtech.api.util.GTTransferUtils;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemAir;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.common.items.TKCYAMetaItems;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -23,8 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static gregtech.api.unification.material.Materials.Air;
 import static tekcays_addon.api.unification.TKCYAMaterials.MixtureToFilter;
-import static tekcays_addon.api.utils.TKCYAValues.ELECTRIC_PUMPS;
-import static tekcays_addon.api.utils.TKCYAValues.MIXTURE_TO_FILTER;
+import static tekcays_addon.api.utils.TKCYAValues.*;
 
 public class MiscMethods {
 
@@ -283,7 +281,12 @@ public class MiscMethods {
 
     public static List<ItemStack> setOutputStack(String composition, OrePrefix prefix) {
         List<MaterialStack> list = getMaterialStacksFromString(composition);
-        return getItemStacksFromMaterialStacks(list, prefix, true);
+        return getItemStacksFromMaterialStacks(list, prefix);
+    }
+
+    public static List<ItemStack> setOutputStack(String composition, OrePrefix prefix, boolean applyMaterialAmount) {
+        List<MaterialStack> list = getMaterialStacksFromString(composition);
+        return getItemStacksFromMaterialStacks(list, prefix, applyMaterialAmount);
     }
 
     public static String getComposition(IItemHandlerModifiable inputInventory, int inputSlot) {
@@ -308,6 +311,14 @@ public class MiscMethods {
         if (!hasEnoughEnergy(energyCost, energyContainer)) return false;
         return GTTransferUtils.addItemsToItemHandler(outputInventory, true, outputStackPerSec);
         //return canOutputItem(outputStackPerSec, outputInventory);
+    }
+
+    public static ItemStack getDustMixtureStackWithNBT(List<MaterialStack> materials) {
+        NBTTagCompound nbt = writeNBTtoDustMixture(materials);
+        ItemStack outputStack = TKCYAMetaItems.DUST_MIXTURE.getStackForm();
+        outputStack.setTagCompound(nbt);
+        DUST_MIXTURE_WITH_NBT.add(outputStack);
+        return outputStack;
     }
 
 }

@@ -62,6 +62,7 @@ public class TKCYAMiscMaterials {
         CopperLeach = new Material.Builder(24107, "copper_leach")
                 .dust()
                 .iconSet(SHINY)
+                .components(Copper, 27, Lead, 1, Iron, 1, Nickel, 1, Silver, 1)
                 .color(0xB99023)
                 .build();
         CopperLeach.setFormula("Cu?", true);
@@ -210,7 +211,7 @@ public class TKCYAMiscMaterials {
         PotassiumMetaBisulfite.setFormula("K2S2O5", true);
 
         //More roastable ores
-        Kesterite = new Material.Builder(24138, "kesterite")
+        Kesterite = new Material.Builder(24139, "kesterite")
                 .dust().ore()
                 .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
@@ -219,7 +220,7 @@ public class TKCYAMiscMaterials {
                 .color(0x577b5b)
                 .build();
 
-        Stannite = new Material.Builder(24139, "stannite")
+        Stannite = new Material.Builder(24140, "stannite")
                 .dust().ore()
                 .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
@@ -228,7 +229,7 @@ public class TKCYAMiscMaterials {
                 .color(0x91a95e)
                 .build();
 
-        Arsenopyrite = new Material.Builder(24140, "arsenopyrite")
+        Arsenopyrite = new Material.Builder(24141, "arsenopyrite")
                 .dust().ore()
                 .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
@@ -238,7 +239,7 @@ public class TKCYAMiscMaterials {
                 .build();
 
         //Roasting outputs
-        Cuprite = new Material.Builder(24141, "cuprite")
+        Cuprite = new Material.Builder(24142, "cuprite")
                 .dust().ore()
                 .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
