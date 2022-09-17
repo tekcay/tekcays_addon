@@ -93,7 +93,7 @@ public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<SimpleRecipeBuilder> SPIRAL_SEPARATION = new RecipeMap<>(
-            "spiral_separation", 1, 1, 1, 8, 0, 0, 0, 0, new SimpleRecipeBuilder(), false)
+            "spiral_separation", 1, 1, 2, 8, 0, 0, 0, 0, new SimpleRecipeBuilder(), false)
             .setSound(GTSounds.MOTOR);
 
 

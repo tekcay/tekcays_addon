@@ -82,27 +82,7 @@ public class GoldChain {
                 .fluidOutputs(Oxygen.getFluid(1500))
                 .buildAndRegister();
 
-        //TODO gets a DUST_MIXTURE
-        // Step 3 recovery
-        // This step does not directly process Chloroauric Acid, and instead is processing
-        // other byproducts from the chain, which are compacted from the older versions of the chain.
         // Cu3? -> 3Cu + Fe + Ni + Ag + Pb
-        /*
-        List<MaterialStack> list = new ArrayList<>();
-        list.add(new MaterialStack(Copper, 27));
-        list.add(new MaterialStack(Lead, 1));
-        list.add(new MaterialStack(Iron, 1));
-        list.add(new MaterialStack(Nickel, 1));
-        list.add(new MaterialStack(Silver, 1));
-        MiscMethods.getDustMixtureStackWithNBT()
-
-                        .output(dust, Copper, 3)
-                .chancedOutput(dust, Lead, 1500, 500)
-                .chancedOutput(dust, Iron, 1200, 400)
-                .chancedOutput(dust, Nickel, 1000, 300)
-                .chancedOutput(dust, Silver, 800, 200)
-
-        */
         GCYSRecipeMaps.DRYER_RECIPES.recipeBuilder().EUt(30).duration(80)
                 .input(dust, CopperLeach, 4)
                 .outputs(getDustMixtureStackWithNBT(CopperLeach))

@@ -62,6 +62,7 @@ public class TKCYAMiscMaterials {
         CopperLeach = new Material.Builder(24107, "copper_leach")
                 .dust()
                 .iconSet(SHINY)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .components(Copper, 27, Lead, 1, Iron, 1, Nickel, 1, Silver, 1)
                 .color(0xB99023)
                 .build();

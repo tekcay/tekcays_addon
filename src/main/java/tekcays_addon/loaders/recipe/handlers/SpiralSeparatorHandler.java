@@ -30,7 +30,7 @@ public class SpiralSeparatorHandler {
                     .EUt(120)
                     .buildAndRegister();
         }
-
+        /*
         //Exemple recipe
         TKCYARecipeMaps.SPIRAL_SEPARATION.recipeBuilder()
                 .inputs(TKCYAMetaItems.DUST_MIXTURE.getStackForm())
@@ -39,6 +39,8 @@ public class SpiralSeparatorHandler {
                 .duration(80)
                 .EUt(120)
                 .buildAndRegister();
+
+         */
     }
 
 }

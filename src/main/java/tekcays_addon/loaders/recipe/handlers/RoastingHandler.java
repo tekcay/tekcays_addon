@@ -91,57 +91,6 @@ public class RoastingHandler {
                     .duration(100)
                     .EUt(50)
                     .buildAndRegister();
-
-
-
-
-            /*
-            TKCYARecipeMaps.ROASTING.recipeBuilder()
-                    .input(dust, material, getComponentsNumber(material))
-                    .outputs(getOutputStack(material, dust, true))
-                    .fluidInputs(Oxygen.getFluid(fluidAmount * 4))
-                    .pressure(rm.getRoastingTemperature())
-                    .temperature(rm.getRoastingTemperature())
-                    .duration(100)
-                    .EUt(50)
-                    .buildAndRegister();
-
-            TKCYARecipeMaps.ROASTING.recipeBuilder()
-                    .input(dust, material, getComponentsNumber(material))
-                    .outputs(getOutputStack(material, dust, true))
-                    .fluidInputs(Air.getFluid(fluidAmount * 10))
-                    .pressure(rm.getRoastingTemperature())
-                    .temperature(rm.getRoastingTemperature())
-                    .duration(100)
-                    .EUt(50)
-                    .buildAndRegister();
-
-            //With the Air collector
-            TKCYARecipeMaps.ROASTING.recipeBuilder()
-                    .input(dust, material, getComponentsNumber(material))
-                    .notConsumable(TKCYAMetaItems.GAS_COLLECTOR.getStackForm())
-                    .outputs(getOutputStack(material, dust, true))
-                    .fluidInputs(Oxygen.getFluid(fluidAmount * 4))
-                    .fluidOutputs(SulfurDioxide.getFluid(fluidAmount))
-                    .pressure(rm.getRoastingTemperature())
-                    .temperature(rm.getRoastingTemperature())
-                    .duration(100)
-                    .EUt(50)
-                    .buildAndRegister();
-
-            TKCYARecipeMaps.ROASTING.recipeBuilder()
-                    .input(dust, material, getComponentsNumber(material))
-                    .notConsumable(TKCYAMetaItems.GAS_COLLECTOR.getStackForm())
-                    .outputs(getOutputStack(material, dust, true))
-                    .fluidInputs(Air.getFluid(fluidAmount * 10))
-                    .fluidOutputs(SulfurDioxide.getFluid(fluidAmount))
-                    .pressure(rm.getRoastingTemperature())
-                    .temperature(rm.getRoastingTemperature())
-                    .duration(100)
-                    .EUt(50)
-                    .buildAndRegister();
-
-             */
         }
     }
 
@@ -247,59 +196,5 @@ public class RoastingHandler {
                     .EUt(50)
                     .buildAndRegister();
         }
-
-
-
-
-
-        /*
-        TKCYARecipeMaps.ROASTING.recipeBuilder()
-                .input(dust, Chalcocite, 4)
-                .output(dust, Cuprite, 4)
-                .fluidInputs(Air.getFluid(20000))
-                .pressure(EARTH_PRESSURE * 2)
-                .temperature(1000)
-                .duration(100)
-                .EUt(50)
-                .buildAndRegister();
-
-        TKCYARecipeMaps.ROASTING.recipeBuilder()
-                .input(dust, Chalcocite, 4)
-                .output(dust, Cuprite, 4)
-                .fluidInputs(Air.getFluid(20000))
-                .pressure(EARTH_PRESSURE * 2)
-                .temperature(1000)
-                .duration(100)
-                .EUt(50)
-                .buildAndRegister();
-
-        //With the Air collector
-        TKCYARecipeMaps.ROASTING.recipeBuilder()
-                .input(dust, Chalcocite, 4)
-                .notConsumable(TKCYAMetaItems.GAS_COLLECTOR.getStackForm())
-                .output(dust, Cuprite, 4)
-                .fluidInputs(Oxygen.getFluid(8000))
-                .fluidOutputs(SulfurDioxide.getFluid(2000))
-                .pressure(EARTH_PRESSURE * 2)
-                .temperature(1000)
-                .duration(100)
-                .EUt(50)
-                .buildAndRegister();
-
-        //With the Air collector
-        TKCYARecipeMaps.ROASTING.recipeBuilder()
-                .input(dust, Chalcocite, 4)
-                .notConsumable(TKCYAMetaItems.GAS_COLLECTOR.getStackForm())
-                .output(dust, Cuprite, 4)
-                .fluidInputs(Oxygen.getFluid(8000))
-                .fluidOutputs(SulfurDioxide.getFluid(2000))
-                .pressure(EARTH_PRESSURE * 2)
-                .temperature(1000)
-                .duration(100)
-                .EUt(50)
-                .buildAndRegister();
-
-         */
-
     }
 }
