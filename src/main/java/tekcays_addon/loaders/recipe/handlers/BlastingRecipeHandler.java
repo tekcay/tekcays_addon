@@ -92,6 +92,28 @@ public class BlastingRecipeHandler {
 
          */
 
+        //Hatch recipes
+
+        ModHandler.addShapedRecipe("brick_blast_furnace_hatch", BRICK_BLAST_FURNACE_HATCH.getStackForm(),
+                "BBB", "B B", "BBB",
+                'B', new UnificationEntry(ingot, Brick));
+
+        ModHandler.addShapedRecipe("reinforced_brick_blast_furnace_hatch", REINFORCED_BRICK_BLAST_FURNACE_HATCH.getStackForm(),
+                "CBC", "B B", "CBC",
+                'B', new UnificationEntry(ingot, Brick),
+                'C', MetaItems.COKE_OVEN_BRICK);
+
+        ModHandler.addShapedRecipe("fireclay_brick_blast_furnace_hatch", FIRECLAY_BRICK_BLAST_FURNACE.getStackForm(),
+                "BBB", "B B", "BBB",
+                'B', MetaItems.FIRECLAY_BRICK);
+
+        /*
+        ModHandler.addShapedRecipe("strong_brick_blast_furnace_hatch", STRONG_BRICK_BLAST_FURNACE.getStackForm(),
+                "BBB", "BBB", "BBB",
+                'B', MetaItems.FIRECLAY_BRICK);
+
+         */
+
         //Controller recipes
 
         ModHandler.addShapedRecipe("brick_blast_furnace", BRICK_BLAST_FURNACE.getStackForm(),

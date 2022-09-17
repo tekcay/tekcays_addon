@@ -10,6 +10,7 @@ import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
+import gregtech.common.metatileentities.MetaTileEntities;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -29,6 +30,8 @@ import tekcays_addon.api.recipes.recipeproperties.NoEnergyTemperatureProperty;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
+import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
+import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBlastFurnaceHatch;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -113,6 +116,16 @@ public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlock
         return iBlockState;
     }
 
+    protected TraceabilityPredicate getHatch() {
+
+        if (brick.equals(BlockBrick.BrickType.BRICK)) return metaTileEntities(TKCYAMetaTileEntities.BRICK_BLAST_FURNACE_HATCH);
+        if (brick.equals(BlockBrick.BrickType.FIRECLAY_BRICK)) return metaTileEntities(TKCYAMetaTileEntities.FIRECLAY_BRICK_BLAST_FURNACE_HATCH);
+        if (brick.equals(BlockBrick.BrickType.REINFORCED_BRICK)) return metaTileEntities(TKCYAMetaTileEntities.REINFORCED_BRICK_BLAST_FURNACE_HATCH);
+        if (brick.equals(BlockBrick.BrickType.STRONG_BRICK)) return metaTileEntities(TKCYAMetaTileEntities.STRONG_BRICK_BLAST_FURNACE_HATCH);
+
+        return metaTileEntities(TKCYAMetaTileEntities.BRICK_BLAST_FURNACE_HATCH);
+    }
+
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
@@ -125,10 +138,9 @@ public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlock
                 .where('S', selfPredicate())
                 .where('Y', states(getCasingState()))
                 .where('X', states(getCasingState())
-                        .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setExactLimit(1)))
+                        .or(getHatch().setMinGlobalLimited(1).setMaxGlobalLimited(2)))
                 .where('O', states(getCasingState())
-                        .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMaxGlobalLimited(2))
-                        .or(abilities(MultiblockAbility.IMPORT_ITEMS).setMinGlobalLimited(1,1).setMaxGlobalLimited(2)))
+                        .or(getHatch().setMinGlobalLimited(1).setMaxGlobalLimited(2)))
                 .where('I', heightIndicatorPredicate())
                 .where('#', air())
                 .build();

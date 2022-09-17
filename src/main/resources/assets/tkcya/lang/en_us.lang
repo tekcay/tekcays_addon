@@ -44,6 +44,12 @@ tkcya.machine.fireclay_brick_blast_furnace.name=Fireclay Brick Blast Furnace
 tkcya.machine.reinforced_brick_blast_furnace.name=Reinforced Brick Blast Furnace
 tkcya.machine.strong_brick_blast_furnace.name=Strong Brick Blast Furnace
 
+#BlastFurnace Hatches
+tkcya.machine.brick_blast_furnace_hatch.name=Brick Blast Furnace Hatch
+tkcya.machine.fireclay_brick_blast_furnace_hatch.name=FireClay Brick Blast Furnace Hatch
+tkcya.machine.reinforced_brick_blast_furnace_hatch.name=Reinforced Brick Blast Furnace Hatch
+tkcya.machine.strong_brick_blast_furnace_hatch.name=Strong Brick Blast Furnace Hatch
+
 tkcya.machine.crystallizer.name=Crystallizer
 tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer
 tkcya.machine.filter.name=Filter

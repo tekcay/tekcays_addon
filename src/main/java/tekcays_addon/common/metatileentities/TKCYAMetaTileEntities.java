@@ -21,6 +21,7 @@ import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.metatileentities.multi.*;
+import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBlastFurnaceHatch;
 import tekcays_addon.common.metatileentities.steam.SteamCooler;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
@@ -50,6 +51,10 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityTKCYABlastFurnace FIRECLAY_BRICK_BLAST_FURNACE;
     public static MetaTileEntityTKCYABlastFurnace REINFORCED_BRICK_BLAST_FURNACE;
     public static MetaTileEntityTKCYABlastFurnace STRONG_BRICK_BLAST_FURNACE;
+    public static MetaTileEntityBlastFurnaceHatch BRICK_BLAST_FURNACE_HATCH;
+    public static MetaTileEntityBlastFurnaceHatch FIRECLAY_BRICK_BLAST_FURNACE_HATCH;
+    public static MetaTileEntityBlastFurnaceHatch REINFORCED_BRICK_BLAST_FURNACE_HATCH;
+    public static MetaTileEntityBlastFurnaceHatch STRONG_BRICK_BLAST_FURNACE_HATCH;
 
 
 
@@ -88,7 +93,7 @@ public class TKCYAMetaTileEntities {
 
         if (TKCYAConfigHolder.meltingOverhaul.enableMeltingOverhaul) {
             PRIMITIVE_MELTER = registerMetaTileEntity(11010, new MetaTileEntityPrimitiveMelter(tkcyaId("primitive_melter")));
-            PRIMITIVE_FERMENTER = registerMetaTileEntity(11056, new MetaTileEntityPrimitiveFermenter(tkcyaId("primitive_fermenter")));
+            PRIMITIVE_FERMENTER = registerMetaTileEntity(11011, new MetaTileEntityPrimitiveFermenter(tkcyaId("primitive_fermenter")));
         }
 
         if (TKCYAConfigHolder.meltingOverhaul.enableAlloyingOverhaul) {
@@ -117,6 +122,11 @@ public class TKCYAMetaTileEntities {
             FIRECLAY_BRICK_BLAST_FURNACE = registerMetaTileEntity(11052, new MetaTileEntityTKCYABlastFurnace(tkcyaId("fireclay_brick_blast_furnace"), BlockBrick.BrickType.FIRECLAY_BRICK));
             REINFORCED_BRICK_BLAST_FURNACE = registerMetaTileEntity(11053, new MetaTileEntityTKCYABlastFurnace(tkcyaId("reinforced_brick_blast_furnace"), BlockBrick.BrickType.REINFORCED_BRICK));
             STRONG_BRICK_BLAST_FURNACE = registerMetaTileEntity(11054, new MetaTileEntityTKCYABlastFurnace(tkcyaId("strong_brick_blast_furnace"), BlockBrick.BrickType.STRONG_BRICK));
+
+            BRICK_BLAST_FURNACE_HATCH = registerMetaTileEntity(11055, new MetaTileEntityBlastFurnaceHatch(tkcyaId("brick_blast_furnace_hatch"), BlockBrick.BrickType.BRICK));
+            FIRECLAY_BRICK_BLAST_FURNACE_HATCH = registerMetaTileEntity(11056, new MetaTileEntityBlastFurnaceHatch(tkcyaId("fireclay_brick_blast_furnace_hatch"), BlockBrick.BrickType.FIRECLAY_BRICK));
+            REINFORCED_BRICK_BLAST_FURNACE_HATCH = registerMetaTileEntity(11057, new MetaTileEntityBlastFurnaceHatch(tkcyaId("reinforced_brick_blast_furnace_hatch"), BlockBrick.BrickType.REINFORCED_BRICK));
+            STRONG_BRICK_BLAST_FURNACE_HATCH = registerMetaTileEntity(11058, new MetaTileEntityBlastFurnaceHatch(tkcyaId("strong_brick_blast_furnace_hatch"), BlockBrick.BrickType.STRONG_BRICK));
         }
 
         if (TKCYAConfigHolder.miscOverhaul.enableGalvanizedSteel) {
@@ -179,10 +189,10 @@ public class TKCYAMetaTileEntities {
             CRYSTALLIZER = registerMetaTileEntity(11050, new MetaTileEntityCrystallizer(tkcyaId("crystallizer")));
         }
 
-        FILTER = registerMetaTileEntity(11055, new MetaTileEntityFilter(tkcyaId("filter")));
+        FILTER = registerMetaTileEntity(11060, new MetaTileEntityFilter(tkcyaId("filter")));
 
         if (TKCYAConfigHolder.crackingOverhaul.enableCrackingOverhaul) {
-            PRESSURIZED_CRACKING_UNIT = registerMetaTileEntity(11057, new MetaTileEntityPressurizedCrackingUnit(tkcyaId("pressurized_cracking_unit")));
+            PRESSURIZED_CRACKING_UNIT = registerMetaTileEntity(11061, new MetaTileEntityPressurizedCrackingUnit(tkcyaId("pressurized_cracking_unit")));
         }
 
     }
