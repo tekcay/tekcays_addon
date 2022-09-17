@@ -3,7 +3,6 @@ package tekcays_addon.loaders.recipe.handlers;
 import gregtech.api.GTValues;
 import gregtech.api.recipes.ModHandler;
 import gregtech.api.recipes.RecipeMaps;
-import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.stack.UnificationEntry;
 import gregtech.common.items.MetaItems;
@@ -12,7 +11,7 @@ import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
 import static gregtech.api.unification.material.Materials.Brick;
-import static gregtech.api.unification.ore.OrePrefix.dust;
+import static gregtech.api.unification.ore.OrePrefix.*;
 import static tekcays_addon.api.recipes.TKCYARecipeMaps.BLASTING_RECIPES;
 import static tekcays_addon.api.utils.TKCYAValues.MINUTE;
 import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.*;
@@ -28,12 +27,14 @@ public class BlastingRecipeHandler {
                 .input(dust, Materials.YellowLimonite, 8)
                 .output(dust, Materials.Hematite, 5)
                 .duration(100)
+                .EUt(8)
                 .buildAndRegister();
 
         RecipeMaps.FURNACE_RECIPES.recipeBuilder()
                 .input(dust, Materials.BrownLimonite, 8)
                 .output(dust, Materials.Hematite, 5)
                 .duration(100)
+                .EUt(8)
                 .buildAndRegister();
 
         ////From Hematite
@@ -75,28 +76,42 @@ public class BlastingRecipeHandler {
                 "BBB", "BBB", "BBB",
                 'B', new UnificationEntry(ingot, Brick));
 
-        ModHandler.addShapedRecipe("brick", TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.REINFORCED_BRICK),
+        ModHandler.addShapedRecipe("reinforced_brick", TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.REINFORCED_BRICK),
                 "CBC", "BCB", "CBC",
                 'B', new UnificationEntry(ingot, Brick),
                 'C', MetaItems.COKE_OVEN_BRICK);
 
-        ModHandler.addShapedRecipe("brick", TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.FIRECLAY_BRICK),
+        ModHandler.addShapedRecipe("fireclay_brick", TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.FIRECLAY_BRICK),
                 "BBB", "BBB", "BBB",
                 'B', MetaItems.FIRECLAY_BRICK);
 
+        /*
+        ModHandler.addShapedRecipe("strong_brick", TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.STRONG_BRICK),
+                "BBB", "BBB", "BBB",
+                'B', MetaItems.FIRECLAY_BRICK);
+
+         */
+
         //Controller recipes
 
-        ModHandler.addShapedRecipe("brick", BRICK_BLAST_FURNACE.getStackForm(),
-                "  ", "B ", "  ",
+        ModHandler.addShapedRecipe("brick_blast_furnace", BRICK_BLAST_FURNACE.getStackForm(),
+                "   ", " B ", "   ",
                 'B', TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.BRICK));
 
-        ModHandler.addShapedRecipe("brick", REINFORCED_BRICK_BLAST_FURNACE.getStackForm(),
-                " w ", "B ", " h ",
+        ModHandler.addShapedRecipe("reinforced_brick_blast_furnace", REINFORCED_BRICK_BLAST_FURNACE.getStackForm(),
+                " w ", " B ", " h ",
                 'B', TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.REINFORCED_BRICK));
 
-        ModHandler.addShapedRecipe("brick", FIRECLAY_BRICK_BLAST_FURNACE.getStackForm(),
+        ModHandler.addShapedRecipe("fireclay_brick_blast_furnace", FIRECLAY_BRICK_BLAST_FURNACE.getStackForm(),
+                " w ", " B ", " h ",
+                'B', TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.FIRECLAY_BRICK));
+
+        /*
+        ModHandler.addShapedRecipe("strong_brick_blast_furnace", STRONG_BRICK_BLAST_FURNACE.getStackForm(),
                 " w ", "B ", " h ",
                 'B', TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.FIRECLAY_BRICK));
+
+         */
 
     }
 
