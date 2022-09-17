@@ -1,5 +1,6 @@
 package tekcays_addon.common.metatileentities.multi;
 
+import gregicality.science.api.metatileentity.multiblock.GCYSMultiblockAbility;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -15,8 +16,7 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
-import tekcays_addon.api.capability.impl.NoEnergyMultiblockLogic;
-import tekcays_addon.api.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
+import tekcays_addon.api.metatileentity.multiblock.NoEnergyPressureMultiblockController;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
@@ -26,7 +26,7 @@ import java.util.List;
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.utils.BlastFurnaceUtils.*;
 
-public class MetaTileEntityPrimitiveConverter extends NoEnergyRecipeMapMultiBlockController {
+public class MetaTileEntityPrimitiveConverter extends NoEnergyPressureMultiblockController {
 
     private final BlockBrick.BrickType brick;
     private final IBlockState iBlockState;
@@ -35,7 +35,6 @@ public class MetaTileEntityPrimitiveConverter extends NoEnergyRecipeMapMultiBloc
         super(metaTileEntityId, TKCYARecipeMaps.PRIMITIVE_CONVERTING_RECIPES);
         this.brick = BlockBrick.BrickType.REINFORCED_BRICK;
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
-        this.recipeMapWorkable = new NoEnergyMultiblockLogic(this);
     }
 
     @Override
@@ -77,6 +76,9 @@ public class MetaTileEntityPrimitiveConverter extends NoEnergyRecipeMapMultiBloc
             } else {
                 textList.add(new TextComponentTranslation("gregtech.multiblock.idling"));
             }
+            double pressure = this.getPressureContainer().getPressure();
+            if (pressure > 100000) textList.add(new TextComponentTranslation("tkcya.machine.text.pressure", String.format("%.3f", pressure/1000D) + " kPa"));
+            if (pressure > 1000000) textList.add(new TextComponentTranslation("tkcya.machine.text.pressure", String.format("%.3f", pressure/1000000D) + " MPa"));
         }
     }
 
@@ -114,7 +116,8 @@ public class MetaTileEntityPrimitiveConverter extends NoEnergyRecipeMapMultiBloc
                 .where('X', states(getCasingState()))
                 .where('Y', states(getCasingState())
                         .or(getOutputBrickFluidHatch(brick).setMinGlobalLimited(1).setMaxGlobalLimited(1))
-                        .or(getInputBrickFluidHatch(brick).setMinGlobalLimited(1).setMaxGlobalLimited(1)))
+                        .or(getInputBrickFluidHatch(brick).setMinGlobalLimited(1).setMaxGlobalLimited(2))
+                        .or(abilities(GCYSMultiblockAbility.PRESSURE_CONTAINER).setMaxGlobalLimited(1, 1)))
                 .where('M', metaTileEntities(MetaTileEntities.MUFFLER_HATCH)
                         .or(getBrickMuffler(brick)))
                 .where('#', air())

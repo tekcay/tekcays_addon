@@ -58,8 +58,8 @@ public class TKCYARecipeMaps {
             .setSound(GTSounds.COOLING);
 
     @ZenProperty
-    public static final RecipeMap<PrimitiveRecipeBuilder> PRIMITIVE_CONVERTING_RECIPES = new RecipeMap<>(
-            "converting", 0, 0, 0, 0, 1, 4, 1, 2, new PrimitiveRecipeBuilder(), false)
+    public static final RecipeMap<NoEnergyPressureRecipeBuilder> PRIMITIVE_CONVERTING_RECIPES = new RecipeMap<>(
+            "primitive_converting", 0, 0, 0, 0, 1, 4, 1, 2, new NoEnergyPressureRecipeBuilder(), false)
             .setSound(GTSounds.COOLING);
 
     @ZenProperty

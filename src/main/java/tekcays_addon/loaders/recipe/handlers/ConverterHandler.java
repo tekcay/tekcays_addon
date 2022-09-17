@@ -20,8 +20,15 @@ public class ConverterHandler {
                 .fluidInputs(PigIron.getFluid(GTValues.L))
                 .fluidInputs(Air.getFluid(8000))
                 .fluidOutputs(Iron.getFluid(GTValues.L))
+                .pressure(GCYSValues.EARTH_PRESSURE)
                 .duration(200).buildAndRegister();
 
+        PRIMITIVE_CONVERTING_RECIPES.recipeBuilder()
+                .fluidInputs(Iron.getFluid(GTValues.L))
+                .fluidInputs(Air.getFluid(8000))
+                .fluidOutputs(Steel.getFluid(GTValues.L))
+                .pressure(GCYSValues.EARTH_PRESSURE * 2)
+                .duration(200).buildAndRegister();
 
         //Steel with Air
         CONVERTING_RECIPES.recipeBuilder()
