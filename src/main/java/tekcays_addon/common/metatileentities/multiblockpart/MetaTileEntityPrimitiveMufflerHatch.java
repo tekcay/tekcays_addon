@@ -18,7 +18,7 @@ public class MetaTileEntityPrimitiveMufflerHatch extends MetaTileEntityMufflerHa
 
     public MetaTileEntityPrimitiveMufflerHatch(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick) {
         super(metaTileEntityId, 0);
-        this.recoveryChance = 5;
+        this.recoveryChance = 30;
         this.inventory = new ItemStackHandler(1);
         this.brick = brick;
     }
@@ -31,6 +31,10 @@ public class MetaTileEntityPrimitiveMufflerHatch extends MetaTileEntityMufflerHa
     @Override
     public ICubeRenderer getBaseTexture() {
         return getBrickTexture(brick);
+    }
+
+    public BlockBrick.BrickType getBrick() {
+        return this.brick;
     }
 
 

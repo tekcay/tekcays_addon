@@ -6,13 +6,13 @@ import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickFluidHatch;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickItemBus;
+import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityPrimitiveMufflerHatch;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static gregtech.api.metatileentity.multiblock.MultiblockControllerBase.metaTileEntities;
-import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.BRICK_EXPORT_FLUID_HATCH;
-import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.BRICK_ITEM_BUS;
+import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.*;
 
 public class BlastFurnaceUtils {
 
@@ -42,11 +42,17 @@ public class BlastFurnaceUtils {
     }
 
     public static TraceabilityPredicate getInputBrickItemBus(BlockBrick.BrickType brick) {
-
         for (MetaTileEntityBrickItemBus mte : BRICK_ITEM_BUS) {
             if (mte.getBrick().equals(brick)) return metaTileEntities(mte);
         }
         return metaTileEntities(BRICK_ITEM_BUS[0]);
+    }
+
+    public static TraceabilityPredicate getBrickMuffler(BlockBrick.BrickType brick) {
+        for (MetaTileEntityPrimitiveMufflerHatch mte : PRIMITIVE_MUFFLER) {
+            if (mte.getBrick().equals(brick)) return metaTileEntities(mte);
+        }
+        return metaTileEntities(PRIMITIVE_MUFFLER[0]);
     }
 
 }

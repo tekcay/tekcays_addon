@@ -10,6 +10,7 @@ import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
+import gregtech.common.metatileentities.MetaTileEntities;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -115,14 +116,6 @@ public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlock
         return iBlockState;
     }
 
-    protected TraceabilityPredicate getOutputFluidHatch(BlockBrick.BrickType brick) {
-        return getOutputBrickFluidHatch(brick);
-    }
-
-    protected TraceabilityPredicate getInputItemBus(BlockBrick.BrickType brick) {
-        return getInputBrickItemBus(brick);
-    }
-
     public BlockBrick.BrickType getBrick() {
         return this.brick;
     }
@@ -137,11 +130,12 @@ public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlock
                 .where('S', selfPredicate())
                 .where('Y', states(getCasingState()))
                 .where('X', states(getCasingState())
-                        .or(getOutputFluidHatch(brick).setMinGlobalLimited(1).setMaxGlobalLimited(1)))
+                        .or(getOutputBrickFluidHatch(brick).setMinGlobalLimited(1).setMaxGlobalLimited(1)))
                 .where('O', states(getCasingState())
-                        .or(getInputItemBus(brick).setMinGlobalLimited(1).setMaxGlobalLimited(2)))
+                        .or(getInputBrickItemBus(brick).setMinGlobalLimited(1).setMaxGlobalLimited(2)))
                 .where('H', heightIndicatorPredicate())
-                .where('M', abilities(MultiblockAbility.MUFFLER_HATCH))
+                .where('M', metaTileEntities(MetaTileEntities.MUFFLER_HATCH)
+                        .or(getBrickMuffler(brick)))
                 .where('#', air())
                 .build();
     }

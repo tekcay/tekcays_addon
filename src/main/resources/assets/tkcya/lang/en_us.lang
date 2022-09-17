@@ -47,14 +47,20 @@ tkcya.machine.strong_brick_blast_furnace.name=Strong Brick Blast Furnace
 
 #BlastFurnace Hatches
 tkcya.machine.brick_export_fluid_hatch.name=Brick Export Fluid Hatch
-tkcya.machine.fireclay_brick_export_fluid_hatch.name=FireClay Brick Export Fluid Hatch
+tkcya.machine.fireclay_brick_export_fluid_hatch.name=Fireclay Brick Export Fluid Hatch
 tkcya.machine.reinforced_brick_export_fluid_hatch.name=Reinforced Brick Export Fluid Hatch
 tkcya.machine.strong_brick_export_fluid_hatch.name=Strong Brick Blast Export Fluid Hatch
 
 tkcya.machine.brick_import_item_bus.name=Brick Import Item Bus
-tkcya.machine.fireclay_brick_import_item_bus.name=FireClay Brick Import Item Bus
+tkcya.machine.fireclay_brick_import_item_bus.name=Fireclay Brick Import Item Bus
 tkcya.machine.reinforced_brick_import_item_bus.name=Reinforced Brick Import Item Bus
 tkcya.machine.strong_brick_import_item_bus.name=Strong Brick Blast Import Item Bus
+
+#Muffler
+tkcya.machine.brick_muffler.name=Brick Muffler
+tkcya.machine.fireclay_brick_muffler.name=Fireclay Brick Muffler
+tkcya.machine.reinforced_brick_muffler.name=Reinforced Brick Muffler
+tkcya.machine.strong_brick_muffler.name=Strong Brick Blast Muffler
 
 tkcya.machine.crystallizer.name=Crystallizer
 tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer

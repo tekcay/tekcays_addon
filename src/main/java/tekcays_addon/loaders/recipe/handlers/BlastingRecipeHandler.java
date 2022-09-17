@@ -6,6 +6,9 @@ import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.stack.UnificationEntry;
 import gregtech.common.items.MetaItems;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
@@ -71,7 +74,6 @@ public class BlastingRecipeHandler {
 
 
         //Bricks recipes
-
         ModHandler.addShapedRecipe("brick", TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.BRICK),
                 "BBB", "BBB", "BBB",
                 'B', new UnificationEntry(ingot, Brick));
@@ -92,31 +94,78 @@ public class BlastingRecipeHandler {
 
          */
 
-        //Hatch recipes
-
-        /*
-        ModHandler.addShapedRecipe("brick_blast_furnace_hatch", BRICK_BLAST_FURNACE_HATCH.getStackForm(),
+        //Fluid Hatch recipes
+        ModHandler.addShapedRecipe("brick_blast_furnace_hatch", BRICK_EXPORT_FLUID_HATCH[0].getStackForm(),
                 "BBB", "B B", "BBB",
                 'B', new UnificationEntry(ingot, Brick));
 
-        ModHandler.addShapedRecipe("reinforced_brick_blast_furnace_hatch", REINFORCED_BRICK_BLAST_FURNACE_HATCH.getStackForm(),
+        ModHandler.addShapedRecipe("reinforced_brick_blast_furnace_hatch", BRICK_EXPORT_FLUID_HATCH[1].getStackForm(),
                 "CBC", "B B", "CBC",
                 'B', new UnificationEntry(ingot, Brick),
                 'C', MetaItems.COKE_OVEN_BRICK);
 
-        ModHandler.addShapedRecipe("fireclay_brick_blast_furnace_hatch", FIRECLAY_BRICK_BLAST_FURNACE.getStackForm(),
+        ModHandler.addShapedRecipe("fireclay_brick_blast_furnace_hatch", BRICK_EXPORT_FLUID_HATCH[2].getStackForm(),
                 "BBB", "B B", "BBB",
                 'B', MetaItems.FIRECLAY_BRICK);
 
         /*
-        ModHandler.addShapedRecipe("strong_brick_blast_furnace_hatch", STRONG_BRICK_BLAST_FURNACE.getStackForm(),
+        ModHandler.addShapedRecipe("strong_brick_blast_furnace_hatch", BRICK_EXPORT_FLUID_HATCH[3].getStackForm(),
                 "BBB", "BBB", "BBB",
+                'B', MetaItems.FIRECLAY_BRICK);
+         */
+
+        //Item Bus recipes
+        ModHandler.addShapedRecipe("brick_blast_furnace_hatch", BRICK_ITEM_BUS[0].getStackForm(),
+                "BBB", "BCB", "BBB",
+                'C', new ItemStack(Blocks.CHEST),
+                'B', new UnificationEntry(ingot, Brick));
+
+        ModHandler.addShapedRecipe("reinforced_brick_blast_furnace_hatch", BRICK_ITEM_BUS[1].getStackForm(),
+                "OBO", "BCB", "OBO",
+                'C', new ItemStack(Blocks.CHEST),
+                'B', new UnificationEntry(ingot, Brick),
+                'O', MetaItems.COKE_OVEN_BRICK);
+
+        ModHandler.addShapedRecipe("fireclay_brick_blast_furnace_hatch", BRICK_ITEM_BUS[2].getStackForm(),
+                "BBB", "BCB", "BBB",
+                'C', new ItemStack(Blocks.CHEST),
+                'B', MetaItems.FIRECLAY_BRICK);
+
+        /*
+        ModHandler.addShapedRecipe("strong_brick_blast_furnace_hatch", BRICK_ITEM_BUS[3].getStackForm(),
+                "BBB", "BCB", "BBB",
+                'C', new ItemStack(Blocks.CHEST),
                 'B', MetaItems.FIRECLAY_BRICK);
 
          */
 
-        //Controller recipes
+        //Muffler recipes
+        ModHandler.addShapedRecipe("brick_blast_furnace_hatch", PRIMITIVE_MUFFLER[0].getStackForm(),
+                "BBB", "BCB", "BBB",
+                'C', new ItemStack(Blocks.FURNACE),
+                'B', new UnificationEntry(ingot, Brick));
 
+        ModHandler.addShapedRecipe("reinforced_brick_blast_furnace_hatch", PRIMITIVE_MUFFLER[1].getStackForm(),
+                "OBO", "BCB", "OBO",
+                'C', new ItemStack(Blocks.FURNACE),
+                'B', new UnificationEntry(ingot, Brick),
+                'O', MetaItems.COKE_OVEN_BRICK);
+
+        ModHandler.addShapedRecipe("fireclay_brick_blast_furnace_hatch", PRIMITIVE_MUFFLER[2].getStackForm(),
+                "BBB", "BCB", "BBB",
+                'C', new ItemStack(Blocks.FURNACE),
+                'B', MetaItems.FIRECLAY_BRICK);
+
+        /*
+        ModHandler.addShapedRecipe("strong_brick_blast_furnace_hatch", PRIMITIVE_MUFFLER[3].getStackForm(),
+                "BBB", "BCB", "BBB",
+                'C', new ItemStack(Blocks.FURNACE),
+                'B', MetaItems.FIRECLAY_BRICK);
+         */
+
+
+
+        //Controller recipes
         ModHandler.addShapedRecipe("brick_blast_furnace", BLAST_FURNACE[0].getStackForm(),
                 "   ", " B ", "   ",
                 'B', TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.BRICK));

@@ -20,6 +20,7 @@ import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.metatileentities.multi.*;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickFluidHatch;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickItemBus;
+import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityPrimitiveMufflerHatch;
 import tekcays_addon.common.metatileentities.steam.SteamCooler;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
@@ -49,6 +50,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityTKCYABlastFurnace[] BLAST_FURNACE = new MetaTileEntityTKCYABlastFurnace[BRICKS.size()];
     public static MetaTileEntityBrickFluidHatch[] BRICK_EXPORT_FLUID_HATCH = new MetaTileEntityBrickFluidHatch[BRICKS.size()];
     public static MetaTileEntityBrickItemBus[] BRICK_ITEM_BUS = new MetaTileEntityBrickItemBus[BRICKS.size()];
+    public static MetaTileEntityPrimitiveMufflerHatch[] PRIMITIVE_MUFFLER = new MetaTileEntityPrimitiveMufflerHatch[BRICKS.size()];
 
 
 
@@ -111,12 +113,13 @@ public class TKCYAMetaTileEntities {
         if (TKCYAConfigHolder.meltingOverhaul.enableBlastingOverhaul) {
             CONVERTER = registerMetaTileEntity(11022, new MetaTileEntityConverter(tkcyaId("converter")));
 
-            //id 11051-11063
+            //id 11051-11066
             for (int i = 0; i < BRICKS.size(); i++) {
                 BlockBrick.BrickType brick = BRICKS.get(i);
                 BLAST_FURNACE[i] = registerMetaTileEntity(11051 + i, new MetaTileEntityTKCYABlastFurnace(tkcyaId(brick.getName() + "_blast_furnace"), brick));
                 BRICK_EXPORT_FLUID_HATCH[i] = registerMetaTileEntity(11055 + i, new MetaTileEntityBrickFluidHatch(tkcyaId(brick.getName() + "_export_fluid_hatch"), true, brick));
                 BRICK_ITEM_BUS[i] = registerMetaTileEntity(11059 + i, new MetaTileEntityBrickItemBus(tkcyaId(brick.getName() + "_import_item_bus"), false, brick));
+                PRIMITIVE_MUFFLER[i] = registerMetaTileEntity(11063 + i, new MetaTileEntityPrimitiveMufflerHatch(tkcyaId(brick.getName() + "_muffler"), brick));
             }
 
         }
@@ -144,21 +147,17 @@ public class TKCYAMetaTileEntities {
         if (TKCYAConfigHolder.storageOverhaul.enableMultiblockTanksOverhaul) {
 
             WOODEN_TANK = registerMetaTileEntity(11040, new TKCYAMetaTileEntityMultiblockTank(tkcyaId("multiblock.tank.wood"),
-                            Materials.TreatedWood,
-                            MetaBlocks.STEAM_CASING.getState(BlockSteamCasing.SteamCasingType.WOOD_WALL),
-                            250000));
-
+                    Materials.TreatedWood,
+                    MetaBlocks.STEAM_CASING.getState(BlockSteamCasing.SteamCasingType.WOOD_WALL),
+                    250000));
             STEEL_TANK = registerMetaTileEntity(11041, new TKCYAMetaTileEntityMultiblockTank(tkcyaId("multiblock.tank.steel"),
                     Materials.Steel,
                     TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.STEEL_WALL),
                     250000));
-
-
             GALVANIZED_STEEL_TANK = registerMetaTileEntity(11042, new TKCYAMetaTileEntityMultiblockTank(tkcyaId("multiblock.tank.galvanized_steel"),
                     TKCYAMaterials.GalvanizedSteel,
                     TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL),
                     250000));
-
             STAINLESS_STEEL_TANK = registerMetaTileEntity(11043, new TKCYAMetaTileEntityMultiblockTank(tkcyaId("multiblock.tank.stainless_steel"),
                     Materials.StainlessSteel,
                     TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.STAINLESS_STEEL_WALL),
@@ -167,10 +166,8 @@ public class TKCYAMetaTileEntities {
 
             STEEL_TANK_VALVE = registerMetaTileEntity(11045, new TKCYAMetaTileEntityTankValve(tkcyaId("multiblock.valve.steel"),
                     Materials.Steel));
-
             GALVANIZED_STEEL_TANK_VALVE = registerMetaTileEntity(11046, new TKCYAMetaTileEntityTankValve(tkcyaId("multiblock.valve.galvanized_steel"),
                     TKCYAMaterials.GalvanizedSteel));
-
             STAINLESS_STEEL_TANK_VALVE = registerMetaTileEntity(11047, new TKCYAMetaTileEntityTankValve(tkcyaId("multiblock.valve.stainless_steel"),
                     Materials.StainlessSteel));
 
@@ -186,6 +183,8 @@ public class TKCYAMetaTileEntities {
         if (TKCYAConfigHolder.crackingOverhaul.enableCrackingOverhaul) {
             PRESSURIZED_CRACKING_UNIT = registerMetaTileEntity(11071, new MetaTileEntityPressurizedCrackingUnit(tkcyaId("pressurized_cracking_unit")));
         }
+
+
 
 
     }
