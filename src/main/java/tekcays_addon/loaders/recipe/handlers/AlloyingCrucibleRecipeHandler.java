@@ -7,19 +7,15 @@ import gregtech.api.recipes.ingredients.GTRecipeInput;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.api.unification.stack.MaterialStack;
-import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.unification.TKCYAMaterials;
-import tekcays_addon.api.utils.TKCYALog;
 
 import static gregtech.api.GTValues.L;
 import static gregtech.api.unification.material.Materials.Carbon;
-import static gregtech.api.unification.material.info.MaterialFlags.DISABLE_DECOMPOSITION;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class TKCYAAlloyingCrucibleRecipeHandler {
+public class AlloyingCrucibleRecipeHandler {
 
     public static void init() {
 
@@ -58,6 +54,7 @@ public class TKCYAAlloyingCrucibleRecipeHandler {
                     .fluidInputs(f)
                     .fluidOutputs(material.getFluid(L * outputMultiplier))
                     .duration((int) material.getMass())
+                    .temperature(material.getFluid().getTemperature())
                     .buildAndRegister();
         }
     }

@@ -9,24 +9,44 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.recipes.Recipe;
 import gregtech.api.util.RelativeDirection;
 import gregtech.client.renderer.ICubeRenderer;
-import gregtech.client.renderer.texture.Textures;
-import gregtech.common.blocks.BlockMetalCasing;
-import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.capability.impl.NoEnergyMultiblockLogic;
 import tekcays_addon.api.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.api.recipes.recipeproperties.NoEnergyTemperatureProperty;
 import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.common.blocks.TKCYAMetaBlocks;
+import tekcays_addon.common.blocks.blocks.BlockBrick;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import java.util.List;
+
+import static tekcays_addon.api.utils.blastfurnace.BlastFurnaceUtils.*;
 
 public class MetaTileEntityPrimitiveMelter extends NoEnergyRecipeMapMultiBlockController {
+    private final BlockBrick.BrickType brick;
+    private final IBlockState iBlockState;
 
-    public MetaTileEntityPrimitiveMelter(ResourceLocation metaTileEntityId) {
+    public MetaTileEntityPrimitiveMelter(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick) {
         super(metaTileEntityId, TKCYARecipeMaps.MELTER_RECIPES);
         this.recipeMapWorkable = new NoEnergyMultiblockLogic(this);
+        this.brick = brick;
+        this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
+    }
+
+    @Override
+    public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
+        return new MetaTileEntityPrimitiveMelter(metaTileEntityId, brick);
     }
 
     @Override
@@ -36,12 +56,31 @@ public class MetaTileEntityPrimitiveMelter extends NoEnergyRecipeMapMultiBlockCo
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
-        return Textures.PRIMITIVE_BRICKS;
+        return getBrickTexture(brick);
+    }
+
+    protected IBlockState getCasingState() {
+        return iBlockState;
+    }
+
+    public BlockBrick.BrickType getBrick() {
+        return this.brick;
+    }
+
+    @Override
+    public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
+        return brick.getBrickTemperature() >= recipe.getProperty(NoEnergyTemperatureProperty.getInstance(), 0);
     }
 
     @Override
     protected ICubeRenderer getFrontOverlay() {
         return TKCYATextures.PRIMITIVE_MELTER_OVERLAY;
+    }
+
+    @Override
+    public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
+        super.addInformation(stack, player, tooltip, advanced);
+        tooltip.add(I18n.format("tkcya.machine.brick_temperature.tooltip", brick.getBrickTemperature()));
     }
 
 
@@ -58,10 +97,6 @@ public class MetaTileEntityPrimitiveMelter extends NoEnergyRecipeMapMultiBlockCo
         this.itemInventory = new ItemHandlerProxy(emptyHandler, emptyHandler);
     }
 
-    protected IBlockState getCasingState() {
-        return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.PRIMITIVE_BRICKS);
-    }
-
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RelativeDirection.FRONT, RelativeDirection.UP, RelativeDirection.RIGHT)
@@ -70,17 +105,12 @@ public class MetaTileEntityPrimitiveMelter extends NoEnergyRecipeMapMultiBlockCo
                 .aisle("XXX", "XXX", "XXX")
                 .where('S', selfPredicate())
                 .where('X', states(getCasingState())
-                        .or(autoAbilities()))
+                        .or(getOutputBrickFluidHatch(brick).setMinGlobalLimited(1).setMaxGlobalLimited(1))
+                        .or(getInputBrickItemBus(brick).setMinGlobalLimited(1).setMaxGlobalLimited(3)))
                 .where('#', air())
                 .build();
 
     }
-
-    @Override
-    public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTileEntityPrimitiveMelter(metaTileEntityId);
-    }
-
     public boolean hasMaintenanceMechanics() {
         return false;
     }

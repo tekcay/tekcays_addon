@@ -127,7 +127,7 @@ public class TKCYARecipeLoader {
         }
 
         if (meltingOverhaul.enableAlloyingOverhaul) {
-            TKCYAAlloyingCrucibleRecipeHandler.init();
+            AlloyingCrucibleRecipeHandler.init();
         }
 
         if (meltingOverhaul.enableCastingOverhaul) {

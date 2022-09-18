@@ -64,7 +64,7 @@ public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlock
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.1"));
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.2"));
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.3", "2"));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.4", brick.getBrickTemperature()));
+        tooltip.add(I18n.format("tkcya.machine.brick_temperature", brick.getBrickTemperature()));
     }
 
     @Override
@@ -93,11 +93,6 @@ public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlock
     }
 
     @Override
-    public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
-        return getBrickTexture(brick);
-    }
-
-    @Override
     public boolean hasMaintenanceMechanics() {
         return false;
     }
@@ -110,6 +105,11 @@ public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlock
     @Override
     protected ICubeRenderer getFrontOverlay() {
         return Textures.COKE_OVEN_OVERLAY;
+    }
+
+    @Override
+    public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
+        return getBrickTexture(brick);
     }
 
     protected IBlockState getCasingState() {

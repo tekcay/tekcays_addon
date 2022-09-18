@@ -34,6 +34,13 @@ public class BlastFurnaceUtils {
         return TKCYATextures.BRICK;
     }
 
+    public static TraceabilityPredicate getInputBrickFluidHatch(BlockBrick.BrickType brick) {
+        for (MetaTileEntityBrickFluidHatch mte : BRICK_IMPORT_FLUID_HATCH) {
+            if (mte.getBrick().equals(brick)) return metaTileEntities(mte);
+        }
+        return metaTileEntities(BRICK_IMPORT_FLUID_HATCH[0]);
+    }
+
     public static TraceabilityPredicate getOutputBrickFluidHatch(BlockBrick.BrickType brick) {
         for (MetaTileEntityBrickFluidHatch mte : BRICK_EXPORT_FLUID_HATCH) {
             if (mte.getBrick().equals(brick)) return metaTileEntities(mte);
