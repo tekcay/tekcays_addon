@@ -45,6 +45,7 @@ public class MetaTileEntityHeatAcceptor extends MetaTileEntityMultiblockPart imp
         return new MetaTileEntityHeatAcceptor(metaTileEntityId, this.getTier());
     }
 
+    /*
     @Override
     public void update() {
         super.update();
@@ -52,7 +53,7 @@ public class MetaTileEntityHeatAcceptor extends MetaTileEntityMultiblockPart imp
             int currentHeat = heatContainer.getHeat();
 
             if (currentHeat < heatContainer.getMaxHeat()) {
-                TileEntity te = getWorld().getTileEntity(getPos().offset(getFrontFacing()));
+                TileEntity te = getWorld().getTileEntity(getPos().offset(EnumFacing.DOWN));
                 if (te != null) {
                     IHeatContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER, EnumFacing.DOWN);
                     if (container != null) {
@@ -63,6 +64,8 @@ public class MetaTileEntityHeatAcceptor extends MetaTileEntityMultiblockPart imp
             else heatContainer.setHeat(currentHeat - coolingRate);
         }
     }
+
+     */
 
     @Override
     protected ModularUI createUI(@Nonnull EntityPlayer entityPlayer) {

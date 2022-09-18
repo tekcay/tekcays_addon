@@ -92,12 +92,20 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
             TKCYALog.logger.info("got here");
             energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
 
-
             TileEntity te = getWorld().getTileEntity(getPos().offset(UP));
             if (te != null) {
+                TKCYALog.logger.info("null ?");
                 IHeatContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER, DOWN);
+                TKCYALog.logger.info("prout ?");
                 if (container != null) {
-                    IHeatContainer.mergeContainers(false, container, heatContainer);
+                    TKCYALog.logger.info("zut ?");
+                    /*
+                    if (container.changeHeat(HEAT_BASE_INCREASE, true)) {
+                        container.changeHeat(HEAT_BASE_INCREASE, false);
+                        this.heatContainer.changeHeat(-HEAT_BASE_INCREASE, false);
+                    }
+
+                     */
                 }
             }
 
@@ -111,16 +119,17 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
         tooltip.add(I18n.format("tkcya.electric_heater.tooltip.1"));
         tooltip.add(I18n.format("tkcya.electric_heater.tooltip.2", NumberFormattingUtil.formatDoubleToCompactString(Math.abs(HEAT_BASE_INCREASE))));
         tooltip.add(I18n.format("tkcya.electric_heater.tooltip.3"));
-
     }
-
 
     @Override
     @Nullable
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
+        /*
         if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
             return side == UP ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
         }
+
+         */
         if (capability.equals(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER)) {
             return TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER.cast(heatContainer);
         }

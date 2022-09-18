@@ -19,7 +19,7 @@ public interface IHeatContainer {
     void setHeat(int amount);
 
     /**
-     * Change the amount of particles in the container by a given amount
+     * Change the amount of heat in the container by a given amount
      *
      * @param amount   the amount to change by
      * @param simulate whether to actually change the value or not
@@ -63,30 +63,6 @@ public interface IHeatContainer {
         return getHeat() == 0;
     }
 
-    /**
-     * Equalizes the Heat between containers.
-     *
-     * @param containers the containers to merge
-     */
-    static void mergeContainers(@Nonnull IHeatContainer... containers) {
-        mergeContainers(true, containers);
-    }
-
-    /**
-     * Equalizes the Heat between containers. This does not modify volume.
-     *
-     * @param checkSafety whether to check if changing Heat is safe before modifying container values
-     * @param containers  the containers to merge
-     */
-    static void mergeContainers(boolean checkSafety, @Nonnull IHeatContainer... containers) {
-
-        int heat = 0;
-        for (IHeatContainer heatContainer : containers) {
-            heat = heatContainer.getHeat();
-            if (heat == 0) continue;
-            heatContainer.isHeatSafe(heat);
-        }
-    }
 
     IHeatContainer EMPTY = new IHeatContainer() {
 

@@ -2,6 +2,8 @@ package tekcays_addon.api.capability.impl;
 
 import gregtech.api.metatileentity.MTETrait;
 import gregtech.api.metatileentity.MetaTileEntity;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
 import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
@@ -64,5 +66,29 @@ public class HeatContainer extends MTETrait implements IHeatContainer {
             return TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER.cast(this);
         }
         return null;
+    }
+
+    @Override
+    public NBTTagCompound serializeNBT() {
+        NBTTagCompound compound = new NBTTagCompound();
+        compound.setInteger("heat", this.heat);
+        return compound;
+    }
+
+    @Override
+    public void deserializeNBT(@Nonnull NBTTagCompound compound) {
+        this.heat = compound.getInteger("heat");
+    }
+
+    @Override
+    public void writeInitialData(PacketBuffer buffer) {
+        super.writeInitialData(buffer);
+        buffer.writeInt(this.heat);
+    }
+
+    @Override
+    public void receiveInitialData(PacketBuffer buffer) {
+        super.receiveInitialData(buffer);
+        this.heat = buffer.readInt();
     }
 }
