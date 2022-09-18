@@ -270,11 +270,19 @@ item.material.oreprefix.moldBlock=%s Mold Block
 
 #Tooltips
 
-tkcya.machine.primitive_fermenter.tooltip.1=Max Parallel: §e%s§7
+# Steam Air Compressor
+tkcya.steam_air_compressor.tooltip.1=Pressurize air.
+tkcya.steam_air_compressor.tooltip.2=Consumes %sL of Steam per second.
 
 
 tkcya.machine.no_overclock.tooltip=No overclock
 tkcya.machine.height.tooltip=Height: %d
+tkcya.machine.pressure_decrease.tooltip=Decreases the pressure by §b%sPa§7 per second while running.
+tkcya.machine.pressure_increase.tooltip=Increases the pressure by §b%sPa§7 per second while running.
+
+tkcya.machine.primitive_converter.tooltip.1=Only runs recipes is the required pressure is set.
+
+tkcya.machine.primitive_fermenter.tooltip.1=Max Parallel: §e%s§7
 
 tkcya.machine.spiral_separator.tooltip.1=Run §a1§7 parallel recipe per §a2§7 additional floors.
 

@@ -50,14 +50,14 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.input.Keyboard;
+import tekcays_addon.api.utils.TKCYAValues;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class MetaTileEntitySteamAirCompressor extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide {
+public class SteamAirCompressor extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide {
 
-    private static final int PRESSURE_INCREASE = 1000;
     private static final int STEAM_CONSUMPTION = 160;
 
     private PressureContainer pressureContainer;
@@ -67,21 +67,21 @@ public class MetaTileEntitySteamAirCompressor extends MetaTileEntity implements 
 
     protected EnumFacing outputFacing;
 
-    public MetaTileEntitySteamAirCompressor(ResourceLocation metaTileEntityId) {
+    public SteamAirCompressor(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId);
         this.isHighPressure = true;
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
-        return new MetaTileEntitySteamAirCompressor(metaTileEntityId);
+        return new SteamAirCompressor(metaTileEntityId);
     }
 
     //Changed
     @Override
     protected void initializeInventory() {
         super.initializeInventory();
-        this.pressureContainer = new PressureContainer(this, GCYSValues.EARTH_PRESSURE, GCYSValues.EARTH_PRESSURE * 2, 1.0);
+        this.pressureContainer = new PressureContainer(this, GCYSValues.EARTH_PRESSURE, GCYSValues.EARTH_PRESSURE * 2.2, 1.0);
     }
 
     @Override
@@ -149,8 +149,8 @@ public class MetaTileEntitySteamAirCompressor extends MetaTileEntity implements 
                 if (drained != null && drained.amount == STEAM_CONSUMPTION && ventSteam(true)) {
                     fuelFluidTank.drain(STEAM_CONSUMPTION, true);
 
-                    if (pressureContainer.changeParticles(PRESSURE_INCREASE, true)) {
-                        pressureContainer.changeParticles(PRESSURE_INCREASE, false);
+                    if (pressureContainer.changeParticles(TKCYAValues.STEAM_AIR_COMPRESSOR_PRESSURE_INCREASE, true)) {
+                        pressureContainer.changeParticles(TKCYAValues.STEAM_AIR_COMPRESSOR_PRESSURE_INCREASE, false);
                     } else if (pressureContainer.changeParticles(pressureContainer.getParticles() / 2, true)) {
                         // divide pressure by 2 if the regular increase is too much
                         pressureContainer.changeParticles(pressureContainer.getParticles() / 2, false);
@@ -213,9 +213,9 @@ public class MetaTileEntitySteamAirCompressor extends MetaTileEntity implements 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("gcys.steam_ejector.tooltip.1"));
-        tooltip.add(I18n.format("gcys.steam_ejector.tooltip.2", NumberFormattingUtil.formatDoubleToCompactString(Math.abs(PRESSURE_INCREASE))));
-        tooltip.add(I18n.format("gcys.steam_ejector.tooltip.3", STEAM_CONSUMPTION));
+        tooltip.add(I18n.format("tkcya.steam_air_compressor.tooltip.1"));
+        tooltip.add(I18n.format("tkcya.machine.pressure_increase.tooltip", NumberFormattingUtil.formatDoubleToCompactString(Math.abs(TKCYAValues.STEAM_AIR_COMPRESSOR_PRESSURE_INCREASE))));
+        tooltip.add(I18n.format("tkcya.steam_air_compressor.tooltip.2", STEAM_CONSUMPTION));
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
             tooltip.add(I18n.format("gcys.universal.tooltip.pressure.minimum", NumberFormattingUtil.formatDoubleToCompactString(pressureContainer.getMinPressure()), GCYSValues.PNF[GCYSUtility.getTierByPressure(pressureContainer.getMinPressure())]));
             tooltip.add(I18n.format("gcys.universal.tooltip.pressure.maximum", NumberFormattingUtil.formatDoubleToCompactString(pressureContainer.getMaxPressure()), GCYSValues.PNF[GCYSUtility.getTierByPressure(pressureContainer.getMaxPressure())]));

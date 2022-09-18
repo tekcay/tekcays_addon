@@ -1,27 +1,35 @@
 package tekcays_addon.common.metatileentities.multi;
 
+import gregicality.science.api.GCYSValues;
 import gregicality.science.api.metatileentity.multiblock.GCYSMultiblockAbility;
+import gregicality.science.api.recipes.recipeproperties.PressureProperty;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.recipes.Recipe;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.MetaTileEntities;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
+import net.minecraft.world.World;
 import tekcays_addon.api.metatileentity.multiblock.NoEnergyPressureMultiblockController;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
 import java.util.List;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.utils.BlastFurnaceUtils.*;
@@ -42,17 +50,13 @@ public class MetaTileEntityPrimitiveConverter extends NoEnergyPressureMultiblock
         return new MetaTileEntityPrimitiveConverter(metaTileEntityId);
     }
 
-    /*
+
     @Override
     public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.1"));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.2"));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.3", "2"));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.4", brick.getBrickTemperature()));
+        tooltip.add(I18n.format("tkcya.machine.primitive_converter.tooltip.1"));
     }
 
-     */
 
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
@@ -123,6 +127,14 @@ public class MetaTileEntityPrimitiveConverter extends NoEnergyPressureMultiblock
                 .where('#', air())
                 .build();
     }
+
+    /*
+    @Override
+    public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
+        return this.getPressureContainer().getPressure() >= recipe.getProperty(PressureProperty.getInstance(), GCYSValues.EARTH_PRESSURE);
+    }
+
+     */
 
 
 }
