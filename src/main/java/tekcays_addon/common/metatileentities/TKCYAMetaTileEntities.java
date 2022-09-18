@@ -21,8 +21,8 @@ import tekcays_addon.common.metatileentities.multi.*;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickFluidHatch;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickItemBus;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityPrimitiveMufflerHatch;
-import tekcays_addon.common.metatileentities.steam.SteamAirCompressor;
-import tekcays_addon.common.metatileentities.steam.SteamCooler;
+import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamAirCompressor;
+import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamCooler;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
 import static tekcays_addon.api.utils.BlastFurnaceUtils.BRICKS;
@@ -39,9 +39,9 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityPrimitiveConverter PRIMITIVE_CONVERTER;
     public static MetaTileEntityAlloyingCrucible ALLOYING_CRUCIBLE;
     public static MetaTileEntityCastingTable CASTING_TABLE;
-    public static SteamCooler STEAM_COOLER_BRONZE;
-    public static SteamCooler STEAM_COOLER_STEEL;
-    public static SteamAirCompressor STEAM_AIR_COMPRESSOR;
+    public static MetaTileEntitySteamCooler STEAM_COOLER_BRONZE;
+    public static MetaTileEntitySteamCooler STEAM_COOLER_STEEL;
+    public static MetaTileEntitySteamAirCompressor STEAM_AIR_COMPRESSOR;
     public static MetaTileEntityElectricConverter CONVERTER;
     public static MetaTileEntityTKCYACokeOven COKE_OVEN;
     public static MetaTileEntityPrimitiveBath PRIMITIVE_BATH;
@@ -112,8 +112,8 @@ public class TKCYAMetaTileEntities {
                     TKCYATextures.CASTING_TABLE_OVERLAY, true, TKCYAMetaTileEntities::tkcyaId, GTUtility.hvCappedTankSizeFunction);
 
 
-            STEAM_COOLER_BRONZE = registerMetaTileEntity(11020, new SteamCooler(tkcyaId("steam_cooler_bronze"), false));
-            STEAM_COOLER_STEEL = registerMetaTileEntity(11021, new SteamCooler(tkcyaId("steam_cooler_steel"), true));
+            STEAM_COOLER_BRONZE = registerMetaTileEntity(11020, new MetaTileEntitySteamCooler(tkcyaId("steam_cooler_bronze"), false));
+            STEAM_COOLER_STEEL = registerMetaTileEntity(11021, new MetaTileEntitySteamCooler(tkcyaId("steam_cooler_steel"), true));
 
         }
 
@@ -198,7 +198,7 @@ public class TKCYAMetaTileEntities {
 
         ROASTING_OVEN = registerMetaTileEntity(11077, new MetaTileEntityRoastingOven(tkcyaId("roasting_oven")));
         SPIRAL_SEPARATOR = registerMetaTileEntity(11078, new MetaTileEntitySpiralSeparator(tkcyaId("spiral_separator")));
-        STEAM_AIR_COMPRESSOR = registerMetaTileEntity(11079, new SteamAirCompressor(tkcyaId("steam_air_compressor")));
+        STEAM_AIR_COMPRESSOR = registerMetaTileEntity(11079, new MetaTileEntitySteamAirCompressor(tkcyaId("steam_air_compressor")));
 
     }
 

@@ -56,7 +56,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class SteamAirCompressor extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide {
+public class MetaTileEntitySteamAirCompressor extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide {
 
     private static final int STEAM_CONSUMPTION = 160;
 
@@ -67,14 +67,14 @@ public class SteamAirCompressor extends MetaTileEntity implements IDataInfoProvi
 
     protected EnumFacing outputFacing;
 
-    public SteamAirCompressor(ResourceLocation metaTileEntityId) {
+    public MetaTileEntitySteamAirCompressor(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId);
         this.isHighPressure = true;
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
-        return new SteamAirCompressor(metaTileEntityId);
+        return new MetaTileEntitySteamAirCompressor(metaTileEntityId);
     }
 
     //Changed

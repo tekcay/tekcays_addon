@@ -24,6 +24,7 @@ import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
 import tekcays_addon.api.metatileentity.multiblock.NoEnergyPressureMultiblockController;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
@@ -88,7 +89,7 @@ public class MetaTileEntityPrimitiveConverter extends NoEnergyPressureMultiblock
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
-        return Textures.COKE_BRICKS;
+        return TKCYATextures.REINFORCED_BRICK;
     }
 
     @Override

@@ -24,7 +24,7 @@ tkcya.machine.electric_casting_table.ev.tooltip=Air speeds up the recipe by §a4
 tkcya.machine.electric_casting_table.iv.tooltip=Air speeds up the recipe by §a40%§7
 
 tkcya.machine.casting_table.tooltip=Air speeds up the recipe by §e20%§7
-
+tkcya.machine.steam_air_compressor.name=Steam Air Compressor
 tkcya.machine.steam_cooler_bronze.name=Steam Cooler
 tkcya.machine.steam_cooler_steel.name=High Pressure Steam Cooler
 tkcya.machine.muffler_hatch.primitive.name=Primitive Muffler Hatch
