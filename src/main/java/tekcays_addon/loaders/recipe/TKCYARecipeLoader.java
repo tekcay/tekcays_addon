@@ -18,21 +18,18 @@ public class TKCYARecipeLoader {
 
         TKCYAMetaTileEntityLoader.init();
 
-        if (miscOverhaul.enableFoilOverhaul) {
-            TKCYAPartsRecipeHandler.initFoil();
-        }
-
-        if (meltingOverhaul.enableMeltingOverhaul) {
-            TKCYAPartsRecipeHandler.removeExtractor();
-        }
+        if (miscOverhaul.enableFoilOverhaul) TKCYAPartsRecipeHandler.initFoil();
+        if (miscOverhaul.enableHarderRotors) HarderRotorsHandler.init();
+        if (miscOverhaul.enableCoilOverhaul) Coils.init();
+        if (miscOverhaul.disableComponentsShapesRecipes) RecipesRemovalHandler.shapedComponentsRecipes();
+        if (miscOverhaul.enableMagneticOverhaul) TKCYAPartsRecipeHandler.initPolarizing();
+        if (meltingOverhaul.enableMeltingOverhaul) TKCYAPartsRecipeHandler.removeExtractor();
+        if (energyOverhaul.disableGasTurbinesOverhaul) BurningGasBoilerRecipeHandler.init();
+        if (crackingOverhaul.enableCrackingOverhaul) PressureCrackingHandler.init();
 
         if (meltingOverhaul.enableAlloyingOverhaul) {
             TKCYAPartsRecipeHandler.removeAlloySmelter();
             GTRecipeHandler.removeAllRecipes(RecipeMaps.PRIMITIVE_BLAST_FURNACE_RECIPES);
-        }
-
-        if (miscOverhaul.enableMagneticOverhaul) {
-            TKCYAPartsRecipeHandler.initPolarizing();
         }
 
         if (meltingOverhaul.enableCastingOverhaul) {
@@ -46,14 +43,6 @@ public class TKCYARecipeLoader {
             RecipesRemovalHandler.removeMoldsAndUsage();
         }
 
-        if (energyOverhaul.disableGasTurbinesOverhaul) {
-            BurningGasBoilerRecipeHandler.init();
-        }
-
-        if (miscOverhaul.enableCoilOverhaul) {
-            Coils.init();
-        }
-
         if (miscOverhaul.enableGalvanizedSteel) {
             GalvanizedSteel.shapedRecipes();
             GalvanizedSteel.componentsAssemblerRecipes();
@@ -64,17 +53,9 @@ public class TKCYARecipeLoader {
             ShapedCraftingRecipes.ulvPotin();
         }
 
-        if (miscOverhaul.disableComponentsShapesRecipes) {
-            RecipesRemovalHandler.shapedComponentsRecipes();
-        }
-
         if (meltingOverhaul.enableBlastingOverhaul) {
             ConverterHandler.init();
             BlastingRecipeHandler.init();
-        }
-
-        if (crackingOverhaul.enableCrackingOverhaul) {
-            PressureCrackingHandler.init();
         }
 
         if (miscOverhaul.enableElectrolysisOverhaul) {
@@ -131,8 +112,8 @@ public class TKCYARecipeLoader {
         }
 
         if (meltingOverhaul.enableCastingOverhaul) {
-            TKCYACastingTableRecipeHandler.init();
-            TKCYACastingTableRecipeHandler.misc();
+            CastingRecipeHandler.init();
+            CastingRecipeHandler.misc();
         }
 
     }
