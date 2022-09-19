@@ -3,16 +3,11 @@ package tekcays_addon.common.metatileentities;
 import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.util.GTUtility;
-import gregtech.client.renderer.texture.Textures;
-import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.BlockSteamCasing;
 import gregtech.common.blocks.MetaBlocks;
-import gregtech.common.metatileentities.MetaTileEntities;
 import gregtech.common.metatileentities.storage.MetaTileEntityDrum;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.TekCaysAddon;
-import tekcays_addon.api.capability.impl.MetaTileEntityLaserEjector;
-import tekcays_addon.api.capability.impl.MetaTileEntityLaserHatch;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
 
@@ -82,9 +77,6 @@ public class TKCYAMetaTileEntities {
     public static TKCYAMetaTileEntityTankValve GALVANIZED_STEEL_TANK_VALVE;
     public static TKCYAMetaTileEntityTankValve STAINLESS_STEEL_TANK_VALVE;
 
-
-    public static MetaTileEntityLaserEjector LASER_EJECTOR;
-    public static MetaTileEntityLaserHatch LASER_HATCH;
 
 
     public static void init() {
@@ -208,9 +200,6 @@ public class TKCYAMetaTileEntities {
 
         HEAT_ACCEPTOR[0] = registerMetaTileEntity(11075, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.lv"), 1));
 
-
-        LASER_EJECTOR = registerMetaTileEntity(11078, new MetaTileEntityLaserEjector(tkcyaId("laser_ejector")));
-        LASER_HATCH = registerMetaTileEntity(11079, new MetaTileEntityLaserHatch(tkcyaId("laser_hatch"), 0, 0, 1000));
 
     }
 

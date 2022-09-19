@@ -6,6 +6,7 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.Fluid;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import gregtech.api.unification.ore.OrePrefix;
@@ -46,6 +47,18 @@ public class TKCYAValues {
     public static final int MAX_HEAT = 10000;
 
     //Lists/Arrays
+    public static final List<EnumFacing> HORIZONTALS = new ArrayList<EnumFacing>(){{
+       add(EnumFacing.SOUTH);
+       add(EnumFacing.NORTH);
+       add(EnumFacing.EAST);
+       add(EnumFacing.WEST);
+    }};
+
+    public static final List<EnumFacing> VERTICALS = new ArrayList<EnumFacing>(){{
+        add(EnumFacing.UP);
+        add(EnumFacing.DOWN);
+    }};
+
 
     public static final MetaItem.MetaValueItem[] ELECTRIC_PUMPS = new MetaItem.MetaValueItem[]{
             ELECTRIC_PUMP_LV, ELECTRIC_PUMP_MV, ELECTRIC_PUMP_HV, ELECTRIC_PUMP_EV, ELECTRIC_PUMP_IV,

@@ -9,6 +9,7 @@ import gregtech.api.GTValues;
 import gregtech.api.capability.GregtechTileCapabilities;
 import gregtech.api.capability.IActiveOutputSide;
 import gregtech.api.gui.ModularUI;
+import gregtech.api.metatileentity.IDataInfoProvider;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.TieredMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -19,11 +20,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.impl.HeatContainer;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 import org.apache.commons.lang3.ArrayUtils;
 import tekcays_addon.api.utils.TKCYALog;
@@ -34,7 +37,7 @@ import java.util.List;
 
 import static net.minecraft.util.EnumFacing.*;
 
-public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implements IActiveOutputSide {
+public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implements IDataInfoProvider, IActiveOutputSide {
 
     private final int HEAT_BASE_INCREASE = (int) (GTValues.V[getTier()] / 4);
     private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()]);
@@ -52,7 +55,7 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
     @Override
     protected void initializeInventory() {
         super.initializeInventory();
-        this.heatContainer = new HeatContainer(this, 0, 1000);
+        this.heatContainer = new HeatContainer(this, 0, 20000);
     }
 
     @Override
@@ -74,41 +77,26 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
     @Override
     public void update() {
         super.update();
-        if (!getWorld().isRemote && getOffsetTimer() % 20 == 0) {
+        int currentHeat = heatContainer.getHeat();
+        if (getOffsetTimer() % 20 == 0) TKCYALog.logger.info("Heater heat : " + currentHeat);
+        if (!getWorld().isRemote) {
             //Redstone stops heating
             if (this.isBlockRedstonePowered()) return;
-
-            TKCYALog.logger.info("stored energy = " + energyContainer.getEnergyStored());
-            TKCYALog.logger.info("EU base consumption = " + ENERGY_BASE_CONSUMPTION);
-
             if (energyContainer.getEnergyStored() < ENERGY_BASE_CONSUMPTION) return;
-            int currentHeat = heatContainer.getHeat();
-
-            TKCYALog.logger.info("currentHeat = " + currentHeat);
-            TKCYALog.logger.info("maxHeat = " + heatContainer.getMaxHeat());
-
             if (currentHeat + HEAT_BASE_INCREASE < heatContainer.getMaxHeat()) heatContainer.setHeat(currentHeat + HEAT_BASE_INCREASE);
 
-            TKCYALog.logger.info("got here");
             energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
 
             TileEntity te = getWorld().getTileEntity(getPos().offset(UP));
             if (te != null) {
-                TKCYALog.logger.info("null ?");
                 IHeatContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER, DOWN);
-                TKCYALog.logger.info("prout ?");
                 if (container != null) {
-                    TKCYALog.logger.info("zut ?");
-                    /*
                     if (container.changeHeat(HEAT_BASE_INCREASE, true)) {
                         container.changeHeat(HEAT_BASE_INCREASE, false);
                         this.heatContainer.changeHeat(-HEAT_BASE_INCREASE, false);
                     }
-
-                     */
                 }
             }
-
         }
     }
 
@@ -124,16 +112,23 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
     @Override
     @Nullable
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
-        /*
         if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
             return side == UP ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
         }
-
-         */
         if (capability.equals(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER)) {
             return TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER.cast(heatContainer);
         }
         return super.getCapability(capability, side);
+    }
+
+    @Nonnull
+    @Override
+    public List<ITextComponent> getDataInfo() {
+        List<ITextComponent> list = new ObjectArrayList<>();
+        list.add(new TextComponentTranslation("behavior.tricorder.current_heat", heatContainer.getHeat()));
+        list.add(new TextComponentTranslation("behavior.tricorder.min_heat", heatContainer.getMinHeat()));
+        list.add(new TextComponentTranslation("behavior.tricorder.max_heat", heatContainer.getMaxHeat()));
+        return list;
     }
 
     @Override

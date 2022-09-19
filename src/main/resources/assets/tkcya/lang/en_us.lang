@@ -290,9 +290,13 @@ tkcya.machine.text.pressure=Current pressure: %s
 
 #Electric Heater
 tkcya.electric_heater.tooltip.1=For heating.
-tkcya.electric_heater.tooltip.2=Produces §b%sHU§7 per second.
+tkcya.electric_heater.tooltip.2=Produces §b%s HU§7 per second.
 tkcya.electric_heater.tooltip.3=Outputs on the TOP face.
 
+#Tricorder
+behavior.tricorder.current_heat=Current Heat: %s HU
+behavior.tricorder.min_heat=Minimum Heat: %s HU
+behavior.tricorder.max_heat=Maximum Heat: %s HU
 
 # Errors
 
