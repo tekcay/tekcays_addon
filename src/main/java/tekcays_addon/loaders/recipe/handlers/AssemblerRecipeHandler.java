@@ -1,5 +1,6 @@
 package tekcays_addon.loaders.recipe.handlers;
 
+import gregtech.api.GTValues;
 import gregtech.api.unification.material.MarkerMaterials;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
@@ -13,14 +14,12 @@ import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.Materials.StainlessSteel;
-import static gregtech.api.unification.ore.OrePrefix.plate;
-import static gregtech.api.unification.ore.OrePrefix.stickLong;
+import static gregtech.api.unification.ore.OrePrefix.*;
 import static gregtech.common.metatileentities.MetaTileEntities.*;
 import static gregtech.common.metatileentities.MetaTileEntities.STAINLESS_STEEL_DRUM;
+import static tekcays_addon.api.recipes.TKCYARecipeMaps.HEATING;
 import static tekcays_addon.api.unification.TKCYAMaterials.*;
 
 public class AssemblerRecipeHandler {
-
-
 
 }

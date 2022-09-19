@@ -6,6 +6,7 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.unification.TKCYAMaterials;
@@ -20,7 +21,6 @@ import static tekcays_addon.api.unification.TKCYAMaterials.*;
 import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -41,6 +41,12 @@ public class TKCYAValues {
      */
     public static final float CLEANROOM_MULTIPLIER = 1.2f;
 
+
+    //Heat
+
+    public static final int MIN_HEAT = 0;
+    public static final int MAX_HEAT = 10000;
+
     /**
      * One second in {@code tick}s.
      */
@@ -54,7 +60,20 @@ public class TKCYAValues {
      */
     public static final int HOUR = 72000;
 
+
     //Lists/Arrays
+    public static final List<EnumFacing> HORIZONTALS = new ArrayList<EnumFacing>(){{
+       add(EnumFacing.SOUTH);
+       add(EnumFacing.NORTH);
+       add(EnumFacing.EAST);
+       add(EnumFacing.WEST);
+    }};
+
+    public static final List<EnumFacing> VERTICALS = new ArrayList<EnumFacing>(){{
+        add(EnumFacing.UP);
+        add(EnumFacing.DOWN);
+    }};
+
 
     public static final MetaItem.MetaValueItem[] ELECTRIC_PUMPS = new MetaItem.MetaValueItem[]{
             ELECTRIC_PUMP_LV, ELECTRIC_PUMP_MV, ELECTRIC_PUMP_HV, ELECTRIC_PUMP_EV, ELECTRIC_PUMP_IV,

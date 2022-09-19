@@ -1,6 +1,7 @@
 package tekcays_addon;
 
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.api.worldgen.TKCYAWorldGenRegistry;
 import tekcays_addon.common.CommonProxy;
@@ -30,6 +31,7 @@ public class TekCaysAddon {
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
         TKCYALog.init(event.getModLog());
+        TKCYATileCapabilities.init();
         TKCYAMetaBlocks.init();
         TKCYAMetaItems.init();
         TKCYAMetaTileEntities.init();

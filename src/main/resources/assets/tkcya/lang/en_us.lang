@@ -25,6 +25,12 @@ tkcya.machine.electric_casting_table.iv.tooltip=Air speeds up the recipe by §a4
 
 tkcya.machine.casting_table.tooltip=Air speeds up the recipe by §e20%§7
 
+tkcya.machine.electric_heater.lv.name=Electric Heater LV
+tkcya.machine.electric_heater.mv.name=Electric Heater MV
+tkcya.machine.electric_heater.hv.name=Electric Heater HV
+tkcya.machine.electric_heater.ev.name=Electric Heater EV
+tkcya.machine.electric_heater.iv.name=Electric Heater IV
+
 tkcya.machine.steam_cooler_bronze.name=Steam Cooler
 tkcya.machine.steam_cooler_steel.name=High Pressure Steam Cooler
 tkcya.machine.muffler_hatch.primitive.name=Primitive Muffler Hatch
@@ -323,6 +329,7 @@ tekcays_addon.machine.electric_converter.tooltip.3=The target temperature and th
 
 tekcays_addon.recipe.blasting_temperature=Temperature: %dK
 tekcays_addon.recipe.blasting_pressure=Pressure: %d bar
+tkcya.recipe.heat=%d HU/t
 
 tekcays_addon.machine.advanced_electrolyzer.tooltip.1=Performs electrolysis of chemicals in solution.
 tekcays_addon.machine.advanced_electrolyzer.tooltip.2=Requires two electrodes, a cathode and an anode, to perform its recipes.
@@ -331,8 +338,20 @@ tekcays_addon.machine.advanced_electrolyzer.tooltip.4=Removal of the electrode w
 
 tkcya.machine.text.pressure=Current pressure: %s
 
+#Electric Heater
+tkcya.electric_heater.tooltip.1=For heating.
+tkcya.electric_heater.tooltip.2=Produces §c%s HU/t§7.
+tkcya.electric_heater.tooltip.3=Outputs on the TOP face.
 
+#Electric Cooler
+tkcya.electric_cooler.tooltip.1=For cooling.
+tkcya.electric_cooler.tooltip.2=Produces §b%s CU/t§7.
+tkcya.electric_cooler.tooltip.3=Outputs on the TOP face.
 
+#Tricorder
+behavior.tricorder.current_heat=Current Heat: %s HU
+behavior.tricorder.min_heat=Minimum Heat: %s HU
+behavior.tricorder.max_heat=Maximum Heat: %s HU
 
 # Errors
 
