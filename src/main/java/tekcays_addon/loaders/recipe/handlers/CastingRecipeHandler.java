@@ -14,7 +14,7 @@ import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
 import static tekcays_addon.api.utils.TKCYAValues.MOLD_MATERIALS;
 
 
-public class TKCYACastingTableRecipeHandler {
+public class CastingRecipeHandler {
 
     public static final Map<OrePrefix, OrePrefix> MOLD_PRODUCTION = new HashMap<>();
 
@@ -31,7 +31,7 @@ public class TKCYACastingTableRecipeHandler {
         //MOLD_PRODUCTION.put(OrePrefix.ball, TKCYAOrePrefix.moldBall);
         //MOLD_PRODUCTION.put(OrePrefix.bot, TKCYAOrePrefix.moldCylinder);
         //MOLD_PRODUCTION.put(OrePrefix.casing, TKCYAOrePrefix.moldCasing);
-        MOLD_PRODUCTION.put(OrePrefix.rotor, TKCYAOrePrefix.moldRotor);
+        //MOLD_PRODUCTION.put(OrePrefix.rotor, TKCYAOrePrefix.moldRotor);
         MOLD_PRODUCTION.put(OrePrefix.ring, TKCYAOrePrefix.moldRing);
         MOLD_PRODUCTION.put(OrePrefix.block, TKCYAOrePrefix.moldBlock);
 

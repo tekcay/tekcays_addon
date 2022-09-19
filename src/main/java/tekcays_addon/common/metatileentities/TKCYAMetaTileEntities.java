@@ -18,6 +18,10 @@ import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.metatileentities.multi.*;
+
+import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityHeatAcceptor;
+import tekcays_addon.common.metatileentities.single.MetaTileEntityElectricHeater;
+
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickFluidHatch;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickItemBus;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityPrimitiveMufflerHatch;
@@ -33,6 +37,8 @@ public class TKCYAMetaTileEntities {
     public static SimpleMachineMetaTileEntity[] CLUSTER_MILL = new SimpleMachineMetaTileEntity[5];
     public static SimpleMachineMetaTileEntity[] ADVANCED_POLARIZER = new SimpleMachineMetaTileEntity[5];
     public static SimpleMachineMetaTileEntity[] ELECTRIC_CASTING_TABLE = new SimpleMachineMetaTileEntity[5];
+    public static MetaTileEntityElectricHeater[] ELECTRIC_HEATER = new MetaTileEntityElectricHeater[5];
+    public static MetaTileEntityHeatAcceptor[] HEAT_ACCEPTOR = new MetaTileEntityHeatAcceptor[1];
 
     public static MetaTileEntityPrimitiveMelter PRIMITIVE_MELTER;
     public static MetaTileEntityPrimitiveFermenter PRIMITIVE_FERMENTER;
@@ -49,8 +55,12 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityAdvancedElectrolyzer ADVANCED_ELECTROLYZER;
     public static MetaTileEntityFilter FILTER;
     public static MetaTileEntityPressurizedCrackingUnit PRESSURIZED_CRACKING_UNIT;
+
+    public static MetaTileEntityAdvancedMelter ADVANCED_MELTER;
+
     public static MetaTileEntityRoastingOven ROASTING_OVEN;
     public static MetaTileEntitySpiralSeparator SPIRAL_SEPARATOR;
+
 
     //Blast Furnaces
     public static MetaTileEntityTKCYABlastFurnace[] BLAST_FURNACE = new MetaTileEntityTKCYABlastFurnace[BRICKS.size()];
@@ -83,6 +93,8 @@ public class TKCYAMetaTileEntities {
     public static TKCYAMetaTileEntityTankValve STEEL_TANK_VALVE;
     public static TKCYAMetaTileEntityTankValve GALVANIZED_STEEL_TANK_VALVE;
     public static TKCYAMetaTileEntityTankValve STAINLESS_STEEL_TANK_VALVE;
+
+
 
     public static void init() {
 
@@ -196,9 +208,23 @@ public class TKCYAMetaTileEntities {
             PRESSURIZED_CRACKING_UNIT = registerMetaTileEntity(11076, new MetaTileEntityPressurizedCrackingUnit(tkcyaId("pressurized_cracking_unit")));
         }
 
+
         ROASTING_OVEN = registerMetaTileEntity(11077, new MetaTileEntityRoastingOven(tkcyaId("roasting_oven")));
         SPIRAL_SEPARATOR = registerMetaTileEntity(11078, new MetaTileEntitySpiralSeparator(tkcyaId("spiral_separator")));
         STEAM_AIR_COMPRESSOR = registerMetaTileEntity(11079, new MetaTileEntitySteamAirCompressor(tkcyaId("steam_air_compressor")));
+
+        
+        ROASTING_OVEN = registerMetaTileEntity(11080, new MetaTileEntityRoastingOven(tkcyaId("roasting_oven")));
+        SPIRAL_SEPARATOR = registerMetaTileEntity(10081, new MetaTileEntitySpiralSeparator(tkcyaId("spiral_separator")));
+        
+        ELECTRIC_HEATER[0] = registerMetaTileEntity(11170, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.lv"), 1));
+        ELECTRIC_HEATER[1] = registerMetaTileEntity(11171, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.mv"), 2));
+        ELECTRIC_HEATER[2] = registerMetaTileEntity(11172, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.hv"), 3));
+        ELECTRIC_HEATER[3] = registerMetaTileEntity(11173, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.ev"), 4));
+        ELECTRIC_HEATER[4] = registerMetaTileEntity(11174, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.iv"), 5));
+
+        HEAT_ACCEPTOR[0] = registerMetaTileEntity(11175, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.lv"), 1));
+        ADVANCED_MELTER = registerMetaTileEntity(1116, new MetaTileEntityAdvancedMelter(tkcyaId("avcanced_melter")));
 
     }
 

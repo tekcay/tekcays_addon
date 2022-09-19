@@ -37,6 +37,10 @@ public class TKCYATextures {
     public static SimpleOverlayRenderer WHITE_GT;
     public static SimpleOverlayRenderer STAINLESS_STEEL_GT;
 
+    //Acceptors
+    public static SimpleOverlayRenderer HEAT_ACCEPTOR_HORIZONTALS_OVERLAY;
+    public static SimpleOverlayRenderer HEAT_ACCEPTOR_VERTICALS_OVERLAY;
+
 
     public static void preInit() {
         // Simple Machines
@@ -48,11 +52,13 @@ public class TKCYATextures {
         FIRECLAY_BRICK = new SimpleOverlayRenderer("casings/block_brick/fireclay_brick");
         STRONG_BRICK = new SimpleOverlayRenderer("casings/block_brick/strong_brick");
 
-
-
         //GT6 Style
         STEEL_GT = new SimpleOverlayRenderer("steel_gt");
         WHITE_GT = new SimpleOverlayRenderer("white_gt");
         STAINLESS_STEEL_GT = new SimpleOverlayRenderer("stainless_steel_gt");
+
+        //Acceptors
+        HEAT_ACCEPTOR_HORIZONTALS_OVERLAY = new SimpleOverlayRenderer("multiblockpart/heat_acceptor_horizontals");
+        HEAT_ACCEPTOR_VERTICALS_OVERLAY = new SimpleOverlayRenderer("multiblockpart/heat_acceptor_verticals");
     }
 }

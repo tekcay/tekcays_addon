@@ -92,6 +92,12 @@ public class TKCYARecipeMaps {
             .setSound(GTSounds.COMPRESSOR);
 
     @ZenProperty
+    public static final RecipeMap<HeatRecipeBuilder> HEATING = new RecipeMap<>(
+            "heating", 1, 2, 0, 0, 0, 2, 1, 2, new HeatRecipeBuilder(), false)
+            .setSound(GTSounds.COMPRESSOR);
+
+
+    @ZenProperty
     public static final RecipeMap<TemperaturePressureRecipeBuilder> ROASTING = new RecipeMap<>(
             "roasting", 1, 2, 0, 4, 1, 1, 0, 2, new TemperaturePressureRecipeBuilder(), false)
             .setSound(GTSounds.FURNACE);
@@ -105,6 +111,7 @@ public class TKCYARecipeMaps {
     public static final RecipeMap<PrimitiveRecipeBuilder> COKING = new RecipeMap<>(
             "coking", 1, 2, 1, 1, 0, 0, 0, 1, new PrimitiveRecipeBuilder(), false)
             .setSound(GTSounds.COMBUSTION);
+
 
 
 }
