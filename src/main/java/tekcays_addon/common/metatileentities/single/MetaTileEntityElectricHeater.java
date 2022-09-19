@@ -78,7 +78,6 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
     public void update() {
         super.update();
         int currentHeat = heatContainer.getHeat();
-        if (getOffsetTimer() % 20 == 0) TKCYALog.logger.info("Heater heat : " + currentHeat);
         if (!getWorld().isRemote) {
             //Redstone stops heating
             if (this.isBlockRedstonePowered()) return;

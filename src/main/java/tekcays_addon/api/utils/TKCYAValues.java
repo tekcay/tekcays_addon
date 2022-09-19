@@ -20,7 +20,6 @@ import static tekcays_addon.api.unification.TKCYAMaterials.*;
 import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

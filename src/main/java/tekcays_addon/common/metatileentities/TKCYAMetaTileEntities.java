@@ -47,6 +47,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityAdvancedElectrolyzer ADVANCED_ELECTROLYZER;
     public static MetaTileEntityFilter FILTER;
     public static MetaTileEntityPressurizedCrackingUnit PRESSURIZED_CRACKING_UNIT;
+    public static MetaTileEntityAdvancedMelter ADVANCED_MELTER;
 
     //Blast Furnaces
     public static MetaTileEntityTKCYABlastFurnace BRICK_BLAST_FURNACE;
@@ -199,6 +200,7 @@ public class TKCYAMetaTileEntities {
         ELECTRIC_HEATER[4] = registerMetaTileEntity(11074, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.iv"), 5));
 
         HEAT_ACCEPTOR[0] = registerMetaTileEntity(11075, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.lv"), 1));
+        ADVANCED_MELTER = registerMetaTileEntity(11090, new MetaTileEntityAdvancedMelter(tkcyaId("avcanced_melter")));
 
 
     }

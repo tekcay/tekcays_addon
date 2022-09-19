@@ -54,30 +54,6 @@ public class MetaTileEntityHeatAcceptor extends MetaTileEntityMultiblockPart imp
     }
 
     @Override
-    public void update() {
-        super.update();
-        if (getOffsetTimer() % 20 == 0) TKCYALog.logger.info("Heat Acceptor heat = " + this.heatContainer.getHeat());
-        /*
-        if (!getWorld().isRemote && getOffsetTimer() % 20 == 0) {
-            int currentHeat = heatContainer.getHeat();
-
-            if (currentHeat < heatContainer.getMaxHeat()) {
-                TileEntity te = getWorld().getTileEntity(getPos().offset(EnumFacing.DOWN));
-                if (te != null) {
-                    IHeatContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER, EnumFacing.DOWN);
-                    if (container != null) {
-                        IHeatContainer.mergeContainers(false, container, heatContainer);
-                    }
-                }
-            }
-            else heatContainer.setHeat(currentHeat - coolingRate);
-        }
-
-         */
-    }
-
-
-    @Override
     protected ModularUI createUI(@Nonnull EntityPlayer entityPlayer) {
         return null;
     }

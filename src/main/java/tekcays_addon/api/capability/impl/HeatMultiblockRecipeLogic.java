@@ -1,25 +1,24 @@
 package tekcays_addon.api.capability.impl;
 
-import gregtech.api.capability.impl.RecipeLogicSteam;
-import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.capability.impl.MultiblockRecipeLogic;
+import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.recipes.Recipe;
-import gregtech.api.recipes.RecipeMap;
 import gregtech.common.ConfigHolder;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fluids.IFluidTank;
 import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.IHeatMachine;
 import tekcays_addon.api.recipes.recipeproperties.HeatProperty;
 
 import javax.annotation.Nonnull;
 
-public class HeatSteamRecipeLogic extends RecipeLogicSteam {
+public class HeatMultiblockRecipeLogic extends MultiblockRecipeLogic {
 
     private int recipeHeat = 0;
 
-    public HeatSteamRecipeLogic(MetaTileEntity tileEntity, RecipeMap<?> recipeMap, boolean isHighPressure, IFluidTank steamFluidTank, double conversionRate) {
-        super(tileEntity, recipeMap, isHighPressure, steamFluidTank, conversionRate);
+    public HeatMultiblockRecipeLogic(RecipeMapMultiblockController tileEntity) {
+        super(tileEntity);
     }
+
 
     @Override
     protected void updateRecipeProgress() {
@@ -48,8 +47,8 @@ public class HeatSteamRecipeLogic extends RecipeLogicSteam {
 
     protected boolean drawHeat(int heat, boolean simulate) {
         IHeatContainer container = this.getHeatContainer();
-        if (container.changeHeat(heat, true)) {
-            container.changeHeat(heat, simulate);
+        if (container.changeHeat(-heat, true)) {
+            container.changeHeat(-heat, simulate);
             return true;
         } else return false;
     }
@@ -70,7 +69,7 @@ public class HeatSteamRecipeLogic extends RecipeLogicSteam {
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = super.serializeNBT();
         if (this.progressTime > 0) {
-            compound.setDouble("heat", this.recipeHeat);
+            compound.setInteger("heat", this.recipeHeat);
         }
         return compound;
     }

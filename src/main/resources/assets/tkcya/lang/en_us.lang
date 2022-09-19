@@ -280,6 +280,7 @@ tekcays_addon.machine.electric_converter.tooltip.3=The target temperature and th
 
 tekcays_addon.recipe.blasting_temperature=Temperature: %dK
 tekcays_addon.recipe.blasting_pressure=Pressure: %d bar
+tkcya.recipe.heat=%d HU/t
 
 tekcays_addon.machine.advanced_electrolyzer.tooltip.1=Performs electrolysis of chemicals in solution.
 tekcays_addon.machine.advanced_electrolyzer.tooltip.2=Requires two electrodes, a cathode and an anode, to perform its recipes.
@@ -290,8 +291,13 @@ tkcya.machine.text.pressure=Current pressure: %s
 
 #Electric Heater
 tkcya.electric_heater.tooltip.1=For heating.
-tkcya.electric_heater.tooltip.2=Produces §b%s HU§7 per second.
+tkcya.electric_heater.tooltip.2=Produces §c%s HU/t§7.
 tkcya.electric_heater.tooltip.3=Outputs on the TOP face.
+
+#Electric Cooler
+tkcya.electric_cooler.tooltip.1=For cooling.
+tkcya.electric_cooler.tooltip.2=Produces §b%s CU/t§7.
+tkcya.electric_cooler.tooltip.3=Outputs on the TOP face.
 
 #Tricorder
 behavior.tricorder.current_heat=Current Heat: %s HU
