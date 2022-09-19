@@ -30,8 +30,8 @@ public class TKCYARecipeMaps {
             .setSound(GTSounds.ARC);
 
     @ZenProperty
-    public static final RecipeMap<TKCYATemperatureRecipeBuilder> MELTER_RECIPES = new RecipeMap<>(
-            "primitive_melter", 1, 1, 0, 0, 0, 0, 1, 1, new TKCYATemperatureRecipeBuilder(), false)
+    public static final RecipeMap<NoEnergyTemperatureRecipeBuilder> MELTER_RECIPES = new RecipeMap<>(
+            "primitive_melter", 1, 1, 0, 0, 0, 0, 1, 1, new NoEnergyTemperatureRecipeBuilder(), false)
             .setSound(GTSounds.FURNACE);
 
     @ZenProperty
@@ -58,8 +58,8 @@ public class TKCYARecipeMaps {
             .setSound(GTSounds.COOLING);
 
     @ZenProperty
-    public static final RecipeMap<TKCYATemperatureRecipeBuilder> BLASTING_RECIPES = new RecipeMap<>(
-            "blasting", 1, 1, 0, 0, 0, 1, 1, 2, new TKCYATemperatureRecipeBuilder(), false)
+    public static final RecipeMap<NoEnergyTemperatureRecipeBuilder> BLASTING_RECIPES = new RecipeMap<>(
+            "blasting", 1, 3, 0, 0, 0, 0, 1, 2, new NoEnergyTemperatureRecipeBuilder(), false)
             .setSound(GTSounds.FURNACE);
 
     @ZenProperty
@@ -74,7 +74,7 @@ public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<SimpleRecipeBuilder> ELECTROLYSIS = new RecipeMap<>(
-            "electrolysis", 0, 4, 0, 1, 1, 3, 0, 3, new SimpleRecipeBuilder(), false)
+            "electrolysis", 0, 4, 0, 2, 1, 3, 0, 3, new SimpleRecipeBuilder(), false)
             .setSound(GTSounds.ELECTROLYZER);
 
     @ZenProperty
@@ -91,6 +91,16 @@ public class TKCYARecipeMaps {
             "heating", 1, 2, 0, 0, 0, 2, 1, 2, new HeatRecipeBuilder(), false)
             .setSound(GTSounds.COMPRESSOR);
 
+
+    @ZenProperty
+    public static final RecipeMap<TemperaturePressureRecipeBuilder> ROASTING = new RecipeMap<>(
+            "roasting", 1, 2, 0, 4, 1, 1, 0, 2, new TemperaturePressureRecipeBuilder(), false)
+            .setSound(GTSounds.FURNACE);
+
+    @ZenProperty
+    public static final RecipeMap<SimpleRecipeBuilder> SPIRAL_SEPARATION = new RecipeMap<>(
+            "spiral_separation", 1, 1, 2, 8, 0, 0, 0, 0, new SimpleRecipeBuilder(), false)
+            .setSound(GTSounds.MOTOR);
 
 
 

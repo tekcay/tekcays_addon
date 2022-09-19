@@ -98,7 +98,7 @@ public class MetaTileEntityFilter extends RecipeMapPrimitiveMultiblockController
                 .widget(new TankWidget(exportFluids.getTankAt(0), 80, 60, 18, 18)
                         .setBackgroundTexture(GuiTextures.FLUID_SLOT)
                         .setAlwaysShowFull(true)
-                        .setContainerClicking(false, true))
+                        .setContainerClicking(true, false))
 
                 .bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 0);
     }

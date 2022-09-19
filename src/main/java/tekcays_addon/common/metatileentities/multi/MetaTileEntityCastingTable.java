@@ -17,7 +17,6 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 
 import net.minecraft.entity.player.EntityPlayer;
-
 import net.minecraft.util.ResourceLocation;
 
 import tekcays_addon.api.recipes.TKCYARecipeMaps;

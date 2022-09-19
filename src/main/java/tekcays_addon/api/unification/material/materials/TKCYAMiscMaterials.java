@@ -5,6 +5,8 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.info.MaterialFlags;
 import gregtech.api.unification.material.info.MaterialIconSet;
+import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.api.unification.material.info.TKCYAMaterialFlags;
 
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialIconSet.*;
@@ -49,6 +51,22 @@ public class TKCYAMiscMaterials {
                 .color(0xB99023)
                 .build();
         GoldAlloy.setFormula("Cu3Au?", true);
+
+        GoldLeach = new Material.Builder(24106, "gold_leach")
+                .dust()
+                .iconSet(SHINY)
+                .color(0xB99023)
+                .build();
+        GoldLeach.setFormula("CuAu?", true);
+
+        CopperLeach = new Material.Builder(24107, "copper_leach")
+                .dust()
+                .iconSet(SHINY)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .components(Copper, 27, Lead, 1, Iron, 1, Nickel, 1, Silver, 1)
+                .color(0xB99023)
+                .build();
+        CopperLeach.setFormula("Cu?", true);
 
 
 
@@ -167,25 +185,72 @@ public class TKCYAMiscMaterials {
                 .fluid(FluidTypes.ACID)
                 .color(Germanium.getMaterialRGB() + SulfuricAcid.getMaterialRGB() / 2)
                 .build();
-        GermanicAcidSolution.setFormula("H4GeO4");
+        GermanicAcidSolution.setFormula("H4GeO4", true);
 
         TannicAcid = new Material.Builder(24135, "tannic_acid")
                 .fluid(FluidTypes.ACID)
                 .color(554242)
                 .build();
-        TannicAcid.setFormula("C76H52O46");
+        TannicAcid.setFormula("C76H52O46", true);
 
         GermaniumChloride = new Material.Builder(24136, "germanium_chloride")
                 .dust()
                 .color(Germanium.getMaterialRGB() + Chlorine.getMaterialRGB() * 4 / 5)
                 .build();
-        GermaniumChloride.setFormula("GeCl4");
+        GermaniumChloride.setFormula("GeCl4", true);
 
         GermaniumOxide = new Material.Builder(24137, "germanium_oxide")
                 .dust()
                 .color(Germanium.getMaterialRGB() + Oxygen.getMaterialRGB() * 2 / 3)
                 .build();
-        GermaniumOxide.setFormula("GeO2");
+        GermaniumOxide.setFormula("GeO2", true);
+
+        PotassiumMetaBisulfite = new Material.Builder(24138, "potassium_metabisulfite")
+                .dust()
+                .color(Potassium.getMaterialRGB() * 2 + Sulfur.getMaterialRGB() * 2 + Obsidian.getMaterialRGB() * 5 / 9)
+                .build();
+        PotassiumMetaBisulfite.setFormula("K2S2O5", true);
+
+        //More roastable ores
+        Kesterite = new Material.Builder(24139, "kesterite")
+                .dust().ore()
+                .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .components(Copper, 2, Zinc, 1, Tin, 1, Sulfur, 4)
+                .iconSet(DULL)
+                .color(0x577b5b)
+                .build();
+
+        Stannite = new Material.Builder(24140, "stannite")
+                .dust().ore()
+                .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .components(Copper, 2, Iron, 1, Tin, 1, Sulfur, 4)
+                .iconSet(DULL)
+                .color(0x91a95e)
+                .build();
+
+        Arsenopyrite = new Material.Builder(24141, "arsenopyrite")
+                .dust().ore()
+                .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .components(Iron, 1, Arsenic, 1, Sulfur, 1)
+                .iconSet(DULL)
+                .color(0x91a95e)
+                .build();
+
+        //Roasting outputs
+        Cuprite = new Material.Builder(24142, "cuprite")
+                .dust().ore()
+                .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .components(Copper, 2, Oxygen, 1)
+                .iconSet(DULL)
+                .color(Copper.getMaterialRGB() * 2 + Oxygen.getMaterialRGB() / 3)
+                .build();
+
+
+
 
     }
 

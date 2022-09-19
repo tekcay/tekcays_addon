@@ -5,6 +5,7 @@ import gregtech.api.recipes.RecipeMaps;
 import tekcays_addon.loaders.recipe.chains.*;
 import tekcays_addon.loaders.recipe.handlers.*;
 import tekcays_addon.loaders.ItemsRemovalHandler;
+import tekcays_addon.loaders.recipe.handlers.StorageOverhaul;
 import tekcays_addon.loaders.recipe.removals.RecipesRemovalHandler;
 
 import static tekcays_addon.common.TKCYAConfigHolder.*;
@@ -54,11 +55,13 @@ public class TKCYARecipeLoader {
         }
 
         if (miscOverhaul.enableGalvanizedSteel) {
-            RecipesRemovalHandler.steelRemovalsInit();
+            GalvanizedSteel.shapedRecipes();
+            GalvanizedSteel.componentsAssemblerRecipes();
+            GalvanizedSteel.componentsGTCEuRecipesRemoval();
+
             RecipesRemovalHandler.removeShapedTreatedWoodRecipe();
             BathRecipeHandler.treatingWoodInit();
-            ShapedCraftingRecipes.galvanizedSteel();
-            AssemblerRecipeHandler.galvanizedSteel();
+            ShapedCraftingRecipes.ulvPotin();
         }
 
         if (miscOverhaul.disableComponentsShapesRecipes) {
@@ -85,30 +88,35 @@ public class TKCYARecipeLoader {
         }
 
         if (storageOverhaul.enableDrumsOverhaul) {
-            RecipesRemovalHandler.removeDrums();
-            ShapedCraftingRecipes.drums();
-            AssemblerRecipeHandler.drums();
+            StorageOverhaul.shapedRecipesDrums();
+            StorageOverhaul.drumsAssembler();
+            StorageOverhaul.removeGTCEuDrumsRecipe();
         }
 
         if (storageOverhaul.enableMultiblockTanksOverhaul) {
-            RecipesRemovalHandler.removeTanksAndValves();
-            ShapedCraftingRecipes.tanksAndValves();
-            AssemblerRecipeHandler.walls();
+            StorageOverhaul.shapesRecipesTanksAndValves();
+            StorageOverhaul.wallsAssembler();
+            StorageOverhaul.removeGTCEuTanksAndValvesRecipe();
         }
 
-        TKCYAPartsRecipeHandler.initFilter();
         CasingsLoader.init();
         ChemicalChains.init();
         MineralChains.init();
         PolymerHandler.init();
+        RoastingHandler.init();
+        //MUST BE CALLED AFTER ANY HANDLER THAT GENERATES DUST_MIXTURE !
+        SpiralSeparatorHandler.init();
         GTCEuRequireCleanRoomHandler.init();
+        //Must be called in the end
+        FiltrationRecipeHandler.init();
     }
 
 
     public static void loadLatest() {
 
         if (miscOverhaul.enableGalvanizedSteel) {
-            BathRecipeHandler.galvanizingSteelInit();
+            GalvanizedSteel.galvanizingSteelBath();
+            GalvanizedSteel.galvanizingSteelElectrolysis();
         }
 
         if (meltingOverhaul.enableMeltingOverhaul) {

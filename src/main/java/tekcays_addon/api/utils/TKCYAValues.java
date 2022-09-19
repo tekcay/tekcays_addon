@@ -8,6 +8,7 @@ import gregtech.api.unification.material.Materials;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import gregtech.api.unification.ore.OrePrefix;
 
@@ -40,10 +41,25 @@ public class TKCYAValues {
      */
     public static final float CLEANROOM_MULTIPLIER = 1.2f;
 
+
     //Heat
 
     public static final int MIN_HEAT = 0;
     public static final int MAX_HEAT = 10000;
+
+    /**
+     * One second in {@code tick}s.
+     */
+    public static final int SECOND = 20;
+    /**
+     * One minute in {@code tick}s.
+     */
+    public static final int MINUTE = 1200;
+    /**
+     * One hour in {@code tick}s.
+     */
+    public static final int HOUR = 72000;
+
 
     //Lists/Arrays
     public static final List<EnumFacing> HORIZONTALS = new ArrayList<EnumFacing>(){{
@@ -80,6 +96,11 @@ public class TKCYAValues {
             add(Polypropylene);
             addAll(GTCEu_POLYMERS);
         }};
+
+    public static final List<FluidStack> MIXTURE_TO_FILTER = new ArrayList<>();
+
+
+    public static final List<ItemStack> DUST_MIXTURE_WITH_NBT = new ArrayList<>();
 
 
 

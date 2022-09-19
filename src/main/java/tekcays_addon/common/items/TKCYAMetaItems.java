@@ -24,6 +24,9 @@ public final class TKCYAMetaItems {
     public static MetaItem<?>.MetaValueItem ELECTRODE;
     public static MetaItem<?>.MetaValueItem FILTER;
 
+    //Mixtures
+    public static MetaItem<?>.MetaValueItem DUST_MIXTURE;
+
 
     public static void init() {
         TKCYAMetaItem1 metaItem1 = new TKCYAMetaItem1();

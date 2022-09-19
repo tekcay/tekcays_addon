@@ -1,11 +1,8 @@
 package tekcays_addon.common.metatileentities.multi;
 
-import gregtech.api.capability.impl.FluidTankList;
-import gregtech.api.capability.impl.ItemHandlerList;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import gregtech.api.metatileentity.multiblock.*;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
@@ -13,8 +10,7 @@ import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
-import gregtech.common.ConfigHolder;
-import gregtech.common.items.MetaItems;
+import gregtech.common.metatileentities.MetaTileEntities;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -27,346 +23,48 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidTank;
-import net.minecraftforge.items.ItemStackHandler;
-import tekcays_addon.api.capability.impl.MultiParallelLogic;
-import tekcays_addon.api.metatileentity.mutiblock.RecipeMapMultiblockNoEnergyController;
+import tekcays_addon.api.capability.impl.NoEnergyMultiblockLogic;
+import tekcays_addon.api.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.recipes.builders.TKCYATemperatureRecipeBuilder;
+import tekcays_addon.api.recipes.recipeproperties.NoEnergyTemperatureProperty;
 import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
-import tekcays_addon.common.items.TKCYAMetaItems;
+import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 
 import static gregtech.api.util.RelativeDirection.*;
-import static tekcays_addon.api.utils.TKCYAValues.*;
+import static tekcays_addon.api.utils.blastfurnace.BlastFurnaceUtils.*;
 
-
-public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergyController {
-
+public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlockController {
 
     private final BlockBrick.BrickType brick;
     private final IBlockState iBlockState;
-    private boolean canAchieveTargetTemp;
-    private boolean hasEnoughGas;
-    private boolean hasEnoughFluidHeatingValue, hasEnoughItemHeatingValue;
-    private boolean hasAcceptedFluid, hasAcceptedItem, hasBothFluidAndItemFuel;
-    private boolean hasSensor, hasGasCollectorItem;
-
-    /* Particles
-
-    private boolean is Heating;
-    private int hasGasOutputHatchInt;
-
-     */
-    private int temp, targetTemp, increaseTemp, runningRecipeTemp;
     public int height;
-    private int inputItemSlot, itemHeatingValue, fluidHeatingValue;
-    private int inputFluidMultiplier, inputItemMultiplier;
-    private IFluidTank tankToDrain;
-
-    private ItemStack inputItemStack;
-    private int gasConsum, itemConsum;
-    private final int baseSolidFuelHeatingValue = 2000;
-
-    public void setIncreaseTemp() {
-        increaseTemp = 1 + inputItemMultiplier * inputFluidMultiplier;
-    }
-
 
     public MetaTileEntityTKCYABlastFurnace(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick) {
         super(metaTileEntityId, TKCYARecipeMaps.BLASTING_RECIPES);
         this.brick = brick;
-        this.targetTemp = brick.getBrickTemperature();
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
-        this.recipeMapWorkable = new MultiParallelLogic(this);
-
-        temp = 300;
-
-        inputFluidMultiplier = 0;
-        inputItemMultiplier = 0;
-        inputItemSlot = 0;
-
-        itemHeatingValue = 0;
-        fluidHeatingValue = 0;
-
-        hasAcceptedFluid = false;
-        hasAcceptedItem = false;
-        hasBothFluidAndItemFuel = false;
-
-        hasEnoughGas = false;
-
-        hasEnoughFluidHeatingValue = false;
-        hasEnoughItemHeatingValue = false;
-
-        //Particle
-        //isHeating = false;
+        this.recipeMapWorkable = new NoEnergyMultiblockLogic(this);
     }
-
-    @Override
-    protected void updateFormedValid() {
-        super.updateFormedValid();
-        setIncreaseTemp();
-
-        if (temp < runningRecipeTemp) this.recipeMapWorkable.invalidate();
-
-        hasSensor = hasSensor();
-        hasGasCollectorItem = hasGasCollectorItem();
-
-        hasAcceptedFluid = hasAcceptedFluid();
-        hasAcceptedItem = hasAcceptedItem();
-
-        checkConditions(temp + increaseTemp);
-
-        /*Particle
-        if (isHeating && getHasGasOutputHatch()) {
-            if (getWorld().isRemote) {
-                pollutionParticles();
-            }
-        }
-
-         */
-
-        ///// Case: temp can be increased
-        if (temp + increaseTemp < targetTemp && hasBothFluidAndItemFuel) {
-            canAchieveTargetTemp = true;
-            if (getOffsetTimer() % 20 == 0) {
-
-                //Gas
-                if (hasEnoughGas) drainGas();
-                else fluidHeatingValue -= gasConsum;
-
-                if (hasGasCollectorItem) fillOutputTank();
-
-                //Item
-                itemHeatingValue -= itemConsum;
-
-                setTemp(temp + increaseTemp);
-            }
-            return;
-        }
-
-        checkConditions(temp);
-
-        ///// Case: No fuel or not enough fuel, and temp can be decreased
-        if (temp - increaseTemp >= 300 && !hasBothFluidAndItemFuel) {
-            canAchieveTargetTemp = false;
-            if (getOffsetTimer() % 20 == 0) {
-                setTemp(temp - increaseTemp);
-            }
-            return;
-
-        ///// Case: No fuel or not enough fuel to increase, but enough for the current temp
-        } else if (temp - increaseTemp >= 300 && hasEnoughFluidHeatingValue) {
-
-            if (getOffsetTimer() % 20 == 0) {
-
-                canAchieveTargetTemp = false;
-                //Particle
-                //isHeating = true;
-
-                //Gas
-                if (hasEnoughGas) drainGas();
-                else fluidHeatingValue -= gasConsum;
-                if (hasGasCollectorItem) fillOutputTank();
-
-                //Item
-                itemHeatingValue -= itemConsum;
-            }
-            return;
-        }
-
-        ///// Case: (temp > targetTemp OR increaseTemp exceed target) AND has fuel
-        if ((temp >= targetTemp || temp + increaseTemp > targetTemp) && hasBothFluidAndItemFuel) {
-            canAchieveTargetTemp = true;
-            //Particle
-            //isHeating = true;
-
-            if (getOffsetTimer() % 20 == 0) {
-
-                //Gas
-                if (hasEnoughGas) drainGas();
-                else fluidHeatingValue -= gasConsum;
-                if (hasGasCollectorItem) fillOutputTank();
-
-                //Item
-                itemHeatingValue -= itemConsum;
-            }
-        }
-    }
-
-    private void checkConditions(int temperature) {
-
-        gasConsum = getTemperatureGasConsumption(temperature);
-        itemConsum = getTemperatureItemConsumption(temperature);
-        hasEnoughFluidHeatingValue = fluidHeatingValue >= gasConsum;
-
-        if (hasAcceptedFluid) {
-            setFluidMultiplier();
-            hasEnoughGas = tankToDrain.getFluidAmount() >= gasConsum;
-            if (!hasEnoughGas && !hasEnoughFluidHeatingValue) {
-                doConvertRemainingGasToHeatingValue();
-                hasEnoughFluidHeatingValue = fluidHeatingValue >= gasConsum;
-            }
-        }
-
-        if (hasAcceptedItem) setItemMultiplier();
-
-        hasEnoughItemHeatingValue = itemHeatingValue >= itemConsum;
-
-        if (hasAcceptedItem && !hasEnoughItemHeatingValue) {
-            doConvertItemToHeatingValue();
-            hasEnoughItemHeatingValue = itemHeatingValue >= itemConsum;
-        }
-        
-        hasBothFluidAndItemFuel = hasBothFluidAndItemFuel();
-    }
-
-
-    /**
-     * Gets the multiplier related to the {@code FluidStack} that is present in the
-     * corresponding input, provided it is considered as a fuel.
-     * <br /><br />
-     *
-     */
-    public void setFluidMultiplier() {
-        getGasCostMap().entrySet().stream()
-                .filter(e -> (tankToDrain.getFluid() != null) && tankToDrain.getFluid().getFluid().equals(e.getKey()))
-                .forEach(e -> inputFluidMultiplier = e.getValue());
-    }
-
-    /**
-     * Gets the multiplier related to the {@code FluidStack} that is present in the
-     * corresponding input, provided it is considered as a fuel.
-     * <br /><br />
-     *
-     */
-    public void setItemMultiplier() {
-        getItemCostMap().entrySet().stream()
-                .filter(e -> inputItemStack.isItemEqual(e.getKey()))
-                .forEach(e -> inputItemMultiplier = e.getValue());
-    }
-
-
-    private boolean hasAcceptedFluid() {
-
-        for (IFluidTank fluidTank : inputFluidInventory.getFluidTanks()) {
-
-            for (Fluid fluid : getGasCostMap().keySet()) { //ACCEPTED_INPUT_FLUIDS
-                FluidStack fs = fluidTank.getFluid();
-                if (fs == null) continue;
-                if (fs.getFluid().equals(fluid)) {
-                    tankToDrain = fluidTank;
-                    hasAcceptedFluid = true;
-                    return true;
-                }
-            }
-        }
-        hasAcceptedFluid = false;
-        return false;
-    }
-
-    private boolean hasAcceptedItem() {
-
-        for (int i = 0;  i < inputInventory.getSlots(); i++) {
-            ItemStack input = inputInventory.getStackInSlot(i);
-            for (ItemStack stack : getItemCostMap().keySet()) {  //ACCEPTED_INPUT_ITEMS
-                if (input.isItemEqual(stack)) { //&&  ModHandler.getFuelValue(input) > 0
-                    inputItemSlot = i;
-                    inputItemStack = stack;
-                    hasAcceptedItem = true;
-                    return true;
-                }
-            }
-        }
-        hasAcceptedItem = false;
-        return false;
-    }
-
-    public boolean hasBothFluidAndItemFuel() {
-        return ((hasEnoughGas || hasEnoughFluidHeatingValue)
-                && hasEnoughItemHeatingValue);
-    }
-
-    private boolean hasGasCollectorItem() {
-
-        for (int i = 0;  i < inputInventory.getSlots(); i++) {
-            ItemStack input = inputInventory.getStackInSlot(i);
-            if (input.isItemEqual((TKCYAMetaItems.GAS_COLLECTOR).getStackForm())) return true;
-        }
-        return false;
-    }
-
-    private boolean hasSensor() {
-
-        for (int i = 0;  i < inputInventory.getSlots(); i++) {
-            ItemStack input = inputInventory.getStackInSlot(i);
-            if (input.isItemEqual((MetaItems.SENSOR_LV).getStackForm())) return true;
-        }
-        return false;
-    }
-
-    private void doConvertRemainingGasToHeatingValue() {
-        int toDrain = tankToDrain.getFluidAmount();
-        tankToDrain.drain(toDrain, true);
-        fluidHeatingValue += toDrain;
-    }
-
-    private void doConvertItemToHeatingValue() {
-        ItemStack stack = inputInventory.getStackInSlot(inputItemSlot);
-        stack.shrink(1);
-        itemHeatingValue += baseSolidFuelHeatingValue * inputItemMultiplier;
-    }
-
-
-    public int getTemperatureGasConsumption(int temperature) {
-        return (int) (Math.log(temperature - 300) * (0.9f * height + 0.1) + 1 );
-    }
-
-    public int getTemperatureItemConsumption(int temperature) {
-        return (int) (1 + (0.9f * height + 0.1) * Math.exp((temperature - 300)/400.0f));
-    }
-
-    private void fillOutputTank() {
-        outputFluidInventory.fill(new FluidStack(TKCYAMaterials.HotFlueGas.getFluid(), gasConsum), true);
-    }
-
-    private void drainGas() {
-        inputFluidInventory.drain(new FluidStack(tankToDrain.getFluid(), gasConsum), true);
-    }
-
-    /*Particle
-    public boolean getHasGasOutputHatch() {
-        return hasGasOutputHatchInt == 1;
-    }
-
-     */
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        runningRecipeTemp = recipe.getProperty(TKCYATemperatureRecipeBuilder.TemperatureProperty.getInstance(), 0);
-        return temp >= runningRecipeTemp;
+        return brick.getBrickTemperature() >= recipe.getProperty(NoEnergyTemperatureProperty.getInstance(), 0);
     }
-
-
     @Override
     public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.1"));
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.2"));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.3"));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.4", targetTemp));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.5"));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.6"));
+        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.3", "2"));
+        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.4", brick.getBrickTemperature()));
     }
 
     @Override
@@ -377,71 +75,36 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
             textList.add((new TextComponentTranslation("gregtech.multiblock.invalid_structure"))
                     .setStyle((new Style()).setColor(TextFormatting.RED).setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
         } else {
-            if (this.hasMaintenanceMechanics() && ConfigHolder.machines.enableMaintenance) {
-                this.addMaintenanceText(textList);
+            if (this.recipeMapWorkable.getParallelLimit() != 1) {
+                textList.add(new TextComponentTranslation("gregtech.multiblock.parallel", this.recipeMapWorkable.getParallelLimit()));
             }
             if (!this.recipeMapWorkable.isWorkingEnabled()) {
                 textList.add(new TextComponentTranslation("gregtech.multiblock.work_paused"));
             } else if (this.recipeMapWorkable.isActive()) {
                 textList.add(new TextComponentTranslation("gregtech.multiblock.running"));
                 int currentProgress = (int) (this.recipeMapWorkable.getProgressPercent() * 100.0D);
-                if (this.recipeMapWorkable.getParallelLimit() != 1) {
-                    textList.add(new TextComponentTranslation("gregtech.multiblock.parallel", this.recipeMapWorkable.getParallelLimit()));
-                }
+
 
                 textList.add(new TextComponentTranslation("gregtech.multiblock.progress", currentProgress));
             } else {
                 textList.add(new TextComponentTranslation("gregtech.multiblock.idling"));
             }
-
-            ///////////Current temperature
-
-            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.1", temp));
-
-            ///////////L/t consumption
-
-            if (canAchieveTargetTemp) {
-
-                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4",
-                        gasConsum, tankToDrain.getFluid() != null ? tankToDrain.getFluid().getLocalizedName() : ""));
-            } else {
-                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.5"));
-            }
-
-            ///////////Target Temperature
-
-            textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.6", targetTemp));
-
-            ///////////If there is sensor (for debugging mainly)
-
-            if (hasSensor) {
-                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.8", fluidHeatingValue));
-                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.9", itemHeatingValue));
-            }
-
-            ///////////If not enough input gas
-
-            if (!hasEnoughGas)
-                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.2")
-                        .setStyle(new Style().setColor(TextFormatting.RED)));
-
-            ///////////If not enough input item
-
-            if (!hasEnoughItemHeatingValue)
-                textList.add(new TextComponentTranslation("tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.7")
-                        .setStyle(new Style().setColor(TextFormatting.RED)));
         }
     }
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
+        return getBrickTexture(brick);
+    }
 
-        if (brick.equals(BlockBrick.BrickType.BRICK)) return TKCYATextures.BRICK;
-        if (brick.equals(BlockBrick.BrickType.FIRECLAY_BRICK)) return TKCYATextures.FIRECLAY_BRICK;
-        if (brick.equals(BlockBrick.BrickType.REINFORCED_BRICK)) return TKCYATextures.REINFORCED_BRICK;
-        if (brick.equals(BlockBrick.BrickType.STRONG_BRICK)) return TKCYATextures.STRONG_BRICK;
+    @Override
+    public boolean hasMaintenanceMechanics() {
+        return false;
+    }
 
-        return TKCYATextures.BRICK;
+    @Override
+    public boolean hasMufflerMechanics() {
+        return true;
     }
 
     @Override
@@ -453,49 +116,48 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         return iBlockState;
     }
 
+    public BlockBrick.BrickType getBrick() {
+        return this.brick;
+    }
+
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
                 .aisle("#YYY#", "YXXXY", "YXXXY", "YXXXY", "#YYY#")
                 .aisle("#YSY#", "Y###Y", "Y###Y", "Y###Y", "#YYY#")
-                .aisle("#YYY#", "Y###Y", "Y#I#Y", "Y###Y", "#YYY#").setRepeatable(1, 11)
-                .aisle("#YYY#", "YOOOY", "YOOOY", "YOOOY", "#YYY#")
-                //Particle
-                //.aisle("#####", "#####", "##C##", "#####", "#####").setRepeatable(0, 1)
+                .aisle("#YYY#", "Y###Y", "Y#H#Y", "Y###Y", "#YYY#").setRepeatable(1, 11)
+                .aisle("#YYY#", "YOOOY", "YOMOY", "YOOOY", "#YYY#")
                 .where('S', selfPredicate())
                 .where('Y', states(getCasingState()))
                 .where('X', states(getCasingState())
-                        .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1))
-                        .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setExactLimit(1)))
+                        .or(getOutputBrickFluidHatch(brick).setMinGlobalLimited(1).setMaxGlobalLimited(1)))
                 .where('O', states(getCasingState())
-                        .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMaxGlobalLimited(2))
-                        .or(abilities(MultiblockAbility.IMPORT_ITEMS).setMinGlobalLimited(1,1).setMaxGlobalLimited(2)))
-                .where('I', heightIndicatorPredicate())
-                //Particle
-                //.where('C', fluidOutputHatchPredicate())
+                        .or(getInputBrickItemBus(brick).setMinGlobalLimited(1).setMaxGlobalLimited(2)))
+                .where('H', heightIndicatorPredicate())
+                .where('M', metaTileEntities(MetaTileEntities.MUFFLER_HATCH)
+                        .or(getBrickMuffler(brick)))
                 .where('#', air())
                 .build();
-
-    }
-
-
-    @Override
-    public boolean hasMufflerMechanics() {
-        return false;
     }
 
     @Override
-    public boolean hasMaintenanceMechanics() {
-        return false;
+    public void readFromNBT(NBTTagCompound data) {
+        super.readFromNBT(data);
+        this.height = data.getInteger("height");
     }
 
     @Override
-    public void invalidateStructure() {
-        setTemp(300);
-        setIncreaseTemp();
-        super.invalidateStructure();
-        resetTileAbilities();
+    public void writeInitialSyncData(PacketBuffer buf) {
+        super.writeInitialSyncData(buf);
+        buf.writeInt(this.height);
     }
+
+    @Override
+    public void receiveInitialSyncData(PacketBuffer buf) {
+        super.receiveInitialSyncData(buf);
+        this.height = buf.readInt();
+    }
+
 
     // This function is highly useful for detecting the length of this multiblock.
     public static TraceabilityPredicate heightIndicatorPredicate() {
@@ -508,168 +170,18 @@ public class MetaTileEntityTKCYABlastFurnace extends RecipeMapMultiblockNoEnergy
         });
     }
 
-    /* Particle
-    public static TraceabilityPredicate fluidOutputHatchPredicate() {
-        return new TraceabilityPredicate((blockWorldState) -> {
-            if (abilities(MultiblockAbility.EXPORT_FLUIDS).test(blockWorldState)) {
-                blockWorldState.getMatchContext().set("blasFurnaceHasGasOutput", 1);
-                return true;
-            } else
-                return false;
-        });
-    }
-
-     */
-
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
         initializeAbilities();
         this.height = context.getOrDefault("blastFurnaceHeight", 1);
-        this.recipeMapWorkable.setParallelLimit(height);
-
-        /*
-        Object type = context.get("BrickType");
-        if (type instanceof BlockBrick.BrickType) {
-            this.targetTemp = ((BlockBrick.BrickType) type).getBrickTemperature();
-            //this.texture = ((BlockBrick.BrickType) type).getTexture();
-        } else
-            this.targetTemp = BlockBrick.BrickType.BRICK.getBrickTemperature();
-
-         */
-        //Particle
-        //this.hasGasOutputHatchInt = context.getOrDefault("blastFurnaceHasGasOutput", 1);
+        this.recipeMapWorkable.setParallelLimit(height * 2);
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityTKCYABlastFurnace(metaTileEntityId, brick);
     }
-
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound data) {
-        super.writeToNBT(data);
-        data.setInteger("temp", this.temp);
-        data.setInteger("targetTemp", this.targetTemp);
-        data.setBoolean("canAchieveTargetTemp", this.canAchieveTargetTemp);
-        data.setBoolean("hasEnoughGas", this.hasEnoughGas);
-        data.setBoolean("hasBothFluidAndItemFuel", this.hasBothFluidAndItemFuel);
-        data.setBoolean("hasAcceptedFluid", this.hasAcceptedFluid);
-        data.setBoolean("hasAcceptedItem", this.hasAcceptedItem);
-        data.setBoolean("hasEnoughFluidHeatingValue", this.hasEnoughFluidHeatingValue);
-        data.setBoolean("hasEnoughItemHeatingValue", this.hasEnoughItemHeatingValue);
-
-        return data;
-    }
-
-    public void setTemp(int temp) {
-        this.temp = temp;
-        if (!getWorld().isRemote) {
-            writeCustomData(600, buf -> buf.writeInt(temp));
-            markDirty();
-        }
-    }
-
-    @Override
-    public void receiveCustomData(int dataId, PacketBuffer buf) {
-        super.receiveCustomData(dataId, buf);
-        if (dataId == 600) {
-            this.temp = buf.readInt();
-            scheduleRenderUpdate();
-        }
-    }
-
-    @Override
-    public void readFromNBT(NBTTagCompound data) {
-        super.readFromNBT(data);
-        this.temp = data.getInteger("temp");
-
-        this.targetTemp = data.getInteger("targetTemp");
-        this.canAchieveTargetTemp = data.getBoolean("canAchieveTargetTemp");
-        this.hasEnoughGas = data.getBoolean("hasEnoughGas");
-
-        this.hasBothFluidAndItemFuel = data.getBoolean("hasBothFluidAndItemFuel");
-        this.hasAcceptedFluid = data.getBoolean("hasAcceptedFluid");
-        this.hasAcceptedItem = data.getBoolean("hasAcceptedItem");
-        this.hasEnoughFluidHeatingValue = data.getBoolean("hasEnoughFluidHeatingValue");
-        this.hasEnoughItemHeatingValue = data.getBoolean("hasEnoughItemHeatingValue");
-
-    }
-
-    @Override
-    public void writeInitialSyncData(PacketBuffer buf) {
-        super.writeInitialSyncData(buf);
-        buf.writeInt(this.temp);
-
-        buf.writeInt(this.targetTemp);
-        buf.writeBoolean(this.canAchieveTargetTemp);
-        buf.writeBoolean(this.hasEnoughGas);
-        buf.writeBoolean(this.hasBothFluidAndItemFuel);
-        buf.writeBoolean(this.hasAcceptedFluid);
-        buf.writeBoolean(this.hasAcceptedItem);
-        buf.writeBoolean(this.hasEnoughFluidHeatingValue);
-        buf.writeBoolean(this.hasEnoughItemHeatingValue);
-
-    }
-
-    @Override
-    public void receiveInitialSyncData(PacketBuffer buf) {
-        super.receiveInitialSyncData(buf);
-        this.temp = buf.readInt();
-
-        this.targetTemp = buf.readInt();
-        this.canAchieveTargetTemp = buf.readBoolean();
-        this.hasEnoughGas = buf.readBoolean();
-
-        this.hasBothFluidAndItemFuel = buf.readBoolean();
-        this.hasAcceptedFluid = buf.readBoolean();
-        this.hasAcceptedItem = buf.readBoolean();
-        this.hasEnoughFluidHeatingValue = buf.readBoolean();
-        this.hasEnoughItemHeatingValue = buf.readBoolean();
-
-
-    }
-    
-    @Override
-    public int getLightValueForPart(IMultiblockPart sourcePart) {
-        return sourcePart == null && temp > 300 ? 15 : 0;
-    }
-
-
-    @Override
-    public void initializeAbilities() {
-        this.inputFluidInventory = new FluidTankList(true, getAbilities(MultiblockAbility.IMPORT_FLUIDS));
-        this.inputInventory = new ItemHandlerList(getAbilities(MultiblockAbility.IMPORT_ITEMS));
-        this.outputFluidInventory = new FluidTankList(true, getAbilities(MultiblockAbility.EXPORT_FLUIDS));
-    }
-
-    private void resetTileAbilities() {
-        this.inputFluidInventory = new FluidTankList(true);
-        this.inputInventory = new ItemStackHandler(0);
-        this.outputFluidInventory = new FluidTankList(true);
-    }
-
-
-    /*
-
-    ////////////////
-    //Added particles/muffler effect if no gas recovery, code from GTCEu's PBF
-    /////////////////
-
-
-
-    private void pollutionParticles() {
-        BlockPos pos = this.getPos();
-        EnumFacing facing = this.getFrontFacing().getOpposite();
-        float xPos = facing.getXOffset() * 0.76F + pos.getX() + 0.5F;
-        float yPos = facing.getYOffset() * 0.76F + pos.getY() + 0.25F;
-        float zPos = facing.getZOffset() * 0.76F + pos.getZ() + 0.5F;
-
-        float ySpd = facing.getYOffset() * 0.1F + 0.2F + 0.1F * GTValues.RNG.nextFloat();
-        runMufflerEffect(xPos, yPos, zPos, 0, ySpd, 0);
-    }
-
-     */
 
 }
 

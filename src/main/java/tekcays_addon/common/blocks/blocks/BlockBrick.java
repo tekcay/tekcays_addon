@@ -45,8 +45,8 @@ public class BlockBrick extends VariantBlock<BlockBrick.BrickType> {
 
     public enum BrickType implements IStringSerializable {
 
-        BRICK("brick", 1200),
-        REINFORCED_BRICK("reinforced_brick", 2000),
+        BRICK("brick", 1600),
+        REINFORCED_BRICK("reinforced_brick", 2100),
         FIRECLAY_BRICK("fireclay_brick", 3600),
         STRONG_BRICK("strong_brick", 5000);
 
