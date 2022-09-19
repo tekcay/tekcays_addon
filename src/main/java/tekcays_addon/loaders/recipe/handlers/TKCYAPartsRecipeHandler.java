@@ -2,25 +2,19 @@ package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.GTValues;
 import gregtech.api.recipes.GTRecipeHandler;
-import gregtech.api.recipes.RecipeMap;
-import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.properties.IngotProperty;
 import gregtech.api.unification.material.properties.PropertyKey;
-import gregtech.common.items.MetaItems;
-import gregtech.common.items.behaviors.TurbineRotorBehavior;
 import net.minecraft.item.ItemStack;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import tekcays_addon.api.unification.TKCYAMaterials;
-import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.api.utils.TKCYAValues;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
-import tekcays_addon.common.items.behaviors.FilterBehavior;
 
 
 import static gregtech.api.GTValues.LV;
@@ -30,7 +24,7 @@ import static gregtech.api.unification.ore.OrePrefix.*;
 import static tekcays_addon.api.unification.material.info.TKCYAMaterialFlags.POLYMER;
 import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
 import static tekcays_addon.api.utils.TKCYAValues.*;
-import static tekcays_addon.loaders.recipe.handlers.TKCYACastingTableRecipeHandler.MOLD_PRODUCTION;
+import static tekcays_addon.loaders.recipe.handlers.CastingRecipeHandler.MOLD_PRODUCTION;
 
 public class TKCYAPartsRecipeHandler {
 
