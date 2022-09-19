@@ -28,7 +28,7 @@ public class TKCYAAlloys {
                 .ingot().fluid()
                 .fluidTemp(1473)
                 .flags(NO_UNIFICATION, NO_SMELTING, DISABLE_DECOMPOSITION)
-                .components(Iron, 50, Carbon, 1)
+                .components(Iron, 25, Carbon, 1)
                 .color(0xe7ada0).iconSet(DULL)
                 .build();
 

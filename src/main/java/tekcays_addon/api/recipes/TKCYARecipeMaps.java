@@ -58,6 +58,11 @@ public class TKCYARecipeMaps {
             .setSound(GTSounds.COOLING);
 
     @ZenProperty
+    public static final RecipeMap<NoEnergyPressureRecipeBuilder> PRIMITIVE_CONVERTING_RECIPES = new RecipeMap<>(
+            "primitive_converting", 0, 0, 0, 0, 1, 4, 1, 2, new NoEnergyPressureRecipeBuilder(), false)
+            .setSound(GTSounds.COOLING);
+
+    @ZenProperty
     public static final RecipeMap<NoEnergyTemperatureRecipeBuilder> BLASTING_RECIPES = new RecipeMap<>(
             "blasting", 1, 3, 0, 0, 0, 0, 1, 2, new NoEnergyTemperatureRecipeBuilder(), false)
             .setSound(GTSounds.FURNACE);
@@ -101,6 +106,11 @@ public class TKCYARecipeMaps {
     public static final RecipeMap<SimpleRecipeBuilder> SPIRAL_SEPARATION = new RecipeMap<>(
             "spiral_separation", 1, 1, 2, 8, 0, 0, 0, 0, new SimpleRecipeBuilder(), false)
             .setSound(GTSounds.MOTOR);
+
+    @ZenProperty
+    public static final RecipeMap<PrimitiveRecipeBuilder> COKING = new RecipeMap<>(
+            "coking", 1, 2, 1, 1, 0, 0, 0, 1, new PrimitiveRecipeBuilder(), false)
+            .setSound(GTSounds.COMBUSTION);
 
 
 

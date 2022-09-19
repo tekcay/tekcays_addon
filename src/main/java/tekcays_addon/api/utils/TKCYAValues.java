@@ -60,6 +60,10 @@ public class TKCYAValues {
      */
     public static final int HOUR = 72000;
 
+    /**
+     * How much in Pa the pressure will increase in the Steam Air Compressor.
+     */
+    public static final int STEAM_AIR_COMPRESSOR_PRESSURE_INCREASE = 1000;
 
     //Lists/Arrays
     public static final List<EnumFacing> HORIZONTALS = new ArrayList<EnumFacing>(){{

@@ -15,19 +15,18 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.items.IItemHandlerModifiable;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
-public class SteamCooler extends SteamMetaTileEntity {
+public class MetaTileEntitySteamCooler extends SteamMetaTileEntity {
 
         protected FluidTank airFluidTank;
 
-        public SteamCooler(ResourceLocation metaTileEntityId, boolean isHighPressure) {
+        public MetaTileEntitySteamCooler(ResourceLocation metaTileEntityId, boolean isHighPressure) {
             super(metaTileEntityId, RecipeMaps.GAS_COLLECTOR_RECIPES, Textures.GAS_COLLECTOR_OVERLAY, isHighPressure);
         }
 
         @Override
         public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-            return new SteamCooler(metaTileEntityId, isHighPressure);
+            return new MetaTileEntitySteamCooler(metaTileEntityId, isHighPressure);
         }
 
          @Override

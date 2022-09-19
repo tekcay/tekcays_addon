@@ -50,10 +50,11 @@ public class TKCYAConfigHolder {
         @Config.Comment({"Removes most electrolysis recipes and replaces the GTCEu Electrolyzer with a new one", "Default: true"})
         public boolean enableElectrolysisOverhaul = true;
 
+        @Config.Comment({"Replaces the GTCEu CokeOven with a new one", "Default: true"})
+        public boolean enableCokeOvenOverhaul = true;
+
         @Config.Comment({"Rotors can not be made in extruder anymore, adds a recipe in the assembler", "Default: true"})
         public boolean enableHarderRotors = true;
-
-
 
     }
 

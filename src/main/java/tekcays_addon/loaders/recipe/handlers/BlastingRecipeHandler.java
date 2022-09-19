@@ -1,22 +1,31 @@
 package tekcays_addon.loaders.recipe.handlers;
 
+import gregicality.science.common.metatileentities.GCYSMetaTileEntities;
 import gregtech.api.GTValues;
+import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.recipes.ModHandler;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.stack.UnificationEntry;
+import gregtech.common.blocks.BlockMachineCasing;
+import gregtech.common.blocks.BlockMetalCasing;
+import gregtech.common.blocks.BlockSteamCasing;
+import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
+import gregtech.common.metatileentities.MetaTileEntities;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
+import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 
-import static gregtech.api.unification.material.Materials.Brick;
+import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
+import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static tekcays_addon.api.recipes.TKCYARecipeMaps.BLASTING_RECIPES;
 import static tekcays_addon.api.utils.TKCYAValues.MINUTE;
+import static tekcays_addon.api.utils.TKCYAValues.SECOND;
 import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.*;
 
 public class BlastingRecipeHandler {
@@ -46,6 +55,7 @@ public class BlastingRecipeHandler {
                 .temperature(2 * MINUTE)
                 .input(dust, Materials.Hematite, 5)
                 .input(dust, Materials.Coke, 2)
+                .input(dust, Materials.Stone, 3)
                 .fluidOutputs(TKCYAMaterials.PigIron.getFluid(GTValues.L))
                 .duration(200)
                 .buildAndRegister();
@@ -114,26 +124,51 @@ public class BlastingRecipeHandler {
                 'B', MetaItems.FIRECLAY_BRICK);
          */
 
-        //Item Bus recipes
-        ModHandler.addShapedRecipe("brick_import_item_bus", BRICK_ITEM_BUS[0].getStackForm(),
+        //Import Item Bus recipes
+        ModHandler.addShapedRecipe("brick_import_item_bus", BRICK_IMPORT_ITEM_BUS[0].getStackForm(),
                 "BBB", "BCB", "BBB",
                 'C', "chestWood",
                 'B', new UnificationEntry(ingot, Brick));
 
-        ModHandler.addShapedRecipe("reinforced_brick_import_item_bus", BRICK_ITEM_BUS[1].getStackForm(),
+        ModHandler.addShapedRecipe("reinforced_brick_import_item_bus", BRICK_IMPORT_ITEM_BUS[1].getStackForm(),
                 "OBO", "BCB", "OBO",
                 'C', "chestWood",
                 'B', new UnificationEntry(ingot, Brick),
                 'O', MetaItems.COKE_OVEN_BRICK);
 
-        ModHandler.addShapedRecipe("fireclay_brick_import_item_bus", BRICK_ITEM_BUS[2].getStackForm(),
+        ModHandler.addShapedRecipe("fireclay_brick_import_item_bus", BRICK_IMPORT_ITEM_BUS[2].getStackForm(),
                 "BBB", "BCB", "BBB",
                 'C', "chestWood",
                 'B', MetaItems.FIRECLAY_BRICK);
 
         /*
-        ModHandler.addShapedRecipe("strong_brick_import_item_bus", BRICK_ITEM_BUS[3].getStackForm(),
+        ModHandler.addShapedRecipe("strong_brick_import_item_bus", BRICK_IMPORT_ITEM_BUS[3].getStackForm(),
                 "BBB", "BCB", "BBB",
+                'C', "chestWood",
+                'B', MetaItems.FIRECLAY_BRICK);
+
+         */
+
+        //Export Item Bus recipes
+        ModHandler.addShapedRecipe("brick_export_item_bus", BRICK_EXPORT_ITEM_BUS[0].getStackForm(),
+                "BBB", "BBB", "BCB",
+                'C', "chestWood",
+                'B', new UnificationEntry(ingot, Brick));
+
+        ModHandler.addShapedRecipe("reinforced_brick_export_item_bus", BRICK_EXPORT_ITEM_BUS[1].getStackForm(),
+                "OBO", "BBB", "OCO",
+                'C', "chestWood",
+                'B', new UnificationEntry(ingot, Brick),
+                'O', MetaItems.COKE_OVEN_BRICK);
+
+        ModHandler.addShapedRecipe("fireclay_brick_export_item_bus", BRICK_EXPORT_ITEM_BUS[2].getStackForm(),
+                "BBB", "BBB", "BCB",
+                'C', "chestWood",
+                'B', MetaItems.FIRECLAY_BRICK);
+
+        /*
+        ModHandler.addShapedRecipe("strong_brick_export_item_bus", BRICK_EXPORT_ITEM_BUS[3].getStackForm(),
+                "BBB", "BBB", "BCB",
                 'C', "chestWood",
                 'B', MetaItems.FIRECLAY_BRICK);
 
@@ -166,24 +201,50 @@ public class BlastingRecipeHandler {
 
 
         //Controller recipes
-        ModHandler.addShapedRecipe("brick_blast_furnace", BLAST_FURNACE[0].getStackForm(),
+        ModHandler.addShapedRecipe("brick_blast_furnace_controller", BLAST_FURNACE[0].getStackForm(),
                 "   ", " B ", "   ",
                 'B', TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.BRICK));
 
-        ModHandler.addShapedRecipe("reinforced_brick_blast_furnace", BLAST_FURNACE[1].getStackForm(),
+        ModHandler.addShapedRecipe("reinforced_brick_blast_furnace_controller", BLAST_FURNACE[1].getStackForm(),
                 " w ", " B ", " h ",
                 'B', TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.REINFORCED_BRICK));
 
-        ModHandler.addShapedRecipe("fireclay_brick_blast_furnace", BLAST_FURNACE[2].getStackForm(),
+        ModHandler.addShapedRecipe("fireclay_brick_blast_furnace_controller", BLAST_FURNACE[2].getStackForm(),
                 " w ", " B ", " h ",
                 'B', TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.FIRECLAY_BRICK));
 
         /*
-        ModHandler.addShapedRecipe("strong_brick_blast_furnace", BLAST_FURNACE[3].getStackForm(),
-                " w ", "B ", " h ",
+        ModHandler.addShapedRecipe("strong_brick_blast_furnace_controller", BLAST_FURNACE[3].getStackForm(),
+                " w ", " B ", " h ",
                 'B', TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.FIRECLAY_BRICK));
-
          */
+        
+        //Primitive converter
+        ModHandler.addShapedRecipe("primitive_converter_controller", PRIMITIVE_CONVERTER.getStackForm(),
+                "   ", "wBh", "   ",
+                'B', TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.REINFORCED_BRICK));
+
+
+        //Low Pressure Hatch
+        ModHandler.addShapedRecipe("low_pressure_hatch", GCYSMetaTileEntities.PRESSURE_HATCH[0].getStackForm(),
+                " w ", " B ", " P ",
+                'P', new UnificationEntry(pipeNormalFluid, Potin),
+                'B', MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.ULV));
+
+        ASSEMBLER_RECIPES.recipeBuilder()
+                .input(pipeNormalFluid, Potin)
+                .inputs(MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.ULV))
+                .outputs(MetaTileEntities.HULL[0].getStackForm())
+                .EUt(8)
+                .duration(5 * SECOND)
+                .buildAndRegister();
+
+        //Low Pressure Hatch
+        ModHandler.addShapedRecipe("steam_air_compressor", STEAM_AIR_COMPRESSOR.getStackForm(),
+                " w ", "RHR", " P ",
+                'P', new UnificationEntry(pipeNormalFluid, Potin),
+                'R', new UnificationEntry(rotor, Bronze),
+                'H', MetaBlocks.STEAM_CASING.getItemVariant(BlockSteamCasing.SteamCasingType.BRONZE_HULL));
 
     }
 

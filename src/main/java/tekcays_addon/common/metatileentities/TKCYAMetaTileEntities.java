@@ -25,10 +25,11 @@ import tekcays_addon.common.metatileentities.single.MetaTileEntityElectricHeater
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickFluidHatch;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickItemBus;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityPrimitiveMufflerHatch;
-import tekcays_addon.common.metatileentities.steam.SteamCooler;
+import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamAirCompressor;
+import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamCooler;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
-import static tekcays_addon.api.utils.blastfurnace.BlastFurnaceUtils.BRICKS;
+import static tekcays_addon.api.utils.BlastFurnaceUtils.BRICKS;
 
 public class TKCYAMetaTileEntities {
 
@@ -41,11 +42,14 @@ public class TKCYAMetaTileEntities {
 
     public static MetaTileEntityPrimitiveMelter PRIMITIVE_MELTER;
     public static MetaTileEntityPrimitiveFermenter PRIMITIVE_FERMENTER;
+    public static MetaTileEntityPrimitiveConverter PRIMITIVE_CONVERTER;
     public static MetaTileEntityAlloyingCrucible ALLOYING_CRUCIBLE;
     public static MetaTileEntityCastingTable CASTING_TABLE;
-    public static SteamCooler STEAM_COOLER_BRONZE;
-    public static SteamCooler STEAM_COOLER_STEEL;
-    public static MetaTileEntityConverter CONVERTER;
+    public static MetaTileEntitySteamCooler STEAM_COOLER_BRONZE;
+    public static MetaTileEntitySteamCooler STEAM_COOLER_STEEL;
+    public static MetaTileEntitySteamAirCompressor STEAM_AIR_COMPRESSOR;
+    public static MetaTileEntityElectricConverter CONVERTER;
+    public static MetaTileEntityTKCYACokeOven COKE_OVEN;
     public static MetaTileEntityPrimitiveBath PRIMITIVE_BATH;
     public static MetaTileEntityCrystallizer CRYSTALLIZER;
     public static MetaTileEntityAdvancedElectrolyzer ADVANCED_ELECTROLYZER;
@@ -60,8 +64,10 @@ public class TKCYAMetaTileEntities {
 
     //Blast Furnaces
     public static MetaTileEntityTKCYABlastFurnace[] BLAST_FURNACE = new MetaTileEntityTKCYABlastFurnace[BRICKS.size()];
+    public static MetaTileEntityBrickFluidHatch[] BRICK_IMPORT_FLUID_HATCH = new MetaTileEntityBrickFluidHatch[BRICKS.size()];
     public static MetaTileEntityBrickFluidHatch[] BRICK_EXPORT_FLUID_HATCH = new MetaTileEntityBrickFluidHatch[BRICKS.size()];
-    public static MetaTileEntityBrickItemBus[] BRICK_ITEM_BUS = new MetaTileEntityBrickItemBus[BRICKS.size()];
+    public static MetaTileEntityBrickItemBus[] BRICK_EXPORT_ITEM_BUS = new MetaTileEntityBrickItemBus[BRICKS.size()];
+    public static MetaTileEntityBrickItemBus[] BRICK_IMPORT_ITEM_BUS = new MetaTileEntityBrickItemBus[BRICKS.size()];
     public static MetaTileEntityPrimitiveMufflerHatch[] PRIMITIVE_MUFFLER = new MetaTileEntityPrimitiveMufflerHatch[BRICKS.size()];
 
 
@@ -118,28 +124,32 @@ public class TKCYAMetaTileEntities {
                     TKCYATextures.CASTING_TABLE_OVERLAY, true, TKCYAMetaTileEntities::tkcyaId, GTUtility.hvCappedTankSizeFunction);
 
 
-            STEAM_COOLER_BRONZE = registerMetaTileEntity(11020, new SteamCooler(tkcyaId("steam_cooler_bronze"), false));
-            STEAM_COOLER_STEEL = registerMetaTileEntity(11021, new SteamCooler(tkcyaId("steam_cooler_steel"), true));
+            STEAM_COOLER_BRONZE = registerMetaTileEntity(11020, new MetaTileEntitySteamCooler(tkcyaId("steam_cooler_bronze"), false));
+            STEAM_COOLER_STEEL = registerMetaTileEntity(11021, new MetaTileEntitySteamCooler(tkcyaId("steam_cooler_steel"), true));
 
         }
 
 
         if (TKCYAConfigHolder.meltingOverhaul.enableBlastingOverhaul) {
-            CONVERTER = registerMetaTileEntity(11022, new MetaTileEntityConverter(tkcyaId("converter")));
+            CONVERTER = registerMetaTileEntity(11022, new MetaTileEntityElectricConverter(tkcyaId("converter")));
+            PRIMITIVE_CONVERTER = registerMetaTileEntity(11023, new MetaTileEntityPrimitiveConverter(tkcyaId("primitive_converter")));
+            COKE_OVEN = registerMetaTileEntity(11024, new MetaTileEntityTKCYACokeOven(tkcyaId("coke_oven")));
 
-            //id 11051-11066
+            //id 11051-11074
             for (int i = 0; i < BRICKS.size(); i++) {
                 BlockBrick.BrickType brick = BRICKS.get(i);
                 BLAST_FURNACE[i] = registerMetaTileEntity(11051 + i, new MetaTileEntityTKCYABlastFurnace(tkcyaId(brick.getName() + "_blast_furnace"), brick));
-                BRICK_EXPORT_FLUID_HATCH[i] = registerMetaTileEntity(11055 + i, new MetaTileEntityBrickFluidHatch(tkcyaId(brick.getName() + "_export_fluid_hatch"), true, brick));
-                BRICK_ITEM_BUS[i] = registerMetaTileEntity(11059 + i, new MetaTileEntityBrickItemBus(tkcyaId(brick.getName() + "_import_item_bus"), false, brick));
-                PRIMITIVE_MUFFLER[i] = registerMetaTileEntity(11063 + i, new MetaTileEntityPrimitiveMufflerHatch(tkcyaId(brick.getName() + "_muffler"), brick));
+                BRICK_IMPORT_FLUID_HATCH[i] = registerMetaTileEntity(11055 + i, new MetaTileEntityBrickFluidHatch(tkcyaId(brick.getName() + "_import_fluid_hatch"), false, brick));
+                BRICK_EXPORT_FLUID_HATCH[i] = registerMetaTileEntity(11059 + i, new MetaTileEntityBrickFluidHatch(tkcyaId(brick.getName() + "_export_fluid_hatch"), true, brick));
+                BRICK_EXPORT_ITEM_BUS[i] = registerMetaTileEntity(11063 + i, new MetaTileEntityBrickItemBus(tkcyaId(brick.getName() + "_export_item_bus"), true, brick));
+                BRICK_IMPORT_ITEM_BUS[i] = registerMetaTileEntity(11067 + i, new MetaTileEntityBrickItemBus(tkcyaId(brick.getName() + "_import_item_bus"), false, brick));
+                PRIMITIVE_MUFFLER[i] = registerMetaTileEntity(11071 + i, new MetaTileEntityPrimitiveMufflerHatch(tkcyaId(brick.getName() + "_muffler"), brick));
             }
 
         }
 
         if (TKCYAConfigHolder.miscOverhaul.enableGalvanizedSteel) {
-            PRIMITIVE_BATH = registerMetaTileEntity(11024, new MetaTileEntityPrimitiveBath(tkcyaId("primitive_bath")));
+            PRIMITIVE_BATH = registerMetaTileEntity(11085, new MetaTileEntityPrimitiveBath(tkcyaId("primitive_bath")));
         }
 
         if (TKCYAConfigHolder.miscOverhaul.enableElectrolysisOverhaul) {
@@ -192,14 +202,20 @@ public class TKCYAMetaTileEntities {
             CRYSTALLIZER = registerMetaTileEntity(11050, new MetaTileEntityCrystallizer(tkcyaId("crystallizer")));
         }
 
-        FILTER = registerMetaTileEntity(11070, new MetaTileEntityFilter(tkcyaId("filter")));
+        FILTER = registerMetaTileEntity(11075, new MetaTileEntityFilter(tkcyaId("filter")));
 
         if (TKCYAConfigHolder.crackingOverhaul.enableCrackingOverhaul) {
-            PRESSURIZED_CRACKING_UNIT = registerMetaTileEntity(11071, new MetaTileEntityPressurizedCrackingUnit(tkcyaId("pressurized_cracking_unit")));
+            PRESSURIZED_CRACKING_UNIT = registerMetaTileEntity(11076, new MetaTileEntityPressurizedCrackingUnit(tkcyaId("pressurized_cracking_unit")));
         }
+
+
+        ROASTING_OVEN = registerMetaTileEntity(11077, new MetaTileEntityRoastingOven(tkcyaId("roasting_oven")));
+        SPIRAL_SEPARATOR = registerMetaTileEntity(11078, new MetaTileEntitySpiralSeparator(tkcyaId("spiral_separator")));
+        STEAM_AIR_COMPRESSOR = registerMetaTileEntity(11079, new MetaTileEntitySteamAirCompressor(tkcyaId("steam_air_compressor")));
+
         
-        ROASTING_OVEN = registerMetaTileEntity(11072, new MetaTileEntityRoastingOven(tkcyaId("roasting_oven")));
-        SPIRAL_SEPARATOR = registerMetaTileEntity(10073, new MetaTileEntitySpiralSeparator(tkcyaId("spiral_separator")));
+        ROASTING_OVEN = registerMetaTileEntity(11080, new MetaTileEntityRoastingOven(tkcyaId("roasting_oven")));
+        SPIRAL_SEPARATOR = registerMetaTileEntity(10081, new MetaTileEntitySpiralSeparator(tkcyaId("spiral_separator")));
         
         ELECTRIC_HEATER[0] = registerMetaTileEntity(11170, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.lv"), 1));
         ELECTRIC_HEATER[1] = registerMetaTileEntity(11171, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.mv"), 2));

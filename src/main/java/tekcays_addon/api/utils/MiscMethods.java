@@ -3,14 +3,10 @@ package tekcays_addon.api.utils;
 import gregtech.api.GregTechAPI;
 import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.items.metaitem.MetaItem;
-import gregtech.api.recipes.ingredients.GTRecipeInput;
 import gregtech.api.unification.material.Material;
-import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.stack.MaterialStack;
 import gregtech.api.unification.OreDictUnifier;
-import gregtech.api.unification.material.Material;
 import gregtech.api.unification.ore.OrePrefix;
-import gregtech.api.unification.stack.MaterialStack;
 import gregtech.api.util.GTTransferUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -206,39 +202,6 @@ public class MiscMethods {
             list.forEach(ms -> output.add(OreDictUnifier.get(prefix, ms.material, (int) (ms.amount))));
         }
         return output;
-    }
-
-    /**
-     * Verifies if there is room in the outputInventory
-     * @param toOutput the {@code List<ItemStack>} that must be output.
-     * @param outputInventory the {@code IItemHandlerModifiable} where to output.
-     * @return {@code true} if it is possible.
-     */
-    public static boolean canOutputItem(List<ItemStack> toOutput, IItemHandlerModifiable outputInventory) {
-        if (toOutput.size() > outputInventory.getSlots()) return false;
-        ItemStack stackLeft = toOutput.get(0);
-
-        for (ItemStack stack : toOutput) {
-            stackLeft = stack;
-            for (int i = 0; i < outputInventory.getSlots(); i++) {
-                stackLeft = outputInventory.insertItem(i, stackLeft, true);
-                if (stackLeft.isEmpty()) break;
-            }
-        }
-        return stackLeft.isEmpty();
-    }
-
-    public static void doOutputItem(List<ItemStack> toOutput, IItemHandlerModifiable outputInventory) {
-
-        for (ItemStack stack : toOutput) {
-            for (int i = 0; i < outputInventory.getSlots(); i++) {
-                if (outputInventory.insertItem(i, stack, false).isEmpty()) break;
-                toOutput.forEach(itemStack -> TKCYALog.logger.info("d : " + itemStack.getCount()));
-                if (stack.isEmpty()) break;
-            }
-        }
-        toOutput.forEach(itemStack -> TKCYALog.logger.info("e : " + itemStack.getCount()));
-        TKCYALog.logger.info("done");
     }
 
 

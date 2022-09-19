@@ -80,6 +80,10 @@ public class TKCYARecipeLoader {
             StorageOverhaul.removeGTCEuTanksAndValvesRecipe();
         }
 
+        if (miscOverhaul.enableCokeOvenOverhaul) {
+            CokeOvenRecipeHandler.init();
+        }
+
         CasingsLoader.init();
         ChemicalChains.init();
         MineralChains.init();
