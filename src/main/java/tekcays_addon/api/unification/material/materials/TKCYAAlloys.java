@@ -45,9 +45,9 @@ public class TKCYAAlloys {
                 .ingot(1).fluid()
                 .fluidTemp(1542)
                 .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
-                .cableProperties(32, 1, 2)
+                .cableProperties(128, 4, 4)
                 .components(Copper, 1, Nickel, 1)
-                .color((Copper.getMaterialRGB() + Nickel.getMaterialRGB()) / 2).iconSet(METALLIC)
+                .color(0xdfa478).iconSet(METALLIC)
                 .build();
 
     }
