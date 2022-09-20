@@ -105,6 +105,7 @@ public class TKCYAMaterials {
     public static Material GalvanizedSteel;
     public static Material PigIron;
     public static Material Monel;
+    public static Material Constantan;
 
     /**
      * Polymers

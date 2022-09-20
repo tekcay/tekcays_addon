@@ -92,6 +92,7 @@ public class TKCYARecipeLoader {
         MineralChains.init();
         PolymerHandler.init();
         RoastingHandler.init();
+        HeatHandler.init();
         //MUST BE CALLED AFTER ANY HANDLER THAT GENERATES DUST_MIXTURE !
         SpiralSeparatorHandler.init();
         GTCEuRequireCleanRoomHandler.init();

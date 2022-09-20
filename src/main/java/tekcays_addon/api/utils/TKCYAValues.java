@@ -1,5 +1,6 @@
 package tekcays_addon.api.utils;
 
+import gregtech.api.GregTechAPI;
 import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.unification.material.Material;
 import net.minecraft.item.ItemStack;
@@ -56,6 +57,14 @@ public class TKCYAValues {
     public static final int STEAM_AIR_COMPRESSOR_PRESSURE_INCREASE = 1000;
 
     //Lists/Arrays
+    /*
+    public static final List<Material> ALL_MATERIALS = new ArrayList<Material>(){{
+        addAll(GregTechAPI.MATERIAL_REGISTRY);
+        a
+    }}
+
+     */
+
     public static final List<EnumFacing> HORIZONTALS = new ArrayList<EnumFacing>(){{
        add(EnumFacing.SOUTH);
        add(EnumFacing.NORTH);
