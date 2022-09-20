@@ -17,7 +17,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import tekcays_addon.api.metatileentity.mutiblock.HeatMultiblockController;
+import tekcays_addon.api.metatileentity.multiblock.HeatMultiblockController;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
 

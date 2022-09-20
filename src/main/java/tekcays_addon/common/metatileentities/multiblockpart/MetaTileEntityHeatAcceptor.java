@@ -21,9 +21,8 @@ import net.minecraftforge.common.capabilities.Capability;
 import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.impl.HeatContainer;
-import tekcays_addon.api.metatileentity.mutiblock.TKCYAMultiblockAbility;
+import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.api.utils.TKCYALog;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 import javax.annotation.Nonnull;

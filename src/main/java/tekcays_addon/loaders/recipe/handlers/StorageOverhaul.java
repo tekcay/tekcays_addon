@@ -21,6 +21,7 @@ import static gregtech.common.blocks.BlockSteamCasing.SteamCasingType.WOOD_WALL;
 import static tekcays_addon.api.unification.TKCYAMaterials.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.GalvanizedSteel;
 import static tekcays_addon.api.unification.TKCYAMaterials.HighDensityPolyethylene;
+import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.curvedPlate;
 
 public class StorageOverhaul {
 
@@ -101,14 +102,14 @@ public class StorageOverhaul {
 
     public static void drumsAssembler() {
 
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Bronze, 2).input(plate, Bronze, 4).outputs(TKCYAMetaTileEntities.WOODEN_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Steel, 2).input(plate, Steel, 4).outputs(TKCYAMetaTileEntities.STEEL_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Aluminium, 2).input(plate, Aluminium, 4).outputs(TKCYAMetaTileEntities.ALUMINIUM_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, StainlessSteel, 2).input(plate, StainlessSteel, 4).outputs(TKCYAMetaTileEntities.STAINLESS_STEEL_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, GalvanizedSteel, 2).input(plate, GalvanizedSteel, 4).outputs(TKCYAMetaTileEntities.GALVANIZED_STEEL_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Polytetrafluoroethylene, 2).input(plate, Polytetrafluoroethylene, 4).outputs(TKCYAMetaTileEntities.POLYTETRAFLUOROETHYLENE_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Polypropylene, 2).input(plate, Polypropylene, 4).outputs(TKCYAMetaTileEntities.POLYPROPYLENE_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, HighDensityPolyethylene, 2).input(plate, HighDensityPolyethylene, 4).outputs(TKCYAMetaTileEntities.HIGH_DENSITY_POLYETHYLENE_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Bronze, 2).input(curvedPlate, Bronze, 4).outputs(TKCYAMetaTileEntities.WOODEN_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Steel, 2).input(curvedPlate, Steel, 4).outputs(TKCYAMetaTileEntities.STEEL_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Aluminium, 2).input(curvedPlate, Aluminium, 4).outputs(TKCYAMetaTileEntities.ALUMINIUM_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, StainlessSteel, 2).input(curvedPlate, StainlessSteel, 4).outputs(TKCYAMetaTileEntities.STAINLESS_STEEL_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, GalvanizedSteel, 2).input(curvedPlate, GalvanizedSteel, 4).outputs(TKCYAMetaTileEntities.GALVANIZED_STEEL_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Polytetrafluoroethylene, 2).input(curvedPlate, Polytetrafluoroethylene, 4).outputs(TKCYAMetaTileEntities.POLYTETRAFLUOROETHYLENE_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Polypropylene, 2).input(curvedPlate, Polypropylene, 4).outputs(TKCYAMetaTileEntities.POLYPROPYLENE_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, HighDensityPolyethylene, 2).input(curvedPlate, HighDensityPolyethylene, 4).outputs(TKCYAMetaTileEntities.HIGH_DENSITY_POLYETHYLENE_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
 
     }
 

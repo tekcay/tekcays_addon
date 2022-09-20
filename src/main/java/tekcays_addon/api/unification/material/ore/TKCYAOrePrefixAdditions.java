@@ -1,12 +1,12 @@
 package tekcays_addon.api.unification.material.ore;
 
+import gregicality.science.api.unification.ore.GCYSOrePrefix;
 import gregtech.common.items.MetaItems;
 
 
 public class TKCYAOrePrefixAdditions {
 
     public static void moldsInit(){
-
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldEmpty);
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldIngot);
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldPlate);
@@ -22,14 +22,12 @@ public class TKCYAOrePrefixAdditions {
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldCasing);
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldBottle);
         MetaItems.addOrePrefix(TKCYAOrePrefix.moldBlock);
-
     }
 
 
     public static void miscInit(){
-
         MetaItems.addOrePrefix(TKCYAOrePrefix.bottleGlass);
-
+        MetaItems.addOrePrefix(TKCYAOrePrefix.curvedPlate);
     }
 
 

@@ -1,4 +1,4 @@
-package tekcays_addon.api.metatileentity.mutiblock;
+package tekcays_addon.api.metatileentity.multiblock;
 
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import tekcays_addon.api.capability.IHeatContainer;

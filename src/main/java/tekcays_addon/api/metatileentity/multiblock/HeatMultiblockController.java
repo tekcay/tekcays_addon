@@ -1,4 +1,4 @@
-package tekcays_addon.api.metatileentity.mutiblock;
+package tekcays_addon.api.metatileentity.multiblock;
 
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.TraceabilityPredicate;

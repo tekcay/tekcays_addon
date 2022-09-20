@@ -276,6 +276,9 @@ item.material.oreprefix.moldCasing=%s Mold Casing
 item.material.oreprefix.moldBottle=%s Mold Bottle
 item.material.oreprefix.moldBlock=%s Mold Block
 
+##Other
+item.material.oreprefix.curvedPlate=%s Curved Plate
+
 #Tooltips
 
 # Steam Air Compressor
