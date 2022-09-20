@@ -1,6 +1,7 @@
 package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.recipes.ModHandler;
+import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.UnificationEntry;
@@ -14,32 +15,32 @@ import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
-import static gregtech.api.unification.material.Materials.StainlessSteel;
 import static gregtech.api.unification.ore.OrePrefix.plate;
 import static gregtech.api.unification.ore.OrePrefix.stickLong;
 import static gregtech.common.blocks.BlockSteamCasing.SteamCasingType.WOOD_WALL;
-import static tekcays_addon.api.unification.TKCYAMaterials.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.GalvanizedSteel;
-import static tekcays_addon.api.unification.TKCYAMaterials.HighDensityPolyethylene;
+import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.curvedPlate;
+import static tekcays_addon.api.utils.TKCYAValues.DRUM_MATERIALS;
+import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.DRUMS;
 
 public class StorageOverhaul {
 
     public static void shapedRecipesDrums() {
 
-        ModHandler.addShapedRecipe(true, "drum_wood", TKCYAMetaTileEntities.WOODEN_DRUM.getStackForm(),
+        ModHandler.addShapedRecipe(true, "drum_wood", DRUMS[0].getStackForm(),
                 "rSs", "PRP", "PRP",
                 'S', MetaItems.STICKY_RESIN.getStackForm(),
                 'P', "plankWood", 'R', new UnificationEntry(stickLong, Materials.Iron));
 
-        ModHandler.addShapedRecipe(true, "drum_bronze", TKCYAMetaTileEntities.BRONZE_DRUM.getStackForm(),
+        ModHandler.addShapedRecipe(true, "drum_bronze", DRUMS[1].getStackForm(),
                 " w ", "PRP", "PRP",
-                'P', new UnificationEntry(plate, Materials.Bronze),
+                'P', new UnificationEntry(curvedPlate, Materials.Bronze),
                 'R', new UnificationEntry(OrePrefix.stickLong, Materials.Bronze));
-
     }
 
     public static void shapesRecipesTanksAndValves() {
 
+        //Tanks
         ModHandler.addShapedRecipe(true, "wood_tank", TKCYAMetaTileEntities.WOODEN_TANK.getStackForm(),
                 " R ", "rCs", " R ",
                 'R', new UnificationEntry(OrePrefix.ring, Materials.Lead),
@@ -60,8 +61,7 @@ public class StorageOverhaul {
                 'R', new UnificationEntry(OrePrefix.ring, TKCYAMaterials.GalvanizedSteel),
                 'C', TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL));
 
-
-
+        //Valves
         ModHandler.addShapedRecipe(true, "tank_valve.steel", TKCYAMetaTileEntities.STEEL_TANK_VALVE.getStackForm(),
                 " R ", "hCw", " O ",
                 'O', new UnificationEntry(OrePrefix.rotor, Materials.Steel),
@@ -81,7 +81,7 @@ public class StorageOverhaul {
                 'R', new UnificationEntry(OrePrefix.ring, TKCYAMaterials.GalvanizedSteel),
                 'C', TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL));
 
-
+        //Walls
         ModHandler.addShapedRecipe(true, "wall.steel",
                 TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.STEEL_WALL),
                 "hdw", "PP ", "PP ",
@@ -96,27 +96,20 @@ public class StorageOverhaul {
                 TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL),
                 "hdw", "PP ", "PP ",
                 'P', new UnificationEntry(plate, TKCYAMaterials.GalvanizedSteel));
-
     }
 
     public static void drumsAssembler() {
-
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Bronze, 2).input(plate, Bronze, 4).outputs(TKCYAMetaTileEntities.WOODEN_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Steel, 2).input(plate, Steel, 4).outputs(TKCYAMetaTileEntities.STEEL_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Aluminium, 2).input(plate, Aluminium, 4).outputs(TKCYAMetaTileEntities.ALUMINIUM_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, StainlessSteel, 2).input(plate, StainlessSteel, 4).outputs(TKCYAMetaTileEntities.STAINLESS_STEEL_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, GalvanizedSteel, 2).input(plate, GalvanizedSteel, 4).outputs(TKCYAMetaTileEntities.GALVANIZED_STEEL_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Polytetrafluoroethylene, 2).input(plate, Polytetrafluoroethylene, 4).outputs(TKCYAMetaTileEntities.POLYTETRAFLUOROETHYLENE_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Polypropylene, 2).input(plate, Polypropylene, 4).outputs(TKCYAMetaTileEntities.POLYPROPYLENE_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, HighDensityPolyethylene, 2).input(plate, HighDensityPolyethylene, 4).outputs(TKCYAMetaTileEntities.HIGH_DENSITY_POLYETHYLENE_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-
+        //Starts at i = 1 so it skips Treated Wood
+        for (int i = 1; i < DRUM_MATERIALS.size(); i++) {
+            Material m = DRUM_MATERIALS.get(i);
+            ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, m, 2).input(curvedPlate, m, 4).outputs(DRUMS[i].getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
+        }
     }
 
     public static void wallsAssembler() {
         ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(plate, Steel, 4).outputs(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.STEEL_WALL)).duration(200).circuitMeta(8).buildAndRegister();
         ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(plate, StainlessSteel, 4).outputs(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.STAINLESS_STEEL_WALL)).duration(200).circuitMeta(8).buildAndRegister();
         ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(plate, GalvanizedSteel, 4).outputs(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL)).duration(200).circuitMeta(8).buildAndRegister();
-
     }
 
     public static void removeGTCEuDrumsRecipe(){
@@ -127,7 +120,6 @@ public class StorageOverhaul {
     public static void removeGTCEuTanksAndValvesRecipe() {
         ModHandler.removeRecipes(MetaTileEntities.WOODEN_TANK.getStackForm());
         ModHandler.removeRecipes(MetaTileEntities.STEEL_TANK.getStackForm());
-
         ModHandler.removeRecipes(MetaTileEntities.STEEL_TANK_VALVE.getStackForm());
     }
 

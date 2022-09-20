@@ -108,15 +108,17 @@ tkcya.machine.multiblock.valve.galvanized_steel.name=Galvanized Steel Tank Valve
 tkcya.machine.multiblock.valve.stainless_steel.name=Stainless Steel Tank Valve
 
 # drums
-tkcya.machine.drum.wood.name=Wooden Drum
-tkcya.machine.drum.bronze.name=Bronze Drum
-tkcya.machine.drum.steel.name=Steel Drum
-tkcya.machine.drum.aluminium.name=Aluminium Drum
-tkcya.machine.drum.galvanized_steel.name=Galvanized Steel Drum
-tkcya.machine.drum.stainless_steel.name=Stainless Steel Drum
-tkcya.machine.drum.polytetrafluoroethylene.name=Teflon Drum
-tkcya.machine.drum.polypropylene.name=Polypropylene Drum
-tkcya.machine.drum.high_density_polyethylene.name=HDPE Drum
+tkcya.machine.drum.material.treated_wood.name=Wooden Drum
+tkcya.machine.drum.material.bronze.name=Bronze Drum
+tkcya.machine.drum.material.steel.name=Steel Drum
+tkcya.machine.drum.material.aluminium.name=Aluminium Drum
+tkcya.machine.drum.material.galvanized_steel.name=Galvanized Steel Drum
+tkcya.machine.drum.material.stainless_steel.name=Stainless Steel Drum
+tkcya.machine.drum.material.tungsten_steel.name=Tungsten Steel Drum
+tkcya.machine.drum.material.titanium.name=Titanium Drum
+tkcya.machine.drum.material.polytetrafluoroethylene.name=Teflon Drum
+tkcya.machine.drum.material.polypropylene.name=Polypropylene Drum
+tkcya.machine.drum.material.high_density_polyethylene.name=HDPE Drum
 
 # casings
 tile.large_multiblock_casing.monel_casing.name=Monel Casing
@@ -275,6 +277,9 @@ item.material.oreprefix.moldRing=%s Mold Ring
 item.material.oreprefix.moldCasing=%s Mold Casing
 item.material.oreprefix.moldBottle=%s Mold Bottle
 item.material.oreprefix.moldBlock=%s Mold Block
+
+##Other
+item.material.oreprefix.curvedPlate=%s Curved Plate
 
 #Tooltips
 

@@ -28,11 +28,6 @@ import static tekcays_addon.loaders.recipe.handlers.CastingRecipeHandler.MOLD_PR
 
 public class TKCYAPartsRecipeHandler {
 
-    public static void initFoil() {
-
-        foil.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processFoil);
-
-    }
 
     public static void initElectrode() {
 
@@ -62,14 +57,12 @@ public class TKCYAPartsRecipeHandler {
     }
 
     public static void removeAlloySmelter() {
-
         for (OrePrefix orePrefix : OrePrefix.values()) {
             orePrefix.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processAlloySmelter);
         }
     }
 
     public static void removeExtractor() {
-
         for (OrePrefix orePrefix : OrePrefix.values()) {
             orePrefix.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processExtractor);
         }
@@ -106,6 +99,8 @@ public class TKCYAPartsRecipeHandler {
                         .buildAndRegister();
         }
     }
+
+
 
     public static void processAlloySmelter(OrePrefix prefix, Material material, IngotProperty property) {
         GTRecipeHandler.removeAllRecipes(ALLOY_SMELTER_RECIPES);

@@ -1,6 +1,7 @@
 package tekcays_addon.common.metatileentities;
 
 import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
+import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.util.GTUtility;
 import gregtech.common.blocks.BlockSteamCasing;
@@ -13,6 +14,7 @@ import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
@@ -30,6 +32,7 @@ import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamCooler;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
 import static tekcays_addon.api.utils.BlastFurnaceUtils.BRICKS;
+import static tekcays_addon.api.utils.TKCYAValues.DRUM_MATERIALS;
 
 public class TKCYAMetaTileEntities {
 
@@ -70,20 +73,8 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityBrickItemBus[] BRICK_IMPORT_ITEM_BUS = new MetaTileEntityBrickItemBus[BRICKS.size()];
     public static MetaTileEntityPrimitiveMufflerHatch[] PRIMITIVE_MUFFLER = new MetaTileEntityPrimitiveMufflerHatch[BRICKS.size()];
 
-
-
-
     // Drums
-    public static MetaTileEntityDrum WOODEN_DRUM;
-    public static MetaTileEntityDrum BRONZE_DRUM;
-    public static MetaTileEntityDrum STEEL_DRUM;
-    public static MetaTileEntityDrum ALUMINIUM_DRUM;
-
-    public static MetaTileEntityDrum GALVANIZED_STEEL_DRUM;
-    public static MetaTileEntityDrum STAINLESS_STEEL_DRUM;
-    public static MetaTileEntityDrum POLYTETRAFLUOROETHYLENE_DRUM;
-    public static MetaTileEntityDrum POLYPROPYLENE_DRUM;
-    public static MetaTileEntityDrum HIGH_DENSITY_POLYETHYLENE_DRUM;
+    public static MetaTileEntityDrum[] DRUMS = new MetaTileEntityDrum[DRUM_MATERIALS.size()];
 
     //Tanks
     public static TKCYAMetaTileEntityMultiblockTank WOODEN_TANK;
@@ -98,11 +89,13 @@ public class TKCYAMetaTileEntities {
 
     public static void init() {
 
+        //id 11000-11004
         if (TKCYAConfigHolder.miscOverhaul.enableFoilOverhaul) {
             registerSimpleMetaTileEntity(CLUSTER_MILL, 11000, "cluster_mill", TKCYARecipeMaps.CLUSTER_MILL_RECIPES,
                     TKCYATextures.CLUSTER_MILL_OVERLAY, true, TKCYAMetaTileEntities::tkcyaId, GTUtility.hvCappedTankSizeFunction);
         }
 
+        //id 11005-11009
         if (TKCYAConfigHolder.miscOverhaul.enableMagneticOverhaul) {
             registerSimpleMetaTileEntity(ADVANCED_POLARIZER, 11005, "advanced_polarizer", TKCYARecipeMaps.ADVANCED_POLARIZER_RECIPES,
                     TKCYATextures.ADVANCED_POLARIZER_OVERLAY, true, TKCYAMetaTileEntities::tkcyaId, GTUtility.hvCappedTankSizeFunction);
@@ -156,16 +149,13 @@ public class TKCYAMetaTileEntities {
             ADVANCED_ELECTROLYZER = registerMetaTileEntity(11025, new MetaTileEntityAdvancedElectrolyzer(tkcyaId("advanced_electrolyzer")));
         }
 
+        //id 11026-11036
         if (TKCYAConfigHolder.storageOverhaul.enableDrumsOverhaul) {
-            WOODEN_DRUM = registerMetaTileEntity(11026, new MetaTileEntityDrum(tkcyaId("drum.wood"), Materials.Wood, 4000));
-            BRONZE_DRUM = registerMetaTileEntity(11027, new MetaTileEntityDrum(tkcyaId("drum.bronze"), Materials.Bronze, 8000));
-            STEEL_DRUM = registerMetaTileEntity(11028, new MetaTileEntityDrum(tkcyaId("drum.steel"), Materials.Steel, 16000));
-            ALUMINIUM_DRUM = registerMetaTileEntity(11029, new MetaTileEntityDrum(tkcyaId("drum.aluminium"), Materials.Aluminium, 16000));
-            GALVANIZED_STEEL_DRUM = registerMetaTileEntity(11030, new MetaTileEntityDrum(tkcyaId("drum.galvanized_steel"), TKCYAMaterials.GalvanizedSteel, 16000));
-            STAINLESS_STEEL_DRUM = registerMetaTileEntity(11031, new MetaTileEntityDrum(tkcyaId("drum.stainless_steel"), Materials.StainlessSteel, 16000));
-            POLYTETRAFLUOROETHYLENE_DRUM = registerMetaTileEntity(11032, new MetaTileEntityDrum(tkcyaId("drum.polytetrafluoroethylene"), Materials.Polytetrafluoroethylene, 16000));
-            POLYPROPYLENE_DRUM = registerMetaTileEntity(11033, new MetaTileEntityDrum(tkcyaId("drum.polypropylene"), TKCYAMaterials.Polypropylene, 16000));
-            HIGH_DENSITY_POLYETHYLENE_DRUM = registerMetaTileEntity(11034, new MetaTileEntityDrum(tkcyaId("drum.high_density_polyethylene"), TKCYAMaterials.HighDensityPolyethylene, 16000));
+            for (int i = 0; i < DRUM_MATERIALS.size(); i++) {
+                Material m = DRUM_MATERIALS.get(i);
+                TKCYALog.logger.info(m.getUnlocalizedName());
+                DRUMS[i] = registerMetaTileEntity(11026 + i, new MetaTileEntityDrum(tkcyaId("drum." + m.getUnlocalizedName()), m, 16000));
+            }
         }
 
         if (TKCYAConfigHolder.storageOverhaul.enableMultiblockTanksOverhaul) {
