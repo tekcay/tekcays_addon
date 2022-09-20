@@ -33,7 +33,7 @@ public class TKCYAOrePrefix {
     // Others
 
     public static final OrePrefix bottleGlass = new OrePrefix("bottleGlass", -1, MarkerMaterials.Color.Colorless, null, SELF_REFERENCING, null);
-    public static final OrePrefix curvedPlate = new OrePrefix("curvedPlate", M, null, TKCYAMaterialIconType.curvedPlate, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_ROTOR));
+    public static final OrePrefix curvedPlate = new OrePrefix("curvedPlate", M, null, TKCYAMaterialIconType.curvedPlate, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_ROTOR) || mat.hasFlag(GENERATE_CURVED_PLATE));
 
 }
 

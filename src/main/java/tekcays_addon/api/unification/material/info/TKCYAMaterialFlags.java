@@ -10,6 +10,10 @@ public class TKCYAMaterialFlags {
             .requireFlags(GENERATE_PLATE)
             .build();
 
+    public static final MaterialFlag GENERATE_CURVED_PLATE = new MaterialFlag.Builder("curvedPlate")
+            .requireFlags(GENERATE_PLATE)
+            .build();
+
     public static final MaterialFlag POLYMER = new MaterialFlag.Builder("polymer")
             .build();
 

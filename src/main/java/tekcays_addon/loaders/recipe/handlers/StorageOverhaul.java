@@ -1,6 +1,7 @@
 package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.recipes.ModHandler;
+import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.UnificationEntry;
@@ -22,19 +23,21 @@ import static tekcays_addon.api.unification.TKCYAMaterials.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.GalvanizedSteel;
 import static tekcays_addon.api.unification.TKCYAMaterials.HighDensityPolyethylene;
 import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.curvedPlate;
+import static tekcays_addon.api.utils.TKCYAValues.DRUM_MATERIALS;
+import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.DRUMS;
 
 public class StorageOverhaul {
 
     public static void shapedRecipesDrums() {
 
-        ModHandler.addShapedRecipe(true, "drum_wood", TKCYAMetaTileEntities.WOODEN_DRUM.getStackForm(),
+        ModHandler.addShapedRecipe(true, "drum_wood", DRUMS[0].getStackForm(),
                 "rSs", "PRP", "PRP",
                 'S', MetaItems.STICKY_RESIN.getStackForm(),
                 'P', "plankWood", 'R', new UnificationEntry(stickLong, Materials.Iron));
 
-        ModHandler.addShapedRecipe(true, "drum_bronze", TKCYAMetaTileEntities.BRONZE_DRUM.getStackForm(),
+        ModHandler.addShapedRecipe(true, "drum_bronze", DRUMS[1].getStackForm(),
                 " w ", "PRP", "PRP",
-                'P', new UnificationEntry(plate, Materials.Bronze),
+                'P', new UnificationEntry(curvedPlate, Materials.Bronze),
                 'R', new UnificationEntry(OrePrefix.stickLong, Materials.Bronze));
 
     }
@@ -101,16 +104,11 @@ public class StorageOverhaul {
     }
 
     public static void drumsAssembler() {
-
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Bronze, 2).input(curvedPlate, Bronze, 4).outputs(TKCYAMetaTileEntities.WOODEN_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Steel, 2).input(curvedPlate, Steel, 4).outputs(TKCYAMetaTileEntities.STEEL_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Aluminium, 2).input(curvedPlate, Aluminium, 4).outputs(TKCYAMetaTileEntities.ALUMINIUM_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, StainlessSteel, 2).input(curvedPlate, StainlessSteel, 4).outputs(TKCYAMetaTileEntities.STAINLESS_STEEL_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, GalvanizedSteel, 2).input(curvedPlate, GalvanizedSteel, 4).outputs(TKCYAMetaTileEntities.GALVANIZED_STEEL_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Polytetrafluoroethylene, 2).input(curvedPlate, Polytetrafluoroethylene, 4).outputs(TKCYAMetaTileEntities.POLYTETRAFLUOROETHYLENE_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, Polypropylene, 2).input(curvedPlate, Polypropylene, 4).outputs(TKCYAMetaTileEntities.POLYPROPYLENE_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-        ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, HighDensityPolyethylene, 2).input(curvedPlate, HighDensityPolyethylene, 4).outputs(TKCYAMetaTileEntities.HIGH_DENSITY_POLYETHYLENE_DRUM.getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
-
+        //Starts at i = 1 so it skips Treated Wood
+        for (int i = 1; i < DRUM_MATERIALS.size(); i++) {
+            Material m = DRUM_MATERIALS.get(i);
+            ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(stickLong, m, 2).input(curvedPlate, m, 4).outputs(DRUMS[i].getStackForm()).duration(200).circuitMeta(2).buildAndRegister();
+        }
     }
 
     public static void wallsAssembler() {

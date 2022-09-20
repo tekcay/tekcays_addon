@@ -4,6 +4,7 @@ package tekcays_addon.api.unification;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.info.MaterialFlags;
+import tekcays_addon.api.utils.TKCYAValues;
 import tekcays_addon.api.utils.roasting.RoastableMaterial;
 
 
@@ -11,8 +12,8 @@ import static gregicality.science.api.unification.materials.GCYSMaterials.ZincOx
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.Ceramic;
-import static tekcays_addon.api.unification.material.info.TKCYAMaterialFlags.GENERATE_MOLDS;
-import static tekcays_addon.api.unification.material.info.TKCYAMaterialFlags.POLYMER;
+import static tekcays_addon.api.unification.material.info.TKCYAMaterialFlags.*;
+import static tekcays_addon.api.utils.TKCYAValues.*;
 import static tekcays_addon.loaders.recipe.handlers.RoastingHandler.ROASTABLE_MATERIALS;
 
 public class TKCYAMaterialFlagAddition {
@@ -46,24 +47,16 @@ public class TKCYAMaterialFlagAddition {
 
 
         //Molds Check with MOLD_MATERIALS
-        Steel.addFlags(GENERATE_MOLDS);
-        Ceramic.addFlags(GENERATE_MOLDS);
-        Tungsten.addFlags(GENERATE_MOLDS);
-        Carbon.addFlags(GENERATE_MOLDS);
+        MOLD_MATERIALS.forEach(material -> material.addFlags(GENERATE_MOLDS));
 
+        //Generate curved plate
+        for (Material m : DRUM_MATERIALS) {
+            if (m.hasFlag(GENERATE_ROTOR)) continue;
+            if (m.hasFlag(GENERATE_PLATE)) m.addFlags(GENERATE_CURVED_PLATE);
+        }
     }
 
     public static void polymersInit() {
-
-        Polybenzimidazole.addFlags(POLYMER);
-        Polycaprolactam.addFlags(POLYMER);
-        Polydimethylsiloxane.addFlags(POLYMER);
-        PolyphenyleneSulfide.addFlags(POLYMER);
-        Polytetrafluoroethylene.addFlags(POLYMER);
-        PolyvinylAcetate.addFlags(POLYMER);
-        PolyvinylButyral.addFlags(POLYMER);
-        PolyvinylChloride.addFlags(POLYMER);
-        Polyethylene.addFlags(POLYMER);
-
+        POLYMERS.forEach(material -> material.addFlags(POLYMER));
     }
 }
