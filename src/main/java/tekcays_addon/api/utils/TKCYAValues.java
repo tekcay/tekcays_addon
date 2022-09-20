@@ -34,7 +34,7 @@ public class TKCYAValues {
     //// ENERGY_TYPE_RATIOS
 
 
-    public static final float EU_TO_HU = 0.50f;
+    public static final float EU_TO_HU = 0.50F;
 
 
     //Heat

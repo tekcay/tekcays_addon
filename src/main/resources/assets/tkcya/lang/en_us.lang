@@ -291,7 +291,7 @@ tkcya.steam_air_compressor.tooltip.2=Consumes %sL of Steam per second.
 tkcya.machine.no_overclock.tooltip=No overclock
 tkcya.machine.height.tooltip=Height: %d
 tkcya.machine.redstone.inverse.tooltip=Can be stopped with a redstone signal.
-tkcya.machine.energy_conversion_efficiency=§eEfficency:§7 %.2f
+tkcya.machine.energy_conversion_efficiency=§eEfficency:§7 %s
 tkcya.machine.pressure_decrease.tooltip=Decreases the pressure by §b%sPa§7 per second while running.
 tkcya.machine.pressure_increase.tooltip=Increases the pressure by §b%sPa§7 per second while running.
 
