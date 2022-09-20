@@ -21,7 +21,7 @@ public class HeatHandler {
                 "NCN", "hLw", "NCN",
                 'L', new UnificationEntry(stickLong, Copper),
                 'C', new UnificationEntry(plateDouble, Copper),
-                'N', new UnificationEntry(plate, Nickel));
+                'N', new UnificationEntry(plate, Invar));
 
         //Electric Heater
         ModHandler.addShapedRecipe("electric_heater_lv", TKCYAMetaTileEntities.ELECTRIC_HEATER[0].getStackForm(),
