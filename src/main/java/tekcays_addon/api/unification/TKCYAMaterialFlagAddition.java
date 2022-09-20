@@ -50,7 +50,7 @@ public class TKCYAMaterialFlagAddition {
         //Generate curved plate
         for (Material m : DRUM_MATERIALS) {
             if (m.hasFlag(GENERATE_ROTOR)) continue;
-            if (m.hasFlag(GENERATE_PLATE)) m.addFlags(GENERATE_CURVED_PLATE);
+            if (m.hasFlags(GENERATE_BOLT_SCREW, GENERATE_PLATE)) m.addFlags(GENERATE_CURVED_PLATE);
         }
     }
 
