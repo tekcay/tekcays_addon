@@ -31,6 +31,11 @@ public class TKCYAValues {
      */
     public static final float CLEANROOM_MULTIPLIER = 1.2f;
 
+    //// ENERGY_TYPE_RATIOS
+
+
+    public static final float EU_TO_HU = 0.50f;
+
 
     //Heat
 

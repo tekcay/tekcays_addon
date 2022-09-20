@@ -290,6 +290,8 @@ tkcya.steam_air_compressor.tooltip.2=Consumes %sL of Steam per second.
 
 tkcya.machine.no_overclock.tooltip=No overclock
 tkcya.machine.height.tooltip=Height: %d
+tkcya.machine.redstone.inverse.tooltip=Can be stopped with a redstone signal.
+tkcya.machine.energy_conversion_efficiency=§eEfficency:§7 %.2f
 tkcya.machine.pressure_decrease.tooltip=Decreases the pressure by §b%sPa§7 per second while running.
 tkcya.machine.pressure_increase.tooltip=Increases the pressure by §b%sPa§7 per second while running.
 
@@ -370,7 +372,7 @@ tkcya.machine.text.pressure=Current pressure: %s
 #Electric Heater
 tkcya.electric_heater.tooltip.1=For heating.
 tkcya.electric_heater.tooltip.2=Produces §c%s HU/t§7.
-tkcya.electric_heater.tooltip.3=Outputs on the TOP face.
+tkcya.electric_heater.tooltip.3=Outputs on the §eTOP§7 face.
 
 #Electric Cooler
 tkcya.electric_cooler.tooltip.1=For cooling.
