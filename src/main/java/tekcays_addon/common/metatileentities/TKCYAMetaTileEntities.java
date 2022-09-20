@@ -153,7 +153,6 @@ public class TKCYAMetaTileEntities {
         if (TKCYAConfigHolder.storageOverhaul.enableDrumsOverhaul) {
             for (int i = 0; i < DRUM_MATERIALS.size(); i++) {
                 Material m = DRUM_MATERIALS.get(i);
-                TKCYALog.logger.info(m.getUnlocalizedName());
                 DRUMS[i] = registerMetaTileEntity(11026 + i, new MetaTileEntityDrum(tkcyaId("drum." + m.getUnlocalizedName()), m, 16000));
             }
         }

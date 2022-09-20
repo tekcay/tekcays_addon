@@ -36,9 +36,18 @@ public class TKCYAAlloys {
                 .ingot(1).fluid()
                 .fluidTemp(1573)
                 .flags(EXT2_METAL, GENERATE_ROTOR, GENERATE_SMALL_GEAR, GENERATE_SPRING,
-                        GENERATE_SPRING_SMALL, GENERATE_FRAME, GENERATE_GEAR, DISABLE_DECOMPOSITION)
+                        GENERATE_SPRING_SMALL, GENERATE_FRAME, GENERATE_GEAR, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .components(Nickel, 7, Copper, 3)
                 .color(0xc1b8a8).iconSet(METALLIC)
+                .build();
+
+        Constantan = new Material.Builder(24204, "constantan")
+                .ingot(1).fluid()
+                .fluidTemp(1542)
+                .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
+                .cableProperties(128, 4, 4)
+                .components(Copper, 1, Nickel, 1)
+                .color(0xdfa478).iconSet(METALLIC)
                 .build();
 
     }

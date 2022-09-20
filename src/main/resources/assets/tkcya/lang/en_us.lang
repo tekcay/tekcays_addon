@@ -227,6 +227,7 @@ material.cuprite=Cuprite
 ##Alloys
 material.galvanized_steel=Galvanized Steel
 material.monel=Monel
+material.constantan=Constantan
 
 ##Polymers
 material.high_density_polyethylene=High Density Polyethylene (HDPE)
