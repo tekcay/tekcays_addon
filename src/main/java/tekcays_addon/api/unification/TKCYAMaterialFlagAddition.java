@@ -4,14 +4,12 @@ package tekcays_addon.api.unification;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.info.MaterialFlags;
-import tekcays_addon.api.utils.TKCYAValues;
 import tekcays_addon.api.utils.roasting.RoastableMaterial;
 
 
 import static gregicality.science.api.unification.materials.GCYSMaterials.ZincOxide;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
-import static tekcays_addon.api.unification.TKCYAMaterials.Ceramic;
 import static tekcays_addon.api.unification.material.info.TKCYAMaterialFlags.*;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 import static tekcays_addon.loaders.recipe.handlers.RoastingHandler.ROASTABLE_MATERIALS;

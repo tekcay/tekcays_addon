@@ -2,13 +2,9 @@ package tekcays_addon.api.utils;
 
 import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.unification.material.Material;
-import gregtech.api.unification.material.Materials;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import tekcays_addon.api.unification.TKCYAMaterials;
 import gregtech.api.unification.ore.OrePrefix;
 
 import static gregtech.api.unification.material.Materials.*;
@@ -19,9 +15,6 @@ import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class TKCYAValues {
 

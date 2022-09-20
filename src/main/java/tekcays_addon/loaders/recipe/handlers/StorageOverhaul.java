@@ -15,13 +15,10 @@ import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
-import static gregtech.api.unification.material.Materials.StainlessSteel;
 import static gregtech.api.unification.ore.OrePrefix.plate;
 import static gregtech.api.unification.ore.OrePrefix.stickLong;
 import static gregtech.common.blocks.BlockSteamCasing.SteamCasingType.WOOD_WALL;
-import static tekcays_addon.api.unification.TKCYAMaterials.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.GalvanizedSteel;
-import static tekcays_addon.api.unification.TKCYAMaterials.HighDensityPolyethylene;
 import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.curvedPlate;
 import static tekcays_addon.api.utils.TKCYAValues.DRUM_MATERIALS;
 import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.DRUMS;
@@ -39,11 +36,11 @@ public class StorageOverhaul {
                 " w ", "PRP", "PRP",
                 'P', new UnificationEntry(curvedPlate, Materials.Bronze),
                 'R', new UnificationEntry(OrePrefix.stickLong, Materials.Bronze));
-
     }
 
     public static void shapesRecipesTanksAndValves() {
 
+        //Tanks
         ModHandler.addShapedRecipe(true, "wood_tank", TKCYAMetaTileEntities.WOODEN_TANK.getStackForm(),
                 " R ", "rCs", " R ",
                 'R', new UnificationEntry(OrePrefix.ring, Materials.Lead),
@@ -64,8 +61,7 @@ public class StorageOverhaul {
                 'R', new UnificationEntry(OrePrefix.ring, TKCYAMaterials.GalvanizedSteel),
                 'C', TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL));
 
-
-
+        //Valves
         ModHandler.addShapedRecipe(true, "tank_valve.steel", TKCYAMetaTileEntities.STEEL_TANK_VALVE.getStackForm(),
                 " R ", "hCw", " O ",
                 'O', new UnificationEntry(OrePrefix.rotor, Materials.Steel),
@@ -85,7 +81,7 @@ public class StorageOverhaul {
                 'R', new UnificationEntry(OrePrefix.ring, TKCYAMaterials.GalvanizedSteel),
                 'C', TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL));
 
-
+        //Walls
         ModHandler.addShapedRecipe(true, "wall.steel",
                 TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.STEEL_WALL),
                 "hdw", "PP ", "PP ",
@@ -100,7 +96,6 @@ public class StorageOverhaul {
                 TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL),
                 "hdw", "PP ", "PP ",
                 'P', new UnificationEntry(plate, TKCYAMaterials.GalvanizedSteel));
-
     }
 
     public static void drumsAssembler() {
@@ -115,7 +110,6 @@ public class StorageOverhaul {
         ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(plate, Steel, 4).outputs(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.STEEL_WALL)).duration(200).circuitMeta(8).buildAndRegister();
         ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(plate, StainlessSteel, 4).outputs(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.STAINLESS_STEEL_WALL)).duration(200).circuitMeta(8).buildAndRegister();
         ASSEMBLER_RECIPES.recipeBuilder().EUt(16).input(plate, GalvanizedSteel, 4).outputs(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL)).duration(200).circuitMeta(8).buildAndRegister();
-
     }
 
     public static void removeGTCEuDrumsRecipe(){
@@ -126,7 +120,6 @@ public class StorageOverhaul {
     public static void removeGTCEuTanksAndValvesRecipe() {
         ModHandler.removeRecipes(MetaTileEntities.WOODEN_TANK.getStackForm());
         ModHandler.removeRecipes(MetaTileEntities.STEEL_TANK.getStackForm());
-
         ModHandler.removeRecipes(MetaTileEntities.STEEL_TANK_VALVE.getStackForm());
     }
 
