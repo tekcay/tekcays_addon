@@ -29,6 +29,7 @@ import tekcays_addon.api.capability.impl.HeatContainer;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 import org.apache.commons.lang3.ArrayUtils;
+import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
@@ -71,7 +72,7 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
         IVertexOperation[] coloredPipeline = ArrayUtils.add(pipeline, multiplier);
 
         Textures.AIR_VENT_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
-        Textures.PIPE_OUT_OVERLAY.renderSided(UP, renderState, translation, pipeline);
+        TKCYATextures.HEAT_ACCEPTOR_VERTICALS_OVERLAY.renderSided(UP, renderState, translation, pipeline);
     }
 
 
@@ -87,8 +88,10 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
 
             energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
 
+            //Get the TileEntity that is placed right on top of the Heat.
             TileEntity te = getWorld().getTileEntity(getPos().offset(UP));
             if (te != null) {
+                //Get the Capability of this Tile Entity on the DOWN FACE.
                 IHeatContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER, DOWN);
                 if (container != null) {
                     if (container.changeHeat(HEAT_BASE_INCREASE, true)) {

@@ -63,7 +63,7 @@ import java.util.List;
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
 import static net.minecraft.util.EnumFacing.DOWN;
 import static net.minecraft.util.EnumFacing.UP;
-import static tekcays_addon.api.utils.TKCYAValues.EU_TO_HU;
+import static tekcays_addon.api.utils.HeatersMethods.getBurnTime;
 
 public class MetaTileEntitySolidFuelHeater extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide, IFuelable {
 
@@ -78,6 +78,7 @@ public class MetaTileEntitySolidFuelHeater extends MetaTileEntity implements IDa
     private final float efficiency;
     private final int powerMultiplier;
     private final ItemStackHandler containerInventory;
+    private int burnTimeLeft;
 
 
 
@@ -150,68 +151,76 @@ public class MetaTileEntitySolidFuelHeater extends MetaTileEntity implements IDa
         return Textures.STEAM_BRICKED_CASING_BRONZE;
     }
 
-    public int getBurnTime(ItemStack stack, FuelHeater fuelHeater) {
-        return (int) (TileEntityFurnace.getItemBurnTime(stack) * fuelHeater.getEfficiency() / fuelHeater.getPowerMultiplier());
+    @SideOnly(Side.CLIENT)
+    @Override
+    public Pair<TextureAtlasSprite, Integer> getParticleTexture() {
+        return Pair.of(getBaseRenderer().getParticleSprite(), getPaintingColorForRendering());
     }
 
+
     /**
-     *
      * @return {@code} false if no fuel has been consumed
      */
-    protected boolean tryConsumeNewFuel() {
+    protected void tryConsumeNewFuel() {
         ItemStack fuelInSlot = importItems.extractItem(0, 1, true);
-        if (fuelInSlot.isEmpty()) return false;
+        if (fuelInSlot.isEmpty()) return;
         // Prevent consuming buckets with burn time
         if(FluidUtil.getFluidHandler(fuelInSlot) != null) {
-            return false;
+            return;
         }
+        //Calculate the burn time for this item taking into account the FuelHeater properties
         int burnTime = getBurnTime(fuelInSlot, fuelHeater);
-        if (burnTime <= 0) return false;
+        if (burnTime <= 0) return;
         importItems.extractItem(0, 1, false);
         ItemStack remainderAsh = ModHandler.getBurningFuelRemainder(fuelInSlot);
         if (!remainderAsh.isEmpty()) { //we don't care if we can't insert ash - it's chanced anyway
             exportItems.insertItem(0, remainderAsh, false);
         }
-        setFuelMaxBurnTime(burnTime);
-        return true;
+        burnTimeLeft = burnTime;
     }
 
-    public void setFuelMaxBurnTime(int fuelMaxBurnTime) {
-        this.fuelMaxBurnTime = fuelMaxBurnTime;
-        this.fuelBurnTimeLeft = fuelMaxBurnTime;
-        if (!getWorld().isRemote) {
-            markDirty();
-        }
-    }
 
     //For TOP, needs to implement IFuelable
     @Override
     public Collection<IFuelInfo> getFuels() {
+        TKCYALog.logger.info("TOP got here");
         ItemStack fuelInSlot = importItems.extractItem(0, Integer.MAX_VALUE, true);
+        TKCYALog.logger.info("TOP : stackSize : " + fuelInSlot.getCount());
         if (fuelInSlot == ItemStack.EMPTY)
             return Collections.emptySet();
         final int fuelRemaining = fuelInSlot.getCount();
+        TKCYALog.logger.info("TOP : fuelInSlot = " + fuelInSlot);
         final int fuelCapacity = importItems.getSlotLimit(0);
+        TKCYALog.logger.info("TOP : fuelRemaining = " + fuelRemaining);
         final long burnTime = (long) fuelRemaining * getBurnTime(fuelInSlot, fuelHeater);
+        TKCYALog.logger.info("TOP : fuelCapacity = " + fuelCapacity);
         return Collections.singleton(new ItemFuelInfo(fuelInSlot, fuelRemaining, fuelCapacity, 1, burnTime));
     }
 
 
+
     @Override
     public void update() {
-        super.update();
-        if (tryConsumeNewFuel() || fuelBurnTimeLeft > 0) setBurning(true);
-        int currentHeat = heatContainer.getHeat();
-        if (!getWorld().isRemote) {
-            if (heatContainer.getHeat() < heatIncreaseRate) return;
-            if (currentHeat + heatIncreaseRate < heatContainer.getMaxHeat()) heatContainer.setHeat(currentHeat + heatIncreaseRate);
-            transferHeat();
+        if (burnTimeLeft <= 0) tryConsumeNewFuel();
+        if (burnTimeLeft > 0) {
+            setBurning(true);
+            int currentHeat = heatContainer.getHeat();
+            if (!getWorld().isRemote) {
+                if (currentHeat + heatIncreaseRate < heatContainer.getMaxHeat())
+                    heatContainer.setHeat(currentHeat + heatIncreaseRate);
+                transferHeat();
+            }
+            burnTimeLeft -= 1;
+            markDirty();
         }
     }
 
+
     public void transferHeat() {
+        //Get the TileEntity that is placed right on top of the Heat.
         TileEntity te = getWorld().getTileEntity(getPos().offset(UP));
         if (te != null) {
+            //Get the Capability of this Tile Entity on the DOWN FACE.
             IHeatContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER, DOWN);
             if (container != null) {
                 if (container.changeHeat(heatIncreaseRate, true)) {
@@ -240,7 +249,7 @@ public class MetaTileEntitySolidFuelHeater extends MetaTileEntity implements IDa
             return side == UP ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
         }
         if (capability.equals(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER)) {
-            return side == UP ? TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER.cast(heatContainer) : null;
+            return TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER.cast(heatContainer);
         }
         return super.getCapability(capability, side);
     }
@@ -264,14 +273,14 @@ public class MetaTileEntitySolidFuelHeater extends MetaTileEntity implements IDa
         list.add(new TextComponentTranslation("behavior.tricorder.current_heat", heatContainer.getHeat()));
         list.add(new TextComponentTranslation("behavior.tricorder.min_heat", heatContainer.getMinHeat()));
         list.add(new TextComponentTranslation("behavior.tricorder.max_heat", heatContainer.getMaxHeat()));
+        list.add(new TextComponentTranslation("behavior.tricorder.burn_time_left", burnTimeLeft));
         return list;
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         super.writeToNBT(data);
-        data.setInteger("FuelBurnTimeLeft", fuelBurnTimeLeft);
-        data.setInteger("FuelMaxBurnTime", fuelMaxBurnTime);
+        data.setInteger("BurnTimeLeft", burnTimeLeft);
         data.setTag("ContainerInventory", containerInventory.serializeNBT());
         return data;
     }
@@ -279,8 +288,7 @@ public class MetaTileEntitySolidFuelHeater extends MetaTileEntity implements IDa
     @Override
     public void readFromNBT(NBTTagCompound data) {
         super.readFromNBT(data);
-        this.fuelBurnTimeLeft = data.getInteger("FuelBurnTimeLeft");
-        this.fuelMaxBurnTime = data.getInteger("FuelMaxBurnTime");
+        this.burnTimeLeft= data.getInteger("BurnTimeLeft");
         this.containerInventory.deserializeNBT(data.getCompoundTag("ContainerInventory"));
         this.isBurning = fuelBurnTimeLeft > 0;
     }
@@ -310,14 +318,6 @@ public class MetaTileEntitySolidFuelHeater extends MetaTileEntity implements IDa
     public boolean isActive() {
         return isBurning;
     }
-
-    @SideOnly(Side.CLIENT)
-    @Override
-    public Pair<TextureAtlasSprite, Integer> getParticleTexture() {
-        return Pair.of(getBaseRenderer().getParticleSprite(), getPaintingColorForRendering());
-    }
-
-
 
     @Override
     public SoundEvent getSound() {

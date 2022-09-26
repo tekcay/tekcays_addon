@@ -384,6 +384,7 @@ tkcya.electric_cooler.tooltip.3=Outputs on the TOP face.
 behavior.tricorder.current_heat=Current Heat: %s HU
 behavior.tricorder.min_heat=Minimum Heat: %s HU
 behavior.tricorder.max_heat=Maximum Heat: %s HU
+behavior.tricorder.burn_time_left= Burn Time Left %s ticks
 
 # Errors
 
