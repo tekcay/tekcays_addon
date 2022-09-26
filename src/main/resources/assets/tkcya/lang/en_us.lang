@@ -370,10 +370,10 @@ tekcays_addon.machine.advanced_electrolyzer.tooltip.4=Removal of the electrode w
 
 tkcya.machine.text.pressure=Current pressure: %s
 
-#Electric Heater
-tkcya.electric_heater.tooltip.1=For heating.
-tkcya.electric_heater.tooltip.2=Produces §c%s HU/t§7.
-tkcya.electric_heater.tooltip.3=Outputs on the §eTOP§7 face.
+#Heaters
+tkcya.heater.tooltip.1=For heating.
+tkcya.heater.tooltip.2=Produces §c%s HU/t§7.
+tkcya.heater.tooltip.3=Outputs on the §eTOP§7 face.
 
 #Electric Cooler
 tkcya.electric_cooler.tooltip.1=For cooling.

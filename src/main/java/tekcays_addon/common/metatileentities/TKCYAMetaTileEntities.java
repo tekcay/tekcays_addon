@@ -216,7 +216,7 @@ public class TKCYAMetaTileEntities {
         ELECTRIC_HEATER[4] = registerMetaTileEntity(11174, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.iv"), 5));
 
         HEAT_ACCEPTOR[0] = registerMetaTileEntity(11175, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.lv"), 1));
-        ADVANCED_MELTER = registerMetaTileEntity(11176, new MetaTileEntityAdvancedMelter(tkcyaId("avcanced_melter")));
+        ADVANCED_MELTER = registerMetaTileEntity(11176, new MetaTileEntityAdvancedMelter(tkcyaId("advanced_melter")));
         SOLID_FUEL_HEATER = registerMetaTileEntity(11177, new MetaTileEntitySolidFuelHeater(tkcyaId("solid_fuel_heater"), BRONZE));
 
     }
