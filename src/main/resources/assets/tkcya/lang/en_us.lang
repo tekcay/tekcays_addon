@@ -33,6 +33,13 @@ tkcya.machine.electric_heater.hv.name=Electric Heater HV
 tkcya.machine.electric_heater.ev.name=Electric Heater EV
 tkcya.machine.electric_heater.iv.name=Electric Heater IV
 
+
+tkcya.machine.material.bronze_solid_fuel_heater=Bronze Solid Fuel Heater
+tkcya.machine.material.steel_solid_fuel_heater=Steel Solid Fuel Heater
+tkcya.machine.material.invar_solid_fuel_heater=Invar Solid Fuel Heater
+tkcya.machine.material.titanium_solid_fuel_heater=Titanium Solid Fuel Heater
+tkcya.machine.material.tungsten_steel_solid_fuel_heater=Tungsten Steel Solid Fuel Heater
+
 tkcya.machine.steam_cooler_bronze.name=Steam Cooler
 tkcya.machine.steam_cooler_steel.name=High Pressure Steam Cooler
 tkcya.machine.muffler_hatch.primitive.name=Primitive Muffler Hatch

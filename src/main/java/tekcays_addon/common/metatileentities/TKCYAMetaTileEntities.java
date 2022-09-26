@@ -14,6 +14,7 @@ import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.api.utils.FuelHeater;
 import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
@@ -34,6 +35,7 @@ import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamCooler;
 import static gregtech.common.metatileentities.MetaTileEntities.*;
 import static tekcays_addon.api.utils.BlastFurnaceUtils.BRICKS;
 import static tekcays_addon.api.utils.FuelHeater.BRONZE;
+import static tekcays_addon.api.utils.FuelHeater.FUEL_HEATERS;
 import static tekcays_addon.api.utils.TKCYAValues.DRUM_MATERIALS;
 
 public class TKCYAMetaTileEntities {
@@ -60,7 +62,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityAdvancedElectrolyzer ADVANCED_ELECTROLYZER;
     public static MetaTileEntityFilter FILTER;
     public static MetaTileEntityPressurizedCrackingUnit PRESSURIZED_CRACKING_UNIT;
-    public static MetaTileEntitySolidFuelHeater SOLID_FUEL_HEATER;
+    public static MetaTileEntitySolidFuelHeater SOLID_FUEL_HEATER[] = new MetaTileEntitySolidFuelHeater[FUEL_HEATERS.size()];
 
     public static MetaTileEntityAdvancedMelter ADVANCED_MELTER;
 
@@ -217,7 +219,16 @@ public class TKCYAMetaTileEntities {
 
         HEAT_ACCEPTOR[0] = registerMetaTileEntity(11175, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.lv"), 1));
         ADVANCED_MELTER = registerMetaTileEntity(11176, new MetaTileEntityAdvancedMelter(tkcyaId("advanced_melter")));
-        SOLID_FUEL_HEATER = registerMetaTileEntity(11177, new MetaTileEntitySolidFuelHeater(tkcyaId("solid_fuel_heater"), BRONZE));
+
+        //id 11177 to
+        for (int i = 0; i < FUEL_HEATERS.size(); i++) {
+            int idToStart = 11177;
+            FuelHeater fuelHeater = FUEL_HEATERS.get(i);
+            SOLID_FUEL_HEATER[0] = registerMetaTileEntity(idToStart+ i, new MetaTileEntitySolidFuelHeater(tkcyaId(fuelHeater.getMaterial().getUnlocalizedName() + "_solid_fuel_heater"), fuelHeater));
+        }
+
+
+
 
     }
 

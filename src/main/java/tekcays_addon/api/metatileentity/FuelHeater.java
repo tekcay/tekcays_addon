@@ -16,6 +16,7 @@ import gregtech.api.sound.GTSounds;
 import gregtech.api.unification.material.Material;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
+import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -50,6 +51,7 @@ import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
 import static net.minecraft.util.EnumFacing.DOWN;
 import static net.minecraft.util.EnumFacing.UP;
 import static tekcays_addon.api.utils.HeatersMethods.getBurnTime;
+import static tekcays_addon.api.utils.HeatersMethods.getTextures;
 
 public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide, IFuelable {
 
@@ -84,8 +86,8 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
     }
 
     @SideOnly(Side.CLIENT)
-    protected SimpleSidedCubeRenderer getBaseRenderer() {
-        return Textures.STEAM_BRICKED_CASING_BRONZE;
+    protected SimpleOverlayRenderer getBaseRenderer() {
+        return getTextures(material);
     }
 
     @SideOnly(Side.CLIENT)

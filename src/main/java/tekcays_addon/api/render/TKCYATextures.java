@@ -33,9 +33,16 @@ public class TKCYATextures {
 
 
     //GT6 style
+    //Casing
     public static SimpleOverlayRenderer STEEL_GT;
     public static SimpleOverlayRenderer WHITE_GT;
     public static SimpleOverlayRenderer STAINLESS_STEEL_GT;
+    //SteamCasing
+    public static SimpleOverlayRenderer BRONZE_STEAM_CASING;
+    public static SimpleOverlayRenderer STEEL_STEAM_CASING;
+    public static SimpleOverlayRenderer INVAR_STEAM_CASING;
+    public static SimpleOverlayRenderer TITANIUM_STEAM_CASING;
+    public static SimpleOverlayRenderer TUNGSTEN_STEEL_STEAM_CASING;
 
     //Acceptors
     public static SimpleOverlayRenderer HEAT_ACCEPTOR_HORIZONTALS_OVERLAY;
@@ -53,9 +60,17 @@ public class TKCYATextures {
         STRONG_BRICK = new SimpleOverlayRenderer("casings/block_brick/strong_brick");
 
         //GT6 Style
+        //Casing
         STEEL_GT = new SimpleOverlayRenderer("steel_gt");
         WHITE_GT = new SimpleOverlayRenderer("white_gt");
         STAINLESS_STEEL_GT = new SimpleOverlayRenderer("stainless_steel_gt");
+        //SteamCasing
+        BRONZE_STEAM_CASING = new SimpleOverlayRenderer("casings/steam/bronze/top");
+        STEEL_STEAM_CASING = new SimpleOverlayRenderer("casings/steam/steel/top");
+        INVAR_STEAM_CASING = new SimpleOverlayRenderer("casings/steam/invar/top");
+        TITANIUM_STEAM_CASING = new SimpleOverlayRenderer("casings/steam/titanium/top");
+        TUNGSTEN_STEEL_STEAM_CASING = new SimpleOverlayRenderer("casings/steam/tungsten_steel/top");
+
 
         //Acceptors
         HEAT_ACCEPTOR_HORIZONTALS_OVERLAY = new SimpleOverlayRenderer("multiblockpart/heat_acceptor_horizontals");

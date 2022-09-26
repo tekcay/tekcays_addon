@@ -1,15 +1,12 @@
 package tekcays_addon.api.utils;
 
-import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.unification.material.Material;
+import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
-import tekcays_addon.api.capability.IHeatContainer;
-import tekcays_addon.api.capability.TKCYATileCapabilities;
-import net.minecraft.world.World;
-import net.minecraft.util.math.BlockPos;
-import static net.minecraft.util.EnumFacing.DOWN;
-import static net.minecraft.util.EnumFacing.UP;
+import tekcays_addon.api.render.TKCYATextures;
+
+import static gregtech.api.unification.material.Materials.*;
 
 public class HeatersMethods {
 
@@ -23,6 +20,15 @@ public class HeatersMethods {
      */
     public static int getBurnTime(ItemStack stack, FuelHeater fuelHeater) {
         return (int) (TileEntityFurnace.getItemBurnTime(stack) * fuelHeater.getEfficiency() / fuelHeater.getPowerMultiplier());
+    }
+
+    public static SimpleOverlayRenderer getTextures(Material material) {
+        if (material.equals(Bronze)) return TKCYATextures.BRONZE_STEAM_CASING;
+        if (material.equals(Steel)) return TKCYATextures.STEEL_STEAM_CASING;
+        if (material.equals(Invar)) return TKCYATextures.INVAR_STEAM_CASING;
+        if (material.equals(Titanium)) return TKCYATextures.TITANIUM_STEAM_CASING;
+        if (material.equals(TungstenSteel)) return TKCYATextures.TUNGSTEN_STEEL_STEAM_CASING;
+        return TKCYATextures.BRONZE_STEAM_CASING;
     }
 
 
