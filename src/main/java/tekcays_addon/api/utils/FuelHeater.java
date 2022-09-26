@@ -9,16 +9,16 @@ import static gregtech.api.unification.material.Materials.*;
 
 public class FuelHeater {
 
-    private final int efficiency;
+    private final float efficiency;
     private final int powerMultiplier;
     private final Material material;
 
-    public static FuelHeater BRICK = new FuelHeater(Brick, 50, 1);
-    public static FuelHeater INVAR = new FuelHeater(Invar, 100, 2);
-    public static FuelHeater BRONZE = new FuelHeater(Bronze, 80, 3);
-    public static FuelHeater STEEL = new FuelHeater(Steel, 80, 4);
-    public static FuelHeater TITANIUM = new FuelHeater(Titanium, 80, 8);
-    public static FuelHeater TUNGSTEN_STEEL = new FuelHeater(TungstenSteel, 80, 16);
+    public static FuelHeater BRICK = new FuelHeater(Brick, 0.50F, 1);
+    public static FuelHeater INVAR = new FuelHeater(Invar, 1.00F, 2);
+    public static FuelHeater BRONZE = new FuelHeater(Bronze, 0.80F, 3);
+    public static FuelHeater STEEL = new FuelHeater(Steel, 0.80F, 4);
+    public static FuelHeater TITANIUM = new FuelHeater(Titanium, 0.80F, 8);
+    public static FuelHeater TUNGSTEN_STEEL = new FuelHeater(TungstenSteel, 0.80F, 16);
 
     /**
      * Contains all the {@code FuelHeater}s registered.
@@ -32,7 +32,7 @@ public class FuelHeater {
        add(TUNGSTEN_STEEL);
     }};
 
-    public FuelHeater(Material material, int efficiency, int powerMultiplier) {
+    public FuelHeater(Material material, float efficiency, int powerMultiplier) {
         this.material = material;
         this.efficiency = efficiency;
         this.powerMultiplier = powerMultiplier;
@@ -42,7 +42,7 @@ public class FuelHeater {
         return material;
     }
 
-    public int getEfficiency() {
+    public float getEfficiency() {
         return efficiency;
     }
 

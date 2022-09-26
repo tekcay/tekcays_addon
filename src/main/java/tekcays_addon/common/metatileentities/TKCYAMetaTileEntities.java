@@ -27,11 +27,13 @@ import tekcays_addon.common.metatileentities.single.MetaTileEntityElectricHeater
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickFluidHatch;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickItemBus;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityPrimitiveMufflerHatch;
+import tekcays_addon.common.metatileentities.single.MetaTileEntitySolidFuelHeater;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamAirCompressor;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamCooler;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
 import static tekcays_addon.api.utils.BlastFurnaceUtils.BRICKS;
+import static tekcays_addon.api.utils.FuelHeater.BRONZE;
 import static tekcays_addon.api.utils.TKCYAValues.DRUM_MATERIALS;
 
 public class TKCYAMetaTileEntities {
@@ -58,6 +60,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityAdvancedElectrolyzer ADVANCED_ELECTROLYZER;
     public static MetaTileEntityFilter FILTER;
     public static MetaTileEntityPressurizedCrackingUnit PRESSURIZED_CRACKING_UNIT;
+    public static MetaTileEntitySolidFuelHeater SOLID_FUEL_HEATER;
 
     public static MetaTileEntityAdvancedMelter ADVANCED_MELTER;
 
@@ -213,7 +216,8 @@ public class TKCYAMetaTileEntities {
         ELECTRIC_HEATER[4] = registerMetaTileEntity(11174, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.iv"), 5));
 
         HEAT_ACCEPTOR[0] = registerMetaTileEntity(11175, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.lv"), 1));
-        ADVANCED_MELTER = registerMetaTileEntity(1116, new MetaTileEntityAdvancedMelter(tkcyaId("avcanced_melter")));
+        ADVANCED_MELTER = registerMetaTileEntity(11176, new MetaTileEntityAdvancedMelter(tkcyaId("avcanced_melter")));
+        SOLID_FUEL_HEATER = registerMetaTileEntity(11177, new MetaTileEntitySolidFuelHeater(tkcyaId("solid_fuel_heater"), BRONZE));
 
     }
 

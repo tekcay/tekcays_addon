@@ -7,18 +7,20 @@ import codechicken.lib.vec.Matrix4;
 import gregicality.science.api.utils.NumberFormattingUtil;
 import gregtech.api.capability.*;
 import gregtech.api.capability.impl.ItemFuelInfo;
+import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
+import gregtech.api.gui.widgets.*;
 import gregtech.api.metatileentity.IDataInfoProvider;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.recipes.ModHandler;
 import gregtech.api.sound.GTSounds;
+import gregtech.api.unification.material.Material;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import javafx.scene.paint.Material;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,6 +40,8 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemStackHandler;
 import org.apache.commons.lang3.ArrayUtils;
 import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
@@ -45,6 +49,10 @@ import tekcays_addon.api.capability.impl.HeatContainer;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import tekcays_addon.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.api.utils.FuelHeater;
+import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -59,24 +67,34 @@ import static tekcays_addon.api.utils.TKCYAValues.EU_TO_HU;
 
 public class MetaTileEntitySolidFuelHeater extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide, IFuelable {
 
-    private static final int HEAT_BASE_INCREASE = 8;
+    private static int HEAT_BASE_INCREASE = 8;
+    private int heatIncreaseRate;
     private HeatContainer heatContainer;
-    private final Material material;
     private int fuelBurnTimeLeft;
     private int fuelMaxBurnTime;
     protected boolean isBurning;
-    private final ICubeRenderer renderer;
-    private final int tier;
+    private final FuelHeater fuelHeater;
+    private final Material material;
+    private final float efficiency;
+    private final int powerMultiplier;
+    private final ItemStackHandler containerInventory;
 
-    public MetaTileEntitySolidFuelHeater(ResourceLocation metaTileEntityId, Material material, ICubeRenderer renderer) {
+
+
+    public MetaTileEntitySolidFuelHeater(ResourceLocation metaTileEntityId, FuelHeater fuelHeater) {
         super(metaTileEntityId);
-        this.material = material;
-        this.renderer = renderer;
+        this.fuelHeater = fuelHeater;
+        this.efficiency = fuelHeater.getEfficiency();
+        this.powerMultiplier = fuelHeater.getPowerMultiplier();
+        this.material = fuelHeater.getMaterial();
+        this.heatIncreaseRate = HEAT_BASE_INCREASE * powerMultiplier;
+        this.containerInventory = new ItemStackHandler(2);
     }
+
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
-        return new MetaTileEntitySolidFuelHeater(metaTileEntityId, material);
+        return new MetaTileEntitySolidFuelHeater(metaTileEntityId, fuelHeater);
     }
 
     @Override
@@ -87,28 +105,58 @@ public class MetaTileEntitySolidFuelHeater extends MetaTileEntity implements IDa
     }
 
     @Override
-    protected ModularUI createUI(EntityPlayer entityPlayer) {
-        return null;
+    protected IItemHandlerModifiable createImportItemHandler() {
+        return new ItemStackHandler(1);
+    }
+
+    @Override
+    protected IItemHandlerModifiable createExportItemHandler() {
+        return new ItemStackHandler(1);
     }
 
 
+    @Override
+    protected ModularUI createUI(EntityPlayer player) {
+        return createUITemplate(player).build(getHolder(), player);
     }
+
+    protected ModularUI.Builder createUITemplate(EntityPlayer entityPlayer) {
+        return ModularUI.builder(GuiTextures.BACKGROUND, 176, 166)
+                .shouldColor(false)
+                .widget(new LabelWidget(5, 5, getMetaFullName()))
+
+                .widget(new SlotWidget(importItems, 0, 50, 10, true, true)
+                        .setBackgroundTexture(GuiTextures.SLOT))
+
+                .widget(new SlotWidget(exportItems, 0, 50, 60, true, false)
+                        .setBackgroundTexture(GuiTextures.SLOT))
+
+                .bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 0);
+    }
+
 
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline, new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
         getBaseRenderer().render(renderState, translation, colouredPipeline);
-        renderer.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isBurning(), true);
+        Textures.COAL_BOILER_OVERLAY.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isBurning(), true);
         ColourMultiplier multiplier = new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
         colouredPipeline = ArrayUtils.add(pipeline, multiplier);
+        TKCYATextures.HEAT_ACCEPTOR_VERTICALS_OVERLAY.renderSided(UP, renderState, translation, pipeline);
+    }
 
-        Textures.AIR_VENT_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
-        Textures.PIPE_OUT_OVERLAY.renderSided(UP, renderState, translation, pipeline);
+    @SideOnly(Side.CLIENT)
+    protected SimpleSidedCubeRenderer getBaseRenderer() {
+        return Textures.STEAM_BRICKED_CASING_BRONZE;
+    }
+
+    public int getBurnTime(ItemStack stack, FuelHeater fuelHeater) {
+        return (int) (TileEntityFurnace.getItemBurnTime(stack) * fuelHeater.getEfficiency() / fuelHeater.getPowerMultiplier());
     }
 
     /**
      *
-     * @return {@code} false if no fuel has been consummed
+     * @return {@code} false if no fuel has been consumed
      */
     protected boolean tryConsumeNewFuel() {
         ItemStack fuelInSlot = importItems.extractItem(0, 1, true);
@@ -117,7 +165,7 @@ public class MetaTileEntitySolidFuelHeater extends MetaTileEntity implements IDa
         if(FluidUtil.getFluidHandler(fuelInSlot) != null) {
             return false;
         }
-        int burnTime = TileEntityFurnace.getItemBurnTime(fuelInSlot);
+        int burnTime = getBurnTime(fuelInSlot, fuelHeater);
         if (burnTime <= 0) return false;
         importItems.extractItem(0, 1, false);
         ItemStack remainderAsh = ModHandler.getBurningFuelRemainder(fuelInSlot);
@@ -144,7 +192,7 @@ public class MetaTileEntitySolidFuelHeater extends MetaTileEntity implements IDa
             return Collections.emptySet();
         final int fuelRemaining = fuelInSlot.getCount();
         final int fuelCapacity = importItems.getSlotLimit(0);
-        final long burnTime = (long) fuelRemaining * TileEntityFurnace.getItemBurnTime(fuelInSlot) * tier;
+        final long burnTime = (long) fuelRemaining * getBurnTime(fuelInSlot, fuelHeater);
         return Collections.singleton(new ItemFuelInfo(fuelInSlot, fuelRemaining, fuelCapacity, 1, burnTime));
     }
 
@@ -155,18 +203,20 @@ public class MetaTileEntitySolidFuelHeater extends MetaTileEntity implements IDa
         if (tryConsumeNewFuel() || fuelBurnTimeLeft > 0) setBurning(true);
         int currentHeat = heatContainer.getHeat();
         if (!getWorld().isRemote) {
-            if (heatContainer.getHeat() < HEAT_BASE_INCREASE) return;
-            if (currentHeat + HEAT_BASE_INCREASE < heatContainer.getMaxHeat()) heatContainer.setHeat(currentHeat + HEAT_BASE_INCREASE);
+            if (heatContainer.getHeat() < heatIncreaseRate) return;
+            if (currentHeat + heatIncreaseRate < heatContainer.getMaxHeat()) heatContainer.setHeat(currentHeat + heatIncreaseRate);
+            transferHeat();
+        }
+    }
 
-
-            TileEntity te = getWorld().getTileEntity(getPos().offset(UP));
-            if (te != null) {
-                IHeatContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER, DOWN);
-                if (container != null) {
-                    if (container.changeHeat(HEAT_BASE_INCREASE, true)) {
-                        container.changeHeat(HEAT_BASE_INCREASE, false);
-                        this.heatContainer.changeHeat(-HEAT_BASE_INCREASE, false);
-                    }
+    public void transferHeat() {
+        TileEntity te = getWorld().getTileEntity(getPos().offset(UP));
+        if (te != null) {
+            IHeatContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER, DOWN);
+            if (container != null) {
+                if (container.changeHeat(heatIncreaseRate, true)) {
+                    container.changeHeat(heatIncreaseRate, false);
+                    this.heatContainer.changeHeat(-heatIncreaseRate, false);
                 }
             }
         }
@@ -177,8 +227,8 @@ public class MetaTileEntitySolidFuelHeater extends MetaTileEntity implements IDa
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tkcya.electric_heater.tooltip.1"));
-        tooltip.add(I18n.format("tkcya.machine.energy_conversion_efficiency",  TextFormatting.WHITE + String.format("%.02f", EU_TO_HU * 100) + "%"));
-        tooltip.add(I18n.format("tkcya.electric_heater.tooltip.2", NumberFormattingUtil.formatDoubleToCompactString(Math.abs(HEAT_BASE_INCREASE))));
+        tooltip.add(I18n.format("tkcya.electric_heater.tooltip.2", NumberFormattingUtil.formatDoubleToCompactString(Math.abs(heatIncreaseRate))));
+        tooltip.add(I18n.format("tkcya.machine.energy_conversion_efficiency",  TextFormatting.WHITE + String.format("%.02f", efficiency * 100.00F) + "%"));
         tooltip.add(I18n.format("tkcya.machine.redstone.inverse.tooltip"));
         tooltip.add(I18n.format("tkcya.electric_heater.tooltip.3"));
     }
@@ -262,15 +312,6 @@ public class MetaTileEntitySolidFuelHeater extends MetaTileEntity implements IDa
     }
 
     @SideOnly(Side.CLIENT)
-    protected SimpleSidedCubeRenderer getBaseRenderer() {
-        if (isHighPressure) {
-            return Textures.STEAM_BRICKED_CASING_STEEL;
-        } else {
-            return Textures.STEAM_BRICKED_CASING_BRONZE;
-        }
-    }
-
-    @SideOnly(Side.CLIENT)
     @Override
     public Pair<TextureAtlasSprite, Integer> getParticleTexture() {
         return Pair.of(getBaseRenderer().getParticleSprite(), getPaintingColorForRendering());
@@ -280,7 +321,7 @@ public class MetaTileEntitySolidFuelHeater extends MetaTileEntity implements IDa
 
     @Override
     public SoundEvent getSound() {
-        return GTSounds.BOILER;
+        return GTSounds.FURNACE;
     }
 
     @Override
@@ -288,6 +329,10 @@ public class MetaTileEntitySolidFuelHeater extends MetaTileEntity implements IDa
         return 0xFFFFFF;
     }
 
+    @Override
+    public boolean isAutoOutputItems() {
+        return true;
+    }
 
     @Override
     public boolean isAutoOutputFluids() {
