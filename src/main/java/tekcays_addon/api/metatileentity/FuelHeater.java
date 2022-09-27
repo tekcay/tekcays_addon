@@ -99,6 +99,27 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
     protected void tryConsumeNewFuel() {
     }
 
+    protected void setBurnTimeLeft(int amount) {
+        burnTimeLeft =  amount;
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        if (burnTimeLeft <= 0) tryConsumeNewFuel();
+        if (burnTimeLeft > 0) {
+            setBurning(true);
+            int currentHeat = heatContainer.getHeat();
+            if (!getWorld().isRemote) {
+                if (currentHeat + heatIncreaseRate < heatContainer.getMaxHeat())
+                    heatContainer.setHeat(currentHeat + heatIncreaseRate);
+                transferHeat(heatIncreaseRate);
+            }
+            burnTimeLeft -= 1;
+            markDirty();
+        }
+    }
+
     //For TOP, needs to implement IFuelable
     @Override
     public Collection<IFuelInfo> getFuels() {

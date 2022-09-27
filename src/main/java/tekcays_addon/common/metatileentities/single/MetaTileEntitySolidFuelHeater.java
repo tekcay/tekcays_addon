@@ -110,7 +110,7 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
         if (!remainderAsh.isEmpty()) { //we don't care if we can't insert ash - it's chanced anyway
             exportItems.insertItem(0, remainderAsh, false);
         }
-        burnTimeLeft = burnTime;
+        setBurnTimeLeft(burnTime);
     }
 
 
@@ -130,24 +130,6 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
         TKCYALog.logger.info("TOP : fuelCapacity = " + fuelCapacity);
         return Collections.singleton(new ItemFuelInfo(fuelInSlot, fuelRemaining, fuelCapacity, 1, burnTime));
     }
-
-    @Override
-    public void update() {
-        super.update();
-        if (burnTimeLeft <= 0) tryConsumeNewFuel();
-        if (burnTimeLeft > 0) {
-            setBurning(true);
-            int currentHeat = heatContainer.getHeat();
-            if (!getWorld().isRemote) {
-                if (currentHeat + heatIncreaseRate < heatContainer.getMaxHeat())
-                    heatContainer.setHeat(currentHeat + heatIncreaseRate);
-                transferHeat(heatIncreaseRate);
-            }
-            burnTimeLeft -= 1;
-            markDirty();
-        }
-    }
-
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {

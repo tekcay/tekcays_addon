@@ -24,6 +24,7 @@ public class TKCYATextures {
     public static OrientedOverlayRenderer PRIMITIVE_MELTER_OVERLAY = new OrientedOverlayRenderer("multiblocks/primitive", FRONT);
     public static OrientedOverlayRenderer ELECTRIC_MELTER_OVERLAY = new OrientedOverlayRenderer("multiblocks/electric_melter", FRONT);
     public static OrientedOverlayRenderer ALLOYING_CRUCIBLE_OVERLAY = new OrientedOverlayRenderer("multiblocks/primitive", FRONT);
+    public static OrientedOverlayRenderer LIQUID_FUEL_HEATER = new OrientedOverlayRenderer("generators/liquid_heater", FRONT);
 
     // Bricks
     public static SimpleOverlayRenderer BRICK;

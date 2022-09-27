@@ -4,9 +4,11 @@ import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.render.TKCYATextures;
 
 import static gregtech.api.unification.material.Materials.*;
+import static tekcays_addon.api.utils.FuelWithProperties.LIQUID_FUELS_BURNING;
 
 public class HeatersMethods {
 
@@ -20,6 +22,10 @@ public class HeatersMethods {
      */
     public static int getBurnTime(ItemStack stack, FuelHeater fuelHeater) {
         return (int) (TileEntityFurnace.getItemBurnTime(stack) * fuelHeater.getEfficiency() / fuelHeater.getPowerMultiplier());
+    }
+
+    public static int getBurnTime(FuelWithProperties fuelWithProperties, FuelHeater fuelHeater) {
+        return (int) (fuelWithProperties.getBurnTime() * fuelHeater.getEfficiency() / fuelHeater.getPowerMultiplier());
     }
 
     public static SimpleOverlayRenderer getTextures(Material material) {
