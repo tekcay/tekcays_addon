@@ -52,6 +52,7 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
 
     @Override
     protected void initializeInventory() {
+        super.initializeInventory();
         this.importItems = this.createImportItemHandler();
         this.exportItems = this.createExportItemHandler();
         this.heatContainer = new HeatContainer(this, 0, 20000);
