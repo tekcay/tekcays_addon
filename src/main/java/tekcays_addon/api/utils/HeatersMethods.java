@@ -4,11 +4,9 @@ import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.render.TKCYATextures;
 
 import static gregtech.api.unification.material.Materials.*;
-import static tekcays_addon.api.utils.FuelWithProperties.LIQUID_FUELS_BURNING;
 
 public class HeatersMethods {
 

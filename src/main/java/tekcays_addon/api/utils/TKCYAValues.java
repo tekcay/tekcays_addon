@@ -13,7 +13,6 @@ import static gregtech.common.items.MetaItems.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.*;
 import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class TKCYAValues {

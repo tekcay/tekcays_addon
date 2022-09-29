@@ -61,7 +61,7 @@ public class MetaTileEntityLiquidFuelHeater extends FuelHeater implements IDataI
     protected FluidTankList createImportFluidHandler() {
         FluidTankList superHandler = super.createImportFluidHandler();
         this.fuelFluidTank = new FilteredFluidHandler(1000);
-        fuelFluidTank.setFluid(Creosote.getFluid(1));
+        fuelFluidTank.setFluid(Creosote.getFluid(0));
         return new FluidTankList(false, superHandler, fuelFluidTank);
     }
 
@@ -74,8 +74,10 @@ public class MetaTileEntityLiquidFuelHeater extends FuelHeater implements IDataI
         return ModularUI.builder(GuiTextures.BACKGROUND, 176, 166)
                 .shouldColor(false)
                 .widget(new LabelWidget(5, 5, getMetaFullName()))
-                .widget(new TankWidget(fuelFluidTank, 119, 26, 10, 54)
-                        .setBackgroundTexture(GuiTextures.SLOT))
+                .widget(new TankWidget(importFluids.getTankAt(0), 20, 50, 18, 18)
+                        .setBackgroundTexture(GuiTextures.FLUID_SLOT)
+                        .setAlwaysShowFull(true)
+                        .setContainerClicking(true, true))
                 .bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 0);
     }
 

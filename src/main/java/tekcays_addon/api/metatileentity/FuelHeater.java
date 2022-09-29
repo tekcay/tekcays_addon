@@ -15,9 +15,7 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.sound.GTSounds;
 import gregtech.api.unification.material.Material;
 import gregtech.api.util.GTUtility;
-import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
-import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.I18n;
@@ -53,7 +51,7 @@ import static net.minecraft.util.EnumFacing.UP;
 import static tekcays_addon.api.utils.HeatersMethods.getBurnTime;
 import static tekcays_addon.api.utils.HeatersMethods.getTextures;
 
-public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide, IFuelable {
+public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide{
 
     protected int heatIncreaseRate;
     protected HeatContainer heatContainer;
@@ -70,6 +68,7 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
         this.efficiency = fuelHeater.getEfficiency();
         this.powerMultiplier = fuelHeater.getPowerMultiplier();
         this.material = fuelHeater.getMaterial();
+        this.isBurning = false;
     }
 
     public int setHeatIncreaseRate(int heatBaseIncrease) {
@@ -106,7 +105,10 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
     @Override
     public void update() {
         super.update();
-        if (burnTimeLeft <= 0) tryConsumeNewFuel();
+        if (burnTimeLeft <= 0) {
+            setBurning(false);
+            tryConsumeNewFuel();
+        }
         if (burnTimeLeft > 0) {
             setBurning(true);
             int currentHeat = heatContainer.getHeat();
@@ -120,6 +122,7 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
         }
     }
 
+    /*
     //For TOP, needs to implement IFuelable
     @Override
     public Collection<IFuelInfo> getFuels() {
@@ -136,6 +139,8 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
         TKCYALog.logger.info("TOP : fuelCapacity = " + fuelCapacity);
         return Collections.singleton(new ItemFuelInfo(fuelInSlot, fuelRemaining, fuelCapacity, 1, burnTime));
     }
+
+     */
 
     public void transferHeat(int heatIncreaseRate) {
         //Get the TileEntity that is placed right on top of the Heat.
@@ -167,10 +172,10 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
     @Nullable
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
         if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
-            return side == UP ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
+            return side == DOWN ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
         }
         if (capability.equals(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER)) {
-            return TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER.cast(heatContainer);
+            return side == UP ? TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER.cast(heatContainer) : null;
         }
         return super.getCapability(capability, side);
     }

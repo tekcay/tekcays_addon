@@ -10,12 +10,9 @@ import gregtech.common.metatileentities.storage.MetaTileEntityDrum;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.TekCaysAddon;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
-
-
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.api.utils.FuelHeater;
-import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
@@ -35,7 +32,6 @@ import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamCooler;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
 import static tekcays_addon.api.utils.BlastFurnaceUtils.BRICKS;
-import static tekcays_addon.api.utils.FuelHeater.BRONZE;
 import static tekcays_addon.api.utils.FuelHeater.FUEL_HEATERS;
 import static tekcays_addon.api.utils.TKCYAValues.DRUM_MATERIALS;
 
