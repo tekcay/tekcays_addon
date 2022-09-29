@@ -6,6 +6,7 @@ import net.minecraftforge.fluids.FluidStack;
 import java.util.ArrayList;
 import java.util.List;
 
+import static gregtech.api.unification.material.Materials.Calcite;
 import static gregtech.api.unification.material.Materials.Creosote;
 
 public class FuelWithProperties {
@@ -38,9 +39,11 @@ public class FuelWithProperties {
     }
 
     public static final FuelWithProperties CREOSOTE = new FuelWithProperties(new FluidStack(Creosote.getFluid(), 100), Creosote, 100);
+    public static final FuelWithProperties CALCITE = new FuelWithProperties(new FluidStack(Calcite.getFluid(), 10), Calcite, 100);
 
     public static final List<FuelWithProperties> LIQUID_FUELS_BURNING = new ArrayList<FuelWithProperties>() {{
        add(CREOSOTE);
+       add(CALCITE);
     }};
 
 

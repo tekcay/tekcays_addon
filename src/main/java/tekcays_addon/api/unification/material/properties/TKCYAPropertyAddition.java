@@ -33,5 +33,9 @@ public class TKCYAPropertyAddition {
         TitaniumTrifluoride.setProperty(PropertyKey.FLUID, new FluidProperty());
         TitaniumTrifluoride.getProperty(PropertyKey.FLUID).setFluidTemperature(1470);
 
+        //For Fluidized Heaters
+        Calcite.setProperty(PropertyKey.FLUID, new FluidProperty());
+        Calcite.getProperty(PropertyKey.FLUID).setFluidTemperature(1612);
+
     }
 }

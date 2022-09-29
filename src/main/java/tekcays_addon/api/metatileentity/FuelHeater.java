@@ -37,6 +37,7 @@ import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.api.utils.FuelWithProperties;
 import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
@@ -46,8 +47,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
-import static net.minecraft.util.EnumFacing.DOWN;
-import static net.minecraft.util.EnumFacing.UP;
+import static net.minecraft.util.EnumFacing.*;
 import static tekcays_addon.api.utils.HeatersMethods.getBurnTime;
 import static tekcays_addon.api.utils.HeatersMethods.getTextures;
 
@@ -82,6 +82,9 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
         ColourMultiplier multiplier = new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
         colouredPipeline = ArrayUtils.add(pipeline, multiplier);
         TKCYATextures.HEAT_ACCEPTOR_VERTICALS_OVERLAY.renderSided(UP, renderState, translation, pipeline);
+        TKCYATextures.HALF_BRICK.renderSided(getFrontFacing().getOpposite(), renderState, translation, pipeline);
+        TKCYATextures.HALF_BRICK.renderSided(getFrontFacing().rotateY(), renderState, translation, pipeline);
+        TKCYATextures.HALF_BRICK.renderSided(getFrontFacing().rotateYCCW(), renderState, translation, pipeline);
     }
 
     @SideOnly(Side.CLIENT)

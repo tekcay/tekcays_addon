@@ -24,6 +24,7 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.metatileentity.FuelHeater;
+import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nullable;
@@ -43,6 +44,7 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
         super(metaTileEntityId, fuelHeater);
         this.heatIncreaseRate = setHeatIncreaseRate(HEAT_BASE_INCREASE);
         this.containerInventory = new ItemStackHandler(2);
+        initializeInventory();
     }
 
     @Override
@@ -92,7 +94,7 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        Textures.COAL_BOILER_OVERLAY.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isBurning(), true);
+        TKCYATextures.SOLID_FUEL_HEATER.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isBurning(), true);
     }
 
     @Override

@@ -25,12 +25,16 @@ public class TKCYATextures {
     public static OrientedOverlayRenderer ELECTRIC_MELTER_OVERLAY = new OrientedOverlayRenderer("multiblocks/electric_melter", FRONT);
     public static OrientedOverlayRenderer ALLOYING_CRUCIBLE_OVERLAY = new OrientedOverlayRenderer("multiblocks/primitive", FRONT);
     public static OrientedOverlayRenderer LIQUID_FUEL_HEATER = new OrientedOverlayRenderer("generators/liquid_heater", FRONT);
+    public static OrientedOverlayRenderer FLUIDIZED_FUEL_HEATER = new OrientedOverlayRenderer("generators/fluidized_heater", FRONT);
+    public static OrientedOverlayRenderer SOLID_FUEL_HEATER = new OrientedOverlayRenderer("generators/solid_heater", FRONT);
 
     // Bricks
     public static SimpleOverlayRenderer BRICK;
     public static SimpleOverlayRenderer REINFORCED_BRICK;
     public static SimpleOverlayRenderer FIRECLAY_BRICK;
     public static SimpleOverlayRenderer STRONG_BRICK;
+
+    public static SimpleOverlayRenderer HALF_BRICK;
 
 
     //GT6 style
@@ -59,6 +63,8 @@ public class TKCYATextures {
         REINFORCED_BRICK = new SimpleOverlayRenderer("casings/block_brick/reinforced_brick");
         FIRECLAY_BRICK = new SimpleOverlayRenderer("casings/block_brick/fireclay_brick");
         STRONG_BRICK = new SimpleOverlayRenderer("casings/block_brick/strong_brick");
+
+        HALF_BRICK = new SimpleOverlayRenderer("half_brick");
 
         //GT6 Style
         //Casing

@@ -33,7 +33,7 @@ tkcya.machine.electric_heater.hv.name=Electric Heater HV
 tkcya.machine.electric_heater.ev.name=Electric Heater EV
 tkcya.machine.electric_heater.iv.name=Electric Heater IV
 
-
+tkcya.machine.brick_solid_fuel_heater.name=Brick Solid Fuel Heater
 tkcya.machine.material.bronze_solid_fuel_heater.name=Bronze Solid Fuel Heater
 tkcya.machine.material.steel_solid_fuel_heater.name=Steel Solid Fuel Heater
 tkcya.machine.material.invar_solid_fuel_heater.name=Invar Solid Fuel Heater
@@ -45,6 +45,12 @@ tkcya.machine.material.steel_liquid_fuel_heater.name=Steel Liquid Fuel Heater
 tkcya.machine.material.invar_liquid_fuel_heater.name=Invar Liquid Fuel Heater
 tkcya.machine.material.titanium_liquid_fuel_heater.name=Titanium Liquid Fuel Heater
 tkcya.machine.material.tungsten_steel_liquid_fuel_heater.name=Tungsten Steel Liquid Fuel Heater
+
+tkcya.machine.material.bronze_fluidized_fuel_heater.name=Bronze Fluidized Fuel Heater
+tkcya.machine.material.steel_fluidized_fuel_heater.name=Steel Fluidized Fuel Heater
+tkcya.machine.material.invar_fluidized_fuel_heater.name=Invar Fluidized Fuel Heater
+tkcya.machine.material.titanium_fluidized_fuel_heater.name=Titanium Fluidized Fuel Heater
+tkcya.machine.material.tungsten_steel_fluidized_fuel_heater.name=Tungsten Steel Fluidized Fuel Heater
 
 tkcya.machine.steam_cooler_bronze.name=Steam Cooler
 tkcya.machine.steam_cooler_steel.name=High Pressure Steam Cooler

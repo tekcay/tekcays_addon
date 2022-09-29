@@ -29,14 +29,14 @@ import java.util.List;
 
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
 import static gregtech.api.unification.material.Materials.Calcite;
-import static tekcays_addon.api.utils.FuelWithProperties.CREOSOTE;
+import static tekcays_addon.api.utils.FuelWithProperties.CALCITE;
 import static tekcays_addon.api.utils.HeatersMethods.getBurnTime;
 
-public class MetaTileEntityLiquidFuelHeater extends FuelHeater implements IDataInfoProvider, IActiveOutputSide {
+public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataInfoProvider, IActiveOutputSide {
 
     private FluidTank fuelFluidTank;
 
-    public MetaTileEntityLiquidFuelHeater(ResourceLocation metaTileEntityId, tekcays_addon.api.utils.FuelHeater fuelHeater) {
+    public MetaTileEntityFluidizedHeater(ResourceLocation metaTileEntityId, tekcays_addon.api.utils.FuelHeater fuelHeater) {
         super(metaTileEntityId, fuelHeater);
         this.heatIncreaseRate = setHeatIncreaseRate(8);
         initializeInventory();
@@ -44,9 +44,8 @@ public class MetaTileEntityLiquidFuelHeater extends FuelHeater implements IDataI
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
-        return new MetaTileEntityLiquidFuelHeater(metaTileEntityId, fuelHeater);
+        return new MetaTileEntityFluidizedHeater(metaTileEntityId, fuelHeater);
     }
-
 
     @Override
     protected void initializeInventory() {
@@ -84,16 +83,16 @@ public class MetaTileEntityLiquidFuelHeater extends FuelHeater implements IDataI
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        TKCYATextures.LIQUID_FUEL_HEATER.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isBurning(), true);
+        TKCYATextures.FLUIDIZED_FUEL_HEATER.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isBurning(), true);
     }
 
     @Override
     protected void tryConsumeNewFuel() {
         if (fuelFluidTank.getFluid() != null &&
-                fuelFluidTank.getFluid().isFluidEqual(CREOSOTE.getFluidStack()) &&
-                        fuelFluidTank.getFluidAmount() >= CREOSOTE.getFluidStack().amount) {
-            fuelFluidTank.drain(CREOSOTE.getFluidStack(), true);
-            setBurnTimeLeft(getBurnTime(CREOSOTE, fuelHeater));
+                fuelFluidTank.getFluid().isFluidEqual(CALCITE.getFluidStack()) &&
+                        fuelFluidTank.getFluidAmount() >= CALCITE.getFluidStack().amount) {
+            fuelFluidTank.drain(CALCITE.getFluidStack(), true);
+            setBurnTimeLeft(getBurnTime(CALCITE, fuelHeater));
         }
     }
 
