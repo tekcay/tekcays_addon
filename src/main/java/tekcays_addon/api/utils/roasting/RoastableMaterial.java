@@ -20,6 +20,8 @@ public class RoastableMaterial {
     public static final RoastableMaterial PENTLANDITE = new RoastableMaterial(Pentlandite, 1000, EARTH_PRESSURE * 3);
     public static final RoastableMaterial STIBNITE = new RoastableMaterial(Stibnite, 1000, EARTH_PRESSURE * 3);
     public static final RoastableMaterial PYRITE = new RoastableMaterial(Pyrite, 1000, EARTH_PRESSURE * 2);
+    public static final RoastableMaterial REALGAR = new RoastableMaterial(Realgar, 1000, EARTH_PRESSURE * 2);
+    public static final RoastableMaterial BORNITE = new RoastableMaterial(Bornite, 1000, EARTH_PRESSURE * 2);
 
     //With special output
     public static final RoastableMaterial CHALCOCITE = new RoastableMaterial(Chalcocite, 1000, EARTH_PRESSURE * 2, Cuprite);
