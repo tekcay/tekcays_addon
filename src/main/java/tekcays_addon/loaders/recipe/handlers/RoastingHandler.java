@@ -27,6 +27,8 @@ public class RoastingHandler {
        add(PENTLANDITE);
        add(STIBNITE);
        add(PYRITE);
+       add(REALGAR);
+       add(BORNITE);
     }};
 
     public static void init() {
