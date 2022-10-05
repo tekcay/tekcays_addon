@@ -103,7 +103,7 @@ public class TKCYAMiscMaterials {
         SodiumFluoride = new Material.Builder(24118, "sodium_fluoride")
                 .dust()
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
-                .color(Sodium.getMaterialRGB() + Fluorine.getMaterialRGB() / 2).iconSet(MaterialIconSet.DULL)
+                .color((Sodium.getMaterialRGB() + Fluorine.getMaterialRGB()) / 2).iconSet(MaterialIconSet.DULL)
                 .components(Sodium, 1, Fluorine, 1)
                 .build();
 
@@ -118,37 +118,39 @@ public class TKCYAMiscMaterials {
         LithiumHydroxide = new Material.Builder(24120, "lithium_hydroxide")
                 .dust()
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
-                .color(Lithium.getMaterialRGB() + Oxygen.getMaterialRGB() + Hydrogen.getMaterialRGB() / 3).iconSet(MaterialIconSet.DULL)
+                .color((Lithium.getMaterialRGB() + Oxygen.getMaterialRGB() + Hydrogen.getMaterialRGB()) / 3).iconSet(MaterialIconSet.DULL)
                 .components(Lithium, 1, Oxygen, 1, Hydrogen, 1)
                 .build();
 
         HydrogenFluoride = new Material.Builder(24121, "hydrogen_fluoride")
                 .fluid(FluidTypes.GAS)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
-                .color(Hydrogen.getMaterialRGB() + Fluorine.getMaterialRGB() / 2)
+                .color((Hydrogen.getMaterialRGB() + Fluorine.getMaterialRGB()) / 2)
                 .components(Hydrogen, 1, Fluorine, 1)
                 .build();
 
         HydrogenChloride = new Material.Builder(24122, "hydrogen_chloride")
                 .fluid(FluidTypes.GAS)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
-                .color(Hydrogen.getMaterialRGB() + Chlorine.getMaterialRGB() / 2)
+                .color((Hydrogen.getMaterialRGB() + Chlorine.getMaterialRGB()) / 2)
                 .components(Hydrogen, 1, Chlorine, 1)
                 .build();
 
         HydrogenBromide = new Material.Builder(24123, "hydrogen_bromide")
                 .fluid(FluidTypes.GAS)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
-                .color(Hydrogen.getMaterialRGB() + Bromine.getMaterialRGB() / 2)
+                .color((Hydrogen.getMaterialRGB() + Bromine.getMaterialRGB()) / 2)
                 .components(Hydrogen, 1, Bromine, 1)
                 .build();
 
         HydrogenIodide = new Material.Builder(24124, "hydrogen_iodide")
                 .fluid(FluidTypes.GAS)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
-                .color(Hydrogen.getMaterialRGB() + Iodine.getMaterialRGB() / 2)
+                .color((Hydrogen.getMaterialRGB() + Iodine.getMaterialRGB()) / 2)
                 .components(Hydrogen, 1, Iodine, 1)
                 .build();
+
+
 
 
         //FREE IDs
@@ -211,6 +213,13 @@ public class TKCYAMiscMaterials {
                 .build();
         PotassiumMetaBisulfite.setFormula("K2S2O5", true);
 
+        PotassiumHydroxide = new Material.Builder(24125, "potassium_hydroxide")
+                .fluid(FluidTypes.GAS)
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .color((Potassium.getMaterialRGB() + Oxygen.getMaterialRGB() + Hydrogen.getMaterialRGB())/ 3)
+                .components(Potassium, 1, Oxygen, 1, Hydrogen, 1)
+                .build();
+
         //More roastable ores
         Kesterite = new Material.Builder(24139, "kesterite")
                 .dust().ore()
@@ -249,6 +258,41 @@ public class TKCYAMiscMaterials {
                 .color(Copper.getMaterialRGB() * 2 + Oxygen.getMaterialRGB() / 3)
                 .build();
 
+        //BauxiteChain
+        PotassiumAluminate = new Material.Builder(24162, "potassium_aluminate")
+                .dust()
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .components(Potassium, 1, Aluminium, 1, Oxygen, 3)
+                .iconSet(DULL)
+                .color(Copper.getMaterialRGB() * 2 + Oxygen.getMaterialRGB() / 3)
+                .build();
+
+        SodiumAluminate = new Material.Builder(24163, "sodium_aluminate")
+                .dust()
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .components(Sodium, 1, Aluminium, 1, Oxygen, 3)
+                .iconSet(DULL)
+                .color(Copper.getMaterialRGB() * 2 + Oxygen.getMaterialRGB() / 3)
+                .build();
+
+        AluminiumFluoride = new Material.Builder(24165, "aluminium_fluoride")
+                .dust()
+                .fluidTemp(1560)
+                .color((Aluminium.getMaterialRGB() + Fluorine.getMaterialRGB() * 3)/ 4)
+                .build();
+        AluminiumFluoride.setFormula("AlF3", true);
+
+        Cryolite = new Material.Builder(24166, "cryolite")
+                .fluidTemp(1285)
+                .color((Aluminium.getMaterialRGB() + Fluorine.getMaterialRGB() * 3)/ 4)
+                .build();
+        Cryolite.setFormula("Na3AlF6", true);
+
+        HexafluorosilicAcid = new Material.Builder(24167, "hexafluorosilic_acid")
+                .fluidTemp(298)
+                .color((Aluminium.getMaterialRGB() + Fluorine.getMaterialRGB() * 3)/ 4)
+                .build();
+        HexafluorosilicAcid.setFormula("H2SiF6", true);
 
 
 

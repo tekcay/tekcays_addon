@@ -33,5 +33,9 @@ public class TKCYAPropertyAddition {
         TitaniumTrifluoride.setProperty(PropertyKey.FLUID, new FluidProperty());
         TitaniumTrifluoride.getProperty(PropertyKey.FLUID).setFluidTemperature(1470);
 
+        //For Bauxite Chain
+        Alumina.setProperty(PropertyKey.FLUID, new FluidProperty());
+        Alumina.getProperty(PropertyKey.FLUID).setFluidTemperature(2345);
+
     }
 }

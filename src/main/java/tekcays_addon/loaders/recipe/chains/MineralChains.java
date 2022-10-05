@@ -4,6 +4,8 @@ public class MineralChains {
 
     public static void init() {
     GoldChain.init();
+    BauxiteChain.init();
+    ZincChain.init();
     }
 
 }

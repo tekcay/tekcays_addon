@@ -11,6 +11,7 @@ import tekcays_addon.common.items.TKCYAMetaItems;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import static gregtech.api.unification.material.Materials.Sulfur;
 import static gregtech.api.unification.ore.OrePrefix.dust;
@@ -97,6 +98,14 @@ public class RoastingRecipeHandlerMethods {
             return OreDictUnifier.get(dust, ms.material, (int) ms.amount);
         }
         NBTTagCompound nbt = writeNBTtoDustMixture(outputs);
+        ItemStack outputStack = TKCYAMetaItems.DUST_MIXTURE.getStackForm();
+        outputStack.setTagCompound(nbt);
+        DUST_MIXTURE_WITH_NBT.add(outputStack);
+        return outputStack;
+    }
+
+    public static ItemStack getDustMixtureStackWithNBT(List<MaterialStack> materialStacks) {
+        NBTTagCompound nbt = writeNBTtoDustMixture(materialStacks);
         ItemStack outputStack = TKCYAMetaItems.DUST_MIXTURE.getStackForm();
         outputStack.setTagCompound(nbt);
         DUST_MIXTURE_WITH_NBT.add(outputStack);

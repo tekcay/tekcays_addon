@@ -5,7 +5,6 @@ public class ChemicalChains {
     public static void init() {
         MiscChemicals.init();
         FluorineChain.init();
-        ZincChain.init();
         PolymersChain.init();
     }
 

@@ -89,6 +89,7 @@ public class TKCYAMaterials {
 
     //Misc
     public static Material PotassiumMetaBisulfite;
+    public static Material PotassiumHydroxide;
 
     //More roastable
     public static Material Kesterite;
@@ -97,6 +98,13 @@ public class TKCYAMaterials {
 
     //Roasting outputs
     public static Material Cuprite;
+
+    //BauxiteChain
+    public static Material PotassiumAluminate;
+    public static Material SodiumAluminate;
+    public static Material AluminiumFluoride;
+    public static Material Cryolite;
+    public static Material HexafluorosilicAcid;
     
     /**
      * Alloys

@@ -28,6 +28,7 @@ import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickF
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickItemBus;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityPrimitiveMufflerHatch;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamAirCompressor;
+import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamAutoclave;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamCooler;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
@@ -58,6 +59,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityAdvancedElectrolyzer ADVANCED_ELECTROLYZER;
     public static MetaTileEntityFilter FILTER;
     public static MetaTileEntityPressurizedCrackingUnit PRESSURIZED_CRACKING_UNIT;
+    public static MetaTileEntitySteamAutoclave STEAM_AUTOCLAVE;
 
     public static MetaTileEntityAdvancedMelter ADVANCED_MELTER;
 
@@ -214,6 +216,8 @@ public class TKCYAMetaTileEntities {
 
         HEAT_ACCEPTOR[0] = registerMetaTileEntity(11175, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.lv"), 1));
         ADVANCED_MELTER = registerMetaTileEntity(1116, new MetaTileEntityAdvancedMelter(tkcyaId("avcanced_melter")));
+
+        STEAM_AUTOCLAVE = registerMetaTileEntity(12010, new MetaTileEntitySteamAutoclave(tkcyaId("steam_autoclave"), true));
 
     }
 
