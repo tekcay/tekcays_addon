@@ -159,6 +159,7 @@ recipemap.pressure_cracking.name=Cracking
 recipemap.roasting.name=Roasting
 recipemap.spiral_separation.name=Spiral Separation
 recipemap.coking.name=Coking
+recipemap.autoclave.name=Autoclave
 
 # Materials
 
@@ -185,6 +186,7 @@ material.mixture_to_filter=Mixture To Filter
 material.hot_air=Hot Air
 material.very_hot_air=Very Hot Air
 material.potassium_metabisulfite=Potassium MetaBisulfite
+material.potassium_hydroxide=Potassium Hydroxide
 
 fluid.fuel.tooltip=To be used in the fuel consuming machines
 
@@ -214,6 +216,13 @@ material.zinc_leaching_solution=Zinc Leaching Solution
 material.zinc_leaching_residue=Zinc Leaching Residue
 material.tannic_acid=Tannic Acid
 material.germanic_acid_solution=Germanic Acid Solution
+
+##BauxiteChain
+material.aluminium_fluoride=Aluminium Fluoride
+material.potassium_aluminate=Potassium Aluminate
+material.sodium_aluminate=Sodium Aluminate
+material.cryolite=Cryolite
+material.hexafluorosilic_acid=Hexafluorosilic Acid
 
 #MoreRoastable
 material.kesterite=Kesterite
