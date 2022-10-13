@@ -78,7 +78,7 @@ public class TKCYAMetaTileEntities {
     // Drums
     public static MetaTileEntityDrum[] DRUMS = new MetaTileEntityDrum[DRUM_MATERIALS.size()];
 
-    public static MetaTileEntitySingleCrucible SINGLE_CRUCIBLE;
+    public static MetaTileEntitySingleCrucible[] SINGLE_CRUCIBLE = new MetaTileEntitySingleCrucible[4];
 
     //Tanks
     public static TKCYAMetaTileEntityMultiblockTank WOODEN_TANK;
@@ -219,7 +219,11 @@ public class TKCYAMetaTileEntities {
         HEAT_ACCEPTOR[0] = registerMetaTileEntity(11175, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.lv"), 1));
         ADVANCED_MELTER = registerMetaTileEntity(1116, new MetaTileEntityAdvancedMelter(tkcyaId("avcanced_melter")));
 
-        SINGLE_CRUCIBLE = registerMetaTileEntity(11200, new MetaTileEntitySingleCrucible(tkcyaId("single_crucible")));
+        for (int i = 0; i < BRICKS.size(); i++) {
+            BlockBrick.BrickType brick = BRICKS.get(i);
+            SINGLE_CRUCIBLE[i] = registerMetaTileEntity(11200 + i, new MetaTileEntitySingleCrucible(tkcyaId(brick.getName() + "_single_crucible"), brick));
+        }
+
     }
 
     private static ResourceLocation tkcyaId(String name) {
