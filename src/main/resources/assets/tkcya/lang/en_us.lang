@@ -33,6 +33,25 @@ tkcya.machine.electric_heater.hv.name=Electric Heater HV
 tkcya.machine.electric_heater.ev.name=Electric Heater EV
 tkcya.machine.electric_heater.iv.name=Electric Heater IV
 
+tkcya.machine.brick_solid_fuel_heater.name=Brick Solid Fuel Heater
+tkcya.machine.material.bronze_solid_fuel_heater.name=Bronze Solid Fuel Heater
+tkcya.machine.material.steel_solid_fuel_heater.name=Steel Solid Fuel Heater
+tkcya.machine.material.invar_solid_fuel_heater.name=Invar Solid Fuel Heater
+tkcya.machine.material.titanium_solid_fuel_heater.name=Titanium Solid Fuel Heater
+tkcya.machine.material.tungsten_steel_solid_fuel_heater.name=Tungsten Steel Solid Fuel Heater
+
+tkcya.machine.material.bronze_liquid_fuel_heater.name=Bronze Liquid Fuel Heater
+tkcya.machine.material.steel_liquid_fuel_heater.name=Steel Liquid Fuel Heater
+tkcya.machine.material.invar_liquid_fuel_heater.name=Invar Liquid Fuel Heater
+tkcya.machine.material.titanium_liquid_fuel_heater.name=Titanium Liquid Fuel Heater
+tkcya.machine.material.tungsten_steel_liquid_fuel_heater.name=Tungsten Steel Liquid Fuel Heater
+
+tkcya.machine.material.bronze_fluidized_fuel_heater.name=Bronze Fluidized Fuel Heater
+tkcya.machine.material.steel_fluidized_fuel_heater.name=Steel Fluidized Fuel Heater
+tkcya.machine.material.invar_fluidized_fuel_heater.name=Invar Fluidized Fuel Heater
+tkcya.machine.material.titanium_fluidized_fuel_heater.name=Titanium Fluidized Fuel Heater
+tkcya.machine.material.tungsten_steel_fluidized_fuel_heater.name=Tungsten Steel Fluidized Fuel Heater
+
 tkcya.machine.steam_cooler_bronze.name=Steam Cooler
 tkcya.machine.steam_cooler_steel.name=High Pressure Steam Cooler
 tkcya.machine.muffler_hatch.primitive.name=Primitive Muffler Hatch
@@ -370,10 +389,10 @@ tekcays_addon.machine.advanced_electrolyzer.tooltip.4=Removal of the electrode w
 
 tkcya.machine.text.pressure=Current pressure: %s
 
-#Electric Heater
-tkcya.electric_heater.tooltip.1=For heating.
-tkcya.electric_heater.tooltip.2=Produces §c%s HU/t§7.
-tkcya.electric_heater.tooltip.3=Outputs on the §eTOP§7 face.
+#Heaters
+tkcya.heater.tooltip.1=For heating.
+tkcya.heater.tooltip.2=Produces §c%s HU/t§7.
+tkcya.heater.tooltip.3=Outputs on the §eTOP§7 face.
 
 #Electric Cooler
 tkcya.electric_cooler.tooltip.1=For cooling.
@@ -384,6 +403,7 @@ tkcya.electric_cooler.tooltip.3=Outputs on the TOP face.
 behavior.tricorder.current_heat=Current Heat: %s HU
 behavior.tricorder.min_heat=Minimum Heat: %s HU
 behavior.tricorder.max_heat=Maximum Heat: %s HU
+behavior.tricorder.burn_time_left= Burn Time Left %s ticks
 
 # Errors
 

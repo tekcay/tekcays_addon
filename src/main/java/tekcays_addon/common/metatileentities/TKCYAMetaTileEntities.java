@@ -1,5 +1,6 @@
 package tekcays_addon.common.metatileentities;
 
+import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
@@ -27,6 +28,7 @@ import tekcays_addon.common.metatileentities.single.MetaTileEntityElectricHeater
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickFluidHatch;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickItemBus;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityPrimitiveMufflerHatch;
+import tekcays_addon.common.metatileentities.single.MetaTileEntitySingleCrucible;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamAirCompressor;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamCooler;
 
@@ -75,6 +77,8 @@ public class TKCYAMetaTileEntities {
 
     // Drums
     public static MetaTileEntityDrum[] DRUMS = new MetaTileEntityDrum[DRUM_MATERIALS.size()];
+
+    public static MetaTileEntitySingleCrucible SINGLE_CRUCIBLE;
 
     //Tanks
     public static TKCYAMetaTileEntityMultiblockTank WOODEN_TANK;
@@ -215,6 +219,7 @@ public class TKCYAMetaTileEntities {
         HEAT_ACCEPTOR[0] = registerMetaTileEntity(11175, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.lv"), 1));
         ADVANCED_MELTER = registerMetaTileEntity(1116, new MetaTileEntityAdvancedMelter(tkcyaId("avcanced_melter")));
 
+        SINGLE_CRUCIBLE = registerMetaTileEntity(11200, new MetaTileEntitySingleCrucible(tkcyaId("single_crucible")));
     }
 
     private static ResourceLocation tkcyaId(String name) {
