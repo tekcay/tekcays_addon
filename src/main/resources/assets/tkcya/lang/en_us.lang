@@ -279,6 +279,8 @@ metaitem.electrode.name=%s Electrode
 metaitem.electrode.tooltip=For electrolysis
 metaitem.filter.name=%s Filter
 metaitem.filter.tooltip=For filtration duh
+metaitem.cover.temperature_detector.name=Cover Temperature Detector
+metaitem.cover.temperature.detector.tooltip=Gives out Temperature as Redstone (as Cover)
 
 item.mica_pulp.dust=Mica Based Pulp
 
@@ -413,6 +415,10 @@ tkcya.heater.tooltip.3=Outputs on the §eTOP§7 face.
 tkcya.electric_cooler.tooltip.1=For cooling.
 tkcya.electric_cooler.tooltip.2=Produces §b%s CU/t§7.
 tkcya.electric_cooler.tooltip.3=Outputs on the TOP face.
+
+#Covers
+tkcya.cover.temperature_detector.message_temperature_storage_normal=Monitoring Normal Temperature Storage
+tkcya.cover.temperature_detector.message_temperature_storage_inverted=Monitoring Inverted Temperature Storage
 
 #Tricorder
 behavior.tricorder.current_heat=Current Heat: %s HU
