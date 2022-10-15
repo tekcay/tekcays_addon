@@ -1,5 +1,7 @@
 package tekcays_addon.api.render;
 
+import gregtech.client.renderer.ICubeRenderer;
+import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import tekcays_addon.TekCaysAddon;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
@@ -26,6 +28,7 @@ public class TKCYATextures {
     public static OrientedOverlayRenderer ALLOYING_CRUCIBLE_OVERLAY = new OrientedOverlayRenderer("multiblocks/primitive", FRONT);
 
     // Bricks
+    public static SimpleOverlayRenderer[] BRICKS = new SimpleOverlayRenderer[4];
     public static SimpleOverlayRenderer BRICK;
     public static SimpleOverlayRenderer REINFORCED_BRICK;
     public static SimpleOverlayRenderer FIRECLAY_BRICK;
@@ -46,7 +49,14 @@ public class TKCYATextures {
         // Simple Machines
 
 
+
         //BRICKS
+        BRICKS[0] = new SimpleOverlayRenderer("casings/block_brick/brick");
+        BRICKS[1] = new SimpleOverlayRenderer("casings/block_brick/reinforced_brick");
+        BRICKS[2] = new SimpleOverlayRenderer("casings/block_brick/fireclay_brick");
+        BRICKS[3] = new SimpleOverlayRenderer("casings/block_brick/strong_brick");
+
+
         BRICK = new SimpleOverlayRenderer("casings/block_brick/brick");
         REINFORCED_BRICK = new SimpleOverlayRenderer("casings/block_brick/reinforced_brick");
         FIRECLAY_BRICK = new SimpleOverlayRenderer("casings/block_brick/fireclay_brick");
