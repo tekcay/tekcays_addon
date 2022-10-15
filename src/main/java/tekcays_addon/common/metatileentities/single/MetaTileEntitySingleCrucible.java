@@ -16,9 +16,8 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.util.GTUtility;
-import gregtech.client.renderer.ICubeRenderer;
+import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
-import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.I18n;
@@ -32,6 +31,8 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -103,8 +104,7 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
 
     @Override
     protected FluidTankList createExportFluidHandler() {
-        this.exportFluids = new FluidTankList(false, new FluidTank(1000));
-        return new FluidTankList(false, exportFluids);
+        return new FluidTankList(false, new FluidTank(1000));
     }
 
     @Override
@@ -131,9 +131,14 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
         if (capability.equals(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER)) {
             return TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER.cast(heatContainer);
         } else if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            IItemHandler itemHandler = itemInventory;
+            IItemHandler itemHandler = importItems;
             if (itemHandler.getSlots() > 0) {
                 return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(itemHandler);
+            }
+        } else if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+            IFluidHandler fluidHandler = exportFluids;
+            if (fluidHandler.getTankProperties().length > 0) {
+                return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(fluidHandler);
             }
         }
         return super.getCapability(capability, side);
@@ -147,6 +152,7 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
         tooltip.add(I18n.format("tkcya.machine.single_crucible.tooltip.1"));
         tooltip.add(I18n.format("tkcya.machine.single_crucible.tooltip.2"));
         tooltip.add(I18n.format("tkcya.machine.single_crucible.tooltip.3"));
+        tooltip.add(I18n.format("tkcya.machine.single_crucible.tooltip.4"));
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.4", maxTemp));
     }
 
@@ -165,6 +171,7 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline, new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
         getBaseRenderer().render(renderState, translation, colouredPipeline);
+        Textures.PIPE_OUT_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
     }
 
     @Nonnull
@@ -184,10 +191,13 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
         return MathHelper.floor(f * 14.0f) + (currentTemp > 0 ? 1 : 0);
     }
 
+
+
     @Override
     public void update() {
         super.update();
         currentHeat = heatContainer.getHeat();
+        pushFluidsIntoNearbyHandlers(getFrontFacing());
 
         if (currentTemp >= maxTemp) {
             this.setOnFire(100);
@@ -212,6 +222,7 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
 
        currentTemp = GCYSValues.EARTH_TEMPERATURE + currentHeat / HEAT_MULTIPLIER;
     }
+
 
     private class CrucibleRecipeLogic extends SingleBlockPrimitiveRecipeLogic {
         private CrucibleRecipeLogic(MetaTileEntity tileEntity, RecipeMap<?> recipeMap) {
