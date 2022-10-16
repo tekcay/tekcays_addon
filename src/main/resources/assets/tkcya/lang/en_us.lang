@@ -52,6 +52,12 @@ tkcya.machine.material.invar_fluidized_fuel_heater.name=Invar Fluidized Fuel Hea
 tkcya.machine.material.titanium_fluidized_fuel_heater.name=Titanium Fluidized Fuel Heater
 tkcya.machine.material.tungsten_steel_fluidized_fuel_heater.name=Tungsten Steel Fluidized Fuel Heater
 
+tkcya.machine.material.bronze_gas_fuel_heater.name=Bronze Gas Fuel Heater
+tkcya.machine.material.steel_gas_fuel_heater.name=Steel Gas Fuel Heater
+tkcya.machine.material.invar_gas_fuel_heater.name=Invar Gas Fuel Heater
+tkcya.machine.material.titanium_gas_fuel_heater.name=Titanium Gas Fuel Heater
+tkcya.machine.material.tungsten_steel_gas_fuel_heater.name=Tungsten Steel Gas Fuel Heater
+
 tkcya.machine.steam_cooler_bronze.name=Steam Cooler
 tkcya.machine.steam_cooler_steel.name=High Pressure Steam Cooler
 tkcya.machine.muffler_hatch.primitive.name=Primitive Muffler Hatch

@@ -28,6 +28,7 @@ public class TKCYATextures {
     public static OrientedOverlayRenderer LIQUID_FUEL_HEATER = new OrientedOverlayRenderer("generators/liquid_heater", FRONT);
     public static OrientedOverlayRenderer FLUIDIZED_FUEL_HEATER = new OrientedOverlayRenderer("generators/fluidized_heater", FRONT);
     public static OrientedOverlayRenderer SOLID_FUEL_HEATER = new OrientedOverlayRenderer("generators/solid_heater", FRONT);
+    public static OrientedOverlayRenderer GAS_FUEL_HEATER = new OrientedOverlayRenderer("generators/gas_heater", FRONT);
 
     // Bricks
     public static SimpleOverlayRenderer BRICK;

@@ -20,14 +20,11 @@ import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.metatileentities.multi.*;
 
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityHeatAcceptor;
-import tekcays_addon.common.metatileentities.single.MetaTileEntityElectricHeater;
+import tekcays_addon.common.metatileentities.single.*;
 
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickFluidHatch;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickItemBus;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityPrimitiveMufflerHatch;
-import tekcays_addon.common.metatileentities.single.MetaTileEntityFluidizedHeater;
-import tekcays_addon.common.metatileentities.single.MetaTileEntityLiquidFuelHeater;
-import tekcays_addon.common.metatileentities.single.MetaTileEntitySolidFuelHeater;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamAirCompressor;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamCooler;
 
@@ -64,6 +61,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntitySolidFuelHeater[] SOLID_FUEL_HEATER = new MetaTileEntitySolidFuelHeater[FUEL_HEATERS.size()];
     public static MetaTileEntityLiquidFuelHeater[] LIQUID_FUEL_HEATER = new MetaTileEntityLiquidFuelHeater[FUEL_HEATERS.size()];
     public static MetaTileEntityFluidizedHeater[] FLUIDIZED_FUEL_HEATER = new MetaTileEntityFluidizedHeater[FUEL_HEATERS.size()];
+    public static MetaTileEntityGasHeater[] GAS_FUEL_HEATER = new MetaTileEntityGasHeater[FUEL_HEATERS.size()];
 
     public static MetaTileEntityAdvancedMelter ADVANCED_MELTER;
 
@@ -231,6 +229,7 @@ public class TKCYAMetaTileEntities {
             SOLID_FUEL_HEATER[i] = registerMetaTileEntity(idToStart + i, new MetaTileEntitySolidFuelHeater(tkcyaId( materialName + "_solid_fuel_heater"), fuelHeater));
             LIQUID_FUEL_HEATER[i] = registerMetaTileEntity(idToStart + i + FUEL_HEATERS.size(), new MetaTileEntityLiquidFuelHeater(tkcyaId(materialName + "_liquid_fuel_heater"), fuelHeater));
             FLUIDIZED_FUEL_HEATER[i] = registerMetaTileEntity(idToStart + i + FUEL_HEATERS.size() * 2, new MetaTileEntityFluidizedHeater(tkcyaId(materialName + "_fluidized_fuel_heater"), fuelHeater));
+            GAS_FUEL_HEATER[i] = registerMetaTileEntity(idToStart + i + FUEL_HEATERS.size() * 3, new MetaTileEntityGasHeater(tkcyaId(materialName + "_gas_fuel_heater"), fuelHeater));
 
         }
 
