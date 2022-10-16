@@ -48,7 +48,7 @@ public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataIn
 
     public MetaTileEntityFluidizedHeater(ResourceLocation metaTileEntityId, FuelHeaterTiers fuelHeater) {
         super(metaTileEntityId, fuelHeater);
-        this.heatIncreaseRate = setHeatIncreaseRate(24);
+        this.heatIncreaseRate = setHeatIncreaseRate(32);
         initializeInventory();
     }
 
@@ -63,7 +63,7 @@ public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataIn
         this.importFluids = this.createImportFluidHandler();
         this.importItems = this.createImportItemHandler();
         this.exportItems = this.createExportItemHandler();
-        this.heatContainer = new HeatContainer(this, 0, 20000);
+        this.heatContainer = new HeatContainer(this, 0, 20 * heatIncreaseRate);
     }
 
     @Override

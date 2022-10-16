@@ -58,7 +58,7 @@ public class MetaTileEntityGasHeater extends FuelHeater implements IDataInfoProv
         this.importFluids = this.createImportFluidHandler();
         this.importItems = this.createImportItemHandler();
         this.exportFluids = this.createExportFluidHandler();
-        this.heatContainer = new HeatContainer(this, 0, 20000);
+        this.heatContainer = new HeatContainer(this, 0, 20 * heatIncreaseRate);
     }
 
     @Override

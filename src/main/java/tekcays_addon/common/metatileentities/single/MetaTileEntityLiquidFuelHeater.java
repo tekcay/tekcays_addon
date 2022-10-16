@@ -56,7 +56,7 @@ public class MetaTileEntityLiquidFuelHeater extends FuelHeater implements IDataI
     protected void initializeInventory() {
         super.initializeInventory();
         this.importFluids = this.createImportFluidHandler();
-        this.heatContainer = new HeatContainer(this, 0, 20000);
+        this.heatContainer = new HeatContainer(this, 0, 20 * heatIncreaseRate);
     }
 
 
