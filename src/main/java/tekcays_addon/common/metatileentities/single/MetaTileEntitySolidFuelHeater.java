@@ -12,6 +12,7 @@ import gregtech.api.metatileentity.IDataInfoProvider;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.recipes.ModHandler;
+import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -20,6 +21,8 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.capability.impl.HeatContainer;
@@ -116,7 +119,11 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
         }
         setBurnTimeLeft(burnTime);
     }
-
+    @Override
+    @SideOnly(Side.CLIENT)
+    protected SimpleOverlayRenderer getBaseRenderer() {
+        return fuelHeater.equals(FuelHeaterTiers.BRICK) ? TKCYATextures.BRICK : TKCYATextures.STEAM_CASING[fuelHeater.getTextureId()];
+    }
 
     //For TOP, needs to implement IFuelable
     @Override
