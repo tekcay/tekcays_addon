@@ -305,7 +305,7 @@ item.material.oreprefix.curvedPlate=%s Curved Plate
 
 #Heaters
 tkcya.machine.liquid_fuel_heater.tooltip=Consumes Creosote.
-tkcya.machine.solide_fuel_heater.tooltip=Consumes solid fuel like coal.
+tkcya.machine.solid_fuel_heater.tooltip=Consumes solid fuel like coal.
 tkcya.machine.fluidized_fuel_heater.tooltip=Consumes molten Calcite and tiny dust of Coke.
 tkcya.machine.gas_fuel_heater.tooltip=Consumes gas.
 
