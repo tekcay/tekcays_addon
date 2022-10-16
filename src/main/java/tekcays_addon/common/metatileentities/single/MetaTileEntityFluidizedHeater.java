@@ -16,6 +16,7 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.ore.OrePrefix;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -128,6 +129,7 @@ public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataIn
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
+        tooltip.add(I18n.format("tkcya.machine.fluidized_fuel_heater.tooltip"));
         super.addInformation(stack, player, tooltip, advanced);
     }
 

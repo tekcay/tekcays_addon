@@ -13,6 +13,7 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.recipes.ModHandler;
 import gregtech.client.renderer.texture.Textures;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -136,6 +137,7 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
+        tooltip.add(I18n.format("tkcya.machine.solid_fuel_heater.tooltip"));
         super.addInformation(stack, player, tooltip, advanced);
     }
 
