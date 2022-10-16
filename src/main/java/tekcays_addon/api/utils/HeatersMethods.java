@@ -1,12 +1,7 @@
 package tekcays_addon.api.utils;
 
-import gregtech.api.unification.material.Material;
-import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
-import tekcays_addon.api.render.TKCYATextures;
-
-import static gregtech.api.unification.material.Materials.*;
 
 public class HeatersMethods {
 
@@ -32,5 +27,7 @@ public class HeatersMethods {
     public static int getBurnTime(FuelWithProperties fuelWithProperties, FuelHeaterTiers fuelHeater) {
         return (int) (fuelWithProperties.getBurnTime() * fuelHeater.getEfficiency() / fuelHeater.getPowerMultiplier());
     }
+
+
 
 }

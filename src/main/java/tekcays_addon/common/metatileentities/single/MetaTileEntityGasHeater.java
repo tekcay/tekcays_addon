@@ -21,6 +21,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -28,19 +29,17 @@ import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.metatileentity.FuelHeater;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.utils.FuelHeaterTiers;
+import tekcays_addon.api.utils.FuelWithProperties;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
-import static gregtech.api.unification.material.Materials.CarbonDioxide;
-import static tekcays_addon.api.utils.FuelWithProperties.CALCITE;
-import static tekcays_addon.api.utils.HeatersMethods.getBurnTime;
+import static gregtech.api.unification.material.Materials.*;
+import static tekcays_addon.api.utils.FuelWithProperties.*;
 
 public class MetaTileEntityGasHeater extends FuelHeater implements IDataInfoProvider, IActiveOutputSide {
-
-    private final int CALCITE_AMOUNT = CALCITE.getFluidStack().amount;
 
     public MetaTileEntityGasHeater(ResourceLocation metaTileEntityId, FuelHeaterTiers fuelHeater) {
         super(metaTileEntityId, fuelHeater);
@@ -98,38 +97,37 @@ public class MetaTileEntityGasHeater extends FuelHeater implements IDataInfoProv
                 .bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 0);
     }
 
-
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
         TKCYATextures.GAS_FUEL_HEATER.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isBurning(), true);
     }
 
-    private boolean isThereEnoughCalcite(IFluidTank fuelFluidTank) {
-        return fuelFluidTank.getFluid() != null &&
-                fuelFluidTank.getFluid().isFluidEqual(CALCITE.getFluidStack()) &&
-                fuelFluidTank.getFluidAmount() >= CALCITE_AMOUNT;
-    }
-
     private boolean isThereGasCollector() {
-        return importItems.extractItem(0, 1, true).equals(TKCYAMetaItems.GAS_COLLECTOR.getStackForm());
+        return importItems.extractItem(0, 1, true).isItemEqual(TKCYAMetaItems.GAS_COLLECTOR.getStackForm());
     }
-
 
     @Override
     protected void tryConsumeNewFuel() {
         IFluidTank fuelFluidTank = importFluids.getTankAt(0);
-        if (isThereEnoughCalcite(fuelFluidTank)) {
-            fuelFluidTank.drain(CALCITE_AMOUNT, true);
-            setBurnTimeLeft(getBurnTime(CALCITE, fuelHeater));
-            if (isThereGasCollector()) exportFluids.fill(CarbonDioxide.getFluid(10), true);
-        }
-    }
+        FluidStack input = fuelFluidTank.getFluid();
+        if (input == null) return;;
 
+        FuelWithProperties fuelWithProperties = getFuelWithProperties(GAS_FUELS_BURNING, input);
+        if (fuelWithProperties == null) return;
+
+        FluidStack fs = fuelWithProperties.getFluidStack();
+        fuelFluidTank.drain(fs.amount, true);
+        setBurnTimeLeft(fuelWithProperties.getBurnTime());
+
+        if (!isThereGasCollector()) return;
+        exportFluids.getTankAt(0).fill(CarbonDioxide.getFluid(10), true);
+    }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
-        tooltip.add(I18n.format("tkcya.machine.gas_fuel_heater.tooltip"));
+        tooltip.add(I18n.format("tkcya.machine.gas_fuel_heater.tooltip.1"));
+        tooltip.add(I18n.format("tkcya.machine.gas_fuel_heater.tooltip.2"));
         super.addInformation(stack, player, tooltip, advanced);
     }
 

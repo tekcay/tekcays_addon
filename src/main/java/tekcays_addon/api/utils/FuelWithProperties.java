@@ -1,5 +1,6 @@
 package tekcays_addon.api.utils;
 
+import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Material;
 import net.minecraftforge.fluids.FluidStack;
@@ -46,16 +47,27 @@ public class FuelWithProperties {
        add(CALCITE);
     }};
 
+    public static final List<FuelWithProperties> GAS_FUELS_BURNING = new ArrayList<>();
+    public static final List<FuelWithProperties> COMBUSTION_FUELS_BURNING = new ArrayList<>();
 
-    //TODO add RU/t recipes
-    private void addCombustionRecipeToList() {
+    public static void addCombustionRecipeToList() {
         RecipeMaps.COMBUSTION_GENERATOR_FUELS
                 .getRecipeList()
-                .forEach(recipe -> addToList(recipe.getFluidInputs().get(0).getInputFluidStack(), recipe.getDuration()));
+                .forEach(recipe -> addToList(COMBUSTION_FUELS_BURNING,
+                        recipe.getFluidInputs().get(0).getInputFluidStack(),
+                        recipe.getDuration()));
     }
 
-    private void addToList(FluidStack fluidStack, int burnTime) {
-        LIQUID_FUELS_BURNING.add(new FuelWithProperties(fluidStack, burnTime));
+    public static void addGasTurbineRecipeToList() {
+        RecipeMaps.GAS_TURBINE_FUELS
+                .getRecipeList()
+                .forEach(recipe -> addToList(GAS_FUELS_BURNING,
+                        recipe.getFluidInputs().get(0).getInputFluidStack(),
+                        recipe.getDuration()));
+    }
+
+    private static void addToList(List<FuelWithProperties> list, FluidStack fluidStack, int burnTime) {
+        list.add(new FuelWithProperties(fluidStack, burnTime));
     }
 
 
@@ -81,6 +93,20 @@ public class FuelWithProperties {
     public static FuelWithProperties getFuelWithProperties(Material material) {
         return LIQUID_FUELS_BURNING.stream()
                 .filter(fuelWithProperties -> fuelWithProperties.getMaterial().equals(material))
+                .findAny()
+                .orElse(null);
+    }
+
+    /**
+     * Retrieve the {@code FuelWithProperties} in LIQUID_FUELS_BURNING (see {@link FuelWithProperties})
+     * with a {@code FluidStack}.
+     * @param list the list to seek in, i.e. LIQUID_FUELS_BURNING, GAS_FUELS_BURNING or COMBUSTION_FUELS_BURNING
+     * @param fluidStack
+     * @return {@code null} if not found
+     */
+    public static FuelWithProperties getFuelWithProperties(List<FuelWithProperties> list, FluidStack fluidStack) {
+        return list.stream()
+                .filter(fuelWithProperties -> fuelWithProperties.getFluidStack().isFluidEqual(fluidStack))
                 .findAny()
                 .orElse(null);
     }
