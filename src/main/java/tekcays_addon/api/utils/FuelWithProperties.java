@@ -1,6 +1,5 @@
 package tekcays_addon.api.utils;
 
-import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Material;
 import net.minecraftforge.fluids.FluidStack;
@@ -42,11 +41,6 @@ public class FuelWithProperties {
     public static final FuelWithProperties CREOSOTE = new FuelWithProperties(new FluidStack(Creosote.getFluid(), 100), Creosote, 100);
     public static final FuelWithProperties CALCITE = new FuelWithProperties(new FluidStack(Calcite.getFluid(), 10), Calcite, 100);
 
-    public static final List<FuelWithProperties> LIQUID_FUELS_BURNING = new ArrayList<FuelWithProperties>() {{
-       add(CREOSOTE);
-       add(CALCITE);
-    }};
-
     public static final List<FuelWithProperties> GAS_FUELS_BURNING = new ArrayList<>();
     public static final List<FuelWithProperties> COMBUSTION_FUELS_BURNING = new ArrayList<>();
 
@@ -68,33 +62,6 @@ public class FuelWithProperties {
 
     private static void addToList(List<FuelWithProperties> list, FluidStack fluidStack, int burnTime) {
         list.add(new FuelWithProperties(fluidStack, burnTime));
-    }
-
-
-    /**
-     * Retrieve the {@code FuelWithProperties} in LIQUID_FUELS_BURNING (see {@link FuelWithProperties})
-     * with a {@code FluidStack}.
-     * @param fluidStack
-     * @return {@code null} if not found
-     */
-    public static FuelWithProperties getFuelWithProperties(FluidStack fluidStack) {
-        return LIQUID_FUELS_BURNING.stream()
-                .filter(fuelWithProperties -> fuelWithProperties.getFluidStack().isFluidEqual(fluidStack))
-                .findAny()
-                .orElse(null);
-    }
-
-    /**
-     * Retrieve the {@code FuelWithProperties} in LIQUID_FUELS_BURNING (see {@link FuelWithProperties})
-     * with a {@code Material}.
-     * @param material
-     * @return {@code null} if not found
-     */
-    public static FuelWithProperties getFuelWithProperties(Material material) {
-        return LIQUID_FUELS_BURNING.stream()
-                .filter(fuelWithProperties -> fuelWithProperties.getMaterial().equals(material))
-                .findAny()
-                .orElse(null);
     }
 
     /**
