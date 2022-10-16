@@ -69,6 +69,7 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
     private int currentHeat;
     private final int HEAT_MULTIPLIER = 24;
     private final int HEAT_DROP = 10000;
+    private final int HEAT_COOL = -100;
     /**
      * requiredHeat = numberItem * recipeTemp * heatMultiplier;
      */
@@ -198,9 +199,17 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
     @Override
     public void update() {
         super.update();
-        currentHeat = heatContainer.getHeat();
+        int previousHeat = currentHeat;
         currentTemp = heatContainer.getTemperature();
+        currentHeat = heatContainer.getHeat();
         pushFluidsIntoNearbyHandlers(getFrontFacing());
+
+        //Loses heat over time if no more heat heat is provided
+        if (getOffsetTimer() % 20 == 0) {
+            if (previousHeat == currentHeat && currentTemp > GCYSValues.EARTH_TEMPERATURE) {
+                heatContainer.changeHeat(HEAT_COOL,false);
+            }
+        }
 
         if (currentTemp >= maxTemp) {
             this.setOnFire(100);
