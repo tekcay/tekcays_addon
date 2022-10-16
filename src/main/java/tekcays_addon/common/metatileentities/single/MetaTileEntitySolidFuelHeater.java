@@ -85,10 +85,10 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
                 .shouldColor(false)
                 .widget(new LabelWidget(5, 5, getMetaFullName()))
 
-                .widget(new SlotWidget(importItems, 0, 50, 10, true, true)
+                .widget(new SlotWidget(importItems, 0, 20, 50, true, true)
                         .setBackgroundTexture(GuiTextures.SLOT))
 
-                .widget(new SlotWidget(exportItems, 0, 50, 60, true, false)
+                .widget(new SlotWidget(exportItems, 0, 80, 50, true, false)
                         .setBackgroundTexture(GuiTextures.SLOT))
 
                 .bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 0);

@@ -2,6 +2,8 @@ package tekcays_addon.api.utils;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidTank;
 
 public class HeatersMethods {
 
@@ -26,6 +28,13 @@ public class HeatersMethods {
 
     public static int getBurnTime(FuelWithProperties fuelWithProperties, FuelHeaterTiers fuelHeater) {
         return (int) (fuelWithProperties.getBurnTime() * fuelHeater.getEfficiency() / fuelHeater.getPowerMultiplier());
+    }
+
+    public static boolean isThereEnoughLiquidFuel(IFluidTank fuelFluidTank, FuelWithProperties fuelWithProperties) {
+        FluidStack fuel = fuelWithProperties.getFluidStack();
+        if (fuelFluidTank.getFluid() == null) return false;
+        if (!fuelFluidTank.getFluid().isFluidEqual(fuel)) return false;
+        return fuelFluidTank.getFluidAmount() >= fuel.amount;
     }
 
 

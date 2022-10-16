@@ -20,7 +20,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.IFluidTank;
 import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.metatileentity.FuelHeater;
 import tekcays_addon.api.render.TKCYATextures;
@@ -31,12 +33,12 @@ import java.util.List;
 
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
 import static gregtech.api.unification.material.Materials.Calcite;
+import static tekcays_addon.api.utils.FuelWithProperties.CALCITE;
 import static tekcays_addon.api.utils.FuelWithProperties.CREOSOTE;
 import static tekcays_addon.api.utils.HeatersMethods.getBurnTime;
+import static tekcays_addon.api.utils.HeatersMethods.isThereEnoughLiquidFuel;
 
 public class MetaTileEntityLiquidFuelHeater extends FuelHeater implements IDataInfoProvider, IActiveOutputSide {
-
-    private FluidTank fuelFluidTank;
 
     public MetaTileEntityLiquidFuelHeater(ResourceLocation metaTileEntityId, FuelHeaterTiers fuelHeater) {
         super(metaTileEntityId, fuelHeater);
@@ -60,10 +62,7 @@ public class MetaTileEntityLiquidFuelHeater extends FuelHeater implements IDataI
 
     @Override
     protected FluidTankList createImportFluidHandler() {
-        FluidTankList superHandler = super.createImportFluidHandler();
-        this.fuelFluidTank = new FilteredFluidHandler(1000);
-        fuelFluidTank.setFluid(Calcite.getFluid(0));
-        return new FluidTankList(false, superHandler, fuelFluidTank);
+        return new FluidTankList(false, new FluidTank(1000));
     }
 
     @Override
@@ -82,7 +81,6 @@ public class MetaTileEntityLiquidFuelHeater extends FuelHeater implements IDataI
                 .bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 0);
     }
 
-
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
@@ -91,12 +89,11 @@ public class MetaTileEntityLiquidFuelHeater extends FuelHeater implements IDataI
 
     @Override
     protected void tryConsumeNewFuel() {
-        if (fuelFluidTank.getFluid() != null &&
-                fuelFluidTank.getFluid().isFluidEqual(CREOSOTE.getFluidStack()) &&
-                        fuelFluidTank.getFluidAmount() >= CREOSOTE.getFluidStack().amount) {
-            fuelFluidTank.drain(CREOSOTE.getFluidStack(), true);
-            setBurnTimeLeft(getBurnTime(CREOSOTE, fuelHeater));
-        }
+        IFluidTank fuelFluidTank = importFluids.getTankAt(0);
+        if (!isThereEnoughLiquidFuel(fuelFluidTank, CREOSOTE)) return;
+
+        fuelFluidTank.drain(CREOSOTE.getFluidStack().amount, true);
+        setBurnTimeLeft(getBurnTime(CREOSOTE, fuelHeater));
     }
 
 

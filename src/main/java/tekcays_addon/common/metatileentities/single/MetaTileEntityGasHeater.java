@@ -84,7 +84,7 @@ public class MetaTileEntityGasHeater extends FuelHeater implements IDataInfoProv
         return ModularUI.builder(GuiTextures.BACKGROUND, 176, 166)
                 .shouldColor(false)
                 .widget(new LabelWidget(5, 5, getMetaFullName()))
-                .widget(new SlotWidget(importItems, 0, 50, 10, true, true)
+                .widget(new SlotWidget(importItems, 0, 50, 50, true, true)
                         .setBackgroundTexture(GuiTextures.SLOT))
                 .widget(new TankWidget(importFluids.getTankAt(0), 20, 50, 18, 18)
                         .setBackgroundTexture(GuiTextures.FLUID_SLOT)
@@ -110,6 +110,7 @@ public class MetaTileEntityGasHeater extends FuelHeater implements IDataInfoProv
     @Override
     protected void tryConsumeNewFuel() {
         IFluidTank fuelFluidTank = importFluids.getTankAt(0);
+
         FluidStack input = fuelFluidTank.getFluid();
         if (input == null) return;;
 

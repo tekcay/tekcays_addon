@@ -24,6 +24,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -32,6 +33,7 @@ import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.metatileentity.FuelHeater;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.utils.FuelHeaterTiers;
+import tekcays_addon.api.utils.FuelWithProperties;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -39,7 +41,9 @@ import java.util.List;
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
 import static gregtech.api.unification.material.Materials.Coke;
 import static tekcays_addon.api.utils.FuelWithProperties.CALCITE;
+import static tekcays_addon.api.utils.FuelWithProperties.CREOSOTE;
 import static tekcays_addon.api.utils.HeatersMethods.getBurnTime;
+import static tekcays_addon.api.utils.HeatersMethods.isThereEnoughLiquidFuel;
 
 public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataInfoProvider, IActiveOutputSide {
 
@@ -89,11 +93,11 @@ public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataIn
         return ModularUI.builder(GuiTextures.BACKGROUND, 176, 166)
                 .shouldColor(false)
                 .widget(new LabelWidget(5, 5, getMetaFullName()))
-                .widget(new SlotWidget(importItems, 0, 50, 10, true, true)
+                .widget(new SlotWidget(importItems, 0, 20, 50, true, true)
                         .setBackgroundTexture(GuiTextures.SLOT))
-                .widget(new SlotWidget(exportItems, 0, 50, 60, true, false)
+                .widget(new SlotWidget(exportItems, 0, 80, 50, true, false)
                         .setBackgroundTexture(GuiTextures.SLOT))
-                .widget(new TankWidget(importFluids.getTankAt(0), 20, 50, 18, 18)
+                .widget(new TankWidget(importFluids.getTankAt(0), 50, 50, 18, 18)
                         .setBackgroundTexture(GuiTextures.FLUID_SLOT)
                         .setAlwaysShowFull(true)
                         .setContainerClicking(true, true))
@@ -107,11 +111,7 @@ public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataIn
         TKCYATextures.FLUIDIZED_FUEL_HEATER.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isBurning(), true);
     }
 
-    private boolean isThereEnoughCalcite(IFluidTank fuelFluidTank) {
-        return fuelFluidTank.getFluid() != null &&
-                fuelFluidTank.getFluid().isFluidEqual(CALCITE.getFluidStack()) &&
-                fuelFluidTank.getFluidAmount() >= CALCITE_AMOUNT;
-    }
+
 
     private boolean isThereCoke() {
         return importItems.getStackInSlot(0).getItem().equals(SOLID_FUEL);
@@ -120,13 +120,12 @@ public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataIn
     @Override
     protected void tryConsumeNewFuel() {
         IFluidTank fuelFluidTank = importFluids.getTankAt(0);
-        if (isThereEnoughCalcite(fuelFluidTank) && isThereCoke()) {
+        if (isThereEnoughLiquidFuel(fuelFluidTank, CALCITE) && isThereCoke()) {
             fuelFluidTank.drain(CALCITE_AMOUNT, true);
             importItems.extractItem(0, 1, false);
             setBurnTimeLeft(getBurnTime(CALCITE, fuelHeater));
         }
     }
-
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
