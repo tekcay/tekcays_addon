@@ -24,7 +24,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -33,7 +32,6 @@ import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.metatileentity.FuelHeater;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.utils.FuelHeaterTiers;
-import tekcays_addon.api.utils.FuelWithProperties;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -41,18 +39,16 @@ import java.util.List;
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
 import static gregtech.api.unification.material.Materials.Coke;
 import static tekcays_addon.api.utils.FuelWithProperties.CALCITE;
-import static tekcays_addon.api.utils.FuelWithProperties.CREOSOTE;
 import static tekcays_addon.api.utils.HeatersMethods.getBurnTime;
 import static tekcays_addon.api.utils.HeatersMethods.isThereEnoughLiquidFuel;
 
 public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataInfoProvider, IActiveOutputSide {
 
     private final Item SOLID_FUEL = OreDictUnifier.get(OrePrefix.dustTiny, Coke).getItem();
-    private final int CALCITE_AMOUNT = CALCITE.getFluidStack().amount;
 
     public MetaTileEntityFluidizedHeater(ResourceLocation metaTileEntityId, FuelHeaterTiers fuelHeater) {
         super(metaTileEntityId, fuelHeater);
-        this.heatIncreaseRate = setHeatIncreaseRate(8);
+        this.heatIncreaseRate = setHeatIncreaseRate(24);
         initializeInventory();
     }
 
@@ -121,7 +117,7 @@ public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataIn
     protected void tryConsumeNewFuel() {
         IFluidTank fuelFluidTank = importFluids.getTankAt(0);
         if (isThereEnoughLiquidFuel(fuelFluidTank, CALCITE) && isThereCoke()) {
-            fuelFluidTank.drain(CALCITE_AMOUNT, true);
+            fuelFluidTank.drain(CALCITE.getFluidStack().amount, true);
             importItems.extractItem(0, 1, false);
             setBurnTimeLeft(getBurnTime(CALCITE, fuelHeater));
         }
