@@ -94,7 +94,7 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
         super.initializeInventory();
         this.exportFluids = this.createExportFluidHandler();
         this.importItems = this.createImportItemHandler();
-        this.heatContainer = new HeatContainer(this, 0, 200000);
+        this.heatContainer = new HeatContainer(this, 0, 200000, maxTemp);
     }
 
     @Override
@@ -190,13 +190,16 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
         float f = maxTemp == 0L ? 0.0f : currentTemp / (maxTemp * 1.0f);
         return MathHelper.floor(f * 14.0f) + (currentTemp > 0 ? 1 : 0);
     }
-
-
+    
+    private void actualizedTemperature() {
+        heatContainer.setTemperature(GCYSValues.EARTH_TEMPERATURE + currentHeat / HEAT_MULTIPLIER);
+    }
 
     @Override
     public void update() {
         super.update();
         currentHeat = heatContainer.getHeat();
+        currentTemp = heatContainer.getTemperature();
         pushFluidsIntoNearbyHandlers(getFrontFacing());
 
         if (currentTemp >= maxTemp) {
@@ -207,20 +210,20 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
         if (currentHeat == 0) {
             if (currentTemp > GCYSValues.EARTH_TEMPERATURE) {
                 if (getOffsetTimer() % 20 == 0) currentTemp -= 1;
-            } else currentTemp = GCYSValues.EARTH_TEMPERATURE;
+            } else heatContainer.setTemperature(GCYSValues.EARTH_TEMPERATURE);
            return;
         }
 
        if (onChange) {
            heatContainer.changeHeat(-HEAT_DROP,false);
-           currentTemp = GCYSValues.EARTH_TEMPERATURE + currentHeat / HEAT_MULTIPLIER;
+           actualizedTemperature();
            onChange = false;
            return;
        }
 
        if (this.workable.isWorking() && this.workable.getProgress() == 1) onChange = true;
 
-       currentTemp = GCYSValues.EARTH_TEMPERATURE + currentHeat / HEAT_MULTIPLIER;
+        actualizedTemperature();
     }
 
 

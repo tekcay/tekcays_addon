@@ -1,11 +1,15 @@
 package tekcays_addon;
 
+import gregtech.api.GregTechAPI;
+import gregtech.api.cover.CoverDefinition;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.api.worldgen.TKCYAWorldGenRegistry;
 import tekcays_addon.common.CommonProxy;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
+import tekcays_addon.common.covers.Covers;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 import gregtech.api.GTValues;
@@ -14,6 +18,8 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.io.IOException;
+
+import static gregtech.api.GregTechAPI.COVER_REGISTRY;
 
 @Mod(   modid        = TekCaysAddon.MODID,
         name         = TekCaysAddon.NAME,
@@ -46,6 +52,11 @@ public class TekCaysAddon {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        /* Start Cover Definition Registration */
+        Covers.init();
+        MinecraftForge.EVENT_BUS.post(new GregTechAPI.RegisterEvent<>(COVER_REGISTRY, CoverDefinition.class));
+        /* End Cover Definition Registration */
+
     }
 
 

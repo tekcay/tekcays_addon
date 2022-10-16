@@ -1,5 +1,6 @@
 package tekcays_addon.api.capability;
 
+import gregicality.science.api.GCYSValues;
 import tekcays_addon.api.utils.TKCYAValues;
 
 import javax.annotation.Nonnull;
@@ -12,11 +13,23 @@ public interface IHeatContainer {
     int getHeat();
 
     /**
+     * @return the temperature of the container
+     */
+    int getTemperature();
+
+    /**
      * Set the amount of heat in the container
      *
      * @param amount the amount to set
      */
     void setHeat(int amount);
+
+    /**
+     * Set the temperature of the container
+     *
+     * @param temperature the amount to set
+     */
+    void setTemperature(int temperature);
 
     /**
      * Change the amount of heat in the container by a given amount
@@ -31,6 +44,7 @@ public interface IHeatContainer {
         return isHeatSafe();
     }
 
+
     /**
      * @return the minimum heat this container can handle
      */
@@ -40,6 +54,11 @@ public interface IHeatContainer {
      * @return the maximum heat this container can handle
      */
     int getMaxHeat();
+
+    /**
+     * @return the maximum temperature this container can handle
+     */
+    int getMaxTemperature();
 
     /**
      * @return true if the Heat is safe for the container, else false
@@ -82,7 +101,21 @@ public interface IHeatContainer {
         }
 
         @Override
+        public int getMaxTemperature() {
+            return TKCYAValues.MAX_HEAT;
+        }
+        @Override
+        public int getTemperature() {
+            return GCYSValues.EARTH_TEMPERATURE;
+        }
+
+
+        @Override
         public void setHeat(int amount) {
+        }
+
+        @Override
+        public void setTemperature(int temperature) {
         }
 
     };
