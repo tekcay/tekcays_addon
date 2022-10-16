@@ -7,13 +7,9 @@ import codechicken.lib.vec.Matrix4;
 import gregicality.science.api.utils.NumberFormattingUtil;
 import gregtech.api.capability.GregtechTileCapabilities;
 import gregtech.api.capability.IActiveOutputSide;
-import gregtech.api.capability.IFuelInfo;
-import gregtech.api.capability.IFuelable;
-import gregtech.api.capability.impl.ItemFuelInfo;
 import gregtech.api.metatileentity.IDataInfoProvider;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.sound.GTSounds;
-import gregtech.api.unification.material.Material;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -37,37 +33,30 @@ import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.api.utils.FuelWithProperties;
-import tekcays_addon.api.utils.TKCYALog;
+import tekcays_addon.api.utils.FuelHeaterTiers;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
 import static net.minecraft.util.EnumFacing.*;
-import static tekcays_addon.api.utils.HeatersMethods.getBurnTime;
-import static tekcays_addon.api.utils.HeatersMethods.getTextures;
 
 public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide{
 
     protected int heatIncreaseRate;
     protected HeatContainer heatContainer;
     protected boolean isBurning;
-    protected final tekcays_addon.api.utils.FuelHeater fuelHeater;
-    private final Material material;
+    protected final FuelHeaterTiers fuelHeater;
     private final float efficiency;
     private final int powerMultiplier;
     protected int burnTimeLeft;
 
-    public FuelHeater(ResourceLocation metaTileEntityId, tekcays_addon.api.utils.FuelHeater fuelHeater) {
+    public FuelHeater(ResourceLocation metaTileEntityId, FuelHeaterTiers fuelHeater) {
         super(metaTileEntityId);
         this.fuelHeater = fuelHeater;
         this.efficiency = fuelHeater.getEfficiency();
         this.powerMultiplier = fuelHeater.getPowerMultiplier();
-        this.material = fuelHeater.getMaterial();
         this.isBurning = false;
     }
 
@@ -90,7 +79,7 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
 
     @SideOnly(Side.CLIENT)
     protected SimpleOverlayRenderer getBaseRenderer() {
-        return getTextures(material);
+        return TKCYATextures.STEAM_CASING[fuelHeater.getTextureId()];
     }
 
     @SideOnly(Side.CLIENT)

@@ -31,6 +31,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.metatileentity.FuelHeater;
 import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.api.utils.FuelHeaterTiers;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -45,7 +46,7 @@ public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataIn
     private final Item SOLID_FUEL = OreDictUnifier.get(OrePrefix.dustTiny, Coke).getItem();
     private final int CALCITE_AMOUNT = CALCITE.getFluidStack().amount;
 
-    public MetaTileEntityFluidizedHeater(ResourceLocation metaTileEntityId, tekcays_addon.api.utils.FuelHeater fuelHeater) {
+    public MetaTileEntityFluidizedHeater(ResourceLocation metaTileEntityId, FuelHeaterTiers fuelHeater) {
         super(metaTileEntityId, fuelHeater);
         this.heatIncreaseRate = setHeatIncreaseRate(8);
         initializeInventory();

@@ -24,6 +24,7 @@ import net.minecraftforge.fluids.FluidTank;
 import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.metatileentity.FuelHeater;
 import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.api.utils.FuelHeaterTiers;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -37,7 +38,7 @@ public class MetaTileEntityLiquidFuelHeater extends FuelHeater implements IDataI
 
     private FluidTank fuelFluidTank;
 
-    public MetaTileEntityLiquidFuelHeater(ResourceLocation metaTileEntityId, tekcays_addon.api.utils.FuelHeater fuelHeater) {
+    public MetaTileEntityLiquidFuelHeater(ResourceLocation metaTileEntityId, FuelHeaterTiers fuelHeater) {
         super(metaTileEntityId, fuelHeater);
         this.heatIncreaseRate = setHeatIncreaseRate(8);
         initializeInventory();

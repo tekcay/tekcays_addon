@@ -12,7 +12,6 @@ import gregtech.api.metatileentity.IDataInfoProvider;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.recipes.ModHandler;
-import gregtech.client.renderer.texture.Textures;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -26,6 +25,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.metatileentity.FuelHeater;
 import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.api.utils.FuelHeaterTiers;
 import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nullable;
@@ -41,7 +41,7 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
     private final int HEAT_BASE_INCREASE = 8;
     private final ItemStackHandler containerInventory;
 
-    public MetaTileEntitySolidFuelHeater(ResourceLocation metaTileEntityId, tekcays_addon.api.utils.FuelHeater fuelHeater) {
+    public MetaTileEntitySolidFuelHeater(ResourceLocation metaTileEntityId, FuelHeaterTiers fuelHeater) {
         super(metaTileEntityId, fuelHeater);
         this.heatIncreaseRate = setHeatIncreaseRate(HEAT_BASE_INCREASE);
         this.containerInventory = new ItemStackHandler(2);

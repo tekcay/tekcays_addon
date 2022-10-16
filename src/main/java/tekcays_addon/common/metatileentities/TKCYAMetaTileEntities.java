@@ -12,7 +12,7 @@ import tekcays_addon.TekCaysAddon;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.unification.TKCYAMaterials;
-import tekcays_addon.api.utils.FuelHeater;
+import tekcays_addon.api.utils.FuelHeaterTiers;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
@@ -33,8 +33,8 @@ import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamCooler;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
 import static tekcays_addon.api.utils.BlastFurnaceUtils.BRICKS;
-import static tekcays_addon.api.utils.FuelHeater.BRICK;
-import static tekcays_addon.api.utils.FuelHeater.FUEL_HEATERS;
+import static tekcays_addon.api.utils.FuelHeaterTiers.BRICK;
+import static tekcays_addon.api.utils.FuelHeaterTiers.FUEL_HEATERS;
 import static tekcays_addon.api.utils.TKCYAValues.DRUM_MATERIALS;
 
 public class TKCYAMetaTileEntities {
@@ -226,7 +226,7 @@ public class TKCYAMetaTileEntities {
 
         for (int i = 1; i < FUEL_HEATERS.size(); i++) {
             int idToStart = 11178;
-            FuelHeater fuelHeater = FUEL_HEATERS.get(i);
+            FuelHeaterTiers fuelHeater = FUEL_HEATERS.get(i);
             String materialName = fuelHeater.getMaterial().getUnlocalizedName();
             SOLID_FUEL_HEATER[i] = registerMetaTileEntity(idToStart + i, new MetaTileEntitySolidFuelHeater(tkcyaId( materialName + "_solid_fuel_heater"), fuelHeater));
             LIQUID_FUEL_HEATER[i] = registerMetaTileEntity(idToStart + i + FUEL_HEATERS.size(), new MetaTileEntityLiquidFuelHeater(tkcyaId(materialName + "_liquid_fuel_heater"), fuelHeater));
