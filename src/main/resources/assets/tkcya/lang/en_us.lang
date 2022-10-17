@@ -108,6 +108,12 @@ tkcya.machine.fireclay_brick_muffler.name=Fireclay Brick Muffler
 tkcya.machine.reinforced_brick_muffler.name=Reinforced Brick Muffler
 tkcya.machine.strong_brick_muffler.name=Strong Brick Blast Muffler
 
+#Crucibles
+tkcya.machine.brick_single_crucible.name=Brick Crucible
+tkcya.machine.fireclay_brick_single_crucible.name=Fireclay Brick Crucible
+tkcya.machine.reinforced_brick_single_crucible.name=Reinforced Brick Crucible
+tkcya.machine.strong_brick_single_crucible.name=Strong Brick Crucible
+
 tkcya.machine.crystallizer.name=Crystallizer
 tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer
 tkcya.machine.filter.name=Filter
@@ -279,6 +285,8 @@ metaitem.electrode.name=%s Electrode
 metaitem.electrode.tooltip=For electrolysis
 metaitem.filter.name=%s Filter
 metaitem.filter.tooltip=For filtration duh
+metaitem.cover.temperature_detector.name=Cover Temperature Detector
+metaitem.cover.temperature.detector.tooltip=Gives out Temperature as Redstone (as Cover)
 
 item.mica_pulp.dust=Mica Based Pulp
 
@@ -330,6 +338,11 @@ tkcya.machine.pressure_decrease.tooltip=Decreases the pressure by §b%sPa§7 per
 tkcya.machine.pressure_increase.tooltip=Increases the pressure by §b%sPa§7 per second while running.
 
 tkcya.machine.primitive_converter.tooltip.1=Only runs recipes is the required pressure is set.
+
+tkcya.machine.single_crucible.tooltip.1=Only runs recipes is the required temperature is set.
+tkcya.machine.single_crucible.tooltip.2=Accept §cHU§7.
+tkcya.machine.single_crucible.tooltip.3=Causes fire and explodes if too hot!
+tkcya.machine.single_crucible.tooltip.4=Auto-outputs fluid.
 
 tkcya.machine.primitive_fermenter.tooltip.1=Max Parallel: §e%s§7
 
@@ -402,6 +415,8 @@ tekcays_addon.machine.advanced_electrolyzer.tooltip.3=Electrodes takes damage du
 tekcays_addon.machine.advanced_electrolyzer.tooltip.4=Removal of the electrode while a recipe is running  will cause explosion!
 
 tkcya.machine.text.pressure=Current pressure: %s
+tkcya.max_parallel.tooltip=Max Parallel: §e%s§7
+tkcya.parallel.tooltip=Can run recipes in parallel.
 
 #Heaters
 tkcya.heater.tooltip.1=For heating.
@@ -413,11 +428,17 @@ tkcya.electric_cooler.tooltip.1=For cooling.
 tkcya.electric_cooler.tooltip.2=Produces §b%s CU/t§7.
 tkcya.electric_cooler.tooltip.3=Outputs on the TOP face.
 
+#Covers
+tkcya.cover.temperature_detector.message_temperature_storage_normal=Monitoring Normal Temperature Storage
+tkcya.cover.temperature_detector.message_temperature_storage_inverted=Monitoring Inverted Temperature Storage
+
 #Tricorder
 behavior.tricorder.current_heat=Current Heat: %s HU
 behavior.tricorder.min_heat=Minimum Heat: %s HU
 behavior.tricorder.max_heat=Maximum Heat: %s HU
 behavior.tricorder.burn_time_left= Burn Time Left %s ticks
+behavior.tricorder.currentTemp=Current Temp: %s K
+
 
 # Errors
 

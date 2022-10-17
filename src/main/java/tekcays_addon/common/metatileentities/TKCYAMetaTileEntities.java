@@ -1,5 +1,6 @@
 package tekcays_addon.common.metatileentities;
 
+import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
@@ -25,6 +26,7 @@ import tekcays_addon.common.metatileentities.single.*;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickFluidHatch;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickItemBus;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityPrimitiveMufflerHatch;
+import tekcays_addon.common.metatileentities.single.MetaTileEntitySingleCrucible;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamAirCompressor;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamCooler;
 
@@ -79,6 +81,8 @@ public class TKCYAMetaTileEntities {
 
     // Drums
     public static MetaTileEntityDrum[] DRUMS = new MetaTileEntityDrum[DRUM_MATERIALS.size()];
+
+    public static MetaTileEntitySingleCrucible[] SINGLE_CRUCIBLE = new MetaTileEntitySingleCrucible[4];
 
     //Tanks
     public static TKCYAMetaTileEntityMultiblockTank WOODEN_TANK;
@@ -235,6 +239,11 @@ public class TKCYAMetaTileEntities {
 
 
 
+
+        for (int i = 0; i < BRICKS.size(); i++) {
+            BlockBrick.BrickType brick = BRICKS.get(i);
+            SINGLE_CRUCIBLE[i] = registerMetaTileEntity(11200 + i, new MetaTileEntitySingleCrucible(tkcyaId(brick.getName() + "_single_crucible"), brick));
+        }
 
     }
 
