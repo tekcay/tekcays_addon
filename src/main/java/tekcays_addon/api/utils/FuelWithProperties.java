@@ -8,6 +8,7 @@ import java.util.List;
 
 import static gregtech.api.unification.material.Materials.Calcite;
 import static gregtech.api.unification.material.Materials.Creosote;
+import static tekcays_addon.api.utils.TKCYAValues.SECOND;
 
 public class FuelWithProperties {
 
@@ -38,8 +39,8 @@ public class FuelWithProperties {
         return this.material;
     }
 
-    public static final FuelWithProperties CREOSOTE = new FuelWithProperties(new FluidStack(Creosote.getFluid(), 100), Creosote, 100);
-    public static final FuelWithProperties CALCITE = new FuelWithProperties(new FluidStack(Calcite.getFluid(), 10), Calcite, 100);
+    public static final FuelWithProperties CREOSOTE = new FuelWithProperties(new FluidStack(Creosote.getFluid(), 100), Creosote, 300);
+    public static final FuelWithProperties CALCITE = new FuelWithProperties(new FluidStack(Calcite.getFluid(), 8), Calcite, 100 * SECOND);
 
     public static final List<FuelWithProperties> GAS_FUELS_BURNING = new ArrayList<>();
     public static final List<FuelWithProperties> COMBUSTION_FUELS_BURNING = new ArrayList<>();
