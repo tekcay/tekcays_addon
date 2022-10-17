@@ -242,7 +242,7 @@ public class TKCYAMetaTileEntities {
 
         for (int i = 0; i < BRICKS.size(); i++) {
             BlockBrick.BrickType brick = BRICKS.get(i);
-            SINGLE_CRUCIBLE[i] = registerMetaTileEntity(11200 + i, new MetaTileEntitySingleCrucible(tkcyaId(brick.getName() + "_single_crucible"), brick));
+            SINGLE_CRUCIBLE[i] = registerMetaTileEntity(11300 + i, new MetaTileEntitySingleCrucible(tkcyaId(brick.getName() + "_single_crucible"), brick));
         }
 
     }
