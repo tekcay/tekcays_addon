@@ -1,6 +1,5 @@
 package tekcays_addon.api.utils;
 
-import gregtech.api.GregTechAPI;
 import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.unification.material.Material;
 import net.minecraft.item.ItemStack;
@@ -14,8 +13,7 @@ import static gregtech.common.items.MetaItems.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.*;
 import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class TKCYAValues {
 
@@ -30,6 +28,7 @@ public class TKCYAValues {
      * Improves the yield by {20%}.
      */
     public static final float CLEANROOM_MULTIPLIER = 1.2f;
+
 
     //// ENERGY_TYPE_RATIOS
 
@@ -61,13 +60,7 @@ public class TKCYAValues {
     public static final int STEAM_AIR_COMPRESSOR_PRESSURE_INCREASE = 1000;
 
     //Lists/Arrays
-    /*
-    public static final List<Material> ALL_MATERIALS = new ArrayList<Material>(){{
-        addAll(GregTechAPI.MATERIAL_REGISTRY);
-        a
-    }}
 
-     */
 
     public static final List<EnumFacing> HORIZONTALS = new ArrayList<EnumFacing>(){{
        add(EnumFacing.SOUTH);

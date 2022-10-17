@@ -3,6 +3,7 @@ package tekcays_addon.common;
 import gregtech.api.GTValues;
 import gregtech.api.recipes.crafttweaker.MetaItemBracketHandler;
 import net.minecraftforge.fml.common.Loader;
+import tekcays_addon.api.utils.FuelWithProperties;
 import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.loaders.DamageableItemsLoader;
@@ -73,6 +74,9 @@ public class CommonProxy {
         DamageableItemsLoader.initElectrodes();
         DamageableItemsLoader.initFilters();
         TKCYARecipeLoader.load();
+
+        FuelWithProperties.addCombustionRecipeToList();
+        FuelWithProperties.addGasTurbineRecipeToList();
     }
 
     //this is called last, so all mods finished registering their stuff, as example, CraftTweaker

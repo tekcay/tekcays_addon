@@ -29,6 +29,7 @@ import tekcays_addon.api.capability.impl.HeatContainer;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 import org.apache.commons.lang3.ArrayUtils;
+import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
@@ -71,7 +72,7 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
         IVertexOperation[] coloredPipeline = ArrayUtils.add(pipeline, multiplier);
 
         Textures.AIR_VENT_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
-        Textures.PIPE_OUT_OVERLAY.renderSided(UP, renderState, translation, pipeline);
+        TKCYATextures.HEAT_ACCEPTOR_VERTICALS_OVERLAY.renderSided(UP, renderState, translation, pipeline);
     }
 
 
@@ -87,8 +88,10 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
 
             energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
 
+            //Get the TileEntity that is placed right on top of the Heat.
             TileEntity te = getWorld().getTileEntity(getPos().offset(UP));
             if (te != null) {
+                //Get the Capability of this Tile Entity on the DOWN FACE.
                 IHeatContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER, DOWN);
                 if (container != null) {
                     if (container.changeHeat(HEAT_BASE_INCREASE, true)) {
@@ -104,14 +107,14 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("tkcya.electric_heater.tooltip.1"));
+        tooltip.add(I18n.format("tkcya.heater.tooltip.1"));
         tooltip.add(I18n.format("gregtech.universal.tooltip.max_voltage_in", energyContainer.getInputVoltage(), GTValues.VNF[getTier()]));
         tooltip.add(I18n.format("tkcya.machine.energy_conversion_efficiency",  TextFormatting.WHITE + String.format("%.02f", EU_TO_HU * 100) + "%"));
         tooltip.add(I18n.format("gregtech.universal.tooltip.energy_storage_capacity", energyContainer.getEnergyCapacity()));
-        tooltip.add(I18n.format("tkcya.electric_heater.tooltip.2", NumberFormattingUtil.formatDoubleToCompactString(Math.abs(HEAT_BASE_INCREASE))));
+        tooltip.add(I18n.format("tkcya.heater.tooltip.2", NumberFormattingUtil.formatDoubleToCompactString(Math.abs(HEAT_BASE_INCREASE))));
         tooltip.add(I18n.format("tkcya.machine.redstone.inverse.tooltip"));
         tooltip.add(I18n.format("gregtech.machine.item_controller.tooltip.consumption", ENERGY_BASE_CONSUMPTION));
-        tooltip.add(I18n.format("tkcya.electric_heater.tooltip.3"));
+        tooltip.add(I18n.format("tkcya.heater.tooltip.3"));
     }
 
     @Override

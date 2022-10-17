@@ -5,6 +5,7 @@ import gregtech.api.cover.CoverDefinition;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
+import tekcays_addon.api.utils.FuelWithProperties;
 import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.api.worldgen.TKCYAWorldGenRegistry;
 import tekcays_addon.common.CommonProxy;
