@@ -213,13 +213,6 @@ public class TKCYAMiscMaterials {
                 .build();
         PotassiumMetaBisulfite.setFormula("K2S2O5", true);
 
-        PotassiumHydroxide = new Material.Builder(24125, "potassium_hydroxide")
-                .fluid(FluidTypes.GAS)
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
-                .color((Potassium.getMaterialRGB() + Oxygen.getMaterialRGB() + Hydrogen.getMaterialRGB())/ 3)
-                .components(Potassium, 1, Oxygen, 1, Hydrogen, 1)
-                .build();
-
         //More roastable ores
         Kesterite = new Material.Builder(24139, "kesterite")
                 .dust().ore()

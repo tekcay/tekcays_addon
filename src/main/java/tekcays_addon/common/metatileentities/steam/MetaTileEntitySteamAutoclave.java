@@ -17,7 +17,6 @@ public class MetaTileEntitySteamAutoclave extends SteamMetaTileEntity {
 
         public MetaTileEntitySteamAutoclave(ResourceLocation metaTileEntityId, boolean isHighPressure) {
             super(metaTileEntityId, TKCYARecipeMaps.STEAM_AUTOCLAVE, Textures.AUTOCLAVE_OVERLAY, isHighPressure);
-            this.isHighPressure = true;
         }
 
         @Override

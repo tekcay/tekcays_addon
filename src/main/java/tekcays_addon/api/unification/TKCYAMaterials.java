@@ -89,7 +89,6 @@ public class TKCYAMaterials {
 
     //Misc
     public static Material PotassiumMetaBisulfite;
-    public static Material PotassiumHydroxide;
 
     //More roastable
     public static Material Kesterite;

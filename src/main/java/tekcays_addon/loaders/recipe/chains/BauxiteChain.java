@@ -5,11 +5,13 @@ import gregtech.api.recipes.ingredients.GTRecipeItemInput;
 import gregtech.api.recipes.ingredients.nbtmatch.NBTCondition;
 import gregtech.api.recipes.ingredients.nbtmatch.NBTMatcher;
 import gregtech.api.unification.stack.MaterialStack;
+import tekcays_addon.common.items.TKCYAMetaItems;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static gregicality.science.api.unification.materials.GCYSMaterials.AluminiumHydroxide;
+import static gregicality.science.api.unification.materials.GCYSMaterials.PotassiumHydroxide;
 import static gregtech.api.recipes.RecipeMaps.CHEMICAL_BATH_RECIPES;
 import static gregtech.api.recipes.RecipeMaps.CHEMICAL_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
@@ -79,7 +81,7 @@ public class BauxiteChain {
 
         // 4 NaAlO2 + 6 H2O -> 7 Al(OH)3 + 3 NaOH
         CHEMICAL_BATH_RECIPES.recipeBuilder()
-                .input(dust, PotassiumAluminate, 4)
+                .input(dust, SodiumAluminate, 4)
                 .fluidInputs(DistilledWater.getFluid(6000))
                 .outputs(getDustMixtureStackWithNBT(output_4))
                 .duration(75 * SECOND)
@@ -101,11 +103,23 @@ public class BauxiteChain {
         ELECTROLYSIS.recipeBuilder()
                 .input(ingot, Alumina, 10)
                 .input(dust, Carbon, 3)
+                .notConsumable(TKCYAMetaItems.GAS_COLLECTOR.getStackForm())
                 .inputNBT(GTRecipeItemInput.getOrCreate(electrodeCarbon).setNonConsumable(), NBTMatcher.ANY, NBTCondition.ANY)
                 .output(dust, Aluminium, 4)
                 .fluidInputs(AluminiumFluoride.getFluid(4))
                 .fluidInputs(Cryolite.getFluid(2))
                 .fluidOutputs(CarbonDioxide.getFluid(9000))
+                .duration(30 * SECOND)
+                .EUt(100)
+                .buildAndRegister();
+
+        ELECTROLYSIS.recipeBuilder()
+                .input(ingot, Alumina, 10)
+                .input(dust, Carbon, 3)
+                .inputNBT(GTRecipeItemInput.getOrCreate(electrodeCarbon).setNonConsumable(), NBTMatcher.ANY, NBTCondition.ANY)
+                .output(dust, Aluminium, 4)
+                .fluidInputs(AluminiumFluoride.getFluid(4))
+                .fluidInputs(Cryolite.getFluid(2))
                 .duration(30 * SECOND)
                 .EUt(100)
                 .buildAndRegister();

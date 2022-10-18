@@ -26,6 +26,7 @@ tkcya.machine.electric_casting_table.iv.tooltip=Air speeds up the recipe by §a4
 tkcya.machine.casting_table.tooltip=Air speeds up the recipe by §e20%§7
 
 tkcya.machine.steam_air_compressor.name=Steam Air Compressor
+tkcya.machine.steam_autoclave.name=Autoclave
 
 tkcya.machine.electric_heater.lv.name=Electric Heater LV
 tkcya.machine.electric_heater.mv.name=Electric Heater MV
@@ -159,7 +160,7 @@ recipemap.pressure_cracking.name=Cracking
 recipemap.roasting.name=Roasting
 recipemap.spiral_separation.name=Spiral Separation
 recipemap.coking.name=Coking
-recipemap.autoclave.name=Autoclave
+recipemap.steam_autoclave.name=Autoclave
 
 # Materials
 
