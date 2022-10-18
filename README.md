@@ -11,7 +11,7 @@ TKCYA requires [**GregTech CE: Unofficial** **(GTCEu)**](https://github.com/Greg
 * Electrolysis overhaul: most recipes were removed, replaced by new ones that need electrodes which take damage
 * Cracking overhaul: cracking now requires both temperature and pressure, introduced thanks to [**GCYS**](https://github.com/GregTechCEu/gregicality-science)
 * Storage overhaul: all of the quantum chest and tanks/super tanks are gone, and drums and multiblock tanks are nerfed. Multiblock tanks follow drum behavior and can only handle specific fluid depending upon the material they are made of. More drums and multiblock tanks can be made, e.g. in Galvanized Steel.
-* Custom oregen: removed native metal ores, including iron, tin and gold
+* Custom oregen: removed native metal ores, including iron, tin, gold, zinc and aluminium
 
 ### Components
 * Magnetic: magnetic materials are made with magnetite in a new 2-slots Polarizer
@@ -26,7 +26,7 @@ TKCYA requires [**GregTech CE: Unofficial** **(GTCEu)**](https://github.com/Greg
 * Wire coils from Mica [**GCYL**](https://github.com/GregTechCEu/gregicality-legacy)
 * Fluorine from Fluorite
 * Gold from Precious Metal [**GCYL**](https://github.com/GregTechCEu/gregicality-legacy)
-* Aluminium from Bauxite [**GCYL**](https://github.com/GregTechCEu/gregicality-legacy) (on-going)
+* Aluminium from Bauxite [**GT6**](https://github.com/GregTech6)
 * Zinc chain from Sphalerite (on-going)
 
 ## Credits: 
