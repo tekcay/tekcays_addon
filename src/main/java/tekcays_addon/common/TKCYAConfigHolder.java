@@ -7,7 +7,7 @@ import net.minecraftforge.common.config.Config;
 public class TKCYAConfigHolder {
 
 
-    @Config.Comment("Config options applying to all TKCYA Multiblocks")
+    @Config.Comment("Miscellaneaous config options")
     @Config.Name("Miscellaneous")
     public static MiscOverhaul miscOverhaul = new MiscOverhaul();
 
@@ -29,16 +29,16 @@ public class TKCYAConfigHolder {
 
     public static class MiscOverhaul {
 
-        @Config.Comment({"Enables TKCYA custom oregen. You MUST delete the vein folder in your config/gregtech/worldgen folder."})
+        @Config.Comment({"Enables TKCYA custom oregen. You MUST delete the json files in your config/gregtech/worldgen/vein folder."})
         public boolean enableTKCYACustomOreGen = true;
 
         @Config.Comment({"Foils are made in the Cluster Mill.", "Default: true"})
         public boolean enableFoilOverhaul = true;
 
-        @Config.Comment({"Coils now requires Mic foils", "Default: true"})
+        @Config.Comment({"Coils now requires Mica foils", "Default: true"})
         public boolean enableCoilOverhaul = true;
 
-        @Config.Comment({"Magnetic parts need magnetite", "Default: true"})
+        @Config.Comment({"Magnetic parts need Magnetite", "Default: true"})
         public boolean enableMagneticOverhaul = true;
 
         @Config.Comment({"Disable IV+ tier machines", "Default: true"})
