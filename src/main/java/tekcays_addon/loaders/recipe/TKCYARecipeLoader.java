@@ -10,7 +10,6 @@ import tekcays_addon.loaders.recipe.handlers.StorageOverhaul;
 import tekcays_addon.loaders.recipe.removals.RecipesRemovalHandler;
 
 import static gregtech.api.unification.ore.OrePrefix.foil;
-import static gregtech.api.unification.ore.OrePrefix.rotor;
 import static tekcays_addon.common.TKCYAConfigHolder.*;
 
 public class TKCYARecipeLoader {
