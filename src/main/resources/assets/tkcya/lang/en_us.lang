@@ -256,6 +256,13 @@ material.sodium_aluminate=Sodium Aluminate
 material.cryolite=Cryolite
 material.hexafluorosilic_acid=Hexafluorosilic Acid
 
+##ChromiteChain
+material.sodium_chromate=Sodium Chromate
+material.sodium_dichromate=Sodium Dichromate
+material.chromium_oxide=Chromium Oxide
+material.sodium_carbonate=Sodium Carbonate
+material.sodium_sulfate=Sodium Sulfate
+
 #MoreRoastable
 material.kesterite=Kesterite
 material.stannite=Stannite
