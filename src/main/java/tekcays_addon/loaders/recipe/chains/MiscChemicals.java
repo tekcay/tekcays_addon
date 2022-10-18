@@ -2,23 +2,62 @@ package tekcays_addon.loaders.recipe.chains;
 
 
 import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.common.items.TKCYAMetaItems;
 
 import static gregicality.science.api.unification.materials.GCYSMaterials.PotassiumHydroxide;
-import static gregtech.api.recipes.RecipeMaps.CHEMICAL_RECIPES;
+import static gregtech.api.recipes.RecipeMaps.*;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.dust;
+import static tekcays_addon.api.unification.TKCYAMaterials.*;
 
 public class MiscChemicals {
 
     public static void init() {
 
+        ////ACIDS
 
+        //2 KCl + H2SO4 -> 2 HCl + K2SO4
+        CHEMICAL_RECIPES.recipeBuilder().duration(90).EUt(30)
+                .input(dust, RockSalt, 2)
+                .fluidInputs(SulfuricAcid.getFluid(1000))
+                .output(dust, TKCYAMaterials.PotassiumSulfate)
+                .buildAndRegister();
 
         CHEMICAL_RECIPES.recipeBuilder().duration(90).EUt(30)
-                .input(dust, PotassiumHydroxide, 2)
-                .fluidInputs(SulfurDioxide.getFluid(2000))
-                .output(dust, TKCYAMaterials.PotassiumMetaBisulfite)
-                .fluidOutputs(DistilledWater.getFluid(1000))
+                .notConsumable(TKCYAMetaItems.GAS_COLLECTOR.getStackForm())
+                .input(dust, RockSalt, 2)
+                .fluidInputs(SulfuricAcid.getFluid(1000))
+                .output(dust, TKCYAMaterials.PotassiumSulfate)
+                .fluidOutputs(HydrogenChloride.getFluid(2000))
+                .buildAndRegister();
+
+        //2 NaCl + H2SO4 -> 2 HCl + Na2SO4
+        CHEMICAL_RECIPES.recipeBuilder().duration(90).EUt(30)
+                .input(dust, Salt, 2)
+                .fluidInputs(SulfuricAcid.getFluid(1000))
+                .output(dust, TKCYAMaterials.PotassiumSulfate)
+                .buildAndRegister();
+
+        CHEMICAL_RECIPES.recipeBuilder().duration(90).EUt(30)
+                .notConsumable(TKCYAMetaItems.GAS_COLLECTOR.getStackForm())
+                .input(dust, Salt, 2)
+                .fluidInputs(SulfuricAcid.getFluid(1000))
+                .output(dust, TKCYAMaterials.PotassiumSulfate)
+                .fluidOutputs(HydrogenChloride.getFluid(2000))
+                .buildAndRegister();
+
+        //HCl(g) + H2O -> HCl (l)
+        MIXER_RECIPES.recipeBuilder().duration(90).EUt(30)
+                .fluidInputs(HydrogenChloride.getFluid(1000))
+                .fluidInputs(Water.getFluid(1000))
+                .fluidOutputs(HydrochloricAcid.getFluid(1000))
+                .buildAndRegister();
+
+        //HF(g) + H2O -> HF (l)
+        MIXER_RECIPES.recipeBuilder().duration(90).EUt(30)
+                .fluidInputs(HydrogenFluoride.getFluid(1000))
+                .fluidInputs(Water.getFluid(1000))
+                .fluidOutputs(HydrofluoricAcid.getFluid(1000))
                 .buildAndRegister();
 
         /*

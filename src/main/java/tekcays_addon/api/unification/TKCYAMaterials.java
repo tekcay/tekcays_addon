@@ -111,6 +111,7 @@ public class TKCYAMaterials {
     public static Material ChromiumOxide;
     public static Material SodiumCarbonate;
     public static Material SodiumSulfate;
+    public static Material PotassiumSulfate;
     
     /**
      * Alloys

@@ -312,11 +312,17 @@ public class TKCYAMiscMaterials {
                 .build();
         SodiumCarbonate.setFormula("Na2CO3", true);
 
-        SodiumSulfate = new Material.Builder(24172, "sodium_carbonate")
+        SodiumSulfate = new Material.Builder(24172, "sodium_sulfate")
                 .dust()
                 .color(0xdeddd1)
                 .build();
         SodiumSulfate.setFormula("Na2SO4", true);
+
+        PotassiumSulfate = new Material.Builder(24173, "potassium_sulfate")
+                .dust()
+                .color(0xdeddd1)
+                .build();
+        PotassiumSulfate.setFormula("K2SO4", true);
 
 
 
