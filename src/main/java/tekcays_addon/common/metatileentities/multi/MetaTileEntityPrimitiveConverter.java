@@ -1,14 +1,11 @@
 package tekcays_addon.common.metatileentities.multi;
 
-import gregicality.science.api.GCYSValues;
 import gregicality.science.api.metatileentity.multiblock.GCYSMultiblockAbility;
-import gregicality.science.api.recipes.recipeproperties.PressureProperty;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.recipes.Recipe;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.MetaTileEntities;
@@ -89,7 +86,7 @@ public class MetaTileEntityPrimitiveConverter extends NoEnergyPressureMultiblock
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
-        return TKCYATextures.REINFORCED_BRICK;
+        return TKCYATextures.BRICKS[BlockBrick.REINFORCED_BRICK];
     }
 
     @Override

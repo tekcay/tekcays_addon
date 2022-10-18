@@ -2,8 +2,6 @@ package tekcays_addon.common.blocks.blocks;
 
 import gregtech.api.block.VariantBlock;
 import gregtech.api.block.VariantItemBlock;
-import gregtech.api.unification.material.Material;
-import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -43,20 +41,27 @@ public class BlockBrick extends VariantBlock<BlockBrick.BrickType> {
         lines.add(I18n.format("tile.block_brick.tooltip_heat", brickType.brickTemperature));
     }
 
+    public static final int BRICK = 0;
+    public static final int REINFORCED_BRICK = 1;
+    public static final int FIRECLAY_BRICK = 2;
+    public static final int STRONG_BRICK = 3;
+
     public enum BrickType implements IStringSerializable {
 
-        BRICK("brick", 1600),
-        REINFORCED_BRICK("reinforced_brick", 2100),
-        FIRECLAY_BRICK("fireclay_brick", 3600),
-        STRONG_BRICK("strong_brick", 5000);
+        BRICK("brick", 1600, BlockBrick.BRICK),
+        REINFORCED_BRICK("reinforced_brick", 2100, BlockBrick.REINFORCED_BRICK),
+        FIRECLAY_BRICK("fireclay_brick", 3600, BlockBrick.FIRECLAY_BRICK),
+        STRONG_BRICK("strong_brick", 5000, BlockBrick.STRONG_BRICK);
 
 
         private final String name;
         private final int brickTemperature;
+        private final int textureId;
 
-        BrickType(String name, int brickTemperature) {
+        BrickType(String name, int brickTemperature, int textureId) {
             this.name = name;
             this.brickTemperature = brickTemperature;
+            this.textureId = textureId;
         }
 
         @Nonnull
@@ -67,6 +72,10 @@ public class BlockBrick extends VariantBlock<BlockBrick.BrickType> {
 
         public int getBrickTemperature() {
             return brickTemperature;
+        }
+
+        public int getTextureId() {
+            return textureId;
         }
 
     }

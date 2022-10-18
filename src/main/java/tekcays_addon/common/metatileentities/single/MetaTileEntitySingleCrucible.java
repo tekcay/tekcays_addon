@@ -57,7 +57,7 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
 
     protected IHeatContainer heatContainer;
     protected final CrucibleRecipeLogic workable;
-    private final BlockBrick.BrickType brickType;
+    private final BlockBrick.BrickType brick;
     //private final int maxParallel = 8; //TODO
     private final int maxTemp;
     private boolean onChange;
@@ -77,17 +77,17 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
     //private int numberItem;
 
 
-    public MetaTileEntitySingleCrucible(ResourceLocation metaTileEntityId, BlockBrick.BrickType brickType) {
+    public MetaTileEntitySingleCrucible(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick) {
         super(metaTileEntityId);
-        this.brickType = brickType;
-        this.maxTemp = brickType.getBrickTemperature();
+        this.brick = brick;
+        this.maxTemp = brick.getBrickTemperature();
         this.workable = new CrucibleRecipeLogic(this, TKCYARecipeMaps.MELTER_RECIPES);
         initializeInventory();
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
-        return new MetaTileEntitySingleCrucible(metaTileEntityId, brickType);
+        return new MetaTileEntitySingleCrucible(metaTileEntityId, brick);
     }
 
     @Override
@@ -159,7 +159,7 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
 
     @SideOnly(Side.CLIENT)
     protected SimpleOverlayRenderer getBaseRenderer() {
-        return TKCYATextures.BRICKS[0];
+        return TKCYATextures.BRICKS[brick.getTextureId()];
     }
 
     @Override
