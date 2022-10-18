@@ -18,6 +18,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.common.blocks.blocks.BlockBrick;
 
 import javax.annotation.Nonnull;
 
@@ -43,9 +44,8 @@ public class MetaTileEntityPrimitiveBath extends RecipeMapPrimitiveMultiblockCon
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
-        return TKCYATextures.BRICK;
+        return TKCYATextures.BRICKS[BlockBrick.BRICK];
     }
-
 
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {

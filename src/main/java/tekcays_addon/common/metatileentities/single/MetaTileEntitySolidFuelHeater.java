@@ -30,6 +30,7 @@ import tekcays_addon.api.metatileentity.FuelHeater;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.utils.FuelHeaterTiers;
 import tekcays_addon.api.utils.TKCYALog;
+import tekcays_addon.common.blocks.blocks.BlockBrick;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -122,7 +123,7 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
     @Override
     @SideOnly(Side.CLIENT)
     protected SimpleOverlayRenderer getBaseRenderer() {
-        return fuelHeater.equals(FuelHeaterTiers.BRICK) ? TKCYATextures.BRICK : TKCYATextures.STEAM_CASING[fuelHeater.getTextureId()];
+        return fuelHeater.equals(FuelHeaterTiers.BRICK) ? TKCYATextures.BRICKS[BlockBrick.BRICK] : TKCYATextures.STEAM_CASING[fuelHeater.getTextureId()];
     }
 
     //For TOP, needs to implement IFuelable

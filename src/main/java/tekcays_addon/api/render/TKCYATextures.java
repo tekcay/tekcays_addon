@@ -1,12 +1,11 @@
 package tekcays_addon.api.render;
 
-import gregtech.client.renderer.ICubeRenderer;
-import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import tekcays_addon.TekCaysAddon;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.relauncher.Side;
+import tekcays_addon.common.blocks.blocks.BlockBrick;
 
 import static gregtech.client.renderer.texture.cube.OrientedOverlayRenderer.OverlayFace.*;
 import static tekcays_addon.api.utils.HeatersMethods.*;
@@ -34,11 +33,6 @@ public class TKCYATextures {
 
     // Bricks
     public static SimpleOverlayRenderer[] BRICKS = new SimpleOverlayRenderer[4];
-    public static SimpleOverlayRenderer BRICK;
-    public static SimpleOverlayRenderer REINFORCED_BRICK;
-    public static SimpleOverlayRenderer FIRECLAY_BRICK;
-    public static SimpleOverlayRenderer STRONG_BRICK;
-
     public static SimpleOverlayRenderer HALF_BRICK;
 
 
@@ -58,19 +52,11 @@ public class TKCYATextures {
     public static void preInit() {
         // Simple Machines
 
-
-
         //BRICKS
-        BRICKS[0] = new SimpleOverlayRenderer("casings/block_brick/brick");
-        BRICKS[1] = new SimpleOverlayRenderer("casings/block_brick/reinforced_brick");
-        BRICKS[2] = new SimpleOverlayRenderer("casings/block_brick/fireclay_brick");
-        BRICKS[3] = new SimpleOverlayRenderer("casings/block_brick/strong_brick");
-
-
-        BRICK = new SimpleOverlayRenderer("casings/block_brick/brick");
-        REINFORCED_BRICK = new SimpleOverlayRenderer("casings/block_brick/reinforced_brick");
-        FIRECLAY_BRICK = new SimpleOverlayRenderer("casings/block_brick/fireclay_brick");
-        STRONG_BRICK = new SimpleOverlayRenderer("casings/block_brick/strong_brick");
+        BRICKS[BlockBrick.BRICK] = new SimpleOverlayRenderer("casings/block_brick/brick");
+        BRICKS[BlockBrick.REINFORCED_BRICK] = new SimpleOverlayRenderer("casings/block_brick/reinforced_brick");
+        BRICKS[BlockBrick.FIRECLAY_BRICK] = new SimpleOverlayRenderer("casings/block_brick/fireclay_brick");
+        BRICKS[BlockBrick.STRONG_BRICK] = new SimpleOverlayRenderer("casings/block_brick/strong_brick");
 
         HALF_BRICK = new SimpleOverlayRenderer("half_brick");
 
