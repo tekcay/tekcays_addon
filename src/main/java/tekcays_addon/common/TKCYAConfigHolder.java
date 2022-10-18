@@ -7,7 +7,7 @@ import net.minecraftforge.common.config.Config;
 public class TKCYAConfigHolder {
 
 
-    @Config.Comment("Config options applying to all TKCYA Multiblocks")
+    @Config.Comment("Miscellaneaous config options")
     @Config.Name("Miscellaneous")
     public static MiscOverhaul miscOverhaul = new MiscOverhaul();
 
@@ -29,22 +29,25 @@ public class TKCYAConfigHolder {
 
     public static class MiscOverhaul {
 
+        @Config.Comment({"Enables TKCYA custom oregen. You MUST delete the json files in your config/gregtech/worldgen/vein folder."})
+        public boolean enableTKCYACustomOreGen = true;
+
         @Config.Comment({"Foils are made in the Cluster Mill.", "Default: true"})
         public boolean enableFoilOverhaul = true;
 
-        @Config.Comment({"Foils are made in the Cluster Mill.", "Default: true"})
+        @Config.Comment({"Coils now requires Mica foils", "Default: true"})
         public boolean enableCoilOverhaul = true;
 
-        @Config.Comment({"Magnetic parts need magnetite", "Default: true"})
+        @Config.Comment({"Magnetic parts need Magnetite", "Default: true"})
         public boolean enableMagneticOverhaul = true;
 
         @Config.Comment({"Disable IV+ tier machines", "Default: true"})
         public boolean disableHighTierMachines = true;
 
-        @Config.Comment({"Replace normal steel with galvanized steel", "Default: true"})
+        @Config.Comment({"Replace normal steel with galvanized steel in LV components", "Default: true"})
         public boolean enableGalvanizedSteel = true;
 
-        @Config.Comment({"Components can not be made in shaped recipe", "Default: true"})
+        @Config.Comment({"Components can only be made in the assembler", "Default: true"})
         public boolean disableComponentsShapesRecipes = true;
 
         @Config.Comment({"Removes most electrolysis recipes and replaces the GTCEu Electrolyzer with a new one", "Default: true"})
@@ -53,7 +56,7 @@ public class TKCYAConfigHolder {
         @Config.Comment({"Replaces the GTCEu CokeOven with a new one", "Default: true"})
         public boolean enableCokeOvenOverhaul = true;
 
-        @Config.Comment({"Rotors can not be made in extruder anymore, adds a recipe in the assembler", "Default: true"})
+        @Config.Comment({"Rotors can not be made in extruder anymore, they also require curved plates adds a recipe in the assembler", "Default: true"})
         public boolean enableHarderRotors = true;
 
     }

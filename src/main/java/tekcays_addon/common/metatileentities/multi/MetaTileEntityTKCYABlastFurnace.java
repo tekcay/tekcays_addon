@@ -27,6 +27,7 @@ import tekcays_addon.api.capability.impl.NoEnergyMultiblockLogic;
 import tekcays_addon.api.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.recipes.recipeproperties.NoEnergyTemperatureProperty;
+import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
@@ -91,7 +92,7 @@ public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlock
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
-        return getBrickTexture(brick);
+        return TKCYATextures.BRICKS[brick.getTextureId()];
     }
 
     @Override

@@ -55,6 +55,8 @@ public class TKCYAMaterialFlagAddition {
             if (m.hasFlag(GENERATE_ROTOR)) continue;
             if (m.hasFlags(GENERATE_BOLT_SCREW, GENERATE_PLATE)) m.addFlags(GENERATE_CURVED_PLATE);
         }
+
+        Invar.addFlags(GENERATE_ROTOR);
     }
 
     public static void polymersInit() {

@@ -6,10 +6,12 @@ import gregtech.api.worldgen.config.BedrockFluidDepositDefinition;
 import gregtech.api.worldgen.config.OreDepositDefinition;
 import gregtech.api.worldgen.config.WorldGenRegistry;
 import net.minecraftforge.fml.common.Loader;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -66,13 +68,14 @@ public class TKCYAWorldGenRegistry {
             e.printStackTrace();
         }
 
-       TKCYALog.logger.info("Vein Size After Addition: " + WorldGenRegistry.getOreDeposits().size());
+        TKCYALog.logger.info("Vein Size After Addition: " + WorldGenRegistry.getOreDeposits().size());
         TKCYALog.logger.info("Fluid Vein Size After Addition: " + WorldGenRegistry.getBedrockVeinDeposits().size());
 
         TKCYALog.logger.info("Vein Size Before Removals: " + WorldGenRegistry.getOreDeposits().size());
         TKCYALog.logger.info("Fluid Vein Size Before Removals: " + WorldGenRegistry.getBedrockVeinDeposits().size());
-        removeVeins();
-        removeFluidVeins();
+
+        //removeFluidVeins();
+
 
         try {
             WorldGenRegistry.INSTANCE.reinitializeRegisteredVeins();
@@ -80,12 +83,12 @@ public class TKCYAWorldGenRegistry {
             e.printStackTrace();
         }
 
+
 //        TKCYALog.logger.info("Vein Size After Removals: " + WorldGenRegistry.getOreDeposits().size());
 //        TKCYALog.logger.info("Fluid Vein Size After Removals: " + WorldGenRegistry.getBedrockVeinDeposits().size());
     }
 
     public void addVeins() {
-
         for (List<String> folder : oreVeinsToAdd.values()) {
             for (String vein : folder) {
                 WorldGenRegistry.INSTANCE.addVeinDefinitions(new OreDepositDefinition(vein));
@@ -101,16 +104,15 @@ public class TKCYAWorldGenRegistry {
         }
     }
 
-    public void removeVeins() {
-        for (int i = 0; i < WorldGenRegistry.getOreDeposits().size(); i++) {
-            OreDepositDefinition definition = WorldGenRegistry.getOreDeposits().get(i);
+    public void removeVeins(String dimension) throws IOException {
 
-            if (definition.getDepositName().startsWith("overworld")
-            || definition.getDepositName().startsWith("end")
-            || definition.getDepositName().startsWith("nether")) {
-                WorldGenRegistry.INSTANCE.removeVeinDefinitions(definition);
-            }
-        }
+        Path path = Loader.instance().getConfigDir().toPath().resolve(GTValues.MODID).resolve("worldgen").resolve("vein").resolve(dimension);
+
+        Files.walk(path)
+                .sorted(Comparator.reverseOrder())
+                .map(Path::toFile)
+                .forEach(File::delete);
+
     }
 
     public void removeFluidVeins() {
@@ -217,8 +219,7 @@ public class TKCYAWorldGenRegistry {
 
         //String separator = FileSystems.getDefault().getSeparator(); !!!! Works on Linux, on Windows it returns <\> !!!!
 
-        ////////
-        String separator = "\\";
+        String separator = System.getProperty("os.name").contains("Windows") ? "/" : FileSystems.getDefault().getSeparator();
         String[] split = path.toString().split("/");
         int count = split.length - 1;
 

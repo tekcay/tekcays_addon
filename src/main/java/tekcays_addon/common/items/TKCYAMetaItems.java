@@ -27,6 +27,9 @@ public final class TKCYAMetaItems {
     //Mixtures
     public static MetaItem<?>.MetaValueItem DUST_MIXTURE;
 
+    //Covers
+    public static MetaItem<?>.MetaValueItem COVER_TEMPERATURE_DETECTOR;
+
 
     public static void init() {
         TKCYAMetaItem1 metaItem1 = new TKCYAMetaItem1();

@@ -1,5 +1,6 @@
 package tekcays_addon.common.metatileentities;
 
+import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
@@ -10,11 +11,9 @@ import gregtech.common.metatileentities.storage.MetaTileEntityDrum;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.TekCaysAddon;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
-
-
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.unification.TKCYAMaterials;
-import tekcays_addon.api.utils.TKCYALog;
+import tekcays_addon.api.utils.FuelHeaterTiers;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
@@ -22,17 +21,20 @@ import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.metatileentities.multi.*;
 
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityHeatAcceptor;
-import tekcays_addon.common.metatileentities.single.MetaTileEntityElectricHeater;
+import tekcays_addon.common.metatileentities.single.*;
 
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickFluidHatch;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickItemBus;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityPrimitiveMufflerHatch;
+import tekcays_addon.common.metatileentities.single.MetaTileEntitySingleCrucible;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamAirCompressor;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamAutoclave;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamCooler;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
 import static tekcays_addon.api.utils.BlastFurnaceUtils.BRICKS;
+import static tekcays_addon.api.utils.FuelHeaterTiers.BRICK;
+import static tekcays_addon.api.utils.FuelHeaterTiers.FUEL_HEATERS;
 import static tekcays_addon.api.utils.TKCYAValues.DRUM_MATERIALS;
 
 public class TKCYAMetaTileEntities {
@@ -61,6 +63,12 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityPressurizedCrackingUnit PRESSURIZED_CRACKING_UNIT;
     public static MetaTileEntitySteamAutoclave STEAM_AUTOCLAVE;
 
+    public static MetaTileEntitySolidFuelHeater[] SOLID_FUEL_HEATER = new MetaTileEntitySolidFuelHeater[FUEL_HEATERS.size()];
+    public static MetaTileEntityLiquidFuelHeater[] LIQUID_FUEL_HEATER = new MetaTileEntityLiquidFuelHeater[FUEL_HEATERS.size()];
+    public static MetaTileEntityFluidizedHeater[] FLUIDIZED_FUEL_HEATER = new MetaTileEntityFluidizedHeater[FUEL_HEATERS.size()];
+    public static MetaTileEntityGasHeater[] GAS_FUEL_HEATER = new MetaTileEntityGasHeater[FUEL_HEATERS.size()];
+
+
     public static MetaTileEntityAdvancedMelter ADVANCED_MELTER;
 
     public static MetaTileEntityRoastingOven ROASTING_OVEN;
@@ -77,6 +85,8 @@ public class TKCYAMetaTileEntities {
 
     // Drums
     public static MetaTileEntityDrum[] DRUMS = new MetaTileEntityDrum[DRUM_MATERIALS.size()];
+
+    public static MetaTileEntitySingleCrucible[] SINGLE_CRUCIBLE = new MetaTileEntitySingleCrucible[4];
 
     //Tanks
     public static TKCYAMetaTileEntityMultiblockTank WOODEN_TANK;
@@ -215,9 +225,31 @@ public class TKCYAMetaTileEntities {
         ELECTRIC_HEATER[4] = registerMetaTileEntity(11174, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.iv"), 5));
 
         HEAT_ACCEPTOR[0] = registerMetaTileEntity(11175, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.lv"), 1));
-        ADVANCED_MELTER = registerMetaTileEntity(1116, new MetaTileEntityAdvancedMelter(tkcyaId("avcanced_melter")));
+        ADVANCED_MELTER = registerMetaTileEntity(11176, new MetaTileEntityAdvancedMelter(tkcyaId("advanced_melter")));
 
-        STEAM_AUTOCLAVE = registerMetaTileEntity(12010, new MetaTileEntitySteamAutoclave(tkcyaId("steam_autoclave"), true));
+        //id 11177 to
+        SOLID_FUEL_HEATER[0] = registerMetaTileEntity(11177, new MetaTileEntitySolidFuelHeater(tkcyaId( "brick_solid_fuel_heater"), BRICK));
+
+        for (int i = 1; i < FUEL_HEATERS.size(); i++) {
+            int idToStart = 11178;
+            FuelHeaterTiers fuelHeater = FUEL_HEATERS.get(i);
+            String materialName = fuelHeater.getMaterial().getUnlocalizedName();
+            SOLID_FUEL_HEATER[i] = registerMetaTileEntity(idToStart + i, new MetaTileEntitySolidFuelHeater(tkcyaId( materialName + "_solid_fuel_heater"), fuelHeater));
+            LIQUID_FUEL_HEATER[i] = registerMetaTileEntity(idToStart + i + FUEL_HEATERS.size(), new MetaTileEntityLiquidFuelHeater(tkcyaId(materialName + "_liquid_fuel_heater"), fuelHeater));
+            FLUIDIZED_FUEL_HEATER[i] = registerMetaTileEntity(idToStart + i + FUEL_HEATERS.size() * 2, new MetaTileEntityFluidizedHeater(tkcyaId(materialName + "_fluidized_fuel_heater"), fuelHeater));
+            GAS_FUEL_HEATER[i] = registerMetaTileEntity(idToStart + i + FUEL_HEATERS.size() * 3, new MetaTileEntityGasHeater(tkcyaId(materialName + "_gas_fuel_heater"), fuelHeater));
+
+        }
+
+
+
+
+        for (int i = 0; i < BRICKS.size(); i++) {
+            BlockBrick.BrickType brick = BRICKS.get(i);
+            SINGLE_CRUCIBLE[i] = registerMetaTileEntity(11300 + i, new MetaTileEntitySingleCrucible(tkcyaId(brick.getName() + "_single_crucible"), brick));
+        }
+
+        STEAM_AUTOCLAVE = registerMetaTileEntity(12020, new MetaTileEntitySteamAutoclave(tkcyaId("steam_autoclave"), true));
 
     }
 

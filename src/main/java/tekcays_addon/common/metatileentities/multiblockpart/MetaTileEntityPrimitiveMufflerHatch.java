@@ -6,9 +6,8 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMufflerHatch;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.ItemStackHandler;
+import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
-
-import static tekcays_addon.api.utils.BlastFurnaceUtils.getBrickTexture;
 
 public class MetaTileEntityPrimitiveMufflerHatch extends MetaTileEntityMufflerHatch {
 
@@ -30,7 +29,7 @@ public class MetaTileEntityPrimitiveMufflerHatch extends MetaTileEntityMufflerHa
 
     @Override
     public ICubeRenderer getBaseTexture() {
-        return getBrickTexture(brick);
+        return TKCYATextures.BRICKS[brick.getTextureId()];
     }
 
     public BlockBrick.BrickType getBrick() {

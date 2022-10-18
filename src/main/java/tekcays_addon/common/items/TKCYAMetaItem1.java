@@ -29,5 +29,8 @@ public class TKCYAMetaItem1 extends StandardMetaItem {
         //Mixtures
         DUST_MIXTURE = addItem(6, "dust_mixture");
 
+        //Covers
+        COVER_TEMPERATURE_DETECTOR = addItem(7, "cover.temperature_detector");
+
     }
 }

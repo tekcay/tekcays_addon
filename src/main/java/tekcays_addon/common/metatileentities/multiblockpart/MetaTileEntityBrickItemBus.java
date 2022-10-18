@@ -8,12 +8,11 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
 import javax.annotation.Nullable;
 import java.util.List;
-
-import static tekcays_addon.api.utils.BlastFurnaceUtils.getBrickTexture;
 
 public class MetaTileEntityBrickItemBus extends MetaTileEntityItemBus {
 
@@ -36,7 +35,7 @@ public class MetaTileEntityBrickItemBus extends MetaTileEntityItemBus {
 
     @Override
     public ICubeRenderer getBaseTexture() {
-        return getBrickTexture(brick);
+        return TKCYATextures.BRICKS[brick.getTextureId()];
     }
 
     private int getInventorySize() {

@@ -1,8 +1,6 @@
 package tekcays_addon.api.utils;
 
 import gregtech.api.pattern.TraceabilityPredicate;
-import gregtech.client.renderer.ICubeRenderer;
-import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickFluidHatch;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickItemBus;
@@ -23,16 +21,6 @@ public class BlastFurnaceUtils {
        add(BlockBrick.BrickType.STRONG_BRICK);
     }};
 
-
-    public static ICubeRenderer getBrickTexture(BlockBrick.BrickType brick) {
-
-        if (brick.equals(BlockBrick.BrickType.BRICK)) return TKCYATextures.BRICK;
-        if (brick.equals(BlockBrick.BrickType.FIRECLAY_BRICK)) return TKCYATextures.FIRECLAY_BRICK;
-        if (brick.equals(BlockBrick.BrickType.REINFORCED_BRICK)) return TKCYATextures.REINFORCED_BRICK;
-        if (brick.equals(BlockBrick.BrickType.STRONG_BRICK)) return TKCYATextures.STRONG_BRICK;
-
-        return TKCYATextures.BRICK;
-    }
 
     public static TraceabilityPredicate getInputBrickFluidHatch(BlockBrick.BrickType brick) {
         for (MetaTileEntityBrickFluidHatch mte : BRICK_IMPORT_FLUID_HATCH) {
