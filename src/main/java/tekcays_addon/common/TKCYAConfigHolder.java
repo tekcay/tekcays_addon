@@ -29,6 +29,9 @@ public class TKCYAConfigHolder {
 
     public static class MiscOverhaul {
 
+        @Config.Comment({"Enables TKCYA custom oregen. You MUST delete the vein folder in your config/gregtech/worldgen folder."})
+        public boolean enableTKCYACustomOreGen = true;
+
         @Config.Comment({"Foils are made in the Cluster Mill.", "Default: true"})
         public boolean enableFoilOverhaul = true;
 

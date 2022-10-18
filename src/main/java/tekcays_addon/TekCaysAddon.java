@@ -9,6 +9,7 @@ import tekcays_addon.api.utils.FuelWithProperties;
 import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.api.worldgen.TKCYAWorldGenRegistry;
 import tekcays_addon.common.CommonProxy;
+import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.covers.Covers;
 import tekcays_addon.common.items.TKCYAMetaItems;
@@ -48,10 +49,12 @@ public class TekCaysAddon {
 
     @Mod.EventHandler
     public void onInit(FMLInitializationEvent event) {
-        try {
-            TKCYAWorldGenRegistry.INSTANCE.addRemoveVeins();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (TKCYAConfigHolder.miscOverhaul.enableTKCYACustomOreGen) {
+            try {
+                TKCYAWorldGenRegistry.INSTANCE.addRemoveVeins();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         /* Start Cover Definition Registration */
         Covers.init();
