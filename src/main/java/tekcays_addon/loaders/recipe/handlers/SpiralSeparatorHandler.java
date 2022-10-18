@@ -24,17 +24,7 @@ public class SpiralSeparatorHandler {
                     .EUt(120)
                     .buildAndRegister();
         }
-        /*
-        //Exemple recipe
-        TKCYARecipeMaps.SPIRAL_SEPARATION.recipeBuilder()
-                .inputs(TKCYAMetaItems.DUST_MIXTURE.getStackForm())
-                .output(dust, Stone)
-                .output(dust, Soapstone)
-                .duration(80)
-                .EUt(120)
-                .buildAndRegister();
 
-         */
+
     }
-
 }

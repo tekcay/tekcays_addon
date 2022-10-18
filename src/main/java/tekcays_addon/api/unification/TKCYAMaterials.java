@@ -97,6 +97,13 @@ public class TKCYAMaterials {
 
     //Roasting outputs
     public static Material Cuprite;
+
+    //BauxiteChain
+    public static Material PotassiumAluminate;
+    public static Material SodiumAluminate;
+    public static Material AluminiumFluoride;
+    public static Material Cryolite;
+    public static Material HexafluorosilicAcid;
     
     /**
      * Alloys

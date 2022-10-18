@@ -33,6 +33,9 @@ public class TKCYAMaterialFlagAddition {
         Sphalerite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
         ZincOxide.addFlags(DISABLE_DECOMPOSITION);
 
+        //For Bauxite chain
+        Bauxite.addFlags(DISABLE_DECOMPOSITION);
+
         //For Roasting
         for (RoastableMaterial rm : ROASTABLE_MATERIALS) {
             Material m = rm.getMaterial();

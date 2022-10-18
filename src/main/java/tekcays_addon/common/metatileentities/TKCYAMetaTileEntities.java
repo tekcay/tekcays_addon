@@ -28,6 +28,7 @@ import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickI
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityPrimitiveMufflerHatch;
 import tekcays_addon.common.metatileentities.single.MetaTileEntitySingleCrucible;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamAirCompressor;
+import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamAutoclave;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamCooler;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
@@ -60,10 +61,13 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityAdvancedElectrolyzer ADVANCED_ELECTROLYZER;
     public static MetaTileEntityFilter FILTER;
     public static MetaTileEntityPressurizedCrackingUnit PRESSURIZED_CRACKING_UNIT;
+    public static MetaTileEntitySteamAutoclave STEAM_AUTOCLAVE;
+
     public static MetaTileEntitySolidFuelHeater[] SOLID_FUEL_HEATER = new MetaTileEntitySolidFuelHeater[FUEL_HEATERS.size()];
     public static MetaTileEntityLiquidFuelHeater[] LIQUID_FUEL_HEATER = new MetaTileEntityLiquidFuelHeater[FUEL_HEATERS.size()];
     public static MetaTileEntityFluidizedHeater[] FLUIDIZED_FUEL_HEATER = new MetaTileEntityFluidizedHeater[FUEL_HEATERS.size()];
     public static MetaTileEntityGasHeater[] GAS_FUEL_HEATER = new MetaTileEntityGasHeater[FUEL_HEATERS.size()];
+
 
     public static MetaTileEntityAdvancedMelter ADVANCED_MELTER;
 
@@ -244,6 +248,8 @@ public class TKCYAMetaTileEntities {
             BlockBrick.BrickType brick = BRICKS.get(i);
             SINGLE_CRUCIBLE[i] = registerMetaTileEntity(11300 + i, new MetaTileEntitySingleCrucible(tkcyaId(brick.getName() + "_single_crucible"), brick));
         }
+
+        STEAM_AUTOCLAVE = registerMetaTileEntity(12020, new MetaTileEntitySteamAutoclave(tkcyaId("steam_autoclave"), true));
 
     }
 
