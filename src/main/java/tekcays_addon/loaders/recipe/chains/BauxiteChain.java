@@ -101,11 +101,11 @@ public class BauxiteChain {
         //STEP 4
         // 10 Al2O3 + 3 C + AlF3 + Cryolite -> 4 Al + 9 CO2 + F2
         ELECTROLYSIS.recipeBuilder()
-                .input(ingot, Alumina, 10)
                 .input(dust, Carbon, 3)
                 .notConsumable(TKCYAMetaItems.GAS_COLLECTOR.getStackForm())
                 .inputNBT(GTRecipeItemInput.getOrCreate(electrodeCarbon).setNonConsumable(), NBTMatcher.ANY, NBTCondition.ANY)
                 .output(dust, Aluminium, 4)
+                .fluidInputs(Alumina.getFluid(GTValues.L * 10))
                 .fluidInputs(AluminiumFluoride.getFluid(4))
                 .fluidInputs(Cryolite.getFluid(2))
                 .fluidOutputs(CarbonDioxide.getFluid(9000))
@@ -114,10 +114,10 @@ public class BauxiteChain {
                 .buildAndRegister();
 
         ELECTROLYSIS.recipeBuilder()
-                .input(ingot, Alumina, 10)
                 .input(dust, Carbon, 3)
                 .inputNBT(GTRecipeItemInput.getOrCreate(electrodeCarbon).setNonConsumable(), NBTMatcher.ANY, NBTCondition.ANY)
                 .output(dust, Aluminium, 4)
+                .fluidInputs(Alumina.getFluid(GTValues.L * 10))
                 .fluidInputs(AluminiumFluoride.getFluid(4))
                 .fluidInputs(Cryolite.getFluid(2))
                 .duration(30 * SECOND)
