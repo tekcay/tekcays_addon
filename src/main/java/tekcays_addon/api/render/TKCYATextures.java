@@ -22,6 +22,9 @@ public class TKCYATextures {
 
     public static OrientedOverlayRenderer CASTING_TABLE_OVERLAY = new OrientedOverlayRenderer("machines/casting_table", FRONT);
 
+    //Casings
+    public static SimpleOverlayRenderer MONEL;
+
     //MeltingOverhaul
     public static OrientedOverlayRenderer PRIMITIVE_MELTER_OVERLAY = new OrientedOverlayRenderer("multiblocks/primitive", FRONT);
     public static OrientedOverlayRenderer ELECTRIC_MELTER_OVERLAY = new OrientedOverlayRenderer("multiblocks/electric_melter", FRONT);
@@ -51,6 +54,9 @@ public class TKCYATextures {
 
     public static void preInit() {
         // Simple Machines
+
+        //CASINGS
+        MONEL = new SimpleOverlayRenderer("casings/large_multiblock_casing/monel_casing");
 
         //BRICKS
         BRICKS[BlockBrick.BRICK] = new SimpleOverlayRenderer("casings/block_brick/brick");

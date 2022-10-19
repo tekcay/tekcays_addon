@@ -20,6 +20,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import tekcays_addon.api.capability.impl.NoOverclockLogic;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.common.blocks.TKCYAMetaBlocks;
+import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 
@@ -97,11 +100,11 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
-        return Textures.FROST_PROOF_CASING;
+        return TKCYATextures.MONEL;
     }
 
     protected IBlockState getCasingState() {
-        return MetaBlocks.METAL_CASING.getState(MetalCasingType.ALUMINIUM_FROSTPROOF);
+        return TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.MONEL_CASING);
     }
 
     @Nonnull
