@@ -77,6 +77,7 @@ public class TKCYAMetaTileEntities {
 
     //Blast Furnaces
     public static MetaTileEntityTKCYABlastFurnace[] BLAST_FURNACE = new MetaTileEntityTKCYABlastFurnace[BRICKS.size()];
+    public static MetaTileEntityAdvancedBlastFurnace[] ADVANCED_BLAST_FURNACE = new MetaTileEntityAdvancedBlastFurnace[BRICKS.size()];
     public static MetaTileEntityBrickFluidHatch[] BRICK_IMPORT_FLUID_HATCH = new MetaTileEntityBrickFluidHatch[BRICKS.size()];
     public static MetaTileEntityBrickFluidHatch[] BRICK_EXPORT_FLUID_HATCH = new MetaTileEntityBrickFluidHatch[BRICKS.size()];
     public static MetaTileEntityBrickItemBus[] BRICK_EXPORT_ITEM_BUS = new MetaTileEntityBrickItemBus[BRICKS.size()];
@@ -144,6 +145,7 @@ public class TKCYAMetaTileEntities {
             for (int i = 0; i < BRICKS.size(); i++) {
                 BlockBrick.BrickType brick = BRICKS.get(i);
                 BLAST_FURNACE[i] = registerMetaTileEntity(11051 + i, new MetaTileEntityTKCYABlastFurnace(tkcyaId(brick.getName() + "_blast_furnace"), brick));
+                ADVANCED_BLAST_FURNACE[i] = registerMetaTileEntity(12100 + i, new MetaTileEntityAdvancedBlastFurnace(tkcyaId(brick.getName() + "_advanced_blast_furnace"), brick));
                 BRICK_IMPORT_FLUID_HATCH[i] = registerMetaTileEntity(11055 + i, new MetaTileEntityBrickFluidHatch(tkcyaId(brick.getName() + "_import_fluid_hatch"), false, brick));
                 BRICK_EXPORT_FLUID_HATCH[i] = registerMetaTileEntity(11059 + i, new MetaTileEntityBrickFluidHatch(tkcyaId(brick.getName() + "_export_fluid_hatch"), true, brick));
                 BRICK_EXPORT_ITEM_BUS[i] = registerMetaTileEntity(11063 + i, new MetaTileEntityBrickItemBus(tkcyaId(brick.getName() + "_export_item_bus"), true, brick));

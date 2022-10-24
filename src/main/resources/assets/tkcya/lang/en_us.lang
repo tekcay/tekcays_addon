@@ -82,6 +82,12 @@ tkcya.machine.fireclay_brick_blast_furnace.name=Fireclay Brick Blast Furnace
 tkcya.machine.reinforced_brick_blast_furnace.name=Reinforced Brick Blast Furnace
 tkcya.machine.strong_brick_blast_furnace.name=Strong Brick Blast Furnace
 
+#Advanced Blast Furnaces
+tkcya.machine.brick_advanced_blast_furnace.name=Brick Advanced Blast Furnace
+tkcya.machine.fireclay_brick_advanced_blast_furnace.name=Fireclay Brick Advanced Blast Furnace
+tkcya.machine.reinforced_brick_advanced_blast_furnace.name=Reinforced Brick Advanced Blast Furnace
+tkcya.machine.strong_brick_advanced_blast_furnace.name=Strong Brick Advanced Blast Furnace
+
 #BlastFurnace Hatches
 tkcya.machine.brick_import_fluid_hatch.name=Brick Import Fluid Hatch
 tkcya.machine.fireclay_brick_import_fluid_hatch.name=Fireclay Brick Import Fluid Hatch
@@ -114,6 +120,9 @@ tkcya.machine.brick_single_crucible.name=Brick Crucible
 tkcya.machine.fireclay_brick_single_crucible.name=Fireclay Brick Crucible
 tkcya.machine.reinforced_brick_single_crucible.name=Reinforced Brick Crucible
 tkcya.machine.strong_brick_single_crucible.name=Strong Brick Crucible
+
+#HeatAcceptors
+tkcya.machine.heat_acceptor.lv.name=Heat Acceptor
 
 tkcya.machine.crystallizer.name=Crystallizer
 tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer

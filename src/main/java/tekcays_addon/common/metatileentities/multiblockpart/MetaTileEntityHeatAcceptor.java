@@ -47,6 +47,10 @@ public class MetaTileEntityHeatAcceptor extends MetaTileEntityMultiblockPart imp
         return new MetaTileEntityHeatAcceptor(metaTileEntityId, this.getTier());
     }
 
+    public IHeatContainer getHeatContainer() {
+        return heatContainer;
+    }
+
     @Override
     public EnumFacing getFrontFacing() {
         return EnumFacing.DOWN;
