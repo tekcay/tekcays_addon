@@ -1,7 +1,6 @@
 package tekcays_addon.api.unification;
 
 import gregtech.api.unification.material.Material;
-import tekcays_addon.api.unification.material.info.TKCYAChemicalFormula;
 import tekcays_addon.api.unification.material.materials.*;
 
 public class TKCYAMaterials {
@@ -32,8 +31,6 @@ public class TKCYAMaterials {
         // Flags
         TKCYAMaterialFlagAddition.init();
         TKCYAMaterialFlagAddition.polymersInit();
-
-        TKCYAChemicalFormula.modifyChemicalFormula();
 
     }
 
