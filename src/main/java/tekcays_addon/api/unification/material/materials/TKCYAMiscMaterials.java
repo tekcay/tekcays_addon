@@ -287,8 +287,59 @@ public class TKCYAMiscMaterials {
                 .build();
         HexafluorosilicAcid.setFormula("H2SiF6", true);
 
+        Dihydrogen = new Material.Builder(24168, "dihydrogen")
+                .fluid(FluidTypes.GAS, true)
+                .fluidTemp(298)
+                .color((Hydrogen.getMaterialRGB()))
+                .build();
+        Dihydrogen.setFormula("H2", true);
 
+        Dioxygen = new Material.Builder(24169, "dioxygen")
+                .fluid(FluidTypes.GAS, true)
+                .fluidTemp(298)
+                .color((Oxygen.getMaterialRGB()))
+                .build();
+        Dioxygen.setFormula("O2", true);
 
+        Dinitrogen = new Material.Builder(24170, "dinitrogen")
+                .fluid(FluidTypes.GAS, true)
+                .fluidTemp(298)
+                .color((Nitrogen.getMaterialRGB()))
+                .build();
+        Dinitrogen.setFormula("N2", true);
+
+        Difluorine = new Material.Builder(24171, "difluorine")
+                .fluid(FluidTypes.GAS, true)
+                .fluidTemp(298)
+                .color((Fluorine.getMaterialRGB()))
+                .build();
+        Difluorine.setFormula("F2", true);
+
+        Dichlorine = new Material.Builder(24172, "dichlorine")
+                .fluid(FluidTypes.GAS, true)
+                .fluidTemp(298)
+                .color((Chlorine.getMaterialRGB()))
+                .build();
+        Dichlorine.setFormula("Cl2", true);
+
+        Dibromine = new Material.Builder(24173, "dibromine")
+                .fluid(FluidTypes.LIQUID, true)
+                .fluidTemp(298)
+                .color((Bromine.getMaterialRGB()))
+                .build();
+        Dibromine.setFormula("Br2", true);
+
+        Diodine = new Material.Builder(24174, "diodine")
+                .dust()
+                .color((Iodine.getMaterialRGB()))
+                .build();
+        Diodine.setFormula("I2", true);
+
+        Octasulfur = new Material.Builder(24175, "octasulfur")
+                .dust()
+                .color((Sulfur.getMaterialRGB()))
+                .build();
+        Octasulfur.setFormula("S8", true);
     }
 
 }
