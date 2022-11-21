@@ -19,8 +19,6 @@ public class HeatContainerList implements IHeatContainer {
             int currentHeat = heatContainer.getHeat();
             int maxHeat = heatContainer.getMaxHeat();
 
-
-
             if (amount > 0) {
                 int diff = maxHeat - currentHeat - amount;
                 if (diff < 0) {
