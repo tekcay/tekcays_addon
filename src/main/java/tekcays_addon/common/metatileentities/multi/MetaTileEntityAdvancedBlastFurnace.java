@@ -1,5 +1,6 @@
 package tekcays_addon.common.metatileentities.multi;
 
+import gregicality.science.api.GCYSValues;
 import gregtech.api.block.IHeatingCoilBlockStats;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -30,6 +31,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.IHeatMachine;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
+import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.capability.impl.HeatContainerMultiblockRecipeLogic;
 import tekcays_addon.api.metatileentity.multiblock.HeatContainerMultiblockController;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
@@ -54,6 +56,12 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerMultiblockC
     private int maxTemp;
     private IHeatContainer heatContainer;
     private int blastFurnaceTemperature;
+    private int currentHeat;
+    private int currentTemp;
+    private final int HEAT_MULTIPLIER = 24;
+    private final int HEAT_DROP = 10000;
+    private final int HEAT_COOL = -100;
+    private boolean onChange;
 
     public MetaTileEntityAdvancedBlastFurnace(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick) {
         super(metaTileEntityId, HEATING);
@@ -61,6 +69,7 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerMultiblockC
         this.maxTemp = brick.getBrickTemperature();
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
         this.recipeMapWorkable = new AdvancedBlastFurnaceLogic(this);
+        this.heatContainer = new HeatContainer(this, 0, 200000, maxTemp);
     }
 
     @Override
@@ -143,11 +152,51 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerMultiblockC
         return this.brick;
     }
 
+    private void actualizeTemperature() {
+        heatContainer.setTemperature(GCYSValues.EARTH_TEMPERATURE + currentHeat / HEAT_MULTIPLIER);
+    }
+
     @Override
     public void update() {
-        //getGlobalHeat();
+        super.update();
+
+        int previousHeat = currentHeat;
+        currentTemp = heatContainer.getTemperature();
+        currentHeat = heatContainer.getHeat();
+        pushFluidsIntoNearbyHandlers(getFrontFacing());
+
+        //Loses heat over time if no more heat heat is provided
+        if (getOffsetTimer() % 20 == 0) {
+            if (previousHeat == currentHeat && currentTemp > GCYSValues.EARTH_TEMPERATURE) {
+                heatContainer.changeHeat(HEAT_COOL,false);
+            }
+        }
+
+        if (currentTemp >= maxTemp) {
+            this.setOnFire(100);
+            this.doExplosion(0.1f);
+        }
+
+        if (currentHeat == 0) {
+            if (currentTemp > GCYSValues.EARTH_TEMPERATURE) {
+                if (getOffsetTimer() % 20 == 0) currentTemp -= 1;
+            } else heatContainer.setTemperature(GCYSValues.EARTH_TEMPERATURE);
+            return;
+        }
+
+        if (onChange) {
+            heatContainer.changeHeat(-HEAT_DROP,false);
+            actualizeTemperature();
+            onChange = false;
+            return;
+        }
+
+        if (this.recipeMapWorkable.isWorking() && this.recipeMapWorkable.getProgress() == 1) onChange = true;
+
+        actualizeTemperature();
 
     }
+
 
     @Override
     protected BlockPattern createStructurePattern() {
