@@ -8,16 +8,16 @@ import net.minecraft.util.ResourceLocation;
 import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.IHeatMachine;
 import tekcays_addon.api.capability.impl.HeatContainerList;
-import tekcays_addon.api.capability.impl.HeatMultiblockRecipeLogic;
+import tekcays_addon.api.capability.impl.HeatContainerListMultiblockRecipeLogic;
 
 
-public abstract class HeatMultiblockController extends RecipeMapMultiblockController implements IHeatMachine {
+public abstract class HeatContainerListMultiblockController extends RecipeMapMultiblockController implements IHeatMachine {
 
     private IHeatContainer heatContainer;
 
-    public HeatMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
+    public HeatContainerListMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
         super(metaTileEntityId, recipeMap);
-        this.recipeMapWorkable = new HeatMultiblockRecipeLogic(this);
+        this.recipeMapWorkable = new HeatContainerListMultiblockRecipeLogic(this);
         resetTileAbilities();
     }
 

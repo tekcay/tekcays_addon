@@ -29,9 +29,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.IHeatMachine;
-import tekcays_addon.api.capability.TKCYATileCapabilities;;
-import tekcays_addon.api.capability.impl.HeatMultiblockRecipeLogic;
-import tekcays_addon.api.metatileentity.multiblock.HeatMultiblockController;
+import tekcays_addon.api.capability.TKCYATileCapabilities;
+import tekcays_addon.api.capability.impl.HeatContainerMultiblockRecipeLogic;
+import tekcays_addon.api.metatileentity.multiblock.HeatContainerMultiblockController;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.api.recipes.recipeproperties.NoEnergyTemperatureProperty;
 import tekcays_addon.api.render.TKCYATextures;
@@ -46,7 +46,7 @@ import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.recipes.TKCYARecipeMaps.HEATING;
 import static tekcays_addon.api.utils.BlastFurnaceUtils.*;
 
-public class MetaTileEntityAdvancedBlastFurnace extends HeatMultiblockController implements IHeatMachine {
+public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerMultiblockController implements IHeatMachine {
 
     private final BlockBrick.BrickType brick;
     private final IBlockState iBlockState;
@@ -159,7 +159,7 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatMultiblockController
                 .aisle("#YYY#", "Y###Y", "Y#P#Y", "Y###Y", "#YYY#").setRepeatable(1, 11)
                 .aisle("#YYY#", "YOOOY", "YOUOY", "YOOOY", "#YYY#")
                 .where('S', selfPredicate())
-                .where('H', abilities(TKCYAMultiblockAbility.HEAT_CONTAINER))
+                .where('H', abilities(TKCYAMultiblockAbility.HEAT_CONTAINER).setExactLimit(1).or(states(getCasingState())))
                 .where('C', heatingCoils())
                 .where('Y', states(getCasingState()))
                 .where('X', states(getCasingState())
@@ -225,9 +225,9 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatMultiblockController
         return this.heatContainer;
     }
 
-    private class AdvancedBlastFurnaceLogic extends HeatMultiblockRecipeLogic implements IHeatMachine {
+    private class AdvancedBlastFurnaceLogic extends HeatContainerMultiblockRecipeLogic implements IHeatMachine {
 
-        AdvancedBlastFurnaceLogic(HeatMultiblockController tileEntity) {
+        AdvancedBlastFurnaceLogic(HeatContainerMultiblockController tileEntity) {
             super(tileEntity);
         }
 

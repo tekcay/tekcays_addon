@@ -11,11 +11,11 @@ import tekcays_addon.api.recipes.recipeproperties.HeatProperty;
 
 import javax.annotation.Nonnull;
 
-public class HeatMultiblockRecipeLogic extends MultiblockRecipeLogic {
+public class HeatContainerListMultiblockRecipeLogic extends MultiblockRecipeLogic {
 
     private int recipeHeat = 0;
 
-    public HeatMultiblockRecipeLogic(RecipeMapMultiblockController tileEntity) {
+    public HeatContainerListMultiblockRecipeLogic(RecipeMapMultiblockController tileEntity) {
         super(tileEntity);
     }
 
