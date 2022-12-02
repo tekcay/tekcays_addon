@@ -11,6 +11,10 @@ public class TKCYAConfigHolder {
     @Config.Name("Miscellaneous")
     public static MiscOverhaul miscOverhaul = new MiscOverhaul();
 
+    @Config.Comment("Machines options")
+    @Config.Name("MachinesOptions")
+    public static MachinesOptions machinesOptions = new MachinesOptions();
+
     @Config.Comment("Config options applying to all TKCYA Multiblocks")
     @Config.Name("Melting overhaul")
     public static MeltingOverhaul meltingOverhaul = new MeltingOverhaul();
@@ -58,6 +62,13 @@ public class TKCYAConfigHolder {
 
         @Config.Comment({"Rotors can not be made in extruder anymore, they also require curved plates adds a recipe in the assembler", "Default: true"})
         public boolean enableHarderRotors = true;
+
+    }
+
+    public static class MachinesOptions {
+
+        @Config.Comment({"Blast furnace can take fire and explode", "Default: true"})
+        public boolean enableBlastFurnaceFireExplosion= true;
 
     }
 

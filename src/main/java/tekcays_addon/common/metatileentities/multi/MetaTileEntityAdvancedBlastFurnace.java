@@ -15,6 +15,7 @@ import gregtech.api.recipes.Recipe;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
+import gregtech.common.ConfigHolder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -37,6 +38,7 @@ import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.api.recipes.recipeproperties.NoEnergyTemperatureProperty;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.utils.TKCYALog;
+import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
@@ -109,6 +111,7 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.2"));
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.3", "2"));
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.4", brick.getBrickTemperature()));
+        tooltip.add(I18n.format("tekcays_addon.machine.temperature_explode.tooltitp"));
     }
 
     @Override
@@ -188,7 +191,7 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
         currentTemp = heatContainer.getTemperature();
         currentHeat = heatContainer.getHeat();
 
-        if (currentTemp >= maxTemp) {
+        if (currentTemp >= maxTemp && TKCYAConfigHolder.machinesOptions.enableBlastFurnaceFireExplosion) {
             this.setOnFire(100);
             this.doExplosion(0.1f);
         }

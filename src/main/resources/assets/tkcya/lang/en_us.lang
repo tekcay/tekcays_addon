@@ -340,6 +340,9 @@ item.material.oreprefix.curvedPlate=%s Curved Plate
 
 #Tooltips
 
+#Temperature fire
+tekcays_addon.machine.temperature_explode.tooltitp=Catches §cFIRE§7 and §cEXPLODES§7 if too hot !
+
 #Heaters
 tkcya.machine.liquid_fuel_heater.tooltip=§bRecipe:§7 Consumes Creosote.
 tkcya.machine.solid_fuel_heater.tooltip=§bRecipe:§7 Consumes solid fuel like coal.
