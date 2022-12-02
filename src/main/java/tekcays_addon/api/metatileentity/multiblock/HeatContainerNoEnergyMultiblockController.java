@@ -12,11 +12,11 @@ import tekcays_addon.api.capability.impl.HeatContainerMultiblockRecipeLogic;
 import java.util.List;
 
 
-public abstract class HeatContainerMultiblockController extends RecipeMapMultiblockController implements IHeatMachine {
+public abstract class HeatContainerNoEnergyMultiblockController extends RecipeMapMultiblockController implements IHeatMachine {
 
     private IHeatContainer heatContainer;
 
-    public HeatContainerMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
+    public HeatContainerNoEnergyMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
         super(metaTileEntityId, recipeMap);
         this.recipeMapWorkable = new HeatContainerMultiblockRecipeLogic(this);
     }
@@ -40,7 +40,7 @@ public abstract class HeatContainerMultiblockController extends RecipeMapMultibl
 
     @Override
     public TraceabilityPredicate autoAbilities(boolean checkEnergyIn, boolean checkMaintenance, boolean checkItemIn, boolean checkItemOut, boolean checkFluidIn, boolean checkFluidOut, boolean checkMuffler) {
-        TraceabilityPredicate predicate = super.autoAbilities(checkEnergyIn, checkMaintenance, checkItemIn, checkItemOut, checkFluidIn, checkFluidOut, checkMuffler);
+        TraceabilityPredicate predicate = super.autoAbilities(false, checkMaintenance, checkItemIn, checkItemOut, checkFluidIn, checkFluidOut, checkMuffler);
         predicate = predicate.or(abilities(TKCYAMultiblockAbility.HEAT_CONTAINER).setMinGlobalLimited(1).setMaxGlobalLimited(1).setPreviewCount(1));
         return predicate;
     }

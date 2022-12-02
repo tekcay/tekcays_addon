@@ -68,6 +68,11 @@ public class TKCYARecipeMaps {
             .setSound(GTSounds.FURNACE);
 
     @ZenProperty
+    public static final RecipeMap<NoEnergyTemperatureRecipeBuilder> ADVANCED_BLAST_FURNACE_RECIPES = new RecipeMap<>(
+            "blasting", 1, 3, 0, 3, 0, 3, 0, 1, new NoEnergyTemperatureRecipeBuilder(), false)
+            .setSound(GTSounds.FURNACE);
+
+    @ZenProperty
     public static final RecipeMap<PrimitiveRecipeBuilder> PRIMITIVE_BATH = new RecipeMap<>(
             "primitive_bath", 1, 1, 1, 1, 1, 1, 0, 0, new PrimitiveRecipeBuilder(), false)
             .setSound(GTSounds.CHEMICAL_REACTOR);

@@ -1,8 +1,6 @@
 package tekcays_addon.common.metatileentities.multi;
 
 import gregicality.science.api.GCYSValues;
-import gregicality.science.api.capability.IPressureContainer;
-import gregicality.science.api.metatileentity.multiblock.GCYSMultiblockAbility;
 import gregtech.api.block.IHeatingCoilBlockStats;
 import gregtech.api.metatileentity.IDataInfoProvider;
 import gregtech.api.metatileentity.MetaTileEntity;
@@ -23,7 +21,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
@@ -31,14 +28,11 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
 import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.IHeatMachine;
-import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.impl.HeatContainer;
-import tekcays_addon.api.capability.impl.HeatContainerList;
-import tekcays_addon.api.capability.impl.HeatContainerMultiblockRecipeLogic;
-import tekcays_addon.api.metatileentity.multiblock.HeatContainerMultiblockController;
+import tekcays_addon.api.capability.impl.HeatContainerNoEnergyMultiblockRecipeLogic;
+import tekcays_addon.api.metatileentity.multiblock.HeatContainerNoEnergyMultiblockController;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.api.recipes.recipeproperties.NoEnergyTemperatureProperty;
 import tekcays_addon.api.render.TKCYATextures;
@@ -51,10 +45,10 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 import static gregtech.api.util.RelativeDirection.*;
-import static tekcays_addon.api.recipes.TKCYARecipeMaps.HEATING;
+import static tekcays_addon.api.recipes.TKCYARecipeMaps.ADVANCED_BLAST_FURNACE_RECIPES;
 import static tekcays_addon.api.utils.BlastFurnaceUtils.*;
 
-public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerMultiblockController implements IHeatMachine, IDataInfoProvider{
+public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMultiblockController implements IHeatMachine, IDataInfoProvider{
 
     private final BlockBrick.BrickType brick;
     private final IBlockState iBlockState;
@@ -67,10 +61,10 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerMultiblockC
     private final int HEAT_MULTIPLIER = 24;
     private final int HEAT_DROP = 10000;
     private final int HEAT_COOL = -100;
-    private boolean onChange;
+    private boolean startedRecipe;
 
     public MetaTileEntityAdvancedBlastFurnace(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick) {
-        super(metaTileEntityId, HEATING);
+        super(metaTileEntityId, ADVANCED_BLAST_FURNACE_RECIPES);
         this.brick = brick;
         this.maxTemp = brick.getBrickTemperature();
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
@@ -105,7 +99,7 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerMultiblockC
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
         int recipeTemp = recipe.getProperty(NoEnergyTemperatureProperty.getInstance(), 0);
-        return brick.getBrickTemperature() >= recipeTemp && blastFurnaceTemperature >= recipeTemp;
+        return currentTemp >= recipeTemp;
     }
 
     @Override
@@ -184,38 +178,20 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerMultiblockC
     public void update() {
         super.update();
 
+        //TO DO: to remove
         try {
             heatContainer = getAbilities(TKCYAMultiblockAbility.HEAT_CONTAINER).get(0);
         } catch (Exception e) {
             TKCYALog.logger.info(e.getMessage() + "IT HAPPENED :(");
         }
 
-        TKCYALog.logger.info("onChange is " + onChange);
-
-        int previousHeat = currentHeat;
         currentTemp = heatContainer.getTemperature();
         currentHeat = heatContainer.getHeat();
 
-
-        TKCYALog.logger.info("this.currentHeat = " + this.currentHeat);
-        TKCYALog.logger.info("currentHeat = " + currentHeat);
-        TKCYALog.logger.info("previousHeat = " + previousHeat);
-        TKCYALog.logger.info("calculatedTemp = " + GCYSValues.EARTH_TEMPERATURE + currentHeat / HEAT_MULTIPLIER);
-
-        //Loses heat over time if no more heat is provided
-        if (getOffsetTimer() % 20 == 0) {
-            if (previousHeat == currentHeat && currentTemp > GCYSValues.EARTH_TEMPERATURE) {
-                heatContainer.changeHeat(HEAT_COOL,false);
-            }
-        }
-
-        /* TODO handle excessive temperature
         if (currentTemp >= maxTemp) {
             this.setOnFire(100);
             this.doExplosion(0.1f);
         }
-
-         */
 
         if (currentHeat == 0) {
             if (currentTemp > GCYSValues.EARTH_TEMPERATURE) {
@@ -224,19 +200,16 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerMultiblockC
             return;
         }
 
-        if (onChange) {
+        if (startedRecipe) {
             heatContainer.changeHeat(-HEAT_DROP,false);
             actualizeTemperature();
-            onChange = false;
+            startedRecipe = false;
             return;
         }
 
-        if (this.recipeMapWorkable.isWorking() && this.recipeMapWorkable.getProgress() == 1) onChange = true;
-
+        if (this.recipeMapWorkable.isWorking() && this.recipeMapWorkable.getProgress() == 1) startedRecipe = true;
         actualizeTemperature();
-
     }
-
 
     @Override
     protected BlockPattern createStructurePattern() {
@@ -248,13 +221,15 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerMultiblockC
                 .aisle("#YYY#", "Y###Y", "Y#P#Y", "Y###Y", "#YYY#").setRepeatable(1, 11)
                 .aisle("#YYY#", "YOOOY", "YOUOY", "YOOOY", "#YYY#")
                 .where('S', selfPredicate())
-                .where('H', abilities(TKCYAMultiblockAbility.HEAT_CONTAINER).setExactLimit(1).or(states(getCasingState())))
+                .where('H', abilities(TKCYAMultiblockAbility.HEAT_CONTAINER).setMinGlobalLimited(1).setMaxGlobalLimited(1).setPreviewCount(1).or(states(getCasingState())))
                 .where('C', heatingCoils())
                 .where('Y', states(getCasingState()))
                 .where('X', states(getCasingState())
-                        .or(getOutputBrickFluidHatch(brick).setMinGlobalLimited(1).setMaxGlobalLimited(1)))
+                        .or(getOutputBrickFluidHatch(brick).setMinGlobalLimited(1).setMaxGlobalLimited(1))
+                        .or(getOutputBrickItemBus(brick).setMinGlobalLimited(1).setMaxGlobalLimited(1)))
                 .where('O', states(getCasingState())
-                        .or(getInputBrickItemBus(brick).setMinGlobalLimited(1).setMaxGlobalLimited(2)))
+                        .or(getInputBrickItemBus(brick).setMinGlobalLimited(1).setMaxGlobalLimited(2))
+                        .or(getInputBrickFluidHatch(brick).setMinGlobalLimited(1).setMaxGlobalLimited(2)))
                 .where('P', heightIndicatorPredicate())
                 .where('M', abilities(MultiblockAbility.MAINTENANCE_HATCH))
                 .where('U', abilities(MultiblockAbility.MUFFLER_HATCH)
@@ -302,6 +277,7 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerMultiblockC
 
         Object type = context.get("CoilType");
         if (type instanceof IHeatingCoilBlockStats) this.blastFurnaceTemperature = ((IHeatingCoilBlockStats) type).getCoilTemperature();
+        this.maxTemp = Math.min(brick.getBrickTemperature(), blastFurnaceTemperature);
     }
 
     @Override
@@ -314,9 +290,9 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerMultiblockC
         return this.heatContainer;
     }
 
-    private class AdvancedBlastFurnaceLogic extends HeatContainerMultiblockRecipeLogic implements IHeatMachine {
+    private class AdvancedBlastFurnaceLogic extends HeatContainerNoEnergyMultiblockRecipeLogic implements IHeatMachine {
 
-        AdvancedBlastFurnaceLogic(HeatContainerMultiblockController tileEntity) {
+        AdvancedBlastFurnaceLogic(HeatContainerNoEnergyMultiblockController tileEntity) {
             super(tileEntity);
         }
 
