@@ -388,6 +388,8 @@ tekcays_addon.multiblock.fuel_melter.tooltip.5=Target temperature: §a%d K§7.
 
 tekcays_addon.recipe.melter_temperature=Temperature: %dK
 
+tkcya.temperature.display=Temperature: %dK
+
 tekcays_addon.machine.tkcya_blast_furnace.tooltip.1=Only runs recipes if the required temperature is set.
 tekcays_addon.machine.tkcya_blast_furnace.tooltip.2=Can run recipes in parallel.
 tekcays_addon.machine.tkcya_blast_furnace.tooltip.3=Each additional floor increases the parallel limit by §e%s§7.

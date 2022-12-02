@@ -48,21 +48,30 @@ public class HeatContainerList implements IHeatContainer {
         return 20000;
     }
 
+    /*
     @Override
     public int getHeat() {
         return heatContainerList.stream()
                 .mapToInt(IHeatContainer::getHeat)
                 .sum();
     }
+     */
+    ////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //Works only for ONE heat container, code must be reworked if multiple heat containers per multiblocks must be handled
+    ////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    @Override
+    public int getHeat() {
+        return heatContainerList.get(0).getHeat();
+    }
 
     @Override
     public int getTemperature() {
-        return 0;
+        return heatContainerList.get(0).getTemperature();
     }
 
     @Override
     public void setHeat(int amount) {
-
+        heatContainerList.get(0).setHeat(amount);
     }
 
     @Override

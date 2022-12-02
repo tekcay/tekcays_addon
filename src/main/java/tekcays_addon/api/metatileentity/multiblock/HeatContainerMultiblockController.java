@@ -26,7 +26,7 @@ public abstract class HeatContainerMultiblockController extends RecipeMapMultibl
         super.initializeAbilities();
         List<IHeatContainer> list = getAbilities(TKCYAMultiblockAbility.HEAT_CONTAINER);
         if (list.isEmpty()) {
-            this.heatContainer = new HeatContainer(this, 0, 10000);
+            this.heatContainer = new HeatContainer(this, 0, 2000000);
         } else {
             this.heatContainer = list.get(0);
         }
@@ -41,7 +41,7 @@ public abstract class HeatContainerMultiblockController extends RecipeMapMultibl
     @Override
     public TraceabilityPredicate autoAbilities(boolean checkEnergyIn, boolean checkMaintenance, boolean checkItemIn, boolean checkItemOut, boolean checkFluidIn, boolean checkFluidOut, boolean checkMuffler) {
         TraceabilityPredicate predicate = super.autoAbilities(checkEnergyIn, checkMaintenance, checkItemIn, checkItemOut, checkFluidIn, checkFluidOut, checkMuffler);
-        predicate = predicate.or(abilities(TKCYAMultiblockAbility.HEAT_CONTAINER));
+        predicate = predicate.or(abilities(TKCYAMultiblockAbility.HEAT_CONTAINER).setMaxGlobalLimited(1).setPreviewCount(1));
         return predicate;
     }
 
