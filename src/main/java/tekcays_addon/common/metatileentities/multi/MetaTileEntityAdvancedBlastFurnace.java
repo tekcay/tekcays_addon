@@ -204,7 +204,7 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
         }
 
         if (startedRecipe) {
-            heatContainer.changeHeat(-HEAT_DROP,false);
+            heatContainer.changeHeat(-HEAT_DROP * this.recipeMapWorkable.getParallelLimit());
             actualizeTemperature();
             startedRecipe = false;
             return;

@@ -13,25 +13,7 @@ public class HeatContainerList implements IHeatContainer {
     }
 
 
-    @Override
-    public boolean changeHeat(int amount, boolean simulate) {
-        for (IHeatContainer heatContainer : heatContainerList) {
-            int currentHeat = heatContainer.getHeat();
-            int maxHeat = heatContainer.getMaxHeat();
 
-            if (amount > 0) {
-                int diff = maxHeat - currentHeat - amount;
-                if (diff < 0) {
-                    heatContainer.changeHeat(maxHeat - currentHeat, false);
-                    amount = - diff;
-                } else {
-                    heatContainer.changeHeat(currentHeat + amount, false);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
     @Override
     public int getMinHeat() {
@@ -40,12 +22,22 @@ public class HeatContainerList implements IHeatContainer {
 
     @Override
     public int getMaxHeat() {
-        return 20000;
+        return heatContainerList.stream()
+                .mapToInt(IHeatContainer::getMaxHeat)
+                .sum();
     }
 
+    /**
+     *
+     * @return the lowest {@code maxTemperature} of all the {@code IHeatContainer}s contained in the {@code HeatContainerList}.
+     */
     @Override
     public int getMaxTemperature() {
-        return 20000;
+        int lowestTemp = Integer.MAX_VALUE;
+        for (IHeatContainer heatContainer : heatContainerList) {
+            lowestTemp = Math.min(heatContainer.getMaxTemperature(), lowestTemp);
+        }
+        return lowestTemp;
     }
 
     /*
@@ -59,6 +51,12 @@ public class HeatContainerList implements IHeatContainer {
     ////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //Works only for ONE heat container, code must be reworked if multiple heat containers per multiblocks must be handled
     ////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    @Override
+    public void changeHeat(int amount) {
+        heatContainerList.get(0).changeHeat(amount);
+    }
+
     @Override
     public int getHeat() {
         return heatContainerList.get(0).getHeat();

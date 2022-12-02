@@ -54,7 +54,7 @@ public class MetaTileEntityHeatAcceptor extends MetaTileEntityMultiblockPart imp
     public void update() {
         super.update();
         if (getOffsetTimer() % 20 == 0) {
-            if (heatContainer.getHeat() - coolingRate >= 0) heatContainer.changeHeat(-coolingRate, false);
+            if (heatContainer.getHeat() - coolingRate >= 0) heatContainer.changeHeat(-coolingRate);
             else heatContainer.setHeat(0);
         }
     }

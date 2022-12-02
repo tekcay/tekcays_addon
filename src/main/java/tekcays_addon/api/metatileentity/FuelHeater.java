@@ -143,10 +143,8 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
             //Get the Capability of this Tile Entity on the DOWN FACE.
             IHeatContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER, DOWN);
             if (container != null) {
-                if (container.changeHeat(heatIncreaseRate, true)) {
-                    container.changeHeat(heatIncreaseRate, false);
-                    this.heatContainer.changeHeat(-heatIncreaseRate, false);
-                }
+                container.changeHeat(heatIncreaseRate);
+                this.heatContainer.changeHeat(-heatIncreaseRate;)
             }
         }
     }

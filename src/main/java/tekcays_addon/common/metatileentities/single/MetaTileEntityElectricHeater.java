@@ -94,10 +94,8 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
                 //Get the Capability of this Tile Entity on the DOWN FACE.
                 IHeatContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER, DOWN);
                 if (container != null) {
-                    if (container.changeHeat(HEAT_BASE_INCREASE, true)) {
-                        container.changeHeat(HEAT_BASE_INCREASE, false);
-                        this.heatContainer.changeHeat(-HEAT_BASE_INCREASE, false);
-                    }
+                    container.changeHeat(HEAT_BASE_INCREASE);
+                    this.heatContainer.changeHeat(-HEAT_BASE_INCREASE);
                 }
             }
         }

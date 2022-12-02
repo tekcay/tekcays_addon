@@ -32,17 +32,23 @@ public interface IHeatContainer {
     void setTemperature(int temperature);
 
     /**
-     * Change the amount of heat in the container by a given amount
-     *
-     * @param amount   the amount to change by
-     * @param simulate whether to actually change the value or not
-     * @return true if the change is safe, else false
+     * Change the amount of heat in the container by a given amount.
+     * If the resulted heat is lower than zero, heat will be set to 0.
+     * If the resulted heat is higher than {@code maxHeat}, heat will be set to {@code maxHeat}.
+     * @param amount the amount to change by
      */
+    default void changeHeat(int amount) {
+        setHeat(Math.max(0, Math.min(getHeat() + amount, getMaxHeat())));
+    }
+
+    /*
     default boolean changeHeat(int amount, boolean simulate) {
         if (simulate) return isHeatSafe(getHeat() + amount);
         setHeat(getHeat() + amount);
         return isHeatSafe();
     }
+
+     */
 
 
     /**
