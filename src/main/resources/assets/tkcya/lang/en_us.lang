@@ -122,7 +122,11 @@ tkcya.machine.reinforced_brick_single_crucible.name=Reinforced Brick Crucible
 tkcya.machine.strong_brick_single_crucible.name=Strong Brick Crucible
 
 #HeatAcceptors
-tkcya.machine.heat_acceptor.lv.name=Heat Acceptor
+tkcya.machine.heat_acceptor.lv.name=Heat Acceptor I
+tkcya.machine.heat_acceptor.mv.name=Heat Acceptor II
+tkcya.machine.heat_acceptor.hv.name=Heat Acceptor III
+tkcya.machine.heat_acceptor.ev.name=Heat Acceptor IV
+
 
 tkcya.machine.crystallizer.name=Crystallizer
 tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer
