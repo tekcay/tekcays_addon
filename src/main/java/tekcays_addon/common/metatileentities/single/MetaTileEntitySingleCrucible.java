@@ -148,8 +148,6 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        //tooltip.add(I18n.format("tkcya.max_parallel.tooltip", maxParallel)); //TODO
-        //tooltip.add(I18n.format("tkcya.parallel.tooltip")); //TODO
         tooltip.add(I18n.format("tkcya.machine.single_crucible.tooltip.1"));
         tooltip.add(I18n.format("tkcya.machine.single_crucible.tooltip.2"));
         tooltip.add(I18n.format("tkcya.machine.single_crucible.tooltip.3"));
