@@ -202,6 +202,7 @@ recipemap.casting_table.name=Casting
 recipemap.primitive_bath.name=Bath
 recipemap.electric_casting_table.name=Casting
 recipemap.blasting.name=Blasting
+recipemap.advanced_blasting.name=Advanced Blasting
 recipemap.converting.name=Converting
 recipemap.primitive_converting.name=Primitive Converting
 recipemap.crystallization.name=Crystallization
