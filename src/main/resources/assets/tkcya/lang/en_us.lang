@@ -385,7 +385,7 @@ tkcya.machine.primitive_fermenter.tooltip.1=Max Parallel: §e%s§7
 tkcya.machine.spiral_separator.tooltip.1=Run §a1§7 parallel recipe per §a2§7 additional floors.
 
 #Heat acceptors
-tkcya.machine.heat_acceptor.tooltip.1=Accepts §cHEAT§7 on the §eBOTTOM§7 side.
+tkcya.machine.heat_acceptor.tooltip.1=Accepts §cHEAT§7 on §eANY§7 side.
 tkcya.machine.heat_acceptor.tooltip.2=Loses §c%d HU/s§7.
 
 tekcays_addon.multiblock.electric_melter.tooltip.1=Temperature: §a%d K§7.
@@ -458,7 +458,7 @@ tkcya.recipe.heat=%d HU/t
 
 tekcays_addon.machine.advanced_electrolyzer.tooltip.1=Performs electrolysis of chemicals in solution.
 tekcays_addon.machine.advanced_electrolyzer.tooltip.2=Requires two electrodes, a cathode and an anode, to perform its recipes.
-tekcays_addon.machine.advanced_electrolyzer.tooltip.3=Electrodes takes damage during recipe running.
+tekcays_addon.machine.advanced_electrolyzer.tooltip.3=Electrodes take damage during recipe running.
 tekcays_addon.machine.advanced_electrolyzer.tooltip.4=Removal of the electrode while a recipe is running  will cause explosion!
 
 tkcya.machine.text.pressure=Current pressure: %s
@@ -468,12 +468,12 @@ tkcya.parallel.tooltip=Can run recipes in parallel.
 #Heaters
 tkcya.heater.tooltip.1=For heating.
 tkcya.heater.tooltip.2=Produces §c%s HU/t§7.
-tkcya.heater.tooltip.3=Outputs on the §eTOP§7 face.
+tkcya.heater.tooltip.3=Outputs on the §eFRONT§7 face.
 
 #Electric Cooler
 tkcya.electric_cooler.tooltip.1=For cooling.
 tkcya.electric_cooler.tooltip.2=Produces §b%s CU/t§7.
-tkcya.electric_cooler.tooltip.3=Outputs on the TOP face.
+tkcya.electric_cooler.tooltip.3=Outputs on the §eFRONT§7 face.
 
 #Covers
 tkcya.cover.temperature_detector.message_temperature_storage_normal=Monitoring Normal Temperature Storage
