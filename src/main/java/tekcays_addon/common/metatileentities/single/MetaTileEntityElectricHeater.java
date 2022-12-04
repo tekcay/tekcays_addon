@@ -1,9 +1,11 @@
 package tekcays_addon.common.metatileentities.single;
 
+import codechicken.lib.raytracer.CuboidRayTraceResult;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.ColourMultiplier;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
+import com.google.common.base.Preconditions;
 import gregicality.science.api.utils.NumberFormattingUtil;
 import gregtech.api.GTValues;
 import gregtech.api.capability.GregtechTileCapabilities;
@@ -30,12 +32,12 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 import org.apache.commons.lang3.ArrayUtils;
 import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static gregtech.api.capability.GregtechDataCodes.UPDATE_FRONT_FACING;
 import static net.minecraft.util.EnumFacing.*;
 import static tekcays_addon.api.utils.TKCYAValues.EU_TO_HU;
 
@@ -47,6 +49,7 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
 
     public MetaTileEntityElectricHeater(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
+        this.frontFacing = UP;
     }
 
     @Override
@@ -71,8 +74,8 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
         ColourMultiplier multiplier = new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
         IVertexOperation[] coloredPipeline = ArrayUtils.add(pipeline, multiplier);
 
-        Textures.AIR_VENT_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
-        TKCYATextures.HEAT_ACCEPTOR_VERTICALS_OVERLAY.renderSided(UP, renderState, translation, pipeline);
+        Textures.AIR_VENT_OVERLAY.renderSided(getFrontFacing().getOpposite(), renderState, translation, pipeline);
+        TKCYATextures.HEAT_ACCEPTOR_VERTICALS_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
     }
 
 
@@ -81,6 +84,7 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
         super.update();
         int currentHeat = heatContainer.getHeat();
         if (!getWorld().isRemote) {
+
             //Redstone stops heating
             if (this.isBlockRedstonePowered()) return;
             if (energyContainer.getEnergyStored() < ENERGY_BASE_CONSUMPTION) return;
@@ -88,9 +92,10 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
 
             energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
 
-            //Get the TileEntity that is placed right on top of the Heat.
-            TileEntity te = getWorld().getTileEntity(getPos().offset(UP));
+            //Get the TileEntity that is placed adjacent to the front face
+            TileEntity te = getWorld().getTileEntity(getPos().offset(getFrontFacing()));
             if (te != null) {
+                //TODO
                 //Get the Capability of this Tile Entity on the DOWN FACE.
                 IHeatContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER, DOWN);
                 if (container != null) {
@@ -119,12 +124,32 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
     @Nullable
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
         if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
-            return side == UP ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
+            return side == getFrontFacing() ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
         }
         if (capability.equals(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER)) {
             return TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER.cast(heatContainer);
         }
         return super.getCapability(capability, side);
+    }
+
+    //To prevent the heater to heat on the bottom face
+    @Override
+    public boolean isValidFrontFacing(EnumFacing facing) {
+        return facing != EnumFacing.DOWN;
+    }
+
+    @Override
+    public boolean onWrenchClick(EntityPlayer playerIn, EnumHand hand, EnumFacing wrenchSide, CuboidRayTraceResult hitResult) {
+        if (!playerIn.isSneaking()) {
+            if (wrenchSide == getFrontFacing() || !isValidFrontFacing(wrenchSide) || !hasFrontFacing()) {
+                return false;
+            }
+            if (wrenchSide != null && !getWorld().isRemote) {
+                setFrontFacing(wrenchSide);
+            }
+            return true;
+        }
+        return false;
     }
 
     @Nonnull
