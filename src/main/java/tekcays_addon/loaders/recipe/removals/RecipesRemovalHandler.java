@@ -4,23 +4,15 @@ import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.recipes.GTRecipeHandler;
 import gregtech.api.recipes.ModHandler;
 import gregtech.api.recipes.RecipeMaps;
-import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import gregtech.api.unification.OreDictUnifier;
-import gregtech.api.unification.material.MarkerMaterials;
-import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
-import gregtech.common.blocks.BlockMachineCasing;
-import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
-import gregtech.common.metatileentities.MetaTileEntities;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 import static gregtech.api.unification.material.Materials.*;
 
 public class RecipesRemovalHandler {
-
-
     
     public static void shapedComponentsRecipes() {
         ModHandler.removeRecipes(MetaItems.ELECTRIC_MOTOR_MV.getStackForm());
@@ -83,11 +75,6 @@ public class RecipesRemovalHandler {
                         OreDictUnifier.get(OrePrefix.dust, Glass),
                         MetaItems.SHAPE_MOLD_BLOCK.getStackForm()},
                 new FluidStack[] {});
-
-
     }
-
-
-
 
 }

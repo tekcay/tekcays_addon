@@ -108,6 +108,14 @@ public class TKCYAMaterials {
     public static Material AluminiumFluoride;
     public static Material Cryolite;
     public static Material HexafluorosilicAcid;
+
+    //ChromiteChain
+    public static Material SodiumChromate;
+    public static Material SodiumDichromate;
+    public static Material ChromiumOxide;
+    public static Material SodiumCarbonate;
+    public static Material SodiumSulfate;
+    public static Material PotassiumSulfate;
     
     /**
      * Alloys
