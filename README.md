@@ -27,6 +27,7 @@ TKCYA requires [**GregTech CE: Unofficial** **(GTCEu)**](https://github.com/Greg
 ### Chains:
 * Wire coils from Mica ([**GCYL**](https://github.com/GregTechCEu/gregicality-legacy))
 * Fluorine from Fluorite
+* Chromite ([**GCYL**](https://github.com/GregTechCEu/gregicality-legacy))
 * Gold from Precious Metal ([**GCYL**](https://github.com/GregTechCEu/gregicality-legacy))
 * Aluminium from Bauxite ([**GT6**](https://github.com/GregTech6))
 * Zinc chain from Sphalerite (on-going)
