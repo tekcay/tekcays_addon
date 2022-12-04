@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.IHeatMachine;
 import tekcays_addon.api.capability.impl.HeatContainer;
-import tekcays_addon.api.capability.impl.HeatContainerMultiblockRecipeLogic;
+import tekcays_addon.api.capability.impl.HeatContainerNoEnergyMultiblockRecipeLogic;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public abstract class HeatContainerNoEnergyMultiblockController extends RecipeMa
 
     public HeatContainerNoEnergyMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
         super(metaTileEntityId, recipeMap);
-        this.recipeMapWorkable = new HeatContainerMultiblockRecipeLogic(this);
+        this.recipeMapWorkable = new HeatContainerNoEnergyMultiblockRecipeLogic(this);
     }
 
     @Override
@@ -31,7 +31,6 @@ public abstract class HeatContainerNoEnergyMultiblockController extends RecipeMa
             this.heatContainer = list.get(0);
         }
     }
-
 
     @Override
     public void invalidateStructure() {

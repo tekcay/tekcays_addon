@@ -15,7 +15,6 @@ import gregtech.api.recipes.Recipe;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
-import gregtech.common.ConfigHolder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -32,7 +31,6 @@ import net.minecraft.world.World;
 import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.IHeatMachine;
 import tekcays_addon.api.capability.impl.HeatContainer;
-import tekcays_addon.api.capability.impl.HeatContainerNoEnergyMultiblockRecipeLogic;
 import tekcays_addon.api.metatileentity.multiblock.HeatContainerNoEnergyMultiblockController;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.api.recipes.recipeproperties.NoEnergyTemperatureProperty;
@@ -62,7 +60,6 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
     private int currentTemp;
     private final int HEAT_MULTIPLIER = 24;
     private final int HEAT_DROP = 10000;
-    private final int HEAT_COOL = -100;
     private boolean startedRecipe;
 
     public MetaTileEntityAdvancedBlastFurnace(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick) {
@@ -70,8 +67,8 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
         this.brick = brick;
         this.maxTemp = brick.getBrickTemperature();
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
-        this.recipeMapWorkable = new AdvancedBlastFurnaceLogic(this);
-        this.heatContainer = new HeatContainer(this, 0, 200000, maxTemp);
+        //this.recipeMapWorkable = new AdvancedBlastFurnaceLogic(this);
+        //this.heatContainer = new HeatContainer(this, 0, 200000, maxTemp);
     }
 
     @Nonnull
@@ -84,19 +81,6 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
         list.add(new TextComponentTranslation("behavior.tricorder.currentTemp", currentTemp));
         return list;
     }
-
-
-    /*
-    @Override
-    @Nullable
-    public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
-        if (capability.equals(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER)) {
-            return TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER.cast(heatContainer);
-        }
-        return super.getCapability(capability, side);
-    }
-
-     */
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
@@ -173,20 +157,21 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
         return this.brick;
     }
 
+    //Depends of the height
     private void actualizeTemperature() {
-        heatContainer.setTemperature(GCYSValues.EARTH_TEMPERATURE + currentHeat / HEAT_MULTIPLIER);
+        heatContainer.setTemperature(GCYSValues.EARTH_TEMPERATURE + currentHeat / (HEAT_MULTIPLIER * height));
     }
 
     @Override
-    public void update() {
-        super.update();
-
-        //TO DO: to remove
-        try {
-            heatContainer = getAbilities(TKCYAMultiblockAbility.HEAT_CONTAINER).get(0);
-        } catch (Exception e) {
-            TKCYALog.logger.info(e.getMessage() + "IT HAPPENED :(");
+    protected void updateFormedValid() {
+        if (!getWorld().isRemote) {
+            updateLogic();
         }
+    }
+
+    private void updateLogic() {
+
+        heatContainer = getAbilities(TKCYAMultiblockAbility.HEAT_CONTAINER).get(0);
 
         currentTemp = heatContainer.getTemperature();
         currentHeat = heatContainer.getHeat();
@@ -194,13 +179,6 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
         if (currentTemp >= maxTemp && TKCYAConfigHolder.machinesOptions.enableBlastFurnaceFireExplosion) {
             this.setOnFire(100);
             this.doExplosion(0.1f);
-        }
-
-        if (currentHeat == 0) {
-            if (currentTemp > GCYSValues.EARTH_TEMPERATURE) {
-                if (getOffsetTimer() % 20 == 0) currentTemp -= 1;
-            } else heatContainer.setTemperature(GCYSValues.EARTH_TEMPERATURE);
-            return;
         }
 
         if (startedRecipe) {
@@ -281,27 +259,12 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
         Object type = context.get("CoilType");
         if (type instanceof IHeatingCoilBlockStats) this.blastFurnaceTemperature = ((IHeatingCoilBlockStats) type).getCoilTemperature();
         this.maxTemp = Math.min(brick.getBrickTemperature(), blastFurnaceTemperature);
+        this.heatContainer = getAbilities(TKCYAMultiblockAbility.HEAT_CONTAINER).get(0);
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityAdvancedBlastFurnace(metaTileEntityId, brick);
-    }
-
-    @Override
-    public IHeatContainer getHeatContainer() {
-        return this.heatContainer;
-    }
-
-    private class AdvancedBlastFurnaceLogic extends HeatContainerNoEnergyMultiblockRecipeLogic implements IHeatMachine {
-
-        AdvancedBlastFurnaceLogic(HeatContainerNoEnergyMultiblockController tileEntity) {
-            super(tileEntity);
-        }
-
-        public IHeatContainer getHeatContainer() {
-            return ((IHeatMachine) this.metaTileEntity).getHeatContainer();
-        }
     }
 
 }

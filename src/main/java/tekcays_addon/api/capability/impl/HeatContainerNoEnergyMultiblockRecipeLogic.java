@@ -9,8 +9,6 @@ import tekcays_addon.api.capability.IHeatMachine;
 
 public class HeatContainerNoEnergyMultiblockRecipeLogic extends MultiblockRecipeLogic {
 
-    private int recipeHeat = 0;
-
     public HeatContainerNoEnergyMultiblockRecipeLogic(RecipeMapMultiblockController tileEntity) {
         super(tileEntity);
     }

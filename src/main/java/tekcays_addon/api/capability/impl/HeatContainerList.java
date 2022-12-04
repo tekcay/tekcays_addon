@@ -12,9 +12,6 @@ public class HeatContainerList implements IHeatContainer {
         this.heatContainerList = heatContainerList;
     }
 
-
-
-
     @Override
     public int getMinHeat() {
         return 0;

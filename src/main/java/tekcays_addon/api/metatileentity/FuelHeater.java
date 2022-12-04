@@ -144,7 +144,7 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
             IHeatContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER, DOWN);
             if (container != null) {
                 container.changeHeat(heatIncreaseRate);
-                this.heatContainer.changeHeat(-heatIncreaseRate;)
+                this.heatContainer.changeHeat(-heatIncreaseRate);
             }
         }
     }
