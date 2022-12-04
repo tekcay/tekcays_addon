@@ -5,7 +5,6 @@ import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.ColourMultiplier;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregicality.science.api.utils.NumberFormattingUtil;
 import gregtech.api.GTValues;
 import gregtech.api.capability.GregtechTileCapabilities;
 import gregtech.api.capability.IActiveOutputSide;
@@ -15,7 +14,6 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.TieredMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.util.GTUtility;
-import gregtech.client.renderer.texture.Textures;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -93,20 +91,34 @@ public class MetaTileEntityElectricCooler extends TieredMetaTileEntity implement
 
             energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
 
-            //Get the TileEntity that is placed adjacent to the front face
-            TileEntity te = getWorld().getTileEntity(getPos().offset(getFrontFacing()));
-            if (te != null) {
-                //TODO
-                //Get the Capability of this Tile Entity on the DOWN FACE.
-                IHeatContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER, DOWN);
-                if (container != null) {
+            //Cold side
+            tryTransferHeat(getFrontFacing());
+
+            //Hotside
+            tryTransferHeat(getFrontFacing().getOpposite());
+        }
+    }
+
+    private void tryTransferHeat(EnumFacing side) {
+        TileEntity te = getWorld().getTileEntity(getPos().offset(side));
+        if (te != null) {
+
+            //Get the Capability of this Tile Entity on the DOWN FACE.
+            IHeatContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER, DOWN);
+            if (container != null) {
+
+                //in case of cold side, it decreases the HU of the container
+                if (side.equals(getFrontFacing())) {
+                    container.changeHeat(-HEAT_BASE_INCREASE);
+
+                //in case of hot side, it increases the HU of the container
+                } else {
                     container.changeHeat(HEAT_BASE_INCREASE);
                     this.heatContainer.changeHeat(-HEAT_BASE_INCREASE);
                 }
             }
         }
     }
-
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
