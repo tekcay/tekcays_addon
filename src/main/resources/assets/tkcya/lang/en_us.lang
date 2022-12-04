@@ -470,8 +470,8 @@ tkcya.heater.tooltip.3=Outputs on the §eFRONT§7 face.
 
 #Electric Cooler
 tkcya.electric_cooler.tooltip.1=For cooling.
-tkcya.electric_cooler.tooltip.2=Produces §b%s CU/t§7.
-tkcya.electric_cooler.tooltip.3=Outputs on the §eFRONT§7 face.
+tkcya.electric_cooler.tooltip.2=Outputs §b%d CU/t§7 on the §eFRONT§7 face.
+tkcya.electric_cooler.tooltip.3=Outputs §c%d HU/t§7 on the §eBACK§7 face.
 
 #Covers
 tkcya.cover.temperature_detector.message_temperature_storage_normal=Monitoring Normal Temperature Storage
