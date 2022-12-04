@@ -43,6 +43,7 @@ public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlock
 
     private final BlockBrick.BrickType brick;
     private final IBlockState iBlockState;
+    private final int PARALLEL_MULTIPLIER = 2;
     public int height;
 
     public MetaTileEntityTKCYABlastFurnace(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick) {
@@ -60,8 +61,8 @@ public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlock
     public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.1"));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.2"));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.3", "2"));
+        tooltip.add(I18n.format("tkcya.machine.parallel_ability.tooltip"));
+        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.3", PARALLEL_MULTIPLIER));
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.4", brick.getBrickTemperature()));
     }
 

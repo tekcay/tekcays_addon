@@ -414,8 +414,7 @@ tkcya.heat_multiplier.display=Heat multiplier: %d
 tkcya.max_temperature.display= Max temperature: %d
 
 tekcays_addon.machine.tkcya_blast_furnace.tooltip.1=Only runs recipes if the required temperature is set.
-tekcays_addon.machine.tkcya_blast_furnace.tooltip.2=Can run recipes in parallel.
-tekcays_addon.machine.tkcya_blast_furnace.tooltip.3=Each additional floor increases the parallel limit by §e%s§7.
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.3=Each additional floor increases the parallel limit by §e%d§7.
 tekcays_addon.machine.tkcya_blast_furnace.tooltip.4=Max temperature: §e%,d K.
 
 tkcya.machine.advanced_blast_furnace.tooltip.1=Each additional floor (§dF§7) increases the parallel limit by §e%d§7.
@@ -463,7 +462,6 @@ tekcays_addon.machine.advanced_electrolyzer.tooltip.4=Removal of the electrode w
 
 tkcya.machine.text.pressure=Current pressure: %s
 tkcya.max_parallel.tooltip=Max Parallel: §e%s§7
-tkcya.parallel.tooltip=Can run recipes in parallel.
 
 #Heaters
 tkcya.heater.tooltip.1=For heating.
