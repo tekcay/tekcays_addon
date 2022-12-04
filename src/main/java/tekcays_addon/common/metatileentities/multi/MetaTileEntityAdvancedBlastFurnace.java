@@ -28,14 +28,13 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
+import org.lwjgl.input.Keyboard;
 import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.IHeatMachine;
-import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.metatileentity.multiblock.HeatContainerNoEnergyMultiblockController;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.api.recipes.recipeproperties.NoEnergyTemperatureProperty;
 import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
@@ -58,8 +57,12 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
     private int blastFurnaceTemperature;
     private int currentHeat;
     private int currentTemp;
-    private final int HEAT_MULTIPLIER = 24;
-    private final int HEAT_DROP = 10000;
+    private int heatMultiplier;
+    private final int HEAT_BASE = 24;
+
+    //TODO possibly to make it depend of heatMultiplier
+    private final int HEAT_DROP = 5000;
+    private final int PARALLEL_MULTIPLIER = 2;
     private boolean startedRecipe;
 
     public MetaTileEntityAdvancedBlastFurnace(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick) {
@@ -67,8 +70,6 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
         this.brick = brick;
         this.maxTemp = brick.getBrickTemperature();
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
-        //this.recipeMapWorkable = new AdvancedBlastFurnaceLogic(this);
-        //this.heatContainer = new HeatContainer(this, 0, 200000, maxTemp);
     }
 
     @Nonnull
@@ -79,6 +80,7 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
         list.add(new TextComponentTranslation("behavior.tricorder.min_heat", heatContainer.getMinHeat()));
         list.add(new TextComponentTranslation("behavior.tricorder.max_heat", heatContainer.getMaxHeat()));
         list.add(new TextComponentTranslation("behavior.tricorder.currentTemp", currentTemp));
+        list.add(new TextComponentTranslation("behavior.tricorder.heatMultiplier", heatMultiplier));
         return list;
     }
 
@@ -92,10 +94,16 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
     public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.1"));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.2"));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.3", "2"));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.4", brick.getBrickTemperature()));
+        tooltip.add(I18n.format("tkcya.machine.parallel_ability.tooltip"));
+        tooltip.add(I18n.format("tkcya.machine.advanced_blast_furnace.tooltip.1", PARALLEL_MULTIPLIER));
+        tooltip.add(I18n.format("tkcya.machine.advanced_blast_furnace.tooltip.2", brick.getBrickTemperature()));
         tooltip.add(I18n.format("tekcays_addon.machine.temperature_explode.tooltitp"));
+        if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+            tooltip.add(I18n.format("tekcays_addon.machine.brick_density.tooltip"));
+            tooltip.add(I18n.format("tekcays_addon.machine.heat_to_temperature.formula.tooltip", HEAT_BASE));
+        } else {
+            tooltip.add(I18n.format("gregtech.tooltip.hold_shift"));
+        }
     }
 
     @Override
@@ -109,9 +117,15 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
             //Display temperature
             textList.add(new TextComponentTranslation("tkcya.temperature.display", currentTemp));
 
-            //textList.add(new TextComponentTranslation("tekcays_addon.machine.tkcya_blast_furnace.tooltip.4", this.getBrick().getBrickTemperature()));
-            textList.add(new TextComponentTranslation("gregtech.multiblock.blast_furnace.max_temperature",
-                    new TextComponentTranslation(GTUtility.formatNumbers(blastFurnaceTemperature) + "K").setStyle(new Style().setColor(TextFormatting.RED))));
+            //Display maxTemperature
+            textList.add(new TextComponentTranslation("tkcya.max_temperature.display", maxTemp));
+
+            /*
+            //Display heat multiplier
+            textList.add(new TextComponentTranslation("tkcya.heat_multiplier.display", this.heatMultiplier));
+
+             */
+
             if (this.recipeMapWorkable.getParallelLimit() != 1) {
                 textList.add(new TextComponentTranslation("gregtech.multiblock.parallel", this.recipeMapWorkable.getParallelLimit()));
             }
@@ -157,9 +171,8 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
         return this.brick;
     }
 
-    //Depends of the height
     private void actualizeTemperature() {
-        heatContainer.setTemperature(GCYSValues.EARTH_TEMPERATURE + currentHeat / (HEAT_MULTIPLIER * height));
+        heatContainer.setTemperature(GCYSValues.EARTH_TEMPERATURE + currentHeat / (heatMultiplier * height));
     }
 
     @Override
@@ -170,7 +183,6 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
     }
 
     private void updateLogic() {
-
         heatContainer = getAbilities(TKCYAMultiblockAbility.HEAT_CONTAINER).get(0);
 
         currentTemp = heatContainer.getTemperature();
@@ -254,12 +266,13 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
         super.formStructure(context);
         initializeAbilities();
         this.height = context.getOrDefault("blastFurnaceHeight", 1);
-        this.recipeMapWorkable.setParallelLimit(height < 2 ? 1 : height * 2);
+        this.recipeMapWorkable.setParallelLimit(height < 2 ? 1 : height * PARALLEL_MULTIPLIER);
 
         Object type = context.get("CoilType");
         if (type instanceof IHeatingCoilBlockStats) this.blastFurnaceTemperature = ((IHeatingCoilBlockStats) type).getCoilTemperature();
-        this.maxTemp = Math.min(brick.getBrickTemperature(), blastFurnaceTemperature);
-        this.heatContainer = getAbilities(TKCYAMultiblockAbility.HEAT_CONTAINER).get(0);
+
+        this.maxTemp = Math.min(brick.getBrickTemperature(), this.blastFurnaceTemperature);
+        this.heatMultiplier = HEAT_BASE * this.brick.getDensity() * this.blastFurnaceTemperature / 1000;
     }
 
     @Override

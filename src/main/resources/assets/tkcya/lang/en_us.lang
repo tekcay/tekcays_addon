@@ -175,7 +175,8 @@ tile.block_brick.fireclay_brick.name=Fireclay Brick
 tile.block_brick.strong_brick.name=Strong Brick
 
 ## tooltips
-tile.block_brick.tooltip_heat=Max temperature: §e%,d K
+tile.block_brick.tooltip.heat=Max temperature: §c%,d K
+tile.block_brick.tooltip.density=Density: §b%d
 
 # walls
 tile.large_multiblock_casing.steel_wall.name=Steel Wall
@@ -340,6 +341,13 @@ item.material.oreprefix.curvedPlate=%s Curved Plate
 
 #Tooltips
 
+#Can run recipe in parallel
+tkcya.machine.parallel_ability.tooltip=Can run recipes in parallel.
+
+#Brick density
+tekcays_addon.machine.brick_density.tooltip=The amount of §cHU§7 to reach a certain temperature (§aT§7) depends of the Brick density (§bB§7), the Coil max temperature (§eC§7) and the amount of additional floors (§dF§7) added to the structure.
+tekcays_addon.machine.heat_to_temperature.formula.tooltip=The formula is as follows: §aT§7 = 298 + §cHU§7 / (%d * §bB§7 * (§eC§7 / 1000) * §dF§7)
+
 #Temperature fire
 tekcays_addon.machine.temperature_explode.tooltitp=Catches §cFIRE§7 and §cEXPLODES§7 if too hot !
 
@@ -402,11 +410,16 @@ tekcays_addon.multiblock.fuel_melter.tooltip.5=Target temperature: §a%d K§7.
 tekcays_addon.recipe.melter_temperature=Temperature: %dK
 
 tkcya.temperature.display=Temperature: %dK
+tkcya.heat_multiplier.display=Heat multiplier: %d
+tkcya.max_temperature.display= Max temperature: %d
 
 tekcays_addon.machine.tkcya_blast_furnace.tooltip.1=Only runs recipes if the required temperature is set.
 tekcays_addon.machine.tkcya_blast_furnace.tooltip.2=Can run recipes in parallel.
 tekcays_addon.machine.tkcya_blast_furnace.tooltip.3=Each additional floor increases the parallel limit by §e%s§7.
 tekcays_addon.machine.tkcya_blast_furnace.tooltip.4=Max temperature: §e%,d K.
+
+tkcya.machine.advanced_blast_furnace.tooltip.1=Each additional floor (§dF§7) increases the parallel limit by §e%d§7.
+tkcya.machine.advanced_blast_furnace.tooltip.2=§eMax temperature§7 is set at the lowest value between the Bricks max temperature and the Coils max temperature.
 
 
 tekcays_addon.machine.tkcya_blast_furnace.tooltip.2a=Requires air and coal.
@@ -472,6 +485,7 @@ behavior.tricorder.min_heat=Minimum Heat: %s HU
 behavior.tricorder.max_heat=Maximum Heat: %s HU
 behavior.tricorder.burn_time_left= Burn Time Left %s ticks
 behavior.tricorder.currentTemp=Current Temp: %s K
+behavior.tricorder.heatMultiplier=Heat Multiplier: %d
 
 
 # Errors
