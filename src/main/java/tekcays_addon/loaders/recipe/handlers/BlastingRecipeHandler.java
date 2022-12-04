@@ -16,6 +16,8 @@ import net.minecraft.item.ItemStack;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
+import tekcays_addon.common.items.TKCYAMetaItem1;
+import tekcays_addon.common.items.TKCYAMetaItems;
 
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
@@ -49,12 +51,21 @@ public class BlastingRecipeHandler {
         ////From Hematite
         //Fe2O3 + 3 CO -> 2 Fe + 3 CO2
         BLASTING_RECIPES.recipeBuilder()
-                .temperature(2 * MINUTE)
+                .temperature(1800)
                 .input(dust, Materials.Hematite, 5)
                 .input(dust, Materials.Coke, 2)
                 .input(dust, Materials.Stone, 3)
                 .fluidOutputs(TKCYAMaterials.PigIron.getFluid(GTValues.L))
-                .duration(200)
+                .duration(MINUTE)
+                .buildAndRegister();
+
+        ADVANCED_BLAST_FURNACE_RECIPES.recipeBuilder()
+                .temperature(1800)
+                .input(dust, Materials.Hematite, 5)
+                .input(dust, Materials.Coke, 2)
+                .input(dust, Materials.Stone, 3)
+                .fluidOutputs(TKCYAMaterials.PigIron.getFluid(GTValues.L))
+                .duration(30 * SECOND)
                 .buildAndRegister();
 
         ////From Magnetite
@@ -65,6 +76,14 @@ public class BlastingRecipeHandler {
                 .input(dust, Materials.Coke, 2)
                 .fluidOutputs(TKCYAMaterials.PigIron.getFluid(GTValues.L * 3))
                 .duration(2 * MINUTE)
+                .buildAndRegister();
+
+        ADVANCED_BLAST_FURNACE_RECIPES.recipeBuilder()
+                .temperature(1800)
+                .input(dust, Materials.Magnetite, 7)
+                .input(dust, Materials.Coke, 2)
+                .fluidOutputs(TKCYAMaterials.PigIron.getFluid(GTValues.L * 3))
+                .duration(30 * SECOND)
                 .buildAndRegister();
 
         //Tin
@@ -83,8 +102,8 @@ public class BlastingRecipeHandler {
                 .temperature(1500)
                 .input(dust, Materials.Cassiterite, 3)
                 .input(dust, Materials.Coke, 2)
-                .output(ingot, Tin)
-                .duration(5 * SECOND)
+                .fluidOutputs(Materials.Tin.getFluid(GTValues.L))
+                .duration(30 * SECOND)
                 .buildAndRegister();
 
 

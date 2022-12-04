@@ -12,7 +12,6 @@ import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
-import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -218,15 +217,14 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
                 .where('C', heatingCoils())
                 .where('Y', states(getCasingState()))
                 .where('X', states(getCasingState())
-                        .or(getOutputBrickFluidHatch(brick).setMinGlobalLimited(1).setMaxGlobalLimited(1))
-                        .or(getOutputBrickItemBus(brick).setMinGlobalLimited(1).setMaxGlobalLimited(1)))
+                        .or(abilities(MultiblockAbility.EXPORT_ITEMS).setPreviewCount(1))
+                        .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setPreviewCount(1)))
                 .where('O', states(getCasingState())
-                        .or(getInputBrickItemBus(brick).setMinGlobalLimited(1).setMaxGlobalLimited(2))
-                        .or(getInputBrickFluidHatch(brick).setMinGlobalLimited(1).setMaxGlobalLimited(2)))
+                        .or(abilities(MultiblockAbility.IMPORT_ITEMS).setPreviewCount(1))
+                        .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setPreviewCount(1)))
                 .where('P', heightIndicatorPredicate())
                 .where('M', abilities(MultiblockAbility.MAINTENANCE_HATCH))
-                .where('U', abilities(MultiblockAbility.MUFFLER_HATCH)
-                        .or(getBrickMuffler(brick)))
+                .where('U', abilities(MultiblockAbility.MUFFLER_HATCH))
                 .where('#', air())
                 .build();
     }

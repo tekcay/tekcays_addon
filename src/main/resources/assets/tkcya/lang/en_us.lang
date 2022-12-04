@@ -202,6 +202,7 @@ recipemap.casting_table.name=Casting
 recipemap.primitive_bath.name=Bath
 recipemap.electric_casting_table.name=Casting
 recipemap.blasting.name=Blasting
+recipemap.advanced_blasting.name=Advanced Blasting
 recipemap.converting.name=Converting
 recipemap.primitive_converting.name=Primitive Converting
 recipemap.crystallization.name=Crystallization
@@ -275,6 +276,14 @@ material.potassium_aluminate=Potassium Aluminate
 material.sodium_aluminate=Sodium Aluminate
 material.cryolite=Cryolite
 material.hexafluorosilic_acid=Hexafluorosilic Acid
+
+##ChromiteChain
+material.sodium_chromate=Sodium Chromate
+material.sodium_dichromate=Sodium Dichromate
+material.chromium_oxide=Chromium Oxide
+material.sodium_carbonate=Sodium Carbonate
+material.sodium_sulfate=Sodium Sulfate
+material.potassium_sulfate=Potassium Sulfate
 
 #MoreRoastable
 material.kesterite=Kesterite
