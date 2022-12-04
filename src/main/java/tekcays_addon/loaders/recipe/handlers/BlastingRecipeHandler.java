@@ -2,13 +2,11 @@ package tekcays_addon.loaders.recipe.handlers;
 
 import gregicality.science.common.metatileentities.GCYSMetaTileEntities;
 import gregtech.api.GTValues;
-import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.recipes.ModHandler;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.stack.UnificationEntry;
 import gregtech.common.blocks.BlockMachineCasing;
-import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.BlockSteamCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
@@ -18,12 +16,11 @@ import net.minecraft.item.ItemStack;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
-import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
-import static tekcays_addon.api.recipes.TKCYARecipeMaps.BLASTING_RECIPES;
+import static tekcays_addon.api.recipes.TKCYARecipeMaps.*;
 import static tekcays_addon.api.utils.TKCYAValues.MINUTE;
 import static tekcays_addon.api.utils.TKCYAValues.SECOND;
 import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.*;
@@ -80,6 +77,14 @@ public class BlastingRecipeHandler {
                 .input(dust, Materials.Coke, 2)
                 .fluidOutputs(Materials.Tin.getFluid(GTValues.L))
                 .duration(2 * MINUTE)
+                .buildAndRegister();
+
+        ADVANCED_BLAST_FURNACE_RECIPES.recipeBuilder()
+                .temperature(1500)
+                .input(dust, Materials.Cassiterite, 3)
+                .input(dust, Materials.Coke, 2)
+                .output(ingot, Tin)
+                .duration(5 * SECOND)
                 .buildAndRegister();
 
 

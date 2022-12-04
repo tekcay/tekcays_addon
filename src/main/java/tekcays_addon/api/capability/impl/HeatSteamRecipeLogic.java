@@ -21,39 +21,6 @@ public class HeatSteamRecipeLogic extends RecipeLogicSteam {
         super(tileEntity, recipeMap, isHighPressure, steamFluidTank, conversionRate);
     }
 
-    @Override
-    protected void updateRecipeProgress() {
-        // do not simulate heat so it keeps growing towards atmospheric
-        if (this.canRecipeProgress && this.drawEnergy(this.recipeEUt, true) && drawHeat(this.recipeHeat, false)) {
-            if (++this.progressTime > this.maxProgressTime) {
-                this.completeRecipe();
-            }
-
-            if (this.hasNotEnoughEnergy) {
-                if (this.getEnergyInputPerSecond() > 19L * (long)this.recipeEUt) {
-                    this.hasNotEnoughEnergy = false;
-                }
-            }
-        } else if (this.recipeEUt > 0 || this.recipeHeat != 0) {
-            this.hasNotEnoughEnergy = true;
-            if (this.progressTime >= 2) {
-                if (ConfigHolder.machines.recipeProgressLowEnergy) {
-                    this.progressTime = 1;
-                } else {
-                    this.progressTime = Math.max(1, this.progressTime - 2);
-                }
-            }
-        }
-    }
-
-    protected boolean drawHeat(int heat, boolean simulate) {
-        IHeatContainer container = this.getHeatContainer();
-        if (container.changeHeat(heat, true)) {
-            container.changeHeat(heat, simulate);
-            return true;
-        } else return false;
-    }
-
     protected IHeatContainer getHeatContainer() {
         return ((IHeatMachine) this.metaTileEntity).getHeatContainer();
     }

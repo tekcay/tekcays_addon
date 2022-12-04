@@ -192,7 +192,7 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
         return MathHelper.floor(f * 14.0f) + (currentTemp > 0 ? 1 : 0);
     }
     
-    private void actualizedTemperature() {
+    private void actualizeTemperature() {
         heatContainer.setTemperature(GCYSValues.EARTH_TEMPERATURE + currentHeat / HEAT_MULTIPLIER);
     }
 
@@ -207,7 +207,7 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
         //Loses heat over time if no more heat heat is provided
         if (getOffsetTimer() % 20 == 0) {
             if (previousHeat == currentHeat && currentTemp > GCYSValues.EARTH_TEMPERATURE) {
-                heatContainer.changeHeat(HEAT_COOL,false);
+                heatContainer.changeHeat(HEAT_COOL);
             }
         }
 
@@ -224,15 +224,14 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
         }
 
        if (onChange) {
-           heatContainer.changeHeat(-HEAT_DROP,false);
-           actualizedTemperature();
+           heatContainer.changeHeat(-HEAT_DROP);
+           actualizeTemperature();
            onChange = false;
            return;
        }
 
        if (this.workable.isWorking() && this.workable.getProgress() == 1) onChange = true;
-
-        actualizedTemperature();
+        actualizeTemperature();
     }
 
 

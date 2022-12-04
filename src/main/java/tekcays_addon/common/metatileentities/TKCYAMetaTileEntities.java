@@ -44,7 +44,7 @@ public class TKCYAMetaTileEntities {
     public static SimpleMachineMetaTileEntity[] ADVANCED_POLARIZER = new SimpleMachineMetaTileEntity[5];
     public static SimpleMachineMetaTileEntity[] ELECTRIC_CASTING_TABLE = new SimpleMachineMetaTileEntity[5];
     public static MetaTileEntityElectricHeater[] ELECTRIC_HEATER = new MetaTileEntityElectricHeater[5];
-    public static MetaTileEntityHeatAcceptor[] HEAT_ACCEPTOR = new MetaTileEntityHeatAcceptor[1];
+    public static MetaTileEntityHeatAcceptor[] HEAT_ACCEPTOR = new MetaTileEntityHeatAcceptor[4];
 
     public static MetaTileEntityPrimitiveMelter PRIMITIVE_MELTER;
     public static MetaTileEntityPrimitiveFermenter PRIMITIVE_FERMENTER;
@@ -77,6 +77,7 @@ public class TKCYAMetaTileEntities {
 
     //Blast Furnaces
     public static MetaTileEntityTKCYABlastFurnace[] BLAST_FURNACE = new MetaTileEntityTKCYABlastFurnace[BRICKS.size()];
+    public static MetaTileEntityAdvancedBlastFurnace[] ADVANCED_BLAST_FURNACE = new MetaTileEntityAdvancedBlastFurnace[BRICKS.size()];
     public static MetaTileEntityBrickFluidHatch[] BRICK_IMPORT_FLUID_HATCH = new MetaTileEntityBrickFluidHatch[BRICKS.size()];
     public static MetaTileEntityBrickFluidHatch[] BRICK_EXPORT_FLUID_HATCH = new MetaTileEntityBrickFluidHatch[BRICKS.size()];
     public static MetaTileEntityBrickItemBus[] BRICK_EXPORT_ITEM_BUS = new MetaTileEntityBrickItemBus[BRICKS.size()];
@@ -144,6 +145,7 @@ public class TKCYAMetaTileEntities {
             for (int i = 0; i < BRICKS.size(); i++) {
                 BlockBrick.BrickType brick = BRICKS.get(i);
                 BLAST_FURNACE[i] = registerMetaTileEntity(11051 + i, new MetaTileEntityTKCYABlastFurnace(tkcyaId(brick.getName() + "_blast_furnace"), brick));
+                ADVANCED_BLAST_FURNACE[i] = registerMetaTileEntity(12100 + i, new MetaTileEntityAdvancedBlastFurnace(tkcyaId(brick.getName() + "_advanced_blast_furnace"), brick));
                 BRICK_IMPORT_FLUID_HATCH[i] = registerMetaTileEntity(11055 + i, new MetaTileEntityBrickFluidHatch(tkcyaId(brick.getName() + "_import_fluid_hatch"), false, brick));
                 BRICK_EXPORT_FLUID_HATCH[i] = registerMetaTileEntity(11059 + i, new MetaTileEntityBrickFluidHatch(tkcyaId(brick.getName() + "_export_fluid_hatch"), true, brick));
                 BRICK_EXPORT_ITEM_BUS[i] = registerMetaTileEntity(11063 + i, new MetaTileEntityBrickItemBus(tkcyaId(brick.getName() + "_export_item_bus"), true, brick));
@@ -224,7 +226,7 @@ public class TKCYAMetaTileEntities {
         ELECTRIC_HEATER[3] = registerMetaTileEntity(11173, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.ev"), 4));
         ELECTRIC_HEATER[4] = registerMetaTileEntity(11174, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.iv"), 5));
 
-        HEAT_ACCEPTOR[0] = registerMetaTileEntity(11175, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.lv"), 1));
+
         ADVANCED_MELTER = registerMetaTileEntity(11176, new MetaTileEntityAdvancedMelter(tkcyaId("advanced_melter")));
 
         //id 11177 to
@@ -250,6 +252,11 @@ public class TKCYAMetaTileEntities {
         }
 
         STEAM_AUTOCLAVE = registerMetaTileEntity(12020, new MetaTileEntitySteamAutoclave(tkcyaId("steam_autoclave"), true));
+
+        HEAT_ACCEPTOR[0] = registerMetaTileEntity(12030, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.lv"), 1));
+        HEAT_ACCEPTOR[1] = registerMetaTileEntity(12031, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.mv"), 2));
+        HEAT_ACCEPTOR[2] = registerMetaTileEntity(12032, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.hv"), 3));
+        HEAT_ACCEPTOR[3] = registerMetaTileEntity(12033, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.ev"), 4));
 
     }
 

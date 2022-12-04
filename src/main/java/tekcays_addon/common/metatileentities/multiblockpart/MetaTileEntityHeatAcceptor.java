@@ -10,6 +10,7 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -24,6 +25,7 @@ import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.api.render.TKCYATextures;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -35,16 +37,30 @@ import static tekcays_addon.api.utils.TKCYAValues.VERTICALS;
 public class MetaTileEntityHeatAcceptor extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IHeatContainer>, IDataInfoProvider {
 
     private final IHeatContainer heatContainer;
-    private final int coolingRate = getTier();
+    private final int coolingRate = 10 * getTier() * getTier();
 
     public MetaTileEntityHeatAcceptor(@Nonnull ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
-        this.heatContainer = new HeatContainer(this, 0, getTier() * 20000);
+        this.heatContainer = new HeatContainer(this, 0, getTier() * getTier() * 20000);
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity iGregTechTileEntity) {
         return new MetaTileEntityHeatAcceptor(metaTileEntityId, this.getTier());
+    }
+
+    //Each second, it cools down
+    @Override
+    public void update() {
+        super.update();
+        if (getOffsetTimer() % 20 == 0) {
+            if (heatContainer.getHeat() - coolingRate >= 0) heatContainer.changeHeat(-coolingRate);
+            else heatContainer.setHeat(0);
+        }
+    }
+
+    public IHeatContainer getHeatContainer() {
+        return heatContainer;
     }
 
     @Override
@@ -67,6 +83,8 @@ public class MetaTileEntityHeatAcceptor extends MetaTileEntityMultiblockPart imp
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
+        tooltip.add(I18n.format("tkcya.machine.heat_acceptor.tooltip.1"));
+        tooltip.add(I18n.format("tkcya.machine.heat_acceptor.tooltip.2", coolingRate));
     }
 
     @Override

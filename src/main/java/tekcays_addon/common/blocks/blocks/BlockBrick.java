@@ -38,7 +38,8 @@ public class BlockBrick extends VariantBlock<BlockBrick.BrickType> {
         IBlockState stackState = itemBlock.getBlockState(itemStack);
         BrickType brickType = getState(stackState);
 
-        lines.add(I18n.format("tile.block_brick.tooltip_heat", brickType.brickTemperature));
+        lines.add(I18n.format("tile.block_brick.tooltip.heat", brickType.brickTemperature));
+        lines.add(I18n.format("tile.block_brick.tooltip.density", brickType.density));
     }
 
     public static final int BRICK = 0;
@@ -48,19 +49,21 @@ public class BlockBrick extends VariantBlock<BlockBrick.BrickType> {
 
     public enum BrickType implements IStringSerializable {
 
-        BRICK("brick", 1600, BlockBrick.BRICK),
-        REINFORCED_BRICK("reinforced_brick", 2100, BlockBrick.REINFORCED_BRICK),
-        FIRECLAY_BRICK("fireclay_brick", 3600, BlockBrick.FIRECLAY_BRICK),
-        STRONG_BRICK("strong_brick", 5000, BlockBrick.STRONG_BRICK);
+        BRICK("brick", 1600, 2, BlockBrick.BRICK),
+        REINFORCED_BRICK("reinforced_brick", 2100, 3, BlockBrick.REINFORCED_BRICK),
+        FIRECLAY_BRICK("fireclay_brick", 3600, 5, BlockBrick.FIRECLAY_BRICK),
+        STRONG_BRICK("strong_brick", 5000, 8, BlockBrick.STRONG_BRICK);
 
 
         private final String name;
         private final int brickTemperature;
         private final int textureId;
+        private final int density;
 
-        BrickType(String name, int brickTemperature, int textureId) {
+        BrickType(String name, int brickTemperature, int density, int textureId) {
             this.name = name;
             this.brickTemperature = brickTemperature;
+            this.density = density;
             this.textureId = textureId;
         }
 
@@ -78,5 +81,8 @@ public class BlockBrick extends VariantBlock<BlockBrick.BrickType> {
             return textureId;
         }
 
+        public int getDensity() {
+            return density;
+        }
     }
 }

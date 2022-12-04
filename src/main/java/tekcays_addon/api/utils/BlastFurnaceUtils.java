@@ -59,4 +59,8 @@ public class BlastFurnaceUtils {
         return metaTileEntities(PRIMITIVE_MUFFLER[0]);
     }
 
+    public static TraceabilityPredicate getHeatAcceptor() {
+        return metaTileEntities(HEAT_ACCEPTOR[0]);
+    }
+
 }
