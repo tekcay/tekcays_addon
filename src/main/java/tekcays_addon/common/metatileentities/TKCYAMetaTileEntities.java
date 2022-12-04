@@ -44,6 +44,7 @@ public class TKCYAMetaTileEntities {
     public static SimpleMachineMetaTileEntity[] ADVANCED_POLARIZER = new SimpleMachineMetaTileEntity[5];
     public static SimpleMachineMetaTileEntity[] ELECTRIC_CASTING_TABLE = new SimpleMachineMetaTileEntity[5];
     public static MetaTileEntityElectricHeater[] ELECTRIC_HEATER = new MetaTileEntityElectricHeater[5];
+    public static MetaTileEntityElectricCooler[] ELECTRIC_COOLER = new MetaTileEntityElectricCooler[5];
     public static MetaTileEntityHeatAcceptor[] HEAT_ACCEPTOR = new MetaTileEntityHeatAcceptor[4];
 
     public static MetaTileEntityPrimitiveMelter PRIMITIVE_MELTER;
@@ -225,6 +226,12 @@ public class TKCYAMetaTileEntities {
         ELECTRIC_HEATER[2] = registerMetaTileEntity(11172, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.hv"), 3));
         ELECTRIC_HEATER[3] = registerMetaTileEntity(11173, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.ev"), 4));
         ELECTRIC_HEATER[4] = registerMetaTileEntity(11174, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.iv"), 5));
+
+        ELECTRIC_COOLER[0] = registerMetaTileEntity(12040, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.lv"), 1));
+        ELECTRIC_COOLER[1] = registerMetaTileEntity(12041, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.mv"), 2));
+        ELECTRIC_COOLER[2] = registerMetaTileEntity(12042, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.hv"), 3));
+        ELECTRIC_COOLER[3] = registerMetaTileEntity(12043, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.ev"), 4));
+        ELECTRIC_COOLER[4] = registerMetaTileEntity(12044, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.iv"), 5));
 
 
         ADVANCED_MELTER = registerMetaTileEntity(11176, new MetaTileEntityAdvancedMelter(tkcyaId("advanced_melter")));

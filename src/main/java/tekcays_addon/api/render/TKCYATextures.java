@@ -51,6 +51,10 @@ public class TKCYATextures {
     public static SimpleOverlayRenderer HEAT_ACCEPTOR_HORIZONTALS_OVERLAY;
     public static SimpleOverlayRenderer HEAT_ACCEPTOR_VERTICALS_OVERLAY;
 
+    //Cooler
+    public static SimpleOverlayRenderer COOLER_COOL_SIDE_OVERLAY;
+    public static SimpleOverlayRenderer COOLER_HOT_SIDE_OVERLAY;
+
 
     public static void preInit() {
         // Simple Machines
@@ -81,5 +85,8 @@ public class TKCYATextures {
         //Acceptors
         HEAT_ACCEPTOR_HORIZONTALS_OVERLAY = new SimpleOverlayRenderer("multiblockpart/heat_acceptor_horizontals");
         HEAT_ACCEPTOR_VERTICALS_OVERLAY = new SimpleOverlayRenderer("multiblockpart/heat_acceptor_verticals");
+
+        COOLER_COOL_SIDE_OVERLAY = new SimpleOverlayRenderer("machines/cooler/cool");
+        COOLER_HOT_SIDE_OVERLAY = new SimpleOverlayRenderer("machines/cooler/hot");
     }
 }

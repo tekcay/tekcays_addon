@@ -114,10 +114,9 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
         tooltip.add(I18n.format("gregtech.universal.tooltip.max_voltage_in", energyContainer.getInputVoltage(), GTValues.VNF[getTier()]));
         tooltip.add(I18n.format("tkcya.machine.energy_conversion_efficiency",  TextFormatting.WHITE + String.format("%.02f", EU_TO_HU * 100) + "%"));
         tooltip.add(I18n.format("gregtech.universal.tooltip.energy_storage_capacity", energyContainer.getEnergyCapacity()));
-        tooltip.add(I18n.format("tkcya.heater.tooltip.2", NumberFormattingUtil.formatDoubleToCompactString(Math.abs(HEAT_BASE_INCREASE))));
+        tooltip.add(I18n.format("tkcya.electric_heater.tooltip.1", HEAT_BASE_INCREASE));
         tooltip.add(I18n.format("tkcya.machine.redstone.inverse.tooltip"));
         tooltip.add(I18n.format("gregtech.machine.item_controller.tooltip.consumption", ENERGY_BASE_CONSUMPTION));
-        tooltip.add(I18n.format("tkcya.heater.tooltip.3"));
     }
 
     @Override

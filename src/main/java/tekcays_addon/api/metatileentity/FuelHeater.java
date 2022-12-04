@@ -154,10 +154,9 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tkcya.heater.tooltip.1"));
-        tooltip.add(I18n.format("tkcya.heater.tooltip.2", NumberFormattingUtil.formatDoubleToCompactString(Math.abs(heatIncreaseRate))));
+        tooltip.add(I18n.format("tkcya.heater.tooltip.2", heatIncreaseRate));
         tooltip.add(I18n.format("tkcya.machine.energy_conversion_efficiency",  TextFormatting.WHITE + String.format("%.02f", efficiency * 100.00F) + "%"));
         tooltip.add(I18n.format("tkcya.machine.redstone.inverse.tooltip"));
-        tooltip.add(I18n.format("tkcya.heater.tooltip.3"));
     }
 
     @Override
