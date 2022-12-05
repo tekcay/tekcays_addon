@@ -4,7 +4,7 @@ public interface IHeatMachine {
 
     /**
      *
-     * @return the pressure container of this machine
+     * @return the heat container of this machine
      */
     IHeatContainer getHeatContainer();
 }

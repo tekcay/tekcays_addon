@@ -3,14 +3,12 @@ package tekcays_addon.api.capability;
 import gregicality.science.api.GCYSValues;
 import tekcays_addon.api.utils.TKCYAValues;
 
-import javax.annotation.Nonnull;
-
 public interface IHeatContainer {
 
     /**
      * @return the amount of heat in the container
      */
-    int getHeat();
+    int getPressure();
 
     /**
      * @return the temperature of the container
@@ -22,7 +20,7 @@ public interface IHeatContainer {
      *
      * @param amount the amount to set
      */
-    void setHeat(int amount);
+    void setPressure(int amount);
 
     /**
      * Set the temperature of the container
@@ -38,7 +36,7 @@ public interface IHeatContainer {
      * @param amount the amount to change by
      */
     default void changeHeat(int amount) {
-        setHeat(Math.max(0, Math.min(getHeat() + amount, getMaxHeat())));
+        setPressure(Math.max(0, Math.min(getPressure() + amount, getMaxPressure())));
     }
 
     /*
@@ -54,12 +52,12 @@ public interface IHeatContainer {
     /**
      * @return the minimum heat this container can handle
      */
-    int getMinHeat();
+    int getMinPressure();
 
     /**
      * @return the maximum heat this container can handle
      */
-    int getMaxHeat();
+    int getMaxPressure();
 
     /**
      * @return the maximum temperature this container can handle
@@ -70,7 +68,7 @@ public interface IHeatContainer {
      * @return true if the Heat is safe for the container, else false
      */
     default boolean isHeatSafe() {
-        return isHeatSafe(getHeat());
+        return isHeatSafe(getPressure());
     }
 
     /**
@@ -78,31 +76,31 @@ public interface IHeatContainer {
      * @return true if the Heat is safe for the container, else false
      */
     default boolean isHeatSafe(int Heat) {
-        return Heat <= getMaxHeat() && Heat >= getMinHeat();
+        return Heat <= getMaxPressure() && Heat >= getMinPressure();
     }
 
     /**
      * @return if the Heat is around atmospheric levels
      */
     default boolean isNormalHeat() {
-        return getHeat() == 0;
+        return getPressure() == 0;
     }
 
 
     IHeatContainer EMPTY = new IHeatContainer() {
 
         @Override
-        public int getMinHeat() {
+        public int getMinPressure() {
             return TKCYAValues.MIN_HEAT;
         }
 
         @Override
-        public int getMaxHeat() {
+        public int getMaxPressure() {
             return TKCYAValues.MAX_HEAT;
         }
 
         @Override
-        public int getHeat() {
+        public int getPressure() {
             return 0;
         }
 
@@ -117,7 +115,7 @@ public interface IHeatContainer {
 
 
         @Override
-        public void setHeat(int amount) {
+        public void setPressure(int amount) {
         }
 
         @Override

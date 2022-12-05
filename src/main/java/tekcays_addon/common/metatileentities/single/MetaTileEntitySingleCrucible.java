@@ -177,9 +177,9 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
-        list.add(new TextComponentTranslation("behavior.tricorder.current_heat", heatContainer.getHeat()));
-        list.add(new TextComponentTranslation("behavior.tricorder.min_heat", heatContainer.getMinHeat()));
-        list.add(new TextComponentTranslation("behavior.tricorder.max_heat", heatContainer.getMaxHeat()));
+        list.add(new TextComponentTranslation("behavior.tricorder.current_heat", heatContainer.getPressure()));
+        list.add(new TextComponentTranslation("behavior.tricorder.min_heat", heatContainer.getMinPressure()));
+        list.add(new TextComponentTranslation("behavior.tricorder.max_heat", heatContainer.getMaxPressure()));
         list.add(new TextComponentTranslation("behavior.tricorder.currentTemp", currentTemp));
         return list;
     }
@@ -199,7 +199,7 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
         super.update();
         int previousHeat = currentHeat;
         currentTemp = heatContainer.getTemperature();
-        currentHeat = heatContainer.getHeat();
+        currentHeat = heatContainer.getPressure();
         pushFluidsIntoNearbyHandlers(getFrontFacing());
 
         //Loses heat over time if no more heat heat is provided

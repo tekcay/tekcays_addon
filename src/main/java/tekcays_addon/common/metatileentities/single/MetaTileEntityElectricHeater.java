@@ -5,8 +5,6 @@ import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.ColourMultiplier;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import com.google.common.base.Preconditions;
-import gregicality.science.api.utils.NumberFormattingUtil;
 import gregtech.api.GTValues;
 import gregtech.api.capability.GregtechTileCapabilities;
 import gregtech.api.capability.IActiveOutputSide;
@@ -37,7 +35,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static gregtech.api.capability.GregtechDataCodes.UPDATE_FRONT_FACING;
 import static net.minecraft.util.EnumFacing.*;
 import static tekcays_addon.api.utils.TKCYAValues.EU_TO_HU;
 
@@ -82,13 +79,13 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
     @Override
     public void update() {
         super.update();
-        int currentHeat = heatContainer.getHeat();
+        int currentHeat = heatContainer.getPressure();
         if (!getWorld().isRemote) {
 
             //Redstone stops heating
             if (this.isBlockRedstonePowered()) return;
             if (energyContainer.getEnergyStored() < ENERGY_BASE_CONSUMPTION) return;
-            if (currentHeat + HEAT_BASE_INCREASE < heatContainer.getMaxHeat()) heatContainer.setHeat(currentHeat + HEAT_BASE_INCREASE);
+            if (currentHeat + HEAT_BASE_INCREASE < heatContainer.getMaxPressure()) heatContainer.setPressure(currentHeat + HEAT_BASE_INCREASE);
 
             energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
 
@@ -155,9 +152,9 @@ public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implement
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
-        list.add(new TextComponentTranslation("behavior.tricorder.current_heat", heatContainer.getHeat()));
-        list.add(new TextComponentTranslation("behavior.tricorder.min_heat", heatContainer.getMinHeat()));
-        list.add(new TextComponentTranslation("behavior.tricorder.max_heat", heatContainer.getMaxHeat()));
+        list.add(new TextComponentTranslation("behavior.tricorder.current_heat", heatContainer.getPressure()));
+        list.add(new TextComponentTranslation("behavior.tricorder.min_heat", heatContainer.getMinPressure()));
+        list.add(new TextComponentTranslation("behavior.tricorder.max_heat", heatContainer.getMaxPressure()));
         return list;
     }
 

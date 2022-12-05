@@ -25,7 +25,6 @@ import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.api.render.TKCYATextures;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -55,8 +54,8 @@ public class MetaTileEntityHeatAcceptor extends MetaTileEntityMultiblockPart imp
     public void update() {
         super.update();
         if (getOffsetTimer() % 20 == 0) {
-            if (heatContainer.getHeat() - coolingRate >= 0) heatContainer.changeHeat(-coolingRate);
-            else heatContainer.setHeat(0);
+            if (heatContainer.getPressure() - coolingRate >= 0) heatContainer.changeHeat(-coolingRate);
+            else heatContainer.setPressure(0);
         }
     }
 
@@ -113,9 +112,9 @@ public class MetaTileEntityHeatAcceptor extends MetaTileEntityMultiblockPart imp
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
-        list.add(new TextComponentTranslation("behavior.tricorder.current_heat", heatContainer.getHeat()));
-        list.add(new TextComponentTranslation("behavior.tricorder.min_heat", heatContainer.getMinHeat()));
-        list.add(new TextComponentTranslation("behavior.tricorder.max_heat", heatContainer.getMaxHeat()));
+        list.add(new TextComponentTranslation("behavior.tricorder.current_heat", heatContainer.getPressure()));
+        list.add(new TextComponentTranslation("behavior.tricorder.min_heat", heatContainer.getMinPressure()));
+        list.add(new TextComponentTranslation("behavior.tricorder.max_heat", heatContainer.getMaxPressure()));
         return list;
     }
 

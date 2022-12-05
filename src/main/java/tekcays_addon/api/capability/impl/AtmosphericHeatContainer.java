@@ -12,5 +12,5 @@ public class AtmosphericHeatContainer extends HeatContainer {
     }
 
     @Override
-    public void setHeat(int amount) {/**/}
+    public void setPressure(int amount) {/**/}
 }

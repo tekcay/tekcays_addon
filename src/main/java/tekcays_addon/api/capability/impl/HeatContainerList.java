@@ -13,16 +13,16 @@ public class HeatContainerList implements IHeatContainer {
     }
 
     @Override
-    public int getMinHeat() {
+    public int getMinPressure() {
         return heatContainerList.stream()
-                .mapToInt(IHeatContainer::getMinHeat)
+                .mapToInt(IHeatContainer::getMinPressure)
                 .sum();
     }
 
     @Override
-    public int getMaxHeat() {
+    public int getMaxPressure() {
         return heatContainerList.stream()
-                .mapToInt(IHeatContainer::getMaxHeat)
+                .mapToInt(IHeatContainer::getMaxPressure)
                 .sum();
     }
 
@@ -41,8 +41,8 @@ public class HeatContainerList implements IHeatContainer {
 
     @Override
     public void changeHeat(int amount) {
-        if (amount >= this.getHeat()) {
-            setHeat(0);
+        if (amount >= this.getPressure()) {
+            setPressure(0);
             return;
         }
         int heatToChange = amount / heatContainerList.size();
@@ -52,9 +52,9 @@ public class HeatContainerList implements IHeatContainer {
     }
 
     @Override
-    public int getHeat() {
+    public int getPressure() {
         return heatContainerList.stream()
-                .mapToInt(IHeatContainer::getHeat)
+                .mapToInt(IHeatContainer::getPressure)
                 .sum();
     }
 
@@ -65,9 +65,9 @@ public class HeatContainerList implements IHeatContainer {
     }
 
     @Override
-    public void setHeat(int amount) {
+    public void setPressure(int amount) {
         for (IHeatContainer heatContainer : heatContainerList) {
-            heatContainer.setHeat(amount);
+            heatContainer.setPressure(amount);
         }
     }
 
