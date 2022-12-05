@@ -83,10 +83,10 @@ tkcya.machine.roasting_oven.name=Roasting Oven
 tkcya.machine.spiral_separator.name=Spiral Separator
 
 #Blast Furnaces
-tkcya.machine.brick_blast_furnace.name=Brick Blast Furnace
-tkcya.machine.fireclay_brick_blast_furnace.name=Fireclay Brick Blast Furnace
-tkcya.machine.reinforced_brick_blast_furnace.name=Reinforced Brick Blast Furnace
-tkcya.machine.strong_brick_blast_furnace.name=Strong Brick Blast Furnace
+tkcya.machine.brick_blast_furnace.name=Primitive Brick Blast Furnace
+tkcya.machine.fireclay_brick_blast_furnace.name=Primitive Fireclay Brick Blast Furnace
+tkcya.machine.reinforced_brick_blast_furnace.name=Primitive Reinforced Brick Blast Furnace
+tkcya.machine.strong_brick_blast_furnace.name=Primitive Strong Brick Blast Furnace
 
 #Advanced Blast Furnaces
 tkcya.machine.brick_advanced_blast_furnace.name=Brick Advanced Blast Furnace
