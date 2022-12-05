@@ -14,7 +14,9 @@ public class HeatContainerList implements IHeatContainer {
 
     @Override
     public int getMinHeat() {
-        return 0;
+        return heatContainerList.stream()
+                .mapToInt(IHeatContainer::getMinHeat)
+                .sum();
     }
 
     @Override

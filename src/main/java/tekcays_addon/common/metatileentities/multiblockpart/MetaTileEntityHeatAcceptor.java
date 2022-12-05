@@ -38,10 +38,11 @@ public class MetaTileEntityHeatAcceptor extends MetaTileEntityMultiblockPart imp
 
     private final IHeatContainer heatContainer;
     private final int coolingRate = 10 * getTier() * getTier();
+    private final int heatCapacity = getTier() * getTier() * 20000;
 
     public MetaTileEntityHeatAcceptor(@Nonnull ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
-        this.heatContainer = new HeatContainer(this, 0, getTier() * getTier() * 20000);
+        this.heatContainer = new HeatContainer(this, 0, heatCapacity);
     }
 
     @Override
@@ -85,6 +86,7 @@ public class MetaTileEntityHeatAcceptor extends MetaTileEntityMultiblockPart imp
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tkcya.machine.heat_acceptor.tooltip.1"));
         tooltip.add(I18n.format("tkcya.machine.heat_acceptor.tooltip.2", coolingRate));
+        tooltip.add(I18n.format("tkcya.machine.heat_acceptor.tooltip.3", heatCapacity / 1000));
     }
 
     @Override
