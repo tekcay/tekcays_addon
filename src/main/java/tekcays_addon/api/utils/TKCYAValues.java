@@ -41,6 +41,8 @@ public class TKCYAValues {
     public static final int MIN_HEAT = 0;
     public static final int MAX_HEAT = 10000;
 
+    //Pressure
+    public static final int MAX_PRESSURE = 10000;
     /**
      * One second in {@code tick}s.
      */
