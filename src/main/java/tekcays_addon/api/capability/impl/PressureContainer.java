@@ -70,8 +70,8 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
     @Nullable
     @Override
     public <T> T getCapability(Capability<T> capability) {
-        if (capability == TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER) {
-            return TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER.cast(this);
+        if (capability == TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER) {
+            return TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER.cast(this);
         }
         return null;
     }
