@@ -69,9 +69,6 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityFluidizedHeater[] FLUIDIZED_FUEL_HEATER = new MetaTileEntityFluidizedHeater[FUEL_HEATERS.size()];
     public static MetaTileEntityGasHeater[] GAS_FUEL_HEATER = new MetaTileEntityGasHeater[FUEL_HEATERS.size()];
 
-
-    public static MetaTileEntityAdvancedMelter ADVANCED_MELTER;
-
     public static MetaTileEntityRoastingOven ROASTING_OVEN;
     public static MetaTileEntitySpiralSeparator SPIRAL_SEPARATOR;
 
@@ -232,9 +229,6 @@ public class TKCYAMetaTileEntities {
         ELECTRIC_COOLER[2] = registerMetaTileEntity(12042, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.hv"), 3));
         ELECTRIC_COOLER[3] = registerMetaTileEntity(12043, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.ev"), 4));
         ELECTRIC_COOLER[4] = registerMetaTileEntity(12044, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.iv"), 5));
-
-
-        ADVANCED_MELTER = registerMetaTileEntity(11176, new MetaTileEntityAdvancedMelter(tkcyaId("advanced_melter")));
 
         //id 11177 to
         SOLID_FUEL_HEATER[0] = registerMetaTileEntity(11177, new MetaTileEntitySolidFuelHeater(tkcyaId( "brick_solid_fuel_heater"), BRICK));
