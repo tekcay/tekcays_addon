@@ -404,6 +404,12 @@ tkcya.machine.heat_acceptor.tooltip.1=Accepts §cHEAT§7 on §eANY§7 side.
 tkcya.machine.heat_acceptor.tooltip.2=Loses §c%d HU/s§7.
 tkcya.machine.heat_acceptor.tooltip.3=Capacity: §c%dk HU§7.
 
+#Pressure hatch
+tkcya.machine.pressure_hatch.tooltip.vacuum=Accepts §dVacuum§7, down to §e%d mBar§7.
+tkcya.machine.pressure_hatch.tooltip.pressure=Accepts §ePressure§7, down to §e%d Bar§7.
+tkcya.machine.pressure_hatch.tooltip.vacuum.leak=Loses §d%d mBar/s§7.
+tkcya.machine.pressure_hatch.tooltip.pressure.leak=Loses §e%d mBar/s§7.
+
 tekcays_addon.multiblock.electric_melter.tooltip.1=Temperature: §a%d K§7.
 tekcays_addon.multiblock.electric_melter.tooltip.2=Not enough energy can be input to reach the target!
 tekcays_addon.multiblock.electric_melter.tooltip.4=Consumption: %d EU/t.
@@ -494,13 +500,22 @@ tkcya.cover.temperature_detector.message_temperature_storage_normal=Monitoring N
 tkcya.cover.temperature_detector.message_temperature_storage_inverted=Monitoring Inverted Temperature Storage
 
 #Tricorder
+
+behavior.tricorder.currentTemp=Current Temp: %s K
 behavior.tricorder.current_heat=Current Heat: %s HU
 behavior.tricorder.min_heat=Minimum Heat: %s HU
 behavior.tricorder.max_heat=Maximum Heat: %s HU
-behavior.tricorder.burn_time_left= Burn Time Left %s ticks
-behavior.tricorder.currentTemp=Current Temp: %s K
+
 behavior.tricorder.heatMultiplier=Heat Multiplier: %d
 
+behavior.tricorder.burn_time_left= Burn Time Left %s ticks
+
+behavior.tricorder.pressure.pressure=Pressure: %d Bar
+behavior.tricorder.pressure.vacuum=Vacuum: %d mBar
+behavior.tricorder.max_pressure.pressure=Maximum Pressure: %d Bar
+behavior.tricorder.max_pressure.vacuum=Maximum Pressure: %d mBar
+behavior.tricorder.min_pressure.pressure=Minimum Pressure: %d Bar
+behavior.tricorder.min_pressure.vacuum=Minimum Pressure: %d mBar
 
 # Errors
 

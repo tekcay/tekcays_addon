@@ -94,8 +94,13 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("tkcya.machine.heat_acceptor.tooltip.1"));
-        tooltip.add(I18n.format("tkcya.machine.heat_acceptor.tooltip.2", leakingRate));
+        if (canHandleVacuum) {
+            tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.vacuum"));
+            tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.vacuum.leak", leakingRate));
+        } else {
+            tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.pressure"));
+            tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.pressure.leak", leakingRate));
+        }
     }
 
     @Override
@@ -107,7 +112,6 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     public void registerAbilities(@Nonnull List<IPressureContainer> list) {
         list.add(this.pressureContainer);
     }
-
 
     @Override
     @Nullable
@@ -122,9 +126,15 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
-        list.add(new TextComponentTranslation("behavior.tricorder.current_heat", pressureContainer.getPressure()));
-        list.add(new TextComponentTranslation("behavior.tricorder.min_heat", pressureContainer.getMinPressure()));
-        list.add(new TextComponentTranslation("behavior.tricorder.max_heat", pressureContainer.getMaxPressure()));
+        if (canHandleVacuum) {
+            list.add(new TextComponentTranslation("behavior.tricorder.pressure.vacuum", pressureContainer.getPressure()));
+            list.add(new TextComponentTranslation("behavior.tricorder.min_pressure.pressure", pressureContainer.getMinPressure()));
+            list.add(new TextComponentTranslation("behavior.tricorder.max_pressure.pressure", pressureContainer.getMaxPressure()));
+        } else {
+            list.add(new TextComponentTranslation("behavior.tricorder.pressure.pressure", pressureContainer.getPressure()));
+            list.add(new TextComponentTranslation("behavior.tricorder.min_pressure.vacuum", pressureContainer.getMinPressure()));
+            list.add(new TextComponentTranslation("behavior.tricorder.max_pressure.vacuum", pressureContainer.getMaxPressure()));
+        }
         return list;
     }
 
