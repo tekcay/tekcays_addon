@@ -43,7 +43,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityElectricHeater[] ELECTRIC_HEATER = new MetaTileEntityElectricHeater[5];
     public static MetaTileEntityElectricCooler[] ELECTRIC_COOLER = new MetaTileEntityElectricCooler[5];
     public static MetaTileEntityHeatAcceptor[] HEAT_ACCEPTOR = new MetaTileEntityHeatAcceptor[4];
-    public static MetaTileEntityPressureHatch[] PRESSURE_HATCH = new MetaTileEntityPressureHatch[13];
+    public static MetaTileEntityPressureHatch[] PRESSURE_HATCH = new MetaTileEntityPressureHatch[14];
 
     public static MetaTileEntityPrimitiveMelter PRIMITIVE_MELTER;
     public static MetaTileEntityPrimitiveFermenter PRIMITIVE_FERMENTER;
@@ -222,11 +222,11 @@ public class TKCYAMetaTileEntities {
         ELECTRIC_HEATER[3] = registerMetaTileEntity(11173, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.ev"), 4));
         ELECTRIC_HEATER[4] = registerMetaTileEntity(11174, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.iv"), 5));
 
-        ELECTRIC_COOLER[0] = registerMetaTileEntity(12040, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.lv"), 1));
-        ELECTRIC_COOLER[1] = registerMetaTileEntity(12041, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.mv"), 2));
-        ELECTRIC_COOLER[2] = registerMetaTileEntity(12042, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.hv"), 3));
-        ELECTRIC_COOLER[3] = registerMetaTileEntity(12043, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.ev"), 4));
-        ELECTRIC_COOLER[4] = registerMetaTileEntity(12044, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.iv"), 5));
+        ELECTRIC_COOLER[0] = registerMetaTileEntity(12050, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.lv"), 1));
+        ELECTRIC_COOLER[1] = registerMetaTileEntity(12051, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.mv"), 2));
+        ELECTRIC_COOLER[2] = registerMetaTileEntity(12052, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.hv"), 3));
+        ELECTRIC_COOLER[3] = registerMetaTileEntity(12053, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.ev"), 4));
+        ELECTRIC_COOLER[4] = registerMetaTileEntity(12054, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.iv"), 5));
 
         //id 11177 to
         SOLID_FUEL_HEATER[0] = registerMetaTileEntity(11177, new MetaTileEntitySolidFuelHeater(tkcyaId( "brick_solid_fuel_heater"), BRICK));
@@ -257,21 +257,21 @@ public class TKCYAMetaTileEntities {
         HEAT_ACCEPTOR[2] = registerMetaTileEntity(12032, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.hv"), 3));
         HEAT_ACCEPTOR[3] = registerMetaTileEntity(12033, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.ev"), 4));
 
-        PRESSURE_HATCH[0] = registerMetaTileEntity(12034, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch.ulv"), true, 0));
-        PRESSURE_HATCH[1] = registerMetaTileEntity(12035, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch.lv"), true, 1));
-        PRESSURE_HATCH[2] = registerMetaTileEntity(12036, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch.mv"), true, 2));
-        PRESSURE_HATCH[3] = registerMetaTileEntity(12037, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch.hv"), true, 3));
-        PRESSURE_HATCH[4] = registerMetaTileEntity(12034, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch.ev"), true, 4));
-        PRESSURE_HATCH[5] = registerMetaTileEntity(12035, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch.iv"), true, 5));
-        PRESSURE_HATCH[6] = registerMetaTileEntity(12036, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch.luv"), true, 6));
+        PRESSURE_HATCH[0] = registerMetaTileEntity(12034, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch.ulv"), true, 0));
+        PRESSURE_HATCH[1] = registerMetaTileEntity(12035, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch.lv"), true, 1));
+        PRESSURE_HATCH[2] = registerMetaTileEntity(12036, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch.mv"), true, 2));
+        PRESSURE_HATCH[3] = registerMetaTileEntity(12037, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch.hv"), true, 3));
+        PRESSURE_HATCH[4] = registerMetaTileEntity(12038, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch.ev"), true, 4));
+        PRESSURE_HATCH[5] = registerMetaTileEntity(12039, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch.iv"), true, 5));
+        PRESSURE_HATCH[6] = registerMetaTileEntity(12040, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch.luv"), true, 6));
 
-        PRESSURE_HATCH[7] = registerMetaTileEntity(12037, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch.ulv"), false, 0));
-        PRESSURE_HATCH[8] = registerMetaTileEntity(12038, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch.lv"), false, 1));
-        PRESSURE_HATCH[9] = registerMetaTileEntity(12039, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch.mv"), false, 2));
-        PRESSURE_HATCH[10] = registerMetaTileEntity(12040, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch.hv"), false, 3));
-        PRESSURE_HATCH[11] = registerMetaTileEntity(12041, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch.ev"), false, 4));
-        PRESSURE_HATCH[12] = registerMetaTileEntity(12042, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch.iv"), false, 5));
-        PRESSURE_HATCH[13] = registerMetaTileEntity(12043, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch.luv"), false, 6));
+        PRESSURE_HATCH[7] = registerMetaTileEntity(12041, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch.ulv"), false, 0));
+        PRESSURE_HATCH[8] = registerMetaTileEntity(12042, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch.lv"), false, 1));
+        PRESSURE_HATCH[9] = registerMetaTileEntity(12043, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch.mv"), false, 2));
+        PRESSURE_HATCH[10] = registerMetaTileEntity(12044, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch.hv"), false, 3));
+        PRESSURE_HATCH[11] = registerMetaTileEntity(12045, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch.ev"), false, 4));
+        PRESSURE_HATCH[12] = registerMetaTileEntity(12046, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch.iv"), false, 5));
+        PRESSURE_HATCH[13] = registerMetaTileEntity(12047, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch.luv"), false, 6));
         
 
     }

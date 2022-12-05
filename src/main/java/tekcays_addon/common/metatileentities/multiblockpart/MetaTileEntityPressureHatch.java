@@ -46,7 +46,7 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
         this.canHandleVacuum = canHandleVacuum;
         this.minPressure = canHandleVacuum ? (int) 100 / (tierMultiplier) : ATMOSPHERIC_PRESSURE;
         this.maxPressure = canHandleVacuum ? ATMOSPHERIC_PRESSURE * 1000 : 10 * tierMultiplier;
-        this.leakingRate = canHandleVacuum ? (int) (10 / getTier() + 1) : 10 * tierMultiplier;
+        this.leakingRate = canHandleVacuum ? (int) (10 / (getTier() + 1)) : 10 * tierMultiplier;
         this.pressureContainer = new PressureContainer(this, canHandleVacuum, minPressure, maxPressure);
     }
 
@@ -88,11 +88,11 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        if (canHandleVacuum) {
-            tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.vacuum"));
+        if (this.canHandleVacuum) {
+            tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.vacuum", minPressure));
             tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.vacuum.leak", leakingRate));
         } else {
-            tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.pressure"));
+            tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.pressure", maxPressure));
             tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.pressure.leak", leakingRate));
         }
     }
