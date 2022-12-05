@@ -6,11 +6,8 @@ import gregtech.api.recipes.RecipeMap;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.IHeatMachine;
-import tekcays_addon.api.capability.impl.HeatContainer;
+import tekcays_addon.api.capability.impl.HeatContainerList;
 import tekcays_addon.api.capability.impl.HeatContainerNoEnergyMultiblockRecipeLogic;
-
-import java.util.List;
-
 
 public abstract class HeatContainerNoEnergyMultiblockController extends RecipeMapMultiblockController implements IHeatMachine {
 
@@ -24,12 +21,7 @@ public abstract class HeatContainerNoEnergyMultiblockController extends RecipeMa
     @Override
     protected void initializeAbilities() {
         super.initializeAbilities();
-        List<IHeatContainer> list = getAbilities(TKCYAMultiblockAbility.HEAT_CONTAINER);
-        if (list.isEmpty()) {
-            this.heatContainer = new HeatContainer(this, 0, 2000000);
-        } else {
-            this.heatContainer = list.get(0);
-        }
+        this.heatContainer = new HeatContainerList(getAbilities(TKCYAMultiblockAbility.HEAT_CONTAINER));
     }
 
     @Override
@@ -40,7 +32,7 @@ public abstract class HeatContainerNoEnergyMultiblockController extends RecipeMa
     @Override
     public TraceabilityPredicate autoAbilities(boolean checkEnergyIn, boolean checkMaintenance, boolean checkItemIn, boolean checkItemOut, boolean checkFluidIn, boolean checkFluidOut, boolean checkMuffler) {
         TraceabilityPredicate predicate = super.autoAbilities(false, checkMaintenance, checkItemIn, checkItemOut, checkFluidIn, checkFluidOut, checkMuffler);
-        predicate = predicate.or(abilities(TKCYAMultiblockAbility.HEAT_CONTAINER).setMinGlobalLimited(1).setMaxGlobalLimited(1).setPreviewCount(1));
+        predicate = predicate.or(abilities(TKCYAMultiblockAbility.HEAT_CONTAINER));
         return predicate;
     }
 
@@ -48,4 +40,5 @@ public abstract class HeatContainerNoEnergyMultiblockController extends RecipeMa
     public IHeatContainer getHeatContainer() {
         return this.heatContainer;
     }
+
 }

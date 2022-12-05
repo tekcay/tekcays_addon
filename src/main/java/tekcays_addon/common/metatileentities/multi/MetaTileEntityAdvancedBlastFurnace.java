@@ -206,14 +206,14 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
-                .aisle("#HHH#", "HHHHH", "HHHHH", "HHHHH", "#HHH#")
-                .aisle("#CCC#", "CCCCC", "CCCCC", "CCCCC", "#CCC#")
-                .aisle("#YYY#", "YYYYY", "XYYYX", "YYYYY", "#YYY#")
-                .aisle("#YSY#", "Y###Y", "Y###Y", "Y###Y", "#YMY#")
-                .aisle("#YYY#", "Y###Y", "Y#P#Y", "Y###Y", "#YYY#").setRepeatable(1, 11)
-                .aisle("#YYY#", "YOOOY", "YOUOY", "YOOOY", "#YYY#")
+                .aisle("AHHHA", "HHHHH", "HHHHH", "HHHHH", "AHHHA")
+                .aisle("ACCCA", "CCCCC", "CCCCC", "CCCCC", "ACCCA")
+                //.aisle("AYYYA", "YYYYY", "XYYYX", "YYYYY", "AYYYA")
+                .aisle("AYSYA", "Y###Y", "Y###Y", "Y###Y", "AYMYA")
+                .aisle("ACCCA", "C###C", "C#P#C", "C###C", "ACCCA").setRepeatable(1, 11)
+                .aisle("AYYYA", "YOOOY", "YOUOY", "YOOOY", "AYYYA")
                 .where('S', selfPredicate())
-                .where('H', abilities(TKCYAMultiblockAbility.HEAT_CONTAINER).setMinGlobalLimited(1).setMaxGlobalLimited(1).setPreviewCount(1).or(states(getCasingState())))
+                .where('H', abilities(TKCYAMultiblockAbility.HEAT_CONTAINER))
                 .where('C', heatingCoils())
                 .where('Y', states(getCasingState()))
                 .where('X', states(getCasingState())
@@ -226,6 +226,7 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
                 .where('M', abilities(MultiblockAbility.MAINTENANCE_HATCH))
                 .where('U', abilities(MultiblockAbility.MUFFLER_HATCH))
                 .where('#', air())
+                .where('A', any())
                 .build();
     }
 
