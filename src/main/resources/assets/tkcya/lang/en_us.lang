@@ -133,6 +133,25 @@ tkcya.machine.heat_acceptor.mv.name=Heat Acceptor II
 tkcya.machine.heat_acceptor.hv.name=Heat Acceptor III
 tkcya.machine.heat_acceptor.ev.name=Heat Acceptor IV
 
+#Pressure/Vacuum Hatches
+tkcya.machine.pressure_hatch.ulv.name=Pressure Hatch
+tkcya.machine.pressure_hatch.lv.name=Pressure Hatch I
+tkcya.machine.pressure_hatch.mv.name=Pressure Hatch II
+tkcya.machine.pressure_hatch.hv.name=Pressure Hatch III
+tkcya.machine.pressure_hatch.ev.name=Pressure Hatch IV
+tkcya.machine.pressure_hatch.iv.name=Pressure Hatch V
+tkcya.machine.pressure_hatch.luv.name=Pressure Hatch VI
+
+tkcya.machine.vacuum_hatch.ulv.name=Vacuum Hatch
+tkcya.machine.vacuum_hatch.lv.name=Vacuum Hatch I
+tkcya.machine.vacuum_hatch.mv.name=Vacuum Hatch II
+tkcya.machine.vacuum_hatch.hv.name=Vacuum Hatch III
+tkcya.machine.vacuum_hatch.ev.name=Vacuum Hatch IV
+tkcya.machine.vacuum_hatch.iv.name=Vacuum Hatch V
+tkcya.machine.vacuum_hatch.luv.name=Vacuum Hatch VI
+
+
+
 
 tkcya.machine.crystallizer.name=Crystallizer
 tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer

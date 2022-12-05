@@ -25,7 +25,6 @@ import tekcays_addon.api.capability.IPressureContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.impl.PressureContainer;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
-import tekcays_addon.api.render.TKCYATextures;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -40,14 +39,14 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     private final boolean canHandleVacuum;
     private final int minPressure;
     private final int maxPressure;
-    private final int tierMultiplier = getTier() * getTier();
+    private final int tierMultiplier = getTier() * getTier() + 1;
 
     public MetaTileEntityPressureHatch(@Nonnull ResourceLocation metaTileEntityId, boolean canHandleVacuum, int tier) {
         super(metaTileEntityId, tier);
         this.canHandleVacuum = canHandleVacuum;
         this.minPressure = canHandleVacuum ? (int) 100 / (tierMultiplier) : ATMOSPHERIC_PRESSURE;
         this.maxPressure = canHandleVacuum ? ATMOSPHERIC_PRESSURE * 1000 : 10 * tierMultiplier;
-        this.leakingRate = canHandleVacuum ? (int) (10 / getTier()) : 10 * tierMultiplier;
+        this.leakingRate = canHandleVacuum ? (int) (10 / getTier() + 1) : 10 * tierMultiplier;
         this.pressureContainer = new PressureContainer(this, canHandleVacuum, minPressure, maxPressure);
     }
 
