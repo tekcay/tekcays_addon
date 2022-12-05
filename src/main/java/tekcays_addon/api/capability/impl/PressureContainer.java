@@ -59,7 +59,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
 
     @Override
     public String getName() {
-        return "pressureContainer";
+        return "PressureContainer";
     }
 
     @Override
