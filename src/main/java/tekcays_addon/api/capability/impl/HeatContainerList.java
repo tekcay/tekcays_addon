@@ -37,28 +37,26 @@ public class HeatContainerList implements IHeatContainer {
         return lowestTemp;
     }
 
-    /*
+    @Override
+    public void changeHeat(int amount) {
+        if (amount >= this.getHeat()) {
+            setHeat(0);
+            return;
+        }
+        int heatToChange = amount / heatContainerList.size();
+        for (IHeatContainer heatContainer : heatContainerList) {
+            heatContainer.changeHeat(heatToChange);
+        }
+    }
+
     @Override
     public int getHeat() {
         return heatContainerList.stream()
                 .mapToInt(IHeatContainer::getHeat)
                 .sum();
     }
-     */
-    ////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //Works only for ONE heat container, code must be reworked if multiple heat containers per multiblocks must be handled
-    ////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-    @Override
-    public void changeHeat(int amount) {
-        heatContainerList.get(0).changeHeat(amount);
-    }
-
-    @Override
-    public int getHeat() {
-        return heatContainerList.get(0).getHeat();
-    }
-
+    //Only needs to check one as they all should have the same temperature
     @Override
     public int getTemperature() {
         return heatContainerList.get(0).getTemperature();
@@ -66,7 +64,9 @@ public class HeatContainerList implements IHeatContainer {
 
     @Override
     public void setHeat(int amount) {
-        heatContainerList.get(0).setHeat(amount);
+        for (IHeatContainer heatContainer : heatContainerList) {
+            heatContainer.setHeat(amount);
+        }
     }
 
     @Override
