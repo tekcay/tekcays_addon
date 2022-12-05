@@ -48,7 +48,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
 
     @Override
     public boolean canHandleVacuum() {
-        return canHandleVacuum;
+        return this.canHandleVacuum;
     }
 
     @Override

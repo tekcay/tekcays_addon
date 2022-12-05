@@ -41,17 +41,17 @@ public class HeatContainer extends MTETrait implements IHeatContainer {
     }
 
     @Override
-    public int getMaxPressure() {
+    public int getMaxHeat() {
         return this.maxHeat;
     }
 
     @Override
-    public int getMinPressure() {
+    public int getMinHeat() {
         return this.minHeat;
     }
 
     @Override
-    public int getPressure() {
+    public int getHeat() {
         return this.heat;
     }
 
@@ -71,7 +71,7 @@ public class HeatContainer extends MTETrait implements IHeatContainer {
     }
 
     @Override
-    public void setPressure(int amount) {
+    public void setHeat(int amount) {
         this.heat = amount;
         this.metaTileEntity.markDirty();
     }

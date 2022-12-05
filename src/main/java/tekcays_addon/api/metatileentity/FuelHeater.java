@@ -104,10 +104,10 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
         }
         if (burnTimeLeft > 0) {
             setBurning(true);
-            int currentHeat = heatContainer.getPressure();
+            int currentHeat = heatContainer.getHeat();
             if (!getWorld().isRemote) {
-                if (currentHeat + heatIncreaseRate < heatContainer.getMaxPressure())
-                    heatContainer.setPressure(currentHeat + heatIncreaseRate);
+                if (currentHeat + heatIncreaseRate < heatContainer.getMaxHeat())
+                    heatContainer.setHeat(currentHeat + heatIncreaseRate);
                 transferHeat(heatIncreaseRate);
             }
             burnTimeLeft -= 1;
@@ -192,9 +192,9 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
-        list.add(new TextComponentTranslation("behavior.tricorder.current_heat", heatContainer.getPressure()));
-        list.add(new TextComponentTranslation("behavior.tricorder.min_heat", heatContainer.getMinPressure()));
-        list.add(new TextComponentTranslation("behavior.tricorder.max_heat", heatContainer.getMaxPressure()));
+        list.add(new TextComponentTranslation("behavior.tricorder.current_heat", heatContainer.getHeat()));
+        list.add(new TextComponentTranslation("behavior.tricorder.min_heat", heatContainer.getMinHeat()));
+        list.add(new TextComponentTranslation("behavior.tricorder.max_heat", heatContainer.getMaxHeat()));
         list.add(new TextComponentTranslation("behavior.tricorder.burn_time_left", burnTimeLeft));
         return list;
     }

@@ -28,8 +28,8 @@ public interface IPressureContainer {
     /**
      * Change the pressure in the container by {@code ADDING} a given amount.
      * If the {@code PressureContainer} can handle vacuum
-     * If the resulted pressure is lower than 1, heat will be set to 1.
-     * If the resulted pressure is higher than {@code maxPressure}, heat will be set to {@code maxPressure}.
+     * If the resulted pressure is lower than 1, pressure will be set to 1.
+     * If the resulted pressure is higher than {@code maxPressure}, pressure will be set to {@code maxPressure}.
      * @param amount the amount to change by
      */
     default void changePressure(int amount) {

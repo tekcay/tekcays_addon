@@ -8,7 +8,7 @@ public interface IHeatContainer {
     /**
      * @return the amount of heat in the container
      */
-    int getPressure();
+    int getHeat();
 
     /**
      * @return the temperature of the container
@@ -20,7 +20,7 @@ public interface IHeatContainer {
      *
      * @param amount the amount to set
      */
-    void setPressure(int amount);
+    void setHeat(int amount);
 
     /**
      * Set the temperature of the container
@@ -36,71 +36,39 @@ public interface IHeatContainer {
      * @param amount the amount to change by
      */
     default void changeHeat(int amount) {
-        setPressure(Math.max(0, Math.min(getPressure() + amount, getMaxPressure())));
+        setHeat(Math.max(0, Math.min(getHeat() + amount, getMaxHeat())));
     }
-
-    /*
-    default boolean changeHeat(int amount, boolean simulate) {
-        if (simulate) return isHeatSafe(getHeat() + amount);
-        setHeat(getHeat() + amount);
-        return isHeatSafe();
-    }
-
-     */
-
 
     /**
      * @return the minimum heat this container can handle
      */
-    int getMinPressure();
+    int getMinHeat();
 
     /**
      * @return the maximum heat this container can handle
      */
-    int getMaxPressure();
+    int getMaxHeat();
 
     /**
      * @return the maximum temperature this container can handle
      */
     int getMaxTemperature();
 
-    /**
-     * @return true if the Heat is safe for the container, else false
-     */
-    default boolean isHeatSafe() {
-        return isHeatSafe(getPressure());
-    }
-
-    /**
-     * @param Heat the Heat to check
-     * @return true if the Heat is safe for the container, else false
-     */
-    default boolean isHeatSafe(int Heat) {
-        return Heat <= getMaxPressure() && Heat >= getMinPressure();
-    }
-
-    /**
-     * @return if the Heat is around atmospheric levels
-     */
-    default boolean isNormalHeat() {
-        return getPressure() == 0;
-    }
-
 
     IHeatContainer EMPTY = new IHeatContainer() {
 
         @Override
-        public int getMinPressure() {
+        public int getMinHeat() {
             return TKCYAValues.MIN_HEAT;
         }
 
         @Override
-        public int getMaxPressure() {
+        public int getMaxHeat() {
             return TKCYAValues.MAX_HEAT;
         }
 
         @Override
-        public int getPressure() {
+        public int getHeat() {
             return 0;
         }
 
@@ -115,7 +83,7 @@ public interface IHeatContainer {
 
 
         @Override
-        public void setPressure(int amount) {
+        public void setHeat(int amount) {
         }
 
         @Override

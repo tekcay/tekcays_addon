@@ -74,9 +74,9 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
-        list.add(new TextComponentTranslation("behavior.tricorder.current_heat", heatContainer.getPressure()));
-        list.add(new TextComponentTranslation("behavior.tricorder.min_heat", heatContainer.getMinPressure()));
-        list.add(new TextComponentTranslation("behavior.tricorder.max_heat", heatContainer.getMaxPressure()));
+        list.add(new TextComponentTranslation("behavior.tricorder.current_heat", heatContainer.getHeat()));
+        list.add(new TextComponentTranslation("behavior.tricorder.min_heat", heatContainer.getMinHeat()));
+        list.add(new TextComponentTranslation("behavior.tricorder.max_heat", heatContainer.getMaxHeat()));
         list.add(new TextComponentTranslation("behavior.tricorder.currentTemp", currentTemp));
         list.add(new TextComponentTranslation("behavior.tricorder.heatMultiplier", heatMultiplier));
         return list;
@@ -184,7 +184,7 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
         heatContainer = getAbilities(TKCYAMultiblockAbility.HEAT_CONTAINER).get(0);
 
         currentTemp = heatContainer.getTemperature();
-        currentHeat = heatContainer.getPressure();
+        currentHeat = heatContainer.getHeat();
 
         if (currentTemp >= maxTemp && TKCYAConfigHolder.machinesOptions.enableBlastFurnaceFireExplosion) {
             this.setOnFire(100);
