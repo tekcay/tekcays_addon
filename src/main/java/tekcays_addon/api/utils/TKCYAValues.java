@@ -41,8 +41,10 @@ public class TKCYAValues {
     public static final int MIN_HEAT = 0;
     public static final int MAX_HEAT = 10000;
 
-    //Pressure
+    //Pressure, in bar
     public static final int MAX_PRESSURE = 10000;
+    public static final int ABSOLUTE_VACUUM = 0;
+    public static final int ATMOSPHERIC_PRESSURE = 1;
     /**
      * One second in {@code tick}s.
      */
