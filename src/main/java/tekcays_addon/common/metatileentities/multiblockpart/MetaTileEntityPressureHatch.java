@@ -9,6 +9,7 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.resources.I18n;
@@ -75,20 +76,14 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     }
 
     @Override
-    public EnumFacing getFrontFacing() {
-        return EnumFacing.DOWN;
+    public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
+        super.renderMetaTileEntity(renderState, translation, pipeline);
+        Textures.PIPE_IN_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
     }
 
     @Override
     protected ModularUI createUI(@Nonnull EntityPlayer entityPlayer) {
         return null;
-    }
-
-    @Override
-    public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
-        super.renderMetaTileEntity(renderState, translation, pipeline);
-        HORIZONTALS.forEach(enumFacing -> TKCYATextures.HEAT_ACCEPTOR_HORIZONTALS_OVERLAY.renderSided(enumFacing, renderState, translation, pipeline));
-        VERTICALS.forEach(enumFacing -> TKCYATextures.HEAT_ACCEPTOR_VERTICALS_OVERLAY.renderOriented(renderState, translation, pipeline, enumFacing));
     }
 
     @Override
