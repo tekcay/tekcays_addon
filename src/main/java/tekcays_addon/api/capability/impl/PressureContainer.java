@@ -17,6 +17,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
     private final int maxPressure;
     private int pressure;
     private int volume;
+    private int pu;
     boolean canHandleVacuum;
 
     /**
@@ -30,6 +31,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
         this.maxPressure = maxPressure;
         this.pressure = 0;
         this.volume = 0;
+        this.pu = 0;
     }
 
 
@@ -51,6 +53,16 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
     @Override
     public boolean canHandleVacuum() {
         return this.canHandleVacuum;
+    }
+
+    @Override
+    public int getPU() {
+        return this.pu;
+    }
+
+    @Override
+    public void setPU(int pu) {
+        this.pu = pu;
     }
 
     @Override

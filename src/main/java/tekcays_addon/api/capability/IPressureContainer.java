@@ -13,17 +13,35 @@ public interface IPressureContainer {
     int getPressure();
 
     /**
+     * Set the {@code pressure}
+     * @param pressure
+     */
+    void setPressure(int pressure);
+
+    /**
      * Determines if the {@code PressureContainer} handles a pressure greater or lower than 1 bar.
      * @return
      */
     boolean canHandleVacuum();
 
     /**
-     * Set the {@code pressure}
-     * @param pressure
+     * @return the Pressure Unit of the {@code PressureContainer}.
      */
-    void setPressure(int pressure);
+    int getPU();
 
+    /**
+     * Set the Pressure Unit amount of the {@code PressureContainer}.
+     * @param amount of PU
+     */
+    void setPU(int amount);
+
+    /**
+     * Change the amount of PU in the container by {@code ADDING} a given amount.
+     * @param amount
+     */
+    default void changePU(int amount) {
+        setPU(getPU() + amount);
+    }
 
     /**
      * Change the pressure in the container by {@code ADDING} a given amount.
@@ -39,7 +57,6 @@ public interface IPressureContainer {
     int getVolume();
 
     void setVolume(int volume);
-
 
     /**
      * @return the maximum pressure this container can handle
@@ -71,6 +88,16 @@ public interface IPressureContainer {
         @Override
         public boolean canHandleVacuum() {
             return false;
+        }
+
+        @Override
+        public int getPU() {
+            return 0;
+        }
+
+        @Override
+        public void setPU(int amount) {
+
         }
 
         @Override
