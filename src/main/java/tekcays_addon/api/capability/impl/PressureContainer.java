@@ -13,12 +13,22 @@ import javax.annotation.Nullable;
 
 public class PressureContainer extends MTETrait implements IPressureContainer {
 
-    private final int minPressure;
-    private final int maxPressure;
+    private int minPressure;
+    private int maxPressure;
     private int pressure;
     private int volume;
     private int pu;
     boolean canHandleVacuum;
+
+    /**
+     * Default Pressure container
+     * {@link IPressureContainer}
+     */
+    public PressureContainer(MetaTileEntity metaTileEntity, boolean canHandleVacuum) {
+        super(metaTileEntity);
+        this.canHandleVacuum = canHandleVacuum;
+        this.pu = 0;
+    }
 
     /**
      * Default Pressure container

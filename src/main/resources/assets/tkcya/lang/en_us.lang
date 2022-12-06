@@ -536,6 +536,9 @@ behavior.tricorder.max_pressure.vacuum=Maximum Pressure: %d mBar
 behavior.tricorder.min_pressure.pressure=Minimum Pressure: %d Bar
 behavior.tricorder.min_pressure.vacuum=Minimum Pressure: %d mBar
 
+behavior.tricorder.current_pu=%d PU
+behavior.tricorder.current_vu=%d VU
+
 # Errors
 
 tkcya.multiblock.pattern.error.bricks=§cAll bricks must be the same§r
