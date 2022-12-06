@@ -29,6 +29,16 @@ public class PressureContainerList implements IPressureContainer {
     }
 
     @Override
+    public int getVolume() {
+        return pressureContainerList.get(0).getVolume();
+    }
+
+    @Override
+    public void setVolume(int volume) {
+        pressureContainerList.get(0).setVolume(volume);
+    }
+
+    @Override
     public int getPressure() {
         return pressureContainerList.get(0).getPressure();
     }

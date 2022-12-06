@@ -36,6 +36,10 @@ public interface IPressureContainer {
         setPressure(Math.max(getMinPressure(), Math.min(getPressure() + amount, getMaxPressure())));
     }
 
+    int getVolume();
+
+    void setVolume(int volume);
+
 
     /**
      * @return the maximum pressure this container can handle
@@ -71,6 +75,16 @@ public interface IPressureContainer {
 
         @Override
         public void setPressure(int pressure) {
+        }
+
+        @Override
+        public int getVolume() {
+            return 0;
+        }
+
+        @Override
+        public void setVolume(int volume) {
+
         }
 
     };

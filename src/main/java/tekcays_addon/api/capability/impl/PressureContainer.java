@@ -16,18 +16,20 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
     private final int minPressure;
     private final int maxPressure;
     private int pressure;
+    private int volume;
     boolean canHandleVacuum;
 
     /**
      * Default Pressure container
      * {@link IPressureContainer}
      */
-    public PressureContainer(MetaTileEntity metaTileEntity, boolean canHandleVacuum, int minHeat, int maxHeat) {
+    public PressureContainer(MetaTileEntity metaTileEntity, boolean canHandleVacuum, int minPressure, int maxPressure) {
         super(metaTileEntity);
         this.canHandleVacuum = canHandleVacuum;
-        this.minPressure = minHeat;
-        this.maxPressure = maxHeat;
+        this.minPressure = minPressure;
+        this.maxPressure = maxPressure;
         this.pressure = 0;
+        this.volume = 0;
     }
 
 
@@ -54,6 +56,17 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
     @Override
     public void setPressure(int amount) {
         this.pressure = amount;
+        this.metaTileEntity.markDirty();
+    }
+
+    @Override
+    public int getVolume() {
+        return this.volume;
+    }
+
+    @Override
+    public void setVolume(int volume) {
+        this.volume = volume;
         this.metaTileEntity.markDirty();
     }
 
