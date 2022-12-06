@@ -76,9 +76,9 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
-        list.add(new TextComponentTranslation("behavior.tricorder.current_heat", heatContainer.getHeat()));
         list.add(new TextComponentTranslation("behavior.tricorder.min_heat", heatContainer.getMinHeat()));
         list.add(new TextComponentTranslation("behavior.tricorder.max_heat", heatContainer.getMaxHeat()));
+        list.add(new TextComponentTranslation("behavior.tricorder.current_heat", heatContainer.getHeat()));
         list.add(new TextComponentTranslation("behavior.tricorder.currentTemp", currentTemp));
         list.add(new TextComponentTranslation("behavior.tricorder.heatMultiplier", heatMultiplier));
         return list;
