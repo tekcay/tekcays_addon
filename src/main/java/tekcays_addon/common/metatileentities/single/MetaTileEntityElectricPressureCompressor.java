@@ -49,7 +49,7 @@ public class MetaTileEntityElectricPressureCompressor extends TieredMetaTileEnti
     private EnumFacing outputSide;
     private PressureContainer pressureContainer;
 
-    public MetaTileEntityElectricPressureCompressor(ResourceLocation metaTileEntityId, int tier, boolean canHandleVacuum) {
+    public MetaTileEntityElectricPressureCompressor(ResourceLocation metaTileEntityId, boolean canHandleVacuum, int tier) {
         super(metaTileEntityId, tier);
         this.canHandleVacuum = canHandleVacuum;
         this.PU_BASE_INCREASE = canHandleVacuum ? (int) (GTValues.V[getTier()] * EU_TO_VU / 2) : (int) (GTValues.V[getTier()] * EU_TO_PU / 2);
@@ -58,7 +58,7 @@ public class MetaTileEntityElectricPressureCompressor extends TieredMetaTileEnti
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
-        return new MetaTileEntityElectricPressureCompressor(metaTileEntityId, getTier(), canHandleVacuum);
+        return new MetaTileEntityElectricPressureCompressor(metaTileEntityId, canHandleVacuum, getTier());
     }
 
     @Override

@@ -1,7 +1,9 @@
 package tekcays_addon.common.metatileentities;
 
+import gregtech.api.GTValues;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
+import gregtech.api.metatileentity.multiblock.MultiblockWithDisplayBase;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.util.GTUtility;
@@ -28,6 +30,11 @@ import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamAirCompres
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamAutoclave;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamCooler;
 
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.IntFunction;
+
 import static gregtech.common.metatileentities.MetaTileEntities.*;
 import static tekcays_addon.api.utils.BlastFurnaceUtils.BRICKS;
 import static tekcays_addon.api.utils.FuelHeaterTiers.BRICK;
@@ -43,7 +50,8 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityElectricHeater[] ELECTRIC_HEATER = new MetaTileEntityElectricHeater[5];
     public static MetaTileEntityElectricCooler[] ELECTRIC_COOLER = new MetaTileEntityElectricCooler[5];
     public static MetaTileEntityHeatAcceptor[] HEAT_ACCEPTOR = new MetaTileEntityHeatAcceptor[4];
-    public static MetaTileEntityPressureHatch[] PRESSURE_HATCH = new MetaTileEntityPressureHatch[14];
+    public static MetaTileEntityPressureHatch[] PRESSURE_HATCH = new MetaTileEntityPressureHatch[GTValues.LuV * 2 + 2];
+    public static MetaTileEntityElectricPressureCompressor[] PRESSURE_COMPRESSOR = new MetaTileEntityElectricPressureCompressor[GTValues.LuV * 2 + 2];
 
     public static MetaTileEntityPrimitiveMelter PRIMITIVE_MELTER;
     public static MetaTileEntityPrimitiveFermenter PRIMITIVE_FERMENTER;
@@ -71,7 +79,8 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntitySpiralSeparator SPIRAL_SEPARATOR;
 
 
-    //Blast Furnaces
+    //Brick MTES
+    public static String[] BRICK_MTES = {"_blast_furnace", "_import_fluid_hatch", "_export_fluid_hatch", "_export_item_bus", "_import_item_bus", "_muffler", "_single_crucible"};
     public static MetaTileEntityTKCYABlastFurnace[] BLAST_FURNACE = new MetaTileEntityTKCYABlastFurnace[BRICKS.size()];
     public static MetaTileEntityAdvancedBlastFurnace[] ADVANCED_BLAST_FURNACE = new MetaTileEntityAdvancedBlastFurnace[BRICKS.size()];
     public static MetaTileEntityBrickFluidHatch[] BRICK_IMPORT_FLUID_HATCH = new MetaTileEntityBrickFluidHatch[BRICKS.size()];
@@ -79,11 +88,12 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityBrickItemBus[] BRICK_EXPORT_ITEM_BUS = new MetaTileEntityBrickItemBus[BRICKS.size()];
     public static MetaTileEntityBrickItemBus[] BRICK_IMPORT_ITEM_BUS = new MetaTileEntityBrickItemBus[BRICKS.size()];
     public static MetaTileEntityPrimitiveMufflerHatch[] PRIMITIVE_MUFFLER = new MetaTileEntityPrimitiveMufflerHatch[BRICKS.size()];
+    public static MetaTileEntitySingleCrucible[] SINGLE_CRUCIBLE = new MetaTileEntitySingleCrucible[BRICKS.size()];
 
     // Drums
     public static MetaTileEntityDrum[] DRUMS = new MetaTileEntityDrum[DRUM_MATERIALS.size()];
 
-    public static MetaTileEntitySingleCrucible[] SINGLE_CRUCIBLE = new MetaTileEntitySingleCrucible[4];
+
 
     //Tanks
     public static TKCYAMetaTileEntityMultiblockTank WOODEN_TANK;
@@ -94,62 +104,90 @@ public class TKCYAMetaTileEntities {
     public static TKCYAMetaTileEntityTankValve GALVANIZED_STEEL_TANK_VALVE;
     public static TKCYAMetaTileEntityTankValve STAINLESS_STEEL_TANK_VALVE;
 
-
-
     public static void init() {
+
+        int startId = 11000;
 
         //id 11000-11004
         if (TKCYAConfigHolder.miscOverhaul.enableFoilOverhaul) {
-            registerSimpleMetaTileEntity(CLUSTER_MILL, 11000, "cluster_mill", TKCYARecipeMaps.CLUSTER_MILL_RECIPES,
+            registerSimpleMetaTileEntity(CLUSTER_MILL, startId, "cluster_mill", TKCYARecipeMaps.CLUSTER_MILL_RECIPES,
                     TKCYATextures.CLUSTER_MILL_OVERLAY, true, TKCYAMetaTileEntities::tkcyaId, GTUtility.hvCappedTankSizeFunction);
         }
 
+        startId += 5;
+
         //id 11005-11009
         if (TKCYAConfigHolder.miscOverhaul.enableMagneticOverhaul) {
-            registerSimpleMetaTileEntity(ADVANCED_POLARIZER, 11005, "advanced_polarizer", TKCYARecipeMaps.ADVANCED_POLARIZER_RECIPES,
+            registerSimpleMetaTileEntity(ADVANCED_POLARIZER, startId, "advanced_polarizer", TKCYARecipeMaps.ADVANCED_POLARIZER_RECIPES,
                     TKCYATextures.ADVANCED_POLARIZER_OVERLAY, true, TKCYAMetaTileEntities::tkcyaId, GTUtility.hvCappedTankSizeFunction);
         }
 
+        startId += 5;
+
         if (TKCYAConfigHolder.meltingOverhaul.enableMeltingOverhaul) {
-            PRIMITIVE_MELTER = registerMetaTileEntity(11010, new MetaTileEntityPrimitiveMelter(tkcyaId("primitive_melter")));
-            PRIMITIVE_FERMENTER = registerMetaTileEntity(11011, new MetaTileEntityPrimitiveFermenter(tkcyaId("primitive_fermenter")));
+            PRIMITIVE_MELTER = registerMetaTileEntity(startId, new MetaTileEntityPrimitiveMelter(tkcyaId("primitive_melter")));
+            PRIMITIVE_FERMENTER = registerMetaTileEntity(startId++, new MetaTileEntityPrimitiveFermenter(tkcyaId("primitive_fermenter")));
         }
+
+        startId = Math.max(startId, startId + 2);
 
         if (TKCYAConfigHolder.meltingOverhaul.enableAlloyingOverhaul) {
-            ALLOYING_CRUCIBLE = registerMetaTileEntity(11013, new MetaTileEntityAlloyingCrucible(tkcyaId("alloying_crucible")));
+            ALLOYING_CRUCIBLE = registerMetaTileEntity(startId, new MetaTileEntityAlloyingCrucible(tkcyaId("alloying_crucible")));
         }
+        startId = Math.max(startId, startId + 1);
 
         if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
-            CASTING_TABLE = registerMetaTileEntity(11014, new MetaTileEntityCastingTable(tkcyaId("casting_table")));
+            CASTING_TABLE = registerMetaTileEntity(startId++, new MetaTileEntityCastingTable(tkcyaId("casting_table")));
 
-            registerSimpleMetaTileEntity(ELECTRIC_CASTING_TABLE, 11015, "electric_casting_table", TKCYARecipeMaps.ELECTRIC_CASTING_RECIPES,
+            registerSimpleMetaTileEntity(ELECTRIC_CASTING_TABLE, startId++, "electric_casting_table", TKCYARecipeMaps.ELECTRIC_CASTING_RECIPES,
                     TKCYATextures.CASTING_TABLE_OVERLAY, true, TKCYAMetaTileEntities::tkcyaId, GTUtility.hvCappedTankSizeFunction);
 
+            startId += 5;
 
-            STEAM_COOLER_BRONZE = registerMetaTileEntity(11020, new MetaTileEntitySteamCooler(tkcyaId("steam_cooler_bronze"), false));
-            STEAM_COOLER_STEEL = registerMetaTileEntity(11021, new MetaTileEntitySteamCooler(tkcyaId("steam_cooler_steel"), true));
+            STEAM_COOLER_BRONZE = registerMetaTileEntity(startId, new MetaTileEntitySteamCooler(tkcyaId("steam_cooler_bronze"), false));
+            STEAM_COOLER_STEEL = registerMetaTileEntity(startId++, new MetaTileEntitySteamCooler(tkcyaId("steam_cooler_steel"), true));
 
         }
 
+        startId = Math.max(startId, startId + 7);
 
         if (TKCYAConfigHolder.meltingOverhaul.enableBlastingOverhaul) {
-            CONVERTER = registerMetaTileEntity(11022, new MetaTileEntityElectricConverter(tkcyaId("converter")));
-            PRIMITIVE_CONVERTER = registerMetaTileEntity(11023, new MetaTileEntityPrimitiveConverter(tkcyaId("primitive_converter")));
-            COKE_OVEN = registerMetaTileEntity(11024, new MetaTileEntityTKCYACokeOven(tkcyaId("coke_oven")));
+            CONVERTER = registerMetaTileEntity(startId, new MetaTileEntityElectricConverter(tkcyaId("converter")));
+            PRIMITIVE_CONVERTER = registerMetaTileEntity(startId++, new MetaTileEntityPrimitiveConverter(tkcyaId("primitive_converter")));
+            COKE_OVEN = registerMetaTileEntity(startId++, new MetaTileEntityTKCYACokeOven(tkcyaId("coke_oven")));
 
-            //id 11051-11074
             for (int i = 0; i < BRICKS.size(); i++) {
+                int j = 0;
                 BlockBrick.BrickType brick = BRICKS.get(i);
-                BLAST_FURNACE[i] = registerMetaTileEntity(11051 + i, new MetaTileEntityTKCYABlastFurnace(tkcyaId(brick.getName() + "_blast_furnace"), brick));
-                ADVANCED_BLAST_FURNACE[i] = registerMetaTileEntity(12100 + i, new MetaTileEntityAdvancedBlastFurnace(tkcyaId(brick.getName() + "_advanced_blast_furnace"), brick));
-                BRICK_IMPORT_FLUID_HATCH[i] = registerMetaTileEntity(11055 + i, new MetaTileEntityBrickFluidHatch(tkcyaId(brick.getName() + "_import_fluid_hatch"), false, brick));
-                BRICK_EXPORT_FLUID_HATCH[i] = registerMetaTileEntity(11059 + i, new MetaTileEntityBrickFluidHatch(tkcyaId(brick.getName() + "_export_fluid_hatch"), true, brick));
-                BRICK_EXPORT_ITEM_BUS[i] = registerMetaTileEntity(11063 + i, new MetaTileEntityBrickItemBus(tkcyaId(brick.getName() + "_export_item_bus"), true, brick));
-                BRICK_IMPORT_ITEM_BUS[i] = registerMetaTileEntity(11067 + i, new MetaTileEntityBrickItemBus(tkcyaId(brick.getName() + "_import_item_bus"), false, brick));
-                PRIMITIVE_MUFFLER[i] = registerMetaTileEntity(11071 + i, new MetaTileEntityPrimitiveMufflerHatch(tkcyaId(brick.getName() + "_muffler"), brick));
-            }
+                String name = brick.getName() + BRICK_MTES[j];
+                int finalI = i;
+                int finalStartId = startId;
+                IntFunction<Integer> setId = (id) -> finalStartId + finalI * BRICKS.size() * id;
 
+                BLAST_FURNACE[i] = registerMetaTileEntity(setId.apply(j++), new MetaTileEntityTKCYABlastFurnace(tkcyaId(name), brick));
+                ADVANCED_BLAST_FURNACE[i] = registerMetaTileEntity(setId.apply(j++), new MetaTileEntityAdvancedBlastFurnace(tkcyaId(name), brick));
+                BRICK_IMPORT_FLUID_HATCH[i] = registerMetaTileEntity(setId.apply(j++), new MetaTileEntityBrickFluidHatch(tkcyaId(name), false, brick));
+                BRICK_EXPORT_FLUID_HATCH[i] = registerMetaTileEntity(setId.apply(j++), new MetaTileEntityBrickFluidHatch(tkcyaId(name), true, brick));
+                BRICK_EXPORT_ITEM_BUS[i] = registerMetaTileEntity(setId.apply(j++), new MetaTileEntityBrickItemBus(tkcyaId(name), true, brick));
+                BRICK_IMPORT_ITEM_BUS[i] = registerMetaTileEntity(setId.apply(j++), new MetaTileEntityBrickItemBus(tkcyaId(name), false, brick));
+                PRIMITIVE_MUFFLER[i] = registerMetaTileEntity(setId.apply(j++), new MetaTileEntityPrimitiveMufflerHatch(tkcyaId(name), brick));
+                SINGLE_CRUCIBLE[i] = registerMetaTileEntity(setId.apply(j++), new MetaTileEntitySingleCrucible(tkcyaId(name), brick));
+
+                /*
+                BLAST_FURNACE[i] = registerMetaTileEntity(j, new MetaTileEntityTKCYABlastFurnace(tkcyaId(name), brick));
+                ADVANCED_BLAST_FURNACE[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityAdvancedBlastFurnace(tkcyaId(name + "_advanced_blast_furnace"), brick));
+                BRICK_IMPORT_FLUID_HATCH[i] = registerMetaTileEntity(startId + i * BRICKS.size() * 2, new MetaTileEntityBrickFluidHatch(tkcyaId(name + "_import_fluid_hatch"), false, brick));
+                BRICK_EXPORT_FLUID_HATCH[i] = registerMetaTileEntity(startId + i * BRICKS.size() * 3, new MetaTileEntityBrickFluidHatch(tkcyaId(name + "_export_fluid_hatch"), true, brick));
+                BRICK_EXPORT_ITEM_BUS[i] = registerMetaTileEntity(startId + i * BRICKS.size() * 4, new MetaTileEntityBrickItemBus(tkcyaId(name + "_export_item_bus"), true, brick));
+                BRICK_IMPORT_ITEM_BUS[i] = registerMetaTileEntity(startId + i * BRICKS.size() * 5, new MetaTileEntityBrickItemBus(tkcyaId(name + "_import_item_bus"), false, brick));
+                PRIMITIVE_MUFFLER[i] = registerMetaTileEntity(startId + i * BRICKS.size() * 6, new MetaTileEntityPrimitiveMufflerHatch(tkcyaId(name + "_muffler"), brick));
+                SINGLE_CRUCIBLE[i] = registerMetaTileEntity(startId + i * BRICKS.size() * 7, new MetaTileEntitySingleCrucible(tkcyaId(name + "_single_crucible"), brick));
+
+                 */
+            }
         }
+
+        startId = Math.max(startId, startId + 36);
 
         if (TKCYAConfigHolder.miscOverhaul.enableGalvanizedSteel) {
             PRIMITIVE_BATH = registerMetaTileEntity(11085, new MetaTileEntityPrimitiveBath(tkcyaId("primitive_bath")));
@@ -201,34 +239,24 @@ public class TKCYAMetaTileEntities {
             CRYSTALLIZER = registerMetaTileEntity(11050, new MetaTileEntityCrystallizer(tkcyaId("crystallizer")));
         }
 
-        FILTER = registerMetaTileEntity(11075, new MetaTileEntityFilter(tkcyaId("filter")));
+        FILTER = registerMetaTileEntity(13075, new MetaTileEntityFilter(tkcyaId("filter")));
 
         if (TKCYAConfigHolder.crackingOverhaul.enableCrackingOverhaul) {
-            PRESSURIZED_CRACKING_UNIT = registerMetaTileEntity(11076, new MetaTileEntityPressurizedCrackingUnit(tkcyaId("pressurized_cracking_unit")));
+            PRESSURIZED_CRACKING_UNIT = registerMetaTileEntity(13076, new MetaTileEntityPressurizedCrackingUnit(tkcyaId("pressurized_cracking_unit")));
         }
 
 
-        ROASTING_OVEN = registerMetaTileEntity(11077, new MetaTileEntityRoastingOven(tkcyaId("roasting_oven")));
-        SPIRAL_SEPARATOR = registerMetaTileEntity(11078, new MetaTileEntitySpiralSeparator(tkcyaId("spiral_separator")));
-        STEAM_AIR_COMPRESSOR = registerMetaTileEntity(11079, new MetaTileEntitySteamAirCompressor(tkcyaId("steam_air_compressor")));
+        ROASTING_OVEN = registerMetaTileEntity(13077, new MetaTileEntityRoastingOven(tkcyaId("roasting_oven")));
+        SPIRAL_SEPARATOR = registerMetaTileEntity(13078, new MetaTileEntitySpiralSeparator(tkcyaId("spiral_separator")));
+        STEAM_AIR_COMPRESSOR = registerMetaTileEntity(13079, new MetaTileEntitySteamAirCompressor(tkcyaId("steam_air_compressor")));
 
         
-        ROASTING_OVEN = registerMetaTileEntity(11080, new MetaTileEntityRoastingOven(tkcyaId("roasting_oven")));
-        SPIRAL_SEPARATOR = registerMetaTileEntity(10081, new MetaTileEntitySpiralSeparator(tkcyaId("spiral_separator")));
+        ROASTING_OVEN = registerMetaTileEntity(13080, new MetaTileEntityRoastingOven(tkcyaId("roasting_oven")));
+        SPIRAL_SEPARATOR = registerMetaTileEntity(13081, new MetaTileEntitySpiralSeparator(tkcyaId("spiral_separator")));
         
-        ELECTRIC_HEATER[0] = registerMetaTileEntity(11170, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.lv"), 1));
-        ELECTRIC_HEATER[1] = registerMetaTileEntity(11171, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.mv"), 2));
-        ELECTRIC_HEATER[2] = registerMetaTileEntity(11172, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.hv"), 3));
-        ELECTRIC_HEATER[3] = registerMetaTileEntity(11173, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.ev"), 4));
-        ELECTRIC_HEATER[4] = registerMetaTileEntity(11174, new MetaTileEntityElectricHeater(tkcyaId("electric_heater.iv"), 5));
 
-        ELECTRIC_COOLER[0] = registerMetaTileEntity(12050, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.lv"), 1));
-        ELECTRIC_COOLER[1] = registerMetaTileEntity(12051, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.mv"), 2));
-        ELECTRIC_COOLER[2] = registerMetaTileEntity(12052, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.hv"), 3));
-        ELECTRIC_COOLER[3] = registerMetaTileEntity(12053, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.ev"), 4));
-        ELECTRIC_COOLER[4] = registerMetaTileEntity(12054, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler.iv"), 5));
 
-        //id 11177 to
+        //id 11177 to 11194
         SOLID_FUEL_HEATER[0] = registerMetaTileEntity(11177, new MetaTileEntitySolidFuelHeater(tkcyaId( "brick_solid_fuel_heater"), BRICK));
 
         for (int i = 1; i < FUEL_HEATERS.size(); i++) {
@@ -239,40 +267,29 @@ public class TKCYAMetaTileEntities {
             LIQUID_FUEL_HEATER[i] = registerMetaTileEntity(idToStart + i + FUEL_HEATERS.size(), new MetaTileEntityLiquidFuelHeater(tkcyaId(materialName + "_liquid_fuel_heater"), fuelHeater));
             FLUIDIZED_FUEL_HEATER[i] = registerMetaTileEntity(idToStart + i + FUEL_HEATERS.size() * 2, new MetaTileEntityFluidizedHeater(tkcyaId(materialName + "_fluidized_fuel_heater"), fuelHeater));
             GAS_FUEL_HEATER[i] = registerMetaTileEntity(idToStart + i + FUEL_HEATERS.size() * 3, new MetaTileEntityGasHeater(tkcyaId(materialName + "_gas_fuel_heater"), fuelHeater));
-
-        }
-
-
-
-
-        for (int i = 0; i < BRICKS.size(); i++) {
-            BlockBrick.BrickType brick = BRICKS.get(i);
-            SINGLE_CRUCIBLE[i] = registerMetaTileEntity(11300 + i, new MetaTileEntitySingleCrucible(tkcyaId(brick.getName() + "_single_crucible"), brick));
         }
 
         STEAM_AUTOCLAVE = registerMetaTileEntity(12020, new MetaTileEntitySteamAutoclave(tkcyaId("steam_autoclave"), true));
 
-        HEAT_ACCEPTOR[0] = registerMetaTileEntity(12030, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.lv"), 1));
-        HEAT_ACCEPTOR[1] = registerMetaTileEntity(12031, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.mv"), 2));
-        HEAT_ACCEPTOR[2] = registerMetaTileEntity(12032, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.hv"), 3));
-        HEAT_ACCEPTOR[3] = registerMetaTileEntity(12033, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor.ev"), 4));
+        int increment = GTValues.LuV + 1;
 
-        PRESSURE_HATCH[0] = registerMetaTileEntity(12034, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch.ulv"), true, 0));
-        PRESSURE_HATCH[1] = registerMetaTileEntity(12035, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch.lv"), true, 1));
-        PRESSURE_HATCH[2] = registerMetaTileEntity(12036, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch.mv"), true, 2));
-        PRESSURE_HATCH[3] = registerMetaTileEntity(12037, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch.hv"), true, 3));
-        PRESSURE_HATCH[4] = registerMetaTileEntity(12038, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch.ev"), true, 4));
-        PRESSURE_HATCH[5] = registerMetaTileEntity(12039, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch.iv"), true, 5));
-        PRESSURE_HATCH[6] = registerMetaTileEntity(12040, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch.luv"), true, 6));
+        for (int i = 0; i < GTValues.LuV; i++) {
+            int startId = 12034;
+            PRESSURE_HATCH[i] = registerMetaTileEntity(startId + i, new MetaTileEntityPressureHatch(tkcyaId("vacuum_hatch." + GTValues.VN[i].toLowerCase()), true, i));
+            PRESSURE_HATCH[i + increment] = registerMetaTileEntity(startId + i + increment, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch." + GTValues.VN[i].toLowerCase()), false, i));
+            PRESSURE_COMPRESSOR[i] = registerMetaTileEntity(startId + i + increment * 2, new MetaTileEntityElectricPressureCompressor(tkcyaId("electric_vacuum_pump." + GTValues.VN[i].toLowerCase()), true, i));
+            PRESSURE_COMPRESSOR[i + increment] = registerMetaTileEntity(startId + i + increment * 3, new MetaTileEntityElectricPressureCompressor(tkcyaId("electric_compressor." + GTValues.VN[i].toLowerCase()), false, i));
+        }
 
-        PRESSURE_HATCH[7] = registerMetaTileEntity(12041, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch.ulv"), false, 0));
-        PRESSURE_HATCH[8] = registerMetaTileEntity(12042, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch.lv"), false, 1));
-        PRESSURE_HATCH[9] = registerMetaTileEntity(12043, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch.mv"), false, 2));
-        PRESSURE_HATCH[10] = registerMetaTileEntity(12044, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch.hv"), false, 3));
-        PRESSURE_HATCH[11] = registerMetaTileEntity(12045, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch.ev"), false, 4));
-        PRESSURE_HATCH[12] = registerMetaTileEntity(12046, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch.iv"), false, 5));
-        PRESSURE_HATCH[13] = registerMetaTileEntity(12047, new MetaTileEntityPressureHatch(tkcyaId("pressure_hatch.luv"), false, 6));
-        
+        increment = GTValues.IV+ 1;
+
+        for (int i = 0; i < GTValues.LuV; i++) {
+            int startId = 12100;
+            ELECTRIC_HEATER[i] = registerMetaTileEntity(startId + i, new MetaTileEntityElectricHeater(tkcyaId("electric_heater." + GTValues.VN[i]), i));
+            ELECTRIC_COOLER[i] = registerMetaTileEntity(startId + increment, new MetaTileEntityElectricCooler(tkcyaId("electric_cooler." + GTValues.VN[i]), i));
+            HEAT_ACCEPTOR[i] = registerMetaTileEntity(startId + increment * 2, new MetaTileEntityHeatAcceptor(tkcyaId("heat_acceptor." + GTValues.VN[i]), i));
+        }
+
 
     }
 

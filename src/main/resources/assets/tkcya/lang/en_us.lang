@@ -132,6 +132,7 @@ tkcya.machine.heat_acceptor.lv.name=Heat Acceptor I
 tkcya.machine.heat_acceptor.mv.name=Heat Acceptor II
 tkcya.machine.heat_acceptor.hv.name=Heat Acceptor III
 tkcya.machine.heat_acceptor.ev.name=Heat Acceptor IV
+tkcya.machine.heat_acceptor.iv.name=Heat Acceptor V
 
 #Pressure/Vacuum Hatches
 tkcya.machine.pressure_hatch.ulv.name=Pressure Hatch
