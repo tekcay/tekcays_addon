@@ -1,9 +1,9 @@
 package tekcays_addon.api.capability;
 
-import tekcays_addon.api.utils.TKCYAValues;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.FluidStack;
 
-import static tekcays_addon.api.utils.TKCYAValues.ABSOLUTE_VACUUM;
-import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
+import static tekcays_addon.api.utils.TKCYAValues.*;
 
 public interface IPressureContainer {
 
@@ -14,49 +14,8 @@ public interface IPressureContainer {
 
     /**
      * Set the {@code pressure}
-     * @param pressure
      */
-    void setPressure(int pressure);
-
-    /**
-     * Determines if the {@code PressureContainer} handles a pressure greater or lower than 1 bar.
-     * @return
-     */
-    boolean canHandleVacuum();
-
-    /**
-     * @return the Pressure Unit of the {@code PressureContainer}.
-     */
-    int getPU();
-
-    /**
-     * Set the Pressure Unit amount of the {@code PressureContainer}.
-     * @param amount of PU
-     */
-    void setPU(int amount);
-
-    /**
-     * Change the amount of PU in the container by {@code ADDING} a given amount.
-     * @param amount
-     */
-    default void changePU(int amount) {
-        setPU(getPU() + amount);
-    }
-
-    /**
-     * Change the pressure in the container by {@code ADDING} a given amount.
-     * If the {@code PressureContainer} can handle vacuum
-     * If the resulted pressure is lower than 1, pressure will be set to 1.
-     * If the resulted pressure is higher than {@code maxPressure}, pressure will be set to {@code maxPressure}.
-     * @param amount the amount to change by
-     */
-    default void changePressure(int amount) {
-        setPressure(Math.max(getMinPressure(), Math.min(getPressure() + amount, getMaxPressure())));
-    }
-
-    int getVolume();
-
-    void setVolume(int volume);
+    void setPressure();
 
     /**
      * @return the maximum pressure this container can handle
@@ -68,21 +27,84 @@ public interface IPressureContainer {
      */
     int getMinPressure();
 
+    boolean canHandleVacuum();
+
+    /**
+     * @return the {@code volume} of the {@code IPressureContainer} in m3
+     */
+    int getVolume();
+
+    /**
+     * Sets the {@code volume} of the {@code IPressureContainer} in m3
+     */
+    void setVolume(int volume);
+
+    /**
+     * @return the {@code FluidStack} pressurized in the {@code IPressureContainer}
+     */
+    FluidStack getFluidStack();
+
+    /**
+     * Sets the {@code FluidStack} pressurized in the {@code IPressureContainer}
+     * @param fluidStack
+     */
+    void setFluidStack(FluidStack fluidStack);
+
+    /**
+     * Gets the amount of the {@code FluidStack} in the {@code IPressureContainer}
+     * @return 0 if the {@code FluidStack} is {@code null}
+     */
+    default int getFluidAmount() {
+        int fluidAmount = 0;
+        try {
+            fluidAmount = getFluidStack().amount;
+        } catch (NullPointerException ignored) {}
+        return fluidAmount;
+    }
+
+    default NBTTagCompound setFluidStackNBT() {
+        NBTTagCompound nbt = new NBTTagCompound();
+        return getFluidStack().writeToNBT(nbt);
+    }
+
+    default boolean isEmpty() {
+        return getFluidAmount() == 0;
+    }
+
+    /**
+     * Calculates the amount of substance which transcribes as an amount of a {@code FluidStack} following the ideal gas law.
+     * @param pressure in {@code bar}, conversion in {@code Pa} is made in situ.
+     * @param temperature in {@code K}.
+     * @param volume in {@code m3}.
+     * @return the corresponding {@code fluidAmount}.
+     */
+    default int calculateFluidAmount(int pressure, int temperature, int volume) {
+        return (int) (PERFECT_GAS_CONSTANT * temperature) / (pressure * 100000 * volume); // n = RT / PV
+    }
+
+    /**
+     * Calculates the pressure following the ideal gas law.
+     * @param fluidAmount the amount of substance, transcribed as the amount of a {@code FluidStack}.
+     * @param temperature in {@code K}.
+     * @param volume in {@code m3}.
+     * @return the corresponding {@code fluidAmount}.
+     */
+    default int calculatePressure(int fluidAmount, int temperature, int volume) {
+        return (int) (PERFECT_GAS_CONSTANT * temperature) / (BAR_TO_PA_MULTIPLIER * volume); // P = nRT / V
+    }
+
+
+
     IPressureContainer EMPTY = new IPressureContainer() {
 
         @Override
         public int getMaxPressure() {
-            return canHandleVacuum() ? ATMOSPHERIC_PRESSURE * 1000 : TKCYAValues.MAX_PRESSURE;
+            return 0;
         }
 
         @Override
         public int getMinPressure() {
-            return canHandleVacuum() ? ABSOLUTE_VACUUM : ATMOSPHERIC_PRESSURE;
-        }
-
-        @Override
-        public int getPressure() {
-            return 1;
+            return 0;
         }
 
         @Override
@@ -91,17 +113,13 @@ public interface IPressureContainer {
         }
 
         @Override
-        public int getPU() {
-            return 0;
+        public int getPressure() {
+            return 1;
         }
 
-        @Override
-        public void setPU(int amount) {
-
-        }
 
         @Override
-        public void setPressure(int pressure) {
+        public void setPressure() {
         }
 
         @Override
@@ -113,6 +131,22 @@ public interface IPressureContainer {
         public void setVolume(int volume) {
 
         }
+
+        @Override
+        public FluidStack getFluidStack() {
+            return null;
+        }
+
+        @Override
+        public void setFluidStack(FluidStack fluidStack) {
+
+        }
+
+        @Override
+        public int getFluidAmount() {
+            return 0;
+        }
+
 
     };
 

@@ -5,11 +5,17 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.capability.IPressureContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import java.io.IOException;
+
+import static gregtech.api.unification.material.Materials.Air;
+import static tekcays_addon.api.utils.TKCYAValues.*;
 
 public class PressureContainer extends MTETrait implements IPressureContainer {
 
@@ -17,7 +23,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
     private int maxPressure;
     private int pressure;
     private int volume;
-    private int pu;
+    private FluidStack fluidStack;
     boolean canHandleVacuum;
 
     /**
@@ -27,7 +33,6 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
     public PressureContainer(MetaTileEntity metaTileEntity, boolean canHandleVacuum) {
         super(metaTileEntity);
         this.canHandleVacuum = canHandleVacuum;
-        this.pu = 0;
     }
 
     /**
@@ -41,9 +46,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
         this.maxPressure = maxPressure;
         this.pressure = 0;
         this.volume = 0;
-        this.pu = 0;
     }
-
 
     @Override
     public int getMaxPressure() {
@@ -66,18 +69,8 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
     }
 
     @Override
-    public int getPU() {
-        return this.pu;
-    }
-
-    @Override
-    public void setPU(int pu) {
-        this.pu = pu;
-    }
-
-    @Override
-    public void setPressure(int amount) {
-        this.pressure = amount;
+    public void setPressure() {
+        this.pressure = calculatePressure(getFluidAmount(), ROOM_TEMPERATURE, getVolume());
         this.metaTileEntity.markDirty();
     }
 
@@ -89,7 +82,22 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
     @Override
     public void setVolume(int volume) {
         this.volume = volume;
-        this.metaTileEntity.markDirty();
+    }
+
+    @Override
+    public FluidStack getFluidStack() {
+        return this.fluidStack;
+    }
+
+    //TODO ELSE ?
+    @Override
+    public void setFluidStack(FluidStack fluidStack) {
+        if (!getFluidStack().isFluidEqual(fluidStack)) this.fluidStack = fluidStack;
+        else this.fluidStack = getDefaultFluidStack();
+    }
+
+    public FluidStack getDefaultFluidStack() {
+        return new FluidStack(Air.getFluid(), calculateFluidAmount(ATMOSPHERIC_PRESSURE, ROOM_TEMPERATURE, getVolume()));
     }
 
     @Override
@@ -115,23 +123,31 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = new NBTTagCompound();
         compound.setInteger("pressure", this.pressure);
+        compound.setTag("fluidStack", this.setFluidStackNBT());
         return compound;
     }
 
     @Override
     public void deserializeNBT(@Nonnull NBTTagCompound compound) {
         this.pressure = compound.getInteger("pressure");
+        this.fluidStack = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag("fluidStack"));
     }
 
     @Override
     public void writeInitialData(PacketBuffer buffer) {
         super.writeInitialData(buffer);
         buffer.writeInt(this.pressure);
+        buffer.writeCompoundTag(this.setFluidStackNBT());
     }
 
     @Override
     public void receiveInitialData(PacketBuffer buffer) {
         super.receiveInitialData(buffer);
         this.pressure = buffer.readInt();
+        try {
+            this.fluidStack = FluidStack.loadFluidStackFromNBT(buffer.readCompoundTag());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package tekcays_addon.api.capability.impl;
 
+import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.capability.IPressureContainer;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public class PressureContainerList implements IPressureContainer {
     public PressureContainerList(List<IPressureContainer> pressureContainerList) {
         this.pressureContainerList = pressureContainerList;
     }
-    
+
     private IPressureContainer getIPressureContainer() {
         return pressureContainerList.get(0);
     }
@@ -28,11 +29,6 @@ public class PressureContainerList implements IPressureContainer {
 
 
     @Override
-    public void changePressure(int amount) {
-        this.setPressure(Math.max(this.getMinPressure(), Math.min(this.getPressure() + amount, this.getMaxPressure())));
-    }
-
-    @Override
     public int getVolume() {
         return getIPressureContainer().getVolume();
     }
@@ -43,33 +39,28 @@ public class PressureContainerList implements IPressureContainer {
     }
 
     @Override
+    public FluidStack getFluidStack() {
+        return getIPressureContainer().getFluidStack();
+    }
+
+    @Override
+    public void setFluidStack(FluidStack fluidStack) {
+        getIPressureContainer().setFluidStack(fluidStack);
+    }
+
+    @Override
     public int getPressure() {
         return getIPressureContainer().getPressure();
     }
 
     @Override
+    public void setPressure() {
+        getIPressureContainer().setPressure();
+    }
+
+    @Override
     public boolean canHandleVacuum() {
         return getIPressureContainer().canHandleVacuum();
-    }
-
-    @Override
-    public int getPU() {
-        return getIPressureContainer().getPU();
-    }
-
-    @Override
-    public void setPU(int amount) {
-        getIPressureContainer().setPU(amount);
-    }
-
-    @Override
-    public void changePU(int amount) {
-       getIPressureContainer().changePU(amount);
-    }
-
-    @Override
-    public void setPressure(int amount) {
-        getIPressureContainer().setPressure(amount);
     }
 
 

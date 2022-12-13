@@ -37,11 +37,13 @@ public class TKCYAValues {
 
 
     //Heat
-
+    public static final int ROOM_TEMPERATURE = 298;
     public static final int MIN_HEAT = 0;
     public static final int MAX_HEAT = 10000;
 
     //Pressure, in bar
+    public static final int BAR_TO_PA_MULTIPLIER = 100000;
+    public static final float PERFECT_GAS_CONSTANT = 8.314f;
     public static final int MAX_PRESSURE = 10000;
     public static final int ABSOLUTE_VACUUM = 0;
     public static final int ATMOSPHERIC_PRESSURE = 1;
