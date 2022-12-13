@@ -3,6 +3,7 @@ package tekcays_addon.api.capability;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
 
+import static gregtech.api.unification.material.Materials.Air;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
 public interface IPressureContainer {
@@ -55,11 +56,24 @@ public interface IPressureContainer {
      * @return 0 if the {@code FluidStack} is {@code null}
      */
     default int getFluidAmount() {
-        int fluidAmount = 0;
-        try {
-            fluidAmount = getFluidStack().amount;
-        } catch (NullPointerException ignored) {}
-        return fluidAmount;
+        return getFluidStack().amount;
+    }
+
+    default void changeFluidAmount(int amount) {
+        setFluidStack(new FluidStack(getFluidStack().getFluid(), getFluidAmount() + amount));
+    }
+
+    /**
+     * @param amount
+     * @return {@code false} if the {@code amount} is negative and would give a {@code fluidAmount} lower than 1 (MINIMUM_FLUID_STACK_AMOUNT).
+     */
+    default boolean canChangeFluidAmount(int amount) {
+        return getFluidAmount() + amount <= MINIMUM_FLUID_STACK_AMOUNT;
+    }
+
+    default void leaksContainer(int amount) {
+        if (!canChangeFluidAmount(amount)) return;
+        changeFluidAmount(amount);
     }
 
     default NBTTagCompound setFluidStackNBT() {
@@ -68,7 +82,11 @@ public interface IPressureContainer {
     }
 
     default boolean isEmpty() {
-        return getFluidAmount() == 0;
+        return getFluidAmount() == MINIMUM_FLUID_STACK_AMOUNT;
+    }
+
+    default boolean canLeakMore(int leak) {
+        return getFluidAmount() - leak <= MINIMUM_FLUID_STACK_AMOUNT;
     }
 
     /**
@@ -91,6 +109,22 @@ public interface IPressureContainer {
      */
     default int calculatePressure(int fluidAmount, int temperature, int volume) {
         return (int) (PERFECT_GAS_CONSTANT * temperature) / (BAR_TO_PA_MULTIPLIER * volume); // P = nRT / V
+    }
+
+    /**
+     * Gets the {@code FluidStack} with the amount at standard conditions (298 K, 1013 hPa).
+     * @return the {@code FluidStack} with changed amount.
+     */
+    default FluidStack getFluidStackStandard(FluidStack fs, int temperature) {
+        return new FluidStack(fs.getFluid(), calculateFluidAmount(ATMOSPHERIC_PRESSURE, temperature, getVolume()));
+    }
+
+    /**
+     * Gets a {@code FluidStack} of Air at standard conditions (298 K, 1013 hPa).
+     * @return {@code FluidStack} of Air.
+     */
+    default FluidStack getDefaultFluidStack() {
+        return getFluidStackStandard(Air.getFluid(MINIMUM_FLUID_STACK_AMOUNT), ROOM_TEMPERATURE);
     }
 
 

@@ -3,6 +3,7 @@ package tekcays_addon.common.metatileentities.multiblockpart;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
+import gregtech.api.capability.impl.NotifiableFluidTank;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.metatileentity.IDataInfoProvider;
 import gregtech.api.metatileentity.MetaTileEntity;
@@ -39,15 +40,17 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     private final boolean canHandleVacuum;
     private final int minPressure;
     private final int maxPressure;
+    private final int volume;
     private final int tierMultiplier = getTier() * getTier() + 1;
 
     public MetaTileEntityPressureHatch(@Nonnull ResourceLocation metaTileEntityId, boolean canHandleVacuum, int tier) {
         super(metaTileEntityId, tier);
         this.canHandleVacuum = canHandleVacuum;
-        this.minPressure = canHandleVacuum ? (int) 100 / (tierMultiplier) : ATMOSPHERIC_PRESSURE;
+        this.minPressure = canHandleVacuum ? (int) 100 * tierMultiplier : 100 * tierMultiplier;
         this.maxPressure = canHandleVacuum ? ATMOSPHERIC_PRESSURE * 1000 : 10 * tierMultiplier;
-        this.leakingRate = canHandleVacuum ? (int) (10 / (getTier() + 1)) : 10 * tierMultiplier;
+        this.leakingRate = canHandleVacuum ? (int) (10 / (getTier() + 1)) : - 10 * tierMultiplier;
         this.pressureContainer = new PressureContainer(this, canHandleVacuum, minPressure, maxPressure);
+        this.volume = 1;
     }
 
     @Override
@@ -60,18 +63,13 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     public void update() {
         super.update();
         if (getOffsetTimer() % 20 == 0) {
-            if (!canHandleVacuum) leaksContainer(ATMOSPHERIC_PRESSURE, leakingRate);
-            else leaksContainer(ABSOLUTE_VACUUM, -leakingRate);
+            getPressureContainer().leaksContainer(leakingRate);
+            getPressureContainer().setPressure();
         }
     }
 
-    private void leaksContainer(int pressure, int leak) {
-        if (pressureContainer.getPressure() - leak>= pressure) pressureContainer.changePressure(-leak);
-        else pressureContainer.setPressure(pressure);
-    }
-
     public IPressureContainer getPressureContainer() {
-        return pressureContainer;
+        return this.pressureContainer;
     }
 
     @Override
@@ -93,7 +91,7 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
             tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.vacuum.leak", leakingRate));
         } else {
             tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.pressure", maxPressure));
-            tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.pressure.leak", leakingRate));
+            tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.pressure.leak", Math.abs(leakingRate)));
         }
     }
 

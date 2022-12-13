@@ -440,8 +440,8 @@ tkcya.machine.heat_acceptor.tooltip.3=Capacity: §c%dk HU§7.
 #Pressure hatch
 tkcya.machine.pressure_hatch.tooltip.vacuum=Accepts §dVacuum§7, down to §e%d mBar§7.
 tkcya.machine.pressure_hatch.tooltip.pressure=Accepts §aPressure§7, up to §e%d Bar§7.
-tkcya.machine.pressure_hatch.tooltip.vacuum.leak=Loses §d%d mBar/s§7.
-tkcya.machine.pressure_hatch.tooltip.pressure.leak=Loses §a%d mBar/s§7.
+tkcya.machine.pressure_hatch.tooltip.vacuum.leak=Loses §d%d L/s§7.
+tkcya.machine.pressure_hatch.tooltip.pressure.leak=Loses §a%d L/s§7.
 
 tekcays_addon.multiblock.electric_melter.tooltip.1=Temperature: §a%d K§7.
 tekcays_addon.multiblock.electric_melter.tooltip.2=Not enough energy can be input to reach the target!

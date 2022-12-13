@@ -14,7 +14,6 @@ import javax.annotation.Nullable;
 
 import java.io.IOException;
 
-import static gregtech.api.unification.material.Materials.Air;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
 public class PressureContainer extends MTETrait implements IPressureContainer {
@@ -46,6 +45,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
         this.maxPressure = maxPressure;
         this.pressure = 0;
         this.volume = 0;
+        this.fluidStack= getDefaultFluidStack();
     }
 
     @Override
@@ -94,10 +94,6 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
     public void setFluidStack(FluidStack fluidStack) {
         if (!getFluidStack().isFluidEqual(fluidStack)) this.fluidStack = fluidStack;
         else this.fluidStack = getDefaultFluidStack();
-    }
-
-    public FluidStack getDefaultFluidStack() {
-        return new FluidStack(Air.getFluid(), calculateFluidAmount(ATMOSPHERIC_PRESSURE, ROOM_TEMPERATURE, getVolume()));
     }
 
     @Override

@@ -42,7 +42,11 @@ public class TKCYAValues {
     public static final int MAX_HEAT = 10000;
 
     //Pressure, in bar
-    public static final int BAR_TO_PA_MULTIPLIER = 100000;
+    /**
+     * Minimum amount of a {@code FluidStack} for it to not be null.
+     */
+    public static final int MINIMUM_FLUID_STACK_AMOUNT = 1;
+    public static final int BAR_TO_PA_MULTIPLIER = 101300;
     public static final float PERFECT_GAS_CONSTANT = 8.314f;
     public static final int MAX_PRESSURE = 10000;
     public static final int ABSOLUTE_VACUUM = 0;
