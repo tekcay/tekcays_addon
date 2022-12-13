@@ -21,7 +21,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
 
     private int minPressure;
     private int maxPressure;
-    private int pressure;
+    protected int pressure;
     private int volume;
     private FluidStack fluidStack;
     boolean canHandleVacuum;
