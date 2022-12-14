@@ -9,22 +9,22 @@ import static tekcays_addon.api.utils.TKCYAValues.*;
 public interface IPressureContainer {
 
     /**
-     * @return the amount of pressure in the container
+     * @return the amount of pressure in the container in {@code Pa}
      */
     int getPressure();
 
     /**
-     * Set the {@code pressure}
+     * Set the {@code pressure} in {@code Pa}
      */
     void setPressure();
 
     /**
-     * @return the maximum pressure this container can handle
+     * @return the maximum pressure this container can handle in {@code Pa}
      */
     int getMaxPressure();
 
     /**
-     * @return the minimum pressure this container can handle
+     * @return the minimum pressure this container can handle in {@code Pa}
      */
     int getMinPressure();
 
@@ -91,13 +91,13 @@ public interface IPressureContainer {
 
     /**
      * Calculates the amount of substance which transcribes as an amount of a {@code FluidStack} following the ideal gas law.
-     * @param pressure in {@code bar}, conversion in {@code Pa} is made in situ.
+     * @param pressure in {@code Pa}.
      * @param temperature in {@code K}.
      * @param volume in {@code m3}.
      * @return the corresponding {@code fluidAmount}.
      */
     default int calculateFluidAmount(int pressure, int temperature, int volume) {
-        return (int) (PERFECT_GAS_CONSTANT * temperature) / (pressure * 100000 * volume); // n = RT / PV
+        return (int) ((PERFECT_GAS_CONSTANT * temperature) / (pressure * volume)); // n = RT / PV
     }
 
     /**
@@ -105,10 +105,18 @@ public interface IPressureContainer {
      * @param fluidAmount the amount of substance, transcribed as the amount of a {@code FluidStack}.
      * @param temperature in {@code K}.
      * @param volume in {@code m3}.
-     * @return the corresponding {@code fluidAmount}.
+     * @return the corresponding pressure in {@code Pa}
      */
     default int calculatePressure(int fluidAmount, int temperature, int volume) {
-        return (int) (PERFECT_GAS_CONSTANT * temperature) / (BAR_TO_PA_MULTIPLIER * volume); // P = nRT / V
+        return (int) ((PERFECT_GAS_CONSTANT * temperature) / volume); // P = nRT / V
+    }
+
+    default String convertPressureToBar(int pressureInPa) {
+        //Returns the pressure in mbar
+        if (pressureInPa < ATMOSPHERIC_PRESSURE) return String.format("%d mbar", (int) (1000 * pressureInPa / ATMOSPHERIC_PRESSURE));
+
+        //Returns the pressure in bar
+        else return String.format("%d bar", (int) (pressureInPa / ATMOSPHERIC_PRESSURE));
     }
 
     /**

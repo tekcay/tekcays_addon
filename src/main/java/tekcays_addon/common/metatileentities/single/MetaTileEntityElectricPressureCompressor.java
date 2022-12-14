@@ -8,14 +8,16 @@ import codechicken.lib.vec.Matrix4;
 import gregtech.api.GTValues;
 import gregtech.api.capability.GregtechTileCapabilities;
 import gregtech.api.capability.IActiveOutputSide;
+import gregtech.api.capability.impl.FluidTankList;
+import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
-import gregtech.api.metatileentity.IDataInfoProvider;
+import gregtech.api.gui.widgets.LabelWidget;
+import gregtech.api.gui.widgets.TankWidget;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.TieredMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -23,37 +25,39 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.FluidTank;
 import org.apache.commons.lang3.ArrayUtils;
 import tekcays_addon.api.capability.IPressureContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
-import tekcays_addon.api.capability.impl.PressureContainer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static net.minecraft.util.EnumFacing.DOWN;
 import static net.minecraft.util.EnumFacing.UP;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
-public class MetaTileEntityElectricPressureCompressor extends TieredMetaTileEntity implements IDataInfoProvider, IActiveOutputSide {
+public class MetaTileEntityElectricPressureCompressor extends TieredMetaTileEntity implements IActiveOutputSide {
 
-    private final int PU_BASE_INCREASE;
-    private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()]);
+    private int transferRate;
+    private final int BASE_TRANSFER_RATE;
+    private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()] * 15/16);
     private final boolean canHandleVacuum;
     private EnumFacing outputSide;
-    private PressureContainer pressureContainer;
+    private IPressureContainer pressureContainer;
+    private int fluidCapacity;
+    private int tierMultiplier = (getTier() * getTier() + 1);
 
     public MetaTileEntityElectricPressureCompressor(ResourceLocation metaTileEntityId, boolean canHandleVacuum, int tier) {
         super(metaTileEntityId, tier);
         this.canHandleVacuum = canHandleVacuum;
-        this.PU_BASE_INCREASE = canHandleVacuum ? (int) (GTValues.V[getTier()] * EU_TO_VU / 2) : (int) (GTValues.V[getTier()] * EU_TO_PU / 2);
+        this.BASE_TRANSFER_RATE = canHandleVacuum ? 50 * tierMultiplier : 100 * tierMultiplier;
         this.outputSide = getFrontFacing().getOpposite();
+        this.fluidCapacity = 1000 * (getTier() * getTier() + 1);
+        initializeInventory();
     }
 
     @Override
@@ -64,12 +68,28 @@ public class MetaTileEntityElectricPressureCompressor extends TieredMetaTileEnti
     @Override
     protected void initializeInventory() {
         super.initializeInventory();
-        this.pressureContainer = new PressureContainer(this, canHandleVacuum);
+        this.importFluids = this.createImportFluidHandler();
     }
 
     @Override
-    protected ModularUI createUI(EntityPlayer entityPlayer) {
-        return null;
+    protected FluidTankList createImportFluidHandler() {
+        return new FluidTankList(false, new FluidTank(fluidCapacity));
+    }
+
+    @Override
+    protected ModularUI createUI(EntityPlayer player) {
+        return createUITemplate(player).build(getHolder(), player);
+    }
+
+    protected ModularUI.Builder createUITemplate(EntityPlayer entityPlayer) {
+        return ModularUI.builder(GuiTextures.BACKGROUND, 176, 166)
+                .shouldColor(false)
+                .widget(new LabelWidget(5, 5, getMetaFullName()))
+                .widget(new TankWidget(importFluids.getTankAt(0), 20, 50, 18, 18)
+                        .setBackgroundTexture(GuiTextures.FLUID_SLOT)
+                        .setAlwaysShowFull(true)
+                        .setContainerClicking(true, true))
+                .bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 0);
     }
 
     @Override
@@ -78,8 +98,9 @@ public class MetaTileEntityElectricPressureCompressor extends TieredMetaTileEnti
         ColourMultiplier multiplier = new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
         IVertexOperation[] coloredPipeline = ArrayUtils.add(pipeline, multiplier);
 
-        Textures.PIPE_OUT_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
-        Textures.ADV_PUMP_OVERLAY.renderSided(getFrontFacing().getOpposite(), renderState, translation, pipeline);
+        if (canHandleVacuum) Textures.PIPE_IN_OVERLAY.renderSided(getFrontFacing().getOpposite(), renderState, translation, pipeline);
+        else Textures.PIPE_OUT_OVERLAY.renderSided(getFrontFacing().getOpposite(), renderState, translation, pipeline);
+        Textures.ADV_PUMP_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
     }
 
     private EnumFacing getOutputSide() {
@@ -94,47 +115,53 @@ public class MetaTileEntityElectricPressureCompressor extends TieredMetaTileEnti
         return facing != getFrontFacing();
     }
 
+    private void setTransferRate() {
+        if (pressureContainer.equals(null)) transferRate = 0;
+        else {
+            double pressurePercentage = canHandleVacuum ? (double) (100 - ((ATMOSPHERIC_PRESSURE - pressureContainer.getPressure()) / ATMOSPHERIC_PRESSURE)) : (double) pressureContainer.getPressure() / pressureContainer.getMaxPressure();
+            transferRate = (int) (BASE_TRANSFER_RATE * pressurePercentage);
+        }
+    }
+
 
     @Override
     public void update() {
         super.update();
-        int currentPU = pressureContainer.getPU();
         if (!getWorld().isRemote) {
+            pressureContainer = getAdjacentIPressureContainer(getFrontFacing());
+            setTransferRate();
 
             //Redstone stops heating
             if (this.isBlockRedstonePowered()) return;
             if (energyContainer.getEnergyStored() < ENERGY_BASE_CONSUMPTION) return;
-            if (currentPU != 0) return;
 
-            pressureContainer.setPressure(currentPU + PU_BASE_INCREASE);
+
             energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
-            tryTransferPU(getFrontFacing());
         }
     }
 
-    private void tryTransferPU(EnumFacing side) {
+    private IPressureContainer getAdjacentIPressureContainer(EnumFacing side) {
         TileEntity te = getWorld().getTileEntity(getPos().offset(side));
-        if (te != null) {
+        if (te.equals(null)) return null;
 
-            //Get the Capability of this Tile Entity on the DOWN FACE.
-            IPressureContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER, DOWN);
-            if (container == null) return;
-            if (!side.equals(getFrontFacing())) return;
-            container.changePU(PU_BASE_INCREASE);
-        }
+        IPressureContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER, side.getOpposite());
+        if (container == null) return null;
+        if (!side.equals(getFrontFacing())) return null;
+        return container;
     }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("tkcya.electric_cooler.tooltip.1"));
+        if (canHandleVacuum) tooltip.add(I18n.format("tkcya.machine.electric_pressure_compressor.vacuum.tooltip.description"));
+        else tooltip.add(I18n.format("tkcya.machine.electric_pressure_compressor.pressure.tooltip.description"));
+        tooltip.add(I18n.format("tkcya.machine.electric_pressure_compressor.tooltip.fluid_capacity", fluidCapacity));
         tooltip.add(I18n.format("gregtech.universal.tooltip.max_voltage_in", energyContainer.getInputVoltage(), GTValues.VNF[getTier()]));
-        tooltip.add(I18n.format("tkcya.machine.energy_conversion_efficiency",  TextFormatting.WHITE + String.format("%.02f", EU_TO_HU * 50) + "%"));
+        tooltip.add(I18n.format("tkcya.machine.tooltip.consumption", ENERGY_BASE_CONSUMPTION));
         tooltip.add(I18n.format("gregtech.universal.tooltip.energy_storage_capacity", energyContainer.getEnergyCapacity()));
-        tooltip.add(I18n.format("tkcya.electric_cooler.tooltip.2", PU_BASE_INCREASE));
-        tooltip.add(I18n.format("tkcya.electric_cooler.tooltip.3", PU_BASE_INCREASE));
+        tooltip.add(I18n.format("tkcya.machine.electric_pressure_compressor.tooltip.transfer", BASE_TRANSFER_RATE));
         tooltip.add(I18n.format("tkcya.machine.redstone.inverse.tooltip"));
-        tooltip.add(I18n.format("gregtech.machine.item_controller.tooltip.consumption", ENERGY_BASE_CONSUMPTION));
+
     }
 
     @Override
@@ -165,15 +192,6 @@ public class MetaTileEntityElectricPressureCompressor extends TieredMetaTileEnti
             if (wrenchSide != null && !getWorld().isRemote) setOutputSide(wrenchSide);
         }
         return true;
-    }
-
-    @Nonnull
-    @Override
-    public List<ITextComponent> getDataInfo() {
-        List<ITextComponent> list = new ObjectArrayList<>();
-        if (canHandleVacuum) list.add(new TextComponentTranslation("behavior.tricorder.current_vu", pressureContainer.getPU()));
-        else list.add(new TextComponentTranslation("behavior.tricorder.current_pu", pressureContainer.getPU()));
-        return list;
     }
 
     @Override

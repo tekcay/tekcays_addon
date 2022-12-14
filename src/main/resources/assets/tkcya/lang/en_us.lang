@@ -389,6 +389,8 @@ item.material.oreprefix.curvedPlate=%s Curved Plate
 
 #Tooltips
 
+tkcya.machine.tooltip.consumption=Consumes §a%d EU/t§7 when active.
+
 #Can run recipe in parallel
 tkcya.machine.parallel_ability.tooltip=Can run recipes in parallel.
 
@@ -438,10 +440,15 @@ tkcya.machine.heat_acceptor.tooltip.2=Loses §c%d HU/s§7.
 tkcya.machine.heat_acceptor.tooltip.3=Capacity: §c%dk HU§7.
 
 #Pressure hatch
-tkcya.machine.pressure_hatch.tooltip.vacuum=Accepts §dVacuum§7, down to §e%d mBar§7.
-tkcya.machine.pressure_hatch.tooltip.pressure=Accepts §aPressure§7, up to §e%d Bar§7.
+tkcya.machine.pressure_hatch.tooltip.vacuum=Accepts §dVacuum§7, down to §e%s§7.
+tkcya.machine.pressure_hatch.tooltip.pressure=Accepts §aPressure§7, up to §e%s§7.
 tkcya.machine.pressure_hatch.tooltip.vacuum.leak=Loses §d%d L/s§7.
 tkcya.machine.pressure_hatch.tooltip.pressure.leak=Loses §a%d L/s§7.
+
+tkcya.machine.electric_pressure_compressor.pressure.tooltip.description=Transfer a fluid to the OUTPUT face to increase §aPressure§7.
+tkcya.machine.electric_pressure_compressor.vacuum.tooltip.description=Transfer a fluid from the INPUT face to increase §aVacuum§7.
+tkcya.machine.electric_pressure_compressor.tooltip.transfer=Base transfer rate: %d L/s
+tkcya.machine.electric_pressure_compressor.tooltip.fluid_capacity=Fluid capacity: %d L.
 
 tekcays_addon.multiblock.electric_melter.tooltip.1=Temperature: §a%d K§7.
 tekcays_addon.multiblock.electric_melter.tooltip.2=Not enough energy can be input to reach the target!

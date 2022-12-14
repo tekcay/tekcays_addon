@@ -3,7 +3,6 @@ package tekcays_addon.common.metatileentities.multiblockpart;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregtech.api.capability.impl.NotifiableFluidTank;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.metatileentity.IDataInfoProvider;
 import gregtech.api.metatileentity.MetaTileEntity;
@@ -46,8 +45,8 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     public MetaTileEntityPressureHatch(@Nonnull ResourceLocation metaTileEntityId, boolean canHandleVacuum, int tier) {
         super(metaTileEntityId, tier);
         this.canHandleVacuum = canHandleVacuum;
-        this.minPressure = canHandleVacuum ? (int) 100 * tierMultiplier : 100 * tierMultiplier;
-        this.maxPressure = canHandleVacuum ? ATMOSPHERIC_PRESSURE * 1000 : 10 * tierMultiplier;
+        this.minPressure = canHandleVacuum ? ATMOSPHERIC_PRESSURE / tierMultiplier : ATMOSPHERIC_PRESSURE;
+        this.maxPressure = canHandleVacuum ? ATMOSPHERIC_PRESSURE : ATMOSPHERIC_PRESSURE * 10 * tierMultiplier;
         this.leakingRate = canHandleVacuum ? (int) (10 / (getTier() + 1)) : - 10 * tierMultiplier;
         this.pressureContainer = new PressureContainer(this, canHandleVacuum, minPressure, maxPressure);
         this.volume = 1;
@@ -87,10 +86,10 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         if (this.canHandleVacuum) {
-            tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.vacuum", minPressure));
+            tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.vacuum", pressureContainer.convertPressureToBar(minPressure)));
             tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.vacuum.leak", leakingRate));
         } else {
-            tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.pressure", maxPressure));
+            tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.pressure", pressureContainer.convertPressureToBar(maxPressure)));
             tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.pressure.leak", Math.abs(leakingRate)));
         }
     }
