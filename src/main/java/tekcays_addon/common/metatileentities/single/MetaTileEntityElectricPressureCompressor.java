@@ -21,6 +21,8 @@ import gregtech.client.renderer.texture.Textures;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -32,11 +34,13 @@ import net.minecraftforge.fluids.FluidTank;
 import org.apache.commons.lang3.ArrayUtils;
 import tekcays_addon.api.capability.IPressureContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
+import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static gregtech.api.capability.GregtechDataCodes.UPDATE_OUTPUT_FACING;
 import static net.minecraft.util.EnumFacing.UP;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
@@ -55,7 +59,6 @@ public class MetaTileEntityElectricPressureCompressor extends TieredMetaTileEnti
         super(metaTileEntityId, tier);
         this.canHandleVacuum = canHandleVacuum;
         this.BASE_TRANSFER_RATE = canHandleVacuum ? 50 * tierMultiplier : 100 * tierMultiplier;
-        this.outputSide = getFrontFacing().getOpposite();
         this.fluidCapacity = 1000 * (getTier() * getTier() + 1);
         initializeInventory();
     }
@@ -98,25 +101,54 @@ public class MetaTileEntityElectricPressureCompressor extends TieredMetaTileEnti
         ColourMultiplier multiplier = new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
         IVertexOperation[] coloredPipeline = ArrayUtils.add(pipeline, multiplier);
 
-        if (canHandleVacuum) Textures.PIPE_IN_OVERLAY.renderSided(getFrontFacing().getOpposite(), renderState, translation, pipeline);
-        else Textures.PIPE_OUT_OVERLAY.renderSided(getFrontFacing().getOpposite(), renderState, translation, pipeline);
+        if (canHandleVacuum) Textures.PIPE_IN_OVERLAY.renderSided(getOutputSide(), renderState, translation, pipeline);
+        else Textures.PIPE_OUT_OVERLAY.renderSided(getOutputSide(), renderState, translation, pipeline);
         Textures.ADV_PUMP_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
     }
 
     private EnumFacing getOutputSide() {
-        return this.outputSide;
+        return outputSide == null ? getFrontFacing().getOpposite() : outputSide;
     }
 
-    private void setOutputSide(EnumFacing facing) {
-        this.outputSide = facing;
+    public void setOutputSide(EnumFacing outputSide) {
+        this.outputSide = outputSide;
+        if (!getWorld().isRemote) {
+            notifyBlockUpdate();
+            writeCustomData(UPDATE_OUTPUT_FACING, buf -> buf.writeByte(outputSide.getIndex()));
+            markDirty();
+        }
     }
 
-    private boolean isValidOutputSide(EnumFacing facing) {
-        return facing != getFrontFacing();
+    @Override
+    public void setFrontFacing(EnumFacing frontFacing) {
+        super.setFrontFacing(frontFacing);
+        if (this.outputSide == null) {
+            //set initial output facing as opposite to front
+            setOutputSide(frontFacing.getOpposite());
+        }
+    }
+
+    //To prevent the heater to heat on the bottom face
+    @Override
+    public boolean isValidFrontFacing(EnumFacing facing) {
+        return facing != EnumFacing.DOWN && facing != UP;
+    }
+
+    @Override
+    public boolean onWrenchClick(EntityPlayer playerIn, EnumHand hand, EnumFacing wrenchSide, CuboidRayTraceResult hitResult) {
+        if (wrenchSide == null) return false;
+        if (playerIn.isSneaking()) {
+            if (wrenchSide == getFrontFacing() || !isValidFrontFacing(wrenchSide) || !hasFrontFacing()) return false;
+            setFrontFacing(wrenchSide);
+        } else {
+            if (wrenchSide == getOutputSide() || wrenchSide == getFrontFacing()) return false;
+            setOutputSide(wrenchSide);
+        }
+        return true;
     }
 
     private void setTransferRate() {
-        if (pressureContainer.equals(null)) transferRate = 0;
+        if (pressureContainer == null) transferRate = 0;
         else {
             double pressurePercentage = canHandleVacuum ? (double) (100 - ((ATMOSPHERIC_PRESSURE - pressureContainer.getPressure()) / ATMOSPHERIC_PRESSURE)) : (double) pressureContainer.getPressure() / pressureContainer.getMaxPressure();
             transferRate = (int) (BASE_TRANSFER_RATE * pressurePercentage);
@@ -142,7 +174,7 @@ public class MetaTileEntityElectricPressureCompressor extends TieredMetaTileEnti
 
     private IPressureContainer getAdjacentIPressureContainer(EnumFacing side) {
         TileEntity te = getWorld().getTileEntity(getPos().offset(side));
-        if (te.equals(null)) return null;
+        if (te == null) return null;
 
         IPressureContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER, side.getOpposite());
         if (container == null) return null;
@@ -176,24 +208,6 @@ public class MetaTileEntityElectricPressureCompressor extends TieredMetaTileEnti
         return super.getCapability(capability, side);
     }
 
-    //To prevent the heater to heat on the bottom face
-    @Override
-    public boolean isValidFrontFacing(EnumFacing facing) {
-        return facing != EnumFacing.DOWN && facing != UP;
-    }
-
-    @Override
-    public boolean onWrenchClick(EntityPlayer playerIn, EnumHand hand, EnumFacing wrenchSide, CuboidRayTraceResult hitResult) {
-        if (playerIn.isSneaking()) {
-            if (wrenchSide == getFrontFacing() || !isValidFrontFacing(wrenchSide) || !hasFrontFacing()) return false;
-            if (wrenchSide != null && !getWorld().isRemote) setFrontFacing(wrenchSide);
-        } else {
-            if (wrenchSide == getOutputSide() || !isValidOutputSide(wrenchSide)) return false;
-            if (wrenchSide != null && !getWorld().isRemote) setOutputSide(wrenchSide);
-        }
-        return true;
-    }
-
     @Override
     public boolean isAutoOutputItems() {
         return false;
@@ -212,6 +226,40 @@ public class MetaTileEntityElectricPressureCompressor extends TieredMetaTileEnti
     @Override
     public boolean isAllowInputFromOutputSideFluids() {
         return false;
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound data) {
+        super.writeToNBT(data);
+        data.setInteger("outputSide", getOutputSide().getIndex());
+        return data;
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound data) {
+        super.readFromNBT(data);
+        this.outputSide = EnumFacing.VALUES[data.getInteger("outputSide")];
+    }
+
+    @Override
+    public void writeInitialSyncData(PacketBuffer buf) {
+        super.writeInitialSyncData(buf);
+        buf.writeByte(getOutputSide().getIndex());
+    }
+
+    @Override
+    public void receiveInitialSyncData(PacketBuffer buf) {
+        super.receiveInitialSyncData(buf);
+        this.outputSide = EnumFacing.VALUES[buf.readByte()];
+    }
+
+    @Override
+    public void receiveCustomData(int dataId, PacketBuffer buf) {
+        super.receiveCustomData(dataId, buf);
+        if (dataId == UPDATE_OUTPUT_FACING) {
+            this.outputSide = EnumFacing.VALUES[buf.readByte()];
+            scheduleRenderUpdate();
+        }
     }
 
 }
