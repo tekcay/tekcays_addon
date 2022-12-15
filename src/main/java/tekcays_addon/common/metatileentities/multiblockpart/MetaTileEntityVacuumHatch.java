@@ -21,20 +21,20 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import tekcays_addon.api.capability.IPressureContainer;
+import tekcays_addon.api.capability.IVacuumContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
-import tekcays_addon.api.capability.impl.PressureContainer;
+import tekcays_addon.api.capability.impl.VacuumContainer;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static tekcays_addon.api.utils.TKCYAValues.*;
+import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
 
-public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IPressureContainer>, IDataInfoProvider {
+public class MetaTileEntityVacuumHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IVacuumContainer>, IDataInfoProvider {
 
-    private final IPressureContainer pressureContainer;
+    private final IVacuumContainer vacuumContainer;
     private final int leakingRate;
     private final boolean canHandleVacuum;
     private final int minPressure;
@@ -42,19 +42,19 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     private final int volume;
     private final int tierMultiplier = getTier() * getTier() + 1;
 
-    public MetaTileEntityPressureHatch(@Nonnull ResourceLocation metaTileEntityId, int tier) {
+    public MetaTileEntityVacuumHatch(@Nonnull ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
-        this.canHandleVacuum = false;
-        this.minPressure = ATMOSPHERIC_PRESSURE;
-        this.maxPressure = ATMOSPHERIC_PRESSURE * 10 * tierMultiplier;
-        this.leakingRate = - 10 * tierMultiplier;
-        this.pressureContainer = new PressureContainer(this, minPressure, maxPressure);
+        this.canHandleVacuum = true;
+        this.minPressure = ATMOSPHERIC_PRESSURE / tierMultiplier;
+        this.maxPressure = ATMOSPHERIC_PRESSURE;
+        this.leakingRate = (int) (10 / (getTier() + 1));
+        this.vacuumContainer = new VacuumContainer(this, true, this.minPressure, this.maxPressure);
         this.volume = 1;
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity iGregTechTileEntity) {
-        return new MetaTileEntityPressureHatch(metaTileEntityId, this.getTier());
+        return new MetaTileEntityVacuumHatch(metaTileEntityId, this.getTier());
     }
 
     //Each second, it leaks
@@ -62,13 +62,13 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     public void update() {
         super.update();
         if (getOffsetTimer() % 20 == 0) {
-            getPressureContainer().leaksContainer(leakingRate);
-            getPressureContainer().setPressure();
+            getVacuumContainer().leaksContainer(leakingRate);
+            getVacuumContainer().setPressure();
         }
     }
 
-    public IPressureContainer getPressureContainer() {
-        return this.pressureContainer;
+    public IVacuumContainer getVacuumContainer() {
+        return this.vacuumContainer;
     }
 
     @Override
@@ -85,25 +85,25 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.pressure", pressureContainer.convertPressureToBar(maxPressure)));
-        tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.pressure.leak", Math.abs(leakingRate)));
+            tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.vacuum", vacuumContainer.convertPressureToBar(minPressure)));
+            tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.vacuum.leak", leakingRate));
     }
 
     @Override
-    public MultiblockAbility<IPressureContainer> getAbility() {
-        return TKCYAMultiblockAbility.PRESSURE_CONTAINER;
+    public MultiblockAbility<IVacuumContainer> getAbility() {
+        return TKCYAMultiblockAbility.VACUUM_CONTAINER;
     }
 
     @Override
-    public void registerAbilities(@Nonnull List<IPressureContainer> list) {
-        list.add(this.pressureContainer);
+    public void registerAbilities(@Nonnull List<IVacuumContainer> list) {
+        list.add(this.vacuumContainer);
     }
 
     @Override
     @Nullable
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
-        if (capability.equals(TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER)) {
-            return TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER.cast(pressureContainer);
+        if (capability.equals(TKCYATileCapabilities.CAPABILITY_VACUUM_CONTAINER)) {
+            return TKCYATileCapabilities.CAPABILITY_VACUUM_CONTAINER.cast(vacuumContainer);
         }
         return super.getCapability(capability, side);
     }
@@ -112,9 +112,9 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
-        list.add(new TextComponentTranslation("behavior.tricorder.pressure.pressure", pressureContainer.getPressure()));
-        list.add(new TextComponentTranslation("behavior.tricorder.min_pressure.vacuum", pressureContainer.getMinPressure()));
-        list.add(new TextComponentTranslation("behavior.tricorder.max_pressure.vacuum", pressureContainer.getMaxPressure()));
+        list.add(new TextComponentTranslation("behavior.tricorder.pressure.vacuum", vacuumContainer.getPressure()));
+        list.add(new TextComponentTranslation("behavior.tricorder.min_pressure.pressure", vacuumContainer.getMinPressure()));
+        list.add(new TextComponentTranslation("behavior.tricorder.max_pressure.pressure", vacuumContainer.getMaxPressure()));
         return list;
     }
 

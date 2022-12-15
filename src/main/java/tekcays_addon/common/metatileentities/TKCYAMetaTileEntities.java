@@ -54,7 +54,8 @@ public class TKCYAMetaTileEntities {
     //PRESSURE HATCHES
     public static int PRESSURE_HATCH_MAX_TIER = GTValues.LuV;
     public static String[] PRESSURE_HATCHES_TYPE = {"vacuum_hatch.", "pressure_hatch."};
-    public static MetaTileEntityPressureHatch[] PRESSURE_HATCH = new MetaTileEntityPressureHatch[PRESSURE_HATCH_MAX_TIER * 2 + 2];
+    public static MetaTileEntityPressureHatch[] PRESSURE_HATCH = new MetaTileEntityPressureHatch[PRESSURE_HATCH_MAX_TIER + 1];
+    public static MetaTileEntityVacuumHatch[] VACUUM_HATCH = new MetaTileEntityVacuumHatch[PRESSURE_HATCH_MAX_TIER + 1];
 
     //ELECTRIC PRESSURE COMPRESSOR
     public static int PRESSURE_COMPRESSOR_SINGLE_MAX_TIER = GTValues.IV;
@@ -298,8 +299,8 @@ public class TKCYAMetaTileEntities {
             IntFunction<String> setHatchName = (k) -> PRESSURE_HATCHES_TYPE[k] + GTValues.VN[tier].toLowerCase();
             IntFunction<Integer> setId = (id) -> finalStartId2 + tier + GTValues.LuV * id;
 
-            PRESSURE_HATCH[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityPressureHatch(tkcyaId(setHatchName.apply(0)), true, i));
-            PRESSURE_HATCH[i + PRESSURE_HATCH.length / 2] = registerMetaTileEntity(setId.apply(++j), new MetaTileEntityPressureHatch(tkcyaId(setHatchName.apply(1)), false, i));
+            VACUUM_HATCH[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityVacuumHatch(tkcyaId(setHatchName.apply(0)), i));
+            PRESSURE_HATCH[i] = registerMetaTileEntity(setId.apply(++j), new MetaTileEntityPressureHatch(tkcyaId(setHatchName.apply(1)), i));
         }
 
         startId += PRESSURE_HATCH.length + 1;

@@ -8,47 +8,45 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
-import tekcays_addon.api.capability.IPressureContainer;
+import tekcays_addon.api.capability.IVacuumContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.metatileentity.ElectricPressureCompressor;
 import tekcays_addon.api.utils.IPressureVacuum;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
 
-
-public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCompressor implements IPressureVacuum {
+public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor implements IPressureVacuum {
 
     private int transferRate = 0;
     private final int BASE_TRANSFER_RATE;
     private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()] * 15/16);
     private final boolean canHandleVacuum;
-    private IPressureContainer pressureContainer;
+    private IVacuumContainer vacuumContainer;
     private int fluidCapacity;
     private int tierMultiplier = (getTier() * getTier() + 1);
     private IFluidTank fluidTank;
 
-    public MetaTileEntityElectricPressureCompressor(ResourceLocation metaTileEntityId, boolean canHandleVacuum, int tier) {
+    public MetaTileEntityElectricVacuumPump(ResourceLocation metaTileEntityId, boolean canHandleVacuum, int tier) {
         super(metaTileEntityId, tier);
         this.canHandleVacuum = canHandleVacuum;
-        this.BASE_TRANSFER_RATE = 100 * tierMultiplier;
+        this.BASE_TRANSFER_RATE = 50 * tierMultiplier;
         this.fluidCapacity = 1000 * (getTier() * getTier() + 1);
         initializeInventory();
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
-        return new MetaTileEntityElectricPressureCompressor(metaTileEntityId, canHandleVacuum, getTier());
+        return new MetaTileEntityElectricVacuumPump(metaTileEntityId, canHandleVacuum, getTier());
     }
 
     @Override
     protected void initializeInventory() {
         super.initializeInventory();
-        this.exportFluids = this.createExportFluidHandler();
-        fluidTank = this.exportFluids.getTankAt(0);
+        this.importFluids = this.createImportFluidHandler();
+        fluidTank = this.importFluids.getTankAt(0);
     }
 
 
@@ -56,9 +54,8 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
         return tank.getTankAt(0).getFluidAmount();
     }
 
-
     private void setTransferRate(int pressure) {
-        double pressurePercentage = (double) pressure / pressureContainer.getMaxPressure();
+        double pressurePercentage = (double) (100 - ((ATMOSPHERIC_PRESSURE - pressure) / ATMOSPHERIC_PRESSURE));
         transferRate = (int) (BASE_TRANSFER_RATE * pressurePercentage);
     }
 
@@ -66,9 +63,9 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
     public void update() {
         super.update();
         if (!getWorld().isRemote) {
-            pressureContainer = getAdjacentIPressureContainer(getFrontFacing(), this);
-            if (pressureContainer != null) {
-                int pressure = pressureContainer.getPressure();
+            vacuumContainer = getAdjacentIVacuumContainer(getFrontFacing(), this);
+            if (vacuumContainer != null) {
+                int pressure = vacuumContainer.getPressure();
                 setTransferRate(pressure);
             } else {
                 transferRate = 0;
@@ -80,15 +77,12 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
 
 
             //TODO first make Air FluidStack amount to 1 and the added FluidStack at standard, then make it pressurized
-
-            FluidStack fluidTankContent = fluidTank.getFluid();
-            if (fluidTankContent == null) return;
-            Fluid fluid = fluidTankContent.getFluid();
-            applyPressure(fluidTank, fluid, pressureContainer, transferRate);
+            applyVacuum(vacuumContainer, transferRate);
 
             energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
         }
     }
+
 
     @Override
     @Nullable
@@ -96,10 +90,11 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
         if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
             return side == getFrontFacing() ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
         }
-        if (capability.equals(TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER)) {
-            return TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER.cast(pressureContainer);
+        if (capability.equals(TKCYATileCapabilities.CAPABILITY_VACUUM_CONTAINER)) {
+            return TKCYATileCapabilities.CAPABILITY_VACUUM_CONTAINER.cast(vacuumContainer);
         }
         return super.getCapability(capability, side);
     }
+
 
 }

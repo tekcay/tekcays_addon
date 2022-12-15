@@ -1,6 +1,5 @@
 package tekcays_addon.api.capability.impl;
 
-import gregtech.api.metatileentity.MTETrait;
 import gregtech.api.metatileentity.MetaTileEntity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
@@ -16,72 +15,44 @@ import java.io.IOException;
 
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
-public class PressureContainer extends MTETrait implements IPressureContainer {
+public class PressureContainer extends VacuumContainer implements IPressureContainer {
 
     private int minPressure;
     private int maxPressure;
     protected int pressure;
     private int volume;
-    private FluidStack fluidStack;
+    private FluidStack fluidStack, airFluidStack;
     boolean canHandleVacuum;
 
     /**
      * Default Pressure container
      * {@link IPressureContainer}
      */
-    public PressureContainer(MetaTileEntity metaTileEntity, boolean canHandleVacuum) {
-        super(metaTileEntity);
-        this.canHandleVacuum = canHandleVacuum;
+    public PressureContainer(MetaTileEntity metaTileEntity) {
+        super(metaTileEntity, false);
     }
 
     /**
      * Default Pressure container
      * {@link IPressureContainer}
      */
-    public PressureContainer(MetaTileEntity metaTileEntity, boolean canHandleVacuum, int minPressure, int maxPressure) {
-        super(metaTileEntity);
-        this.canHandleVacuum = canHandleVacuum;
+    public PressureContainer(MetaTileEntity metaTileEntity, int minPressure, int maxPressure) {
+        super(metaTileEntity, false);
         this.minPressure = minPressure;
         this.maxPressure = maxPressure;
         this.pressure = 0;
         this.volume = 0;
-        this.fluidStack= getDefaultFluidStack();
-    }
-
-    @Override
-    public int getMaxPressure() {
-        return this.maxPressure;
-    }
-
-    @Override
-    public int getMinPressure() {
-        return this.minPressure;
-    }
-
-    @Override
-    public int getPressure() {
-        return this.pressure;
+        this.airFluidStack= getAirFluidStackStandard();
     }
 
     @Override
     public boolean canHandleVacuum() {
-        return this.canHandleVacuum;
+        return false;
     }
 
     @Override
-    public void setPressure() {
-        this.pressure = calculatePressure(getFluidAmount(), ROOM_TEMPERATURE, getVolume());
-        this.metaTileEntity.markDirty();
-    }
-
-    @Override
-    public int getVolume() {
-        return this.volume;
-    }
-
-    @Override
-    public void setVolume(int volume) {
-        this.volume = volume;
+    public boolean canLeakMore(int leak) {
+        return false;
     }
 
     @Override
@@ -89,11 +60,15 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
         return this.fluidStack;
     }
 
-    //TODO ELSE ?
     @Override
     public void setFluidStack(FluidStack fluidStack) {
-        if (!getFluidStack().isFluidEqual(fluidStack)) this.fluidStack = fluidStack;
-        else this.fluidStack = getDefaultFluidStack();
+        this.fluidStack = fluidStack;
+    }
+
+    @Override
+    public void setPressure() {
+        this.pressure = calculatePressure(getTotalFluidAmount(), ROOM_TEMPERATURE, getVolume());
+        this.metaTileEntity.markDirty();
     }
 
     @Override
