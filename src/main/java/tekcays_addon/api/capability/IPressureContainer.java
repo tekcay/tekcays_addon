@@ -108,7 +108,7 @@ public interface IPressureContainer {
      * @return the corresponding pressure in {@code Pa}
      */
     default int calculatePressure(int fluidAmount, int temperature, int volume) {
-        return (int) ((PERFECT_GAS_CONSTANT * temperature) / volume); // P = nRT / V
+        return (int) ((fluidAmount * PERFECT_GAS_CONSTANT * temperature) / volume); // P = nRT / V
     }
 
     default String convertPressureToBar(int pressureInPa) {
