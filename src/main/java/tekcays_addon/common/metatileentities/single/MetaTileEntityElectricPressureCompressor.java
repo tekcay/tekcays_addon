@@ -16,6 +16,7 @@ import gregtech.api.gui.widgets.TankWidget;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.TieredMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.unification.material.Material;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
 import net.minecraft.client.resources.I18n;
@@ -27,26 +28,28 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.IFluidTank;
 import org.apache.commons.lang3.ArrayUtils;
 import tekcays_addon.api.capability.IPressureContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
-import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
 import static gregtech.api.capability.GregtechDataCodes.UPDATE_OUTPUT_FACING;
+import static gregtech.api.unification.material.Materials.Air;
 import static net.minecraft.util.EnumFacing.UP;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
 public class MetaTileEntityElectricPressureCompressor extends TieredMetaTileEntity implements IActiveOutputSide {
 
-    private int transferRate;
+    private int transferRate = 0;
     private final int BASE_TRANSFER_RATE;
     private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()] * 15/16);
     private final boolean canHandleVacuum;
@@ -54,6 +57,7 @@ public class MetaTileEntityElectricPressureCompressor extends TieredMetaTileEnti
     private IPressureContainer pressureContainer;
     private int fluidCapacity;
     private int tierMultiplier = (getTier() * getTier() + 1);
+    private IFluidTank fluidTank;
 
     public MetaTileEntityElectricPressureCompressor(ResourceLocation metaTileEntityId, boolean canHandleVacuum, int tier) {
         super(metaTileEntityId, tier);
@@ -71,12 +75,28 @@ public class MetaTileEntityElectricPressureCompressor extends TieredMetaTileEnti
     @Override
     protected void initializeInventory() {
         super.initializeInventory();
-        this.importFluids = this.createImportFluidHandler();
+        if (canHandleVacuum) {
+            this.importFluids = this.createImportFluidHandler();
+            fluidTank = this.importFluids.getTankAt(0);
+        }
+        else {
+            this.exportFluids = this.createExportFluidHandler();
+            fluidTank = this.exportFluids.getTankAt(0);
+        }
     }
 
     @Override
     protected FluidTankList createImportFluidHandler() {
         return new FluidTankList(false, new FluidTank(fluidCapacity));
+    }
+
+    @Override
+    protected FluidTankList createExportFluidHandler() {
+        return new FluidTankList(false, new FluidTank(fluidCapacity));
+    }
+
+    private int getTankFluidAmount(FluidTankList tank) {
+        return tank.getTankAt(0).getFluidAmount();
     }
 
     @Override
@@ -88,7 +108,8 @@ public class MetaTileEntityElectricPressureCompressor extends TieredMetaTileEnti
         return ModularUI.builder(GuiTextures.BACKGROUND, 176, 166)
                 .shouldColor(false)
                 .widget(new LabelWidget(5, 5, getMetaFullName()))
-                .widget(new TankWidget(importFluids.getTankAt(0), 20, 50, 18, 18)
+                .widget(new LabelWidget(5, 25, String.format("Transfer rate: %d L/t", transferRate)))
+                .widget(new TankWidget((canHandleVacuum ? exportFluids : importFluids).getTankAt(0), 20, 60, 18, 18)
                         .setBackgroundTexture(GuiTextures.FLUID_SLOT)
                         .setAlwaysShowFull(true)
                         .setContainerClicking(true, true))
@@ -147,28 +168,74 @@ public class MetaTileEntityElectricPressureCompressor extends TieredMetaTileEnti
         return true;
     }
 
-    private void setTransferRate() {
-        if (pressureContainer == null) transferRate = 0;
-        else {
-            double pressurePercentage = canHandleVacuum ? (double) (100 - ((ATMOSPHERIC_PRESSURE - pressureContainer.getPressure()) / ATMOSPHERIC_PRESSURE)) : (double) pressureContainer.getPressure() / pressureContainer.getMaxPressure();
-            transferRate = (int) (BASE_TRANSFER_RATE * pressurePercentage);
-        }
+    private void setTransferRate(int pressure) {
+        double pressurePercentage = canHandleVacuum ? (double) (100 - ((ATMOSPHERIC_PRESSURE - pressure) / ATMOSPHERIC_PRESSURE)) : (double) pressure / pressureContainer.getMaxPressure();
+        transferRate = (int) (BASE_TRANSFER_RATE * pressurePercentage);
     }
-
 
     @Override
     public void update() {
         super.update();
         if (!getWorld().isRemote) {
             pressureContainer = getAdjacentIPressureContainer(getFrontFacing());
-            setTransferRate();
+            if (pressureContainer != null) {
+                int pressure = pressureContainer.getPressure();
+                setTransferRate(pressure);
+            } else {
+                transferRate = 0;
+            }
+
 
             //Redstone stops heating
             if (this.isBlockRedstonePowered()) return;
             if (energyContainer.getEnergyStored() < ENERGY_BASE_CONSUMPTION) return;
 
+            if (canHandleVacuum) {
+                applyVacuum();
+            } else {
+                FluidStack fluidTankContent = fluidTank.getFluid();
+                if (fluidTankContent == null) return;
+                Fluid fluid = fluidTankContent.getFluid();
+                applyPressure(fluid);
+
+            }
 
             energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
+        }
+    }
+
+    private int fillExportTank(int amount, boolean doFill) {
+        return this.exportFluids.fill(Air.getFluid(amount), doFill);
+    }
+
+
+    private int drainImportTank(Fluid fluid, int amount, boolean doFill) {
+        return this.importFluids.drain(new FluidStack(fluid, amount), doFill).amount;
+    }
+
+    private void applyVacuum() {
+        int toTransfer = Math.min(pressureContainer.getFluidAmount(), transferRate);
+        int fillAmount = fillExportTank(toTransfer, false);
+
+        if (fillAmount == toTransfer) {
+            fillExportTank(toTransfer, true);
+            pressureContainer.changeFluidAmount(-transferRate);
+        } else if (fillAmount != 0) {
+            fillExportTank(fillAmount, true);
+            pressureContainer.changeFluidAmount(-fillAmount);
+        }
+    }
+
+    private void applyPressure(Fluid fluid) {
+        int toTransfer = Math.min(fluidTank.getFluidAmount(), transferRate);
+        int drainAmount = drainImportTank(fluid, toTransfer, false);
+
+        if (drainAmount == toTransfer) {
+            drainImportTank(fluid, toTransfer, true);
+            pressureContainer.changeFluidAmount(-transferRate);
+        } else if (drainAmount != 0) {
+            drainImportTank(fluid, drainAmount, true);
+            pressureContainer.changeFluidAmount(drainAmount);
         }
     }
 
