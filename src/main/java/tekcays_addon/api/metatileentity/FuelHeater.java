@@ -13,6 +13,7 @@ import gregtech.api.sound.GTSounds;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -20,6 +21,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
@@ -43,7 +45,7 @@ import java.util.List;
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
 import static net.minecraft.util.EnumFacing.*;
 
-public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide{
+public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide, IFreeFace{
 
     protected int heatIncreaseRate;
     protected HeatContainer heatContainer;
@@ -99,20 +101,24 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
     @Override
     public void update() {
         super.update();
-        if (burnTimeLeft <= 0) {
-            setBurning(false);
-            tryConsumeNewFuel();
-        }
-        if (burnTimeLeft > 0) {
-            setBurning(true);
-            int currentHeat = heatContainer.getHeat();
-            if (!getWorld().isRemote) {
-                if (currentHeat + heatIncreaseRate < heatContainer.getMaxHeat())
-                    heatContainer.setHeat(currentHeat + heatIncreaseRate);
-                transferHeat(heatIncreaseRate);
+
+        if (!this.checkFaceFree(getPos(), getFrontFacing())) setBurning(false);
+        else {
+            if (burnTimeLeft <= 0) {
+                setBurning(false);
+                tryConsumeNewFuel();
             }
-            burnTimeLeft -= 1;
-            markDirty();
+            if (burnTimeLeft > 0) {
+                setBurning(true);
+                int currentHeat = heatContainer.getHeat();
+                if (!getWorld().isRemote) {
+                    if (currentHeat + heatIncreaseRate < heatContainer.getMaxHeat())
+                        heatContainer.setHeat(currentHeat + heatIncreaseRate);
+                    transferHeat(heatIncreaseRate);
+                }
+                burnTimeLeft -= 1;
+                markDirty();
+            }
         }
     }
 
