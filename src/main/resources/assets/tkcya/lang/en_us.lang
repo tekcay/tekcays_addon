@@ -493,6 +493,10 @@ tkcya.electric_cooler.tooltip.3=Outputs §c%d HU/t§7 on the §eBACK§7 face.
 tkcya.cover.temperature_detector.message_temperature_storage_normal=Monitoring Normal Temperature Storage
 tkcya.cover.temperature_detector.message_temperature_storage_inverted=Monitoring Inverted Temperature Storage
 
+##Buttons in covers
+cover.cover.detector.inverted=I
+cover.cover.detector.normal=N
+
 #Tricorder
 behavior.tricorder.current_heat=Current Heat: %s HU
 behavior.tricorder.min_heat=Minimum Heat: %s HU
