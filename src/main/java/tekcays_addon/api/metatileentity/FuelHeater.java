@@ -194,6 +194,7 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
         tooltip.add(I18n.format("tkcya.heater.tooltip.2", heatIncreaseRate));
         tooltip.add(I18n.format("tkcya.machine.energy_conversion_efficiency",  TextFormatting.WHITE + String.format("%.02f", efficiency * 100.00F) + "%"));
         tooltip.add(I18n.format("tkcya.machine.free_front_face.tooltip"));
+        tooltip.add(I18n.format("tkcya.machine.fuel_heater.ignition.tooltip", TextFormatting.WHITE + String.format("%d%%", IGNITION_CHANCE_WOOD_STICK)));
     }
 
     @Override

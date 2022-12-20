@@ -483,6 +483,7 @@ tkcya.max_parallel.tooltip=Max Parallel: §e%s§7
 #Heaters
 tkcya.heater.tooltip.1=For heating.
 tkcya.heater.tooltip.2=Outputs §c%s HU/t§7 on the §eTOP§7 side.
+tkcya.machine.fuel_heater.ignition.tooltip=Ignition by right-clicking on the §eFRONT§7 side with wood sticks while sneaking (%s chance).
 tkcya.electric_heater.tooltip.1=Outputs §c%s HU/t§7 on the §eFRONT§7 side.
 
 #Electric Cooler
