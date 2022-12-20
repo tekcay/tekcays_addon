@@ -107,8 +107,6 @@ public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataIn
         TKCYATextures.FLUIDIZED_FUEL_HEATER.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isBurning(), true);
     }
 
-
-
     private boolean isThereCoke() {
         return importItems.getStackInSlot(0).getItem().equals(SOLID_FUEL);
     }
@@ -129,39 +127,5 @@ public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataIn
         super.addInformation(stack, player, tooltip, advanced);
     }
 
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound data) {
-        super.writeToNBT(data);
-        data.setInteger("BurnTimeLeft", burnTimeLeft);
-        return data;
-    }
-
-    @Override
-    public void readFromNBT(NBTTagCompound data) {
-        super.readFromNBT(data);
-        this.burnTimeLeft= data.getInteger("BurnTimeLeft");
-        this.isBurning = burnTimeLeft > 0;
-    }
-
-    @Override
-    public void writeInitialSyncData(PacketBuffer buf) {
-        super.writeInitialSyncData(buf);
-        buf.writeBoolean(isBurning);
-    }
-
-    @Override
-    public void receiveInitialSyncData(PacketBuffer buf) {
-        super.receiveInitialSyncData(buf);
-        this.isBurning = buf.readBoolean();
-    }
-
-    @Override
-    public void receiveCustomData(int dataId, PacketBuffer buf) {
-        super.receiveCustomData(dataId, buf);
-        if (dataId == IS_WORKING) {
-            this.isBurning = buf.readBoolean();
-            scheduleRenderUpdate();
-        }
-    }
 
 }

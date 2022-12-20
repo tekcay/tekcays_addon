@@ -20,6 +20,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
@@ -36,6 +38,7 @@ import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.utils.FuelHeaterTiers;
+import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
 import javax.annotation.Nonnull;
@@ -63,8 +66,6 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
         this.fuelHeater = fuelHeater;
         this.efficiency = fuelHeater.getEfficiency();
         this.powerMultiplier = fuelHeater.getPowerMultiplier();
-        this.isBurning = false;
-        this.canIgnite = false;
     }
 
     public int setHeatIncreaseRate(int heatBaseIncrease) {
@@ -106,6 +107,7 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
     public void update() {
         super.update();
 
+        //TODO when restarting the game, this returns true, as if there was a block in front ?!
         if (!this.checkFaceFree(getPos(), getFrontFacing())) {
             setBurning(false);
             canIgnite = false;
@@ -115,16 +117,18 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
                 setBurning(false);
                 tryConsumeNewFuel();
             }
-            if (canIgnite && burnTimeLeft > 0) {
-                setBurning(true);
+
+            if (canIgnite && burnTimeLeft > 0) setBurning(true);
+
+            if (isBurning()) {
                 int currentHeat = heatContainer.getHeat();
-                //if (!getWorld().isRemote) {
+                if (!getWorld().isRemote) {
                     if (currentHeat + heatIncreaseRate < heatContainer.getMaxHeat())
                         heatContainer.setHeat(currentHeat + heatIncreaseRate);
                     transferHeat(heatIncreaseRate);
-                //}
+                }
                 burnTimeLeft -= 1;
-                markDirty();
+                //markDirty();
             }
         }
     }
@@ -176,16 +180,14 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
             return true;
         } else {
             ItemStack itemInHand = playerIn.getHeldItemMainhand();
-
             if (playerIn.isSneaking() && itemInHand.getItem().equals(Items.STICK)) {
                 Random rand = new Random();
-                canIgnite = rand.nextInt(100) < IGNITION_CHANCE_WOOD_STICK;
+                canIgnite =  rand.nextInt(100) < IGNITION_CHANCE_WOOD_STICK;
                 itemInHand.setCount(itemInHand.getCount() - 1);
             }
         }
         return false;
     }
-
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
@@ -221,7 +223,6 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
         }
     }
 
-
     @Override
     public boolean isActive() {
         return isBurning;
@@ -231,11 +232,47 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
+        list.add(new TextComponentTranslation("behavior.tricorder.is_burning", isBurning));
         list.add(new TextComponentTranslation("behavior.tricorder.current_heat", heatContainer.getHeat()));
-        list.add(new TextComponentTranslation("behavior.tricorder.min_heat", heatContainer.getMinHeat()));
-        list.add(new TextComponentTranslation("behavior.tricorder.max_heat", heatContainer.getMaxHeat()));
-        list.add(new TextComponentTranslation("behavior.tricorder.burn_time_left", burnTimeLeft));
+        //list.add(new TextComponentTranslation("behavior.tricorder.min_heat", heatContainer.getMinHeat()));
+        //list.add(new TextComponentTranslation("behavior.tricorder.max_heat", heatContainer.getMaxHeat()));
+        //list.add(new TextComponentTranslation("behavior.tricorder.burn_time_left", burnTimeLeft));
         return list;
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound data) {
+        super.writeToNBT(data);
+        data.setInteger("BurnTimeLeft", burnTimeLeft);
+        return data;
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound data) {
+        super.readFromNBT(data);
+        this.burnTimeLeft = data.getInteger("BurnTimeLeft");
+        this.isBurning = burnTimeLeft > 0;
+    }
+
+    @Override
+    public void writeInitialSyncData(PacketBuffer buf) {
+        super.writeInitialSyncData(buf);
+        buf.writeBoolean(isBurning);
+    }
+
+    @Override
+    public void receiveInitialSyncData(PacketBuffer buf) {
+        super.receiveInitialSyncData(buf);
+        this.isBurning = buf.readBoolean();
+    }
+
+    @Override
+    public void receiveCustomData(int dataId, PacketBuffer buf) {
+        super.receiveCustomData(dataId, buf);
+        if (dataId == IS_WORKING) {
+            this.isBurning = buf.readBoolean();
+            scheduleRenderUpdate();
+        }
     }
 
 
