@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "tkcya:items/metaitems/cover.energy_detector"
+    "layer0": "tkcya:items/metaitems/cover.temperature_detector"
   }
 }

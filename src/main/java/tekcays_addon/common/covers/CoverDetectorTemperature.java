@@ -15,6 +15,7 @@ import net.minecraft.util.*;
 import net.minecraft.util.text.TextComponentTranslation;
 import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
+import tekcays_addon.api.render.TKCYATextures;
 
 public class CoverDetectorTemperature extends CoverBehavior implements ITickable {
 
@@ -32,7 +33,7 @@ public class CoverDetectorTemperature extends CoverBehavior implements ITickable
 
     @Override
     public void renderCover(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline, Cuboid6 plateBox, BlockRenderLayer layer) {
-        Textures.DETECTOR_ENERGY.renderSided(attachedSide, plateBox, renderState, pipeline, translation);
+        TKCYATextures.DETECTOR_TEMPERATURE.renderSided(attachedSide, plateBox, renderState, pipeline, translation);
     }
 
     @Override

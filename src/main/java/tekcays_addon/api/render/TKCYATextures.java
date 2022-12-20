@@ -55,6 +55,9 @@ public class TKCYATextures {
     public static SimpleOverlayRenderer COOLER_COOL_SIDE_OVERLAY;
     public static SimpleOverlayRenderer COOLER_HOT_SIDE_OVERLAY;
 
+    //Covers
+    public static SimpleOverlayRenderer DETECTOR_TEMPERATURE;
+
 
     public static void preInit() {
         // Simple Machines
@@ -88,5 +91,8 @@ public class TKCYATextures {
 
         COOLER_COOL_SIDE_OVERLAY = new SimpleOverlayRenderer("machines/cooler/cool");
         COOLER_HOT_SIDE_OVERLAY = new SimpleOverlayRenderer("machines/cooler/hot");
+
+        //Covers
+        DETECTOR_TEMPERATURE = new SimpleOverlayRenderer("cover/overlay_temperature_detector");
     }
 }
