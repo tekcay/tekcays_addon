@@ -1,27 +1,27 @@
 package tekcays_addon.api.metatileentity;
 
+import codechicken.lib.raytracer.CuboidRayTraceResult;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.ColourMultiplier;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregicality.science.api.utils.NumberFormattingUtil;
 import gregtech.api.capability.GregtechTileCapabilities;
 import gregtech.api.capability.IActiveOutputSide;
 import gregtech.api.metatileentity.IDataInfoProvider;
 import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.metatileentity.MetaTileEntityUIFactory;
 import gregtech.api.sound.GTSounds;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
@@ -41,6 +41,7 @@ import tekcays_addon.common.blocks.blocks.BlockBrick;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Random;
 
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
 import static net.minecraft.util.EnumFacing.*;
@@ -54,6 +55,8 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
     private final float efficiency;
     private final int powerMultiplier;
     protected int burnTimeLeft;
+    protected boolean canIgnite;
+    protected final int IGNITION_CHANCE_WOOD_STICK = 30;
 
     public FuelHeater(ResourceLocation metaTileEntityId, FuelHeaterTiers fuelHeater) {
         super(metaTileEntityId);
@@ -61,6 +64,7 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
         this.efficiency = fuelHeater.getEfficiency();
         this.powerMultiplier = fuelHeater.getPowerMultiplier();
         this.isBurning = false;
+        this.canIgnite = false;
     }
 
     public int setHeatIncreaseRate(int heatBaseIncrease) {
@@ -102,20 +106,23 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
     public void update() {
         super.update();
 
-        if (!this.checkFaceFree(getPos(), getFrontFacing())) setBurning(false);
+        if (!this.checkFaceFree(getPos(), getFrontFacing())) {
+            setBurning(false);
+            canIgnite = false;
+        }
         else {
             if (burnTimeLeft <= 0) {
                 setBurning(false);
                 tryConsumeNewFuel();
             }
-            if (burnTimeLeft > 0) {
+            if (canIgnite && burnTimeLeft > 0) {
                 setBurning(true);
                 int currentHeat = heatContainer.getHeat();
-                if (!getWorld().isRemote) {
+                //if (!getWorld().isRemote) {
                     if (currentHeat + heatIncreaseRate < heatContainer.getMaxHeat())
                         heatContainer.setHeat(currentHeat + heatIncreaseRate);
                     transferHeat(heatIncreaseRate);
-                }
+                //}
                 burnTimeLeft -= 1;
                 markDirty();
             }
@@ -155,6 +162,30 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
         }
     }
 
+    /**
+     * Called when player clicks on specific side of this meta tile entity
+     *
+     * @return true if something happened, so animation will be played
+     */
+    @Override
+    public boolean onRightClick(EntityPlayer playerIn, EnumHand hand, EnumFacing facing, CuboidRayTraceResult hitResult) {
+        if (!playerIn.isSneaking() && openGUIOnRightClick()) {
+            if (getWorld() != null && !getWorld().isRemote) {
+                MetaTileEntityUIFactory.INSTANCE.openUI(getHolder(), (EntityPlayerMP) playerIn);
+            }
+            return true;
+        } else {
+            ItemStack itemInHand = playerIn.getHeldItemMainhand();
+
+            if (playerIn.isSneaking() && itemInHand.getItem().equals(Items.STICK)) {
+                Random rand = new Random();
+                canIgnite = rand.nextInt(100) < IGNITION_CHANCE_WOOD_STICK;
+                itemInHand.setCount(itemInHand.getCount() - 1);
+            }
+        }
+        return false;
+    }
+
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
@@ -162,7 +193,7 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
         tooltip.add(I18n.format("tkcya.heater.tooltip.1"));
         tooltip.add(I18n.format("tkcya.heater.tooltip.2", heatIncreaseRate));
         tooltip.add(I18n.format("tkcya.machine.energy_conversion_efficiency",  TextFormatting.WHITE + String.format("%.02f", efficiency * 100.00F) + "%"));
-        tooltip.add(I18n.format("tkcya.machine.redstone.inverse.tooltip"));
+        tooltip.add(I18n.format("tkcya.machine.free_front_face.tooltip"));
     }
 
     @Override
