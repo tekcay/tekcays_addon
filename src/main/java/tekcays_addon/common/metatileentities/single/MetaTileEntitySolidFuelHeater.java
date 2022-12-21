@@ -28,6 +28,7 @@ import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.metatileentity.FuelHeater;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.utils.FuelHeaterTiers;
+import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
 import javax.annotation.Nullable;
@@ -117,6 +118,7 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
         }
         setBurnTimeLeft(burnTime);
     }
+
     @Override
     @SideOnly(Side.CLIENT)
     protected SimpleOverlayRenderer getBaseRenderer() {
@@ -153,7 +155,6 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
         super.readFromNBT(data);
         this.containerInventory.deserializeNBT(data.getCompoundTag("ContainerInventory"));
     }
-
 
     @Override
     public boolean isAutoOutputItems() {

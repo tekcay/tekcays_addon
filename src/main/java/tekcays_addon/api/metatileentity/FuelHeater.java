@@ -58,8 +58,8 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
     private final float efficiency;
     private final int powerMultiplier;
     protected int burnTimeLeft;
-    protected boolean canIgnite;
-    protected final int IGNITION_CHANCE_WOOD_STICK = 30;
+    private boolean canIgnite;
+    private final int IGNITION_CHANCE_WOOD_STICK = 30;
 
     public FuelHeater(ResourceLocation metaTileEntityId, FuelHeaterTiers fuelHeater) {
         super(metaTileEntityId);
@@ -96,42 +96,50 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
         return Pair.of(getBaseRenderer().getParticleSprite(), getPaintingColorForRendering());
     }
 
-    protected void tryConsumeNewFuel() {
-    }
+    protected abstract void tryConsumeNewFuel();
 
     protected void setBurnTimeLeft(int amount) {
-        burnTimeLeft =  amount;
+        this.burnTimeLeft =  amount;
+        //if (!getWorld().isRemote) markDirty();
+    }
+
+
+
+    private void setIgnition() {
+        canIgnite = true;
     }
 
     @Override
     public void update() {
         super.update();
 
-        //TODO when restarting the game, this returns true, as if there was a block in front ?!
-        if (!this.checkFaceFree(getPos(), getFrontFacing())) {
-            setBurning(false);
-            canIgnite = false;
+        if (burnTimeLeft <= 0) {
+            tryConsumeNewFuel();
+            if (isBurning() && burnTimeLeft <= 0) setBurning(false);
         }
-        else {
-            if (burnTimeLeft <= 0) {
+
+        if (canIgnite && burnTimeLeft > 0) setBurning(true);
+
+        if (isBurning()) {
+
+            if (!this.checkFaceFree(getPos(), getFrontFacing())) {
                 setBurning(false);
-                tryConsumeNewFuel();
+                canIgnite = false;
+                return;
             }
 
-            if (canIgnite && burnTimeLeft > 0) setBurning(true);
-
-            if (isBurning()) {
-                int currentHeat = heatContainer.getHeat();
-                if (!getWorld().isRemote) {
-                    if (currentHeat + heatIncreaseRate < heatContainer.getMaxHeat())
-                        heatContainer.setHeat(currentHeat + heatIncreaseRate);
-                    transferHeat(heatIncreaseRate);
-                }
-                burnTimeLeft -= 1;
-                //markDirty();
+            int currentHeat = heatContainer.getHeat();
+            if (!getWorld().isRemote) {
+                if (currentHeat + heatIncreaseRate < heatContainer.getMaxHeat())
+                    heatContainer.setHeat(currentHeat + heatIncreaseRate);
+                transferHeat(heatIncreaseRate);
             }
+
+            --burnTimeLeft;
         }
     }
+
+
 
     /*
     //For TOP, needs to implement IFuelable
@@ -182,7 +190,7 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
             ItemStack itemInHand = playerIn.getHeldItemMainhand();
             if (playerIn.isSneaking() && itemInHand.getItem().equals(Items.STICK)) {
                 Random rand = new Random();
-                canIgnite =  rand.nextInt(100) < IGNITION_CHANCE_WOOD_STICK;
+                if (rand.nextInt(100) < IGNITION_CHANCE_WOOD_STICK) setIgnition();
                 itemInHand.setCount(itemInHand.getCount() - 1);
             }
         }
@@ -212,15 +220,18 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
     }
 
     public boolean isBurning() {
-        return isBurning;
+        return this.isBurning;
     }
 
     public void setBurning(boolean burning) {
         this.isBurning = burning;
+        /*
         if (!getWorld().isRemote) {
             markDirty();
             writeCustomData(IS_WORKING, buf -> buf.writeBoolean(burning));
         }
+
+         */
     }
 
     @Override
@@ -232,11 +243,9 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
-        list.add(new TextComponentTranslation("behavior.tricorder.is_burning", isBurning));
         list.add(new TextComponentTranslation("behavior.tricorder.current_heat", heatContainer.getHeat()));
-        //list.add(new TextComponentTranslation("behavior.tricorder.min_heat", heatContainer.getMinHeat()));
-        //list.add(new TextComponentTranslation("behavior.tricorder.max_heat", heatContainer.getMaxHeat()));
-        //list.add(new TextComponentTranslation("behavior.tricorder.burn_time_left", burnTimeLeft));
+        list.add(new TextComponentTranslation("behavior.tricorder.min_heat", heatContainer.getMinHeat()));
+        list.add(new TextComponentTranslation("behavior.tricorder.max_heat", heatContainer.getMaxHeat()));
         return list;
     }
 
@@ -244,6 +253,7 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         super.writeToNBT(data);
         data.setInteger("BurnTimeLeft", burnTimeLeft);
+        data.setBoolean("isBurning", isBurning());
         return data;
     }
 
@@ -251,21 +261,24 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
     public void readFromNBT(NBTTagCompound data) {
         super.readFromNBT(data);
         this.burnTimeLeft = data.getInteger("BurnTimeLeft");
-        this.isBurning = burnTimeLeft > 0;
+        this.isBurning = data.getBoolean("isBurning");
     }
 
     @Override
     public void writeInitialSyncData(PacketBuffer buf) {
         super.writeInitialSyncData(buf);
-        buf.writeBoolean(isBurning);
+        buf.writeBoolean(isBurning());
+        buf.writeInt(burnTimeLeft);
     }
 
     @Override
     public void receiveInitialSyncData(PacketBuffer buf) {
         super.receiveInitialSyncData(buf);
         this.isBurning = buf.readBoolean();
+        this.burnTimeLeft = buf.readInt();
     }
 
+    /*
     @Override
     public void receiveCustomData(int dataId, PacketBuffer buf) {
         super.receiveCustomData(dataId, buf);
@@ -274,6 +287,8 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
             scheduleRenderUpdate();
         }
     }
+
+     */
 
 
     @Override

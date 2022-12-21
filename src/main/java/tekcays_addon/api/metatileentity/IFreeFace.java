@@ -1,8 +1,11 @@
 package tekcays_addon.api.metatileentity;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import tekcays_addon.api.utils.TKCYALog;
 
 import static codechicken.lib.util.ClientUtils.getWorld;
 
@@ -20,8 +23,7 @@ public interface IFreeFace {
             IBlockState blockState = getWorld().getBlockState(position);
             return blockState.getBlock().isAir(blockState, getWorld(), position);
         } catch (NullPointerException e) {
-            return false;
+            return true;
         }
     }
-
 }

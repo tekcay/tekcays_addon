@@ -127,5 +127,4 @@ public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataIn
         super.addInformation(stack, player, tooltip, advanced);
     }
 
-
 }

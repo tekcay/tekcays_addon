@@ -96,7 +96,6 @@ public class MetaTileEntityLiquidFuelHeater extends FuelHeater implements IDataI
         setBurnTimeLeft(getBurnTime(CREOSOTE, fuelHeater));
     }
 
-
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         tooltip.add(I18n.format("tkcya.machine.liquid_fuel_heater.tooltip"));
