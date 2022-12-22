@@ -60,7 +60,8 @@ public class TKCYAMetaTileEntities {
     //ELECTRIC PRESSURE COMPRESSOR
     public static int PRESSURE_COMPRESSOR_SINGLE_MAX_TIER = GTValues.IV;
     public static String[] ELECTRIC_PRESSURE_COMPRESSORS_TYPE = {"electric_vacuum_pump.", "electric_compressor."};
-    public static MetaTileEntityElectricPressureCompressor[] PRESSURE_COMPRESSOR = new MetaTileEntityElectricPressureCompressor[PRESSURE_COMPRESSOR_SINGLE_MAX_TIER * 2 + 2];
+    public static MetaTileEntityElectricPressureCompressor[] PRESSURE_COMPRESSOR = new MetaTileEntityElectricPressureCompressor[PRESSURE_COMPRESSOR_SINGLE_MAX_TIER + 1];
+    public static MetaTileEntityElectricVacuumPump[] VACUUM_PUMP = new MetaTileEntityElectricVacuumPump[PRESSURE_COMPRESSOR_SINGLE_MAX_TIER + 1];
 
 
     public static MetaTileEntityPrimitiveMelter PRIMITIVE_MELTER;
@@ -303,7 +304,7 @@ public class TKCYAMetaTileEntities {
             PRESSURE_HATCH[i] = registerMetaTileEntity(setId.apply(++j), new MetaTileEntityPressureHatch(tkcyaId(setHatchName.apply(1)), i));
         }
 
-        startId += PRESSURE_HATCH.length + 1;
+        startId += PRESSURE_HATCH.length * 2 + 1;
 
         for (int i = 0; i < MAX_TIER; i++) {
             int j = 0;
@@ -317,8 +318,8 @@ public class TKCYAMetaTileEntities {
             ELECTRIC_HEATER[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityElectricHeater(tkcyaId(setName.apply(j++)), i));
             ELECTRIC_COOLER[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityElectricCooler(tkcyaId(setName.apply(j++)), i));
             HEAT_ACCEPTOR[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityHeatAcceptor(tkcyaId(setName.apply(j++)), i));
-            PRESSURE_COMPRESSOR[i] = registerMetaTileEntity(setId.apply(j++), new MetaTileEntityElectricPressureCompressor(tkcyaId(setCompressorName.apply(0)), true, i));
-            PRESSURE_COMPRESSOR[i + PRESSURE_COMPRESSOR.length / 2] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityElectricPressureCompressor(tkcyaId(setCompressorName.apply(1)), false, i));
+            VACUUM_PUMP[i] = registerMetaTileEntity(setId.apply(j++), new MetaTileEntityElectricVacuumPump(tkcyaId(setCompressorName.apply(0)), i));
+            PRESSURE_COMPRESSOR[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityElectricPressureCompressor(tkcyaId(setCompressorName.apply(1)), i));
         }
 
         startId += MAX_TIER * 5 + 1;

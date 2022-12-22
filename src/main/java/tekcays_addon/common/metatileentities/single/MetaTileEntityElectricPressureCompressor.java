@@ -25,15 +25,13 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
     private int transferRate = 0;
     private final int BASE_TRANSFER_RATE;
     private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()] * 15/16);
-    private final boolean canHandleVacuum;
     private IPressureContainer pressureContainer;
     private int fluidCapacity;
     private int tierMultiplier = (getTier() * getTier() + 1);
     private IFluidTank fluidTank;
 
-    public MetaTileEntityElectricPressureCompressor(ResourceLocation metaTileEntityId, boolean canHandleVacuum, int tier) {
-        super(metaTileEntityId, tier);
-        this.canHandleVacuum = canHandleVacuum;
+    public MetaTileEntityElectricPressureCompressor(ResourceLocation metaTileEntityId, int tier) {
+        super(metaTileEntityId, false, tier);
         this.BASE_TRANSFER_RATE = 100 * tierMultiplier;
         this.fluidCapacity = 1000 * (getTier() * getTier() + 1);
         initializeInventory();
@@ -41,7 +39,7 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
-        return new MetaTileEntityElectricPressureCompressor(metaTileEntityId, canHandleVacuum, getTier());
+        return new MetaTileEntityElectricPressureCompressor(metaTileEntityId, getTier());
     }
 
     @Override
@@ -100,6 +98,11 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
             return TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER.cast(pressureContainer);
         }
         return super.getCapability(capability, side);
+    }
+
+    @Override
+    public MetaTileEntityElectricPressureCompressor getMetaTileEntity() {
+        return this;
     }
 
 }

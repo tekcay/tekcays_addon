@@ -23,15 +23,14 @@ public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor
     private int transferRate = 0;
     private final int BASE_TRANSFER_RATE;
     private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()] * 15/16);
-    private final boolean canHandleVacuum;
     private IVacuumContainer vacuumContainer;
     private int fluidCapacity;
     private int tierMultiplier = (getTier() * getTier() + 1);
     private IFluidTank fluidTank;
 
-    public MetaTileEntityElectricVacuumPump(ResourceLocation metaTileEntityId, boolean canHandleVacuum, int tier) {
-        super(metaTileEntityId, tier);
-        this.canHandleVacuum = canHandleVacuum;
+    public MetaTileEntityElectricVacuumPump(ResourceLocation metaTileEntityId, int tier) {
+        super(metaTileEntityId, true, tier);
+
         this.BASE_TRANSFER_RATE = 50 * tierMultiplier;
         this.fluidCapacity = 1000 * (getTier() * getTier() + 1);
         initializeInventory();
@@ -39,7 +38,7 @@ public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
-        return new MetaTileEntityElectricVacuumPump(metaTileEntityId, canHandleVacuum, getTier());
+        return new MetaTileEntityElectricVacuumPump(metaTileEntityId, getTier());
     }
 
     @Override
@@ -97,4 +96,8 @@ public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor
     }
 
 
+    @Override
+    public MetaTileEntityElectricVacuumPump getMetaTileEntity() {
+        return this;
+    }
 }

@@ -26,23 +26,19 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidTank;
 import org.apache.commons.lang3.ArrayUtils;
 import tekcays_addon.api.capability.IVacuumContainer;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
 import static gregtech.api.capability.GregtechDataCodes.UPDATE_OUTPUT_FACING;
-import static gregtech.api.unification.material.Materials.Air;
 import static net.minecraft.util.EnumFacing.UP;
 import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
 
-public abstract class ElectricPressureCompressor extends TieredMetaTileEntity implements IActiveOutputSide {
+public class ElectricPressureCompressor extends TieredMetaTileEntity implements IActiveOutputSide {
 
     private int transferRate = 0;
     private final int BASE_TRANSFER_RATE;
@@ -165,14 +161,6 @@ public abstract class ElectricPressureCompressor extends TieredMetaTileEntity im
         super.update();
     }
 
-    protected int fillExportTank(int amount, boolean doFill) {
-        return this.exportFluids.fill(Air.getFluid(amount), doFill);
-    }
-
-
-    protected int drainImportTank(Fluid fluid, int amount, boolean doFill) {
-        return this.importFluids.drain(new FluidStack(fluid, amount), doFill).amount;
-    }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {

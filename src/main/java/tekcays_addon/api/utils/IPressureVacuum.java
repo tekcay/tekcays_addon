@@ -18,6 +18,8 @@ import static gregtech.api.unification.material.Materials.Air;
 
 public interface IPressureVacuum {
 
+    MetaTileEntity getMetaTileEntity();
+
     default void applyVacuum(IVacuumContainer pressureContainer, int transferRate) {
         int toTransfer = Math.min(pressureContainer.getAirAmount(), transferRate);
         int fillAmount = fillExportTank(toTransfer, false);
@@ -64,13 +66,13 @@ public interface IPressureVacuum {
         return container;
     }
 
-    default int fillExportTank(int amount, boolean doFill, MetaTileEntity currentMTE) {
-        return currentMTE.getExportFluids().fill(Air.getFluid(amount), doFill);
+    default int fillExportTank(int amount, boolean doFill) {
+        return getMetaTileEntity().getExportFluids().fill(Air.getFluid(amount), doFill);
     }
 
-
-    default int drainImportTank(Fluid fluid, int amount, boolean doDrain, MetaTileEntity currentMTE) {
-        return currentMTE.getImportFluids().drain(new FluidStack(fluid, amount), doDrain).amount;
+    default int drainImportTank(Fluid fluid, int amount, boolean doDrain) {
+        FluidStack fs = getMetaTileEntity().getImportFluids().drain(new FluidStack(fluid, amount), doDrain);
+        return fs == null ? amount : fs.amount;
     }
 
 }

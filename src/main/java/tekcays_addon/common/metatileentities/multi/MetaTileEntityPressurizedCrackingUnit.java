@@ -54,7 +54,8 @@ public class MetaTileEntityPressurizedCrackingUnit extends PressureMultiblockCon
                 .where('B', states(getCasingState()).setMinGlobalLimited(12).or(autoAbilities()))
                 .where('#', air())
                 .where('C', heatingCoils())
-                .where('P', abilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER))
+                .where('P', abilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER)
+                        .or(states(getCasingState())))
                 .where('H', abilities(TKCYAMultiblockAbility.HEAT_CONTAINER))
                 .where('-', any())
                 .build();

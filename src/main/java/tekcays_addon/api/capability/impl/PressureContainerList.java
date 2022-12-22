@@ -39,6 +39,21 @@ public class PressureContainerList implements IPressureContainer {
     }
 
     @Override
+    public FluidStack getAirFluidStack() {
+        return getIPressureContainer().getAirFluidStack();
+    }
+
+    @Override
+    public void setAirFluidStack(FluidStack fluidStack) {
+        getIPressureContainer().setAirFluidStack(fluidStack);
+    }
+
+    @Override
+    public boolean canLeakMore(int leak) {
+        return false;
+    }
+
+    @Override
     public FluidStack getFluidStack() {
         return getIPressureContainer().getFluidStack();
     }
