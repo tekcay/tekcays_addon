@@ -187,6 +187,9 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
             }
             return true;
         } else {
+
+            if (facing != getFrontFacing()) return false;
+
             ItemStack itemInHand = playerIn.getHeldItemMainhand();
             if (playerIn.isSneaking() && itemInHand.getItem().equals(Items.STICK)) {
                 Random rand = new Random();
