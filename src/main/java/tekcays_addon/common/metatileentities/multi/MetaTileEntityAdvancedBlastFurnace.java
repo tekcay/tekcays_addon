@@ -30,6 +30,7 @@ import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
 import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.IHeatMachine;
+import tekcays_addon.api.capability.impl.HeatContainerList;
 import tekcays_addon.api.metatileentity.multiblock.HeatContainerNoEnergyMultiblockController;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.api.recipes.recipeproperties.NoEnergyTemperatureProperty;
@@ -74,9 +75,9 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
-        list.add(new TextComponentTranslation("behavior.tricorder.current_heat", heatContainer.getHeat()));
         list.add(new TextComponentTranslation("behavior.tricorder.min_heat", heatContainer.getMinHeat()));
         list.add(new TextComponentTranslation("behavior.tricorder.max_heat", heatContainer.getMaxHeat()));
+        list.add(new TextComponentTranslation("behavior.tricorder.current_heat", heatContainer.getHeat()));
         list.add(new TextComponentTranslation("behavior.tricorder.currentTemp", currentTemp));
         list.add(new TextComponentTranslation("behavior.tricorder.heatMultiplier", heatMultiplier));
         return list;
@@ -181,7 +182,7 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
     }
 
     private void updateLogic() {
-        heatContainer = getAbilities(TKCYAMultiblockAbility.HEAT_CONTAINER).get(0);
+        heatContainer = new HeatContainerList(getAbilities(TKCYAMultiblockAbility.HEAT_CONTAINER));
 
         currentTemp = heatContainer.getTemperature();
         currentHeat = heatContainer.getHeat();

@@ -357,8 +357,8 @@ metaitem.electrode.name=%s Electrode
 metaitem.electrode.tooltip=For electrolysis
 metaitem.filter.name=%s Filter
 metaitem.filter.tooltip=For filtration duh
-metaitem.cover.temperature_detector.name=Cover Temperature Detector
-metaitem.cover.temperature.detector.tooltip=Gives out Temperature as Redstone (as Cover)
+metaitem.cover_temperature_detector.name=Cover Temperature Detector
+metaitem.cover.temperature.detector.tooltip=Emits a redstone signal if the temperature exceeds a specified value (as Cover). Right click with a Screwdriver while sneaking to invert redstone signal.
 
 item.mica_pulp.dust=Mica Based Pulp
 
@@ -538,6 +538,10 @@ tkcya.electric_cooler.tooltip.3=Outputs §c%d HU/t§7 on the §eBACK§7 face.
 #Covers
 tkcya.cover.temperature_detector.message_temperature_storage_normal=Monitoring Normal Temperature Storage
 tkcya.cover.temperature_detector.message_temperature_storage_inverted=Monitoring Inverted Temperature Storage
+
+##Buttons in covers
+cover.cover.detector.inverted=I
+cover.cover.detector.normal=N
 
 #Tricorder
 

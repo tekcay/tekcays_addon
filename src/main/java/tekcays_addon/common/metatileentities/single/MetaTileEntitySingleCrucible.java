@@ -202,7 +202,7 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
         currentHeat = heatContainer.getHeat();
         pushFluidsIntoNearbyHandlers(getFrontFacing());
 
-        //Loses heat over time if no more heat heat is provided
+        //Loses heat over time if no more heat is provided
         if (getOffsetTimer() % 20 == 0) {
             if (previousHeat == currentHeat && currentTemp > GCYSValues.EARTH_TEMPERATURE) {
                 heatContainer.changeHeat(HEAT_COOL);
