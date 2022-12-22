@@ -64,7 +64,7 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
 
     @Override
     public boolean canHandleVacuum() {
-        return false;
+        return true;
     }
 
     @Override

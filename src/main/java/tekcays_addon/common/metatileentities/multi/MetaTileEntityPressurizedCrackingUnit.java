@@ -23,6 +23,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
 import javax.annotation.Nonnull;
@@ -46,13 +47,16 @@ public class MetaTileEntityPressurizedCrackingUnit extends PressureMultiblockCon
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
-                .aisle("HCHCH", "HCHCH", "HCHCH")
-                .aisle("HCHCH", "H###H", "HCHCH")
-                .aisle("HCHCH", "HCOCH", "HCHCH")
-                .where('O', selfPredicate())
-                .where('H', states(getCasingState()).setMinGlobalLimited(12).or(autoAbilities()))
+                .aisle("-H-H-", "BCBCB", "BCBCB", "BCBCB")
+                .aisle("-H-H-", "BCBCB", "P###P", "BCBCB")
+                .aisle("-H-H-", "BCBCB", "BCSCB", "BCBCB")
+                .where('S', selfPredicate())
+                .where('B', states(getCasingState()).setMinGlobalLimited(12).or(autoAbilities()))
                 .where('#', air())
                 .where('C', heatingCoils())
+                .where('P', abilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER))
+                .where('H', abilities(TKCYAMultiblockAbility.HEAT_CONTAINER))
+                .where('-', any())
                 .build();
     }
 

@@ -47,9 +47,9 @@ public class TKCYAValues {
      */
     public static final int MINIMUM_FLUID_STACK_AMOUNT = 1;
     public static final float PERFECT_GAS_CONSTANT = 8.314f;
-    public static final int MAX_PRESSURE = 10000;
     public static final int ABSOLUTE_VACUUM = 0;
     public static final int ATMOSPHERIC_PRESSURE = 101300;
+    public static final int MAX_PRESSURE = ATMOSPHERIC_PRESSURE * 2000;
     public static final float EU_TO_PU = 0.40F;
     public static final float EU_TO_VU = 0.30F;
     /**

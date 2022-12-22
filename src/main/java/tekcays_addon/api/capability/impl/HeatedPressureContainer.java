@@ -19,16 +19,16 @@ public class HeatedPressureContainer extends PressureContainer {
      * Default Pressure container
      * {@link IPressureContainer}
      */
-    public HeatedPressureContainer(MetaTileEntity metaTileEntity, boolean canHandleVacuum) {
-        super(metaTileEntity, canHandleVacuum);
+    public HeatedPressureContainer(MetaTileEntity metaTileEntity) {
+        super(metaTileEntity);
     }
 
     /**
-     * Default Pressure container
+     * Pressure Container with pressure paramaters
      * {@link IPressureContainer}
      */
     public HeatedPressureContainer(MetaTileEntity metaTileEntity, boolean canHandleVacuum, int minPressure, int maxPressure) {
-        super(metaTileEntity, canHandleVacuum, minPressure, maxPressure);
+        super(metaTileEntity, minPressure, maxPressure);
     }
 
     public int getTemperature() {
