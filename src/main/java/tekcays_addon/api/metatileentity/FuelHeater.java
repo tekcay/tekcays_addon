@@ -38,7 +38,6 @@ import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.utils.FuelHeaterTiers;
-import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
 import javax.annotation.Nonnull;
@@ -53,11 +52,11 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
 
     protected int heatIncreaseRate;
     protected HeatContainer heatContainer;
-    protected boolean isBurning;
+    private boolean isBurning;
     protected final FuelHeaterTiers fuelHeater;
     private final float efficiency;
     private final int powerMultiplier;
-    protected int burnTimeLeft;
+    private int burnTimeLeft;
     private boolean canIgnite;
     private final int IGNITION_CHANCE_WOOD_STICK = 30;
 
@@ -100,10 +99,7 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
 
     protected void setBurnTimeLeft(int amount) {
         this.burnTimeLeft =  amount;
-        //if (!getWorld().isRemote) markDirty();
     }
-
-
 
     private void setIgnition() {
         canIgnite = true;
@@ -228,13 +224,10 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
 
     public void setBurning(boolean burning) {
         this.isBurning = burning;
-        /*
         if (!getWorld().isRemote) {
             markDirty();
             writeCustomData(IS_WORKING, buf -> buf.writeBoolean(burning));
         }
-
-         */
     }
 
     @Override
@@ -281,7 +274,6 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
         this.burnTimeLeft = buf.readInt();
     }
 
-    /*
     @Override
     public void receiveCustomData(int dataId, PacketBuffer buf) {
         super.receiveCustomData(dataId, buf);
@@ -290,9 +282,6 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
             scheduleRenderUpdate();
         }
     }
-
-     */
-
 
     @Override
     public SoundEvent getSound() {
