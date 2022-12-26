@@ -74,6 +74,11 @@ public class PressureContainerList implements IPressureContainer {
     }
 
     @Override
+    public void setPressure(int temperature) {
+        getIPressureContainer().setPressure(temperature);
+    }
+
+    @Override
     public boolean canHandleVacuum() {
         return getIPressureContainer().canHandleVacuum();
     }

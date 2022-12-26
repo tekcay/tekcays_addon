@@ -21,8 +21,7 @@ public class PressureContainer extends VacuumContainer implements IPressureConta
     private int maxPressure;
     protected int pressure;
     private int volume;
-    private FluidStack fluidStack, airFluidStack;
-    boolean canHandleVacuum;
+    private FluidStack fluidStack;
 
     /**
      * Default Pressure container
@@ -42,8 +41,24 @@ public class PressureContainer extends VacuumContainer implements IPressureConta
         this.maxPressure = maxPressure;
         this.pressure = 0;
         this.volume = 0;
-        this.airFluidStack= getAirFluidStackStandard();
+        this.initializeAirFluidStack();
     }
+
+    @Override
+    public int getMaxPressure() {
+        return this.maxPressure;
+    }
+
+    @Override
+    public int getMinPressure() {
+        return this.minPressure;
+    }
+
+    @Override
+    public int getPressure() {
+        return this.pressure;
+    }
+
 
     @Override
     public boolean canHandleVacuum() {
@@ -72,6 +87,12 @@ public class PressureContainer extends VacuumContainer implements IPressureConta
     }
 
     @Override
+    public void setPressure(int temperature) {
+        this.pressure = calculatePressure(getTotalFluidAmount(), temperature, getVolume());
+        this.metaTileEntity.markDirty();
+    }
+
+    @Override
     public String getName() {
         return "PressureContainer";
     }
@@ -92,29 +113,31 @@ public class PressureContainer extends VacuumContainer implements IPressureConta
 
     @Override
     public NBTTagCompound serializeNBT() {
-        NBTTagCompound compound = new NBTTagCompound();
-        compound.setInteger("pressure", this.pressure);
+        //NBTTagCompound compound = new NBTTagCompound();
+        NBTTagCompound compound = super.serializeNBT();
+        //compound.setInteger("pressure", this.pressure);
         compound.setTag("fluidStack", this.setFluidStackNBT());
         return compound;
     }
 
     @Override
     public void deserializeNBT(@Nonnull NBTTagCompound compound) {
-        this.pressure = compound.getInteger("pressure");
+        super.deserializeNBT(compound);
+        //this.pressure = compound.getInteger("pressure");
         this.fluidStack = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag("fluidStack"));
     }
 
     @Override
     public void writeInitialData(PacketBuffer buffer) {
         super.writeInitialData(buffer);
-        buffer.writeInt(this.pressure);
+        //buffer.writeInt(this.pressure);
         buffer.writeCompoundTag(this.setFluidStackNBT());
     }
 
     @Override
     public void receiveInitialData(PacketBuffer buffer) {
         super.receiveInitialData(buffer);
-        this.pressure = buffer.readInt();
+        //this.pressure = buffer.readInt();
         try {
             this.fluidStack = FluidStack.loadFluidStackFromNBT(buffer.readCompoundTag());
         } catch (IOException e) {

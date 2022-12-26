@@ -523,6 +523,7 @@ tekcays_addon.machine.advanced_electrolyzer.tooltip.3=Electrodes take damage dur
 tekcays_addon.machine.advanced_electrolyzer.tooltip.4=Removal of the electrode while a recipe is running  will cause explosion!
 
 tkcya.machine.text.pressure=Current pressure: %s
+tkcya.machine.text.temperature=Current temperature: %s K
 tkcya.max_parallel.tooltip=Max Parallel: §e%s§7
 
 #Heaters
@@ -554,13 +555,13 @@ behavior.tricorder.heatMultiplier=Heat Multiplier: %d
 
 behavior.tricorder.burn_time_left= Burn Time Left %s ticks
 
-behavior.tricorder.pressure.pressure=Pressure: %d Bar
-behavior.tricorder.pressure.vacuum=Vacuum: %d mBar
-behavior.tricorder.max_pressure.pressure=Maximum Pressure: %d Bar
-behavior.tricorder.max_pressure.vacuum=Maximum Pressure: %d mBar
-behavior.tricorder.min_pressure.pressure=Minimum Pressure: %d Bar
-behavior.tricorder.min_pressure.vacuum=Minimum Pressure: %d mBar
-
+behavior.tricorder.air.amount=Air amount: %d L
+behavior.tricorder.pressure.pressure=Pressure: %d
+behavior.tricorder.pressure.vacuum=Vacuum: %d
+behavior.tricorder.max_pressure.pressure=Maximum Pressure: %d
+behavior.tricorder.max_pressure.vacuum=Maximum Pressure: %d
+behavior.tricorder.min_pressure.pressure=Minimum Pressure: %d
+behavior.tricorder.min_pressure.vacuum=Minimum Pressure: %d
 behavior.tricorder.current_pu=%d PU
 behavior.tricorder.current_vu=%d VU
 

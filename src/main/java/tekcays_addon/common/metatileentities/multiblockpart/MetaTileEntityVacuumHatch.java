@@ -9,6 +9,7 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import gregtech.api.unification.material.Materials;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -50,6 +51,7 @@ public class MetaTileEntityVacuumHatch extends MetaTileEntityMultiblockPart impl
         this.leakingRate = (int) (10 / (getTier() + 1));
         this.vacuumContainer = new VacuumContainer(this, true, this.minPressure, this.maxPressure);
         this.volume = 1;
+        this.vacuumContainer.initializeAirFluidStack();
     }
 
     @Override
@@ -61,10 +63,14 @@ public class MetaTileEntityVacuumHatch extends MetaTileEntityMultiblockPart impl
     @Override
     public void update() {
         super.update();
+        /*
         if (getOffsetTimer() % 20 == 0) {
             getVacuumContainer().leaksContainer(leakingRate);
             getVacuumContainer().setPressure();
         }
+
+         */
+        getVacuumContainer().setPressure();
     }
 
     public IVacuumContainer getVacuumContainer() {
@@ -85,7 +91,7 @@ public class MetaTileEntityVacuumHatch extends MetaTileEntityMultiblockPart impl
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-            tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.vacuum", vacuumContainer.convertPressureToBar(minPressure)));
+            tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.vacuum", vacuumContainer.convertPressureTomBar(minPressure)));
             tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.vacuum.leak", leakingRate));
     }
 
@@ -112,6 +118,7 @@ public class MetaTileEntityVacuumHatch extends MetaTileEntityMultiblockPart impl
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
+        list.add(new TextComponentTranslation("behavior.tricorder.air.amount", vacuumContainer.getAirAmount()));
         list.add(new TextComponentTranslation("behavior.tricorder.pressure.vacuum", vacuumContainer.getPressure()));
         list.add(new TextComponentTranslation("behavior.tricorder.min_pressure.pressure", vacuumContainer.getMinPressure()));
         list.add(new TextComponentTranslation("behavior.tricorder.max_pressure.pressure", vacuumContainer.getMaxPressure()));

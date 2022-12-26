@@ -59,9 +59,21 @@ public interface IPressureContainer extends IVacuumContainer {
     @Override
     default NBTTagCompound setFluidStackNBT() {
         NBTTagCompound nbt = new NBTTagCompound();
-        getFluidStack().writeToNBT(nbt);
-        getAirFluidStack().writeToNBT(nbt);
+        FluidStack fs = getFluidStack();
+        if (fs != null) fs.writeToNBT(nbt);
+
+        FluidStack airFs = getAirFluidStack();
+        if (airFs != null) airFs.writeToNBT(nbt);
+
         return nbt;
+    }
+
+    default String convertPressureToBar(int pressureInPa) {
+        //Returns the pressure in kbar
+        if (pressureInPa > ATMOSPHERIC_PRESSURE * 1000) {
+            return String.format("%4.1f kbar", (pressureInPa / (ATMOSPHERIC_PRESSURE * Math.pow(10, 6))));
+        }
+        return String.format("%4.1f bar", (double) (pressureInPa / ATMOSPHERIC_PRESSURE));
     }
 
 

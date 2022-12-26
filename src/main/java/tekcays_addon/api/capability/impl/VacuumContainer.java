@@ -44,7 +44,7 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
         this.maxPressure = maxPressure;
         this.pressure = 0;
         this.volume = 0;
-        this.airFluidStack= getAirFluidStackStandard();
+        this.initializeAirFluidStack();
     }
 
     @Override
@@ -72,6 +72,13 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
         this.pressure = calculatePressure(getAirAmount(), ROOM_TEMPERATURE, getVolume());
         this.metaTileEntity.markDirty();
     }
+
+    @Override
+    public void setPressure(int temperature) {
+        this.pressure = calculatePressure(getAirAmount(), temperature, getVolume());
+        this.metaTileEntity.markDirty();
+    }
+
 
     @Override
     public int getVolume() {
@@ -121,6 +128,7 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = new NBTTagCompound();
         compound.setInteger("pressure", this.pressure);
+        compound.setInteger("volume", this.volume);
         compound.setTag("airFluidStack", this.setFluidStackNBT());
         return compound;
     }
@@ -128,6 +136,7 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
     @Override
     public void deserializeNBT(@Nonnull NBTTagCompound compound) {
         this.pressure = compound.getInteger("pressure");
+        this.volume = compound.getInteger("volume");
         this.airFluidStack = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag("airFluidStack"));
     }
 
@@ -135,6 +144,7 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
     public void writeInitialData(PacketBuffer buffer) {
         super.writeInitialData(buffer);
         buffer.writeInt(this.pressure);
+        buffer.writeInt(this.volume);
         buffer.writeCompoundTag(this.setFluidStackNBT());
     }
 
@@ -142,6 +152,7 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
     public void receiveInitialData(PacketBuffer buffer) {
         super.receiveInitialData(buffer);
         this.pressure = buffer.readInt();
+        this.volume = buffer.readInt();
         try {
             this.airFluidStack = FluidStack.loadFluidStackFromNBT(buffer.readCompoundTag());
         } catch (IOException e) {

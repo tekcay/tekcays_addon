@@ -25,11 +25,13 @@ import tekcays_addon.api.capability.IPressureContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.impl.PressureContainer;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
+import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static gregtech.api.unification.material.Materials.Air;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
 public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IPressureContainer>, IDataInfoProvider {
@@ -39,7 +41,6 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     private final boolean canHandleVacuum;
     private final int minPressure;
     private final int maxPressure;
-    private final int volume;
     private final int tierMultiplier = getTier() * getTier() + 1;
 
     public MetaTileEntityPressureHatch(@Nonnull ResourceLocation metaTileEntityId, int tier) {
@@ -49,7 +50,8 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
         this.maxPressure = ATMOSPHERIC_PRESSURE * 10 * tierMultiplier;
         this.leakingRate = - 10 * tierMultiplier;
         this.pressureContainer = new PressureContainer(this, minPressure, maxPressure);
-        this.volume = 1;
+        //this.volume = 1;
+        //this.pressureContainer.initializeAirFluidStack();
     }
 
     @Override
@@ -61,10 +63,15 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     @Override
     public void update() {
         super.update();
+        //pressureContainer.setPressure();
         if (getOffsetTimer() % 20 == 0) {
+
+            /*
             getPressureContainer().leaksContainer(leakingRate);
             getPressureContainer().setPressure();
+            */
         }
+
     }
 
     public IPressureContainer getPressureContainer() {
@@ -112,9 +119,10 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
-        list.add(new TextComponentTranslation("behavior.tricorder.pressure.pressure", pressureContainer.getPressure()));
-        list.add(new TextComponentTranslation("behavior.tricorder.min_pressure.vacuum", pressureContainer.getMinPressure()));
-        list.add(new TextComponentTranslation("behavior.tricorder.max_pressure.vacuum", pressureContainer.getMaxPressure()));
+        list.add(new TextComponentTranslation("behavior.tricorder.air.amount", pressureContainer.getAirAmount()));
+        list.add(new TextComponentTranslation("behavior.tricorder.pressure.pressure", pressureContainer.convertPressureToBar(pressureContainer.getPressure())));
+        list.add(new TextComponentTranslation("behavior.tricorder.min_pressure.pressure", pressureContainer.convertPressureToBar(minPressure)));
+        list.add(new TextComponentTranslation("behavior.tricorder.max_pressure.pressure", pressureContainer.convertPressureToBar(maxPressure)));
         return list;
     }
 

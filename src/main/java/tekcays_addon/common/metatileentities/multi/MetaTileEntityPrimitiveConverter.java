@@ -20,7 +20,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
 import tekcays_addon.api.capability.IPressureContainer;
-import tekcays_addon.api.capability.impl.PressureContainerList;
 import tekcays_addon.api.metatileentity.multiblock.PressureContainerNoEnergyMultiblockController;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
@@ -102,7 +101,7 @@ public class MetaTileEntityPrimitiveConverter extends PressureContainerNoEnergyM
     }
 
     private void updateLogic() {
-        pressureContainer = new PressureContainerList(getAbilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER));
+        IPressureContainer pressureContainer = getAbilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER).get(0);
     }
 
     @Override

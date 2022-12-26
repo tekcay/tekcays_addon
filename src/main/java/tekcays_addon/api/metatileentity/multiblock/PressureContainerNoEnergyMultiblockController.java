@@ -6,8 +6,11 @@ import gregtech.api.recipes.RecipeMap;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.api.capability.IPressureContainer;
 import tekcays_addon.api.capability.IPressureMachine;
-import tekcays_addon.api.capability.impl.PressureContainerList;
+import tekcays_addon.api.capability.impl.PressureContainer;
 import tekcays_addon.api.capability.impl.PressureContainerNoEnergyMultiblockRecipeLogic;
+import tekcays_addon.api.utils.TKCYAValues;
+
+import java.util.List;
 
 public abstract class PressureContainerNoEnergyMultiblockController extends RecipeMapMultiblockController implements IPressureMachine {
 
@@ -21,7 +24,12 @@ public abstract class PressureContainerNoEnergyMultiblockController extends Reci
     @Override
     protected void initializeAbilities() {
         super.initializeAbilities();
-        this.pressureContainer = new PressureContainerList(getAbilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER));
+        List<IPressureContainer> list = getAbilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER);
+        if (list.isEmpty()) {
+            this.pressureContainer = new PressureContainer(this, 0, TKCYAValues.MAX_PRESSURE);
+        } else {
+            this.pressureContainer = list.get(0);
+        }
     }
 
     @Override

@@ -1,6 +1,5 @@
 package tekcays_addon.common.metatileentities.multi;
 
-import gregicality.science.api.metatileentity.multiblock.PressureMultiblockController;
 import gregicality.science.api.recipes.recipeproperties.PressureProperty;
 import gregtech.api.block.IHeatingCoilBlockStats;
 import gregtech.api.capability.impl.MultiblockRecipeLogic;
@@ -23,20 +22,45 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import tekcays_addon.api.capability.IHeatContainer;
+import tekcays_addon.api.capability.IHeatMachine;
+import tekcays_addon.api.capability.IPressureContainer;
+import tekcays_addon.api.capability.IPressureMachine;
+import tekcays_addon.api.capability.impl.HeatContainerList;
+import tekcays_addon.api.metatileentity.multiblock.HeatedPressureContainerMultiblockController;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class MetaTileEntityPressurizedCrackingUnit extends PressureMultiblockController {
+
+public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContainerMultiblockController implements IHeatMachine, IPressureMachine {
 
     private int coilTier;
+    private IHeatContainer heatContainer;
+    private IPressureContainer pressureContainer;
+    private int volume;
+    private int currentTemp;
+    private int currentPressure;
 
     public MetaTileEntityPressurizedCrackingUnit(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.PRESSURE_CRACKING);
         this.recipeMapWorkable = new CrackingUnitWorkableHandler(this);
+        this.volume = 1;
+        this.initializeAbilities();
+        this.initializePressureContainer();
+    }
+
+
+    protected void initializePressureContainer() {
+        this.pressureContainer = getPressureContainer();
+        if (this.pressureContainer == null) return;
+        this.pressureContainer.setVolume(volume);
+        this.pressureContainer.initializeAirFluidStack();
+        this.pressureContainer.setPressure();
     }
 
     @Override
@@ -51,10 +75,11 @@ public class MetaTileEntityPressurizedCrackingUnit extends PressureMultiblockCon
                 .aisle("-H-H-", "BCBCB", "P###P", "BCBCB")
                 .aisle("-H-H-", "BCBCB", "BCSCB", "BCBCB")
                 .where('S', selfPredicate())
-                .where('B', states(getCasingState()).setMinGlobalLimited(12).or(autoAbilities()))
+                .where('B', states(getCasingState()).setMinGlobalLimited(17)
+                        .or(autoAbilities()))
                 .where('#', air())
                 .where('C', heatingCoils())
-                .where('P', abilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER)
+                .where('P', abilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER).setMinGlobalLimited(1).setMaxGlobalLimited(1)
                         .or(states(getCasingState())))
                 .where('H', abilities(TKCYAMultiblockAbility.HEAT_CONTAINER))
                 .where('-', any())
@@ -70,14 +95,22 @@ public class MetaTileEntityPressurizedCrackingUnit extends PressureMultiblockCon
         return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.STAINLESS_CLEAN);
     }
 
+    private String getCurrentPressureWithUnit() {
+        return pressureContainer.convertPressureToBar(currentPressure);
+    }
+
+    private int getCurrentTemperature() {
+        return heatContainer.getHeat();
+    }
+
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
         super.addDisplayText(textList);
         if (isStructureFormed()) {
             textList.add(new TextComponentTranslation("gregtech.multiblock.cracking_unit.energy", 100 - 10 * coilTier));
-            double pressure = this.getPressureContainer().getPressure();
-            if (pressure > 100000) textList.add(new TextComponentTranslation("tkcya.machine.text.pressure", String.format("%.3f", pressure/1000D) + " kPa"));
-            if (pressure > 1000000) textList.add(new TextComponentTranslation("tkcya.machine.text.pressure", String.format("%.3f", pressure/1000000D) + " MPa"));
+            textList.add(new TextComponentTranslation("tkcya.machine.text.pressure", getCurrentPressureWithUnit()));
+            textList.add(new TextComponentTranslation("tkcya.machine.text.temperature", getCurrentTemperature()));
+
         }
     }
 
@@ -88,8 +121,30 @@ public class MetaTileEntityPressurizedCrackingUnit extends PressureMultiblockCon
     }
 
     @Override
+    protected void updateFormedValid() {
+        if (!getWorld().isRemote) {
+            updateLogic();
+        }
+    }
+
+    @Override
+    public IPressureContainer getPressureContainer() {
+        List<IPressureContainer> list = getAbilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER);
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+    private void updateLogic() {
+        heatContainer = new HeatContainerList(getAbilities(TKCYAMultiblockAbility.HEAT_CONTAINER));
+
+        pressureContainer = getPressureContainer();
+
+        if (pressureContainer == null) return;
+        currentPressure = pressureContainer.getPressure();
+    }
+
+    @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        return this.getPressureContainer().getPressure() >= recipe.getProperty(PressureProperty.getInstance(), 0D);
+        return currentPressure >= recipe.getProperty(PressureProperty.getInstance(), 0D);
         //TODO : to fill with temperature checking when it is implemented
     }
 
@@ -102,12 +157,11 @@ public class MetaTileEntityPressurizedCrackingUnit extends PressureMultiblockCon
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
+        initializePressureContainer();
         Object type = context.get("CoilType");
         if (type instanceof IHeatingCoilBlockStats) {
             this.coilTier = ((IHeatingCoilBlockStats) type).getTier();
-        } else {
-            this.coilTier = 0;
-        }
+        } else this.coilTier = 0;
     }
 
     @Override

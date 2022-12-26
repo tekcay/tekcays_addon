@@ -10,6 +10,8 @@ import tekcays_addon.api.capability.IPressureContainer;
 import tekcays_addon.api.capability.IPressureMachine;
 import tekcays_addon.api.capability.impl.*;
 
+import java.util.List;
+
 public abstract class HeatedPressureContainerMultiblockController extends RecipeMapMultiblockController implements IPressureMachine, IHeatMachine {
 
     private IPressureContainer pressureContainer;
@@ -24,7 +26,8 @@ public abstract class HeatedPressureContainerMultiblockController extends Recipe
     protected void initializeAbilities() {
         super.initializeAbilities();
         this.heatContainer = new HeatContainerList(getAbilities(TKCYAMultiblockAbility.HEAT_CONTAINER));
-        this.pressureContainer = new PressureContainerList(getAbilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER));
+        List<IPressureContainer> list = getAbilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER);
+        this.pressureContainer = list.isEmpty() ? null : list.get(0);
     }
 
 
@@ -36,8 +39,8 @@ public abstract class HeatedPressureContainerMultiblockController extends Recipe
     @Override
     public TraceabilityPredicate autoAbilities(boolean checkEnergyIn, boolean checkMaintenance, boolean checkItemIn, boolean checkItemOut, boolean checkFluidIn, boolean checkFluidOut, boolean checkMuffler) {
         TraceabilityPredicate predicate = super.autoAbilities(checkEnergyIn, checkMaintenance, checkItemIn, checkItemOut, checkFluidIn, checkFluidOut, checkMuffler);
-        predicate = predicate.or(abilities(TKCYAMultiblockAbility.HEAT_CONTAINER));
-        predicate = predicate.or(abilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER));
+        //predicate = predicate.or(abilities(TKCYAMultiblockAbility.HEAT_CONTAINER));
+        //predicate = predicate.or(abilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER)).setMaxGlobalLimited(1);
         return predicate;
     }
 

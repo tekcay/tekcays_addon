@@ -4,6 +4,7 @@ import gregtech.api.unification.material.Material;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.utils.IFluidStack;
+import tekcays_addon.api.utils.TKCYALog;
 
 import static gregtech.api.unification.material.Materials.Air;
 import static tekcays_addon.api.utils.TKCYAValues.*;
@@ -20,6 +21,11 @@ public interface IVacuumContainer {
      * Set the {@code pressure} in {@code Pa}
      */
     void setPressure();
+
+    /**
+     * Set the {@code pressure} in {@code Pa} with a temperature input
+     */
+    void setPressure(int temperature);
 
     /**
      * @return the maximum pressure this container can handle in {@code Pa}
@@ -79,6 +85,9 @@ public interface IVacuumContainer {
 
     boolean canLeakMore(int leak);
 
+    default void initializeAirFluidStack() {
+        setAirFluidStack(getAirFluidStackStandard());
+    }
 
     /**
      * Calculates the amount of substance which transcribes as an amount of a {@code FluidStack} following the ideal gas law.
@@ -88,7 +97,7 @@ public interface IVacuumContainer {
      * @return the corresponding {@code fluidAmount}.
      */
     default int calculateFluidAmount(int pressure, int temperature, int volume) {
-        return (int) ((PERFECT_GAS_CONSTANT * temperature) / (pressure * volume)); // n = RT / PV
+        return (int) ((pressure * volume) / (PERFECT_GAS_CONSTANT * temperature) ); // n = PV / RT
     }
 
     /**
@@ -102,12 +111,10 @@ public interface IVacuumContainer {
         return (int) ((fluidAmount * PERFECT_GAS_CONSTANT * temperature) / volume); // P = nRT / V
     }
 
-    default String convertPressureToBar(int pressureInPa) {
+    default String convertPressureTomBar(int pressureInPa) {
         //Returns the pressure in mbar
         if (pressureInPa < ATMOSPHERIC_PRESSURE) return String.format("%d mbar", (int) (1000 * pressureInPa / ATMOSPHERIC_PRESSURE));
-
-            //Returns the pressure in bar
-        else return String.format("%d bar", (int) (pressureInPa / ATMOSPHERIC_PRESSURE));
+        return "error";
     }
 
     /**
@@ -171,6 +178,11 @@ public interface IVacuumContainer {
 
         @Override
         public void setPressure() {
+        }
+
+        @Override
+        public void setPressure(int temperature) {
+
         }
 
         @Override
