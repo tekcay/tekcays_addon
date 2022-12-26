@@ -4,13 +4,13 @@ import gregtech.api.unification.material.Material;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.utils.IFluidStack;
-import tekcays_addon.api.utils.TKCYALog;
+import tekcays_addon.api.utils.IPressureFormatting;
 
 import static gregtech.api.unification.material.Materials.Air;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 import static tekcays_addon.api.utils.TKCYAValues.ROOM_TEMPERATURE;
 
-public interface IVacuumContainer {
+public interface IVacuumContainer extends IPressureFormatting {
 
     /**
      * @return the amount of pressure in the container in {@code Pa}
@@ -109,12 +109,6 @@ public interface IVacuumContainer {
      */
     default int calculatePressure(int fluidAmount, int temperature, int volume) {
         return (int) ((fluidAmount * PERFECT_GAS_CONSTANT * temperature) / volume); // P = nRT / V
-    }
-
-    default String convertPressureTomBar(int pressureInPa) {
-        //Returns the pressure in mbar
-        if (pressureInPa < ATMOSPHERIC_PRESSURE) return String.format("%d mbar", (int) (1000 * pressureInPa / ATMOSPHERIC_PRESSURE));
-        return "error";
     }
 
     /**

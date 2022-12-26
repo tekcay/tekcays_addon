@@ -1,12 +1,12 @@
 package tekcays_addon.loaders.recipe.handlers;
 
-import gregicality.science.api.GCYSValues;
 import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import gregtech.api.unification.material.Material;
 
 import static gregtech.api.GTValues.*;
 import static gregtech.api.unification.material.Materials.*;
 import static tekcays_addon.api.recipes.TKCYARecipeMaps.PRESSURE_CRACKING;
+import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
 
 public class PressureCrackingHandler {
     
@@ -38,8 +38,9 @@ public class PressureCrackingHandler {
                 .fluidInputs(raw.getFluid(1000))
                 .fluidInputs(Hydrogen.getFluid(2000))
                 .fluidOutputs(hydroCracked.getFluid(1000))
-                .pressure(GCYSValues.EARTH_PRESSURE * 10)
                 .temperature(400)
+                .minPressure(ATMOSPHERIC_PRESSURE * 10)
+                .maxPressure(ATMOSPHERIC_PRESSURE * 12)
                 .duration(80).EUt(VA[MV]).buildAndRegister();
 
         PRESSURE_CRACKING.recipeBuilder()
@@ -47,7 +48,8 @@ public class PressureCrackingHandler {
                 .fluidInputs(raw.getFluid(1000))
                 .fluidInputs(Steam.getFluid(1000))
                 .fluidOutputs(steamCracked.getFluid(1000))
-                .pressure(GCYSValues.EARTH_PRESSURE * 10)
+                .minPressure(ATMOSPHERIC_PRESSURE * 10)
+                .maxPressure(ATMOSPHERIC_PRESSURE * 12)
                 .temperature(400)
                 .duration(80).EUt(240).buildAndRegister();
     }
@@ -59,7 +61,8 @@ public class PressureCrackingHandler {
                 .fluidInputs(raw.getFluid(1000))
                 .fluidInputs(Hydrogen.getFluid(4000))
                 .fluidOutputs(hydroCracked.getFluid(1000))
-                .pressure(GCYSValues.EARTH_PRESSURE * 50)
+                .minPressure(ATMOSPHERIC_PRESSURE * 50)
+                .maxPressure(ATMOSPHERIC_PRESSURE * 55)
                 .temperature(500)
                 .duration(120).EUt(180).buildAndRegister();
 
@@ -68,7 +71,8 @@ public class PressureCrackingHandler {
                 .fluidInputs(raw.getFluid(1000))
                 .fluidInputs(Steam.getFluid(1000))
                 .fluidOutputs(steamCracked.getFluid(1000))
-                .pressure(GCYSValues.EARTH_PRESSURE * 50)
+                .minPressure(ATMOSPHERIC_PRESSURE * 50)
+                .maxPressure(ATMOSPHERIC_PRESSURE * 55)
                 .temperature(500)
                 .duration(120).EUt(360).buildAndRegister();
     }
@@ -80,7 +84,8 @@ public class PressureCrackingHandler {
                 .fluidInputs(raw.getFluid(1000))
                 .fluidInputs(Hydrogen.getFluid(6000))
                 .fluidOutputs(hydroCracked.getFluid(1000))
-                .pressure(GCYSValues.EARTH_PRESSURE * 100)
+                .minPressure(ATMOSPHERIC_PRESSURE * 100)
+                .maxPressure(ATMOSPHERIC_PRESSURE * 120)
                 .temperature(600)
                 .duration(160).EUt(240).buildAndRegister();
 
@@ -89,7 +94,8 @@ public class PressureCrackingHandler {
                 .fluidInputs(raw.getFluid(1000))
                 .fluidInputs(Steam.getFluid(1000))
                 .fluidOutputs(steamCracked.getFluid(1000))
-                .pressure(GCYSValues.EARTH_PRESSURE * 100)
+                .minPressure(ATMOSPHERIC_PRESSURE * 100)
+                .maxPressure(ATMOSPHERIC_PRESSURE * 120)
                 .temperature(600)
                 .duration(160).EUt(VA[HV]).buildAndRegister();
     }

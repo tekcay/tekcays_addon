@@ -68,13 +68,4 @@ public interface IPressureContainer extends IVacuumContainer {
         return nbt;
     }
 
-    default String convertPressureToBar(int pressureInPa) {
-        //Returns the pressure in kbar
-        if (pressureInPa > ATMOSPHERIC_PRESSURE * 1000) {
-            return String.format("%4.1f kbar", (pressureInPa / (ATMOSPHERIC_PRESSURE * Math.pow(10, 6))));
-        }
-        return String.format("%4.1f bar", (double) (pressureInPa / ATMOSPHERIC_PRESSURE));
-    }
-
-
 }

@@ -516,6 +516,8 @@ tekcays_addon.machine.electric_converter.tooltip.3=The target temperature and th
 tekcays_addon.recipe.blasting_temperature=Temperature: %dK
 tekcays_addon.recipe.blasting_pressure=Pressure: %d bar
 tkcya.recipe.heat=%d HU/t
+gcys.recipe.pressure=Pressure: %s
+gcys.recipe.vacuum=Vacuum: %s
 
 tekcays_addon.machine.advanced_electrolyzer.tooltip.1=Performs electrolysis of chemicals in solution.
 tekcays_addon.machine.advanced_electrolyzer.tooltip.2=Requires two electrodes, a cathode and an anode, to perform its recipes.

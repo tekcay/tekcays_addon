@@ -9,7 +9,6 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.unification.material.Materials;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -91,7 +90,7 @@ public class MetaTileEntityVacuumHatch extends MetaTileEntityMultiblockPart impl
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-            tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.vacuum", vacuumContainer.convertPressureTomBar(minPressure)));
+            tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.vacuum", vacuumContainer.convertPressureToMbar(minPressure)));
             tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.vacuum.leak", leakingRate));
     }
 
