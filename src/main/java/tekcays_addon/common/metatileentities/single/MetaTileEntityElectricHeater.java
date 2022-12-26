@@ -5,8 +5,6 @@ import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.ColourMultiplier;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import com.google.common.base.Preconditions;
-import gregicality.science.api.utils.NumberFormattingUtil;
 import gregtech.api.GTValues;
 import gregtech.api.capability.GregtechTileCapabilities;
 import gregtech.api.capability.IActiveOutputSide;
@@ -37,7 +35,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static gregtech.api.capability.GregtechDataCodes.UPDATE_FRONT_FACING;
 import static net.minecraft.util.EnumFacing.*;
 import static tekcays_addon.api.utils.TKCYAValues.EU_TO_HU;
 

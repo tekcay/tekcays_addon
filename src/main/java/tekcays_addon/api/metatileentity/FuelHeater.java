@@ -1,25 +1,29 @@
 package tekcays_addon.api.metatileentity;
 
+import codechicken.lib.raytracer.CuboidRayTraceResult;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.ColourMultiplier;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregicality.science.api.utils.NumberFormattingUtil;
 import gregtech.api.capability.GregtechTileCapabilities;
 import gregtech.api.capability.IActiveOutputSide;
 import gregtech.api.metatileentity.IDataInfoProvider;
 import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.metatileentity.MetaTileEntityUIFactory;
 import gregtech.api.sound.GTSounds;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
@@ -39,26 +43,28 @@ import tekcays_addon.common.blocks.blocks.BlockBrick;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Random;
 
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
 import static net.minecraft.util.EnumFacing.*;
 
-public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide{
+public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide, IFreeFace{
 
     protected int heatIncreaseRate;
     protected HeatContainer heatContainer;
-    protected boolean isBurning;
+    private boolean isBurning;
     protected final FuelHeaterTiers fuelHeater;
     private final float efficiency;
     private final int powerMultiplier;
-    protected int burnTimeLeft;
+    private int burnTimeLeft;
+    private boolean canIgnite;
+    private final int IGNITION_CHANCE_WOOD_STICK = 30;
 
     public FuelHeater(ResourceLocation metaTileEntityId, FuelHeaterTiers fuelHeater) {
         super(metaTileEntityId);
         this.fuelHeater = fuelHeater;
         this.efficiency = fuelHeater.getEfficiency();
         this.powerMultiplier = fuelHeater.getPowerMultiplier();
-        this.isBurning = false;
     }
 
     public int setHeatIncreaseRate(int heatBaseIncrease) {
@@ -89,32 +95,47 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
         return Pair.of(getBaseRenderer().getParticleSprite(), getPaintingColorForRendering());
     }
 
-    protected void tryConsumeNewFuel() {
-    }
+    protected abstract void tryConsumeNewFuel();
 
     protected void setBurnTimeLeft(int amount) {
-        burnTimeLeft =  amount;
+        this.burnTimeLeft =  amount;
+    }
+
+    private void setIgnition() {
+        canIgnite = true;
     }
 
     @Override
     public void update() {
         super.update();
+
         if (burnTimeLeft <= 0) {
-            setBurning(false);
             tryConsumeNewFuel();
+            if (isBurning() && burnTimeLeft <= 0) setBurning(false);
         }
-        if (burnTimeLeft > 0) {
-            setBurning(true);
+
+        if (canIgnite && burnTimeLeft > 0) setBurning(true);
+
+        if (isBurning()) {
+
+            if (!this.checkFaceFree(getPos(), getFrontFacing())) {
+                setBurning(false);
+                canIgnite = false;
+                return;
+            }
+
             int currentHeat = heatContainer.getHeat();
             if (!getWorld().isRemote) {
                 if (currentHeat + heatIncreaseRate < heatContainer.getMaxHeat())
                     heatContainer.setHeat(currentHeat + heatIncreaseRate);
                 transferHeat(heatIncreaseRate);
             }
-            burnTimeLeft -= 1;
-            markDirty();
+
+            --burnTimeLeft;
         }
     }
+
+
 
     /*
     //For TOP, needs to implement IFuelable
@@ -149,6 +170,31 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
         }
     }
 
+    /**
+     * Called when player clicks on specific side of this meta tile entity
+     *
+     * @return true if something happened, so animation will be played
+     */
+    @Override
+    public boolean onRightClick(EntityPlayer playerIn, EnumHand hand, EnumFacing facing, CuboidRayTraceResult hitResult) {
+        if (!playerIn.isSneaking() && openGUIOnRightClick()) {
+            if (getWorld() != null && !getWorld().isRemote) {
+                MetaTileEntityUIFactory.INSTANCE.openUI(getHolder(), (EntityPlayerMP) playerIn);
+            }
+            return true;
+        } else {
+
+            if (facing != getFrontFacing()) return false;
+
+            ItemStack itemInHand = playerIn.getHeldItemMainhand();
+            if (playerIn.isSneaking() && itemInHand.getItem().equals(Items.STICK)) {
+                Random rand = new Random();
+                if (rand.nextInt(100) < IGNITION_CHANCE_WOOD_STICK) setIgnition();
+                itemInHand.setCount(itemInHand.getCount() - 1);
+            }
+        }
+        return false;
+    }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
@@ -156,7 +202,8 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
         tooltip.add(I18n.format("tkcya.heater.tooltip.1"));
         tooltip.add(I18n.format("tkcya.heater.tooltip.2", heatIncreaseRate));
         tooltip.add(I18n.format("tkcya.machine.energy_conversion_efficiency",  TextFormatting.WHITE + String.format("%.02f", efficiency * 100.00F) + "%"));
-        tooltip.add(I18n.format("tkcya.machine.redstone.inverse.tooltip"));
+        tooltip.add(I18n.format("tkcya.machine.free_front_face.tooltip"));
+        tooltip.add(I18n.format("tkcya.machine.fuel_heater.ignition.tooltip", TextFormatting.WHITE + String.format("%d%%", IGNITION_CHANCE_WOOD_STICK)));
     }
 
     @Override
@@ -172,7 +219,7 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
     }
 
     public boolean isBurning() {
-        return isBurning;
+        return this.isBurning;
     }
 
     public void setBurning(boolean burning) {
@@ -182,7 +229,6 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
             writeCustomData(IS_WORKING, buf -> buf.writeBoolean(burning));
         }
     }
-
 
     @Override
     public boolean isActive() {
@@ -196,10 +242,46 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
         list.add(new TextComponentTranslation("behavior.tricorder.current_heat", heatContainer.getHeat()));
         list.add(new TextComponentTranslation("behavior.tricorder.min_heat", heatContainer.getMinHeat()));
         list.add(new TextComponentTranslation("behavior.tricorder.max_heat", heatContainer.getMaxHeat()));
-        list.add(new TextComponentTranslation("behavior.tricorder.burn_time_left", burnTimeLeft));
         return list;
     }
 
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound data) {
+        super.writeToNBT(data);
+        data.setInteger("BurnTimeLeft", burnTimeLeft);
+        data.setBoolean("isBurning", isBurning());
+        return data;
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound data) {
+        super.readFromNBT(data);
+        this.burnTimeLeft = data.getInteger("BurnTimeLeft");
+        this.isBurning = data.getBoolean("isBurning");
+    }
+
+    @Override
+    public void writeInitialSyncData(PacketBuffer buf) {
+        super.writeInitialSyncData(buf);
+        buf.writeBoolean(isBurning());
+        buf.writeInt(burnTimeLeft);
+    }
+
+    @Override
+    public void receiveInitialSyncData(PacketBuffer buf) {
+        super.receiveInitialSyncData(buf);
+        this.isBurning = buf.readBoolean();
+        this.burnTimeLeft = buf.readInt();
+    }
+
+    @Override
+    public void receiveCustomData(int dataId, PacketBuffer buf) {
+        super.receiveCustomData(dataId, buf);
+        if (dataId == IS_WORKING) {
+            this.isBurning = buf.readBoolean();
+            scheduleRenderUpdate();
+        }
+    }
 
     @Override
     public SoundEvent getSound() {

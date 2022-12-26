@@ -17,7 +17,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidUtil;
@@ -37,7 +36,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
 import static tekcays_addon.api.utils.HeatersMethods.getBurnTime;
 
 public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataInfoProvider, IActiveOutputSide, IFuelable {
@@ -120,6 +118,7 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
         }
         setBurnTimeLeft(burnTime);
     }
+
     @Override
     @SideOnly(Side.CLIENT)
     protected SimpleOverlayRenderer getBaseRenderer() {
@@ -129,17 +128,12 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
     //For TOP, needs to implement IFuelable
     @Override
     public Collection<IFuelInfo> getFuels() {
-        TKCYALog.logger.info("TOP got here");
         ItemStack fuelInSlot = importItems.extractItem(0, Integer.MAX_VALUE, true);
-        TKCYALog.logger.info("TOP : stackSize : " + fuelInSlot.getCount());
         if (fuelInSlot == ItemStack.EMPTY)
             return Collections.emptySet();
         final int fuelRemaining = fuelInSlot.getCount();
-        TKCYALog.logger.info("TOP : fuelInSlot = " + fuelInSlot);
         final int fuelCapacity = importItems.getSlotLimit(0);
-        TKCYALog.logger.info("TOP : fuelRemaining = " + fuelRemaining);
         final long burnTime = (long) fuelRemaining * getBurnTime(fuelInSlot, fuelHeater);
-        TKCYALog.logger.info("TOP : fuelCapacity = " + fuelCapacity);
         return Collections.singleton(new ItemFuelInfo(fuelInSlot, fuelRemaining, fuelCapacity, 1, burnTime));
     }
 
@@ -152,7 +146,6 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         super.writeToNBT(data);
-        data.setInteger("BurnTimeLeft", burnTimeLeft);
         data.setTag("ContainerInventory", containerInventory.serializeNBT());
         return data;
     }
@@ -160,30 +153,7 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
     @Override
     public void readFromNBT(NBTTagCompound data) {
         super.readFromNBT(data);
-        this.burnTimeLeft= data.getInteger("BurnTimeLeft");
         this.containerInventory.deserializeNBT(data.getCompoundTag("ContainerInventory"));
-        this.isBurning = burnTimeLeft > 0;
-    }
-
-    @Override
-    public void writeInitialSyncData(PacketBuffer buf) {
-        super.writeInitialSyncData(buf);
-        buf.writeBoolean(isBurning);
-    }
-
-    @Override
-    public void receiveInitialSyncData(PacketBuffer buf) {
-        super.receiveInitialSyncData(buf);
-        this.isBurning = buf.readBoolean();
-    }
-
-    @Override
-    public void receiveCustomData(int dataId, PacketBuffer buf) {
-        super.receiveCustomData(dataId, buf);
-        if (dataId == IS_WORKING) {
-            this.isBurning = buf.readBoolean();
-            scheduleRenderUpdate();
-        }
     }
 
     @Override

@@ -382,6 +382,7 @@ tkcya.steam_air_compressor.tooltip.2=Consumes %sL of Steam per second.
 tkcya.machine.no_overclock.tooltip=No overclock
 tkcya.machine.height.tooltip=Height: %d
 tkcya.machine.redstone.inverse.tooltip=Can be stopped with a redstone signal.
+tkcya.machine.free_front_face.tooltip=The front face must be free.
 tkcya.machine.energy_conversion_efficiency=§eEfficency:§7 %s
 tkcya.machine.pressure_decrease.tooltip=Decreases the pressure by §b%sPa§7 per second while running.
 tkcya.machine.pressure_increase.tooltip=Increases the pressure by §b%sPa§7 per second while running.
@@ -482,6 +483,7 @@ tkcya.max_parallel.tooltip=Max Parallel: §e%s§7
 #Heaters
 tkcya.heater.tooltip.1=For heating.
 tkcya.heater.tooltip.2=Outputs §c%s HU/t§7 on the §eTOP§7 side.
+tkcya.machine.fuel_heater.ignition.tooltip=Ignition by right-clicking on the §eFRONT§7 side with wood sticks while sneaking (%s chance).
 tkcya.electric_heater.tooltip.1=Outputs §c%s HU/t§7 on the §eFRONT§7 side.
 
 #Electric Cooler
@@ -504,6 +506,8 @@ behavior.tricorder.max_heat=Maximum Heat: %s HU
 behavior.tricorder.burn_time_left= Burn Time Left %s ticks
 behavior.tricorder.currentTemp=Current Temp: %s K
 behavior.tricorder.heatMultiplier=Heat Multiplier: %d
+behavior.tricorder.can_ignite=Can ignite: %s
+behavior.tricorder.is_burning=Is burning: %s
 
 
 # Errors
