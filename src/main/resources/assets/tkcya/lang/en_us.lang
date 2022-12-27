@@ -324,7 +324,7 @@ metaitem.electrode.name=%s Electrode
 metaitem.electrode.tooltip=For electrolysis
 metaitem.filter.name=%s Filter
 metaitem.filter.tooltip=For filtration duh
-metaitem.cover_temperature_detector.name=Cover Temperature Detector
+metaitem.cover.temperature_detector.name=Cover Temperature Detector
 metaitem.cover.temperature.detector.tooltip=Emits a redstone signal if the temperature exceeds a specified value (as Cover). Right click with a Screwdriver while sneaking to invert redstone signal.
 
 item.mica_pulp.dust=Mica Based Pulp
