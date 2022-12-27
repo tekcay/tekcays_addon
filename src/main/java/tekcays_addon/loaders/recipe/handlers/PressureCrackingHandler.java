@@ -1,5 +1,6 @@
 package tekcays_addon.loaders.recipe.handlers;
 
+import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import gregtech.api.unification.material.Material;
 
 import static gregtech.api.GTValues.*;
@@ -11,25 +12,6 @@ public class PressureCrackingHandler {
     
     public static void init() {
 
-        PRESSURE_CRACKING.recipeBuilder()
-                .fluidInputs(Ethane.getFluid(1000))
-                .fluidOutputs(HydroCrackedEthane.getFluid(1000))
-                .temperature(400)
-                .minPressure(ATMOSPHERIC_PRESSURE * 10)
-                .maxPressure(ATMOSPHERIC_PRESSURE * 12)
-                .gas(Hydrogen)
-                .duration(80).EUt(VA[MV]).buildAndRegister();
-
-        PRESSURE_CRACKING.recipeBuilder()
-                .fluidInputs(Ethane.getFluid(1000))
-                .fluidOutputs(SteamCrackedEthane.getFluid(1000))
-                .minPressure(ATMOSPHERIC_PRESSURE * 10)
-                .maxPressure(ATMOSPHERIC_PRESSURE * 12)
-                .temperature(400)
-                .gas(Steam)
-                .duration(80).EUt(240).buildAndRegister();
-
-        /*
         moderatelyCrack(Ethane, HydroCrackedEthane, SteamCrackedEthane);
         moderatelyCrack(Ethylene, HydroCrackedEthylene, SteamCrackedEthylene);
         moderatelyCrack(Propene, HydroCrackedPropene, SteamCrackedPropene);
@@ -46,23 +28,22 @@ public class PressureCrackingHandler {
         severelyCrack(Naphtha, SeverelyHydroCrackedNaphtha, SeverelySteamCrackedNaphtha);
         lightlyCrack(RefineryGas, LightlyHydroCrackedGas, LightlySteamCrackedGas);
         severelyCrack(RefineryGas, SeverelyHydroCrackedGas, SeverelySteamCrackedGas);
-
-         */
-        
     }
 
     private static void lightlyCrack(Material raw, Material hydroCracked, Material steamCracked) {
 
         PRESSURE_CRACKING.recipeBuilder()
+                .notConsumable(new IntCircuitIngredient(1))
                 .fluidInputs(raw.getFluid(1000))
                 .fluidOutputs(hydroCracked.getFluid(1000))
-                .temperature(400)
                 .minPressure(ATMOSPHERIC_PRESSURE * 10)
                 .maxPressure(ATMOSPHERIC_PRESSURE * 12)
+                .temperature(400)
                 .gas(Hydrogen)
                 .duration(80).EUt(VA[MV]).buildAndRegister();
 
         PRESSURE_CRACKING.recipeBuilder()
+                .notConsumable(new IntCircuitIngredient(2))
                 .fluidInputs(raw.getFluid(1000))
                 .fluidOutputs(steamCracked.getFluid(1000))
                 .minPressure(ATMOSPHERIC_PRESSURE * 10)
@@ -75,6 +56,7 @@ public class PressureCrackingHandler {
     private static void moderatelyCrack(Material raw, Material hydroCracked, Material steamCracked) {
 
         PRESSURE_CRACKING.recipeBuilder()
+                .notConsumable(new IntCircuitIngredient(3))
                 .fluidInputs(raw.getFluid(1000))
                 .fluidOutputs(hydroCracked.getFluid(1000))
                 .minPressure(ATMOSPHERIC_PRESSURE * 50)
@@ -84,6 +66,7 @@ public class PressureCrackingHandler {
                 .duration(120).EUt(180).buildAndRegister();
 
         PRESSURE_CRACKING.recipeBuilder()
+                .notConsumable(new IntCircuitIngredient(4))
                 .fluidInputs(raw.getFluid(1000))
                 .fluidOutputs(steamCracked.getFluid(1000))
                 .minPressure(ATMOSPHERIC_PRESSURE * 50)
@@ -96,6 +79,7 @@ public class PressureCrackingHandler {
     private static void severelyCrack(Material raw, Material hydroCracked, Material steamCracked) {
 
         PRESSURE_CRACKING.recipeBuilder()
+                .notConsumable(new IntCircuitIngredient(5))
                 .fluidInputs(raw.getFluid(1000))
                 .fluidOutputs(hydroCracked.getFluid(1000))
                 .minPressure(ATMOSPHERIC_PRESSURE * 100)
@@ -105,6 +89,7 @@ public class PressureCrackingHandler {
                 .duration(160).EUt(240).buildAndRegister();
 
         PRESSURE_CRACKING.recipeBuilder()
+                .notConsumable(new IntCircuitIngredient(6))
                 .fluidInputs(raw.getFluid(1000))
                 .fluidOutputs(steamCracked.getFluid(1000))
                 .minPressure(ATMOSPHERIC_PRESSURE * 100)
