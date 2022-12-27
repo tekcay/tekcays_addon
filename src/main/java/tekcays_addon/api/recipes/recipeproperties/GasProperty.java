@@ -29,8 +29,7 @@ public class GasProperty extends RecipeProperty<Material> implements RecipePrope
 
     @Override
     public void drawInfo(@Nonnull Minecraft minecraft, int x, int y, int color, Object value) {
-        Material casted = castValue(value);
         minecraft.fontRenderer.drawString(I18n.format(
-                "tkcya.recipe.gas", casted.getLocalizedName()), x, y, color);
+                "tkcya.recipe.gas", ((Material) value).getLocalizedName()), x, y, color);
     }
 }

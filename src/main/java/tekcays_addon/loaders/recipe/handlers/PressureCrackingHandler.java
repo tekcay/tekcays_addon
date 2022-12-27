@@ -11,6 +11,25 @@ public class PressureCrackingHandler {
     
     public static void init() {
 
+        PRESSURE_CRACKING.recipeBuilder()
+                .fluidInputs(Ethane.getFluid(1000))
+                .fluidOutputs(HydroCrackedEthane.getFluid(1000))
+                .temperature(400)
+                .minPressure(ATMOSPHERIC_PRESSURE * 10)
+                .maxPressure(ATMOSPHERIC_PRESSURE * 12)
+                .gas(Hydrogen)
+                .duration(80).EUt(VA[MV]).buildAndRegister();
+
+        PRESSURE_CRACKING.recipeBuilder()
+                .fluidInputs(Ethane.getFluid(1000))
+                .fluidOutputs(SteamCrackedEthane.getFluid(1000))
+                .minPressure(ATMOSPHERIC_PRESSURE * 10)
+                .maxPressure(ATMOSPHERIC_PRESSURE * 12)
+                .temperature(400)
+                .gas(Steam)
+                .duration(80).EUt(240).buildAndRegister();
+
+        /*
         moderatelyCrack(Ethane, HydroCrackedEthane, SteamCrackedEthane);
         moderatelyCrack(Ethylene, HydroCrackedEthylene, SteamCrackedEthylene);
         moderatelyCrack(Propene, HydroCrackedPropene, SteamCrackedPropene);
@@ -26,7 +45,9 @@ public class PressureCrackingHandler {
         lightlyCrack(Naphtha, LightlyHydroCrackedNaphtha, LightlySteamCrackedNaphtha);
         severelyCrack(Naphtha, SeverelyHydroCrackedNaphtha, SeverelySteamCrackedNaphtha);
         lightlyCrack(RefineryGas, LightlyHydroCrackedGas, LightlySteamCrackedGas);
-        severelyCrack(RefineryGas, SeverelyHydroCrackedGas, SeverelySteamCrackedGas);      
+        severelyCrack(RefineryGas, SeverelyHydroCrackedGas, SeverelySteamCrackedGas);
+
+         */
         
     }
 

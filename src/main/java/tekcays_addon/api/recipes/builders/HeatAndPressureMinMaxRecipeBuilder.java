@@ -7,9 +7,11 @@ import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
 import gregtech.api.recipes.recipeproperties.RecipeProperty;
 import gregtech.api.recipes.recipeproperties.RecipePropertyStorage;
 import gregtech.api.util.EnumValidationResult;
+import gregtech.api.util.GTLog;
 import gregtech.api.util.ValidationResult;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import tekcays_addon.api.recipes.recipeproperties.*;
+import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;

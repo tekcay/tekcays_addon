@@ -111,16 +111,16 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
     default boolean applyPropertyHelper(@Nonnull String key, Object value) {
         for (RecipeProperty recipeProperty : getRecipePropertyInstance()) {
             if (recipeProperty instanceof NoCoilTemperatureProperty) {
-                if (applyTemperatureHelper(key, value)) return true;
+                return applyTemperatureHelper(key, value);
             }
             if (recipeProperty instanceof MinPressureProperty) {
-                if (applyMinPressureHelper(key, value)) return true;
+                return applyMinPressureHelper(key, value);
             }
             if (recipeProperty instanceof MaxPressureProperty) {
-                if (applyMaxPressureHelper(key, value)) return true;
+                return applyMaxPressureHelper(key, value);
             }
             if (recipeProperty instanceof GasProperty) {
-                if (applyGasHelper(key, value)) return true;
+                return applyGasHelper(key, value);
             }
         }
         return false;
