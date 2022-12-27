@@ -9,22 +9,26 @@ import tekcays_addon.api.recipes.recipeproperties.GasProperty;
 import tekcays_addon.api.recipes.recipeproperties.MaxPressureProperty;
 import tekcays_addon.api.recipes.recipeproperties.MinPressureProperty;
 import tekcays_addon.api.utils.IMaterialHelper;
+import tekcays_addon.api.utils.MaterialHelper;
 
 import javax.annotation.Nonnull;
 
 import static gregtech.api.unification.material.Materials.Air;
 
-public interface CheckRecipeHelper extends IMaterialHelper {
+public interface CheckRecipeHelper {
 
     int getCurrentPressure();
     int getCurrentTemperature();
     Fluid getFluid();
+    IMaterialHelper materialHelper = new MaterialHelper();
+
+
 
     default Material getGas() {
-        return getMaterial(getFluid());
+        return materialHelper.getMaterial(getFluid());
     }
 
-    default boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
+    default boolean checkRecipeHelper(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
         int currentPressure = getCurrentPressure();
         if (currentPressure < recipe.getProperty(MinPressureProperty.getInstance(), 0)) return false;
         if (currentPressure > recipe.getProperty(MaxPressureProperty.getInstance(), 0)) return false;
