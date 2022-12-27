@@ -28,6 +28,7 @@ public class PressureCrackingHandler {
         severelyCrack(Naphtha, SeverelyHydroCrackedNaphtha, SeverelySteamCrackedNaphtha);
         lightlyCrack(RefineryGas, LightlyHydroCrackedGas, LightlySteamCrackedGas);
         severelyCrack(RefineryGas, SeverelyHydroCrackedGas, SeverelySteamCrackedGas);
+
     }
 
     private static void lightlyCrack(Material raw, Material hydroCracked, Material steamCracked) {
