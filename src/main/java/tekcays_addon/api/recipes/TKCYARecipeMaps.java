@@ -11,6 +11,7 @@ import gregtech.api.sound.GTSounds;
 import stanhebben.zenscript.annotations.ZenExpansion;
 import stanhebben.zenscript.annotations.ZenProperty;
 import tekcays_addon.api.recipes.builders.*;
+import tekcays_addon.api.recipes.machines.TopStaggeredRecipeMap;
 
 
 @ZenExpansion("mods.tkcya.recipe.RecipeMaps")
@@ -92,7 +93,7 @@ public class TKCYARecipeMaps {
             "filtration", 1, 1, 1, 1, 1, 1, 1, 1, new PrimitiveRecipeBuilder(), false);
 
     @ZenProperty
-    public static final RecipeMap<HeatAndPressureMinMaxRecipeBuilder> PRESSURE_CRACKING = new RecipeMap<>(
+    public static final RecipeMap<HeatAndPressureMinMaxRecipeBuilder> PRESSURE_CRACKING = new TopStaggeredRecipeMap<>(
             "pressure_cracking", 0, 2, 0, 0, 1, 2, 1, 2, new HeatAndPressureMinMaxRecipeBuilder(), false)
             .setSound(GTSounds.COMPRESSOR);
 
