@@ -1,25 +1,36 @@
 package tekcays_addon.api.recipes.recipeproperties;
 
 import gregtech.api.recipes.recipeproperties.RecipeProperty;
+import gregtech.api.unification.material.Material;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.fluids.FluidStack;
+import net.minecraft.client.resources.I18n;
 
-public class FluidStackProperty extends RecipeProperty<FluidStack> implements RecipePropertiesHelper {
+import javax.annotation.Nonnull;
+
+public class GasProperty extends RecipeProperty<Material> implements RecipePropertiesHelper {
 
     public static final String KEY = "fluidStack";
 
-    @Override
-    public void drawInfo(Minecraft minecraft, int i, int i1, int i2, Object o) {
-
-    }
 
     @Override
     public String getKey() {
         return KEY;
     }
 
-    private static FluidStackProperty INSTANCE;
-    protected PressureProperty() {
-        super(KEY, Integer.class);
+    private static GasProperty INSTANCE;
+    protected GasProperty() {
+        super(KEY, Material.class);
+    }
+
+    public static GasProperty getInstance() {
+        if (INSTANCE == null) INSTANCE = new GasProperty();
+        return INSTANCE;
+    }
+
+    @Override
+    public void drawInfo(@Nonnull Minecraft minecraft, int x, int y, int color, Object value) {
+        Material casted = castValue(value);
+        minecraft.fontRenderer.drawString(I18n.format(
+                "tkcya.recipe.gas", casted.getLocalizedName()), x, y, color);
     }
 }

@@ -5,7 +5,10 @@ import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
 import gregtech.api.recipes.recipeproperties.RecipeProperty;
 import gregtech.api.recipes.recipeproperties.RecipePropertyStorage;
 import gregtech.api.recipes.recipeproperties.TemperatureProperty;
+import gregtech.api.unification.material.Material;
+import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.api.util.EnumValidationResult;
+import tekcays_addon.api.recipes.recipeproperties.GasProperty;
 import tekcays_addon.api.recipes.recipeproperties.HeatProperty;
 import tekcays_addon.api.recipes.recipeproperties.MaxPressureProperty;
 import tekcays_addon.api.recipes.recipeproperties.MinPressureProperty;
@@ -13,6 +16,8 @@ import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import java.util.List;
+
+import static gregtech.api.unification.material.Materials.Air;
 
 public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
 
@@ -27,11 +32,16 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
         if (recipePropertyStorage == null) recipePropertyStorage = new RecipePropertyStorage();
         for (RecipeProperty recipeProperty : getRecipePropertyInstance()) {
             if (recipePropertyStorage.hasRecipeProperty(recipeProperty)) {
-                if (recipePropertyStorage.getRecipePropertyValue(recipeProperty, 0) <= 0) {
+
+                if (recipeProperty instanceof GasProperty) {
+
+                    if (recipePropertyStorage.getRecipePropertyValue(recipeProperty, Air) == null) {
+                        recipePropertyStorage.store(recipeProperty, Air);
+                    } else recipePropertyStorage.store(HeatProperty.getInstance(), Air);
+
+                } else if (recipePropertyStorage.getRecipePropertyValue(recipeProperty, 0) <= 0) {
                     recipePropertyStorage.store(recipeProperty, 0);
-                }
-            } else {
-                recipePropertyStorage.store(HeatProperty.getInstance(), 0);
+                } else recipePropertyStorage.store(recipeProperty, 0);
             }
         }
     }
@@ -43,6 +53,16 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
             setRecipeStatus(EnumValidationResult.INVALID);
         }
         getRecipeBuilder().applyProperty(recipeProperty, value);
+        return recipeBuilder;
+    }
+
+    default T validateValue(Material material, RecipeProperty recipeProperty) {
+        T recipeBuilder =  getRecipeBuilder();
+        if (!material.hasProperty(PropertyKey.FLUID)) {
+            TKCYALog.logger.error(recipeProperty.getKey() + " cannot use a Material that does not have a fluid property", new IllegalArgumentException());
+            setRecipeStatus(EnumValidationResult.INVALID);
+        }
+        getRecipeBuilder().applyProperty(recipeProperty, material);
         return recipeBuilder;
     }
 
@@ -62,6 +82,11 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
         return validateValue(maxPressure, MaxPressureProperty.getInstance());
     }
 
+    @Nonnull
+    default T gas(Material material) {
+        return validateValue(material, GasProperty.getInstance());
+    }
+
     //Getters for their values
     default int getTemperature() {
         return getRecipePropertyStorage()== null ? 0 :
@@ -76,6 +101,11 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
     default int getMaxPressure() {
         return getRecipePropertyStorage() == null ? 0 :
                 getRecipePropertyStorage().getRecipePropertyValue(MaxPressureProperty.getInstance(), 0);
+    }
+
+    default Material getGas() {
+        return getRecipePropertyStorage() == null ? Air :
+                getRecipePropertyStorage().getRecipePropertyValue(GasProperty.getInstance(), Air);
     }
 
 
@@ -109,6 +139,12 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
     default boolean applyMaxPressureHelper(@Nonnull String key, Object value) {
         if (!key.equals(MaxPressureProperty.KEY)) return false;
         this.maxPressure(((Number) value).intValue());
+        return true;
+    }
+
+    default boolean applyGasHelper(@Nonnull String key, Object value) {
+        if (!key.equals(GasProperty.KEY)) return false;
+        this.gas(((Material) value));
         return true;
     }
 

@@ -520,6 +520,7 @@ tkcya.recipe.pressure=Pressure: %s
 tkcya.recipe.vacuum=Vacuum: %s
 tkcya.recipe.min.pressure=Min. pressure: %s
 tkcya.recipe.max.pressure=Max. pressure: %s
+tkcya.recipe.gas=Gas: %s
 
 tekcays_addon.machine.advanced_electrolyzer.tooltip.1=Performs electrolysis of chemicals in solution.
 tekcays_addon.machine.advanced_electrolyzer.tooltip.2=Requires two electrodes, a cathode and an anode, to perform its recipes.

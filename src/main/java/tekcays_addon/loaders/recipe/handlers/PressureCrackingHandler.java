@@ -34,69 +34,69 @@ public class PressureCrackingHandler {
     private static void lightlyCrack(Material raw, Material hydroCracked, Material steamCracked) {
 
         PRESSURE_CRACKING.recipeBuilder()
-                .notConsumable(new IntCircuitIngredient(1))
+                //.notConsumable(new IntCircuitIngredient(1))
                 .fluidInputs(raw.getFluid(1000))
-                .fluidInputs(Hydrogen.getFluid(2000))
                 .fluidOutputs(hydroCracked.getFluid(1000))
                 .temperature(400)
                 .minPressure(ATMOSPHERIC_PRESSURE * 10)
                 .maxPressure(ATMOSPHERIC_PRESSURE * 12)
+                .gas(Hydrogen)
                 .duration(80).EUt(VA[MV]).buildAndRegister();
 
         PRESSURE_CRACKING.recipeBuilder()
-                .notConsumable(new IntCircuitIngredient(1))
+                //.notConsumable(new IntCircuitIngredient(1))
                 .fluidInputs(raw.getFluid(1000))
-                .fluidInputs(Steam.getFluid(1000))
                 .fluidOutputs(steamCracked.getFluid(1000))
                 .minPressure(ATMOSPHERIC_PRESSURE * 10)
                 .maxPressure(ATMOSPHERIC_PRESSURE * 12)
                 .temperature(400)
+                .gas(Steam)
                 .duration(80).EUt(240).buildAndRegister();
     }
 
     private static void moderatelyCrack(Material raw, Material hydroCracked, Material steamCracked) {
 
         PRESSURE_CRACKING.recipeBuilder()
-                .notConsumable(new IntCircuitIngredient(2))
+                //.notConsumable(new IntCircuitIngredient(2))
                 .fluidInputs(raw.getFluid(1000))
-                .fluidInputs(Hydrogen.getFluid(4000))
                 .fluidOutputs(hydroCracked.getFluid(1000))
                 .minPressure(ATMOSPHERIC_PRESSURE * 50)
                 .maxPressure(ATMOSPHERIC_PRESSURE * 55)
                 .temperature(500)
+                .gas(Hydrogen)
                 .duration(120).EUt(180).buildAndRegister();
 
         PRESSURE_CRACKING.recipeBuilder()
-                .notConsumable(new IntCircuitIngredient(2))
+                //.notConsumable(new IntCircuitIngredient(2))
                 .fluidInputs(raw.getFluid(1000))
-                .fluidInputs(Steam.getFluid(1000))
                 .fluidOutputs(steamCracked.getFluid(1000))
                 .minPressure(ATMOSPHERIC_PRESSURE * 50)
                 .maxPressure(ATMOSPHERIC_PRESSURE * 55)
                 .temperature(500)
+                .gas(Steam)
                 .duration(120).EUt(360).buildAndRegister();
     }
 
     private static void severelyCrack(Material raw, Material hydroCracked, Material steamCracked) {
 
         PRESSURE_CRACKING.recipeBuilder()
-                .notConsumable(new IntCircuitIngredient(2))
+                //.notConsumable(new IntCircuitIngredient(2))
                 .fluidInputs(raw.getFluid(1000))
-                .fluidInputs(Hydrogen.getFluid(6000))
                 .fluidOutputs(hydroCracked.getFluid(1000))
                 .minPressure(ATMOSPHERIC_PRESSURE * 100)
                 .maxPressure(ATMOSPHERIC_PRESSURE * 120)
                 .temperature(600)
+                .gas(Hydrogen)
                 .duration(160).EUt(240).buildAndRegister();
 
         PRESSURE_CRACKING.recipeBuilder()
-                .notConsumable(new IntCircuitIngredient(3))
+                //.notConsumable(new IntCircuitIngredient(3))
                 .fluidInputs(raw.getFluid(1000))
-                .fluidInputs(Steam.getFluid(1000))
                 .fluidOutputs(steamCracked.getFluid(1000))
                 .minPressure(ATMOSPHERIC_PRESSURE * 100)
                 .maxPressure(ATMOSPHERIC_PRESSURE * 120)
                 .temperature(600)
+                .gas(Steam)
                 .duration(160).EUt(VA[HV]).buildAndRegister();
     }
     

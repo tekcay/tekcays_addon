@@ -36,6 +36,7 @@ public class HeatAndPressureMinMaxRecipeBuilder extends RecipeBuilder<HeatAndPre
         add(TemperatureProperty.getInstance());
         add(MinPressureProperty.getInstance());
         add(MaxPressureProperty.getInstance());
+        add(GasProperty.getInstance());
     }};
 
     public HeatAndPressureMinMaxRecipeBuilder(HeatAndPressureMinMaxRecipeBuilder builder) {
@@ -67,6 +68,7 @@ public class HeatAndPressureMinMaxRecipeBuilder extends RecipeBuilder<HeatAndPre
                 .append("Temperature", getTemperature())
                 .append("MinPressure", getMinPressure())
                 .append("MaxPressure", getMaxPressure())
+                .append("Gas:", getGas())
                 .toString();
     }
 
