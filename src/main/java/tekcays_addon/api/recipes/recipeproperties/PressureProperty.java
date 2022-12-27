@@ -27,7 +27,6 @@ public class PressureProperty extends RecipeProperty<Integer> implements IPressu
          if (isVacuum(casted)) minecraft.fontRenderer.drawString(I18n.format(
                  "tkcya.recipe.vacuum", convertPressureToMbar(casted)), x, y, color);
          else minecraft.fontRenderer.drawString(I18n.format(
-                 "tkcya.recipe.pressure", convertPressureToMbar(casted)), x, y, color);
-
+                 "tkcya.recipe.pressure", convertPressureToBar(casted)), x, y, color);
     }
 }
