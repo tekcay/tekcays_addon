@@ -4,14 +4,10 @@ import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
 import gregtech.api.recipes.recipeproperties.RecipeProperty;
 import gregtech.api.recipes.recipeproperties.RecipePropertyStorage;
-import gregtech.api.recipes.recipeproperties.TemperatureProperty;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.api.util.EnumValidationResult;
-import tekcays_addon.api.recipes.recipeproperties.GasProperty;
-import tekcays_addon.api.recipes.recipeproperties.HeatProperty;
-import tekcays_addon.api.recipes.recipeproperties.MaxPressureProperty;
-import tekcays_addon.api.recipes.recipeproperties.MinPressureProperty;
+import tekcays_addon.api.recipes.recipeproperties.*;
 import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
@@ -31,18 +27,21 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
         IRecipePropertyStorage recipePropertyStorage = getRecipePropertyStorage();
         if (recipePropertyStorage == null) recipePropertyStorage = new RecipePropertyStorage();
         for (RecipeProperty recipeProperty : getRecipePropertyInstance()) {
-            if (recipePropertyStorage.hasRecipeProperty(recipeProperty)) {
 
                 if (recipeProperty instanceof GasProperty) {
+                    if (recipePropertyStorage.hasRecipeProperty(recipeProperty)) {
+                        if (recipePropertyStorage.getRecipePropertyValue(recipeProperty, Air) == null) {
+                            recipePropertyStorage.store(recipeProperty, Air);
+                        }
+                    } else recipePropertyStorage.store(recipeProperty, Air);
+                    continue;
+                }
 
-                    if (recipePropertyStorage.getRecipePropertyValue(recipeProperty, Air) == null) {
-                        recipePropertyStorage.store(recipeProperty, Air);
-                    } else recipePropertyStorage.store(HeatProperty.getInstance(), Air);
-
-                } else if (recipePropertyStorage.getRecipePropertyValue(recipeProperty, 0) <= 0) {
+            if (recipePropertyStorage.hasRecipeProperty(recipeProperty)) {
+                if (recipePropertyStorage.getRecipePropertyValue(recipeProperty, 0) <= 0) {
                     recipePropertyStorage.store(recipeProperty, 0);
-                } else recipePropertyStorage.store(recipeProperty, 0);
-            }
+                }
+            } else recipePropertyStorage.store(recipeProperty, 0);
         }
     }
 
@@ -69,7 +68,7 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
     //RecipeProperties
     @Nonnull
     default T temperature (int temperature) {
-        return validateValue(temperature, TemperatureProperty.getInstance());
+        return validateValue(temperature, NoCoilTemperatureProperty.getInstance());
     }
 
     @Nonnull
@@ -90,7 +89,7 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
     //Getters for their values
     default int getTemperature() {
         return getRecipePropertyStorage()== null ? 0 :
-                getRecipePropertyStorage().getRecipePropertyValue(TemperatureProperty.getInstance(), 0);
+                getRecipePropertyStorage().getRecipePropertyValue(NoCoilTemperatureProperty.getInstance(), 0);
     }
 
     default int getMinPressure() {
@@ -111,7 +110,7 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
 
     default boolean applyPropertyHelper(@Nonnull String key, Object value) {
         for (RecipeProperty recipeProperty : getRecipePropertyInstance()) {
-            if (recipeProperty instanceof TemperatureProperty) {
+            if (recipeProperty instanceof NoCoilTemperatureProperty) {
                 if (applyTemperatureHelper(key, value)) return true;
             }
             if (recipeProperty instanceof MinPressureProperty) {
@@ -120,12 +119,15 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
             if (recipeProperty instanceof MaxPressureProperty) {
                 if (applyMaxPressureHelper(key, value)) return true;
             }
+            if (recipeProperty instanceof GasProperty) {
+                if (applyGasHelper(key, value)) return true;
+            }
         }
         return false;
     }
 
     default boolean applyTemperatureHelper(@Nonnull String key, Object value) {
-        if (!key.equals(TemperatureProperty.KEY)) return false;
+        if (!key.equals(NoCoilTemperatureProperty.KEY)) return false;
         this.temperature(((Number) value).intValue());
         return true;
     }

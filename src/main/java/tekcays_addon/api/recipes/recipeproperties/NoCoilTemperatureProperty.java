@@ -6,30 +6,30 @@ import net.minecraft.client.resources.I18n;
 
 import javax.annotation.Nonnull;
 
-public class HeatProperty extends RecipeProperty<Integer> implements RecipePropertiesHelper {
+public class NoCoilTemperatureProperty extends RecipeProperty<Integer> implements RecipePropertiesHelper {
 
-    public static final String KEY = "heat";
+    public static final String KEY = "temperature";
 
     @Override
     public String getKey() {
         return KEY;
     }
 
-    private static HeatProperty INSTANCE;
+    private static NoCoilTemperatureProperty INSTANCE;
 
-    private HeatProperty() {
+    private NoCoilTemperatureProperty() {
         super(KEY, Integer.class);
     }
 
-    public static HeatProperty getInstance() {
+    public static NoCoilTemperatureProperty getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new HeatProperty();
+            INSTANCE = new NoCoilTemperatureProperty();
         }
         return INSTANCE;
     }
 
     @Override
     public void drawInfo(@Nonnull Minecraft minecraft, int x, int y, int color, Object value) {
-        minecraft.fontRenderer.drawString(I18n.format("tkcya.recipe.heat", castValue(value)), x, y, color);
+        minecraft.fontRenderer.drawString(I18n.format("tkcya.recipe.temperature", castValue(value)), x, y, color);
     }
 }

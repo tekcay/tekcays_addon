@@ -1,6 +1,5 @@
 package tekcays_addon.loaders.recipe.handlers;
 
-import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import gregtech.api.unification.material.Material;
 
 import static gregtech.api.GTValues.*;
@@ -34,7 +33,6 @@ public class PressureCrackingHandler {
     private static void lightlyCrack(Material raw, Material hydroCracked, Material steamCracked) {
 
         PRESSURE_CRACKING.recipeBuilder()
-                //.notConsumable(new IntCircuitIngredient(1))
                 .fluidInputs(raw.getFluid(1000))
                 .fluidOutputs(hydroCracked.getFluid(1000))
                 .temperature(400)
@@ -44,7 +42,6 @@ public class PressureCrackingHandler {
                 .duration(80).EUt(VA[MV]).buildAndRegister();
 
         PRESSURE_CRACKING.recipeBuilder()
-                //.notConsumable(new IntCircuitIngredient(1))
                 .fluidInputs(raw.getFluid(1000))
                 .fluidOutputs(steamCracked.getFluid(1000))
                 .minPressure(ATMOSPHERIC_PRESSURE * 10)
@@ -57,7 +54,6 @@ public class PressureCrackingHandler {
     private static void moderatelyCrack(Material raw, Material hydroCracked, Material steamCracked) {
 
         PRESSURE_CRACKING.recipeBuilder()
-                //.notConsumable(new IntCircuitIngredient(2))
                 .fluidInputs(raw.getFluid(1000))
                 .fluidOutputs(hydroCracked.getFluid(1000))
                 .minPressure(ATMOSPHERIC_PRESSURE * 50)
@@ -67,7 +63,6 @@ public class PressureCrackingHandler {
                 .duration(120).EUt(180).buildAndRegister();
 
         PRESSURE_CRACKING.recipeBuilder()
-                //.notConsumable(new IntCircuitIngredient(2))
                 .fluidInputs(raw.getFluid(1000))
                 .fluidOutputs(steamCracked.getFluid(1000))
                 .minPressure(ATMOSPHERIC_PRESSURE * 50)
@@ -80,7 +75,6 @@ public class PressureCrackingHandler {
     private static void severelyCrack(Material raw, Material hydroCracked, Material steamCracked) {
 
         PRESSURE_CRACKING.recipeBuilder()
-                //.notConsumable(new IntCircuitIngredient(2))
                 .fluidInputs(raw.getFluid(1000))
                 .fluidOutputs(hydroCracked.getFluid(1000))
                 .minPressure(ATMOSPHERIC_PRESSURE * 100)
@@ -90,7 +84,6 @@ public class PressureCrackingHandler {
                 .duration(160).EUt(240).buildAndRegister();
 
         PRESSURE_CRACKING.recipeBuilder()
-                //.notConsumable(new IntCircuitIngredient(3))
                 .fluidInputs(raw.getFluid(1000))
                 .fluidOutputs(steamCracked.getFluid(1000))
                 .minPressure(ATMOSPHERIC_PRESSURE * 100)
