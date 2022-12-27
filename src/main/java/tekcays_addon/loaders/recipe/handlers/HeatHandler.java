@@ -69,7 +69,6 @@ public class HeatHandler {
 
         for (int i = 1; i < FUEL_HEATERS.size(); i++) {
             Material m = FUEL_HEATERS.get(i).getMaterial();
-            TKCYALog.logger.info("i = " + i);
             ModHandler.addShapedRecipe(true, m.getUnlocalizedName() + "_solid_fuel_heater", TKCYAMetaTileEntities.SOLID_FUEL_HEATER[i].getStackForm(),
                     "PDP", "PwP", "BBB",
                     'D', new UnificationEntry(plateDouble, Copper),
