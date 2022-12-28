@@ -20,10 +20,11 @@ public class TopStaggeredRecipeMap<R extends RecipeBuilder<R>> extends RecipeMap
     @Override
     public ModularUI.Builder createJeiUITemplate(IItemHandlerModifiable importItems, IItemHandlerModifiable exportItems, FluidTankList importFluids, FluidTankList exportFluids, int yOffset) {
         ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 176, 150)
-                .widget(new ProgressWidget(200, 75, 5, 18, 18, GuiTextures.PROGRESS_BAR_ARROW, ProgressWidget.MoveType.HORIZONTAL));
-        addSlot(builder, 52, 5, 0, importItems, null, false, false);
-        addSlot(builder, 30, 5, 0, null, importFluids, true, false);
-        addSlot(builder, 106, 5, 0, null, exportFluids, true, true);
+                .widget(new ProgressWidget(200, 96, 5, 20, 18, GuiTextures.PROGRESS_BAR_ARROW, ProgressWidget.MoveType.HORIZONTAL));
+        addSlot(builder, 30, 5, 0, importItems, null, false, false);
+        addSlot(builder, 52, 5, 1, importItems, null, false, false);
+        addSlot(builder, 74, 5, 0, null, importFluids, true, false);
+        addSlot(builder, 118, 5, 0, null, exportFluids, true, true);
         return builder;
     }
 }

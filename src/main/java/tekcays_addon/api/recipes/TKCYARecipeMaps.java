@@ -111,7 +111,8 @@ public class TKCYARecipeMaps {
     @ZenProperty
     public static final RecipeMap<HeatAndPressureMinMaxRecipeBuilder> PRESSURE_CRACKING = new TopStaggeredRecipeMap<>(
             "pressure_cracking", 0, 2, 0, 0, 1, 2, 1, 2, new HeatAndPressureMinMaxRecipeBuilder(), false)
-            .setSound(GTSounds.COMPRESSOR);
+            .setSound(GTSounds.COMPRESSOR)
+            .setSlotOverlay(false,false, true, GuiTextures.CRYSTAL_OVERLAY);
 
     @ZenProperty
     public static final RecipeMap<HeatRecipeBuilder> HEATING = new RecipeMap<>(

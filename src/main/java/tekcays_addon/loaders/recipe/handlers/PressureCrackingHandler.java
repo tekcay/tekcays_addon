@@ -30,6 +30,7 @@ public class PressureCrackingHandler {
         lightlyCrack(RefineryGas, LightlyHydroCrackedGas, LightlySteamCrackedGas);
         severelyCrack(RefineryGas, SeverelyHydroCrackedGas, SeverelySteamCrackedGas);
 
+        //2 CH4 + H2O -> 2 CO + 3 H2
         PRESSURE_CRACKING.recipeBuilder()
                 .notConsumable(new IntCircuitIngredient(1))
                 .fluidInputs(Methane.getFluid(1000))
@@ -40,6 +41,7 @@ public class PressureCrackingHandler {
                 .gas(Steam)
                 .duration(120).EUt(120).buildAndRegister();
 
+        //CH4 + H2O -> CO + 3 H2
         PRESSURE_CRACKING.recipeBuilder()
                 .notConsumable(new IntCircuitIngredient(2))
                 .fluidInputs(Methane.getFluid(1000))
@@ -50,6 +52,7 @@ public class PressureCrackingHandler {
                 .gas(Steam)
                 .duration(120).EUt(180).buildAndRegister();
 
+        //CH4 + 2 H2O -> CO2 + 4 H2
         PRESSURE_CRACKING.recipeBuilder()
                 .notConsumable(new IntCircuitIngredient(3))
                 .fluidInputs(Methane.getFluid(1000))
