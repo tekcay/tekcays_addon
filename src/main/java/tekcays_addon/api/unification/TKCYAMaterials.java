@@ -53,6 +53,9 @@ public class TKCYAMaterials {
     public static Material MelonOil;
     public static Material PumpkinOil;
     public static Material MixtureToFilter;
+    public static Material LightlySteamCrackedMethane;
+    public static Material ModeratelySteamCrackedMethane;
+    public static Material SeverelySteamCrackedMethane;
 
     /**
      * Misc

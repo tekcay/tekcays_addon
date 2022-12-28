@@ -5,6 +5,7 @@ import gregtech.api.unification.material.Material;
 
 import static gregtech.api.GTValues.*;
 import static gregtech.api.unification.material.Materials.*;
+import static tekcays_addon.api.unification.TKCYAMaterials.*;
 import static tekcays_addon.api.recipes.TKCYARecipeMaps.PRESSURE_CRACKING;
 import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
 
@@ -28,6 +29,36 @@ public class PressureCrackingHandler {
         severelyCrack(Naphtha, SeverelyHydroCrackedNaphtha, SeverelySteamCrackedNaphtha);
         lightlyCrack(RefineryGas, LightlyHydroCrackedGas, LightlySteamCrackedGas);
         severelyCrack(RefineryGas, SeverelyHydroCrackedGas, SeverelySteamCrackedGas);
+
+        PRESSURE_CRACKING.recipeBuilder()
+                .notConsumable(new IntCircuitIngredient(1))
+                .fluidInputs(Methane.getFluid(1000))
+                .fluidOutputs(LightlySteamCrackedMethane.getFluid(1000))
+                .minPressure(ATMOSPHERIC_PRESSURE * 10)
+                .maxPressure(ATMOSPHERIC_PRESSURE * 12)
+                .temperature(500)
+                .gas(Steam)
+                .duration(120).EUt(120).buildAndRegister();
+
+        PRESSURE_CRACKING.recipeBuilder()
+                .notConsumable(new IntCircuitIngredient(2))
+                .fluidInputs(Methane.getFluid(1000))
+                .fluidOutputs(ModeratelySteamCrackedMethane.getFluid(1000))
+                .minPressure(ATMOSPHERIC_PRESSURE * 50)
+                .maxPressure(ATMOSPHERIC_PRESSURE * 55)
+                .temperature(600)
+                .gas(Steam)
+                .duration(120).EUt(180).buildAndRegister();
+
+        PRESSURE_CRACKING.recipeBuilder()
+                .notConsumable(new IntCircuitIngredient(3))
+                .fluidInputs(Methane.getFluid(1000))
+                .fluidOutputs(SeverelySteamCrackedMethane.getFluid(1000))
+                .minPressure(ATMOSPHERIC_PRESSURE * 10)
+                .maxPressure(ATMOSPHERIC_PRESSURE * 12)
+                .temperature(700)
+                .gas(Steam)
+                .duration(120).EUt(240).buildAndRegister();
 
     }
 

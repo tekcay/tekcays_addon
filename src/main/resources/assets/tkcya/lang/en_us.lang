@@ -267,6 +267,9 @@ material.flue_gas=Flue Gas
 material.melon_oil=Melon Oil
 material.pumpkin_oil=Pumpkin Oil
 material.mixture_to_filter=Mixture To Filter
+material.lightly_steam_cracked_methane=Lightly Steam Cracked Methane
+material.moderately_steam_cracked_methane=Moderately Steam Cracked Methane
+material.severely_steam_cracked_methane=Severly Steam Cracked Methane
 
 ##Misc
 material.hot_air=Hot Air
