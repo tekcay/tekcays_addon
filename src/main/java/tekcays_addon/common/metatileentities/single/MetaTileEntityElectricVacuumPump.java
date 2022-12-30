@@ -27,6 +27,7 @@ public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor
     private int fluidCapacity;
     private int tierMultiplier = (getTier() * getTier() + 1);
     private IFluidTank fluidTank;
+    private int pressure;
 
     public MetaTileEntityElectricVacuumPump(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, true, tier);
@@ -53,19 +54,20 @@ public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor
         return tank.getTankAt(0).getFluidAmount();
     }
 
-    private void setTransferRate(int pressure) {
-        double pressurePercentage = (double) (100 - ((ATMOSPHERIC_PRESSURE - pressure) / ATMOSPHERIC_PRESSURE));
-        transferRate = (int) (BASE_TRANSFER_RATE * pressurePercentage);
+    @Override
+    protected int getCurrentTransferRate() {
+        return this.transferRate;
     }
+
 
     @Override
     public void update() {
         super.update();
         if (!getWorld().isRemote) {
-            vacuumContainer = getAdjacentIVacuumContainer(getFrontFacing(), this);
+            vacuumContainer = getAdjacentIVacuumContainer(getFrontFacing());
             if (vacuumContainer != null) {
-                int pressure = vacuumContainer.getPressure();
-                setTransferRate(pressure);
+                pressure = vacuumContainer.getPressure();
+                transferRate = getTransferRate();
             } else {
                 transferRate = 0;
             }
@@ -76,7 +78,7 @@ public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor
 
 
             //TODO first make Air FluidStack amount to 1 and the added FluidStack at standard, then make it pressurized
-            applyVacuum(vacuumContainer, transferRate);
+            applyVacuum(transferRate);
 
             energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
         }
@@ -99,5 +101,20 @@ public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor
     @Override
     public MetaTileEntityElectricVacuumPump getMetaTileEntity() {
         return this;
+    }
+
+    @Override
+    public int getPressure() {
+        return pressure;
+    }
+
+    @Override
+    public IVacuumContainer getPressureContainer() {
+        return vacuumContainer;
+    }
+
+    @Override
+    public int getBaseTransferRate() {
+        return BASE_TRANSFER_RATE;
     }
 }

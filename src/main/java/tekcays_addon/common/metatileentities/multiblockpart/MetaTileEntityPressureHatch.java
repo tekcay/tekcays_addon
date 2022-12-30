@@ -75,7 +75,7 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     }
 
     public IPressureContainer getPressureContainer() {
-        return this.pressureContainer;
+        return pressureContainer;
     }
 
     @Override
@@ -119,10 +119,11 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
+        list.add(new TextComponentTranslation("behavior.tricorder.fluid.amount", pressureContainer.getFluidAmount()));
         list.add(new TextComponentTranslation("behavior.tricorder.air.amount", pressureContainer.getAirAmount()));
         list.add(new TextComponentTranslation("behavior.tricorder.pressure.pressure", pressureContainer.convertPressureToBar(pressureContainer.getPressure())));
-        list.add(new TextComponentTranslation("behavior.tricorder.min_pressure.pressure", pressureContainer.convertPressureToBar(minPressure)));
-        list.add(new TextComponentTranslation("behavior.tricorder.max_pressure.pressure", pressureContainer.convertPressureToBar(maxPressure)));
+        //list.add(new TextComponentTranslation("behavior.tricorder.min_pressure.pressure", pressureContainer.convertPressureToBar(minPressure)));
+        //list.add(new TextComponentTranslation("behavior.tricorder.max_pressure.pressure", pressureContainer.convertPressureToBar(maxPressure)));
         return list;
     }
 

@@ -38,9 +38,9 @@ import static gregtech.api.capability.GregtechDataCodes.UPDATE_OUTPUT_FACING;
 import static net.minecraft.util.EnumFacing.UP;
 import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
 
-public class ElectricPressureCompressor extends TieredMetaTileEntity implements IActiveOutputSide {
+public abstract class ElectricPressureCompressor extends TieredMetaTileEntity implements IActiveOutputSide {
 
-    private int transferRate = 0;
+    protected int transferRate = 0;
     private final int BASE_TRANSFER_RATE;
     private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()] * 15/16);
     private final boolean canHandleVacuum;
@@ -56,11 +56,6 @@ public class ElectricPressureCompressor extends TieredMetaTileEntity implements 
         this.BASE_TRANSFER_RATE = canHandleVacuum ? 50 * tierMultiplier : 100 * tierMultiplier;
         this.fluidCapacity = 1000 * (getTier() * getTier() + 1);
         initializeInventory();
-    }
-
-    @Override
-    public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
-        return new ElectricPressureCompressor(metaTileEntityId, canHandleVacuum, getTier());
     }
 
     @Override
@@ -87,11 +82,13 @@ public class ElectricPressureCompressor extends TieredMetaTileEntity implements 
         return createUITemplate(player).build(getHolder(), player);
     }
 
+    protected abstract int getCurrentTransferRate();
+
     protected ModularUI.Builder createUITemplate(EntityPlayer entityPlayer) {
         return ModularUI.builder(GuiTextures.BACKGROUND, 176, 166)
                 .shouldColor(false)
                 .widget(new LabelWidget(5, 5, getMetaFullName()))
-                .widget(new LabelWidget(5, 25, String.format("Transfer rate: %d L/t", transferRate)))
+                .widget(new LabelWidget(5, 25, String.format("Transfer rate: %d L/t", getCurrentTransferRate())))
                 .widget(new TankWidget((canHandleVacuum ? exportFluids : importFluids).getTankAt(0), 20, 60, 18, 18)
                         .setBackgroundTexture(GuiTextures.FLUID_SLOT)
                         .setAlwaysShowFull(true)
@@ -151,16 +148,10 @@ public class ElectricPressureCompressor extends TieredMetaTileEntity implements 
         return true;
     }
 
-    private void setTransferRate(int pressure) {
-        double pressurePercentage = canHandleVacuum ? (double) (100 - ((ATMOSPHERIC_PRESSURE - pressure) / ATMOSPHERIC_PRESSURE)) : (double) pressure / pressureContainer.getMaxPressure();
-        transferRate = (int) (BASE_TRANSFER_RATE * pressurePercentage);
-    }
-
     @Override
     public void update() {
         super.update();
     }
-
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {

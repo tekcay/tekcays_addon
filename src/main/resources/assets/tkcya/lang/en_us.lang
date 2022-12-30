@@ -564,6 +564,7 @@ behavior.tricorder.heatMultiplier=Heat Multiplier: %d
 
 behavior.tricorder.burn_time_left= Burn Time Left %s ticks
 
+behavior.tricorder.fluid.amount=Fluid amount: %d L
 behavior.tricorder.air.amount=Air amount: %d L
 behavior.tricorder.pressure.pressure=Pressure: %d
 behavior.tricorder.pressure.vacuum=Vacuum: %d

@@ -12,23 +12,29 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import tekcays_addon.api.capability.IPressureContainer;
+import tekcays_addon.api.capability.IVacuumContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.metatileentity.ElectricPressureCompressor;
 import tekcays_addon.api.utils.IPressureVacuum;
+import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
+import static tekcays_addon.api.utils.TKCYAValues.MINIMUM_FLUID_STACK_AMOUNT;
+
 
 public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCompressor implements IPressureVacuum {
 
-    private int transferRate = 0;
+    //private int transferRate = 0;
     private final int BASE_TRANSFER_RATE;
     private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()] * 15/16);
     private IPressureContainer pressureContainer;
     private int fluidCapacity;
     private int tierMultiplier = (getTier() * getTier() + 1);
     private IFluidTank fluidTank;
+    private int pressure;
 
     public MetaTileEntityElectricPressureCompressor(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, false, tier);
@@ -45,45 +51,43 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
     @Override
     protected void initializeInventory() {
         super.initializeInventory();
-        this.exportFluids = this.createExportFluidHandler();
-        fluidTank = this.exportFluids.getTankAt(0);
+        this.importFluids = this.createImportFluidHandler();
+        fluidTank = this.importFluids.getTankAt(0);
     }
 
-
-    private int getTankFluidAmount(FluidTankList tank) {
-        return tank.getTankAt(0).getFluidAmount();
+    @Override
+    protected int getCurrentTransferRate() {
+        return this.transferRate;
     }
 
-
-    private void setTransferRate(int pressure) {
-        double pressurePercentage = (double) pressure / pressureContainer.getMaxPressure();
-        transferRate = (int) (BASE_TRANSFER_RATE * pressurePercentage);
-    }
 
     @Override
     public void update() {
         super.update();
+        //Redstone stops fluid transfer
+        if (this.isBlockRedstonePowered()) return;
+        if (energyContainer.getEnergyStored() < ENERGY_BASE_CONSUMPTION) return;
+        TKCYALog.logger.info("getOutputSide() = " + getOutputSide().getName());
         if (!getWorld().isRemote) {
-            pressureContainer = getAdjacentIPressureContainer(getFrontFacing(), this);
+            pressureContainer = getAdjacentIPressureContainer(getOutputSide());
             if (pressureContainer != null) {
-                int pressure = pressureContainer.getPressure();
-                setTransferRate(pressure);
+                TKCYALog.logger.info("pressureContainer is not null");
+                pressure = pressureContainer.getPressure();
+                TKCYALog.logger.info("pressure = " + pressure);
+                transferRate = getBaseTransferRate();
+                TKCYALog.logger.info("transferRate = " + transferRate);
             } else {
                 transferRate = 0;
+                return;
             }
-
-            //Redstone stops heating
-            if (this.isBlockRedstonePowered()) return;
-            if (energyContainer.getEnergyStored() < ENERGY_BASE_CONSUMPTION) return;
-
-
-            //TODO first make Air FluidStack amount to 1 and the added FluidStack at standard, then make it pressurized
 
             FluidStack fluidTankContent = fluidTank.getFluid();
             if (fluidTankContent == null) return;
             Fluid fluid = fluidTankContent.getFluid();
-            applyPressure(fluidTank, fluid, pressureContainer, transferRate);
 
+            applyPressure(fluidTank, fluid, transferRate);
+            if (pressureContainer.getAirAmount() > MINIMUM_FLUID_STACK_AMOUNT) applyVacuum(transferRate);
+            pressureContainer.setPressure();
             energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
         }
     }
@@ -100,9 +104,26 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
         return super.getCapability(capability, side);
     }
 
+    //Implementations
+
     @Override
     public MetaTileEntityElectricPressureCompressor getMetaTileEntity() {
         return this;
+    }
+
+    @Override
+    public int getPressure() {
+        return pressure;
+    }
+
+    @Override
+    public IVacuumContainer getPressureContainer() {
+        return pressureContainer;
+    }
+
+    @Override
+    public int getBaseTransferRate() {
+        return BASE_TRANSFER_RATE;
     }
 
 }

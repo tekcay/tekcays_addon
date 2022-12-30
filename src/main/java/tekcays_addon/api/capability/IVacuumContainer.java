@@ -68,6 +68,11 @@ public interface IVacuumContainer extends IPressureFormatting {
         return getAirFluidStack().amount;
     }
 
+    /**
+     *
+     * @param amount
+     * @param doAdd true: adds the amount, false: substracts the amount
+     */
     default void changeAirFluidStack(int amount, boolean doAdd) {
         if (doAdd) setAirFluidStack(IFluidStack.addFluidStacks(getAirFluidStack(), amount));
         else setAirFluidStack(IFluidStack.substractFluidStacks(getAirFluidStack(), amount));
