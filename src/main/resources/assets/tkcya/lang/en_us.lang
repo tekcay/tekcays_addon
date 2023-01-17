@@ -450,7 +450,7 @@ tkcya.machine.pressure_hatch.tooltip.pressure.leak=Loses §a%d L/s§7.
 
 tkcya.machine.electric_pressure_compressor.pressure.tooltip.description=Transfer a fluid to the OUTPUT face to increase §aPressure§7.
 tkcya.machine.electric_pressure_compressor.vacuum.tooltip.description=Transfer a fluid from the INPUT face to increase §aVacuum§7.
-tkcya.machine.electric_pressure_compressor.tooltip.transfer=Base transfer rate: %d L/s
+tkcya.machine.electric_pressure_compressor.tooltip.transfer=Base transfer rate: %d L/t
 tkcya.machine.electric_pressure_compressor.tooltip.fluid_capacity=Fluid capacity: %d L.
 
 tekcays_addon.multiblock.electric_melter.tooltip.1=Temperature: §a%d K§7.

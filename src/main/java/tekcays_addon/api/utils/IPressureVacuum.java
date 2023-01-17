@@ -49,31 +49,30 @@ public interface IPressureVacuum {
         }
     }
 
-    default IPressureContainer getAdjacentIPressureContainer(EnumFacing side) {
-        BlockPos blockPos = getMetaTileEntity().getPos().offset(side);
+    default IPressureContainer getAdjacentIPressureContainer(EnumFacing outputSide) {
+        BlockPos blockPos = getMetaTileEntity().getPos().offset(outputSide);
         TileEntity te;
         IPressureContainer container;
         try {
             te = getWorld().getTileEntity(blockPos);
-            container = te.getCapability(TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER, side.getOpposite());
+            container = te.getCapability(TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER, outputSide.getOpposite());
         } catch (NullPointerException e) {
             return null;
         }
-        if (!side.equals(getMetaTileEntity().getFrontFacing())) return null;
         return container;
     }
 
-    default IVacuumContainer getAdjacentIVacuumContainer(EnumFacing side) {
-        BlockPos blockPos = getMetaTileEntity().getPos().offset(side);
+    default IVacuumContainer getAdjacentIVacuumContainer(EnumFacing outputSide) {
+        BlockPos blockPos = getMetaTileEntity().getPos().offset(outputSide);
         TileEntity te;
         IVacuumContainer container;
         try {
             te = getWorld().getTileEntity(blockPos);
-            container = te.getCapability(TKCYATileCapabilities.CAPABILITY_VACUUM_CONTAINER, side.getOpposite());
+            container = te.getCapability(TKCYATileCapabilities.CAPABILITY_VACUUM_CONTAINER, outputSide.getOpposite());
         } catch (NullPointerException e) {
             return null;
         }
-        if (!side.equals(getMetaTileEntity().getFrontFacing())) return null;
+
         return container;
     }
 

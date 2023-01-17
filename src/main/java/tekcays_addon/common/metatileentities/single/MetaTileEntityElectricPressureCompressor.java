@@ -2,11 +2,13 @@ package tekcays_addon.common.metatileentities.single;
 
 import gregtech.api.GTValues;
 import gregtech.api.capability.GregtechTileCapabilities;
-import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -21,14 +23,12 @@ import tekcays_addon.api.utils.TKCYALog;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
-import static tekcays_addon.api.utils.TKCYAValues.MINIMUM_FLUID_STACK_AMOUNT;
+import java.util.List;
 
+import static tekcays_addon.api.utils.TKCYAValues.MINIMUM_FLUID_STACK_AMOUNT;
 
 public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCompressor implements IPressureVacuum {
 
-    //private int transferRate = 0;
-    private final int BASE_TRANSFER_RATE;
     private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()] * 15/16);
     private IPressureContainer pressureContainer;
     private int fluidCapacity;
@@ -38,7 +38,6 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
 
     public MetaTileEntityElectricPressureCompressor(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, false, tier);
-        this.BASE_TRANSFER_RATE = 100 * tierMultiplier;
         this.fluidCapacity = 1000 * (getTier() * getTier() + 1);
         initializeInventory();
     }
@@ -55,6 +54,7 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
         fluidTank = this.importFluids.getTankAt(0);
     }
 
+
     @Override
     protected int getCurrentTransferRate() {
         return this.transferRate;
@@ -67,7 +67,7 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
         //Redstone stops fluid transfer
         if (this.isBlockRedstonePowered()) return;
         if (energyContainer.getEnergyStored() < ENERGY_BASE_CONSUMPTION) return;
-        TKCYALog.logger.info("getOutputSide() = " + getOutputSide().getName());
+
         if (!getWorld().isRemote) {
             pressureContainer = getAdjacentIPressureContainer(getOutputSide());
             if (pressureContainer != null) {

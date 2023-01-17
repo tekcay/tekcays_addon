@@ -25,6 +25,7 @@ import tekcays_addon.api.capability.IVacuumContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.impl.VacuumContainer;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
+import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -107,10 +108,10 @@ public class MetaTileEntityVacuumHatch extends MetaTileEntityMultiblockPart impl
     @Override
     @Nullable
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
-        if (capability.equals(TKCYATileCapabilities.CAPABILITY_VACUUM_CONTAINER)) {
+        if (capability.equals(TKCYATileCapabilities.CAPABILITY_VACUUM_CONTAINER) && side.equals(getFrontFacing())) {
             return TKCYATileCapabilities.CAPABILITY_VACUUM_CONTAINER.cast(vacuumContainer);
         }
-        return super.getCapability(capability, side);
+        return null;
     }
 
     @Nonnull

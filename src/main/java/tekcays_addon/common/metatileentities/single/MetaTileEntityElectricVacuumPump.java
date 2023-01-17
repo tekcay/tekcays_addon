@@ -5,8 +5,11 @@ import gregtech.api.capability.GregtechTileCapabilities;
 import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.IFluidTank;
 import tekcays_addon.api.capability.IVacuumContainer;
@@ -16,12 +19,13 @@ import tekcays_addon.api.utils.IPressureVacuum;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
+
 import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
 
 public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor implements IPressureVacuum {
 
     private int transferRate = 0;
-    private final int BASE_TRANSFER_RATE;
     private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()] * 15/16);
     private IVacuumContainer vacuumContainer;
     private int fluidCapacity;
@@ -31,8 +35,6 @@ public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor
 
     public MetaTileEntityElectricVacuumPump(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, true, tier);
-
-        this.BASE_TRANSFER_RATE = 50 * tierMultiplier;
         this.fluidCapacity = 1000 * (getTier() * getTier() + 1);
         initializeInventory();
     }
@@ -83,8 +85,6 @@ public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor
             energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
         }
     }
-
-
     @Override
     @Nullable
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
@@ -96,7 +96,6 @@ public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor
         }
         return super.getCapability(capability, side);
     }
-
 
     @Override
     public MetaTileEntityElectricVacuumPump getMetaTileEntity() {
@@ -117,4 +116,5 @@ public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor
     public int getBaseTransferRate() {
         return BASE_TRANSFER_RATE;
     }
+
 }

@@ -31,7 +31,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static gregtech.api.unification.material.Materials.Air;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
 public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IPressureContainer>, IDataInfoProvider {
@@ -65,17 +64,16 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
         super.update();
         //pressureContainer.setPressure();
         if (getOffsetTimer() % 20 == 0) {
-
             /*
             getPressureContainer().leaksContainer(leakingRate);
-            getPressureContainer().setPressure();
             */
+            getPressureContainer().setPressure();
         }
 
     }
 
     public IPressureContainer getPressureContainer() {
-        return pressureContainer;
+        return this.pressureContainer;
     }
 
     @Override
@@ -109,10 +107,10 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     @Override
     @Nullable
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
-        if (capability.equals(TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER)) {
+        if (capability.equals(TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER) && side.equals(getFrontFacing())) {
             return TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER.cast(pressureContainer);
         }
-        return super.getCapability(capability, side);
+        return null;
     }
 
     @Nonnull

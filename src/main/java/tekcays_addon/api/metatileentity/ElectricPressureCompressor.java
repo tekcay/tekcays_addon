@@ -41,7 +41,7 @@ import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
 public abstract class ElectricPressureCompressor extends TieredMetaTileEntity implements IActiveOutputSide {
 
     protected int transferRate = 0;
-    private final int BASE_TRANSFER_RATE;
+    protected final int BASE_TRANSFER_RATE;
     private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()] * 15/16);
     private final boolean canHandleVacuum;
     private EnumFacing outputSide;
@@ -53,7 +53,7 @@ public abstract class ElectricPressureCompressor extends TieredMetaTileEntity im
     public ElectricPressureCompressor(ResourceLocation metaTileEntityId, boolean canHandleVacuum, int tier) {
         super(metaTileEntityId, tier);
         this.canHandleVacuum = canHandleVacuum;
-        this.BASE_TRANSFER_RATE = canHandleVacuum ? 50 * tierMultiplier : 100 * tierMultiplier;
+        this.BASE_TRANSFER_RATE = canHandleVacuum ? tierMultiplier : 2 * tierMultiplier;
         this.fluidCapacity = 1000 * (getTier() * getTier() + 1);
         initializeInventory();
     }
@@ -129,6 +129,8 @@ public abstract class ElectricPressureCompressor extends TieredMetaTileEntity im
         }
     }
 
+
+
     //To prevent the heater to heat on the bottom face
     @Override
     public boolean isValidFrontFacing(EnumFacing facing) {
@@ -158,11 +160,11 @@ public abstract class ElectricPressureCompressor extends TieredMetaTileEntity im
         super.addInformation(stack, player, tooltip, advanced);
         if (canHandleVacuum) tooltip.add(I18n.format("tkcya.machine.electric_pressure_compressor.vacuum.tooltip.description"));
         else tooltip.add(I18n.format("tkcya.machine.electric_pressure_compressor.pressure.tooltip.description"));
+        tooltip.add(I18n.format("tkcya.machine.electric_pressure_compressor.tooltip.transfer", BASE_TRANSFER_RATE));
         tooltip.add(I18n.format("tkcya.machine.electric_pressure_compressor.tooltip.fluid_capacity", fluidCapacity));
         tooltip.add(I18n.format("gregtech.universal.tooltip.max_voltage_in", energyContainer.getInputVoltage(), GTValues.VNF[getTier()]));
         tooltip.add(I18n.format("tkcya.machine.tooltip.consumption", ENERGY_BASE_CONSUMPTION));
         tooltip.add(I18n.format("gregtech.universal.tooltip.energy_storage_capacity", energyContainer.getEnergyCapacity()));
-        tooltip.add(I18n.format("tkcya.machine.electric_pressure_compressor.tooltip.transfer", BASE_TRANSFER_RATE));
         tooltip.add(I18n.format("tkcya.machine.redstone.inverse.tooltip"));
 
     }
