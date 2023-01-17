@@ -3,6 +3,7 @@ package tekcays_addon.api.utils;
 import gregtech.api.metatileentity.MetaTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
@@ -49,23 +50,29 @@ public interface IPressureVacuum {
     }
 
     default IPressureContainer getAdjacentIPressureContainer(EnumFacing side) {
-        TileEntity te = getWorld().getTileEntity(getMetaTileEntity().getPos().offset(side));
-        if (te == null) TKCYALog.logger.info("te == null");
-        if (te == null) return null;
-
-        IPressureContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER, side.getOpposite());
-        if (container == null) TKCYALog.logger.info("container == null");
-        if (container == null) return null;
-        //if (!side.equals(getMetaTileEntity().getFrontFacing())) return null;
+        BlockPos blockPos = getMetaTileEntity().getPos().offset(side);
+        TileEntity te;
+        IPressureContainer container;
+        try {
+            te = getWorld().getTileEntity(blockPos);
+            container = te.getCapability(TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER, side.getOpposite());
+        } catch (NullPointerException e) {
+            return null;
+        }
+        if (!side.equals(getMetaTileEntity().getFrontFacing())) return null;
         return container;
     }
 
     default IVacuumContainer getAdjacentIVacuumContainer(EnumFacing side) {
-        TileEntity te = getWorld().getTileEntity(getMetaTileEntity().getPos().offset(side));
-        if (te == null) return null;
-
-        IVacuumContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_VACUUM_CONTAINER, side.getOpposite());
-        if (container == null) return null;
+        BlockPos blockPos = getMetaTileEntity().getPos().offset(side);
+        TileEntity te;
+        IVacuumContainer container;
+        try {
+            te = getWorld().getTileEntity(blockPos);
+            container = te.getCapability(TKCYATileCapabilities.CAPABILITY_VACUUM_CONTAINER, side.getOpposite());
+        } catch (NullPointerException e) {
+            return null;
+        }
         if (!side.equals(getMetaTileEntity().getFrontFacing())) return null;
         return container;
     }
