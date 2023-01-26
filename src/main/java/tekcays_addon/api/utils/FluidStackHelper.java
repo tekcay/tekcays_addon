@@ -1,8 +1,9 @@
 package tekcays_addon.api.utils;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
 
-public interface IFluidStack {
+public interface FluidStackHelper {
 
     /**
      * Adds the amount of a {@code FluidStack f2} to a {@code FluidStack f1} and returns the modified {@code f1}.
@@ -11,7 +12,7 @@ public interface IFluidStack {
      * @return the corresponding {@code FluidStack} with increased amount. If the two {@code FluidStack}s are not
      * made of the same {@code Fluid}, it will return {@code f1}.
      */
-    static FluidStack addFluidStacks(FluidStack f1, FluidStack f2) {
+    default FluidStack addFluidStacks(FluidStack f1, FluidStack f2) {
         if (!f1.equals(f2)) return f1;
         return new FluidStack(f1.getFluid(), f1.amount + f2.amount);
     }
@@ -22,7 +23,7 @@ public interface IFluidStack {
      * @param toAdd the {@code amount} which will be added to {@code f1}.
      * @return the corresponding {@code FluidStack} with increased amount.
      */
-    static FluidStack addFluidStacks(FluidStack f1, int toAdd) {
+    default FluidStack addFluidStacks(FluidStack f1, int toAdd) {
         return new FluidStack(f1.getFluid(), f1.amount + toAdd);
     }
 
@@ -33,7 +34,7 @@ public interface IFluidStack {
      * @return the corresponding {@code FluidStack} with decreased amount. If the two {@code FluidStack}s are not
      * made of the same {@code Fluid}, it will return {@code f1}.
      */
-    static FluidStack substractFluidStacks(FluidStack f1, FluidStack f2) {
+    default FluidStack substractFluidStacks(FluidStack f1, FluidStack f2) {
         if (!f1.containsFluid(f2)) return f1;
         return new FluidStack(f1.getFluid(), f1.amount - f2.amount);
     }
@@ -45,8 +46,14 @@ public interface IFluidStack {
      * @return the corresponding {@code FluidStack} with decreased amount. If the substraction gives 0 or less, it
      * will return {@code f1}.
      */
-    static FluidStack substractFluidStacks(FluidStack f1, int toRemove) {
+    default FluidStack substractFluidStacks(FluidStack f1, int toRemove) {
         if (f1.amount - toRemove <= 0) return f1;
         return new FluidStack(f1.getFluid(), f1.amount - toRemove);
+    }
+
+    default NBTTagCompound getFluidStackNBT(FluidStack fluidStack) {
+        NBTTagCompound nbt = new NBTTagCompound();
+        fluidStack.writeToNBT(nbt);
+        return nbt;
     }
 }

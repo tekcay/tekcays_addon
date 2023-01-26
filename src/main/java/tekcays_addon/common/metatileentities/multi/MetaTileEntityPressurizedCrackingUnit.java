@@ -31,6 +31,7 @@ import tekcays_addon.api.metatileentity.multiblock.HeatedPressureContainerMultib
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.api.recipes.CheckRecipeHelper;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -50,6 +51,7 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
         super(metaTileEntityId, TKCYARecipeMaps.PRESSURE_CRACKING);
         this.recipeMapWorkable = new CrackingUnitWorkableHandler(this);
         this.volume = 1;
+        this.currentTemp = 298;
         this.initializeAbilities();
         this.initializePressureContainer();
     }
@@ -131,11 +133,15 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
 
     private void updateLogic() {
         heatContainer = new HeatContainerList(getAbilities(TKCYAMultiblockAbility.HEAT_CONTAINER));
-
         pressureContainer = getPressureContainer();
 
         if (pressureContainer == null) return;
+        pressureContainer.setPressure();
         currentPressure = pressureContainer.getPressure();
+        if (getOffsetTimer() % 20 == 0) {
+            TKCYALog.logger.info("pressure :" + currentPressure);
+            TKCYALog.logger.info("pressureToBar :" + getPressureContainer().convertPressureToBar(currentPressure));
+        }
     }
 
     @Override

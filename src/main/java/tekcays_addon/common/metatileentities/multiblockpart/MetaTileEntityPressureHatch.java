@@ -25,7 +25,6 @@ import tekcays_addon.api.capability.IPressureContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.impl.PressureContainer;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
-import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -67,7 +66,7 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
             /*
             getPressureContainer().leaksContainer(leakingRate);
             */
-            getPressureContainer().setPressure();
+            //getPressureContainer().setPressure();
         }
 
     }

@@ -14,7 +14,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import tekcays_addon.api.capability.IPressureContainer;
-import tekcays_addon.api.capability.IVacuumContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.metatileentity.ElectricPressureCompressor;
 import tekcays_addon.api.utils.IPressureVacuum;
@@ -25,9 +24,10 @@ import javax.annotation.Nullable;
 
 import java.util.List;
 
+import static gregtech.api.unification.material.Materials.Air;
 import static tekcays_addon.api.utils.TKCYAValues.MINIMUM_FLUID_STACK_AMOUNT;
 
-public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCompressor implements IPressureVacuum {
+public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCompressor implements IPressureVacuum<IPressureContainer> {
 
     private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()] * 15/16);
     private IPressureContainer pressureContainer;
@@ -71,11 +71,8 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
         if (!getWorld().isRemote) {
             pressureContainer = getAdjacentIPressureContainer(getOutputSide());
             if (pressureContainer != null) {
-                TKCYALog.logger.info("pressureContainer is not null");
                 pressure = pressureContainer.getPressure();
-                TKCYALog.logger.info("pressure = " + pressure);
                 transferRate = getBaseTransferRate();
-                TKCYALog.logger.info("transferRate = " + transferRate);
             } else {
                 transferRate = 0;
                 return;
@@ -85,7 +82,11 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
             if (fluidTankContent == null) return;
             Fluid fluid = fluidTankContent.getFluid();
 
-            applyPressure(fluidTank, fluid, transferRate);
+            FluidStack pressureContainerFluid = pressureContainer.getFluidStack();
+
+            if (pressureContainerFluid != null && !pressureContainerFluid.isFluidEqual(fluidTankContent)) return;
+
+            applyPressure(fluidTankContent, transferRate);
             if (pressureContainer.getAirAmount() > MINIMUM_FLUID_STACK_AMOUNT) applyVacuum(transferRate);
             pressureContainer.setPressure();
             energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
@@ -99,6 +100,7 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
             return side == getFrontFacing() ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
         }
         if (capability.equals(TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER)) {
+            System.out.println("GOT THERE");
             return TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER.cast(pressureContainer);
         }
         return super.getCapability(capability, side);
@@ -116,10 +118,12 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
         return pressure;
     }
 
+
     @Override
-    public IVacuumContainer getPressureContainer() {
+    public IPressureContainer getPressureContainer() {
         return pressureContainer;
     }
+
 
     @Override
     public int getBaseTransferRate() {

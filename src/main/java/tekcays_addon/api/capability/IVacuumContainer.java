@@ -3,14 +3,15 @@ package tekcays_addon.api.capability;
 import gregtech.api.unification.material.Material;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
-import tekcays_addon.api.utils.IFluidStack;
+import tekcays_addon.api.utils.FluidStackHelper;
 import tekcays_addon.api.utils.IPressureFormatting;
+import tekcays_addon.api.utils.TKCYALog;
 
 import static gregtech.api.unification.material.Materials.Air;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 import static tekcays_addon.api.utils.TKCYAValues.ROOM_TEMPERATURE;
 
-public interface IVacuumContainer extends IPressureFormatting {
+public interface IVacuumContainer extends IPressureFormatting, FluidStackHelper {
 
     /**
      * @return the amount of pressure in the container in {@code Pa}
@@ -74,18 +75,16 @@ public interface IVacuumContainer extends IPressureFormatting {
      * @param doAdd true: adds the amount, false: substracts the amount
      */
     default void changeAirFluidStack(int amount, boolean doAdd) {
-        if (doAdd) setAirFluidStack(IFluidStack.addFluidStacks(getAirFluidStack(), amount));
-        else setAirFluidStack(IFluidStack.substractFluidStacks(getAirFluidStack(), amount));
+        if (doAdd) setAirFluidStack(addFluidStacks(getAirFluidStack(), amount));
+        else setAirFluidStack(substractFluidStacks(getAirFluidStack(), amount));
     }
 
     default void leaksContainer(int amount) {
         changeAirFluidStack(amount, true);
     }
 
-    default NBTTagCompound setFluidStackNBT() {
-        NBTTagCompound nbt = new NBTTagCompound();
-        getAirFluidStack().writeToNBT(nbt);
-        return nbt;
+    default NBTTagCompound setAirFluidStackNBT() {
+        return getAirFluidStack() == null ? new NBTTagCompound() : getFluidStackNBT(getAirFluidStack());
     }
 
     boolean canLeakMore(int leak);
@@ -102,7 +101,7 @@ public interface IVacuumContainer extends IPressureFormatting {
      * @return the corresponding {@code fluidAmount}.
      */
     default int calculateFluidAmount(int pressure, int temperature, int volume) {
-        return (int) ((pressure * volume) / (PERFECT_GAS_CONSTANT * temperature) ); // n = PV / RT
+        return (int) ((1.0 * pressure * volume) / (1.0 * PERFECT_GAS_CONSTANT * temperature) ); // n = PV / RT
     }
 
     /**
@@ -113,7 +112,7 @@ public interface IVacuumContainer extends IPressureFormatting {
      * @return the corresponding pressure in {@code Pa}
      */
     default int calculatePressure(int fluidAmount, int temperature, int volume) {
-        return (int) ((fluidAmount * PERFECT_GAS_CONSTANT * temperature) / volume); // P = nRT / V
+        return (int) ((1.0 * fluidAmount * PERFECT_GAS_CONSTANT * temperature) / volume); // P = nRT / V
     }
 
     /**
@@ -126,7 +125,7 @@ public interface IVacuumContainer extends IPressureFormatting {
 
     /**
      * Gets the {@code FluidStack} with the amount at standard conditions (1013 hPa).
-     * @param material
+     * @param material the {@code Material} of the fluid.
      * @param temperature in {@code K}.
      * @return
      */
@@ -136,7 +135,7 @@ public interface IVacuumContainer extends IPressureFormatting {
 
     /**
      * Gets the {@code FluidStack} with the amount at standard conditions (298 K, 1013 hPa).
-     * @param material
+     * @param material the {@code Material} of the fluid.
      * @return
      */
     default FluidStack getFluidStackStandard(Material material) {

@@ -7,20 +7,20 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.capability.IPressureContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
+import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import java.io.IOException;
 
+import static gregtech.api.unification.material.Materials.Air;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
 public class PressureContainer extends VacuumContainer implements IPressureContainer {
 
     private int minPressure;
     private int maxPressure;
-    protected int pressure;
-    private int volume;
     private FluidStack fluidStack;
 
     /**
@@ -39,9 +39,6 @@ public class PressureContainer extends VacuumContainer implements IPressureConta
         super(metaTileEntity, false);
         this.minPressure = minPressure;
         this.maxPressure = maxPressure;
-        this.pressure = 0;
-        this.volume = 0;
-        this.initializeAirFluidStack();
     }
 
     @Override

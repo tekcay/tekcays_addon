@@ -17,12 +17,12 @@ import static tekcays_addon.api.utils.TKCYAValues.ROOM_TEMPERATURE;
 
 public class VacuumContainer extends MTETrait implements IVacuumContainer {
 
-    private int minPressure;
-    private int maxPressure;
+    protected int minPressure;
+    protected int maxPressure;
     protected int pressure;
-    private int volume;
-    private FluidStack airFluidStack;
-    boolean canHandleVacuum;
+    protected int volume;
+    protected FluidStack airFluidStack;
+    protected boolean canHandleVacuum;
 
     /**
      * Default Vacuum container
@@ -42,9 +42,6 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
         this.canHandleVacuum = canHandleVacuum;
         this.minPressure = minPressure;
         this.maxPressure = maxPressure;
-        this.pressure = 0;
-        this.volume = 0;
-        this.initializeAirFluidStack();
     }
 
     @Override
@@ -129,7 +126,7 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
         NBTTagCompound compound = new NBTTagCompound();
         compound.setInteger("pressure", this.pressure);
         compound.setInteger("volume", this.volume);
-        compound.setTag("airFluidStack", this.setFluidStackNBT());
+        compound.setTag("airFluidStack", this.setAirFluidStackNBT());
         return compound;
     }
 
@@ -145,7 +142,7 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
         super.writeInitialData(buffer);
         buffer.writeInt(this.pressure);
         buffer.writeInt(this.volume);
-        buffer.writeCompoundTag(this.setFluidStackNBT());
+        buffer.writeCompoundTag(this.setAirFluidStackNBT());
     }
 
     @Override

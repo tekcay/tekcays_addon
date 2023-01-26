@@ -10,17 +10,18 @@ import net.minecraftforge.fluids.IFluidTank;
 import tekcays_addon.api.capability.IPressureContainer;
 import tekcays_addon.api.capability.IVacuumContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
+import tekcays_addon.api.capability.impl.VacuumContainer;
 
 
 import static codechicken.lib.util.ClientUtils.getWorld;
 import static gregtech.api.unification.material.Materials.Air;
 import static tekcays_addon.api.utils.TKCYAValues.MINIMUM_FLUID_STACK_AMOUNT;
 
-public interface IPressureVacuum {
+public interface IPressureVacuum<T extends IVacuumContainer> {
 
     MetaTileEntity getMetaTileEntity();
     int getPressure();
-    IVacuumContainer getPressureContainer();
+    T getPressureContainer();
     int getBaseTransferRate();
 
     default void applyVacuum(int transferRate) {
@@ -36,16 +37,39 @@ public interface IPressureVacuum {
         }
     }
 
-    default void applyPressure(IFluidTank fluidTank, Fluid fluid, int transferRate) {
-        int toTransfer = Math.min(fluidTank.getFluidAmount(), transferRate);
-        int drainAmount = drainImportTank(fluid, toTransfer, false);
+/*
+    default void applyPressure(FluidStack fluidStack, int transferRate) {
+        int toTransfer = Math.min(fluidStack.amount, transferRate);
+        int drainAmount = drainImportTank(fluidStack, toTransfer, false);
 
         if (drainAmount == toTransfer) {
-            drainImportTank(fluid, toTransfer, true);
+            drainImportTank(fluidStack, toTransfer, true);
             ((IPressureContainer) getPressureContainer()).changeFluidStack(toTransfer, true);
         } else if (drainAmount != 0) {
-            drainImportTank(fluid, drainAmount, true);
+            drainImportTank(fluidStack, drainAmount, true);
             ((IPressureContainer) getPressureContainer()).changeFluidStack(drainAmount, true);
+        }
+    }
+
+ */
+
+    default void applyPressure(FluidStack fluidStack, int transferRate) {
+        IPressureContainer pressureContainer = ((IPressureContainer) getPressureContainer());
+        int toTransfer = Math.min(fluidStack.amount, transferRate);
+
+        if (pressureContainer.getFluidStack() == null) {
+            drainImportTank(fluidStack, transferRate, true);
+            pressureContainer.setFluidStack(new FluidStack(fluidStack.getFluid(), toTransfer));
+        }
+
+        int drainAmount = drainImportTank(fluidStack, toTransfer, false);
+
+        if (drainAmount == toTransfer) {
+            drainImportTank(fluidStack, toTransfer, true);
+            pressureContainer.changeFluidStack(toTransfer, true);
+        } else if (drainAmount != 0) {
+            drainImportTank(fluidStack, drainAmount, true);
+            pressureContainer.changeFluidStack(drainAmount, true);
         }
     }
 
@@ -80,9 +104,9 @@ public interface IPressureVacuum {
         return getMetaTileEntity().getExportFluids().fill(Air.getFluid(amount), doFill);
     }
 
-    default int drainImportTank(Fluid fluid, int amount, boolean doDrain) {
-        FluidStack fs = getMetaTileEntity().getImportFluids().drain(new FluidStack(fluid, amount), doDrain);
-        return fs == null ? amount : fs.amount;
+    default int drainImportTank(FluidStack fluidStack, int amount, boolean doDrain) {
+        FluidStack fs = getMetaTileEntity().getImportFluids().drain(new FluidStack(fluidStack.getFluid(), amount), doDrain);
+        return fs == null ? fluidStack.amount : fs.amount;
     }
 
     default int getTransferRate() {

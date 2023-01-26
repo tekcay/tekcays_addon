@@ -2,14 +2,13 @@ package tekcays_addon.api.capability;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
-import tekcays_addon.api.utils.IFluidStack;
 
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
 public interface IPressureContainer extends IVacuumContainer {
 
     /**
-     * @return all the {@code FluidStack}s pressurized in the {@code IPressureContainer}
+     * @return the {@code FluidStack} pressurized in the {@code IPressureContainer}
      */
     FluidStack getFluidStack();
 
@@ -18,6 +17,16 @@ public interface IPressureContainer extends IVacuumContainer {
      * @param fluidStack
      */
     void setFluidStack(FluidStack fluidStack);
+
+    /**
+     * Set the {@code pressure} in {@code Pa}
+     */
+    void setPressure();
+
+    /**
+     * Set the {@code pressure} in {@code Pa} with a temperature input
+     */
+    void setPressure(int temperature);
 
     /**
      * Gets the amount of the {@code FluidStack} in the {@code IPressureContainer}
@@ -32,14 +41,15 @@ public interface IPressureContainer extends IVacuumContainer {
     }
 
     default void changeFluidStack(FluidStack fs, boolean doAdd) {
-        if (doAdd) setFluidStack(IFluidStack.addFluidStacks(getFluidStack(), fs));
-        else setFluidStack(IFluidStack.substractFluidStacks(getFluidStack(), fs));
+        if (doAdd) setFluidStack(addFluidStacks(getFluidStack(), fs));
+        else setFluidStack(substractFluidStacks(getFluidStack(), fs));
     }
 
     default void changeFluidStack(int amount, boolean doAdd) {
-        if (doAdd) setFluidStack(IFluidStack.addFluidStacks(getFluidStack(), amount));
-        else setFluidStack(IFluidStack.substractFluidStacks(getFluidStack(), amount));
+        if (doAdd) setFluidStack(addFluidStacks(getFluidStack(), amount));
+        else setFluidStack(substractFluidStacks(getFluidStack(), amount));
     }
+
 
     /**
      * @param amount
@@ -56,16 +66,8 @@ public interface IPressureContainer extends IVacuumContainer {
         changeFluidStack(amount / 2, false);
     }
 
-    @Override
     default NBTTagCompound setFluidStackNBT() {
-        NBTTagCompound nbt = new NBTTagCompound();
-        FluidStack fs = getFluidStack();
-        if (fs != null) fs.writeToNBT(nbt);
-
-        FluidStack airFs = getAirFluidStack();
-        if (airFs != null) airFs.writeToNBT(nbt);
-
-        return nbt;
+        return getFluidStack() == null ? new NBTTagCompound() : getFluidStackNBT(getFluidStack());
     }
 
 }

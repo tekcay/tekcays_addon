@@ -23,7 +23,7 @@ import java.util.List;
 
 import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
 
-public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor implements IPressureVacuum {
+public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor implements IPressureVacuum<IVacuumContainer> {
 
     private int transferRate = 0;
     private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()] * 15/16);

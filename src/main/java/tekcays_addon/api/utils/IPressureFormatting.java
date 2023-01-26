@@ -15,7 +15,7 @@ public interface IPressureFormatting {
      */
     default String convertPressureToMbar(int pressureInPa) {
         //Returns the pressure in mbar
-        if (pressureInPa < ATMOSPHERIC_PRESSURE) return String.format("%d mbar", (int) (1000 * pressureInPa / ATMOSPHERIC_PRESSURE));
+        if (pressureInPa < ATMOSPHERIC_PRESSURE) return String.format("%d mbar", (int) (1000.0 * pressureInPa / ATMOSPHERIC_PRESSURE));
         return "error";
     }
 
@@ -27,8 +27,8 @@ public interface IPressureFormatting {
     default String convertPressureToBar(int pressureInPa) {
         //Returns the pressure in kbar
         if (pressureInPa > ATMOSPHERIC_PRESSURE * 1000) {
-            return String.format("%4.1f kbar", (pressureInPa / (ATMOSPHERIC_PRESSURE * Math.pow(10, 6))));
+            return String.format("%4.1f kbar", (pressureInPa * 1.0 / (ATMOSPHERIC_PRESSURE * Math.pow(10, 6))));
         }
-        return String.format("%4.1f bar", (double) (pressureInPa / ATMOSPHERIC_PRESSURE));
+        return String.format("%4.1f bar", (pressureInPa * 1.0 / ATMOSPHERIC_PRESSURE));
     }
 }

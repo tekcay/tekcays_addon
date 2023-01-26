@@ -2,8 +2,11 @@ package tekcays_addon.api.capability.impl;
 
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.capability.IPressureContainer;
+import tekcays_addon.api.utils.TKCYALog;
 
 import java.util.List;
+
+import static gregtech.api.unification.material.Materials.Air;
 
 public class PressureContainerList implements IPressureContainer {
 
@@ -60,6 +63,8 @@ public class PressureContainerList implements IPressureContainer {
 
     @Override
     public void setFluidStack(FluidStack fluidStack) {
+        TKCYALog.logger.info("PCList fstack : " + fluidStack.getLocalizedName());
+        if (fluidStack.isFluidEqual(Air.getFluid(1))) throw new IllegalArgumentException("FluidStack is Air!");
         getIPressureContainer().setFluidStack(fluidStack);
     }
 
