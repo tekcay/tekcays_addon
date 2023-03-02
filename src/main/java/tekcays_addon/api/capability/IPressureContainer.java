@@ -29,7 +29,7 @@ public interface IPressureContainer extends IVacuumContainer {
     void setPressure(int temperature);
 
     /**
-     * Gets the amount of the {@code FluidStack} in the {@code IPressureContainer}
+     * Gets the amount of the pressurized {@code FluidStack} in the {@code IPressureContainer}
      * @return 0 if the {@code FluidStack} is {@code null}
      */
     default int getFluidAmount() {

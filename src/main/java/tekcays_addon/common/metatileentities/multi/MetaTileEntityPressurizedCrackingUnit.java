@@ -22,6 +22,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.IHeatMachine;
 import tekcays_addon.api.capability.IPressureContainer;
@@ -101,12 +102,17 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
         return pressureContainer.convertPressureToBar(currentPressure);
     }
 
+    private String getPressurizedFluidName() {
+        FluidStack fs = pressureContainer.getFluidStack();
+        return fs == null ? "Air" : fs.getLocalizedName();
+    }
+
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
         super.addDisplayText(textList);
         if (isStructureFormed()) {
             textList.add(new TextComponentTranslation("gregtech.multiblock.cracking_unit.energy", 100 - 10 * coilTier));
-            textList.add(new TextComponentTranslation("tkcya.machine.text.pressure", getCurrentPressureWithUnit()));
+            textList.add(new TextComponentTranslation("tkcya.machine.text.pressurized.fluid", getPressurizedFluidName(), getCurrentPressureWithUnit()));
             textList.add(new TextComponentTranslation("tkcya.machine.text.temperature", getCurrentTemperature()));
 
         }
@@ -139,8 +145,8 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
         pressureContainer.setPressure();
         currentPressure = pressureContainer.getPressure();
         if (getOffsetTimer() % 20 == 0) {
-            TKCYALog.logger.info("pressure :" + currentPressure);
-            TKCYALog.logger.info("pressureToBar :" + getPressureContainer().convertPressureToBar(currentPressure));
+            //TKCYALog.logger.info("pressure :" + currentPressure);
+            //TKCYALog.logger.info("pressureToBar :" + getPressureContainer().convertPressureToBar(currentPressure));
         }
     }
 

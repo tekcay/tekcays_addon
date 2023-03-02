@@ -531,6 +531,7 @@ tekcays_addon.machine.advanced_electrolyzer.tooltip.2=Requires two electrodes, a
 tekcays_addon.machine.advanced_electrolyzer.tooltip.3=Electrodes take damage during recipe running.
 tekcays_addon.machine.advanced_electrolyzer.tooltip.4=Removal of the electrode while a recipe is running  will cause explosion!
 
+tkcya.machine.text.pressurized.fluid=Fluid: %s %s
 tkcya.machine.text.pressure=Current pressure: %s
 tkcya.machine.text.temperature=Current temperature: %s K
 tkcya.max_parallel.tooltip=Max Parallel: §e%s§7

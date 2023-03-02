@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 
 import java.io.IOException;
 
-import static gregtech.api.unification.material.Materials.Air;
+import static tekcays_addon.api.consts.DataIds.PRESSURIZED_FLUID_STACK;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
 public class PressureContainer extends VacuumContainer implements IPressureContainer {
@@ -110,35 +110,44 @@ public class PressureContainer extends VacuumContainer implements IPressureConta
 
     @Override
     public NBTTagCompound serializeNBT() {
-        //NBTTagCompound compound = new NBTTagCompound();
+        super.serializeNBT();
         NBTTagCompound compound = super.serializeNBT();
-        //compound.setInteger("pressure", this.pressure);
-        compound.setTag("fluidStack", this.setFluidStackNBT());
+        compound.setTag(PRESSURIZED_FLUID_STACK.getName(), this.setFluidStackNBT());
         return compound;
     }
 
     @Override
     public void deserializeNBT(@Nonnull NBTTagCompound compound) {
         super.deserializeNBT(compound);
-        //this.pressure = compound.getInteger("pressure");
-        this.fluidStack = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag("fluidStack"));
+        this.fluidStack = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag(PRESSURIZED_FLUID_STACK.getName()));
     }
 
     @Override
     public void writeInitialData(PacketBuffer buffer) {
         super.writeInitialData(buffer);
-        //buffer.writeInt(this.pressure);
         buffer.writeCompoundTag(this.setFluidStackNBT());
     }
 
     @Override
     public void receiveInitialData(PacketBuffer buffer) {
         super.receiveInitialData(buffer);
-        //this.pressure = buffer.readInt();
         try {
             this.fluidStack = FluidStack.loadFluidStackFromNBT(buffer.readCompoundTag());
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void receiveCustomData(int dataId, PacketBuffer buf) {
+        super.receiveCustomData(dataId, buf);
+        if (dataId == PRESSURIZED_FLUID_STACK.getId()) {
+            try {
+                this.fluidStack = FluidStack.loadFluidStackFromNBT(buf.readCompoundTag());
+                TKCYALog.logger.info("InPressureContainer, is fluidStack null ? " + this.fluidStack == null);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

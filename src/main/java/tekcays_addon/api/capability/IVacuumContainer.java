@@ -63,10 +63,10 @@ public interface IVacuumContainer extends IPressureFormatting, FluidStackHelper 
 
     /**
      * Gets the amount of the {@code FluidStack} in the {@code IPressureContainer}
-     * @return the amount of Air {@code FluidStack}.
+     * @return the amount of Air {@code FluidStack}, 0 if the Air {@code FluidStack} is null.
      */
     default int getAirAmount() {
-        return getAirFluidStack().amount;
+        return getAirFluidStack() == null ? 0 : getAirFluidStack().amount;
     }
 
     /**

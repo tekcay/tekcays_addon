@@ -15,6 +15,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -24,12 +25,16 @@ import net.minecraftforge.common.capabilities.Capability;
 import tekcays_addon.api.capability.IPressureContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.impl.PressureContainer;
+import tekcays_addon.api.consts.DataIds;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
+import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static tekcays_addon.api.consts.DataIds.AIR_FLUID_STACK;
+import static tekcays_addon.api.consts.DataIds.PRESSURIZED_FLUID_STACK;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
 public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IPressureContainer>, IDataInfoProvider {
@@ -62,13 +67,25 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     public void update() {
         super.update();
         //pressureContainer.setPressure();
+
+            writeData(PRESSURIZED_FLUID_STACK);
+            writeData(AIR_FLUID_STACK);
         if (getOffsetTimer() % 20 == 0) {
+            TKCYALog.logger.info("air amount in MTEPressureHatch" + this.pressureContainer.getAirAmount());
+
             /*
             getPressureContainer().leaksContainer(leakingRate);
             */
             //getPressureContainer().setPressure();
         }
 
+    }
+
+    private void writeData(DataIds dataId) {
+        NBTTagCompound nbt = new NBTTagCompound();
+        nbt.setTag(dataId.getName(), getPressureContainer().setFluidStackNBT());
+        writeCustomData(dataId.getId(), packetBuffer -> packetBuffer.writeCompoundTag(nbt));
+        TKCYALog.logger.info("WroteData");
     }
 
     public IPressureContainer getPressureContainer() {
