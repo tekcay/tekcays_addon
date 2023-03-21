@@ -22,8 +22,6 @@ public interface CheckRecipeHelper {
     Fluid getFluid();
     IMaterialHelper materialHelper = new MaterialHelper();
 
-
-
     default Material getGas() {
         return materialHelper.getMaterial(getFluid());
     }

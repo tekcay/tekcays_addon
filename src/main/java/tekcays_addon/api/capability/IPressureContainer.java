@@ -12,6 +12,19 @@ public interface IPressureContainer extends IVacuumContainer {
      */
     FluidStack getFluidStack();
 
+    void setPressurizedFluidName(String pressurizedFluidName);
+
+    String getPressurizedFluidName();
+
+    void setPressurizedFluidAmount(int pressurizedFluidAmount);
+
+    int getPressurizedFluidAmount();
+
+    default void increasePressurizedFluidAmount(int amount) {
+        setPressurizedFluidAmount(getPressurizedFluidAmount() + amount);
+    }
+
+
     /**
      * Sets the {@code FluidStack} pressurized in the {@code IPressureContainer}
      * @param fluidStack
@@ -37,7 +50,7 @@ public interface IPressureContainer extends IVacuumContainer {
     }
 
     default int getTotalFluidAmount() {
-        return getFluidAmount() + getAirAmount();
+        return getPressurizedFluidAmount() + getAirAmount();
     }
 
     default void changeFluidStack(FluidStack fs, boolean doAdd) {
@@ -49,7 +62,6 @@ public interface IPressureContainer extends IVacuumContainer {
         if (doAdd) setFluidStack(addFluidStacks(getFluidStack(), amount));
         else setFluidStack(substractFluidStacks(getFluidStack(), amount));
     }
-
 
     /**
      * @param amount

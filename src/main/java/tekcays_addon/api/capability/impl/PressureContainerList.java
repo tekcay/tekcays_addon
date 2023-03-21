@@ -62,6 +62,26 @@ public class PressureContainerList implements IPressureContainer {
     }
 
     @Override
+    public void setPressurizedFluidName(String pressurizedFluidName) {
+        getIPressureContainer().setPressurizedFluidName(pressurizedFluidName);
+    }
+
+    @Override
+    public String getPressurizedFluidName() {
+        return getIPressureContainer().getPressurizedFluidName();
+    }
+
+    @Override
+    public void setPressurizedFluidAmount(int pressurizedFluidAmount) {
+        getIPressureContainer().setPressurizedFluidAmount(pressurizedFluidAmount);
+    }
+
+    @Override
+    public int getPressurizedFluidAmount() {
+        return getIPressureContainer().getPressurizedFluidAmount();
+    }
+
+    @Override
     public void setFluidStack(FluidStack fluidStack) {
         TKCYALog.logger.info("PCList fstack : " + fluidStack.getLocalizedName());
         if (fluidStack.isFluidEqual(Air.getFluid(1))) throw new IllegalArgumentException("FluidStack is Air!");

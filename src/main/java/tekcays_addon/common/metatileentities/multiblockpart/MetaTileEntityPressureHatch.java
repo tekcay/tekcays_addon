@@ -68,10 +68,10 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
         super.update();
         //pressureContainer.setPressure();
 
-            writeData(PRESSURIZED_FLUID_STACK);
-            writeData(AIR_FLUID_STACK);
+            //writeData(PRESSURIZED_FLUID_STACK);
+            //writeData(AIR_FLUID_STACK);
         if (getOffsetTimer() % 20 == 0) {
-            TKCYALog.logger.info("air amount in MTEPressureHatch" + this.pressureContainer.getAirAmount());
+            //TKCYALog.logger.info("air amount in MTEPressureHatch" + this.pressureContainer.getAirAmount());
 
             /*
             getPressureContainer().leaksContainer(leakingRate);
@@ -133,7 +133,7 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
-        list.add(new TextComponentTranslation("behavior.tricorder.fluid.amount", pressureContainer.getFluidAmount()));
+        list.add(new TextComponentTranslation("behavior.tricorder.fluid.amount", pressureContainer.getPressurizedFluidAmount()));
         list.add(new TextComponentTranslation("behavior.tricorder.air.amount", pressureContainer.getAirAmount()));
         list.add(new TextComponentTranslation("behavior.tricorder.pressure.pressure", pressureContainer.convertPressureToBar(pressureContainer.getPressure())));
         //list.add(new TextComponentTranslation("behavior.tricorder.min_pressure.pressure", pressureContainer.convertPressureToBar(minPressure)));

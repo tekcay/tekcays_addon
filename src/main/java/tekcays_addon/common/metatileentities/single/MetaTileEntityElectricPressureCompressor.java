@@ -58,12 +58,10 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
         fluidTank = this.importFluids.getTankAt(0);
     }
 
-
     @Override
     protected int getCurrentTransferRate() {
         return this.transferRate;
     }
-
 
     @Override
     public void update() {
@@ -77,32 +75,34 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
             if (pressureContainer != null) {
                 pressure = pressureContainer.getPressure();
                 transferRate = getBaseTransferRate();
-                TKCYALog.logger.info("transferRate = " + transferRate);
             } else {
                 transferRate = 0;
                 return;
             }
 
-            FluidStack fluidTankContent = fluidTank.getFluid();
-            if (fluidTankContent == null) return;
-            Fluid fluid = fluidTankContent.getFluid();
+            
+            if (getFluidTankContent() == null) return;
+            Fluid fluid = getFluidTankContent().getFluid();
 
-            FluidStack pressureContainerFluid = pressureContainer.getFluidStack();
+            //FluidStack pressureContainerFluid = pressureContainer.getFluidStack();
+            String pressurizedFluidName = pressureContainer.getPressurizedFluidName();
 
-            if (pressureContainerFluid != null && !pressureContainerFluid.isFluidEqual(fluidTankContent)) return;
-            if (pressureContainerFluid != null) {
-                TKCYALog.logger.info("FluidStack is :" + pressureContainerFluid.getLocalizedName() + pressureContainerFluid.amount);
-            }
-            applyPressure(fluidTankContent, transferRate);
-            //writeData(PRESSURIZED_FLUID_STACK);
+            TKCYALog.logger.info("Fluid in tank is {}, fluid in hatch is {}, amount : {}", getFluidTankContent().getUnlocalizedName(), pressurizedFluidName, pressureContainer.getPressurizedFluidAmount());
 
-            if (pressureContainer.getAirAmount() > MINIMUM_FLUID_STACK_AMOUNT) {
-                applyVacuum(transferRate);
-                //writeData(AIR_FLUID_STACK);
-            }
-            pressureContainer.setPressure();
+            if (!canInteractWithContainer()) return;
+             applyPressure(getFluidTankContent(), transferRate);
+
+            if (pressureContainer.getAirAmount() > MINIMUM_FLUID_STACK_AMOUNT) applyVacuum(transferRate);
             energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
         }
+    }
+    
+    private FluidStack getFluidTankContent() {
+        return fluidTank.getFluid();
+    }
+    
+    private boolean canInteractWithContainer() {
+        return pressureContainer.getPressurizedFluidAmount() == 0 || pressureContainer.getPressurizedFluidName().equals(getFluidTankContent().getUnlocalizedName());
     }
 
     private void writeData(DataIds dataId) {
