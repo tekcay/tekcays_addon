@@ -3,6 +3,7 @@ package tekcays_addon.common.metatileentities.single;
 import gregtech.api.GTValues;
 import gregtech.api.capability.GregtechTileCapabilities;
 import gregtech.api.capability.impl.FluidTankList;
+import gregtech.api.capability.impl.NotifiableFluidTank;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -26,7 +27,6 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
     private IPressureContainer pressureContainer;
     private int fluidCapacity;
     private int tierMultiplier = (getTier() * getTier() + 1);
-    private IFluidTank fluidTank;
     private long pressure;
 
     public MetaTileEntityElectricPressureCompressor(ResourceLocation metaTileEntityId, int tier) {
@@ -41,10 +41,9 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
     }
 
     @Override
-    protected void initializeInventory() {
-        super.initializeInventory();
-        this.importFluids = this.createImportFluidHandler();
-        fluidTank = this.importFluids.getTankAt(0);
+    public FluidTankList createImportFluidHandler() {
+        this.fluidTank = new NotifiableFluidTank(fluidCapacity, this, false);
+        return new FluidTankList(false, fluidTank);
     }
 
     @Override
@@ -90,15 +89,6 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
             return te.getCapability(TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER, getOutputSide().getOpposite());
         }
         return null;
-    }
-
-    @Override
-    @Nullable
-    public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
-        if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
-            return side == getFrontFacing() ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
-        }
-        return super.getCapability(capability, side);
     }
 
     //Implementations

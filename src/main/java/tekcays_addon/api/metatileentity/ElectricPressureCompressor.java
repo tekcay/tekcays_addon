@@ -6,8 +6,10 @@ import codechicken.lib.render.pipeline.ColourMultiplier;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
 import gregtech.api.GTValues;
+import gregtech.api.capability.GregtechTileCapabilities;
 import gregtech.api.capability.IActiveOutputSide;
 import gregtech.api.capability.impl.FluidTankList;
+import gregtech.api.capability.impl.NotifiableFluidTank;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.LabelWidget;
@@ -26,8 +28,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.apache.commons.lang3.ArrayUtils;
 import tekcays_addon.api.capability.IVacuumContainer;
 
@@ -48,33 +53,20 @@ public abstract class ElectricPressureCompressor extends TieredMetaTileEntity im
     private IVacuumContainer pressureContainer;
     private int fluidCapacity;
     private int tierMultiplier = (getTier() * getTier() + 1);
-    private IFluidTank fluidTank;
+    protected IFluidTank fluidTank;
 
     public ElectricPressureCompressor(ResourceLocation metaTileEntityId, boolean canHandleVacuum, int tier) {
         super(metaTileEntityId, tier);
         this.canHandleVacuum = canHandleVacuum;
         this.BASE_TRANSFER_RATE = canHandleVacuum ? tierMultiplier : 2 * tierMultiplier;
         this.fluidCapacity = 1000 * (getTier() * getTier() + 1);
+        this.fluidTank = new NotifiableFluidTank(fluidCapacity, this, false);
         initializeInventory();
     }
 
     @Override
     protected void initializeInventory() {
         super.initializeInventory();
-    }
-
-    @Override
-    protected FluidTankList createImportFluidHandler() {
-        return new FluidTankList(false, new FluidTank(fluidCapacity));
-    }
-
-    @Override
-    protected FluidTankList createExportFluidHandler() {
-        return new FluidTankList(false, new FluidTank(fluidCapacity));
-    }
-
-    private int getTankFluidAmount(FluidTankList tank) {
-        return tank.getTankAt(0).getFluidAmount();
     }
 
     @Override
@@ -89,7 +81,7 @@ public abstract class ElectricPressureCompressor extends TieredMetaTileEntity im
                 .shouldColor(false)
                 .widget(new LabelWidget(5, 5, getMetaFullName()))
                 .widget(new LabelWidget(5, 25, String.format("Transfer rate: %d L/t", getCurrentTransferRate())))
-                .widget(new TankWidget((canHandleVacuum ? exportFluids : importFluids).getTankAt(0), 20, 60, 18, 18)
+                .widget(new TankWidget(fluidTank, 20, 60, 18, 18)
                         .setBackgroundTexture(GuiTextures.FLUID_SLOT)
                         .setAlwaysShowFull(true)
                         .setContainerClicking(true, true))
@@ -153,6 +145,23 @@ public abstract class ElectricPressureCompressor extends TieredMetaTileEntity im
     @Override
     public void update() {
         super.update();
+    }
+
+    @Override
+    public <T> T getCapability(Capability<T> capability, EnumFacing side) {
+        if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+            IFluidHandler fluidHandler = fluidInventory;
+            if (fluidHandler.getTankProperties().length > 0) {
+                return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(fluidHandler);
+            }
+            return null;
+        } else if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
+            if (side == getOutputSide()) {
+            return GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this);
+            }
+        return null;
+    }
+        return super.getCapability(capability, side);
     }
 
     @Override

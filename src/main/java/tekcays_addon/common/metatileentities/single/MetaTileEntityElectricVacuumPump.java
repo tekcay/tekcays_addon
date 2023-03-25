@@ -45,18 +45,6 @@ public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor
     }
 
     @Override
-    protected void initializeInventory() {
-        super.initializeInventory();
-        this.importFluids = this.createImportFluidHandler();
-        fluidTank = this.importFluids.getTankAt(0);
-    }
-
-
-    private int getTankFluidAmount(FluidTankList tank) {
-        return tank.getTankAt(0).getFluidAmount();
-    }
-
-    @Override
     protected int getCurrentTransferRate() {
         return this.transferRate;
     }
