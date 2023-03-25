@@ -60,25 +60,10 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
         return new MetaTileEntityPressureHatch(metaTileEntityId, this.getTier());
     }
 
-    //Each second, it leaks
     @Override
     public void update() {
         super.update();
         pressureContainer.setPressure();
-        //pressureContainer.setPressure();
-
-            //writeData(PRESSURIZED_FLUID_STACK);
-            //writeData(AIR_FLUID_STACK);
-        if (getOffsetTimer() % 20 == 0) {
-            //TKCYALog.logger.info("There is {} L of {} in hatch", pressureContainer.getPressurizedFluidAmount(), pressureContainer.getPressurizedFluidName());
-            //TKCYALog.logger.info("air amount in MTEPressureHatch" + this.pressureContainer.getAirAmount());
-
-            /*
-            getPressureContainer().leaksContainer(leakingRate);
-            */
-            //getPressureContainer().setPressure();
-        }
-
     }
 
     public IPressureContainer getPressureContainer() {
@@ -126,8 +111,8 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
-        list.add(new TextComponentTranslation("behavior.tricorder.fluid.amount", pressureContainer.getPressurizedFluidAmount()));
-        list.add(new TextComponentTranslation("behavior.tricorder.fluid.name", pressureContainer.getPressurizedFluidName()));
+        list.add(new TextComponentTranslation("behavior.tricorder.fluid.amount", pressureContainer.getPressurizedFluidStackAmount()));
+        list.add(new TextComponentTranslation("behavior.tricorder.fluid.name", pressureContainer.getPressurizedFluidStackLocalizedName()));
         //list.add(new TextComponentTranslation("behavior.tricorder.pressure.pressure", pressureContainer.getPressure()));
         list.add(new TextComponentTranslation("behavior.tricorder.pressure.pressure", convertPressureToBar(pressureContainer.getPressure())));
         //list.add(new TextComponentTranslation("behavior.tricorder.min_pressure.pressure", convertPressureToBar(minPressure)));

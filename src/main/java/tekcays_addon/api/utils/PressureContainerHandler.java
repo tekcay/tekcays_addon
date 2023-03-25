@@ -30,34 +30,6 @@ public interface PressureContainerHandler {
 
  */
 
-    default void applyPressure(FluidStack fluidStack, int transferRate) {
-        int toTransfer = Math.min(fluidStack.amount, transferRate);
-
-        //if (pressureContainer.getPressurizedFluidName().equals("")) {
-        drainImportTank(fluidStack, transferRate, true);
-        getPressureContainer().increasePressurizedFluidAmount(toTransfer);
-        getPressureContainer().setPressurizedFluidName(fluidStack.getUnlocalizedName());
-
-        if (getPressureContainer().getPressurizedFluidName().equals(NO_FLUID)) {
-            getPressureContainer().setPressurizedFluidName(fluidStack.getUnlocalizedName());
-            getPressureContainer().setPressurizedFluidStack(new FluidStack(fluidStack.getFluid(), toTransfer));
-        } else getPressureContainer().setPressurizedFluidStack(new FluidStack(fluidStack.getFluid(), toTransfer));
-
-        //}
-
-        /*
-        int drainAmount = drainImportTank(fluidStack, toTransfer, false);
-
-        if (drainAmount == toTransfer) {
-            drainImportTank(fluidStack, toTransfer, true);
-            pressureContainer.changeFluidStack(toTransfer, true);
-        } else if (drainAmount != 0) {
-            drainImportTank(fluidStack, drainAmount, true);
-            pressureContainer.changeFluidStack(drainAmount, true);
-        }
-
-         */
-    }
 
 
     default int drainImportTank(FluidStack fluidStack, int amount, boolean doDrain) {

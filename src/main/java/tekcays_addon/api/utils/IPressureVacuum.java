@@ -53,30 +53,6 @@ public interface IPressureVacuum<T extends IVacuumContainer> {
 
  */
 
-    default void applyPressure(FluidStack fluidStack, int transferRate) {
-        IPressureContainer pressureContainer = ((IPressureContainer) getPressureContainer());
-        int toTransfer = Math.min(fluidStack.amount, transferRate);
-
-        //if (pressureContainer.getPressurizedFluidName().equals("")) {
-            drainImportTank(fluidStack, transferRate, true);
-            pressureContainer.increasePressurizedFluidAmount(toTransfer);
-            pressureContainer.setPressurizedFluidName(fluidStack.getUnlocalizedName());
-            //pressureContainer.setFluidStack(new FluidStack(fluidStack.getFluid(), toTransfer));
-        //}
-
-        /*
-        int drainAmount = drainImportTank(fluidStack, toTransfer, false);
-
-        if (drainAmount == toTransfer) {
-            drainImportTank(fluidStack, toTransfer, true);
-            pressureContainer.changeFluidStack(toTransfer, true);
-        } else if (drainAmount != 0) {
-            drainImportTank(fluidStack, drainAmount, true);
-            pressureContainer.changeFluidStack(drainAmount, true);
-        }
-
-         */
-    }
 
     default IPressureContainer getAdjacentIPressureContainer(EnumFacing outputSide) {
         BlockPos blockPos = getMetaTileEntity().getPos().offset(outputSide);

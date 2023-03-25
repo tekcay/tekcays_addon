@@ -8,6 +8,19 @@ import static tekcays_addon.api.utils.TKCYAValues.*;
 public interface IPressureContainer {
 
     /**
+     * Changes the amount of the {@link IPressureContainer} {@code pressurizedFluidStack} by adding a provided
+     * {@code amount}.
+     * <br>
+     * If the addition results in a negative value, the amount of {@code pressurizedFluidStack} is set to 0 and the
+     * rest is returned.
+     * <br>
+     * If the {@code pressurizedFluidStack} is {@code null}, it returns the provided amount.
+     * @param amount
+     * @return the amount that has been transfered.
+     */
+    int changePressurizedFluidStack(FluidStack fluidStack, int amount);
+
+    /**
      * @return the amount of pressure in the container in {@code Pa}
      */
     long getPressure();
@@ -43,21 +56,11 @@ public interface IPressureContainer {
      * Sets the {@code volume} of the {@code IPressureContainer} in m3
      */
     void setVolume(int volume);
-
-    void setPressurizedFluidName(String pressurizedFluidName);
-
-    String getPressurizedFluidName();
-
-    void setPressurizedFluidAmount(int pressurizedFluidAmount);
-
-    int getPressurizedFluidAmount();
-
     FluidStack getPressurizedFluidStack();
-    void setPressurizedFluidStack(FluidStack fluidStack);
+    int getPressurizedFluidStackAmount();
+    String getPressurizedFluidStackLocalizedName();
 
-    default void increasePressurizedFluidAmount(int amount) {
-        setPressurizedFluidAmount(getPressurizedFluidAmount() + amount);
-    }
+    void setPressurizedFluidStack(FluidStack fluidStack);
 
     /**
      * Calculates the amount of substance which transcribes as an amount of a {@code FluidStack} following the ideal gas law.
@@ -80,16 +83,6 @@ public interface IPressureContainer {
     default int calculatePressure(int fluidAmount, int temperature, int volume) {
         return (int) ((1.0 * fluidAmount * PERFECT_GAS_CONSTANT * temperature) / (volume * FLUID_MULTIPLIER_PRESSURE)); // P = nRT / V
     }
-
-    /**
-     * @param amount
-     * @return {@code false} if the {@code amount} is negative and would give a {@code fluidAmount} lower than 1 (MINIMUM_FLUID_STACK_AMOUNT).
-     */
-    default boolean canChangeFluidAmount(int amount) {
-        return getPressurizedFluidAmount() + amount >= MINIMUM_FLUID_STACK_AMOUNT;
-    }
-
-
 
 
 }

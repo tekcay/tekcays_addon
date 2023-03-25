@@ -169,15 +169,6 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
          */
     }
 
-    @Override
-    public void setFluidStack(FluidStack fluidStack) {
-
-    }
-
-    @Override
-    public FluidStack getFluidStack() {
-        return null;
-    }
 
     /*
     @Override

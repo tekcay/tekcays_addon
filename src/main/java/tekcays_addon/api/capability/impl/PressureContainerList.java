@@ -2,10 +2,11 @@ package tekcays_addon.api.capability.impl;
 
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.capability.IPressureContainer;
+import tekcays_addon.api.utils.FluidStackHelper;
 
 import java.util.List;
 
-public class PressureContainerList implements IPressureContainer {
+public class PressureContainerList implements IPressureContainer, FluidStackHelper {
 
     private final List<IPressureContainer> pressureContainerList;
 
@@ -39,33 +40,28 @@ public class PressureContainerList implements IPressureContainer {
     }
 
     @Override
-    public void setPressurizedFluidName(String pressurizedFluidName) {
-        getIPressureContainer().setPressurizedFluidName(pressurizedFluidName);
-    }
-
-    @Override
-    public String getPressurizedFluidName() {
-        return getIPressureContainer().getPressurizedFluidName();
-    }
-
-    @Override
-    public void setPressurizedFluidAmount(int pressurizedFluidAmount) {
-        getIPressureContainer().setPressurizedFluidAmount(pressurizedFluidAmount);
-    }
-
-    @Override
-    public int getPressurizedFluidAmount() {
-        return getIPressureContainer().getPressurizedFluidAmount();
-    }
-
-    @Override
     public FluidStack getPressurizedFluidStack() {
         return getIPressureContainer().getPressurizedFluidStack();
     }
 
     @Override
+    public int getPressurizedFluidStackAmount() {
+        return getNullableFluidStackAmount(getPressurizedFluidStack());
+    }
+
+    @Override
+    public String getPressurizedFluidStackLocalizedName() {
+        return getNullableFluidStackLocalizedName(getPressurizedFluidStack());
+    }
+
+    @Override
     public void setPressurizedFluidStack(FluidStack fluidStack) {
         getIPressureContainer().setPressurizedFluidStack(fluidStack);
+    }
+
+    @Override
+    public int changePressurizedFluidStack(FluidStack fluidStack, int amount) {
+        return getIPressureContainer().changePressurizedFluidStack(fluidStack, amount);
     }
 
     @Override

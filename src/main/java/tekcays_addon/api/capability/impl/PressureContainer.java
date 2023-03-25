@@ -9,6 +9,7 @@ import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.capability.IPressureContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.utils.FluidStackHelper;
+import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,8 +25,6 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
     protected long pressure;
     protected long minPressure;
     protected long maxPressure;
-    protected int pressurizedFluidAmount;
-    protected String pressurizedFluidName;
     private FluidStack pressurizedFluidStack;
 
     /**
@@ -44,8 +43,6 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
         super(metaTileEntity);
         this.minPressure = minPressure;
         this.maxPressure = maxPressure;
-        this.pressurizedFluidName = NO_FLUID;
-        this.pressurizedFluidAmount = 0;
     }
     @Override
     public long getMaxPressure() {
@@ -56,6 +53,28 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
     public long getMinPressure() {
         return this.minPressure;
     }
+
+
+    @Override
+    public int changePressurizedFluidStack(FluidStack fluidStack, int amount) {
+
+        int changed = 0;
+
+        FluidStack smallestFluidStackToTransfer = getSmallestFluidStackByAmount(fluidStack, amount);
+
+        if (this.pressurizedFluidStack == null) {
+            setPressurizedFluidStack(smallestFluidStackToTransfer);
+            changed = smallestFluidStackToTransfer.amount;
+        }
+
+        if (fluidStack.isFluidEqual(this.pressurizedFluidStack)) {
+            setPressurizedFluidStack(getChangedFluidStack(getPressurizedFluidStack(), smallestFluidStackToTransfer.amount));
+            changed = smallestFluidStackToTransfer.amount;
+        }
+
+        return changed;
+    }
+
 
     @Override
     public long getPressure() {
@@ -71,18 +90,20 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
     public int getVolume() {
         return this.volume;
     }
-    @Override
-    public String getPressurizedFluidName() {
-        return this.pressurizedFluidName;
-    }
-    @Override
-    public int getPressurizedFluidAmount() {
-        return this.pressurizedFluidAmount;
-    }
 
     @Override
     public FluidStack getPressurizedFluidStack() {
         return this.pressurizedFluidStack;
+    }
+
+    @Override
+    public int getPressurizedFluidStackAmount() {
+        return getNullableFluidStackAmount(this.pressurizedFluidStack);
+    }
+
+    @Override
+    public String getPressurizedFluidStackLocalizedName() {
+        return getNullableFluidStackLocalizedName(this.pressurizedFluidStack);
     }
 
     @Override
@@ -98,20 +119,8 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
     }
 
     @Override
-    public void setPressurizedFluidName(String pressurizedFluidName) {
-        this.pressurizedFluidName = pressurizedFluidName;
-        this.metaTileEntity.markDirty();
-    }
-
-    @Override
-    public void setPressurizedFluidAmount(int pressurizedFluidAmount) {
-        this.pressurizedFluidAmount = pressurizedFluidAmount;
-        this.metaTileEntity.markDirty();
-    }
-
-    @Override
     public void setPressure() {
-        this.pressure = calculatePressure(getPressurizedFluidAmount(), ROOM_TEMPERATURE, getVolume());
+        this.pressure = calculatePressure(getPressurizedFluidStackAmount(), ROOM_TEMPERATURE, getVolume());
         this.metaTileEntity.markDirty();
     }
 
@@ -142,21 +151,15 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
 
     @Override
     public NBTTagCompound serializeNBT() {
-        //super.serializeNBT();
         NBTTagCompound compound = super.serializeNBT();
-        compound.setTag(PRESSURIZED_FLUID_STACK.getName(), this.setFluidStackNBT());
+        compound.setTag(PRESSURIZED_FLUID_STACK.getName(), this.setFluidStackNBT(this.pressurizedFluidStack));
         compound.setLong("pressure", this.pressure);
-        compound.setInteger("pressurizedFluid", this.pressurizedFluidAmount);
-        compound.setString("pressurizedFluidName", this.pressurizedFluidName);
         return compound;
     }
 
     @Override
     public void deserializeNBT(@Nonnull NBTTagCompound compound) {
-        //super.deserializeNBT(compound);
         this.pressure = compound.getLong("pressure");
-        this.pressurizedFluidAmount = compound.getInteger("pressurizedFluid");
-        this.pressurizedFluidName = compound.getString("pressurizedFluidName");
         this.pressurizedFluidStack = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag(PRESSURIZED_FLUID_STACK.getName()));
 
     }
@@ -165,8 +168,6 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
     public void writeInitialData(PacketBuffer buffer) {
         super.writeInitialData(buffer);
         buffer.writeLong(this.pressure);
-        buffer.writeInt(this.pressurizedFluidAmount);
-        buffer.writeString(this.pressurizedFluidName);
         //buffer.writeCompoundTag(this.setFluidStackNBT());
     }
 
@@ -174,8 +175,6 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
     public void receiveInitialData(PacketBuffer buffer) {
         super.receiveInitialData(buffer);
         this.pressure = buffer.readLong();
-        this.pressurizedFluidAmount = buffer.readInt();
-        this.pressurizedFluidName = buffer.readString(40);
 
         /*
         try {
@@ -188,29 +187,5 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
          */
     }
 
-    @Override
-    public void setFluidStack(FluidStack fluidStack) {
 
-    }
-
-    @Override
-    public FluidStack getFluidStack() {
-        return null;
-    }
-
-    /*
-    @Override
-    public void receiveCustomData(int dataId, PacketBuffer buf) {
-        super.receiveCustomData(dataId, buf);
-        if (dataId == PRESSURIZED_FLUID_STACK.getId()) {
-            try {
-                this.fluidStack = FluidStack.loadFluidStackFromNBT(buf.readCompoundTag());
-                TKCYALog.logger.info("InPressureContainer, is fluidStack null ? " + this.fluidStack == null);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-     */
 }

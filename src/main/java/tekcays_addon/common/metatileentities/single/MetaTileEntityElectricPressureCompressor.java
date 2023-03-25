@@ -71,20 +71,17 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
             
             if (getFluidTankContent() == null) return;
 
-            if (!canInteractWithContainer()) return;
+            int toDrain = pressureContainer.changePressurizedFluidStack(getFluidTankContent(), transferRate);
 
-            applyPressure(getFluidTankContent(), transferRate);
-            energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
-
+            if (toDrain > 0) {
+                fluidTank.drain(toDrain, true);
+                energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
+            }
         }
     }
     
     private FluidStack getFluidTankContent() {
         return fluidTank.getFluid();
-    }
-    
-    private boolean canInteractWithContainer() {
-        return pressureContainer.getPressurizedFluidAmount() == 0 || pressureContainer.getPressurizedFluidName().equals(getFluidTankContent().getUnlocalizedName());
     }
 
     private IPressureContainer getAdjacentPressureContainer() {

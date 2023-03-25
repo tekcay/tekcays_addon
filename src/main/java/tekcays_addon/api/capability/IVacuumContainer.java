@@ -5,7 +5,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.utils.FluidStackHelper;
 import tekcays_addon.api.utils.IPressureFormatting;
-import tekcays_addon.api.utils.TKCYALog;
 
 import static gregtech.api.unification.material.Materials.Air;
 import static tekcays_addon.api.utils.TKCYAValues.*;
@@ -76,7 +75,7 @@ public interface IVacuumContainer extends IPressureFormatting, FluidStackHelper 
      */
     default void changeAirFluidStack(int amount, boolean doAdd) {
         if (doAdd) setAirFluidStack(addFluidStacks(getAirFluidStack(), amount));
-        else setAirFluidStack(substractFluidStacks(getAirFluidStack(), amount));
+        else setAirFluidStack(subtractFluidStacks(getAirFluidStack(), amount));
     }
 
     default void leaksContainer(int amount) {
