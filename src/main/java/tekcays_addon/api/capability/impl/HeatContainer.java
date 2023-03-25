@@ -1,6 +1,5 @@
 package tekcays_addon.api.capability.impl;
 
-import gregicality.science.api.GCYSValues;
 import gregtech.api.metatileentity.MTETrait;
 import gregtech.api.metatileentity.MetaTileEntity;
 import net.minecraft.nbt.NBTTagCompound;
@@ -8,9 +7,12 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
 import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
+import tekcays_addon.api.utils.TKCYAValues;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import static tekcays_addon.api.consts.NetworkIds.HEAT;
 
 public class HeatContainer extends MTETrait implements IHeatContainer {
 
@@ -37,7 +39,7 @@ public class HeatContainer extends MTETrait implements IHeatContainer {
         this.maxHeat = maxHeat;
         this.heat = 0;
         this.maxTemperature = maxTemperature;
-        this.temperature = GCYSValues.EARTH_TEMPERATURE;
+        this.temperature = TKCYAValues.ROOM_TEMPERATURE;
     }
 
     @Override
@@ -84,7 +86,7 @@ public class HeatContainer extends MTETrait implements IHeatContainer {
 
     @Override
     public int getNetworkID() {
-        return 4;
+        return HEAT;
     }
 
     @Nullable

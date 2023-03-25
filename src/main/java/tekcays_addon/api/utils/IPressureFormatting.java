@@ -13,7 +13,7 @@ public interface IPressureFormatting {
      * @param pressureInPa
      * @return a {@code String} containing the value of the pressure with its unit.
      */
-    default String convertPressureToMbar(int pressureInPa) {
+    default String convertPressureToMbar(long pressureInPa) {
         //Returns the pressure in mbar
         if (pressureInPa < ATMOSPHERIC_PRESSURE) return String.format("%d mbar", (int) (1000.0 * pressureInPa / ATMOSPHERIC_PRESSURE));
         return "error";
@@ -24,7 +24,7 @@ public interface IPressureFormatting {
      * @param pressureInPa
      * @return a {@code String} containing the value of the pressure with its unit.
      */
-    default String convertPressureToBar(int pressureInPa) {
+    default String convertPressureToBar(long pressureInPa) {
         //Returns the pressure in kbar
         if (pressureInPa > ATMOSPHERIC_PRESSURE * 1000) {
             return String.format("%4.1f kbar", (pressureInPa * 1.0 / (ATMOSPHERIC_PRESSURE * Math.pow(10, 6))));

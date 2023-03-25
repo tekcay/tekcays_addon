@@ -169,6 +169,16 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
          */
     }
 
+    @Override
+    public void setFluidStack(FluidStack fluidStack) {
+
+    }
+
+    @Override
+    public FluidStack getFluidStack() {
+        return null;
+    }
+
     /*
     @Override
     public void receiveCustomData(int dataId, PacketBuffer buf) {

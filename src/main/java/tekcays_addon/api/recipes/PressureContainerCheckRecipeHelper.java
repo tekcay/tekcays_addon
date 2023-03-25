@@ -1,7 +1,6 @@
 package tekcays_addon.api.recipes;
 
 import gregicality.science.api.recipes.recipeproperties.NoCoilTemperatureProperty;
-import gregicality.science.api.recipes.recipeproperties.PressureProperty;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.unification.material.Material;
 import net.minecraftforge.fluids.Fluid;
@@ -15,9 +14,9 @@ import javax.annotation.Nonnull;
 
 import static gregtech.api.unification.material.Materials.Air;
 
-public interface CheckRecipeHelper {
+public interface PressureContainerCheckRecipeHelper {
 
-    int getCurrentPressure();
+    long getCurrentPressure();
     int getCurrentTemperature();
     Fluid getFluid();
     IMaterialHelper materialHelper = new MaterialHelper();
@@ -27,7 +26,7 @@ public interface CheckRecipeHelper {
     }
 
     default boolean checkRecipeHelper(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        int currentPressure = getCurrentPressure();
+        long currentPressure = getCurrentPressure();
         if (currentPressure < recipe.getProperty(MinPressureProperty.getInstance(), 0)) return false;
         if (currentPressure > recipe.getProperty(MaxPressureProperty.getInstance(), 0)) return false;
         if (getCurrentTemperature() < recipe.getProperty(NoCoilTemperatureProperty.getInstance(), 0)) return false;

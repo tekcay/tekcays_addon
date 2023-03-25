@@ -24,7 +24,7 @@ public class HeatedPressureContainer extends PressureContainer {
     }
 
     /**
-     * Pressure Container with pressure paramaters
+     * Pressure Container with pressure parameters
      * {@link IPressureContainer}
      */
     public HeatedPressureContainer(MetaTileEntity metaTileEntity, boolean canHandleVacuum, int minPressure, int maxPressure) {
@@ -40,13 +40,9 @@ public class HeatedPressureContainer extends PressureContainer {
     }
 
     @Override
-    public void setPressure() {
-        this.pressure = calculatePressure(getFluidAmount(), getTemperature(), getVolume());
+    public void setPressure(int temperature) {
+        this.pressure = calculatePressure(getPressurizedFluidAmount(), getTemperature(), getVolume());
         this.metaTileEntity.markDirty();
-    }
-
-    public FluidStack getDefaultFluidStack() {
-        return new FluidStack(Air.getFluid(), calculateFluidAmount(ATMOSPHERIC_PRESSURE, getTemperature(), getVolume()));
     }
 
     @Override

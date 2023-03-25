@@ -1,16 +1,46 @@
 package tekcays_addon.api.capability;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fluids.FluidStack;
 
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
-public interface IPressureContainer extends IVacuumContainer {
+public interface IPressureContainer {
 
     /**
-     * @return the {@code FluidStack} pressurized in the {@code IPressureContainer}
+     * @return the amount of pressure in the container in {@code Pa}
      */
-    FluidStack getFluidStack();
+    long getPressure();
+
+    /**
+     * Set the {@code pressure} in {@code Pa}
+     */
+    void setPressure();
+
+    /**
+     * Set the {@code pressure} in {@code Pa} with a temperature input
+     */
+    void setPressure(int temperature);
+
+    /**
+     * @return the maximum pressure this container can handle in {@code Pa}
+     */
+    long getMaxPressure();
+
+    /**
+     * @return the minimum pressure this container can handle in {@code Pa}
+     */
+    long getMinPressure();
+
+    boolean canHandleVacuum();
+
+    /**
+     * @return the {@code volume} of the {@code IPressureContainer} in m3
+     */
+    int getVolume();
+
+    /**
+     * Sets the {@code volume} of the {@code IPressureContainer} in m3
+     */
+    void setVolume(int volume);
 
     void setPressurizedFluidName(String pressurizedFluidName);
 
@@ -24,43 +54,26 @@ public interface IPressureContainer extends IVacuumContainer {
         setPressurizedFluidAmount(getPressurizedFluidAmount() + amount);
     }
 
-
     /**
-     * Sets the {@code FluidStack} pressurized in the {@code IPressureContainer}
-     * @param fluidStack
+     * Calculates the amount of substance which transcribes as an amount of a {@code FluidStack} following the ideal gas law.
+     * @param pressure in {@code Pa}.
+     * @param temperature in {@code K}.
+     * @param volume in {@code m3}.
+     * @return the corresponding {@code fluidAmount}.
      */
-    void setFluidStack(FluidStack fluidStack);
-
-    /**
-     * Set the {@code pressure} in {@code Pa}
-     */
-    void setPressure();
-
-    /**
-     * Set the {@code pressure} in {@code Pa} with a temperature input
-     */
-    void setPressure(int temperature);
-
-    /**
-     * Gets the amount of the pressurized {@code FluidStack} in the {@code IPressureContainer}
-     * @return 0 if the {@code FluidStack} is {@code null}
-     */
-    default int getFluidAmount() {
-        return getFluidStack() == null ? 0 : getFluidStack().amount;
+    default int calculateFluidAmount(int pressure, int temperature, int volume) {
+        return (int) ((1.0 * pressure * volume * FLUID_MULTIPLIER_PRESSURE) / (1.0 * PERFECT_GAS_CONSTANT * temperature) ); // n = PV / RT
     }
 
-    default int getTotalFluidAmount() {
-        return getPressurizedFluidAmount() + getAirAmount();
-    }
-
-    default void changeFluidStack(FluidStack fs, boolean doAdd) {
-        if (doAdd) setFluidStack(addFluidStacks(getFluidStack(), fs));
-        else setFluidStack(substractFluidStacks(getFluidStack(), fs));
-    }
-
-    default void changeFluidStack(int amount, boolean doAdd) {
-        if (doAdd) setFluidStack(addFluidStacks(getFluidStack(), amount));
-        else setFluidStack(substractFluidStacks(getFluidStack(), amount));
+    /**
+     * Calculates the pressure following the ideal gas law.
+     * @param fluidAmount the amount of substance, transcribed as the amount of a {@code FluidStack}.
+     * @param temperature in {@code K}.
+     * @param volume in {@code m3}.
+     * @return the corresponding pressure in {@code Pa}
+     */
+    default int calculatePressure(int fluidAmount, int temperature, int volume) {
+        return (int) ((1.0 * fluidAmount * PERFECT_GAS_CONSTANT * temperature) / (volume * FLUID_MULTIPLIER_PRESSURE)); // P = nRT / V
     }
 
     /**
@@ -68,18 +81,10 @@ public interface IPressureContainer extends IVacuumContainer {
      * @return {@code false} if the {@code amount} is negative and would give a {@code fluidAmount} lower than 1 (MINIMUM_FLUID_STACK_AMOUNT).
      */
     default boolean canChangeFluidAmount(int amount) {
-        return getFluidAmount() + amount >= MINIMUM_FLUID_STACK_AMOUNT;
+        return getPressurizedFluidAmount() + amount >= MINIMUM_FLUID_STACK_AMOUNT;
     }
 
-    @Override
-    default void leaksContainer(int amount) {
-        if (!canChangeFluidAmount(amount / 2)) return;
-        changeAirFluidStack(amount / 2, true);
-        changeFluidStack(amount / 2, false);
-    }
 
-    default NBTTagCompound setFluidStackNBT() {
-        return getFluidStack() == null ? new NBTTagCompound() : getFluidStackNBT(getFluidStack());
-    }
+
 
 }

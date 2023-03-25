@@ -5,6 +5,10 @@ import net.minecraftforge.fluids.FluidStack;
 
 public interface FluidStackHelper {
 
+    void setFluidStack(FluidStack fluidStack);
+
+    FluidStack getFluidStack();
+
     /**
      * Adds the amount of a {@code FluidStack f2} to a {@code FluidStack f1} and returns the modified {@code f1}.
      * @param f1 the {@code FluidStack} to increase the amount.
@@ -55,5 +59,19 @@ public interface FluidStackHelper {
         NBTTagCompound nbt = new NBTTagCompound();
         fluidStack.writeToNBT(nbt);
         return nbt;
+    }
+
+    default NBTTagCompound setFluidStackNBT() {
+        return getFluidStack() == null ? new NBTTagCompound() : getFluidStackNBT(getFluidStack());
+    }
+
+    default void changeFluidStack(FluidStack fs, boolean doAdd) {
+        if (doAdd) setFluidStack(addFluidStacks(getFluidStack(), fs));
+        else setFluidStack(substractFluidStacks(getFluidStack(), fs));
+    }
+
+    default void changeFluidStack(int amount, boolean doAdd) {
+        if (doAdd) setFluidStack(addFluidStacks(getFluidStack(), amount));
+        else setFluidStack(substractFluidStacks(getFluidStack(), amount));
     }
 }

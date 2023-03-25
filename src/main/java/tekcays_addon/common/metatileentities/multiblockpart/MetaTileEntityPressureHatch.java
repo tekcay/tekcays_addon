@@ -27,6 +27,7 @@ import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.impl.PressureContainer;
 import tekcays_addon.api.consts.DataIds;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
+import tekcays_addon.api.utils.IPressureFormatting;
 import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
@@ -37,22 +38,23 @@ import static tekcays_addon.api.consts.DataIds.AIR_FLUID_STACK;
 import static tekcays_addon.api.consts.DataIds.PRESSURIZED_FLUID_STACK;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
-public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IPressureContainer>, IDataInfoProvider {
+public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IPressureContainer>, IDataInfoProvider, IPressureFormatting {
 
     private final IPressureContainer pressureContainer;
     private final int leakingRate;
     private final boolean canHandleVacuum;
-    private final int minPressure;
-    private final int maxPressure;
+    private final long minPressure;
+    private final long maxPressure;
     private final int tierMultiplier = getTier() * getTier() + 1;
 
     public MetaTileEntityPressureHatch(@Nonnull ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
         this.canHandleVacuum = false;
         this.minPressure = ATMOSPHERIC_PRESSURE;
-        this.maxPressure = ATMOSPHERIC_PRESSURE * 10 * tierMultiplier;
+        this.maxPressure = (long) ATMOSPHERIC_PRESSURE * 10 * tierMultiplier;
         this.leakingRate = - 10 * tierMultiplier;
         this.pressureContainer = new PressureContainer(this, minPressure, maxPressure);
+        this.pressureContainer.setVolume(1);
         //this.volume = 1;
         //this.pressureContainer.initializeAirFluidStack();
     }
@@ -66,11 +68,13 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     @Override
     public void update() {
         super.update();
+        pressureContainer.setPressure();
         //pressureContainer.setPressure();
 
             //writeData(PRESSURIZED_FLUID_STACK);
             //writeData(AIR_FLUID_STACK);
         if (getOffsetTimer() % 20 == 0) {
+            //TKCYALog.logger.info("There is {} L of {} in hatch", pressureContainer.getPressurizedFluidAmount(), pressureContainer.getPressurizedFluidName());
             //TKCYALog.logger.info("air amount in MTEPressureHatch" + this.pressureContainer.getAirAmount());
 
             /*
@@ -79,13 +83,6 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
             //getPressureContainer().setPressure();
         }
 
-    }
-
-    private void writeData(DataIds dataId) {
-        NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setTag(dataId.getName(), getPressureContainer().setFluidStackNBT());
-        writeCustomData(dataId.getId(), packetBuffer -> packetBuffer.writeCompoundTag(nbt));
-        TKCYALog.logger.info("WroteData");
     }
 
     public IPressureContainer getPressureContainer() {
@@ -106,7 +103,7 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.pressure", pressureContainer.convertPressureToBar(maxPressure)));
+        tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.pressure", convertPressureToBar(maxPressure)));
         tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.pressure.leak", Math.abs(leakingRate)));
     }
 
@@ -134,9 +131,10 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
         list.add(new TextComponentTranslation("behavior.tricorder.fluid.amount", pressureContainer.getPressurizedFluidAmount()));
-        list.add(new TextComponentTranslation("behavior.tricorder.air.amount", pressureContainer.getAirAmount()));
-        list.add(new TextComponentTranslation("behavior.tricorder.pressure.pressure", pressureContainer.convertPressureToBar(pressureContainer.getPressure())));
-        //list.add(new TextComponentTranslation("behavior.tricorder.min_pressure.pressure", pressureContainer.convertPressureToBar(minPressure)));
+        list.add(new TextComponentTranslation("behavior.tricorder.fluid.name", pressureContainer.getPressurizedFluidName()));
+        //list.add(new TextComponentTranslation("behavior.tricorder.pressure.pressure", pressureContainer.getPressure()));
+        list.add(new TextComponentTranslation("behavior.tricorder.pressure.pressure", convertPressureToBar(pressureContainer.getPressure())));
+        //list.add(new TextComponentTranslation("behavior.tricorder.min_pressure.pressure", convertPressureToBar(minPressure)));
         //list.add(new TextComponentTranslation("behavior.tricorder.max_pressure.pressure", pressureContainer.convertPressureToBar(maxPressure)));
         return list;
     }

@@ -22,7 +22,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.IHeatMachine;
 import tekcays_addon.api.capability.IPressureContainer;
@@ -30,9 +29,9 @@ import tekcays_addon.api.capability.IPressureMachine;
 import tekcays_addon.api.capability.impl.HeatContainerList;
 import tekcays_addon.api.metatileentity.multiblock.HeatedPressureContainerMultiblockController;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
-import tekcays_addon.api.recipes.CheckRecipeHelper;
+import tekcays_addon.api.recipes.PressureContainerCheckRecipeHelper;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.utils.TKCYALog;
+import tekcays_addon.api.utils.IPressureFormatting;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -42,31 +41,31 @@ import static tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility
 import static tekcays_addon.api.utils.TKCYAValues.ROOM_TEMPERATURE;
 
 
-public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContainerMultiblockController implements IHeatMachine, IPressureMachine, CheckRecipeHelper {
+public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContainerMultiblockController implements IHeatMachine, IPressureMachine, PressureContainerCheckRecipeHelper, IPressureFormatting {
 
     private int coilTier;
     private IHeatContainer heatContainer;
     private IPressureContainer pressureContainer;
     private int volume;
     private int currentTemp;
-    private int currentPressure;
+    private long currentPressure;
 
     public MetaTileEntityPressurizedCrackingUnit(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.PRESSURE_CRACKING);
         this.recipeMapWorkable = new CrackingUnitWorkableHandler(this);
         this.volume = 1;
         this.currentTemp = ROOM_TEMPERATURE;
-        this.initializeAbilities();
-        this.initializePressureContainer();
+        //this.initializeAbilities();
+        //this.initializePressureContainer();
     }
 
 
     protected void initializePressureContainer() {
         this.pressureContainer = getPressureContainer();
         if (this.pressureContainer == null) return;
-        this.pressureContainer.setVolume(volume);
-        this.pressureContainer.initializeAirFluidStack();
-        this.pressureContainer.setPressure();
+        //this.pressureContainer.setVolume(volume);
+        //this.pressureContainer.initializeAirFluidStack();
+        //this.pressureContainer.setPressure();
     }
 
     @Override
@@ -102,22 +101,17 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     }
 
     private String getCurrentPressureWithUnit() {
-        return pressureContainer.convertPressureToBar(currentPressure);
+        return convertPressureToBar(currentPressure);
     }
 
-    private String getPressurizedFluidName() {
-        FluidStack fs = pressureContainer.getFluidStack();
-        return fs == null ? "Air" : fs.getLocalizedName();
-    }
 
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
         super.addDisplayText(textList);
         if (isStructureFormed()) {
             textList.add(new TextComponentTranslation("gregtech.multiblock.cracking_unit.energy", 100 - 10 * coilTier));
-            textList.add(new TextComponentTranslation("tkcya.machine.text.pressurized.fluid", getPressurizedFluidName(), getCurrentPressureWithUnit()));
+            textList.add(new TextComponentTranslation("tkcya.machine.text.pressurized.fluid", pressureContainer.getPressurizedFluidName(), getCurrentPressureWithUnit()));
             textList.add(new TextComponentTranslation("tkcya.machine.text.temperature", getCurrentTemperature()));
-
         }
     }
 
@@ -143,26 +137,8 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     private void updateLogic() {
         heatContainer = new HeatContainerList(getAbilities(TKCYAMultiblockAbility.HEAT_CONTAINER));
         pressureContainer = getPressureContainer();
-
         if (pressureContainer == null) return;
-        pressureContainer.setPressure();
         currentPressure = pressureContainer.getPressure();
-        if (getOffsetTimer() % 20 == 0) {
-            TKCYALog.logger.info("pressure :" + currentPressure);
-            TKCYALog.logger.info("pressureToBar :" + getPressureContainer().convertPressureToBar(currentPressure));
-            TKCYALog.logger.info("Fluid is {}, amount : {}", pressureContainer.getPressurizedFluidName(), pressureContainer.getPressurizedFluidAmount());
-
-
-            /*
-            try {
-                TKCYALog.logger.info("Fluid is {}, amount : {}", pressureContainer.getFluidStack().getLocalizedName(), pressureContainer.getFluidAmount());
-            } catch (NullPointerException nullPointerException) {
-                TKCYALog.logger.info("no fluid in yet");
-            }
-
-             */
-
-        }
     }
 
     @Override
@@ -197,7 +173,7 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     }
 
     @Override
-    public int getCurrentPressure() {
+    public long getCurrentPressure() {
         return currentPressure;
     }
 
@@ -206,9 +182,10 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
         return currentTemp;
     }
 
+    //Implementation
     @Override
     public Fluid getFluid() {
-        return pressureContainer.getFluidStack().getFluid();
+        return null;
     }
 
     @SuppressWarnings("InnerClassMayBeStatic")

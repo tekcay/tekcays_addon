@@ -1,65 +1,62 @@
 package tekcays_addon.api.capability.impl;
 
+import gregtech.api.metatileentity.MTETrait;
 import gregtech.api.metatileentity.MetaTileEntity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.capability.IPressureContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
-import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import java.io.IOException;
 
-import static tekcays_addon.api.consts.DataIds.PRESSURIZED_FLUID_STACK;
+import static tekcays_addon.api.consts.NetworkIds.PRESSURE;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
-public class PressureContainer extends VacuumContainer implements IPressureContainer {
+public class PressureContainer extends MTETrait implements IPressureContainer {
 
-    private int minPressure;
-    private int maxPressure;
-    private FluidStack fluidStack;
-    private int pressurizedFluidAmount;
-    private String pressurizedFluidName;
+    protected int volume;
+    protected long pressure;
+    protected long minPressure;
+    protected long maxPressure;
+    protected int pressurizedFluidAmount;
+    protected String pressurizedFluidName;
 
     /**
      * Default Pressure container
      * {@link IPressureContainer}
      */
     public PressureContainer(MetaTileEntity metaTileEntity) {
-        super(metaTileEntity, false);
+        super(metaTileEntity);
     }
 
     /**
      * Default Pressure container
      * {@link IPressureContainer}
      */
-    public PressureContainer(MetaTileEntity metaTileEntity, int minPressure, int maxPressure) {
-        super(metaTileEntity, false);
+    public PressureContainer(MetaTileEntity metaTileEntity, long minPressure, long maxPressure) {
+        super(metaTileEntity);
         this.minPressure = minPressure;
         this.maxPressure = maxPressure;
         this.pressurizedFluidName = "";
         this.pressurizedFluidAmount = 0;
     }
-
     @Override
-    public int getMaxPressure() {
+    public long getMaxPressure() {
         return this.maxPressure;
     }
 
     @Override
-    public int getMinPressure() {
+    public long getMinPressure() {
         return this.minPressure;
     }
 
     @Override
-    public int getPressure() {
+    public long getPressure() {
         return this.pressure;
     }
-
 
     @Override
     public boolean canHandleVacuum() {
@@ -67,50 +64,46 @@ public class PressureContainer extends VacuumContainer implements IPressureConta
     }
 
     @Override
-    public boolean canLeakMore(int leak) {
-        return false;
+    public int getVolume() {
+        return this.volume;
     }
-
-    @Override
-    public FluidStack getFluidStack() {
-        return this.fluidStack;
-    }
-
-    @Override
-    public void setPressurizedFluidName(String pressurizedFluidName) {
-        this.pressurizedFluidName = pressurizedFluidName;
-    }
-
     @Override
     public String getPressurizedFluidName() {
         return this.pressurizedFluidName;
     }
-
-    @Override
-    public void setPressurizedFluidAmount(int pressurizedFluidAmount) {
-        this.pressurizedFluidAmount = pressurizedFluidAmount;
-    }
-
     @Override
     public int getPressurizedFluidAmount() {
         return this.pressurizedFluidAmount;
     }
 
     @Override
-    public void setFluidStack(FluidStack fluidStack) {
-        this.fluidStack = fluidStack;
+    public void setVolume(int volume) {
+        this.volume = volume;
+        this.metaTileEntity.markDirty();
     }
 
     @Override
+    public void setPressurizedFluidName(String pressurizedFluidName) {
+        this.pressurizedFluidName = pressurizedFluidName;
+        this.metaTileEntity.markDirty();
+    }
+
+    @Override
+    public void setPressurizedFluidAmount(int pressurizedFluidAmount) {
+        this.pressurizedFluidAmount = pressurizedFluidAmount;
+        this.metaTileEntity.markDirty();
+    }
+
+
+    @Override
     public void setPressure() {
-        this.pressure = calculatePressure(getTotalFluidAmount(), ROOM_TEMPERATURE, getVolume());
+        this.pressure = calculatePressure(getPressurizedFluidAmount(), ROOM_TEMPERATURE, getVolume());
         this.metaTileEntity.markDirty();
     }
 
     @Override
     public void setPressure(int temperature) {
-        this.pressure = calculatePressure(getTotalFluidAmount(), temperature, getVolume());
-        this.metaTileEntity.markDirty();
+        setPressure();
     }
 
     @Override
@@ -120,7 +113,7 @@ public class PressureContainer extends VacuumContainer implements IPressureConta
 
     @Override
     public int getNetworkID() {
-        return 5;
+        return PRESSURE;
     }
 
     @Nullable
@@ -135,9 +128,10 @@ public class PressureContainer extends VacuumContainer implements IPressureConta
 
     @Override
     public NBTTagCompound serializeNBT() {
-        super.serializeNBT();
+        //super.serializeNBT();
         NBTTagCompound compound = super.serializeNBT();
         //compound.setTag(PRESSURIZED_FLUID_STACK.getName(), this.setFluidStackNBT());
+        compound.setLong("pressure", this.pressure);
         compound.setInteger("pressurizedFluid", this.pressurizedFluidAmount);
         compound.setString("pressurizedFluidName", this.pressurizedFluidName);
         return compound;
@@ -145,7 +139,8 @@ public class PressureContainer extends VacuumContainer implements IPressureConta
 
     @Override
     public void deserializeNBT(@Nonnull NBTTagCompound compound) {
-        super.deserializeNBT(compound);
+        //super.deserializeNBT(compound);
+        this.pressure = compound.getLong("pressure");
         this.pressurizedFluidAmount = compound.getInteger("pressurizedFluid");
         this.pressurizedFluidName = compound.getString("pressurizedFluidName");
         //this.fluidStack = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag(PRESSURIZED_FLUID_STACK.getName()));
@@ -155,6 +150,7 @@ public class PressureContainer extends VacuumContainer implements IPressureConta
     @Override
     public void writeInitialData(PacketBuffer buffer) {
         super.writeInitialData(buffer);
+        buffer.writeLong(this.pressure);
         buffer.writeInt(this.pressurizedFluidAmount);
         buffer.writeString(this.pressurizedFluidName);
         //buffer.writeCompoundTag(this.setFluidStackNBT());
@@ -163,6 +159,7 @@ public class PressureContainer extends VacuumContainer implements IPressureConta
     @Override
     public void receiveInitialData(PacketBuffer buffer) {
         super.receiveInitialData(buffer);
+        this.pressure = buffer.readLong();
         this.pressurizedFluidAmount = buffer.readInt();
         this.pressurizedFluidName = buffer.readString(40);
 
