@@ -5,13 +5,10 @@ import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
 import gregtech.api.recipes.recipeproperties.RecipeProperty;
-import gregtech.api.recipes.recipeproperties.RecipePropertyStorage;
 import gregtech.api.util.EnumValidationResult;
-import gregtech.api.util.GTLog;
 import gregtech.api.util.ValidationResult;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import tekcays_addon.api.recipes.recipeproperties.*;
-import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -35,7 +32,7 @@ public class HeatAndPressureMinMaxRecipeBuilder extends RecipeBuilder<HeatAndPre
         add(NoCoilTemperatureProperty.getInstance());
         add(MinPressureProperty.getInstance());
         add(MaxPressureProperty.getInstance());
-        add(GasProperty.getInstance());
+        add(PressurizedFluidStackProperty.getInstance());
     }};
 
     public HeatAndPressureMinMaxRecipeBuilder(HeatAndPressureMinMaxRecipeBuilder builder) {

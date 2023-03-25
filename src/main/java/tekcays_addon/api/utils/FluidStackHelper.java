@@ -1,6 +1,7 @@
 package tekcays_addon.api.utils;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nullable;
@@ -109,6 +110,11 @@ public interface FluidStackHelper {
 
     default String getNullableFluidStackLocalizedName(@Nullable FluidStack fluidStack) {
         return fluidStack == null ? NO_FLUID : fluidStack.getLocalizedName();
+    }
+
+    @Nullable
+    default Fluid getNullableFluidStackFluid(@Nullable FluidStack fluidStack) {
+        return fluidStack == null ? null : fluidStack.getFluid();
     }
 
     default FluidStack getSmallestFluidStackByAmount(FluidStack fluidStack, int amount) {

@@ -5,8 +5,8 @@ import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
 import gregtech.api.recipes.recipeproperties.RecipeProperty;
 import gregtech.api.recipes.recipeproperties.RecipePropertyStorage;
 import gregtech.api.unification.material.Material;
-import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.api.util.EnumValidationResult;
+import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.recipes.recipeproperties.*;
 import tekcays_addon.api.utils.TKCYALog;
 
@@ -28,7 +28,7 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
         if (recipePropertyStorage == null) recipePropertyStorage = new RecipePropertyStorage();
         for (RecipeProperty recipeProperty : getRecipePropertyInstance()) {
 
-                if (recipeProperty instanceof GasProperty) {
+                if (recipeProperty instanceof PressurizedFluidStackProperty) {
                     if (recipePropertyStorage.hasRecipeProperty(recipeProperty)) {
                         if (recipePropertyStorage.getRecipePropertyValue(recipeProperty, Air) == null) {
                             recipePropertyStorage.store(recipeProperty, Air);
@@ -55,13 +55,13 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
         return recipeBuilder;
     }
 
-    default T validateValue(Material material, RecipeProperty recipeProperty) {
+    default T validateValue(FluidStack fluidStack, RecipeProperty recipeProperty) {
         T recipeBuilder =  getRecipeBuilder();
-        if (!material.hasProperty(PropertyKey.FLUID)) {
-            TKCYALog.logger.error(recipeProperty.getKey() + " cannot use a Material that does not have a fluid property", new IllegalArgumentException());
+        if (fluidStack == null) {
+            TKCYALog.logger.error(recipeProperty.getKey() + "fluidStack is null!", new IllegalArgumentException());
             setRecipeStatus(EnumValidationResult.INVALID);
         }
-        getRecipeBuilder().applyProperty(recipeProperty, material);
+        getRecipeBuilder().applyProperty(recipeProperty, fluidStack);
         return recipeBuilder;
     }
 
@@ -82,8 +82,8 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
     }
 
     @Nonnull
-    default T gas(Material material) {
-        return validateValue(material, GasProperty.getInstance());
+    default T gas(FluidStack fluidStack) {
+        return validateValue(fluidStack, PressurizedFluidStackProperty.getInstance());
     }
 
     //Getters for their values
@@ -102,9 +102,9 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
                 getRecipePropertyStorage().getRecipePropertyValue(MaxPressureProperty.getInstance(), 0);
     }
 
-    default Material getGas() {
-        return getRecipePropertyStorage() == null ? Air :
-                getRecipePropertyStorage().getRecipePropertyValue(GasProperty.getInstance(), Air);
+    default FluidStack getGas() {
+        return getRecipePropertyStorage() == null ? null :
+                getRecipePropertyStorage().getRecipePropertyValue(PressurizedFluidStackProperty.getInstance(), null);
     }
 
 
@@ -119,7 +119,7 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
             if (recipeProperty instanceof MaxPressureProperty) {
                 return applyMaxPressureHelper(key, value);
             }
-            if (recipeProperty instanceof GasProperty) {
+            if (recipeProperty instanceof PressurizedFluidStackProperty) {
                 return applyGasHelper(key, value);
             }
         }
@@ -145,8 +145,8 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
     }
 
     default boolean applyGasHelper(@Nonnull String key, Object value) {
-        if (!key.equals(GasProperty.KEY)) return false;
-        this.gas(((Material) value));
+        if (!key.equals(PressurizedFluidStackProperty.KEY)) return false;
+        this.gas(((FluidStack) value));
         return true;
     }
 

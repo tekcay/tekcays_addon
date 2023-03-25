@@ -1,7 +1,10 @@
 package tekcays_addon.api.capability;
 
 
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+
+import javax.annotation.Nullable;
 
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
@@ -56,8 +59,11 @@ public interface IPressureContainer {
      * Sets the {@code volume} of the {@code IPressureContainer} in m3
      */
     void setVolume(int volume);
+
     FluidStack getPressurizedFluidStack();
+
     int getPressurizedFluidStackAmount();
+
     String getPressurizedFluidStackLocalizedName();
 
     void setPressurizedFluidStack(FluidStack fluidStack);

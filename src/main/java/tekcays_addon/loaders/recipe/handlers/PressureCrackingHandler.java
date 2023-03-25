@@ -8,6 +8,7 @@ import static gregtech.api.unification.material.Materials.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.*;
 import static tekcays_addon.api.recipes.TKCYARecipeMaps.PRESSURE_CRACKING;
 import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
+import static tekcays_addon.api.utils.TKCYAValues.MINIMUM_FLUID_STACK_AMOUNT;
 
 public class PressureCrackingHandler {
     
@@ -38,7 +39,7 @@ public class PressureCrackingHandler {
                 .minPressure(ATMOSPHERIC_PRESSURE * 10)
                 .maxPressure(ATMOSPHERIC_PRESSURE * 12)
                 .temperature(500)
-                .gas(Steam)
+                .gas(Steam.getFluid(MINIMUM_FLUID_STACK_AMOUNT))
                 .duration(120).EUt(120).buildAndRegister();
 
         //CH4 + H2O -> CO + 3 H2
@@ -49,7 +50,7 @@ public class PressureCrackingHandler {
                 .minPressure(ATMOSPHERIC_PRESSURE * 50)
                 .maxPressure(ATMOSPHERIC_PRESSURE * 55)
                 .temperature(600)
-                .gas(Steam)
+                .gas(Steam.getFluid(MINIMUM_FLUID_STACK_AMOUNT))
                 .duration(120).EUt(180).buildAndRegister();
 
         //CH4 + 2 H2O -> CO2 + 4 H2
@@ -60,7 +61,7 @@ public class PressureCrackingHandler {
                 .minPressure(ATMOSPHERIC_PRESSURE * 10)
                 .maxPressure(ATMOSPHERIC_PRESSURE * 12)
                 .temperature(700)
-                .gas(Steam)
+                .gas(Steam.getFluid(MINIMUM_FLUID_STACK_AMOUNT))
                 .duration(120).EUt(240).buildAndRegister();
 
     }
@@ -74,7 +75,7 @@ public class PressureCrackingHandler {
                 .minPressure(ATMOSPHERIC_PRESSURE * 10)
                 .maxPressure(ATMOSPHERIC_PRESSURE * 12)
                 .temperature(400)
-                .gas(Hydrogen)
+                .gas(Hydrogen.getFluid(MINIMUM_FLUID_STACK_AMOUNT))
                 .duration(80).EUt(VA[MV]).buildAndRegister();
 
         PRESSURE_CRACKING.recipeBuilder()
@@ -84,7 +85,7 @@ public class PressureCrackingHandler {
                 .minPressure(ATMOSPHERIC_PRESSURE * 10)
                 .maxPressure(ATMOSPHERIC_PRESSURE * 12)
                 .temperature(400)
-                .gas(Steam)
+                .gas(Steam.getFluid(MINIMUM_FLUID_STACK_AMOUNT))
                 .duration(80).EUt(240).buildAndRegister();
     }
 
@@ -97,7 +98,7 @@ public class PressureCrackingHandler {
                 .minPressure(ATMOSPHERIC_PRESSURE * 50)
                 .maxPressure(ATMOSPHERIC_PRESSURE * 55)
                 .temperature(500)
-                .gas(Hydrogen)
+                .gas(Hydrogen.getFluid(MINIMUM_FLUID_STACK_AMOUNT))
                 .duration(120).EUt(180).buildAndRegister();
 
         PRESSURE_CRACKING.recipeBuilder()
@@ -107,7 +108,7 @@ public class PressureCrackingHandler {
                 .minPressure(ATMOSPHERIC_PRESSURE * 50)
                 .maxPressure(ATMOSPHERIC_PRESSURE * 55)
                 .temperature(500)
-                .gas(Steam)
+                .gas(Steam.getFluid(MINIMUM_FLUID_STACK_AMOUNT))
                 .duration(120).EUt(360).buildAndRegister();
     }
 
@@ -120,7 +121,7 @@ public class PressureCrackingHandler {
                 .minPressure(ATMOSPHERIC_PRESSURE * 100)
                 .maxPressure(ATMOSPHERIC_PRESSURE * 120)
                 .temperature(600)
-                .gas(Hydrogen)
+                .gas(Hydrogen.getFluid(MINIMUM_FLUID_STACK_AMOUNT))
                 .duration(160).EUt(240).buildAndRegister();
 
         PRESSURE_CRACKING.recipeBuilder()
@@ -130,7 +131,7 @@ public class PressureCrackingHandler {
                 .minPressure(ATMOSPHERIC_PRESSURE * 100)
                 .maxPressure(ATMOSPHERIC_PRESSURE * 120)
                 .temperature(600)
-                .gas(Steam)
+                .gas(Steam.getFluid(MINIMUM_FLUID_STACK_AMOUNT))
                 .duration(160).EUt(VA[HV]).buildAndRegister();
     }
     

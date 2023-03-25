@@ -22,6 +22,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.IHeatMachine;
 import tekcays_addon.api.capability.IPressureContainer;
@@ -184,8 +185,8 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
 
     //Implementation
     @Override
-    public Fluid getFluid() {
-        return null;
+    public FluidStack getFluidStack() {
+        return pressureContainer.getPressurizedFluidStack();
     }
 
     @SuppressWarnings("InnerClassMayBeStatic")
