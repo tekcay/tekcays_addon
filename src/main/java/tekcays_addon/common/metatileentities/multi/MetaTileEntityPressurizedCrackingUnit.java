@@ -110,7 +110,7 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
         super.addDisplayText(textList);
         if (isStructureFormed()) {
             textList.add(new TextComponentTranslation("gregtech.multiblock.cracking_unit.energy", 100 - 10 * coilTier));
-            textList.add(new TextComponentTranslation("tkcya.machine.text.pressurized.fluid", pressureContainer.getPressurizedFluidName(), getCurrentPressureWithUnit()));
+            textList.add(new TextComponentTranslation("tkcya.machine.text.pressurized.fluid", pressureContainer.getPressurizedFluidStack().getLocalizedName(), getCurrentPressureWithUnit()));
             textList.add(new TextComponentTranslation("tkcya.machine.text.temperature", getCurrentTemperature()));
         }
     }

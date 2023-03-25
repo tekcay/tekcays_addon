@@ -4,6 +4,8 @@ import gregtech.api.capability.impl.FluidTankList;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.capability.IPressureContainer;
 
+import static tekcays_addon.api.utils.TKCYAValues.NO_FLUID;
+
 public interface PressureContainerHandler {
 
 
@@ -35,7 +37,12 @@ public interface PressureContainerHandler {
         drainImportTank(fluidStack, transferRate, true);
         getPressureContainer().increasePressurizedFluidAmount(toTransfer);
         getPressureContainer().setPressurizedFluidName(fluidStack.getUnlocalizedName());
-        //pressureContainer.setFluidStack(new FluidStack(fluidStack.getFluid(), toTransfer));
+
+        if (getPressureContainer().getPressurizedFluidName().equals(NO_FLUID)) {
+            getPressureContainer().setPressurizedFluidName(fluidStack.getUnlocalizedName());
+            getPressureContainer().setPressurizedFluidStack(new FluidStack(fluidStack.getFluid(), toTransfer));
+        } else getPressureContainer().setPressurizedFluidStack(new FluidStack(fluidStack.getFluid(), toTransfer));
+
         //}
 
         /*

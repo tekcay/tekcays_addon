@@ -1,5 +1,6 @@
 package tekcays_addon.api.capability.impl;
 
+import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.capability.IPressureContainer;
 
 import java.util.List;
@@ -55,6 +56,16 @@ public class PressureContainerList implements IPressureContainer {
     @Override
     public int getPressurizedFluidAmount() {
         return getIPressureContainer().getPressurizedFluidAmount();
+    }
+
+    @Override
+    public FluidStack getPressurizedFluidStack() {
+        return getIPressureContainer().getPressurizedFluidStack();
+    }
+
+    @Override
+    public void setPressurizedFluidStack(FluidStack fluidStack) {
+        getIPressureContainer().setPressurizedFluidStack(fluidStack);
     }
 
     @Override

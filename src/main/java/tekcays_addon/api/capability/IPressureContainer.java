@@ -1,6 +1,8 @@
 package tekcays_addon.api.capability;
 
 
+import net.minecraftforge.fluids.FluidStack;
+
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
 public interface IPressureContainer {
@@ -49,6 +51,9 @@ public interface IPressureContainer {
     void setPressurizedFluidAmount(int pressurizedFluidAmount);
 
     int getPressurizedFluidAmount();
+
+    FluidStack getPressurizedFluidStack();
+    void setPressurizedFluidStack(FluidStack fluidStack);
 
     default void increasePressurizedFluidAmount(int amount) {
         setPressurizedFluidAmount(getPressurizedFluidAmount() + amount);

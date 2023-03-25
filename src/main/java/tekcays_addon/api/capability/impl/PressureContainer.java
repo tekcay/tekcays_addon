@@ -5,17 +5,20 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.capability.IPressureContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
+import tekcays_addon.api.utils.FluidStackHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 
+import static tekcays_addon.api.consts.DataIds.PRESSURIZED_FLUID_STACK;
 import static tekcays_addon.api.consts.NetworkIds.PRESSURE;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
-public class PressureContainer extends MTETrait implements IPressureContainer {
+public class PressureContainer extends MTETrait implements IPressureContainer, FluidStackHelper {
 
     protected int volume;
     protected long pressure;
@@ -23,6 +26,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
     protected long maxPressure;
     protected int pressurizedFluidAmount;
     protected String pressurizedFluidName;
+    private FluidStack pressurizedFluidStack;
 
     /**
      * Default Pressure container
@@ -40,7 +44,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
         super(metaTileEntity);
         this.minPressure = minPressure;
         this.maxPressure = maxPressure;
-        this.pressurizedFluidName = "";
+        this.pressurizedFluidName = NO_FLUID;
         this.pressurizedFluidAmount = 0;
     }
     @Override
@@ -77,6 +81,17 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
     }
 
     @Override
+    public FluidStack getPressurizedFluidStack() {
+        return this.pressurizedFluidStack;
+    }
+
+    @Override
+    public void setPressurizedFluidStack(FluidStack fluidStack) {
+        this.pressurizedFluidStack = fluidStack;
+        this.metaTileEntity.markDirty();
+    }
+
+    @Override
     public void setVolume(int volume) {
         this.volume = volume;
         this.metaTileEntity.markDirty();
@@ -93,7 +108,6 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
         this.pressurizedFluidAmount = pressurizedFluidAmount;
         this.metaTileEntity.markDirty();
     }
-
 
     @Override
     public void setPressure() {
@@ -130,7 +144,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
     public NBTTagCompound serializeNBT() {
         //super.serializeNBT();
         NBTTagCompound compound = super.serializeNBT();
-        //compound.setTag(PRESSURIZED_FLUID_STACK.getName(), this.setFluidStackNBT());
+        compound.setTag(PRESSURIZED_FLUID_STACK.getName(), this.setFluidStackNBT());
         compound.setLong("pressure", this.pressure);
         compound.setInteger("pressurizedFluid", this.pressurizedFluidAmount);
         compound.setString("pressurizedFluidName", this.pressurizedFluidName);
@@ -143,7 +157,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
         this.pressure = compound.getLong("pressure");
         this.pressurizedFluidAmount = compound.getInteger("pressurizedFluid");
         this.pressurizedFluidName = compound.getString("pressurizedFluidName");
-        //this.fluidStack = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag(PRESSURIZED_FLUID_STACK.getName()));
+        this.pressurizedFluidStack = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag(PRESSURIZED_FLUID_STACK.getName()));
 
     }
 
@@ -172,6 +186,16 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
         }
 
          */
+    }
+
+    @Override
+    public void setFluidStack(FluidStack fluidStack) {
+
+    }
+
+    @Override
+    public FluidStack getFluidStack() {
+        return null;
     }
 
     /*

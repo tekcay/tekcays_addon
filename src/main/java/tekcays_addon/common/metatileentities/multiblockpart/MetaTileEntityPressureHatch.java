@@ -15,7 +15,6 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -25,17 +24,14 @@ import net.minecraftforge.common.capabilities.Capability;
 import tekcays_addon.api.capability.IPressureContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.impl.PressureContainer;
-import tekcays_addon.api.consts.DataIds;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.api.utils.IPressureFormatting;
-import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static tekcays_addon.api.consts.DataIds.AIR_FLUID_STACK;
-import static tekcays_addon.api.consts.DataIds.PRESSURIZED_FLUID_STACK;
+import static gregtech.api.unification.material.Materials.Air;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
 public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IPressureContainer>, IDataInfoProvider, IPressureFormatting {
