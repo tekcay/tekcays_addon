@@ -20,7 +20,7 @@ import static tekcays_addon.api.utils.TKCYAValues.MINIMUM_FLUID_STACK_AMOUNT;
 public interface IPressureVacuum<T extends IVacuumContainer> {
 
     MetaTileEntity getMetaTileEntity();
-    int getPressure();
+    long getPressure();
     T getPressureContainer();
     int getBaseTransferRate();
 

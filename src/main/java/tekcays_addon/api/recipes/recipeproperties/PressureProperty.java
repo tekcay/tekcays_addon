@@ -7,13 +7,13 @@ import tekcays_addon.api.utils.IPressureFormatting;
 
 import javax.annotation.Nonnull;
 
-public class PressureProperty extends RecipeProperty<Integer> implements IPressureFormatting, RecipePropertiesHelper {
+public class PressureProperty extends RecipeProperty<Long> implements IPressureFormatting, RecipePropertiesHelper {
 
     public static final String KEY = "pressure";
     private static PressureProperty INSTANCE;
 
     protected PressureProperty() {
-        super(KEY, Integer.class);
+        super(KEY, Long.class);
     }
 
     public static PressureProperty getInstance() {
@@ -23,7 +23,7 @@ public class PressureProperty extends RecipeProperty<Integer> implements IPressu
 
     @Override
     public void drawInfo(@Nonnull Minecraft minecraft, int x, int y, int color, Object value) {
-        Integer casted = castValue(value);
+        Long casted = castValue(value);
          if (isVacuum(casted)) minecraft.fontRenderer.drawString(I18n.format(
                  "tkcya.recipe.vacuum", convertPressureToMbar(casted)), x, y, color);
          else minecraft.fontRenderer.drawString(I18n.format(

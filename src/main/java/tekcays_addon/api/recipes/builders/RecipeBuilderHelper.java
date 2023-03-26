@@ -4,7 +4,6 @@ import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
 import gregtech.api.recipes.recipeproperties.RecipeProperty;
 import gregtech.api.recipes.recipeproperties.RecipePropertyStorage;
-import gregtech.api.unification.material.Material;
 import gregtech.api.util.EnumValidationResult;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.recipes.recipeproperties.*;
@@ -13,39 +12,64 @@ import tekcays_addon.api.utils.TKCYALog;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-import static gregtech.api.unification.material.Materials.Air;
+import static tekcays_addon.api.utils.TKCYAValues.*;
 
 public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
 
     IRecipePropertyStorage getRecipePropertyStorage();
     T getRecipeBuilder();
-    List<RecipeProperty> getRecipePropertyInstance();
+    List<RecipeProperty<?>> getRecipePropertiesInstance();
     void setRecipeStatus(EnumValidationResult enumValidationResult);
 
 
     default void buildHelper() {
         IRecipePropertyStorage recipePropertyStorage = getRecipePropertyStorage();
         if (recipePropertyStorage == null) recipePropertyStorage = new RecipePropertyStorage();
-        for (RecipeProperty recipeProperty : getRecipePropertyInstance()) {
+        for (RecipeProperty<?> recipeProperty : getRecipePropertiesInstance()) {
 
-                if (recipeProperty instanceof PressurizedFluidStackProperty) {
-                    if (recipePropertyStorage.hasRecipeProperty(recipeProperty)) {
-                        if (recipePropertyStorage.getRecipePropertyValue(recipeProperty, Air) == null) {
-                            recipePropertyStorage.store(recipeProperty, Air);
-                        }
-                    } else recipePropertyStorage.store(recipeProperty, Air);
-                    continue;
-                }
+            if (recipeProperty instanceof PressurizedFluidStackProperty) {
+                PressurizedFluidStackProperty pressurizedFluidStackProperty = (PressurizedFluidStackProperty) recipeProperty;
+                if (recipePropertyStorage.hasRecipeProperty(pressurizedFluidStackProperty)) {
+                    if (recipePropertyStorage.getRecipePropertyValue(pressurizedFluidStackProperty, null) == null) {
+                        recipePropertyStorage.store(recipeProperty, null);
+                    }
+                } else recipePropertyStorage.store(recipeProperty, null);
+                continue;
+            }
 
-            if (recipePropertyStorage.hasRecipeProperty(recipeProperty)) {
-                if (recipePropertyStorage.getRecipePropertyValue(recipeProperty, 0) <= 0) {
-                    recipePropertyStorage.store(recipeProperty, 0);
-                }
-            } else recipePropertyStorage.store(recipeProperty, 0);
+            if (recipeProperty instanceof MinPressureProperty) {
+                MinPressureProperty minPressureProperty = (MinPressureProperty) recipeProperty;
+                if (recipePropertyStorage.hasRecipeProperty(minPressureProperty)) {
+                    if (recipePropertyStorage.getRecipePropertyValue(minPressureProperty, 0L) <= 0) {
+                        recipePropertyStorage.store(recipeProperty, 0L);
+                    }
+                } else recipePropertyStorage.store(recipeProperty, 0L);
+                continue;
+            }
+
+            if (recipeProperty instanceof MaxPressureProperty) {
+                MaxPressureProperty maxPressureProperty = (MaxPressureProperty) recipeProperty;
+                if (recipePropertyStorage.hasRecipeProperty(maxPressureProperty)) {
+                    if (recipePropertyStorage.getRecipePropertyValue(maxPressureProperty, 0L) <= 0) {
+                        recipePropertyStorage.store(recipeProperty, 0L);
+                    }
+                } else recipePropertyStorage.store(recipeProperty, 0L);
+                continue;
+            }
+
+            if (recipeProperty instanceof NoCoilTemperatureProperty) {
+                NoCoilTemperatureProperty temperatureProperty = (NoCoilTemperatureProperty) recipeProperty;
+                if (recipePropertyStorage.hasRecipeProperty(temperatureProperty)) {
+                    if (recipePropertyStorage.getRecipePropertyValue(temperatureProperty, 0) <= 0) {
+                        recipePropertyStorage.store(temperatureProperty, 0);
+                    }
+                } else recipePropertyStorage.store(temperatureProperty, 0);
+            }
         }
     }
 
-    default T validateValue(int value, RecipeProperty recipeProperty) {
+
+    default T validateValue(int value, RecipeProperty<?> recipeProperty) {
         T recipeBuilder =  getRecipeBuilder();
         if (value <= 0) {
             TKCYALog.logger.error(recipeProperty.getKey() + " cannot be less than or equal to 0", new IllegalArgumentException());
@@ -55,7 +79,17 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
         return recipeBuilder;
     }
 
-    default T validateValue(FluidStack fluidStack, RecipeProperty recipeProperty) {
+    default T validateValue(long value, RecipeProperty<?> recipeProperty) {
+        T recipeBuilder =  getRecipeBuilder();
+        if (value <= 0) {
+            TKCYALog.logger.error(recipeProperty.getKey() + " cannot be less than or equal to 0", new IllegalArgumentException());
+            setRecipeStatus(EnumValidationResult.INVALID);
+        }
+        getRecipeBuilder().applyProperty(recipeProperty, value);
+        return recipeBuilder;
+    }
+
+    default T validateValue(FluidStack fluidStack, RecipeProperty<?> recipeProperty) {
         T recipeBuilder =  getRecipeBuilder();
         if (fluidStack == null) {
             TKCYALog.logger.error(recipeProperty.getKey() + "fluidStack is null!", new IllegalArgumentException());
@@ -72,12 +106,12 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
     }
 
     @Nonnull
-    default T minPressure(int minPressure) {
+    default T minPressure(long minPressure) {
         return validateValue(minPressure, MinPressureProperty.getInstance());
     }
 
     @Nonnull
-    default T maxPressure(int maxPressure) {
+    default T maxPressure(long maxPressure) {
         return validateValue(maxPressure, MaxPressureProperty.getInstance());
     }
 
@@ -92,14 +126,14 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
                 getRecipePropertyStorage().getRecipePropertyValue(NoCoilTemperatureProperty.getInstance(), 0);
     }
 
-    default int getMinPressure() {
+    default long getMinPressure() {
         return getRecipePropertyStorage() == null ? 0 :
-                getRecipePropertyStorage().getRecipePropertyValue(MinPressureProperty.getInstance(), 0);
+                getRecipePropertyStorage().getRecipePropertyValue(MinPressureProperty.getInstance(), 0L);
     }
 
-    default int getMaxPressure() {
+    default long getMaxPressure() {
         return getRecipePropertyStorage() == null ? 0 :
-                getRecipePropertyStorage().getRecipePropertyValue(MaxPressureProperty.getInstance(), 0);
+                getRecipePropertyStorage().getRecipePropertyValue(MaxPressureProperty.getInstance(), 0L);
     }
 
     default FluidStack getGas() {
@@ -109,7 +143,7 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
 
 
     default boolean applyPropertyHelper(@Nonnull String key, Object value) {
-        for (RecipeProperty recipeProperty : getRecipePropertyInstance()) {
+        for (RecipeProperty<?> recipeProperty : getRecipePropertiesInstance()) {
             if (recipeProperty instanceof NoCoilTemperatureProperty) {
                 return applyTemperatureHelper(key, value);
             }
@@ -133,19 +167,19 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
     }
 
     default boolean applyMinPressureHelper(@Nonnull String key, Object value) {
-        if (!key.equals(MinPressureProperty.KEY)) return false;
-        this.minPressure(((Number) value).intValue());
+        if (!key.equals(MIN_PRESSURE_PROPERTY)) return false;
+        this.minPressure(((Number) value).longValue());
         return true;
     }
 
     default boolean applyMaxPressureHelper(@Nonnull String key, Object value) {
-        if (!key.equals(MaxPressureProperty.KEY)) return false;
-        this.maxPressure(((Number) value).intValue());
+        if (!key.equals(MAX_PRESSURE_PROPERTY)) return false;
+        this.maxPressure(((Number) value).longValue());
         return true;
     }
 
     default boolean applyGasHelper(@Nonnull String key, Object value) {
-        if (!key.equals(PressurizedFluidStackProperty.KEY)) return false;
+        if (!key.equals(PRESSURIZED_FLUIDSTACK_PROPERTY)) return false;
         this.gas(((FluidStack) value));
         return true;
     }

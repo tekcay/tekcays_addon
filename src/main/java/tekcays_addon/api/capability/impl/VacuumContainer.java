@@ -21,9 +21,9 @@ import static tekcays_addon.api.utils.TKCYAValues.ROOM_TEMPERATURE;
 
 public class VacuumContainer extends MTETrait implements IVacuumContainer {
 
-    protected int minPressure;
-    protected int maxPressure;
-    protected int pressure;
+    protected long minPressure;
+    protected long maxPressure;
+    protected long pressure;
     protected int volume;
     protected FluidStack airFluidStack;
     protected boolean canHandleVacuum;
@@ -41,7 +41,7 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
      * Default Vacuum container
      * {@link IVacuumContainer}
      */
-    public VacuumContainer(MetaTileEntity metaTileEntity, boolean canHandleVacuum, int minPressure, int maxPressure) {
+    public VacuumContainer(MetaTileEntity metaTileEntity, boolean canHandleVacuum, long minPressure, long maxPressure) {
         super(metaTileEntity);
         this.canHandleVacuum = canHandleVacuum;
         this.minPressure = minPressure;
@@ -49,17 +49,17 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
     }
 
     @Override
-    public int getMaxPressure() {
+    public long getMaxPressure() {
         return this.maxPressure;
     }
 
     @Override
-    public int getMinPressure() {
+    public long getMinPressure() {
         return this.minPressure;
     }
 
     @Override
-    public int getPressure() {
+    public long getPressure() {
         return this.pressure;
     }
 
@@ -128,7 +128,7 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = new NBTTagCompound();
-        compound.setInteger("pressure", this.pressure);
+        compound.setLong("pressure", this.pressure);
         compound.setInteger("volume", this.volume);
         //compound.setTag(AIR_FLUID_STACK.getName(), this.setAirFluidStackNBT());
         compound.setInteger("airAmount", this.getAirAmount());
@@ -138,7 +138,7 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
     @Override
     public void deserializeNBT(@Nonnull NBTTagCompound compound) {
         super.deserializeNBT(compound);
-        this.pressure = compound.getInteger("pressure");
+        this.pressure = compound.getLong("pressure");
         this.volume = compound.getInteger("volume");
         this.airFluidStack = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag(AIR_FLUID_STACK.getName()));
         this.airFluidStack = Materials.Air.getFluid(compound.getInteger("airAmount"));
@@ -147,7 +147,7 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
     @Override
     public void writeInitialData(PacketBuffer buffer) {
         super.writeInitialData(buffer);
-        buffer.writeInt(this.pressure);
+        buffer.writeLong(this.pressure);
         buffer.writeInt(this.volume);
         //buffer.writeCompoundTag(this.setAirFluidStackNBT());
         buffer.writeInt(this.getAirAmount());
@@ -156,7 +156,7 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
     @Override
     public void receiveInitialData(PacketBuffer buffer) {
         super.receiveInitialData(buffer);
-        this.pressure = buffer.readInt();
+        this.pressure = buffer.readLong();
         this.volume = buffer.readInt();
         this.airFluidStack = Materials.Air.getFluid(buffer.readInt());
         /*

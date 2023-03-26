@@ -31,7 +31,7 @@ public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor
     private int fluidCapacity;
     private int tierMultiplier = (getTier() * getTier() + 1);
     private IFluidTank fluidTank;
-    private int pressure;
+    private long pressure;
 
     public MetaTileEntityElectricVacuumPump(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, true, tier);
@@ -91,7 +91,7 @@ public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor
     }
 
     @Override
-    public int getPressure() {
+    public long getPressure() {
         return pressure;
     }
 

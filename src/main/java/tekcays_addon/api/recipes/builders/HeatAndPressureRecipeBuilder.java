@@ -60,7 +60,7 @@ public class HeatAndPressureRecipeBuilder extends RecipeBuilder<HeatAndPressureR
     }
 
     @Nonnull
-    public HeatAndPressureRecipeBuilder pressure(int pressure) {
+    public HeatAndPressureRecipeBuilder pressure(long pressure) {
         if (pressure <= 0) {
             GTLog.logger.error("Pressure cannot be less than or equal to 0", new IllegalArgumentException());
             recipeStatus = EnumValidationResult.INVALID;
@@ -81,7 +81,7 @@ public class HeatAndPressureRecipeBuilder extends RecipeBuilder<HeatAndPressureR
         }
 
         if (this.recipePropertyStorage.hasRecipeProperty(PressureProperty.getInstance())) {
-            if (this.recipePropertyStorage.getRecipePropertyValue(PressureProperty.getInstance(), 0) <= 0) {
+            if (this.recipePropertyStorage.getRecipePropertyValue(PressureProperty.getInstance(), 0L) <= 0) {
                 this.recipePropertyStorage.store(PressureProperty.getInstance(), 0);
             }
         } else {
@@ -95,9 +95,9 @@ public class HeatAndPressureRecipeBuilder extends RecipeBuilder<HeatAndPressureR
                 this.recipePropertyStorage.getRecipePropertyValue(TemperatureProperty.getInstance(), 0);
     }
 
-    public int getPressure() {
+    public long getPressure() {
         return this.recipePropertyStorage == null ? 0 :
-                this.recipePropertyStorage.getRecipePropertyValue(PressureProperty.getInstance(), 0);
+                this.recipePropertyStorage.getRecipePropertyValue(PressureProperty.getInstance(), 0L);
     }
 
     @Override

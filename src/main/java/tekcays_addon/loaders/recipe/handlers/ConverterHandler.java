@@ -1,6 +1,5 @@
 package tekcays_addon.loaders.recipe.handlers;
 
-import gregicality.science.api.GCYSValues;
 import gregtech.api.GTValues;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
@@ -10,6 +9,7 @@ import static gregtech.api.unification.material.Materials.*;
 import static tekcays_addon.api.recipes.TKCYARecipeMaps.CONVERTING_RECIPES;
 import static tekcays_addon.api.recipes.TKCYARecipeMaps.PRIMITIVE_CONVERTING_RECIPES;
 import static tekcays_addon.api.unification.TKCYAMaterials.*;
+import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
 
 public class ConverterHandler {
 
@@ -20,14 +20,14 @@ public class ConverterHandler {
                 .fluidInputs(PigIron.getFluid(GTValues.L))
                 .fluidInputs(Air.getFluid(8000))
                 .fluidOutputs(Iron.getFluid(GTValues.L))
-                .pressure(GCYSValues.EARTH_PRESSURE)
+                .pressure(ATMOSPHERIC_PRESSURE)
                 .duration(200).buildAndRegister();
 
         PRIMITIVE_CONVERTING_RECIPES.recipeBuilder()
                 .fluidInputs(Iron.getFluid(GTValues.L))
                 .fluidInputs(Air.getFluid(8000))
                 .fluidOutputs(Steel.getFluid(GTValues.L))
-                .pressure(GCYSValues.EARTH_PRESSURE * 2)
+                .pressure(ATMOSPHERIC_PRESSURE * 2)
                 .duration(200).buildAndRegister();
 
         //Steel with Air
@@ -35,7 +35,7 @@ public class ConverterHandler {
                 .fluidInputs(PigIron.getFluid(GTValues.L))
                 .fluidInputs(Air.getFluid(4000))
                 .fluidOutputs(Steel.getFluid(GTValues.L))
-                .pressure(GCYSValues.EARTH_PRESSURE * 5)
+                .pressure(ATMOSPHERIC_PRESSURE * 5)
                 .temperature(Steel.getFluid().getTemperature())
                 .duration(200).EUt(VA[MV]).buildAndRegister();
 
@@ -44,7 +44,7 @@ public class ConverterHandler {
                 .fluidInputs(PigIron.getFluid(GTValues.L))
                 .fluidInputs(Oxygen.getFluid(2000))
                 .fluidOutputs(Steel.getFluid(GTValues.L))
-                .pressure(GCYSValues.EARTH_PRESSURE * 5)
+                .pressure(ATMOSPHERIC_PRESSURE * 5)
                 .temperature(Steel.getFluid().getTemperature())
                 .duration(200).EUt(VA[MV]).buildAndRegister();
 
@@ -55,7 +55,7 @@ public class ConverterHandler {
                 .fluidInputs(Oxygen.getFluid(2000))
                 .fluidOutputs(Steel.getFluid(GTValues.L))
                 .fluidOutputs(Oxygen.getFluid(5000))
-                .pressure(GCYSValues.EARTH_PRESSURE * 5)
+                .pressure(ATMOSPHERIC_PRESSURE * 5)
                 .temperature(Steel.getFluid().getTemperature())
                 .duration(200).EUt(VA[MV]).buildAndRegister();
 
@@ -64,7 +64,7 @@ public class ConverterHandler {
                 .fluidInputs(FerriteMixture.getFluid(GTValues.L))
                 .fluidInputs(Oxygen.getFluid(8000))
                 .fluidOutputs(NickelZincFerrite.getFluid(GTValues.L))
-                .pressure(GCYSValues.EARTH_PRESSURE * 10)
+                .pressure(ATMOSPHERIC_PRESSURE * 10)
                 .temperature(NickelZincFerrite.getFluid().getTemperature())
                 .duration(200).EUt(VA[MV]).buildAndRegister();
 
@@ -73,7 +73,7 @@ public class ConverterHandler {
                 .fluidInputs(TitaniumTrifluoride.getFluid(GTValues.L * 4))
                 .fluidInputs(Hydrogen.getFluid(3000))
                 .fluidOutputs(Titanium.getFluid(GTValues.L))
-                .pressure(GCYSValues.EARTH_PRESSURE * 10)
+                .pressure(ATMOSPHERIC_PRESSURE * 10)
                 .temperature(Titanium.getFluid().getTemperature())
                 .duration(200).EUt(VA[MV]).buildAndRegister();
 
@@ -84,7 +84,7 @@ public class ConverterHandler {
                 .fluidInputs(Hydrogen.getFluid(3000))
                 .fluidOutputs(Titanium.getFluid(GTValues.L))
                 .fluidOutputs(HydrogenFluoride.getFluid(GTValues.L * 3))
-                .pressure(GCYSValues.EARTH_PRESSURE * 10)
+                .pressure(ATMOSPHERIC_PRESSURE * 10)
                 .temperature(Titanium.getFluid().getTemperature())
                 .duration(200).EUt(VA[MV]).buildAndRegister();
 

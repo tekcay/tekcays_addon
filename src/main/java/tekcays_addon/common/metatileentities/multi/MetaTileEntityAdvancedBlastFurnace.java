@@ -1,6 +1,5 @@
 package tekcays_addon.common.metatileentities.multi;
 
-import gregicality.science.api.GCYSValues;
 import gregtech.api.block.IHeatingCoilBlockStats;
 import gregtech.api.metatileentity.IDataInfoProvider;
 import gregtech.api.metatileentity.MetaTileEntity;
@@ -35,6 +34,7 @@ import tekcays_addon.api.metatileentity.multiblock.HeatContainerNoEnergyMultiblo
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.api.recipes.recipeproperties.NoEnergyTemperatureProperty;
 import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.api.utils.TKCYAValues;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
@@ -171,11 +171,12 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
     }
 
     private void actualizeTemperature() {
-        heatContainer.setTemperature(GCYSValues.EARTH_TEMPERATURE + currentHeat / (heatMultiplier * height));
+        heatContainer.setTemperature(TKCYAValues.ROOM_TEMPERATURE + currentHeat / (heatMultiplier * height));
     }
 
     @Override
     protected void updateFormedValid() {
+        super.updateFormedValid();
         if (!getWorld().isRemote) {
             updateLogic();
         }

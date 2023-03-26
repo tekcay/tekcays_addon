@@ -7,19 +7,18 @@ import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nonnull;
 
+import static tekcays_addon.api.utils.TKCYAValues.PRESSURIZED_FLUIDSTACK_PROPERTY;
+
 public class PressurizedFluidStackProperty extends RecipeProperty<FluidStack> implements RecipePropertiesHelper {
-
-    public static final String KEY = "fluidStack";
-
 
     @Override
     public String getKey() {
-        return KEY;
+        return PRESSURIZED_FLUIDSTACK_PROPERTY;
     }
 
     private static PressurizedFluidStackProperty INSTANCE;
     protected PressurizedFluidStackProperty() {
-        super(KEY, FluidStack.class);
+        super(PRESSURIZED_FLUIDSTACK_PROPERTY, FluidStack.class);
     }
 
     public static PressurizedFluidStackProperty getInstance() {

@@ -4,7 +4,6 @@ import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.ColourMultiplier;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregicality.science.api.GCYSValues;
 import gregtech.api.capability.impl.*;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
@@ -52,6 +51,8 @@ import tekcays_addon.common.blocks.blocks.BlockBrick;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+
+import static tekcays_addon.api.utils.TKCYAValues.ROOM_TEMPERATURE;
 
 public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDataInfoProvider {
 
@@ -191,7 +192,7 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
     }
     
     private void actualizeTemperature() {
-        heatContainer.setTemperature(GCYSValues.EARTH_TEMPERATURE + currentHeat / HEAT_MULTIPLIER);
+        heatContainer.setTemperature(ROOM_TEMPERATURE + currentHeat / HEAT_MULTIPLIER);
     }
 
     @Override
@@ -204,7 +205,7 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
 
         //Loses heat over time if no more heat is provided
         if (getOffsetTimer() % 20 == 0) {
-            if (previousHeat == currentHeat && currentTemp > GCYSValues.EARTH_TEMPERATURE) {
+            if (previousHeat == currentHeat && currentTemp > ROOM_TEMPERATURE) {
                 heatContainer.changeHeat(HEAT_COOL);
             }
         }
@@ -215,9 +216,9 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
         }
 
         if (currentHeat == 0) {
-            if (currentTemp > GCYSValues.EARTH_TEMPERATURE) {
+            if (currentTemp > ROOM_TEMPERATURE) {
                 if (getOffsetTimer() % 20 == 0) currentTemp -= 1;
-            } else heatContainer.setTemperature(GCYSValues.EARTH_TEMPERATURE);
+            } else heatContainer.setTemperature(ROOM_TEMPERATURE);
            return;
         }
 

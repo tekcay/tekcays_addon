@@ -38,8 +38,8 @@ public class MetaTileEntityVacuumHatch extends MetaTileEntityMultiblockPart impl
     private final IVacuumContainer vacuumContainer;
     private final int leakingRate;
     private final boolean canHandleVacuum;
-    private final int minPressure;
-    private final int maxPressure;
+    private final long minPressure;
+    private final long maxPressure;
     private final int volume;
     private final int tierMultiplier = getTier() * getTier() + 1;
 

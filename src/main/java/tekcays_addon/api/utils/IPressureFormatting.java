@@ -4,7 +4,7 @@ import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
 
 public interface IPressureFormatting {
 
-    default boolean isVacuum(int pressure) {
+    default boolean isVacuum(long pressure) {
         return pressure < ATMOSPHERIC_PRESSURE;
     }
 

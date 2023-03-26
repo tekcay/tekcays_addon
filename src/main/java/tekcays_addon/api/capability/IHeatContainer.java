@@ -1,7 +1,8 @@
 package tekcays_addon.api.capability;
 
-import gregicality.science.api.GCYSValues;
 import tekcays_addon.api.utils.TKCYAValues;
+
+import static tekcays_addon.api.utils.TKCYAValues.ROOM_TEMPERATURE;
 
 public interface IHeatContainer {
 
@@ -78,7 +79,7 @@ public interface IHeatContainer {
         }
         @Override
         public int getTemperature() {
-            return GCYSValues.EARTH_TEMPERATURE;
+            return ROOM_TEMPERATURE;
         }
 
 

@@ -1,5 +1,6 @@
 package tekcays_addon.api.metatileentity.multiblock;
 
+import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.RecipeMap;
@@ -19,7 +20,7 @@ public abstract class HeatedPressureContainerMultiblockController extends Recipe
 
     public HeatedPressureContainerMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
         super(metaTileEntityId, recipeMap);
-        this.recipeMapWorkable = new HeatedPressureContainerMultiblockRecipeLogic(this);
+        this.recipeMapWorkable = new MultiblockRecipeLogic(this);
     }
 
     @Override
@@ -39,8 +40,7 @@ public abstract class HeatedPressureContainerMultiblockController extends Recipe
     @Override
     public TraceabilityPredicate autoAbilities(boolean checkEnergyIn, boolean checkMaintenance, boolean checkItemIn, boolean checkItemOut, boolean checkFluidIn, boolean checkFluidOut, boolean checkMuffler) {
         TraceabilityPredicate predicate = super.autoAbilities(checkEnergyIn, checkMaintenance, checkItemIn, checkItemOut, checkFluidIn, checkFluidOut, checkMuffler);
-        //predicate = predicate.or(abilities(TKCYAMultiblockAbility.HEAT_CONTAINER));
-        //predicate = predicate.or(abilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER)).setMaxGlobalLimited(1);
+        predicate = predicate.or(abilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER)).setMaxGlobalLimited(1);
         return predicate;
     }
 
