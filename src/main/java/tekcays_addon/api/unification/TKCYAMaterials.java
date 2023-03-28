@@ -15,21 +15,22 @@ public class TKCYAMaterials {
 
     public static void init() {
 
+        int id = 24000;
 
         // NoFormula 24000-24100
-        TKCYANoFormulaMaterials.init();
+        id = TKCYANoFormulaMaterials.init(id);
 
         // 24101-24200
-        TKCYAMiscMaterials.init();
+        id = TKCYAMiscMaterials.init(id);
 
         // Alloys 24201-24299
-        TKCYAAlloys.init();
+        id = TKCYAAlloys.init(id);
 
         // Second Degree 24300-24699
-        TKCYAOrganicCompounds.init();
+        id = TKCYAOrganicCompounds.init(id);
 
         // Second Degree 24700-24800
-        TKCYAPolymers.init();
+        id = TKCYAPolymers.init(id);
 
         // Flags
         TKCYAMaterialFlagAddition.init();

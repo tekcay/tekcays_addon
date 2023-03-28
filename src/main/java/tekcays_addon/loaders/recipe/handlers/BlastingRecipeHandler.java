@@ -254,12 +254,6 @@ public class BlastingRecipeHandler {
                 .duration(5 * SECOND)
                 .buildAndRegister();
 
-        //Low Pressure Hatch
-        ModHandler.addShapedRecipe("steam_air_compressor", STEAM_AIR_COMPRESSOR.getStackForm(),
-                " w ", "RHR", " P ",
-                'P', new UnificationEntry(pipeNormalFluid, Potin),
-                'R', new UnificationEntry(rotor, Bronze),
-                'H', MetaBlocks.STEAM_CASING.getItemVariant(BlockSteamCasing.SteamCasingType.BRONZE_HULL));
 
     }
 

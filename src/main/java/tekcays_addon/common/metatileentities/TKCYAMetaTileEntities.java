@@ -24,7 +24,6 @@ import tekcays_addon.common.metatileentities.multiblockpart.*;
 import tekcays_addon.common.metatileentities.single.*;
 
 import tekcays_addon.common.metatileentities.single.MetaTileEntitySingleCrucible;
-import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamAirCompressor;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamAutoclave;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamCooler;
 
@@ -71,7 +70,6 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityCastingTable CASTING_TABLE;
     public static MetaTileEntitySteamCooler STEAM_COOLER_BRONZE;
     public static MetaTileEntitySteamCooler STEAM_COOLER_STEEL;
-    public static MetaTileEntitySteamAirCompressor STEAM_AIR_COMPRESSOR;
     public static MetaTileEntityElectricConverter CONVERTER;
     public static MetaTileEntityTKCYACokeOven COKE_OVEN;
     public static MetaTileEntityPrimitiveBath PRIMITIVE_BATH;
@@ -263,7 +261,6 @@ public class TKCYAMetaTileEntities {
 
         ROASTING_OVEN = registerMetaTileEntity(startId++, new MetaTileEntityRoastingOven(tkcyaId("roasting_oven")));
         SPIRAL_SEPARATOR = registerMetaTileEntity(startId++, new MetaTileEntitySpiralSeparator(tkcyaId("spiral_separator")));
-        STEAM_AIR_COMPRESSOR = registerMetaTileEntity(startId++, new MetaTileEntitySteamAirCompressor(tkcyaId("steam_air_compressor")));
         
         ROASTING_OVEN = registerMetaTileEntity(startId++, new MetaTileEntityRoastingOven(tkcyaId("roasting_oven")));
         SPIRAL_SEPARATOR = registerMetaTileEntity(startId++, new MetaTileEntitySpiralSeparator(tkcyaId("spiral_separator")));
