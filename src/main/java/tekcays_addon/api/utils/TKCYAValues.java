@@ -18,9 +18,6 @@ import java.util.*;
 public class TKCYAValues {
 
     //Mods
-    public static final String GREGIFICATION_MODID = "gregification";
-    public static final String GCYS_MODID = "gcys";
-    public static final String GCYM_MODID = "gcym";
 
     //Recipe properties keys
     public static final String INTERVAL_PRESSURE_PROPERTY = "interval_pressure_property";

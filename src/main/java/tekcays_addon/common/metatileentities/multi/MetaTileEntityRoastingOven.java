@@ -1,7 +1,5 @@
 package tekcays_addon.common.metatileentities.multi;
 
-import gregicality.science.api.recipes.recipeproperties.NoCoilTemperatureProperty;
-import gregicality.science.client.render.GCYSTextures;
 import gregtech.api.capability.IHeatingCoil;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -31,6 +29,7 @@ import net.minecraft.world.World;
 import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.input.Keyboard;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.api.recipes.recipeproperties.NoCoilTemperatureProperty;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -152,10 +151,6 @@ public class MetaTileEntityRoastingOven extends RecipeMapMultiblockController im
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-            tooltip.add(I18n.format("gcys.multiblock.roaster.tooltip.1"));
-            tooltip.add(I18n.format("gcys.multiblock.roaster.tooltip.2"));
-            tooltip.add(I18n.format("gcys.multiblock.roaster.tooltip.3"));
-            tooltip.add(I18n.format("gcys.multiblock.roaster.tooltip.4"));
         } else {
             tooltip.add(I18n.format("gregtech.tooltip.hold_shift"));
         }
@@ -169,7 +164,7 @@ public class MetaTileEntityRoastingOven extends RecipeMapMultiblockController im
     @Nonnull
     @Override
     protected ICubeRenderer getFrontOverlay() {
-        return GCYSTextures.ROASTER_OVERLAY;
+        return Textures.ELECTROLYZER_OVERLAY;
     }
 
     @Override
@@ -191,29 +186,4 @@ public class MetaTileEntityRoastingOven extends RecipeMapMultiblockController im
         return list;
     }
 
-    //TODO why does this kill JEI
-//    @Override
-//    public List<MultiblockShapeInfo> getMatchingShapes() {
-//        MultiblockShapeInfo.Builder builder = MultiblockShapeInfo.builder()
-//                .aisle("     ", "     ", " P P ", " P P ", " P P ")
-//                .aisle("F   F", "FBBBF", "XPEPX", "XXXXX", " P P ")
-//                .aisle("     ", "XBBBX", "XP PX", "XPHPX", " P P ")
-//                .aisle("F   F", "FBBBF", "XISOX", "XLMDX", "     ")
-//                .where('S', GCYSMetaTileEntities.ROASTER, EnumFacing.SOUTH)
-//                .where('X', MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.INVAR_HEATPROOF))
-//                .where('P', MetaBlocks.BOILER_CASING.getState(BlockBoilerCasing.BoilerCasingType.TITANIUM_PIPE))
-//                .where('F', MetaBlocks.FRAMES.get(Materials.Invar).getBlock(Materials.Invar))
-//                .where('E', MetaTileEntities.ENERGY_INPUT_HATCH[GTValues.MV], EnumFacing.NORTH)
-//                .where('I', MetaTileEntities.ITEM_IMPORT_BUS[GTValues.LV], EnumFacing.SOUTH)
-//                .where('O', MetaTileEntities.ITEM_EXPORT_BUS[GTValues.LV], EnumFacing.SOUTH)
-//                .where('L', MetaTileEntities.FLUID_IMPORT_HATCH[GTValues.LV], EnumFacing.WEST)
-//                .where('D', MetaTileEntities.FLUID_EXPORT_HATCH[GTValues.LV], EnumFacing.EAST)
-//                .where('H', MetaTileEntities.MUFFLER_HATCH[GTValues.LV], EnumFacing.UP)
-//                .where(' ', Blocks.AIR.getDefaultState())
-//                .where('M', () -> ConfigHolder.machines.enableMaintenance ? MetaTileEntities.MAINTENANCE_HATCH : MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.INVAR_HEATPROOF), EnumFacing.NORTH);
-//
-//        return Arrays.stream(BlockFireboxCasing.FireboxCasingType.values())
-//                .map(casingType -> builder.where('B', MetaBlocks.BOILER_FIREBOX_CASING.getState(casingType)).build())
-//                .collect(Collectors.toList());
-//    }
 }

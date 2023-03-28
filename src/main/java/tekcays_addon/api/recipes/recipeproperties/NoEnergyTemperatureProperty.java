@@ -25,6 +25,6 @@ public class NoEnergyTemperatureProperty extends RecipeProperty<Integer> {
 
     @Override
     public void drawInfo(@Nonnull Minecraft minecraft, int x, int y, int color, Object value) {
-        minecraft.fontRenderer.drawString(I18n.format("gcys.recipe.temperature", castValue(value)), x, y, color);
+        minecraft.fontRenderer.drawString(I18n.format("tkcya.recipe.temperature", castValue(value)), x, y, color);
     }
 }

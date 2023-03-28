@@ -1,8 +1,6 @@
 package tekcays_addon.api.unification.material.ore;
 
-import gregicality.science.api.unification.ore.GCYSOrePrefix;
 import gregtech.common.items.MetaItems;
-
 
 public class TKCYAOrePrefixAdditions {
 
