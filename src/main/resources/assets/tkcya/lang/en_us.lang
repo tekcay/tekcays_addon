@@ -132,6 +132,39 @@ tkcya.machine.heat_acceptor.lv.name=Heat Acceptor I
 tkcya.machine.heat_acceptor.mv.name=Heat Acceptor II
 tkcya.machine.heat_acceptor.hv.name=Heat Acceptor III
 tkcya.machine.heat_acceptor.ev.name=Heat Acceptor IV
+tkcya.machine.heat_acceptor.iv.name=Heat Acceptor V
+
+#Pressure/Vacuum Hatches
+tkcya.machine.pressure_hatch.ulv.name=Pressure Hatch
+tkcya.machine.pressure_hatch.lv.name=Pressure Hatch I
+tkcya.machine.pressure_hatch.mv.name=Pressure Hatch II
+tkcya.machine.pressure_hatch.hv.name=Pressure Hatch III
+tkcya.machine.pressure_hatch.ev.name=Pressure Hatch IV
+tkcya.machine.pressure_hatch.iv.name=Pressure Hatch V
+tkcya.machine.pressure_hatch.luv.name=Pressure Hatch VI
+
+tkcya.machine.vacuum_hatch.ulv.name=Vacuum Hatch
+tkcya.machine.vacuum_hatch.lv.name=Vacuum Hatch I
+tkcya.machine.vacuum_hatch.mv.name=Vacuum Hatch II
+tkcya.machine.vacuum_hatch.hv.name=Vacuum Hatch III
+tkcya.machine.vacuum_hatch.ev.name=Vacuum Hatch IV
+tkcya.machine.vacuum_hatch.iv.name=Vacuum Hatch V
+tkcya.machine.vacuum_hatch.luv.name=Vacuum Hatch VI
+
+#Pressure Compressor
+tkcya.machine.electric_compressor.ulv.name=Electric Compressor
+tkcya.machine.electric_compressor.lv.name=Electric Compressor I
+tkcya.machine.electric_compressor.mv.name=Electric Compressor II
+tkcya.machine.electric_compressor.hv.name=Electric Compressor III
+tkcya.machine.electric_compressor.ev.name=Electric Compressor IV
+
+
+tkcya.machine.electric_vacuum_pump.ulv.name=Vacuum Pump
+tkcya.machine.electric_vacuum_pump.lv.name=Vacuum Pump I
+tkcya.machine.electric_vacuum_pump.mv.name=Vacuum Pump II
+tkcya.machine.electric_vacuum_pump.hv.name=Vacuum Pump III
+tkcya.machine.electric_vacuum_pump.ev.name=Vacuum Pump IV
+
 
 
 tkcya.machine.crystallizer.name=Crystallizer
@@ -234,6 +267,9 @@ material.flue_gas=Flue Gas
 material.melon_oil=Melon Oil
 material.pumpkin_oil=Pumpkin Oil
 material.mixture_to_filter=Mixture To Filter
+material.lightly_steam_cracked_methane=Lightly Steam Cracked Methane
+material.moderately_steam_cracked_methane=Moderately Steam Cracked Methane
+material.severely_steam_cracked_methane=Severly Steam Cracked Methane
 
 ##Misc
 material.hot_air=Hot Air
@@ -356,6 +392,8 @@ item.material.oreprefix.curvedPlate=%s Curved Plate
 
 #Tooltips
 
+tkcya.machine.tooltip.consumption=Consumes §a%d EU/t§7 when active.
+
 #Can run recipe in parallel
 tkcya.machine.parallel_ability.tooltip=Can run recipes in parallel.
 
@@ -404,6 +442,17 @@ tkcya.machine.spiral_separator.tooltip.1=Run §a1§7 parallel recipe per §a2§7
 tkcya.machine.heat_acceptor.tooltip.1=Accepts §cHEAT§7 on §eANY§7 side.
 tkcya.machine.heat_acceptor.tooltip.2=Loses §c%d HU/s§7.
 tkcya.machine.heat_acceptor.tooltip.3=Capacity: §c%dk HU§7.
+
+#Pressure hatch
+tkcya.machine.pressure_hatch.tooltip.vacuum=Accepts §dVacuum§7, down to §e%s§7.
+tkcya.machine.pressure_hatch.tooltip.pressure=Accepts §aPressure§7, up to §e%s§7.
+tkcya.machine.pressure_hatch.tooltip.vacuum.leak=Loses §d%d L/s§7.
+tkcya.machine.pressure_hatch.tooltip.pressure.leak=Loses §a%d L/s§7.
+
+tkcya.machine.electric_pressure_compressor.pressure.tooltip.description=Transfer a fluid to the OUTPUT face to increase §aPressure§7.
+tkcya.machine.electric_pressure_compressor.vacuum.tooltip.description=Transfer a fluid from the INPUT face to increase §aVacuum§7.
+tkcya.machine.electric_pressure_compressor.tooltip.transfer=Base transfer rate: %d L/t
+tkcya.machine.electric_pressure_compressor.tooltip.fluid_capacity=Fluid capacity: %d L.
 
 tekcays_addon.multiblock.electric_melter.tooltip.1=Temperature: §a%d K§7.
 tekcays_addon.multiblock.electric_melter.tooltip.2=Not enough energy can be input to reach the target!
@@ -471,13 +520,23 @@ tekcays_addon.machine.electric_converter.tooltip.3=The target temperature and th
 tekcays_addon.recipe.blasting_temperature=Temperature: %dK
 tekcays_addon.recipe.blasting_pressure=Pressure: %d bar
 tkcya.recipe.heat=%d HU/t
+tkcya.recipe.temperature=Temperature: %d K
+tkcya.recipe.interval.pressure=Pressure: %s - %s
+tkcya.recipe.interval.temperature=Temperature: %d - %d K
+tkcya.recipe.pressure=Pressure: %s
+tkcya.recipe.vacuum=Vacuum: %s
+tkcya.recipe.min.pressure=Min. pressure: %s
+tkcya.recipe.max.pressure=Max. pressure: %s
+tkcya.recipe.pressurized-fluid-stack=Gas: %s
 
 tekcays_addon.machine.advanced_electrolyzer.tooltip.1=Performs electrolysis of chemicals in solution.
 tekcays_addon.machine.advanced_electrolyzer.tooltip.2=Requires two electrodes, a cathode and an anode, to perform its recipes.
 tekcays_addon.machine.advanced_electrolyzer.tooltip.3=Electrodes take damage during recipe running.
 tekcays_addon.machine.advanced_electrolyzer.tooltip.4=Removal of the electrode while a recipe is running  will cause explosion!
 
+tkcya.machine.text.pressurized.fluid=Fluid: %s %s
 tkcya.machine.text.pressure=Current pressure: %s
+tkcya.machine.text.temperature=Current temperature: %s K
 tkcya.max_parallel.tooltip=Max Parallel: §e%s§7
 
 #Heaters
@@ -500,15 +559,29 @@ cover.cover.detector.inverted=I
 cover.cover.detector.normal=N
 
 #Tricorder
+
+behavior.tricorder.currentTemp=Current Temp: %s K
 behavior.tricorder.current_heat=Current Heat: %s HU
 behavior.tricorder.min_heat=Minimum Heat: %s HU
 behavior.tricorder.max_heat=Maximum Heat: %s HU
-behavior.tricorder.burn_time_left= Burn Time Left %s ticks
-behavior.tricorder.currentTemp=Current Temp: %s K
+
 behavior.tricorder.heatMultiplier=Heat Multiplier: %d
 behavior.tricorder.can_ignite=Can ignite: %s
 behavior.tricorder.is_burning=Is burning: %s
 
+behavior.tricorder.burn_time_left= Burn Time Left %s ticks
+
+behavior.tricorder.fluid.amount=Fluid amount: %d L
+behavior.tricorder.fluid.name=Fluid name: %s
+behavior.tricorder.air.amount=Air amount: %d L
+behavior.tricorder.pressure.pressure=Pressure: %d
+behavior.tricorder.pressure.vacuum=Vacuum: %d
+behavior.tricorder.max_pressure.pressure=Maximum Pressure: %d
+behavior.tricorder.max_pressure.vacuum=Maximum Pressure: %d
+behavior.tricorder.min_pressure.pressure=Minimum Pressure: %d
+behavior.tricorder.min_pressure.vacuum=Minimum Pressure: %d
+behavior.tricorder.current_pu=%d PU
+behavior.tricorder.current_vu=%d VU
 
 # Errors
 

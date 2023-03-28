@@ -11,6 +11,7 @@ import gregtech.api.sound.GTSounds;
 import stanhebben.zenscript.annotations.ZenExpansion;
 import stanhebben.zenscript.annotations.ZenProperty;
 import tekcays_addon.api.recipes.builders.*;
+import tekcays_addon.api.recipes.machines.TopStaggeredRecipeMap;
 
 
 @ZenExpansion("mods.tkcya.recipe.RecipeMaps")
@@ -91,10 +92,27 @@ public class TKCYARecipeMaps {
     public static final RecipeMap<PrimitiveRecipeBuilder> FILTRATION = new RecipeMap<>(
             "filtration", 1, 1, 1, 1, 1, 1, 1, 1, new PrimitiveRecipeBuilder(), false);
 
+    /**
+     * When using a fluid for two different recipes, it's MANDATORY to use an {@code ntCircuitIngredient}.
+     * <pre>
+     * Example:
+     * <pre>
+     *  PRESSURE_CRACKING.recipeBuilder()
+     *          .notConsumable(new IntCircuitIngredient(1))
+     *          .fluidInputs(Ethane.getFluid(1000))
+     *          .fluidOutputs(HydroCrackedEthane.getFluid(1000))
+     *          .minPressure(ATMOSPHERIC_PRESSURE * 10)
+     *          .maxPressure(ATMOSPHERIC_PRESSURE * 12)
+     *          .temperature(400)
+     *          .gas(Hydrogen)
+     *          .duration(80).EUt(VA[MV]).buildAndRegister();
+     * </pre>
+     */
     @ZenProperty
-    public static final RecipeMap<TemperaturePressureRecipeBuilder> PRESSURE_CRACKING = new RecipeMap<>(
-            "pressure_cracking", 1, 2, 0, 0, 1, 2, 1, 2, new TemperaturePressureRecipeBuilder(), false)
-            .setSound(GTSounds.COMPRESSOR);
+    public static final RecipeMap<HeatAndPressureMinMaxRecipeBuilder> PRESSURE_CRACKING = new TopStaggeredRecipeMap<>(
+            "pressure_cracking", 1, 2, 0, 0, 1, 2, 1, 2, new HeatAndPressureMinMaxRecipeBuilder(), false)
+            .setSound(GTSounds.COMPRESSOR)
+            .setSlotOverlay(false,false, true, GuiTextures.CRYSTAL_OVERLAY);
 
     @ZenProperty
     public static final RecipeMap<HeatRecipeBuilder> HEATING = new RecipeMap<>(

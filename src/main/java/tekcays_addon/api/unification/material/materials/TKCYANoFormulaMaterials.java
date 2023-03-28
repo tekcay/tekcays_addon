@@ -3,6 +3,8 @@ package tekcays_addon.api.unification.material.materials;
 import gregtech.api.fluids.fluidType.FluidTypes;
 import gregtech.api.unification.material.Material;
 
+import static gregtech.api.unification.material.Materials.Methane;
+import static gregtech.api.unification.material.Materials.Steam;
 import static gregtech.api.unification.material.info.MaterialIconSet.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.*;
 
@@ -56,6 +58,25 @@ public class TKCYANoFormulaMaterials {
                 .fluid()
                 .color(0xc6c079)
                 .build();
+
+        LightlySteamCrackedMethane = new Material.Builder(24009, "lightly_steam_cracked_methane")
+                .fluid()
+                .fluidTemp(500)
+                .color((2 * Methane.getMaterialRGB() + Steam.getMaterialRGB()) / 3)
+                .build();
+
+        ModeratelySteamCrackedMethane = new Material.Builder(24010, "moderately_steam_cracked_methane")
+                .fluid()
+                .fluidTemp(600)
+                .color((Methane.getMaterialRGB() + Steam.getMaterialRGB()) / 2)
+                .build();
+
+        SeverelySteamCrackedMethane = new Material.Builder(24011, "severely_steam_cracked_methane")
+                .fluid()
+                .fluidTemp(700)
+                .color((Methane.getMaterialRGB() + Steam.getMaterialRGB() * 2) / 3)
+                .build();
+
 
     }
 

@@ -6,9 +6,14 @@ import net.minecraft.client.resources.I18n;
 
 import javax.annotation.Nonnull;
 
-public class HeatProperty extends RecipeProperty<Integer> {
+public class HeatProperty extends RecipeProperty<Integer> implements RecipePropertiesHelper {
 
     public static final String KEY = "heat";
+
+    @Override
+    public String getKey() {
+        return KEY;
+    }
 
     private static HeatProperty INSTANCE;
 

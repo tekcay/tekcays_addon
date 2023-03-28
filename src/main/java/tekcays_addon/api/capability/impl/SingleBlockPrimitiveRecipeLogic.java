@@ -7,9 +7,7 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.logic.IParallelableRecipeLogic;
 
-/**
- * Recipe Logic for a Multiblock that does not require power.
- */
+
 public class SingleBlockPrimitiveRecipeLogic extends AbstractRecipeLogic implements IWorkable, IParallelableRecipeLogic {
 
     public SingleBlockPrimitiveRecipeLogic(MetaTileEntity tileEntity, RecipeMap<?> recipeMap) {

@@ -32,7 +32,6 @@ public abstract class HeatContainerNoEnergyMultiblockController extends RecipeMa
     @Override
     public TraceabilityPredicate autoAbilities(boolean checkEnergyIn, boolean checkMaintenance, boolean checkItemIn, boolean checkItemOut, boolean checkFluidIn, boolean checkFluidOut, boolean checkMuffler) {
         TraceabilityPredicate predicate = super.autoAbilities(false, checkMaintenance, checkItemIn, checkItemOut, checkFluidIn, checkFluidOut, checkMuffler);
-        predicate = predicate.or(abilities(TKCYAMultiblockAbility.HEAT_CONTAINER));
         return predicate;
     }
 

@@ -1,6 +1,5 @@
 package tekcays_addon.loaders.recipe.handlers;
 
-import gregicality.science.common.metatileentities.GCYSMetaTileEntities;
 import gregtech.api.GTValues;
 import gregtech.api.recipes.ModHandler;
 import gregtech.api.recipes.RecipeMaps;
@@ -16,8 +15,6 @@ import net.minecraft.item.ItemStack;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
-import tekcays_addon.common.items.TKCYAMetaItem1;
-import tekcays_addon.common.items.TKCYAMetaItems;
 
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
@@ -248,12 +245,6 @@ public class BlastingRecipeHandler {
                 "   ", "wBh", "   ",
                 'B', TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.REINFORCED_BRICK));
 
-
-        //Low Pressure Hatch
-        ModHandler.addShapedRecipe("low_pressure_hatch", GCYSMetaTileEntities.PRESSURE_HATCH[0].getStackForm(),
-                " w ", " B ", " P ",
-                'P', new UnificationEntry(pipeNormalFluid, Potin),
-                'B', MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.ULV));
 
         ASSEMBLER_RECIPES.recipeBuilder()
                 .input(pipeNormalFluid, Potin)

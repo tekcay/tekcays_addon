@@ -22,7 +22,18 @@ public class TKCYAValues {
     public static final String GCYS_MODID = "gcys";
     public static final String GCYM_MODID = "gcym";
 
+    //Recipe properties keys
+    public static final String INTERVAL_PRESSURE_PROPERTY = "interval_pressure_property";
+    public static final String INTERVAL_TEMPERATURE_PROPERTY = "interval_temperatue_property";
+    public static final String MIN_PRESSURE_PROPERTY = "minPressure";
+    public static final String MAX_PRESSURE_PROPERTY = "maxPressure";
+    public static final String MIN_TEMPERATURE_PROPERTY = "minTemperature";
+    public static final String MAX_TEMPERATURE_PROPERTY = "maxTemperature";
+    public static final String PRESSURIZED_FLUIDSTACK_PROPERTY = "pressurizedFluidStack";
     //Simple Values
+
+    public static final Long[] EMPTY_LONG_TWO_ARRAY = new Long[]{0L, 0L};
+    public static final Integer[] EMPTY_INT_TWO_ARRAY = new Integer[]{0, 0};
 
     /**
      * Improves the yield by {20%}.
@@ -37,10 +48,23 @@ public class TKCYAValues {
 
 
     //Heat
-
+    public static final int ROOM_TEMPERATURE = 298;
     public static final int MIN_HEAT = 0;
     public static final int MAX_HEAT = 10000;
 
+    //Pressure, in bar
+    /**
+     * Minimum amount of a {@code FluidStack} for it to not be null.
+     */
+    public static final int MINIMUM_FLUID_STACK_AMOUNT = 1;
+    public static final float PERFECT_GAS_CONSTANT = 8.314f;
+    public static final float FLUID_MULTIPLIER_PRESSURE = 100.0f;
+    public static final String NO_FLUID = "";
+    public static final int ABSOLUTE_VACUUM = 0;
+    public static final long ATMOSPHERIC_PRESSURE = 101300;
+    public static final long MAX_PRESSURE = ATMOSPHERIC_PRESSURE * 2000;
+    public static final float EU_TO_PU = 0.40F;
+    public static final float EU_TO_VU = 0.30F;
     /**
      * One second in {@code tick}s.
      */

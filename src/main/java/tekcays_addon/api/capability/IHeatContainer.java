@@ -1,9 +1,8 @@
 package tekcays_addon.api.capability;
 
-import gregicality.science.api.GCYSValues;
 import tekcays_addon.api.utils.TKCYAValues;
 
-import javax.annotation.Nonnull;
+import static tekcays_addon.api.utils.TKCYAValues.ROOM_TEMPERATURE;
 
 public interface IHeatContainer {
 
@@ -41,16 +40,6 @@ public interface IHeatContainer {
         setHeat(Math.max(0, Math.min(getHeat() + amount, getMaxHeat())));
     }
 
-    /*
-    default boolean changeHeat(int amount, boolean simulate) {
-        if (simulate) return isHeatSafe(getHeat() + amount);
-        setHeat(getHeat() + amount);
-        return isHeatSafe();
-    }
-
-     */
-
-
     /**
      * @return the minimum heat this container can handle
      */
@@ -65,28 +54,6 @@ public interface IHeatContainer {
      * @return the maximum temperature this container can handle
      */
     int getMaxTemperature();
-
-    /**
-     * @return true if the Heat is safe for the container, else false
-     */
-    default boolean isHeatSafe() {
-        return isHeatSafe(getHeat());
-    }
-
-    /**
-     * @param Heat the Heat to check
-     * @return true if the Heat is safe for the container, else false
-     */
-    default boolean isHeatSafe(int Heat) {
-        return Heat <= getMaxHeat() && Heat >= getMinHeat();
-    }
-
-    /**
-     * @return if the Heat is around atmospheric levels
-     */
-    default boolean isNormalHeat() {
-        return getHeat() == 0;
-    }
 
 
     IHeatContainer EMPTY = new IHeatContainer() {
@@ -112,7 +79,7 @@ public interface IHeatContainer {
         }
         @Override
         public int getTemperature() {
-            return GCYSValues.EARTH_TEMPERATURE;
+            return ROOM_TEMPERATURE;
         }
 
 

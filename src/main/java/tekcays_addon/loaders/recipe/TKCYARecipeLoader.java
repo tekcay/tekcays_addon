@@ -27,7 +27,10 @@ public class TKCYARecipeLoader {
         if (miscOverhaul.enableMagneticOverhaul) TKCYAPartsRecipeHandler.initPolarizing();
         if (meltingOverhaul.enableMeltingOverhaul) TKCYAPartsRecipeHandler.removeExtractor();
         if (energyOverhaul.disableGasTurbinesOverhaul) BurningGasBoilerRecipeHandler.init();
-        if (crackingOverhaul.enableCrackingOverhaul) PressureCrackingHandler.init();
+        if (crackingOverhaul.enableCrackingOverhaul) {
+            PressureCrackingHandler.init();
+            DistillationHandler.init();
+        }
 
         if (meltingOverhaul.enableAlloyingOverhaul) {
             TKCYAPartsRecipeHandler.removeAlloySmelter();

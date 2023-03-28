@@ -1,13 +1,9 @@
 package tekcays_addon.common.metatileentities.multi;
 
-import gregicality.science.api.metatileentity.multiblock.PressureMultiblockController;
-import gregicality.science.api.recipes.recipeproperties.PressureProperty;
 import gregtech.api.block.IHeatingCoilBlockStats;
-import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
@@ -23,19 +19,49 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
+import tekcays_addon.api.capability.IHeatContainer;
+import tekcays_addon.api.capability.IPressureContainer;
+import tekcays_addon.api.capability.impl.HeatContainerList;
+import tekcays_addon.api.metatileentity.multiblock.HeatedPressureContainerMultiblockController;
+import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
+import tekcays_addon.api.utils.recipe.PressureContainerCheckRecipeHelper;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.api.utils.IPressureFormatting;
+import tekcays_addon.api.utils.TKCYAValues;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class MetaTileEntityPressurizedCrackingUnit extends PressureMultiblockController {
+import static tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility.*;
+
+
+public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContainerMultiblockController implements PressureContainerCheckRecipeHelper, IPressureFormatting {
 
     private int coilTier;
+    private IHeatContainer heatContainer;
+    private IPressureContainer pressureContainer;
+    private int volume;
+    private int currentTemp;
+    private long currentPressure;
+    private int currentHeat;
 
     public MetaTileEntityPressurizedCrackingUnit(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.PRESSURE_CRACKING);
-        this.recipeMapWorkable = new CrackingUnitWorkableHandler(this);
+        this.volume = 1;
+        //this.currentTemp = ROOM_TEMPERATURE;
+        this.initializeAbilities();
+        //this.initializePressureContainer();
+    }
+
+
+    protected void initializePressureContainer() {
+        this.pressureContainer = getPressureContainer();
+        if (this.pressureContainer == null) return;
+        //this.pressureContainer.setVolume(volume);
+        //this.pressureContainer.initializeAirFluidStack();
+        //this.pressureContainer.setPressure();
     }
 
     @Override
@@ -46,13 +72,16 @@ public class MetaTileEntityPressurizedCrackingUnit extends PressureMultiblockCon
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
-                .aisle("HCHCH", "HCHCH", "HCHCH")
-                .aisle("HCHCH", "H###H", "HCHCH")
-                .aisle("HCHCH", "HCOCH", "HCHCH")
-                .where('O', selfPredicate())
-                .where('H', states(getCasingState()).setMinGlobalLimited(12).or(autoAbilities()))
+                .aisle("-H-H-", "BCBCB", "BCBCB", "BCBCB")
+                .aisle("-H-H-", "BCBCB", "B###B", "BCBCB")
+                .aisle("-H-H-", "BCBCB", "BCSCB", "BCBCB")
+                .where('S', selfPredicate())
+                .where('B', states(getCasingState()).setMinGlobalLimited(17)
+                        .or(autoAbilities()))
                 .where('#', air())
                 .where('C', heatingCoils())
+                .where('H', abilities(HEAT_CONTAINER))
+                .where('-', any())
                 .build();
     }
 
@@ -65,14 +94,17 @@ public class MetaTileEntityPressurizedCrackingUnit extends PressureMultiblockCon
         return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.STAINLESS_CLEAN);
     }
 
+    private String getCurrentPressureWithUnit() {
+        return convertPressureToBar(currentPressure, true);
+    }
+
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
         super.addDisplayText(textList);
         if (isStructureFormed()) {
             textList.add(new TextComponentTranslation("gregtech.multiblock.cracking_unit.energy", 100 - 10 * coilTier));
-            double pressure = this.getPressureContainer().getPressure();
-            if (pressure > 100000) textList.add(new TextComponentTranslation("tkcya.machine.text.pressure", String.format("%.3f", pressure/1000D) + " kPa"));
-            if (pressure > 1000000) textList.add(new TextComponentTranslation("tkcya.machine.text.pressure", String.format("%.3f", pressure/1000000D) + " MPa"));
+            textList.add(new TextComponentTranslation("tkcya.machine.text.pressurized.fluid", pressureContainer.getPressurizedFluidStackLocalizedName(), getCurrentPressureWithUnit()));
+            textList.add(new TextComponentTranslation("tkcya.machine.text.temperature", currentTemp));
         }
     }
 
@@ -83,9 +115,31 @@ public class MetaTileEntityPressurizedCrackingUnit extends PressureMultiblockCon
     }
 
     @Override
-    public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        return this.getPressureContainer().getPressure() >= recipe.getProperty(PressureProperty.getInstance(), 0D);
-        //TODO : to fill with temperature checking when it is implemented
+    protected void updateFormedValid() {
+        super.updateFormedValid();
+        if (!getWorld().isRemote) updateLogic();
+    }
+
+    private void updateLogic() {
+        heatContainer = new HeatContainerList(getAbilities(TKCYAMultiblockAbility.HEAT_CONTAINER));
+        pressureContainer = getPressureContainer();
+        if (pressureContainer == null) return;
+        currentPressure = pressureContainer.getPressure();
+
+        if (heatContainer == null) return;
+        currentHeat = heatContainer.getHeat();
+        actualizeTemperature();
+        currentTemp = heatContainer.getTemperature();
+    }
+
+    private void actualizeTemperature() {
+        heatContainer.setTemperature(TKCYAValues.ROOM_TEMPERATURE + currentHeat / (20));
+    }
+
+    @Override
+    public IPressureContainer getPressureContainer() {
+        List<IPressureContainer> list = getAbilities(PRESSURE_CONTAINER);
+        return list.isEmpty() ? null : list.get(0);
     }
 
     @Nonnull
@@ -97,12 +151,11 @@ public class MetaTileEntityPressurizedCrackingUnit extends PressureMultiblockCon
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
+        initializePressureContainer();
         Object type = context.get("CoilType");
         if (type instanceof IHeatingCoilBlockStats) {
             this.coilTier = ((IHeatingCoilBlockStats) type).getTier();
-        } else {
-            this.coilTier = 0;
-        }
+        } else this.coilTier = 0;
     }
 
     @Override
@@ -115,12 +168,42 @@ public class MetaTileEntityPressurizedCrackingUnit extends PressureMultiblockCon
         return this.coilTier;
     }
 
+    @Override
+    public long getCurrentPressure() {
+        return currentPressure;
+    }
+
+    @Override
+    public int getCurrentTemperature() {
+        return currentTemp;
+    }
+
+    //Implementation
+    @Override
+    public FluidStack getFluidStack() {
+        return pressureContainer.getPressurizedFluidStack();
+    }
+
+    @Override
+    public IHeatContainer getHeatContainer() {
+        return this.heatContainer;
+    }
+
+
+    @Override
+    public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
+        return checkRecipeHelper(recipe, consumeIfSuccess);
+    }
+
+
+    /*
     @SuppressWarnings("InnerClassMayBeStatic")
     private class CrackingUnitWorkableHandler extends MultiblockRecipeLogic {
 
         public CrackingUnitWorkableHandler(RecipeMapMultiblockController tileEntity) {
             super(tileEntity);
         }
+
 
         @Override
         protected void performNonOverclockBonuses(int[] resultOverclock) {
@@ -132,5 +215,9 @@ public class MetaTileEntityPressurizedCrackingUnit extends PressureMultiblockCon
             resultOverclock[0] *= 1.0f - coilTier * 0.1; // each coil above cupronickel (coilTier = 0) uses 10% less energy
             resultOverclock[0] = Math.max(1, resultOverclock[0]);
         }
+
+
     }
+
+         */
 }

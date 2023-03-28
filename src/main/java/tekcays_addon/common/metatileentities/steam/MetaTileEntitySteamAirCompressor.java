@@ -56,6 +56,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
+
 public class MetaTileEntitySteamAirCompressor extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide {
 
     private static final int STEAM_CONSUMPTION = 160;
@@ -81,7 +83,7 @@ public class MetaTileEntitySteamAirCompressor extends MetaTileEntity implements 
     @Override
     protected void initializeInventory() {
         super.initializeInventory();
-        this.pressureContainer = new PressureContainer(this, GCYSValues.EARTH_PRESSURE, GCYSValues.EARTH_PRESSURE * 2.2, 1.0);
+        this.pressureContainer = new PressureContainer(this, ATMOSPHERIC_PRESSURE, ATMOSPHERIC_PRESSURE * 2.2, 1.0);
     }
 
     @Override

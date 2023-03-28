@@ -1,7 +1,5 @@
 package tekcays_addon.api.recipes.builders;
 
-import gregicality.science.api.GCYSValues;
-import gregicality.science.api.recipes.recipeproperties.PressureProperty;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMap;
@@ -11,8 +9,13 @@ import gregtech.api.util.GTLog;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.ValidationResult;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import tekcays_addon.api.recipes.recipeproperties.MinPressureProperty;
+import tekcays_addon.api.recipes.recipeproperties.PressureProperty;
 
 import javax.annotation.Nonnull;
+
+import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
+import static tekcays_addon.api.utils.TKCYAValues.MIN_TEMPERATURE_PROPERTY;
 
 @SuppressWarnings("unused")
 public class NoEnergyPressureRecipeBuilder extends RecipeBuilder<NoEnergyPressureRecipeBuilder> {
@@ -51,7 +54,7 @@ public class NoEnergyPressureRecipeBuilder extends RecipeBuilder<NoEnergyPressur
             GTLog.logger.error("Pressure cannot be less than or equal to 0", new IllegalArgumentException());
             recipeStatus = EnumValidationResult.INVALID;
         }
-        this.applyProperty(PressureProperty.getInstance(), pressure);
+        this.applyProperty(MinPressureProperty.getInstance(), pressure);
         return this;
     }
 
@@ -59,12 +62,12 @@ public class NoEnergyPressureRecipeBuilder extends RecipeBuilder<NoEnergyPressur
     public ValidationResult<Recipe> build() {
         this.EUt = 1; // secretly force to 1 to allow recipe matching to work properly
         if (this.recipePropertyStorage == null) this.recipePropertyStorage = new RecipePropertyStorage();
-        if (this.recipePropertyStorage.hasRecipeProperty(PressureProperty.getInstance())) {
-            if (this.recipePropertyStorage.getRecipePropertyValue(PressureProperty.getInstance(), -1.0D) <= 0) {
-                this.recipePropertyStorage.store(PressureProperty.getInstance(), GCYSValues.EARTH_PRESSURE);
+        if (this.recipePropertyStorage.hasRecipeProperty(MinPressureProperty.getInstance())) {
+            if (this.recipePropertyStorage.getRecipePropertyValue(MinPressureProperty.getInstance(), 0L) <= 0) {
+                this.recipePropertyStorage.store(MinPressureProperty.getInstance(), ATMOSPHERIC_PRESSURE);
             }
         } else {
-            this.recipePropertyStorage.store(PressureProperty.getInstance(), GCYSValues.EARTH_PRESSURE);
+            this.recipePropertyStorage.store(MinPressureProperty.getInstance(), ATMOSPHERIC_PRESSURE);
         }
 
         return super.build();
@@ -72,14 +75,14 @@ public class NoEnergyPressureRecipeBuilder extends RecipeBuilder<NoEnergyPressur
 
     public double getPressure() {
         return this.recipePropertyStorage == null ? 0.0D :
-                this.recipePropertyStorage.getRecipePropertyValue(PressureProperty.getInstance(), 0.0D);
+                this.recipePropertyStorage.getRecipePropertyValue(MinPressureProperty.getInstance(), 0L);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
-                .append(PressureProperty.getInstance().getKey(), GTUtility.formatNumbers(getPressure()))
+                .append(MinPressureProperty.getInstance().getKey(), GTUtility.formatNumbers(getPressure()))
                 .toString();
     }
 
