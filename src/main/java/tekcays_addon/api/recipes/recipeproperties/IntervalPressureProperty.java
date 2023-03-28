@@ -26,6 +26,7 @@ public class IntervalPressureProperty extends RecipeProperty<Long[]> implements 
         return INSTANCE;
     }
 
+    //TODO refacto
     @Override
     public void drawInfo(@Nonnull Minecraft minecraft, int x, int y, int color, Object value) {
         Long[] casted = castValue(value);

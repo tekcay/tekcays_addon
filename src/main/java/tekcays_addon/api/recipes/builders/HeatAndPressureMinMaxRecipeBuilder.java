@@ -28,8 +28,7 @@ public class HeatAndPressureMinMaxRecipeBuilder extends RecipeBuilder<HeatAndPre
     }
 
     public static final List<RecipeProperty<?>> recipePropertiesInstances = new ArrayList<RecipeProperty<?>>() {{
-        add(MinTemperatureProperty.getInstance());
-        add(MaxTemperatureProperty.getInstance());
+        add(IntervalTemperatureProperty.getInstance());
         add(IntervalPressureProperty.getInstance());
         add(PressurizedFluidStackProperty.getInstance());
     }};

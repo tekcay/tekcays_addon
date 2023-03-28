@@ -24,6 +24,7 @@ public class TKCYAValues {
 
     //Recipe properties keys
     public static final String INTERVAL_PRESSURE_PROPERTY = "interval_pressure_property";
+    public static final String INTERVAL_TEMPERATURE_PROPERTY = "interval_temperatue_property";
     public static final String MIN_PRESSURE_PROPERTY = "minPressure";
     public static final String MAX_PRESSURE_PROPERTY = "maxPressure";
     public static final String MIN_TEMPERATURE_PROPERTY = "minTemperature";
@@ -32,6 +33,7 @@ public class TKCYAValues {
     //Simple Values
 
     public static final Long[] EMPTY_LONG_TWO_ARRAY = new Long[]{0L, 0L};
+    public static final Integer[] EMPTY_INT_TWO_ARRAY = new Integer[]{0, 0};
 
     /**
      * Improves the yield by {20%}.

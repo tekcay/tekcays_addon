@@ -46,6 +46,14 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
                     store((MaxTemperatureProperty) recipeProperty, recipePropertyStorage, 0L);
                     break;
 
+                case INTERVAL_PRESSURE_PROPERTY:
+                    store((IntervalPressureProperty) recipeProperty, recipePropertyStorage, EMPTY_LONG_TWO_ARRAY);
+                    break;
+
+                case INTERVAL_TEMPERATURE_PROPERTY:
+                    store((IntervalTemperatureProperty) recipeProperty, recipePropertyStorage, EMPTY_INT_TWO_ARRAY);
+                    break;
+
                 case PRESSURIZED_FLUIDSTACK_PROPERTY:
                     store((PressurizedFluidStackProperty) recipeProperty, recipePropertyStorage, null);
                     break;
@@ -77,7 +85,12 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
 
     @Nonnull
     default T intervalPressure(Long[] pressures) {
-        return validate(IntervalPressureProperty.getInstance(), pressures, VALIDATE_ARRAY);
+        return validate(IntervalPressureProperty.getInstance(), pressures, VALIDATE_LONG_ARRAY);
+    }
+
+    @Nonnull
+    default T intervalTemperature(Integer[] temperatures) {
+        return validate(IntervalTemperatureProperty.getInstance(), temperatures, VALIDATE_INT_ARRAY);
     }
     @Nonnull
     default T minTemperature (int temperature) {
@@ -108,6 +121,11 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
     default Long[] getIntervalPressure() {
         return getRecipePropertyStorage() == null ? EMPTY_LONG_TWO_ARRAY :
                 getRecipePropertyStorage().getRecipePropertyValue(IntervalPressureProperty.getInstance(), EMPTY_LONG_TWO_ARRAY);
+    }
+
+    default Integer[] getIntervalTemperature() {
+        return getRecipePropertyStorage() == null ? EMPTY_INT_TWO_ARRAY :
+                getRecipePropertyStorage().getRecipePropertyValue(IntervalTemperatureProperty.getInstance(), EMPTY_INT_TWO_ARRAY);
     }
 
     default int getMinTemperature() {
@@ -142,6 +160,10 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
         switch (key) {
             case INTERVAL_PRESSURE_PROPERTY:
                 this.intervalPressure(((Long[]) value).clone());
+                return true;
+
+            case INTERVAL_TEMPERATURE_PROPERTY:
+                this.intervalTemperature(((Integer[]) value).clone());
                 return true;
 
             case MIN_TEMPERATURE_PROPERTY:
