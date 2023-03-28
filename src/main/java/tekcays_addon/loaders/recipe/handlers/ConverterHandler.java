@@ -35,8 +35,8 @@ public class ConverterHandler {
                 .fluidInputs(PigIron.getFluid(GTValues.L))
                 .fluidInputs(Air.getFluid(4000))
                 .fluidOutputs(Steel.getFluid(GTValues.L))
-                .pressure(ATMOSPHERIC_PRESSURE * 5)
-                .temperature(Steel.getFluid().getTemperature())
+                .minPressure(ATMOSPHERIC_PRESSURE * 5)
+                .minTemperature(Steel.getFluid().getTemperature())
                 .duration(200).EUt(VA[MV]).buildAndRegister();
 
         //Steel with oxygen
@@ -44,8 +44,8 @@ public class ConverterHandler {
                 .fluidInputs(PigIron.getFluid(GTValues.L))
                 .fluidInputs(Oxygen.getFluid(2000))
                 .fluidOutputs(Steel.getFluid(GTValues.L))
-                .pressure(ATMOSPHERIC_PRESSURE * 5)
-                .temperature(Steel.getFluid().getTemperature())
+                .minPressure(ATMOSPHERIC_PRESSURE * 5)
+                .minTemperature(Steel.getFluid().getTemperature())
                 .duration(200).EUt(VA[MV]).buildAndRegister();
 
         //Steel with oxygen recycling
@@ -55,8 +55,8 @@ public class ConverterHandler {
                 .fluidInputs(Oxygen.getFluid(2000))
                 .fluidOutputs(Steel.getFluid(GTValues.L))
                 .fluidOutputs(Oxygen.getFluid(5000))
-                .pressure(ATMOSPHERIC_PRESSURE * 5)
-                .temperature(Steel.getFluid().getTemperature())
+                .minPressure(ATMOSPHERIC_PRESSURE * 5)
+                .minTemperature(Steel.getFluid().getTemperature())
                 .duration(200).EUt(VA[MV]).buildAndRegister();
 
         //NiZnFe4 + 4 O2 -> NiZnFe4O8
@@ -64,8 +64,8 @@ public class ConverterHandler {
                 .fluidInputs(FerriteMixture.getFluid(GTValues.L))
                 .fluidInputs(Oxygen.getFluid(8000))
                 .fluidOutputs(NickelZincFerrite.getFluid(GTValues.L))
-                .pressure(ATMOSPHERIC_PRESSURE * 10)
-                .temperature(NickelZincFerrite.getFluid().getTemperature())
+                .minPressure(ATMOSPHERIC_PRESSURE * 10)
+                .minTemperature(NickelZincFerrite.getFluid().getTemperature())
                 .duration(200).EUt(VA[MV]).buildAndRegister();
 
         //TiF3 + 3 H2 -> Ti + 3 HF
@@ -73,8 +73,8 @@ public class ConverterHandler {
                 .fluidInputs(TitaniumTrifluoride.getFluid(GTValues.L * 4))
                 .fluidInputs(Hydrogen.getFluid(3000))
                 .fluidOutputs(Titanium.getFluid(GTValues.L))
-                .pressure(ATMOSPHERIC_PRESSURE * 10)
-                .temperature(Titanium.getFluid().getTemperature())
+                .minPressure(ATMOSPHERIC_PRESSURE * 10)
+                .minTemperature(Titanium.getFluid().getTemperature())
                 .duration(200).EUt(VA[MV]).buildAndRegister();
 
         //TiF3 + 3 H2 -> Ti + 3 HF with HF recovery
@@ -84,8 +84,8 @@ public class ConverterHandler {
                 .fluidInputs(Hydrogen.getFluid(3000))
                 .fluidOutputs(Titanium.getFluid(GTValues.L))
                 .fluidOutputs(HydrogenFluoride.getFluid(GTValues.L * 3))
-                .pressure(ATMOSPHERIC_PRESSURE * 10)
-                .temperature(Titanium.getFluid().getTemperature())
+                .minPressure(ATMOSPHERIC_PRESSURE * 10)
+                .minTemperature(Titanium.getFluid().getTemperature())
                 .duration(200).EUt(VA[MV]).buildAndRegister();
 
     }

@@ -29,24 +29,24 @@ public class RoastableMaterial {
 
     private final Material material;
     private final int temperature;
-    private final double pressure;
+    private final long pressure;
     private Material output;
     private Material fluidOutput;
 
-    public RoastableMaterial(Material material, int temperature, double pressure) {
+    public RoastableMaterial(Material material, int temperature, long pressure) {
         this.material = material;
         this.temperature = temperature;
         this.pressure = pressure;
     }
 
-    public RoastableMaterial(Material material, int temperature, double pressure, Material output) {
+    public RoastableMaterial(Material material, int temperature, long pressure, Material output) {
         this.material = material;
         this.temperature = temperature;
         this.pressure = pressure;
         this.output = output;
     }
 
-    public RoastableMaterial(Material material, int temperature, double pressure, Material output, Material fluidOutput) {
+    public RoastableMaterial(Material material, int temperature, long pressure, Material output, Material fluidOutput) {
         this.material = material;
         this.temperature = temperature;
         this.pressure = pressure;
@@ -62,7 +62,7 @@ public class RoastableMaterial {
         return this.temperature;
     }
 
-    public double getRoastingPressure() {
+    public long getRoastingPressure() {
         return this.pressure;
     }
     public Material getOutput() {
