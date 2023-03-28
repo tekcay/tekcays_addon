@@ -520,6 +520,7 @@ tekcays_addon.recipe.blasting_temperature=Temperature: %dK
 tekcays_addon.recipe.blasting_pressure=Pressure: %d bar
 tkcya.recipe.heat=%d HU/t
 tkcya.recipe.temperature=Temperature: %d K
+tkcya.recipe.interval.pressure=Pressure: %s - %s
 tkcya.recipe.pressure=Pressure: %s
 tkcya.recipe.vacuum=Vacuum: %s
 tkcya.recipe.min.pressure=Min. pressure: %s

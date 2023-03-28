@@ -25,8 +25,8 @@ public class PressureProperty extends RecipeProperty<Long> implements IPressureF
     public void drawInfo(@Nonnull Minecraft minecraft, int x, int y, int color, Object value) {
         Long casted = castValue(value);
          if (isVacuum(casted)) minecraft.fontRenderer.drawString(I18n.format(
-                 "tkcya.recipe.vacuum", convertPressureToMbar(casted)), x, y, color);
+                 "tkcya.recipe.vacuum", convertPressureToMbar(casted, true)), x, y, color);
          else minecraft.fontRenderer.drawString(I18n.format(
-                 "tkcya.recipe.pressure", convertPressureToBar(casted)), x, y, color);
+                 "tkcya.recipe.pressure", convertPressureToBar(casted, true)), x, y, color);
     }
 }

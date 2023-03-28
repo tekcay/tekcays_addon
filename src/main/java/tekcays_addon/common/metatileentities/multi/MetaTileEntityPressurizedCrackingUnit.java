@@ -1,16 +1,13 @@
 package tekcays_addon.common.metatileentities.multi;
 
 import gregtech.api.block.IHeatingCoilBlockStats;
-import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.recipes.Recipe;
-import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing;
@@ -22,23 +19,15 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.capability.IHeatContainer;
-import tekcays_addon.api.capability.IHeatMachine;
 import tekcays_addon.api.capability.IPressureContainer;
-import tekcays_addon.api.capability.IPressureMachine;
 import tekcays_addon.api.capability.impl.HeatContainerList;
 import tekcays_addon.api.metatileentity.multiblock.HeatedPressureContainerMultiblockController;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
-import tekcays_addon.api.recipes.PressureContainerCheckRecipeHelper;
+import tekcays_addon.api.utils.recipe.PressureContainerCheckRecipeHelper;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.recipes.recipeproperties.MaxPressureProperty;
-import tekcays_addon.api.recipes.recipeproperties.MinPressureProperty;
-import tekcays_addon.api.recipes.recipeproperties.NoCoilTemperatureProperty;
-import tekcays_addon.api.recipes.recipeproperties.PressurizedFluidStackProperty;
 import tekcays_addon.api.utils.IPressureFormatting;
-import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.api.utils.TKCYAValues;
 
 import javax.annotation.Nonnull;
@@ -46,7 +35,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 import static tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility.*;
-import static tekcays_addon.api.utils.TKCYAValues.ROOM_TEMPERATURE;
 
 
 public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContainerMultiblockController implements PressureContainerCheckRecipeHelper, IPressureFormatting {
@@ -107,9 +95,8 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     }
 
     private String getCurrentPressureWithUnit() {
-        return convertPressureToBar(currentPressure);
+        return convertPressureToBar(currentPressure, true);
     }
-
 
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
@@ -154,7 +141,6 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
         List<IPressureContainer> list = getAbilities(PRESSURE_CONTAINER);
         return list.isEmpty() ? null : list.get(0);
     }
-
 
     @Nonnull
     @Override
@@ -206,18 +192,7 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        TKCYALog.logger.info("got here");
-
-        long currentPressure = getCurrentPressure();
-        TKCYALog.logger.info("current Pressure is {}, MinPressure is {}, MaxPressure is {}", currentPressure, recipe.getProperty(MinPressureProperty.getInstance(), 0L), recipe.getProperty(MaxPressureProperty.getInstance(), 0L));
-        TKCYALog.logger.info("current temperature is {} K, required temperature is {} K", getCurrentTemperature(), recipe.getProperty(NoCoilTemperatureProperty.getInstance(), 0));
-        TKCYALog.logger.info("current fluid is {}, required fluid is {}", getFluidStack().getLocalizedName(), recipe.getProperty(PressurizedFluidStackProperty.getInstance(), null).getLocalizedName());
-        if (!GTUtility.isBetweenInclusive(
-                recipe.getProperty(MinPressureProperty.getInstance(), 0L),
-                recipe.getProperty(MaxPressureProperty.getInstance(), 0L),
-                currentPressure)) return false;
-        if (getCurrentTemperature() < recipe.getProperty(NoCoilTemperatureProperty.getInstance(), 0)) return false;
-        return getFluidStack().isFluidEqual(recipe.getProperty(PressurizedFluidStackProperty.getInstance(), null));
+        return checkRecipeHelper(recipe, consumeIfSuccess);
     }
 
 

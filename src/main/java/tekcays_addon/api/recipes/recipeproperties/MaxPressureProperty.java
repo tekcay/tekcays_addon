@@ -30,9 +30,9 @@ public class MaxPressureProperty extends RecipeProperty<Long> implements IPressu
     public void drawInfo(@Nonnull Minecraft minecraft, int x, int y, int color, Object value) {
         Long casted = castValue(value);
         if (isVacuum(casted)) minecraft.fontRenderer.drawString(I18n.format(
-                "tkcya.recipe.max.pressure", convertPressureToMbar(casted)), x, y, color);
+                "tkcya.recipe.max.pressure", convertPressureToMbar(casted, true)), x, y, color);
         else minecraft.fontRenderer.drawString(I18n.format(
-                "tkcya.recipe.max.pressure", convertPressureToBar(casted)), x, y, color);
+                "tkcya.recipe.max.pressure", convertPressureToBar(casted, true)), x, y, color);
     }
 
 }

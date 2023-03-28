@@ -23,12 +23,15 @@ public class TKCYAValues {
     public static final String GCYM_MODID = "gcym";
 
     //Recipe properties keys
+    public static final String INTERVAL_PRESSURE_PROPERTY = "interval_pressure_property";
     public static final String MIN_PRESSURE_PROPERTY = "minPressure";
     public static final String MAX_PRESSURE_PROPERTY = "maxPressure";
     public static final String MIN_TEMPERATURE_PROPERTY = "minTemperature";
     public static final String MAX_TEMPERATURE_PROPERTY = "maxTemperature";
     public static final String PRESSURIZED_FLUIDSTACK_PROPERTY = "pressurizedFluidStack";
     //Simple Values
+
+    public static final Long[] EMPTY_LONG_TWO_ARRAY = new Long[]{0L, 0L};
 
     /**
      * Improves the yield by {20%}.

@@ -30,9 +30,9 @@ public class MinPressureProperty extends RecipeProperty<Long> implements IPressu
     public void drawInfo(@Nonnull Minecraft minecraft, int x, int y, int color, Object value) {
         Long casted = castValue(value);
         if (isVacuum(casted)) minecraft.fontRenderer.drawString(I18n.format(
-                "tkcya.recipe.min.pressure", convertPressureToMbar(casted)), x, y, color);
+                "tkcya.recipe.min.pressure", convertPressureToMbar(casted, true)), x, y, color);
         else minecraft.fontRenderer.drawString(I18n.format(
-                "tkcya.recipe.min.pressure", convertPressureToBar(casted)), x, y, color);
+                "tkcya.recipe.min.pressure", convertPressureToBar(casted, true)), x, y, color);
     }
 
 }
