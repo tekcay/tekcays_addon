@@ -77,6 +77,12 @@ public class TKCYANoFormulaMaterials {
                 .color((Methane.getMaterialRGB() + Steam.getMaterialRGB() * 2) / 3)
                 .build();
 
+        ChalcogenAnodeMud = new Material.Builder(24012, "chalcogen_anode_mud")
+                .dust()
+                .color(0x8A3324)
+                .iconSet(FINE)
+                .build();
+
 
     }
 

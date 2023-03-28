@@ -2,7 +2,6 @@ package tekcays_addon.api.utils.roasting;
 
 import gregtech.api.unification.material.Material;
 
-import static gregicality.science.api.unification.materials.GCYSMaterials.*;
 import static gregtech.api.unification.material.Materials.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.*;
 import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;

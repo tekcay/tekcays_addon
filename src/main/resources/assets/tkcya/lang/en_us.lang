@@ -270,6 +270,7 @@ material.mixture_to_filter=Mixture To Filter
 material.lightly_steam_cracked_methane=Lightly Steam Cracked Methane
 material.moderately_steam_cracked_methane=Moderately Steam Cracked Methane
 material.severely_steam_cracked_methane=Severly Steam Cracked Methane
+material.chalcogen_anode_mud=Chalcogen Anode Mud
 
 ##Misc
 material.hot_air=Hot Air
@@ -305,6 +306,7 @@ material.zinc_leaching_solution=Zinc Leaching Solution
 material.zinc_leaching_residue=Zinc Leaching Residue
 material.tannic_acid=Tannic Acid
 material.germanic_acid_solution=Germanic Acid Solution
+material.zinc_oxide=Zinc Oxide
 
 ##BauxiteChain
 material.aluminium_fluoride=Aluminium Fluoride
@@ -321,6 +323,10 @@ material.sodium_carbonate=Sodium Carbonate
 material.sodium_sulfate=Sodium Sulfate
 material.potassium_sulfate=Potassium Sulfate
 
+##MolybdenumChain
+material.molybdenum_trioxide=Molybdenum Trioxide
+material.molybdenum_flue=Molybdenum Flue
+
 #MoreRoastable
 material.kesterite=Kesterite
 material.stannite=Stannite
@@ -334,6 +340,7 @@ material.cuprite=Cuprite
 material.galvanized_steel=Galvanized Steel
 material.monel=Monel
 material.constantan=Constantan
+material.silicon_carbide=Silicon Carbide
 
 ##Polymers
 material.high_density_polyethylene=High Density Polyethylene (HDPE)

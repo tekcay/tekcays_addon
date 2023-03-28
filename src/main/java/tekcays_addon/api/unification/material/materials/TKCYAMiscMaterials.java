@@ -5,8 +5,6 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.info.MaterialFlags;
 import gregtech.api.unification.material.info.MaterialIconSet;
-import tekcays_addon.api.unification.TKCYAMaterials;
-import tekcays_addon.api.unification.material.info.TKCYAMaterialFlags;
 
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialIconSet.*;
@@ -157,6 +155,13 @@ public class TKCYAMiscMaterials {
 
         //Zinc chain
 
+        ZincOxide = new Material.Builder(24129, "zinc_oxide")
+                .dust()
+                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .color((Zinc.getMaterialRGB() + Oxygen.getMaterialRGB()) / 2)
+                .components(Zinc, 1, Oxygen, 1)
+                .build();
+
         IronSulfate = new Material.Builder(24130, "iron_sulfate")
                 .dust()
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
@@ -287,6 +292,14 @@ public class TKCYAMiscMaterials {
                 .build();
         HexafluorosilicAcid.setFormula("H2SiF6", true);
 
+        AluminiumHydroxide = new Material.Builder(24167, "hexafluorosilic_acid")
+                .fluidTemp(298)
+                .color(Aluminium.getMaterialRGB() + (Oxygen.getMaterialRGB() * 3 + Hydrogen.getMaterialRGB() * 3)/ 7)
+                .build();
+        AluminiumHydroxide.setFormula("Al(OH)3", true);
+
+
+
         //Chromite Chain
         SodiumChromate = new Material.Builder(24168, "sodium_chromate")
                 .dust()
@@ -319,6 +332,27 @@ public class TKCYAMiscMaterials {
                 .build();
         PotassiumSulfate.setFormula("K2SO4", true);
 
+        //Mo chain
+        MolybdenumTrioxide = new Material.Builder(24174, "molybdenum_trioxide")
+                .dust()
+                .fluidTemp(795 + 273)
+                .color((Molybdenum.getMaterialRGB() + Oxygen.getMaterialRGB()) / 4)
+                .build();
+        MolybdenumTrioxide.setFormula("MoO3", true);
+
+        MolybdenumFlue = new Material.Builder(24175, "molybdenum_flue")
+                .dust()
+                .color(Molybdenum.getMaterialRGB())
+                .build();
+        MolybdenumFlue.setFormula("Mo?", true);
+
+
+        //Others
+        PotassiumHydroxide = new Material.Builder(24190, "potassium_hydroxide")
+                .dust()
+                .color((Potassium.getMaterialRGB() + Hydrogen.getMaterialRGB() + Oxygen.getMaterialRGB()) / 3)
+                .build();
+        MolybdenumTrioxide.setFormula("KOH", true);
 
 
     }
