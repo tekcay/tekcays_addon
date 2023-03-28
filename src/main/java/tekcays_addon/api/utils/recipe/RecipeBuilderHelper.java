@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.function.Function;
 
-import static tekcays_addon.api.utils.recipe.RecipeValidateHelper.*;
+import static tekcays_addon.api.utils.recipe.RecipeValidationFunctions.*;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
 public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
@@ -116,44 +116,6 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
     default T gas(FluidStack fluidStack) {
         return validate(PressurizedFluidStackProperty.getInstance(), fluidStack, VALIDATE_FLUIDSTACK);
     }
-
-    //Getters for their values
-    default Long[] getIntervalPressure() {
-        return getRecipePropertyStorage() == null ? EMPTY_LONG_TWO_ARRAY :
-                getRecipePropertyStorage().getRecipePropertyValue(IntervalPressureProperty.getInstance(), EMPTY_LONG_TWO_ARRAY);
-    }
-
-    default Integer[] getIntervalTemperature() {
-        return getRecipePropertyStorage() == null ? EMPTY_INT_TWO_ARRAY :
-                getRecipePropertyStorage().getRecipePropertyValue(IntervalTemperatureProperty.getInstance(), EMPTY_INT_TWO_ARRAY);
-    }
-
-    default int getMinTemperature() {
-        return getRecipePropertyStorage()== null ? 0 :
-                getRecipePropertyStorage().getRecipePropertyValue(MinTemperatureProperty.getInstance(), 0);
-    }
-
-    default int getMaxTemperature() {
-        return getRecipePropertyStorage()== null ? 0 :
-                getRecipePropertyStorage().getRecipePropertyValue(MaxTemperatureProperty.getInstance(), 0);
-    }
-
-    default long getMinPressure() {
-        return getRecipePropertyStorage() == null ? 0L :
-                getRecipePropertyStorage().getRecipePropertyValue(MinPressureProperty.getInstance(), 0L);
-    }
-
-    default long getMaxPressure() {
-        return getRecipePropertyStorage() == null ? 0L :
-                getRecipePropertyStorage().getRecipePropertyValue(MaxPressureProperty.getInstance(), 0L);
-    }
-
-
-    default FluidStack getGas() {
-        return getRecipePropertyStorage() == null ? null :
-                getRecipePropertyStorage().getRecipePropertyValue(PressurizedFluidStackProperty.getInstance(), null);
-    }
-
 
     default boolean applyPropertyHelper(@Nonnull String key, Object value) {
 

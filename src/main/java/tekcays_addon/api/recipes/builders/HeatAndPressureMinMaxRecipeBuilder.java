@@ -10,6 +10,7 @@ import gregtech.api.util.ValidationResult;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import tekcays_addon.api.recipes.recipeproperties.*;
 import tekcays_addon.api.utils.recipe.RecipeBuilderHelper;
+import tekcays_addon.api.utils.recipe.RecipePropertyGetters;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -47,24 +48,19 @@ public class HeatAndPressureMinMaxRecipeBuilder extends RecipeBuilder<HeatAndPre
         applyPropertyHelper(key, value);
         return super.applyProperty(key, value);
     }
-
-    private String getTemperature() {
-        return String.format("%d - %d", getMinTemperature(), getMaxTemperature());
-    }
-
     @Override
     public ValidationResult<Recipe> build() {
         buildHelper();
         return super.build();
     }
-
     @Override
     public String toString() {
+        RecipePropertyGetters recipePropertyGetters = new RecipePropertyGetters(getRecipePropertyStorage());
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
-                .append("Temperature: ", getTemperature())
-                .append("Pressure: ", getIntervalPressure())
-                .append("Gas: ", getGas())
+                .append("Temperature: ", recipePropertyGetters.getIntervalTemperature())
+                .append("Pressure: ", recipePropertyGetters.getIntervalPressure())
+                .append("Gas: ", recipePropertyGetters.getGas())
                 .toString();
     }
 
@@ -87,6 +83,5 @@ public class HeatAndPressureMinMaxRecipeBuilder extends RecipeBuilder<HeatAndPre
     public void setRecipeStatus(EnumValidationResult enumValidationResult) {
         recipeStatus = enumValidationResult;
     }
-
 
 }
