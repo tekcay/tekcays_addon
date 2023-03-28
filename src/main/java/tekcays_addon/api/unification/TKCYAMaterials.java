@@ -4,6 +4,8 @@ import gregtech.api.unification.material.Material;
 import tekcays_addon.api.unification.material.info.TKCYAChemicalFormula;
 import tekcays_addon.api.unification.material.materials.*;
 
+import static gregtech.api.unification.material.info.MaterialIconSet.FINE;
+
 public class TKCYAMaterials {
 
 
@@ -13,21 +15,22 @@ public class TKCYAMaterials {
 
     public static void init() {
 
+        int id = 24000;
 
         // NoFormula 24000-24100
-        TKCYANoFormulaMaterials.init();
+        id = TKCYANoFormulaMaterials.init(id);
 
         // 24101-24200
-        TKCYAMiscMaterials.init();
+        id = TKCYAMiscMaterials.init(id);
 
         // Alloys 24201-24299
-        TKCYAAlloys.init();
+        id = TKCYAAlloys.init(id);
 
         // Second Degree 24300-24699
-        TKCYAOrganicCompounds.init();
+        id = TKCYAOrganicCompounds.init(id);
 
         // Second Degree 24700-24800
-        TKCYAPolymers.init();
+        id = TKCYAPolymers.init(id);
 
         // Flags
         TKCYAMaterialFlagAddition.init();
@@ -56,6 +59,7 @@ public class TKCYAMaterials {
     public static Material LightlySteamCrackedMethane;
     public static Material ModeratelySteamCrackedMethane;
     public static Material SeverelySteamCrackedMethane;
+    public static Material ChalcogenAnodeMud;
 
     /**
      * Misc
@@ -92,10 +96,13 @@ public class TKCYAMaterials {
     public static Material GermanicAcidSolution;
     public static Material GermaniumChloride;
     public static Material GermaniumOxide;
+    public static Material ZincOxide;
 
 
     //Misc
     public static Material PotassiumMetaBisulfite;
+    public static Material PotassiumHydroxide;
+
 
     //More roastable
     public static Material Kesterite;
@@ -111,6 +118,7 @@ public class TKCYAMaterials {
     public static Material AluminiumFluoride;
     public static Material Cryolite;
     public static Material HexafluorosilicAcid;
+    public static Material AluminiumHydroxide;
 
     //ChromiteChain
     public static Material SodiumChromate;
@@ -119,6 +127,10 @@ public class TKCYAMaterials {
     public static Material SodiumCarbonate;
     public static Material SodiumSulfate;
     public static Material PotassiumSulfate;
+
+    //Molybdenum chain
+    public static Material MolybdenumTrioxide;
+    public static Material MolybdenumFlue;
     
     /**
      * Alloys
@@ -128,6 +140,7 @@ public class TKCYAMaterials {
     public static Material PigIron;
     public static Material Monel;
     public static Material Constantan;
+    public static Material SiliconCarbide;
 
     /**
      * Polymers

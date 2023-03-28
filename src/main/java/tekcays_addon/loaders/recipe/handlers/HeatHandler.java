@@ -7,11 +7,9 @@ import gregtech.common.metatileentities.MetaTileEntities;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 
 
-import static gregicality.science.api.unification.materials.GCYSMaterials.SiliconCarbide;
 import static gregtech.api.unification.material.Materials.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;

@@ -53,8 +53,8 @@ public class RoastingHandler {
                     .input(dust, material, getComponentsNumber(material))
                     .outputs(outputStack)
                     .fluidInputs(oxygenStack)
-                    .pressure(rm.getRoastingTemperature())
-                    .temperature(rm.getRoastingTemperature())
+                    .minPressure(rm.getRoastingPressure())
+                    .minTemperature(rm.getRoastingTemperature())
                     .duration(100)
                     .EUt(50)
                     .buildAndRegister();
@@ -63,8 +63,8 @@ public class RoastingHandler {
                     .input(dust, material, getComponentsNumber(material))
                     .outputs(outputStack)
                     .fluidInputs(airStack)
-                    .pressure(rm.getRoastingTemperature())
-                    .temperature(rm.getRoastingTemperature())
+                    .minPressure(rm.getRoastingPressure())
+                    .minTemperature(rm.getRoastingTemperature())
                     .duration(100)
                     .EUt(50)
                     .buildAndRegister();
@@ -76,8 +76,8 @@ public class RoastingHandler {
                     .outputs(outputStack)
                     .fluidInputs(oxygenStack)
                     .fluidOutputs(sulfurDioxideStack)
-                    .pressure(rm.getRoastingTemperature())
-                    .temperature(rm.getRoastingTemperature())
+                    .minPressure(rm.getRoastingPressure())
+                    .minTemperature(rm.getRoastingTemperature())
                     .duration(100)
                     .EUt(50)
                     .buildAndRegister();
@@ -88,8 +88,8 @@ public class RoastingHandler {
                     .outputs(outputStack)
                     .fluidInputs(airStack)
                     .fluidOutputs(sulfurDioxideStack)
-                    .pressure(rm.getRoastingTemperature())
-                    .temperature(rm.getRoastingTemperature())
+                    .minPressure(rm.getRoastingPressure())
+                    .minTemperature(rm.getRoastingTemperature())
                     .duration(100)
                     .EUt(50)
                     .buildAndRegister();
@@ -101,7 +101,7 @@ public class RoastingHandler {
         Material input = roastableMaterial.getMaterial();
         Material output = roastableMaterial.getOutput();
         int fluidAmount = 1000 * getAmountSulfur(input);
-        double pressure = roastableMaterial.getRoastingPressure();
+        long pressure = roastableMaterial.getRoastingPressure();
         int temp = roastableMaterial.getRoastingTemperature();
 
         if (roastableMaterial.getFluidOutput() == null) {
@@ -110,8 +110,8 @@ public class RoastingHandler {
                     .input(dust, input, countInput * getComponentsNumber(input))
                     .output(dust, output, countOutput * getComponentsNumber(output))
                     .fluidInputs(Air.getFluid(10000 * oxygen))
-                    .pressure(pressure)
-                    .temperature(temp)
+                    .minPressure(pressure)
+                    .minTemperature(temp)
                     .duration(100)
                     .EUt(50)
                     .buildAndRegister();
@@ -120,8 +120,8 @@ public class RoastingHandler {
                     .input(dust, input, countInput * getComponentsNumber(input))
                     .output(dust, output, countOutput * getComponentsNumber(output))
                     .fluidInputs(Oxygen.getFluid(4000 * oxygen))
-                    .pressure(pressure)
-                    .temperature(temp)
+                    .minPressure(pressure)
+                    .minTemperature(temp)
                     .duration(100)
                     .EUt(50)
                     .buildAndRegister();
@@ -132,8 +132,8 @@ public class RoastingHandler {
                     .output(dust, output, countOutput * getComponentsNumber(output))
                     .fluidInputs(Air.getFluid(10000 * oxygen))
                     .fluidOutputs(SulfurDioxide.getFluid(fluidAmount))
-                    .pressure(pressure)
-                    .temperature(temp)
+                    .minPressure(pressure)
+                    .minTemperature(temp)
                     .duration(100)
                     .EUt(50)
                     .buildAndRegister();
@@ -143,8 +143,8 @@ public class RoastingHandler {
                     .output(dust, output, countOutput * getComponentsNumber(output))
                     .fluidInputs(Oxygen.getFluid(4000 * oxygen))
                     .fluidOutputs(SulfurDioxide.getFluid(fluidAmount))
-                    .pressure(pressure)
-                    .temperature(temp)
+                    .minPressure(pressure)
+                    .minTemperature(temp)
                     .duration(100)
                     .EUt(50)
                     .buildAndRegister();
@@ -156,8 +156,8 @@ public class RoastingHandler {
                     .output(dust, output, countOutput * getComponentsNumber(output))
                     .fluidInputs(Air.getFluid(10000 * oxygen))
                     .fluidOutputs(roastableMaterial.getFluidOutput().getFluid(1000))
-                    .pressure(pressure)
-                    .temperature(temp)
+                    .minPressure(pressure)
+                    .minTemperature(temp)
                     .duration(100)
                     .EUt(50)
                     .buildAndRegister();
@@ -167,8 +167,8 @@ public class RoastingHandler {
                     .output(dust, output, countOutput * getComponentsNumber(output))
                     .fluidInputs(Oxygen.getFluid(4000 * oxygen))
                     .fluidOutputs(roastableMaterial.getFluidOutput().getFluid(1000))
-                    .pressure(pressure)
-                    .temperature(temp)
+                    .minPressure(pressure)
+                    .minTemperature(temp)
                     .duration(100)
                     .EUt(50)
                     .buildAndRegister();
@@ -180,8 +180,8 @@ public class RoastingHandler {
                     .fluidInputs(Air.getFluid(10000 * oxygen))
                     .fluidOutputs(SulfurDioxide.getFluid(fluidAmount))
                     .fluidOutputs(roastableMaterial.getFluidOutput().getFluid(1000))
-                    .pressure(pressure)
-                    .temperature(temp)
+                    .minPressure(pressure)
+                    .minTemperature(temp)
                     .duration(100)
                     .EUt(50)
                     .buildAndRegister();
@@ -192,8 +192,8 @@ public class RoastingHandler {
                     .fluidInputs(Oxygen.getFluid(4000 * oxygen))
                     .fluidOutputs(SulfurDioxide.getFluid(fluidAmount))
                     .fluidOutputs(roastableMaterial.getFluidOutput().getFluid(1000))
-                    .pressure(pressure)
-                    .temperature(temp)
+                    .minPressure(pressure)
+                    .minTemperature(temp)
                     .duration(100)
                     .EUt(50)
                     .buildAndRegister();

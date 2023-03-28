@@ -5,7 +5,6 @@ import gregtech.api.recipes.ingredients.nbtmatch.NBTCondition;
 import gregtech.api.recipes.ingredients.nbtmatch.NBTMatcher;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
-import static gregicality.science.api.unification.materials.GCYSMaterials.ZincOxide;
 import static gregtech.api.recipes.RecipeMaps.CHEMICAL_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;

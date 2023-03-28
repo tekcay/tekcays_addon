@@ -10,8 +10,6 @@ import tekcays_addon.common.items.TKCYAMetaItems;
 import java.util.ArrayList;
 import java.util.List;
 
-import static gregicality.science.api.unification.materials.GCYSMaterials.AluminiumHydroxide;
-import static gregicality.science.api.unification.materials.GCYSMaterials.PotassiumHydroxide;
 import static gregtech.api.recipes.RecipeMaps.CHEMICAL_BATH_RECIPES;
 import static gregtech.api.recipes.RecipeMaps.CHEMICAL_RECIPES;
 import static gregtech.api.unification.material.Materials.*;

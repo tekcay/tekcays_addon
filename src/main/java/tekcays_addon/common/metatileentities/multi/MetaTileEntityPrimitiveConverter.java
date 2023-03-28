@@ -146,14 +146,6 @@ public class MetaTileEntityPrimitiveConverter extends PressureContainerNoEnergyM
                 .build();
     }
 
-    /*
-    @Override
-    public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        return this.getPressureContainer().getPressure() >= recipe.getProperty(PressureProperty.getInstance(), GCYSValues.EARTH_PRESSURE);
-    }
-
-     */
-
 
 }
 

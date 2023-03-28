@@ -1,26 +1,20 @@
 package tekcays_addon.loaders.recipe.chains;
 
-import gregicality.science.api.recipes.GCYSRecipeMaps;
 import gregtech.api.recipes.ingredients.GTRecipeItemInput;
 import gregtech.api.recipes.ingredients.nbtmatch.NBTCondition;
 import gregtech.api.recipes.ingredients.nbtmatch.NBTMatcher;
 import gregtech.api.unification.stack.MaterialStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.api.utils.MiscMethods;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import static gregtech.api.recipes.RecipeMaps.CHEMICAL_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.*;
-import static tekcays_addon.api.utils.TKCYAValues.MIXTURE_TO_FILTER;
-import static tekcays_addon.api.utils.roasting.RoastingRecipeHandlerMethods.getDustMixtureStackWithNBT;
 import static tekcays_addon.loaders.DamageableItemsLoader.electrodeSilver;
 
 
@@ -82,11 +76,14 @@ public class GoldChain {
                 .fluidOutputs(Oxygen.getFluid(1500))
                 .buildAndRegister();
 
-        // Cu3? -> 3Cu + Fe + Ni + Ag + Pb
+        // Cu3? -> 3Cu + Fe + Ni + Ag + Pb //TODO
+        /*
         GCYSRecipeMaps.DRYER_RECIPES.recipeBuilder().EUt(30).duration(80)
                 .input(dust, CopperLeach, 4)
                 .outputs(getDustMixtureStackWithNBT(CopperLeach))
                 .buildAndRegister();
+
+         */
 
 
     }

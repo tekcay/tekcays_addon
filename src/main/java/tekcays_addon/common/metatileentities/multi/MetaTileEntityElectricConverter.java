@@ -1,7 +1,5 @@
 package tekcays_addon.common.metatileentities.multi;
 
-import gregicality.science.api.metatileentity.multiblock.PressureMultiblockController;
-import gregicality.science.api.recipes.recipeproperties.PressureProperty;
 import gregtech.api.GTValues;
 import gregtech.api.block.IHeatingCoilBlockStats;
 import gregtech.api.capability.IHeatingCoil;
@@ -29,13 +27,14 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import tekcays_addon.api.metatileentity.multiblock.PressureContainerMultiblockController;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class MetaTileEntityElectricConverter extends PressureMultiblockController implements IHeatingCoil {
+public class MetaTileEntityElectricConverter extends PressureContainerMultiblockController implements IHeatingCoil {
 
     private int blastFurnaceTemperature;
 
@@ -80,11 +79,14 @@ public class MetaTileEntityElectricConverter extends PressureMultiblockControlle
         this.blastFurnaceTemperature = 0;
     }
 
+    /*//TODO
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
         return this.blastFurnaceTemperature >= recipe.getProperty(TemperatureProperty.getInstance(), 0) &&
                 this.getPressureContainer().getPressure() >= recipe.getProperty(PressureProperty.getInstance(), 0D);
     }
+
+     */
 
     @Override
     protected BlockPattern createStructurePattern() {

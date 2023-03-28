@@ -1,13 +1,10 @@
 package tekcays_addon.api.unification;
 
-
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.info.MaterialFlags;
 import tekcays_addon.api.utils.roasting.RoastableMaterial;
 
-
-import static gregicality.science.api.unification.materials.GCYSMaterials.ZincOxide;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static tekcays_addon.api.unification.material.info.TKCYAMaterialFlags.*;
@@ -31,7 +28,6 @@ public class TKCYAMaterialFlagAddition {
 
         //For Zinc chain
         Sphalerite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
-        ZincOxide.addFlags(DISABLE_DECOMPOSITION);
 
         //For Bauxite chain
         Bauxite.addFlags(DISABLE_DECOMPOSITION);

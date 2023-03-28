@@ -1,7 +1,6 @@
 package tekcays_addon.api.recipes;
 
 import crafttweaker.annotations.ZenRegister;
-import gregicality.science.api.recipes.builders.TemperaturePressureRecipeBuilder;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.widgets.ProgressWidget;
 import gregtech.api.recipes.RecipeMap;
@@ -53,10 +52,12 @@ public class TKCYARecipeMaps {
             "electric_casting_table", 1, 2, 1, 1, 1, 2, 0, 1, new SimpleRecipeBuilder(), false)
             .setSound(GTSounds.MIXER);
 
+
     @ZenProperty
-    public static final RecipeMap<TemperaturePressureRecipeBuilder> CONVERTING_RECIPES = new RecipeMap<>(
-            "converting", 0, 2, 0, 2, 1, 4, 1, 2, new TemperaturePressureRecipeBuilder(), false)
+    public static final RecipeMap<HeatAndPressureMinMaxRecipeBuilder> CONVERTING_RECIPES = new RecipeMap<>(
+            "converting", 0, 2, 0, 2, 1, 4, 1, 2, new HeatAndPressureMinMaxRecipeBuilder(), false)
             .setSound(GTSounds.COOLING);
+
 
     @ZenProperty
     public static final RecipeMap<NoEnergyPressureRecipeBuilder> PRIMITIVE_CONVERTING_RECIPES = new RecipeMap<>(
@@ -120,10 +121,12 @@ public class TKCYARecipeMaps {
             .setSound(GTSounds.COMPRESSOR);
 
 
+
     @ZenProperty
-    public static final RecipeMap<TemperaturePressureRecipeBuilder> ROASTING = new RecipeMap<>(
-            "roasting", 1, 2, 0, 4, 1, 1, 0, 2, new TemperaturePressureRecipeBuilder(), false)
+    public static final RecipeMap<HeatAndPressureMinMaxRecipeBuilder> ROASTING = new RecipeMap<>(
+            "roasting", 1, 2, 0, 4, 1, 1, 0, 2, new HeatAndPressureMinMaxRecipeBuilder(), false)
             .setSound(GTSounds.FURNACE);
+
 
     @ZenProperty
     public static final RecipeMap<SimpleRecipeBuilder> SPIRAL_SEPARATION = new RecipeMap<>(

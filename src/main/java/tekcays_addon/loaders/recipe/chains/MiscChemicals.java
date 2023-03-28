@@ -97,7 +97,7 @@ public class MiscChemicals {
 
         /*
         //Diethyl ether
-        // 2C2H5OH = (C2H5)2O + H2O (H2O lost to dehydrator) //TODO in GCYS
+        // 2C2H5OH = (C2H5)2O + H2O (H2O lost to dehydrator) //TODO
         CHEMICAL_DEHYDRATOR_RECIPES.recipeBuilder().duration(120).EUt(750)
                 .fluidInputs(Ethanol.getFluid(2000))
                 .notConsumable(SulfuricAcid.getFluid(0))
