@@ -1,11 +1,8 @@
 package tekcays_addon.common.items;
 
 import gregtech.api.items.metaitem.StandardMetaItem;
-import gregtech.common.items.behaviors.TurbineRotorBehavior;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 import tekcays_addon.common.items.behaviors.FilterBehavior;
-
-import static gregtech.common.items.MetaItems.TURBINE_ROTOR;
 import static tekcays_addon.common.items.TKCYAMetaItems.*;
 
 public class TKCYAMetaItem1 extends StandardMetaItem {

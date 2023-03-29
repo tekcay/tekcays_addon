@@ -15,38 +15,38 @@ import static gregtech.api.unification.material.Materials.*;
 public class RecipesRemovalHandler {
     
     public static void shapedComponentsRecipes() {
-        ModHandler.removeRecipes(MetaItems.ELECTRIC_MOTOR_MV.getStackForm());
-        ModHandler.removeRecipes(MetaItems.ELECTRIC_PISTON_MV.getStackForm());
-        ModHandler.removeRecipes(MetaItems.ELECTRIC_PUMP_MV.getStackForm());
-        ModHandler.removeRecipes(MetaItems.ROBOT_ARM_MV.getStackForm());
-        ModHandler.removeRecipes(MetaItems.FLUID_REGULATOR_MV.getStackForm());
-        ModHandler.removeRecipes(MetaItems.CONVEYOR_MODULE_MV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_MV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PISTON_MV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PUMP_MV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.ROBOT_ARM_MV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.FLUID_REGULATOR_MV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.CONVEYOR_MODULE_MV.getStackForm());
 
-        ModHandler.removeRecipes(MetaItems.ELECTRIC_MOTOR_HV.getStackForm());
-        ModHandler.removeRecipes(MetaItems.ELECTRIC_PISTON_HV.getStackForm());
-        ModHandler.removeRecipes(MetaItems.ELECTRIC_PUMP_HV.getStackForm());
-        ModHandler.removeRecipes(MetaItems.ROBOT_ARM_HV.getStackForm());
-        ModHandler.removeRecipes(MetaItems.FLUID_REGULATOR_HV.getStackForm());
-        ModHandler.removeRecipes(MetaItems.CONVEYOR_MODULE_HV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_HV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PISTON_HV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PUMP_HV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.ROBOT_ARM_HV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.FLUID_REGULATOR_HV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.CONVEYOR_MODULE_HV.getStackForm());
 
-        ModHandler.removeRecipes(MetaItems.ELECTRIC_MOTOR_EV.getStackForm());
-        ModHandler.removeRecipes(MetaItems.ELECTRIC_PISTON_EV.getStackForm());
-        ModHandler.removeRecipes(MetaItems.ELECTRIC_PUMP_EV.getStackForm());
-        ModHandler.removeRecipes(MetaItems.ROBOT_ARM_EV.getStackForm());
-        ModHandler.removeRecipes(MetaItems.FLUID_REGULATOR_EV.getStackForm());
-        ModHandler.removeRecipes(MetaItems.CONVEYOR_MODULE_EV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_EV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PISTON_EV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PUMP_EV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.ROBOT_ARM_EV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.FLUID_REGULATOR_EV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.CONVEYOR_MODULE_EV.getStackForm());
 
-        ModHandler.removeRecipes(MetaItems.ELECTRIC_MOTOR_IV.getStackForm());
-        ModHandler.removeRecipes(MetaItems.ELECTRIC_PISTON_IV.getStackForm());
-        ModHandler.removeRecipes(MetaItems.ELECTRIC_PUMP_IV.getStackForm());
-        ModHandler.removeRecipes(MetaItems.ROBOT_ARM_IV.getStackForm());
-        ModHandler.removeRecipes(MetaItems.FLUID_REGULATOR_IV.getStackForm());
-        ModHandler.removeRecipes(MetaItems.CONVEYOR_MODULE_IV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_IV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PISTON_IV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PUMP_IV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.ROBOT_ARM_IV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.FLUID_REGULATOR_IV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.CONVEYOR_MODULE_IV.getStackForm());
 
     }
 
     public static void removeShapedTreatedWoodRecipe(){
-        ModHandler.removeRecipes(OreDictUnifier.get(OrePrefix.plank, TreatedWood));
+        ModHandler.removeRecipeByOutput(OreDictUnifier.get(OrePrefix.plank, TreatedWood));
     }
 
 
@@ -55,7 +55,7 @@ public class RecipesRemovalHandler {
 
         for (MetaItem.MetaValueItem mvi : MetaItems.SHAPE_MOLDS) {
             if (mvi.isItemEqual(MetaItems.SHAPE_EMPTY.getStackForm())) continue;
-            ModHandler.removeRecipes(mvi.getStackForm());
+            ModHandler.removeRecipeByOutput(mvi.getStackForm());
         }
 
         GTRecipeHandler.removeRecipesByInputs(RecipeMaps.ASSEMBLER_RECIPES,

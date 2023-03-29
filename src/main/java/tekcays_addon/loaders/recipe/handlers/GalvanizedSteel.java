@@ -197,20 +197,20 @@ public class GalvanizedSteel {
         //Shaped recipes
 
         //LV Machine Casing
-        ModHandler.removeRecipes(MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.LV));
+        ModHandler.removeRecipeByOutput(MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.LV));
 
         //ULV Machine Casing
-        ModHandler.removeRecipes(MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.ULV));
+        ModHandler.removeRecipeByOutput(MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.ULV));
 
         //ULV Machine Hull
-        ModHandler.removeRecipes(MetaTileEntities.HULL[0].getStackForm());
+        ModHandler.removeRecipeByOutput(MetaTileEntities.HULL[0].getStackForm());
 
 
         //LV Motor
-        ModHandler.removeRecipes(MetaItems.ELECTRIC_MOTOR_LV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_LV.getStackForm());
         //LV Piston
-        ModHandler.removeRecipes(MetaItems.ELECTRIC_PISTON_LV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PISTON_LV.getStackForm());
         //LV Robot Arm
-        ModHandler.removeRecipes(MetaItems.ROBOT_ARM_LV.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaItems.ROBOT_ARM_LV.getStackForm());
     }
 }

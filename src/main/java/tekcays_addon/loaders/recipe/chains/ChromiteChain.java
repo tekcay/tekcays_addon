@@ -22,7 +22,7 @@ public class ChromiteChain {
                 .input(dust, SodiumCarbonate, 12)
                 .fluidInputs(Oxygen.getFluid(7000))
                 .output(dust, SodiumChromate, 8)
-                .output(dust, Hematite, 5)
+                .output(dust, BandedIron, 5)
                 .duration(80)
                 .EUt(VA[MV])
                 .buildAndRegister();
@@ -33,7 +33,7 @@ public class ChromiteChain {
                 .input(dust, SodiumCarbonate, 12)
                 .fluidInputs(Oxygen.getFluid(7000))
                 .output(dust, SodiumChromate, 8)
-                .output(dust, Hematite, 5)
+                .output(dust, BandedIron, 5)
                 .fluidOutputs(CarbonDioxide.getFluid(12000))
                 .duration(80)
                 .EUt(VA[MV])

@@ -113,14 +113,14 @@ public class StorageOverhaul {
     }
 
     public static void removeGTCEuDrumsRecipe(){
-        ModHandler.removeRecipes(MetaTileEntities.WOODEN_DRUM.getStackForm());
-        ModHandler.removeRecipes(MetaTileEntities.BRONZE_DRUM.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaTileEntities.WOODEN_DRUM.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaTileEntities.BRONZE_DRUM.getStackForm());
     }
 
     public static void removeGTCEuTanksAndValvesRecipe() {
-        ModHandler.removeRecipes(MetaTileEntities.WOODEN_TANK.getStackForm());
-        ModHandler.removeRecipes(MetaTileEntities.STEEL_TANK.getStackForm());
-        ModHandler.removeRecipes(MetaTileEntities.STEEL_TANK_VALVE.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaTileEntities.WOODEN_TANK.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaTileEntities.STEEL_TANK.getStackForm());
+        ModHandler.removeRecipeByOutput(MetaTileEntities.STEEL_TANK_VALVE.getStackForm());
     }
 
 }

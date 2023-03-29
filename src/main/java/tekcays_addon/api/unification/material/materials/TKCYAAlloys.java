@@ -2,6 +2,7 @@ package tekcays_addon.api.unification.material.materials;
 
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.info.MaterialFlags;
+import gregtech.api.unification.material.properties.ToolProperty;
 
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
@@ -15,7 +16,6 @@ public class TKCYAAlloys {
 
         GalvanizedSteel = new Material.Builder(id++, "galvanized_steel")
                 .ingot(3)
-                .toolStats(8.0f, 4.0f, 768, 25)
                 .fluidPipeProperties(2000, 100, true, true, true, false)
                 .flags(EXT2_METAL, GENERATE_ROTOR, GENERATE_SMALL_GEAR, GENERATE_SPRING,
                         GENERATE_SPRING_SMALL, GENERATE_FRAME, GENERATE_GEAR,

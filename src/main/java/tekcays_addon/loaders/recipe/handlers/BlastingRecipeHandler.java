@@ -33,23 +33,23 @@ public class BlastingRecipeHandler {
 
         RecipeMaps.FURNACE_RECIPES.recipeBuilder()
                 .input(dust, Materials.YellowLimonite, 8)
-                .output(dust, Materials.Hematite, 5)
+                .output(dust, Materials.BandedIron, 5)
                 .duration(100)
                 .EUt(8)
                 .buildAndRegister();
 
         RecipeMaps.FURNACE_RECIPES.recipeBuilder()
                 .input(dust, Materials.BrownLimonite, 8)
-                .output(dust, Materials.Hematite, 5)
+                .output(dust, Materials.BandedIron, 5)
                 .duration(100)
                 .EUt(8)
                 .buildAndRegister();
 
-        ////From Hematite
+        ////From BandedIron
         //Fe2O3 + 3 CO -> 2 Fe + 3 CO2
         BLASTING_RECIPES.recipeBuilder()
                 .temperature(1800)
-                .input(dust, Materials.Hematite, 5)
+                .input(dust, Materials.BandedIron, 5)
                 .input(dust, Materials.Coke, 2)
                 .input(dust, Materials.Stone, 3)
                 .fluidOutputs(TKCYAMaterials.PigIron.getFluid(GTValues.L))
@@ -58,7 +58,7 @@ public class BlastingRecipeHandler {
 
         ADVANCED_BLAST_FURNACE_RECIPES.recipeBuilder()
                 .temperature(1800)
-                .input(dust, Materials.Hematite, 5)
+                .input(dust, Materials.BandedIron, 5)
                 .input(dust, Materials.Coke, 2)
                 .input(dust, Materials.Stone, 3)
                 .fluidOutputs(TKCYAMaterials.PigIron.getFluid(GTValues.L))

@@ -4,8 +4,6 @@ import gregtech.api.unification.material.Material;
 import tekcays_addon.api.unification.material.info.TKCYAChemicalFormula;
 import tekcays_addon.api.unification.material.materials.*;
 
-import static gregtech.api.unification.material.info.MaterialIconSet.FINE;
-
 public class TKCYAMaterials {
 
 
@@ -73,6 +71,8 @@ public class TKCYAMaterials {
     public static Material GoldAlloy;
     public static Material GoldLeach;
     public static Material CopperLeach;
+    public static Material PotassiumBisulfate;
+    public static Material ChloroauricAcid;
 
     //FluorideChain
     public static Material PotassiumBifluoride;
@@ -102,6 +102,16 @@ public class TKCYAMaterials {
     //Misc
     public static Material PotassiumMetaBisulfite;
     public static Material PotassiumHydroxide;
+    
+    //Vitriols
+    public static Material BlueVitriol;
+    public static Material GrayVitriol;
+    public static Material PinkVitriol;
+    public static Material GreenVitriol;
+    public static Material WhiteVitriol;
+    public static Material ClayVitriol;
+    public static Material CyanVitriol;
+    public static Material RedVitriol;
 
 
     //More roastable
@@ -119,6 +129,7 @@ public class TKCYAMaterials {
     public static Material Cryolite;
     public static Material HexafluorosilicAcid;
     public static Material AluminiumHydroxide;
+    public static Material Alumina;
 
     //ChromiteChain
     public static Material SodiumChromate;

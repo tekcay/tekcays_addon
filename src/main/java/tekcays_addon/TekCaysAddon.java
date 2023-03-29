@@ -25,7 +25,8 @@ import static gregtech.api.GregTechAPI.COVER_REGISTRY;
 
 @Mod(   modid        = TekCaysAddon.MODID,
         name         = TekCaysAddon.NAME,
-        version      = TekCaysAddon.VERSION)
+        version      = TekCaysAddon.VERSION,
+        dependencies = GTValues.MOD_VERSION_DEP)
 public class TekCaysAddon {
 
     public static final String MODID = "tkcya";

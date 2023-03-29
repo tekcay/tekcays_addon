@@ -2,22 +2,14 @@ package tekcays_addon.loaders.recipe.chains;
 
 
 import gregtech.api.recipes.GTRecipeHandler;
-import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import gregtech.api.unification.OreDictUnifier;
-import gregtech.api.unification.material.Materials;
-import gregtech.api.unification.ore.OrePrefix;
-import gregtech.common.items.MetaItems;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import tekcays_addon.api.unification.TKCYAMaterials;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
-import static gregtech.api.GTValues.*;
 import static gregtech.api.recipes.RecipeMaps.*;
 import static gregtech.api.unification.material.Materials.*;
-import static gregtech.api.unification.material.Materials.PotassiumBisulfate;
-import static gregtech.api.unification.material.Materials.SodiumBisulfate;
 import static gregtech.api.unification.ore.OrePrefix.dust;
 import static tekcays_addon.api.unification.TKCYAMaterials.*;
 
