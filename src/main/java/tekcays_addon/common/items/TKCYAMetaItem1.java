@@ -17,7 +17,7 @@ public class TKCYAMetaItem1 extends StandardMetaItem {
         MICA_SHEET = addItem(1, "mica.sheet");
         MICA_INSULATOR_SHEET = addItem(2, "mica_insulator.sheet");
         MICA_INSULATOR_FOIL = addItem(3, "mica_insulator.foil");
-        GAS_COLLECTOR = addItem(1, "gas_collector");
+        GAS_COLLECTOR = addItem(4, "gas_collector");
 
         //Damageable items
         ELECTRODE = addItem(5, "electrode").addComponents(new ElectrodeBehavior());

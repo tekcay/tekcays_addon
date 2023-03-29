@@ -23,6 +23,7 @@ public class MiscChemicals {
 
         //TODO in a new machine
 
+        /*
         GTRecipeHandler.removeRecipesByInputs(CHEMICAL_RECIPES,
                 new ItemStack[] {OreDictUnifier.get(dust, RockSalt, 2),
                         IntCircuitIngredient.getIntegratedCircuit(1)},
@@ -32,6 +33,8 @@ public class MiscChemicals {
                 new ItemStack[] {OreDictUnifier.get(dust, RockSalt, 2),
                         IntCircuitIngredient.getIntegratedCircuit(1)},
                 new FluidStack[]{SulfuricAcid.getFluid(1000)});
+
+         */
 
         CHEMICAL_RECIPES.recipeBuilder().duration(90).EUt(30)
                 .input(dust, RockSalt)

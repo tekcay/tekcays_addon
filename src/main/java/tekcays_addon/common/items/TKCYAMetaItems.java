@@ -31,7 +31,7 @@ public final class TKCYAMetaItems {
 
     public static void init() {
         TKCYAMetaItem1 metaItem1 = new TKCYAMetaItem1((short) 0);
-        metaItem1.setRegistryName("meta_item_1");
+        metaItem1.setRegistryName("tkcya");
 
     }
 

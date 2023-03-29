@@ -62,7 +62,7 @@ minecraft {
     mappings channel: "${mcp_mappings_channel}", version: "${mcp_mappings_version}"
 
     if (project.has_access_transformer.toBoolean()) {
-        accessTransformer = file('src/main/resources/META-INF/TekCaysAddon_at.cfg')
+        accessTransformer = file('src/main/resources/META-INF/tekcays_addon_at.cfg')
     }
 
     runs {
@@ -214,7 +214,7 @@ sourceSets {
         }
 
         java {
-            srcDirs = ['src/main/java']
+            srcDirs = ['src/main/java', 'src/api/java']
         }
 
         resources {
@@ -228,12 +228,6 @@ sourceSets {
         }
         resources {
             srcDirs = ['src/test/resources']
-        }
-    }
-
-    api {
-        java {
-            srcDirs = ['src/api/java']
         }
     }
 
