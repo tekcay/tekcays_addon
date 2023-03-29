@@ -62,7 +62,7 @@ minecraft {
     mappings channel: "${mcp_mappings_channel}", version: "${mcp_mappings_version}"
 
     if (project.has_access_transformer.toBoolean()) {
-        accessTransformer = file('src/main/resources/META-INF/GregicalityMultiblocks_at.cfg')
+        accessTransformer = file('src/main/resources/META-INF/TekCaysAddon_at.cfg')
     }
 
     runs {
@@ -189,11 +189,11 @@ if (project.build_apiJar.toBoolean()) {
     tasks.register('apiJar', Jar) {
         archiveClassifier.set 'api'
         from(sourceSets.main.java) {
-            include 'gregicality.multiblocks/api/**'
+            include 'tekcays_addon/api/**'
         }
 
         from(sourceSets.main.output) {
-            include 'gregicality.multiblocks/api/**'
+            include 'tekcays_addon/api/**'
         }
     }
 }
@@ -228,6 +228,12 @@ sourceSets {
         }
         resources {
             srcDirs = ['src/test/resources']
+        }
+    }
+
+    api {
+        java {
+            srcDirs = ['src/api/java']
         }
     }
 
@@ -306,7 +312,7 @@ private void processJarTask(task) {
                 attribute_map['TweakClass'] = 'org.spongepowered.asm.launch.MixinTweaker'
             }
             if (project.has_access_transformer.toBoolean()) {
-                attribute_map['FMLAT'] = 'GregicalityMultiblocks_at.cfg'
+                attribute_map['FMLAT'] = 'TekCaysAddon_at.cfg'
             }
             attributes(attribute_map)
         }
