@@ -7,6 +7,7 @@ import gregtech.api.unification.material.info.MaterialFlags;
 import gregtech.api.unification.material.info.MaterialIconSet;
 
 import static gregtech.api.unification.material.Materials.*;
+import static gregtech.api.unification.material.info.MaterialFlags.DISABLE_DECOMPOSITION;
 import static gregtech.api.unification.material.info.MaterialIconSet.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.*;
 
@@ -16,7 +17,7 @@ public class TKCYAMiscMaterials {
 
         HotAir = new Material.Builder(id++, "hot_air")
                 .fluid(FluidTypes.GAS, true)
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .components(Materials.Air, 1)
                 .color(0xe08b41)
                 .build();
@@ -33,7 +34,7 @@ public class TKCYAMiscMaterials {
                 .dust().ore().fluid()
                 .fluidTemp(1337)
                 .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .components(Materials.Gold, 1)
                 .iconSet(SHINY)
                 .color(0xB99023)
@@ -43,7 +44,7 @@ public class TKCYAMiscMaterials {
         GoldAlloy = new Material.Builder(id++, "gold_alloy")
                 .ingot().fluid()
                 .fluidTemp(1000) //TODO
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .components(Materials.Copper, 3, PreciousMetal, 1)
                 .iconSet(SHINY)
                 .color(0xB99023)
@@ -60,7 +61,7 @@ public class TKCYAMiscMaterials {
         CopperLeach = new Material.Builder(id++, "copper_leach")
                 .dust()
                 .iconSet(SHINY)
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .components(Copper, 27, Lead, 1, Iron, 1, Nickel, 1, Silver, 1)
                 .color(0xB99023)
                 .build();
@@ -85,42 +86,42 @@ public class TKCYAMiscMaterials {
         PotassiumBifluoride = new Material.Builder(id++, "potassium_bifluoride")
                 .ingot().fluid(FluidTypes.ACID)
                 .fluidTemp(512)
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .color(0xFF6400).iconSet(MaterialIconSet.DULL)
                 .components(Potassium, 1, Hydrogen, 1, Fluorine, 2)
                 .build();
 
         Fluorite = new Material.Builder(id++, "fluorite")
                 .dust().ore()
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .color(0x009933).iconSet(MaterialIconSet.BRIGHT)
                 .components(Calcium, 1, Fluorine, 2)
                 .build();
 
         CalciumSulfonate = new Material.Builder(id++, "calcium_sulfonate")
                 .dust()
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .color(0xFF6400).iconSet(MaterialIconSet.BRIGHT)
                 .components(Calcium, 1, Sulfur, 1, Oxygen, 4)
                 .build();
 
         LithiumFluoride = new Material.Builder(id++, "lithium_fluoride")
                 .dust()
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .color(0x757575).iconSet(MaterialIconSet.DULL)
                 .components(Lithium, 1, Fluorine, 1)
                 .build();
 
         SodiumFluoride = new Material.Builder(id++, "sodium_fluoride")
                 .dust()
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .color((Sodium.getMaterialRGB() + Fluorine.getMaterialRGB()) / 2).iconSet(MaterialIconSet.DULL)
                 .components(Sodium, 1, Fluorine, 1)
                 .build();
 
         PotassiumFluoride = new Material.Builder(id++, "potassium_fluoride")
                 .dust()
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .color(0xFDFDFD).iconSet(MaterialIconSet.DULL)
                 .components(Potassium, 1, Fluorine, 1)
                 .build();
@@ -128,35 +129,35 @@ public class TKCYAMiscMaterials {
 
         LithiumHydroxide = new Material.Builder(id++, "lithium_hydroxide")
                 .dust()
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .color((Lithium.getMaterialRGB() + Oxygen.getMaterialRGB() + Hydrogen.getMaterialRGB()) / 3).iconSet(MaterialIconSet.DULL)
                 .components(Lithium, 1, Oxygen, 1, Hydrogen, 1)
                 .build();
 
         HydrogenFluoride = new Material.Builder(id++, "hydrogen_fluoride")
                 .fluid(FluidTypes.GAS)
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .color((Hydrogen.getMaterialRGB() + Fluorine.getMaterialRGB()) / 2)
                 .components(Hydrogen, 1, Fluorine, 1)
                 .build();
 
         HydrogenChloride = new Material.Builder(id++, "hydrogen_chloride")
                 .fluid(FluidTypes.GAS)
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .color((Hydrogen.getMaterialRGB() + Chlorine.getMaterialRGB()) / 2)
                 .components(Hydrogen, 1, Chlorine, 1)
                 .build();
 
         HydrogenBromide = new Material.Builder(id++, "hydrogen_bromide")
                 .fluid(FluidTypes.GAS)
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .color((Hydrogen.getMaterialRGB() + Bromine.getMaterialRGB()) / 2)
                 .components(Hydrogen, 1, Bromine, 1)
                 .build();
 
         HydrogenIodide = new Material.Builder(id++, "hydrogen_iodide")
                 .fluid(FluidTypes.GAS)
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .color((Hydrogen.getMaterialRGB() + Iodine.getMaterialRGB()) / 2)
                 .components(Hydrogen, 1, Iodine, 1)
                 .build();
@@ -170,21 +171,21 @@ public class TKCYAMiscMaterials {
 
         ZincOxide = new Material.Builder(id++, "zinc_oxide")
                 .dust()
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .color((Zinc.getMaterialRGB() + Oxygen.getMaterialRGB()) / 2)
                 .components(Zinc, 1, Oxygen, 1)
                 .build();
 
         IronSulfate = new Material.Builder(id++, "iron_sulfate")
                 .dust()
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .color(Iron.getMaterialRGB() + Sulfur.getMaterialRGB() + Oxygen.getMaterialRGB() / 3)
                 .components(Iron, 1, Sulfur, 1, Oxygen, 4)
                 .build();
 
         ZincSulfate = new Material.Builder(id++, "zinc_sulfate")
                 .dust()
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .color(Zinc.getMaterialRGB() + Sulfur.getMaterialRGB() + Oxygen.getMaterialRGB() / 3)
                 .components(Zinc, 1, Sulfur, 1, Oxygen, 4)
                 .build();
@@ -235,7 +236,7 @@ public class TKCYAMiscMaterials {
         Kesterite = new Material.Builder(id++, "kesterite")
                 .dust().ore()
                 .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .components(Copper, 2, Zinc, 1, Tin, 1, Sulfur, 4)
                 .iconSet(DULL)
                 .color(0x577b5b)
@@ -244,7 +245,7 @@ public class TKCYAMiscMaterials {
         Stannite = new Material.Builder(id++, "stannite")
                 .dust().ore()
                 .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .components(Copper, 2, Iron, 1, Tin, 1, Sulfur, 4)
                 .iconSet(DULL)
                 .color(0x91a95e)
@@ -253,7 +254,7 @@ public class TKCYAMiscMaterials {
         Arsenopyrite = new Material.Builder(id++, "arsenopyrite")
                 .dust().ore()
                 .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .components(Iron, 1, Arsenic, 1, Sulfur, 1)
                 .iconSet(DULL)
                 .color(0x91a95e)
@@ -263,7 +264,7 @@ public class TKCYAMiscMaterials {
         Cuprite = new Material.Builder(id++, "cuprite")
                 .dust().ore()
                 .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .components(Copper, 2, Oxygen, 1)
                 .iconSet(DULL)
                 .color(Copper.getMaterialRGB() * 2 + Oxygen.getMaterialRGB() / 3)
@@ -272,7 +273,7 @@ public class TKCYAMiscMaterials {
         //BauxiteChain
         PotassiumAluminate = new Material.Builder(id++, "potassium_aluminate")
                 .dust()
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .components(Potassium, 1, Aluminium, 1, Oxygen, 3)
                 .iconSet(DULL)
                 .color(Copper.getMaterialRGB() * 2 + Oxygen.getMaterialRGB() / 3)
@@ -280,7 +281,7 @@ public class TKCYAMiscMaterials {
 
         SodiumAluminate = new Material.Builder(id++, "sodium_aluminate")
                 .dust()
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
+                .flags(DISABLE_DECOMPOSITION)
                 .components(Sodium, 1, Aluminium, 1, Oxygen, 3)
                 .iconSet(DULL)
                 .color(Copper.getMaterialRGB() * 2 + Oxygen.getMaterialRGB() / 3)
@@ -305,8 +306,11 @@ public class TKCYAMiscMaterials {
                 .build();
         HexafluorosilicAcid.setFormula("H2SiF6", true);
 
-        AluminiumHydroxide = new Material.Builder(id++, "hexafluorosilic_acid")
+        AluminiumHydroxide = new Material.Builder(id++, "aluminium_hydroxide")
+                .dust()
                 .fluidTemp(573)
+                .components(Aluminium, 1, Oxygen, 3, Hydrogen, 3)
+                .flags(DISABLE_DECOMPOSITION)
                 .color(Aluminium.getMaterialRGB() + (Oxygen.getMaterialRGB() * 3 + Hydrogen.getMaterialRGB() * 3)/ 7)
                 .build();
         AluminiumHydroxide.setFormula("Al(OH)3", true);
@@ -418,6 +422,8 @@ public class TKCYAMiscMaterials {
         //Others
         PotassiumHydroxide = new Material.Builder(id++, "potassium_hydroxide")
                 .dust()
+                .components(Potassium, 1, Oxygen, 1, Hydrogen, 1)
+                .flags(DISABLE_DECOMPOSITION)
                 .color((Potassium.getMaterialRGB() + Hydrogen.getMaterialRGB() + Oxygen.getMaterialRGB()) / 3)
                 .build();
         PotassiumHydroxide.setFormula("KOH", true);

@@ -17,6 +17,7 @@ import static gregtech.api.unification.material.Materials.Sulfur;
 import static gregtech.api.unification.ore.OrePrefix.dust;
 import static tekcays_addon.api.utils.MiscMethods.writeNBTtoDustMixture;
 import static tekcays_addon.api.utils.TKCYAValues.DUST_MIXTURE_WITH_NBT;
+import static tekcays_addon.common.items.TKCYAMetaItems.DUST_MIXTURE;
 
 public class RoastingRecipeHandlerMethods {
 
@@ -98,7 +99,7 @@ public class RoastingRecipeHandlerMethods {
             return OreDictUnifier.get(dust, ms.material, (int) ms.amount);
         }
         NBTTagCompound nbt = writeNBTtoDustMixture(outputs);
-        ItemStack outputStack = TKCYAMetaItems.DUST_MIXTURE.getStackForm();
+        ItemStack outputStack = DUST_MIXTURE.getStackForm();
         outputStack.setTagCompound(nbt);
         DUST_MIXTURE_WITH_NBT.add(outputStack);
         return outputStack;
@@ -106,7 +107,7 @@ public class RoastingRecipeHandlerMethods {
 
     public static ItemStack getDustMixtureStackWithNBT(List<MaterialStack> materialStacks) {
         NBTTagCompound nbt = writeNBTtoDustMixture(materialStacks);
-        ItemStack outputStack = TKCYAMetaItems.DUST_MIXTURE.getStackForm();
+        ItemStack outputStack = DUST_MIXTURE.getStackForm();
         outputStack.setTagCompound(nbt);
         DUST_MIXTURE_WITH_NBT.add(outputStack);
         return outputStack;
@@ -126,7 +127,7 @@ public class RoastingRecipeHandlerMethods {
             return OreDictUnifier.get(dust, m, (int) (ms.amount * dust.getMaterialAmount(m) / outputPrefix.getMaterialAmount(m)));
         }
         NBTTagCompound nbt = writeNBTtoDustMixture(outputs);
-        ItemStack outputStack = TKCYAMetaItems.DUST_MIXTURE.getStackForm();
+        ItemStack outputStack = DUST_MIXTURE.getStackForm();
         outputStack.setTagCompound(nbt);
         DUST_MIXTURE_WITH_NBT.add(outputStack);
         return outputStack;
