@@ -15,24 +15,24 @@ public class TKCYATextures {
 
 
     // SimpleMachines
-    public static OrientedOverlayRenderer CLUSTER_MILL_OVERLAY = new OrientedOverlayRenderer("machines/cluster_mill", FRONT);
-    public static OrientedOverlayRenderer ADVANCED_POLARIZER_OVERLAY = new OrientedOverlayRenderer("machines/advanced_polarizer", FRONT, TOP);
+    public static OrientedOverlayRenderer CLUSTER_MILL_OVERLAY = new OrientedOverlayRenderer("machines/cluster_mill");
+    public static OrientedOverlayRenderer ADVANCED_POLARIZER_OVERLAY = new OrientedOverlayRenderer("machines/advanced_polarizer");
 
 
 
-    public static OrientedOverlayRenderer CASTING_TABLE_OVERLAY = new OrientedOverlayRenderer("machines/casting_table", FRONT);
+    public static OrientedOverlayRenderer CASTING_TABLE_OVERLAY = new OrientedOverlayRenderer("machines/casting_table");
 
     //Casings
     public static SimpleOverlayRenderer MONEL;
 
     //MeltingOverhaul
-    public static OrientedOverlayRenderer PRIMITIVE_MELTER_OVERLAY = new OrientedOverlayRenderer("multiblocks/primitive", FRONT);
-    public static OrientedOverlayRenderer ELECTRIC_MELTER_OVERLAY = new OrientedOverlayRenderer("multiblocks/electric_melter", FRONT);
-    public static OrientedOverlayRenderer ALLOYING_CRUCIBLE_OVERLAY = new OrientedOverlayRenderer("multiblocks/primitive", FRONT);
-    public static OrientedOverlayRenderer LIQUID_FUEL_HEATER = new OrientedOverlayRenderer("generators/liquid_heater", FRONT);
-    public static OrientedOverlayRenderer FLUIDIZED_FUEL_HEATER = new OrientedOverlayRenderer("generators/fluidized_heater", FRONT);
-    public static OrientedOverlayRenderer SOLID_FUEL_HEATER = new OrientedOverlayRenderer("generators/solid_heater", FRONT);
-    public static OrientedOverlayRenderer GAS_FUEL_HEATER = new OrientedOverlayRenderer("generators/gas_heater", FRONT);
+    public static OrientedOverlayRenderer PRIMITIVE_MELTER_OVERLAY = new OrientedOverlayRenderer("multiblocks/primitive");
+    public static OrientedOverlayRenderer ELECTRIC_MELTER_OVERLAY = new OrientedOverlayRenderer("multiblocks/electric_melter");
+    public static OrientedOverlayRenderer ALLOYING_CRUCIBLE_OVERLAY = new OrientedOverlayRenderer("multiblocks/primitive");
+    public static OrientedOverlayRenderer LIQUID_FUEL_HEATER = new OrientedOverlayRenderer("generators/liquid_heater");
+    public static OrientedOverlayRenderer FLUIDIZED_FUEL_HEATER = new OrientedOverlayRenderer("generators/fluidized_heater");
+    public static OrientedOverlayRenderer SOLID_FUEL_HEATER = new OrientedOverlayRenderer("generators/solid_heater");
+    public static OrientedOverlayRenderer GAS_FUEL_HEATER = new OrientedOverlayRenderer("generators/gas_heater");
 
     // Bricks
     public static SimpleOverlayRenderer[] BRICKS = new SimpleOverlayRenderer[4];

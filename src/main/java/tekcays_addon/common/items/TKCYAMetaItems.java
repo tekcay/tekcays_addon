@@ -13,8 +13,6 @@ public final class TKCYAMetaItems {
         super();
     }
 
-    //public static final List<MetaItem<?>> ITEMS = MetaItem.getMetaItems();
-
     public static MetaItem<?>.MetaValueItem MICA_SHEET;
     public static MetaItem<?>.MetaValueItem MICA_INSULATOR_SHEET;
     public static MetaItem<?>.MetaValueItem MICA_INSULATOR_FOIL;
@@ -32,8 +30,8 @@ public final class TKCYAMetaItems {
 
 
     public static void init() {
-        TKCYAMetaItem1 metaItem1 = new TKCYAMetaItem1();
-        metaItem1.setRegistryName("meta_item_1");
+        TKCYAMetaItem1 metaItem1 = new TKCYAMetaItem1((short) 0);
+        metaItem1.setRegistryName("tkcya");
 
     }
 

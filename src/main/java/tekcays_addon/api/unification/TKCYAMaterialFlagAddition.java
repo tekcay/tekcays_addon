@@ -21,7 +21,7 @@ public class TKCYAMaterialFlagAddition {
         //For Blasting
         BrownLimonite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
         YellowLimonite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
-        Hematite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
+        BandedIron.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
         Magnetite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
         Cassiterite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
 

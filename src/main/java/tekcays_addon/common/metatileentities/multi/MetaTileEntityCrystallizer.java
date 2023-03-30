@@ -70,11 +70,6 @@ public class MetaTileEntityCrystallizer extends NoEnergyRecipeMapMultiBlockContr
     }
 
     @Override
-    public int getLightValueForPart(IMultiblockPart sourcePart) {
-        return sourcePart == null && recipeMapWorkable.isActive() ? 15 : 0;
-    }
-
-    @Override
     public boolean hasMaintenanceMechanics() {
         return false;
     }

@@ -153,10 +153,11 @@ public class CoverDetectorTemperature extends CoverBehavior implements ITickable
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tagCompound) {
+    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
         super.writeToNBT(tagCompound);
         tagCompound.setBoolean("isInverted", this.isInverted);
         tagCompound.setInteger("temperatureThreshold", this.temperatureThreshold);
+        return tagCompound;
     }
 
     @Override

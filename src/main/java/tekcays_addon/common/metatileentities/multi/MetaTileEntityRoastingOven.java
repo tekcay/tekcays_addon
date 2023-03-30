@@ -63,31 +63,7 @@ public class MetaTileEntityRoastingOven extends RecipeMapMultiblockController im
     public void invalidateStructure() {
         super.invalidateStructure();
         this.temperature = 0;
-        replaceFireboxAsActive(false);
     }
-
-    @Override
-    public void onRemoval() {
-        super.onRemoval();
-        if (!getWorld().isRemote && isStructureFormed()) {
-            replaceFireboxAsActive(false);
-        }
-    }
-
-    public void replaceFireboxAsActive(boolean isActive) {
-        BlockPos centerPos = getPos().offset(getFrontFacing().getOpposite()).down();
-        for (int x = -1; x <= 1; x++) {
-            for (int z = -1; z <= 1; z++) {
-                BlockPos blockPos = centerPos.add(x, 0, z);
-                IBlockState blockState = getWorld().getBlockState(blockPos);
-                if (blockState.getBlock() instanceof BlockFireboxCasing) {
-                    blockState = blockState.withProperty(BlockFireboxCasing.ACTIVE, isActive);
-                    getWorld().setBlockState(blockPos, blockState);
-                }
-            }
-        }
-    }
-
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {

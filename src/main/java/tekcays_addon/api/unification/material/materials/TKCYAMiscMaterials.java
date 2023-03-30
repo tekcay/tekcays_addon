@@ -66,6 +66,19 @@ public class TKCYAMiscMaterials {
                 .build();
         CopperLeach.setFormula("Cu?", true);
 
+        PotassiumBisulfate = new Material.Builder(id++, "potassium_bisulfate")
+                .dust()
+                .iconSet(DULL)
+                .color(0xB99022)
+                .build();
+        PotassiumBisulfate.setFormula("KHSO4", true);
+
+        ChloroauricAcid = new Material.Builder(id++, "chloroauric_acid")
+                .fluid(FluidTypes.ACID)
+                .color(0xfcb13b)
+                .build();
+        ChloroauricAcid.setFormula("HAuCl4", true);
+
 
 
         //FluorineChain
@@ -293,10 +306,16 @@ public class TKCYAMiscMaterials {
         HexafluorosilicAcid.setFormula("H2SiF6", true);
 
         AluminiumHydroxide = new Material.Builder(id++, "hexafluorosilic_acid")
-                .fluidTemp(298)
+                .fluidTemp(573)
                 .color(Aluminium.getMaterialRGB() + (Oxygen.getMaterialRGB() * 3 + Hydrogen.getMaterialRGB() * 3)/ 7)
                 .build();
         AluminiumHydroxide.setFormula("Al(OH)3", true);
+
+        Alumina = new Material.Builder(id++, "alumina")
+                .fluidTemp(2345)
+                .color(Aluminium.getMaterialRGB() * 2 + (Oxygen.getMaterialRGB())/ 5)
+                .build();
+        Alumina.setFormula("Al2O3", true);
 
 
 
@@ -347,13 +366,61 @@ public class TKCYAMiscMaterials {
                 .build();
         MolybdenumFlue.setFormula("Mo?", true);
 
+        //Vitriols
+        BlueVitriol = new Material.Builder(id++, "blue_vitriol")
+                .fluid(FluidTypes.ACID)
+                .color(0x350092)
+                .build();
+        BlueVitriol.setFormula("H2SO4 + Cu?", true);
+
+        GrayVitriol = new Material.Builder(id++, "gray_vitriol")
+                .fluid(FluidTypes.ACID)
+                .color(0xbab6b6)
+                .build();
+        GrayVitriol.setFormula("H2SO4 + Mn?", true);
+
+        PinkVitriol = new Material.Builder(id++, "pink_vitriol")
+                .fluid(FluidTypes.ACID)
+                .color(0xf6b7c9)
+                .build();
+        PinkVitriol.setFormula("H2SO4 + Mg?", true);
+
+        GreenVitriol = new Material.Builder(id++, "green_vitriol")
+                .fluid(FluidTypes.ACID)
+                .color(0x5ba304)
+                .build();
+        GreenVitriol.setFormula("H2SO4 + Fe?", true);
+
+        WhiteVitriol = new Material.Builder(id++, "white_vitriol")
+                .fluid(FluidTypes.ACID)
+                .color(0xf7f7f7)
+                .build();
+        WhiteVitriol.setFormula("H2SO4 + Zn?", true);
+
+        ClayVitriol = new Material.Builder(id++, "clay_vitriol")
+                .fluid(FluidTypes.ACID)
+                .color(0xc49963)
+                .build();
+        ClayVitriol.setFormula("H2SO4 + Al2O3?", true);
+
+        CyanVitriol = new Material.Builder(id++, "cyan_vitriol")
+                .fluid(FluidTypes.ACID)
+                .color(0x09b6c6)
+                .build();
+        CyanVitriol.setFormula("H2SO4 + Ni?", true);
+
+        RedVitriol = new Material.Builder(id++, "red_vitriol")
+                .fluid(FluidTypes.ACID)
+                .color(0xd41501)
+                .build();
+        RedVitriol.setFormula("H2SO4 + Fe?", true);
 
         //Others
         PotassiumHydroxide = new Material.Builder(id++, "potassium_hydroxide")
                 .dust()
                 .color((Potassium.getMaterialRGB() + Hydrogen.getMaterialRGB() + Oxygen.getMaterialRGB()) / 3)
                 .build();
-        MolybdenumTrioxide.setFormula("KOH", true);
+        PotassiumHydroxide.setFormula("KOH", true);
 
 
         return id;

@@ -36,11 +36,6 @@ public class MetaTileEntityPrimitiveFermenter extends NoEnergyRecipeMapMultiBloc
     }
 
     @Override
-    public int getLightValueForPart(IMultiblockPart sourcePart) {
-        return sourcePart == null && recipeMapWorkable.isActive() ? 15 : 0;
-    }
-
-    @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
         return Textures.WOOD_WALL;
     }

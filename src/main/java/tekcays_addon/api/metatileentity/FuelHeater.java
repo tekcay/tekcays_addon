@@ -10,9 +10,9 @@ import gregtech.api.capability.IActiveOutputSide;
 import gregtech.api.metatileentity.IDataInfoProvider;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntityUIFactory;
-import gregtech.api.sound.GTSounds;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
+import gregtech.core.sound.GTSoundEvents;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.I18n;
@@ -285,7 +285,7 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
 
     @Override
     public SoundEvent getSound() {
-        return GTSounds.FURNACE;
+        return GTSoundEvents.FURNACE;
     }
 
     @Override

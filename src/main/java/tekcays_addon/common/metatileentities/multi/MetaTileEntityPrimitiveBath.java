@@ -53,10 +53,13 @@ public class MetaTileEntityPrimitiveBath extends RecipeMapPrimitiveMultiblockCon
         getFrontOverlay().renderOrientedState(renderState, translation, pipeline, getFrontFacing(), recipeMapWorkable.isActive(), recipeMapWorkable.isWorkingEnabled());
     }
 
+    /*
     @Override
     public int getLightValueForPart(IMultiblockPart sourcePart) {
         return sourcePart == null && recipeMapWorkable.isActive() ? 15 : 0;
     }
+
+     */
 
 
     @Override
