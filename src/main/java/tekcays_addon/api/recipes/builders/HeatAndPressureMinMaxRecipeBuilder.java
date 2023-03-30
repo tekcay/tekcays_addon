@@ -50,7 +50,7 @@ public class HeatAndPressureMinMaxRecipeBuilder extends RecipeBuilder<HeatAndPre
     }
     @Override
     public ValidationResult<Recipe> build() {
-        buildHelper();
+        //buildHelper();
         return super.build();
     }
     @Override
@@ -60,7 +60,7 @@ public class HeatAndPressureMinMaxRecipeBuilder extends RecipeBuilder<HeatAndPre
                 .appendSuper(super.toString())
                 .append("Temperature: ", recipePropertyGetters.getIntervalTemperature())
                 .append("Pressure: ", recipePropertyGetters.getIntervalPressure())
-                .append("Gas: ", recipePropertyGetters.getGas())
+                .append("Gas: ", recipePropertyGetters.getPressurizedFluidStack())
                 .toString();
     }
 

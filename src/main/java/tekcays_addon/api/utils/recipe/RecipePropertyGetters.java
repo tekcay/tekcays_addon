@@ -4,8 +4,7 @@ import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.recipes.recipeproperties.*;
 
-import static tekcays_addon.api.utils.TKCYAValues.EMPTY_INT_TWO_ARRAY;
-import static tekcays_addon.api.utils.TKCYAValues.EMPTY_LONG_TWO_ARRAY;
+import static tekcays_addon.api.utils.TKCYAValues.*;
 
 public class RecipePropertyGetters {
 
@@ -45,7 +44,7 @@ public class RecipePropertyGetters {
                 this.recipePropertyStorage.getRecipePropertyValue(MaxPressureProperty.getInstance(), 0L);
     }
 
-    public FluidStack getGas() {
+    public FluidStack getPressurizedFluidStack() {
         return this.recipePropertyStorage == null ? null :
                 this.recipePropertyStorage.getRecipePropertyValue(PressurizedFluidStackProperty.getInstance(), null);
     }
