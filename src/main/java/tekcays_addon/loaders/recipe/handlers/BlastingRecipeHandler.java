@@ -48,7 +48,7 @@ public class BlastingRecipeHandler {
         ////From BandedIron
         //Fe2O3 + 3 CO -> 2 Fe + 3 CO2
         BLASTING_RECIPES.recipeBuilder()
-                .temperature(1800)
+                .minPressure(1800)
                 .input(dust, Materials.BandedIron, 5)
                 .input(dust, Materials.Coke, 2)
                 .input(dust, Materials.Stone, 3)
@@ -57,7 +57,7 @@ public class BlastingRecipeHandler {
                 .buildAndRegister();
 
         ADVANCED_BLAST_FURNACE_RECIPES.recipeBuilder()
-                .temperature(1800)
+                .minPressure(1800)
                 .input(dust, Materials.BandedIron, 5)
                 .input(dust, Materials.Coke, 2)
                 .input(dust, Materials.Stone, 3)
@@ -68,7 +68,7 @@ public class BlastingRecipeHandler {
         ////From Magnetite
         //Fe3O4 + 4 CO -> 3 Fe + 4 CO2
         BLASTING_RECIPES.recipeBuilder()
-                .temperature(1800)
+                .minPressure(1800)
                 .input(dust, Materials.Magnetite, 7)
                 .input(dust, Materials.Coke, 2)
                 .fluidOutputs(TKCYAMaterials.PigIron.getFluid(GTValues.L * 3))
@@ -76,7 +76,7 @@ public class BlastingRecipeHandler {
                 .buildAndRegister();
 
         ADVANCED_BLAST_FURNACE_RECIPES.recipeBuilder()
-                .temperature(1800)
+                .minTemperature(1800)
                 .input(dust, Materials.Magnetite, 7)
                 .input(dust, Materials.Coke, 2)
                 .fluidOutputs(TKCYAMaterials.PigIron.getFluid(GTValues.L * 3))
@@ -88,7 +88,7 @@ public class BlastingRecipeHandler {
         ////From Cassiterite
         //SnO2 + 2 CO -> Sn + 2 CO2
         BLASTING_RECIPES.recipeBuilder()
-                .temperature(1500)
+                .minTemperature(1500)
                 .input(dust, Materials.Cassiterite, 3)
                 .input(dust, Materials.Coke, 2)
                 .fluidOutputs(Materials.Tin.getFluid(GTValues.L))
@@ -96,7 +96,7 @@ public class BlastingRecipeHandler {
                 .buildAndRegister();
 
         ADVANCED_BLAST_FURNACE_RECIPES.recipeBuilder()
-                .temperature(1500)
+                .minTemperature(1500)
                 .input(dust, Materials.Cassiterite, 3)
                 .input(dust, Materials.Coke, 2)
                 .fluidOutputs(Materials.Tin.getFluid(GTValues.L))

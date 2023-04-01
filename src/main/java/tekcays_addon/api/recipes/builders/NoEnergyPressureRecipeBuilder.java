@@ -46,10 +46,14 @@ public class NoEnergyPressureRecipeBuilder extends RecipeBuilder<NoEnergyPressur
 
     @Override
     public boolean applyProperty(@Nonnull String key, Object value) {
+        applyPropertyHelper(key, value);
+        /*
         if (key.equals(PressureProperty.KEY)) {
             this.pressure(((Number) value).longValue());
             return true;
         }
+
+         */
         return super.applyProperty(key, value);
     }
 
@@ -66,27 +70,13 @@ public class NoEnergyPressureRecipeBuilder extends RecipeBuilder<NoEnergyPressur
     @Override
     public ValidationResult<Recipe> build() {
         this.EUt = 1; // secretly force to 1 to allow recipe matching to work properly
-        if (this.recipePropertyStorage == null) this.recipePropertyStorage = new RecipePropertyStorage();
-        if (this.recipePropertyStorage.hasRecipeProperty(MinPressureProperty.getInstance())) {
-            if (this.recipePropertyStorage.getRecipePropertyValue(MinPressureProperty.getInstance(), 0L) <= 0) {
-                this.recipePropertyStorage.store(MinPressureProperty.getInstance(), ATMOSPHERIC_PRESSURE);
-            }
-        } else {
-            this.recipePropertyStorage.store(MinPressureProperty.getInstance(), ATMOSPHERIC_PRESSURE);
-        }
-
         return super.build();
-    }
-
-    public double getPressure() {
-        return this.recipePropertyStorage == null ? 0.0D :
-                this.recipePropertyStorage.getRecipePropertyValue(MinPressureProperty.getInstance(), 0L);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .appendSuper(super.toString())
+                //.appendSuper(super.toString())
                 .append(MinPressureProperty.getInstance().getKey())
                 .toString();
     }
@@ -101,11 +91,6 @@ public class NoEnergyPressureRecipeBuilder extends RecipeBuilder<NoEnergyPressur
     @Override
     public NoEnergyPressureRecipeBuilder getRecipeBuilder() {
         return this;
-    }
-
-    @Override
-    public List<RecipeProperty<?>> getRecipePropertiesInstance() {
-        return null;
     }
 
     @Override

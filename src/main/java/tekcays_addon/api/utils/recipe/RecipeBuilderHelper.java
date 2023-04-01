@@ -10,7 +10,6 @@ import tekcays_addon.api.recipes.recipeproperties.*;
 import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -21,7 +20,6 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
 
     IRecipePropertyStorage getRecipePropertyStorage();
     T getRecipeBuilder();
-    List<RecipeProperty<?>> getRecipePropertiesInstance();
     void setRecipeStatus(EnumValidationResult enumValidationResult);
 
     default void buildHelper() {

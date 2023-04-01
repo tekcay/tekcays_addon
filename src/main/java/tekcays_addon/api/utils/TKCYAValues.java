@@ -59,6 +59,7 @@ public class TKCYAValues {
     public static final String NO_FLUID = "";
     public static final int ABSOLUTE_VACUUM = 0;
     public static final long ATMOSPHERIC_PRESSURE = 101300;
+    public static final float OXYGEN_IN_AIR_RATIO = 0.21f;
     public static final long MAX_PRESSURE = ATMOSPHERIC_PRESSURE * 2000;
     public static final float EU_TO_PU = 0.40F;
     public static final float EU_TO_VU = 0.30F;
@@ -74,6 +75,8 @@ public class TKCYAValues {
      * One hour in {@code tick}s.
      */
     public static final int HOUR = 72000;
+
+    public static final int SLOT_INTERVAL = 19;
 
     /**
      * How much in Pa the pressure will increase in the Steam Air Compressor.
@@ -110,7 +113,7 @@ public class TKCYAValues {
     }};
 
 
-    public static final MetaItem.MetaValueItem[] ELECTRIC_PUMPS = new MetaItem.MetaValueItem[]{
+    public static final MetaItem<?>.MetaValueItem[] ELECTRIC_PUMPS = new MetaItem.MetaValueItem[]{
             ELECTRIC_PUMP_LV, ELECTRIC_PUMP_MV, ELECTRIC_PUMP_HV, ELECTRIC_PUMP_EV, ELECTRIC_PUMP_IV,
             ELECTRIC_PUMP_LuV, ELECTRIC_PUMP_ZPM};
 
