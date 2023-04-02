@@ -5,7 +5,7 @@
   "max_height": 40,
   "vein_populator": {
     "type": "surface_rock",
-    "material": "hematite"
+    "material": "banded_iron"
   },
 
   "generator": {
@@ -25,7 +25,7 @@
         "secondary": "ore:yellow_limonite"
       },
       {
-        "between": "ore:hematite"
+        "between": "ore:banded_iron"
       },
       {
         "sporadic": "ore:precious_metal"

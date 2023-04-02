@@ -27,7 +27,7 @@
         "between": "ore:stannite"
       },
       {
-        "sporadic": "ore:hematite"
+        "sporadic": "ore:banded_iron"
       }
     ]
   }
