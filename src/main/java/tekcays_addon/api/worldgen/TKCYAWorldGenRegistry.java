@@ -27,6 +27,8 @@ import java.util.stream.Collectors;
 public class TKCYAWorldGenRegistry {
 
     public static final TKCYAWorldGenRegistry INSTANCE = new TKCYAWorldGenRegistry();
+    private static final String VEIN_PATH = "/assets/tkcya/worldgen/vein";
+    private static final String FLUID_PATH = "/assets/tkcya/worldgen/fluid";
 
     private final Map<Path, List<String>> oreVeinsToAdd = new HashMap<>();
     private final Map<Path, List<String>> fluidVeinsToAdd = new HashMap<>();
@@ -60,7 +62,7 @@ public class TKCYAWorldGenRegistry {
         TKCYALog.logger.info("Vein Size Before Addition: " + WorldGenRegistry.getOreDeposits().size());
         TKCYALog.logger.info("Fluid Vein Size Before Addition: " + WorldGenRegistry.getBedrockVeinDeposits().size());
         addVeins();
-        //addFluidVeins();  //TODO Returns NullPointer
+        addFluidVeins();  //TODO Returns NullPointer
 
         try {
             WorldGenRegistry.INSTANCE.reinitializeRegisteredVeins();
@@ -140,13 +142,17 @@ public class TKCYAWorldGenRegistry {
     private static void extractJarVeinDefinitions(@Nonnull Path configPath, Path targetPath, Map<Path, List<String>> oreVeinsToAdd) throws IOException {
         // The path of the worldgen folder in the config folder
         Path worldgenRootPath = configPath.resolve("worldgen");
+
         // The path of the worldgen folder in the config folder
         Path tkcyaWorldgenRootPath = worldgenRootPath.resolve("tkcya");
+
         // The path of the physical vein folder in the config folder
         Path oreVeinRootPath = tkcyaWorldgenRootPath.resolve("vein");
+
         // The path of the bedrock fluid vein folder in the config folder
         Path bedrockFluidVeinRootPath = tkcyaWorldgenRootPath.resolve("fluid");
         FileSystem zipFileSystem = null;
+
         try {
             URI sampleUri = TKCYAWorldGenRegistry.class.getResource("/assets/tkcya/.tkcyaassetsroot").toURI(); //"/assets/tkcya/.tkcyaassetsroot"
             // The Path for representing the vein folder in the vein folder in the assets folder in the Gregtech resources folder in the jar
@@ -155,11 +161,11 @@ public class TKCYAWorldGenRegistry {
             Path bedrockFluidJarRootPath;
             if (sampleUri.getScheme().equals("jar") || sampleUri.getScheme().equals("zip")) {
                 zipFileSystem = FileSystems.newFileSystem(sampleUri, Collections.emptyMap());
-                oreVeinJarRootPath = zipFileSystem.getPath("/assets/tkcya/worldgen/vein");
-                bedrockFluidJarRootPath = zipFileSystem.getPath("/assets/tkcya/worldgen/fluid");
+                oreVeinJarRootPath = zipFileSystem.getPath(VEIN_PATH);
+                bedrockFluidJarRootPath = zipFileSystem.getPath(FLUID_PATH);
             } else if (sampleUri.getScheme().equals("file")) {
-                oreVeinJarRootPath = Paths.get(TKCYAWorldGenRegistry.class.getResource("/assets/tkcya/worldgen/vein").toURI());
-                bedrockFluidJarRootPath = Paths.get(TKCYAWorldGenRegistry.class.getResource("/assets/tkcya/worldgen/fluid").toURI());
+                oreVeinJarRootPath = Paths.get(TKCYAWorldGenRegistry.class.getResource(VEIN_PATH).toURI());
+                bedrockFluidJarRootPath = Paths.get(TKCYAWorldGenRegistry.class.getResource(FLUID_PATH).toURI());
             } else {
                 throw new IllegalStateException("Unable to locate absolute path to TKCYA worldgen root directory: " + sampleUri);
             }
@@ -168,6 +174,7 @@ public class TKCYAWorldGenRegistry {
             if (targetPath.compareTo(oreVeinRootPath) == 0) {
                 TKCYALog.logger.info("Attempting retrieval of standard TKCYA worldgen definitions from {} to {}",
                         oreVeinJarRootPath, oreVeinRootPath);
+
                 // Find all the default worldgen files in the assets folder
                 List<Path> jarFiles = Files.walk(oreVeinJarRootPath)
                         .filter(Files::isRegularFile)
@@ -186,6 +193,7 @@ public class TKCYAWorldGenRegistry {
             } else if (targetPath.compareTo(bedrockFluidVeinRootPath) == 0) {
                 TKCYALog.logger.info("Attempting retrieval of standard TKCYA worldgen definitions from {} to {}",
                         bedrockFluidJarRootPath, bedrockFluidVeinRootPath);
+
                 // Find all the default worldgen files in the assets folder
                 List<Path> jarFiles = Files.walk(bedrockFluidJarRootPath)
                         .filter(Files::isRegularFile)
