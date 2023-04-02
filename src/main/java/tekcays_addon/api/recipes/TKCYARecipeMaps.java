@@ -54,24 +54,24 @@ public class TKCYARecipeMaps {
 
 
     @ZenProperty
-    public static final RecipeMap<HeatAndPressureMinMaxRecipeBuilder> CONVERTING_RECIPES = new RecipeMap<>(
-            "converting", 0, 2, 0, 2, 1, 4, 1, 2, new HeatAndPressureMinMaxRecipeBuilder(), false)
+    public static final RecipeMap<TemperaturePressureIntervalRecipeBuilder> CONVERTING_RECIPES = new TopStaggeredRecipeMap<>(
+            "converting", 0, 2, 0, 2, 1, 3, 1, 2, new TemperaturePressureIntervalRecipeBuilder(), false)
             .setSound(GTSoundEvents.COOLING);
 
 
     @ZenProperty
-    public static final RecipeMap<NoEnergyPressureRecipeBuilder> PRIMITIVE_CONVERTING_RECIPES = new RecipeMap<>(
-            "primitive_converting", 0, 0, 0, 0, 1, 4, 1, 2, new NoEnergyPressureRecipeBuilder(), false)
+    public static final RecipeMap<NoEnergyTemperaturePressureIntervalRecipeBuilder> PRIMITIVE_CONVERTING_RECIPES = new TopStaggeredRecipeMap<>(
+            "primitive_converting", 0, 1, 0, 0, 1, 3, 1, 2, new NoEnergyTemperaturePressureIntervalRecipeBuilder(), false)
             .setSound(GTSoundEvents.COOLING);
 
     @ZenProperty
-    public static final RecipeMap<NoEnergyTemperatureRecipeBuilder> BLASTING_RECIPES = new RecipeMap<>(
-            "blasting", 1, 3, 0, 0, 0, 0, 1, 2, new NoEnergyTemperatureRecipeBuilder(), false)
+    public static final RecipeMap<NoEnergyTemperaturePressureIntervalRecipeBuilder> BLASTING_RECIPES = new TopStaggeredRecipeMap<>(
+            "blasting", 1, 3, 0, 0, 0, 0, 1, 2, new NoEnergyTemperaturePressureIntervalRecipeBuilder(), false)
             .setSound(GTSoundEvents.FURNACE);
 
     @ZenProperty
-    public static final RecipeMap<NoEnergyTemperatureRecipeBuilder> ADVANCED_BLAST_FURNACE_RECIPES = new RecipeMap<>(
-            "advanced_blasting", 1, 4, 0, 3, 0, 3, 0, 2, new NoEnergyTemperatureRecipeBuilder(), false)
+    public static final RecipeMap<NoEnergyTemperaturePressureIntervalRecipeBuilder> ADVANCED_BLAST_FURNACE_RECIPES = new TopStaggeredRecipeMap<>(
+            "advanced_blasting", 1, 4, 0, 3, 0, 3, 0, 2, new NoEnergyTemperaturePressureIntervalRecipeBuilder(), false)
             .setSound(GTSoundEvents.FURNACE);
 
     @ZenProperty
@@ -110,8 +110,8 @@ public class TKCYARecipeMaps {
      * </pre>
      */
     @ZenProperty
-    public static final RecipeMap<HeatAndPressureMinMaxRecipeBuilder> PRESSURE_CRACKING = new TopStaggeredRecipeMap<>(
-            "pressure_cracking", 1, 2, 0, 0, 1, 2, 1, 2, new HeatAndPressureMinMaxRecipeBuilder(), false)
+    public static final RecipeMap<TemperaturePressureIntervalRecipeBuilder> PRESSURE_CRACKING = new TopStaggeredRecipeMap<>(
+            "pressure_cracking", 1, 2, 0, 0, 1, 1, 1, 1, new TemperaturePressureIntervalRecipeBuilder(), false)
             .setSound(GTSoundEvents.COMPRESSOR)
             .setSlotOverlay(false,false, true, GuiTextures.CRYSTAL_OVERLAY);
 
@@ -123,8 +123,8 @@ public class TKCYARecipeMaps {
 
 
     @ZenProperty
-    public static final RecipeMap<HeatAndPressureMinMaxRecipeBuilder> ROASTING = new RecipeMap<>(
-            "roasting", 1, 2, 0, 4, 1, 1, 0, 2, new HeatAndPressureMinMaxRecipeBuilder(), false)
+    public static final RecipeMap<TemperaturePressureIntervalRecipeBuilder> ROASTING = new RecipeMap<>(
+            "roasting", 1, 2, 0, 4, 1, 1, 0, 2, new TemperaturePressureIntervalRecipeBuilder(), false)
             .setSound(GTSoundEvents.FURNACE);
 
 

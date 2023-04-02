@@ -56,7 +56,7 @@ public class ChromiteChain {
                 .input(dust, Carbon, 2)
                 .output(dust, ChromiumOxide, 8)
                 .output(dust, SodiumCarbonate, 6)
-                .temperature(2000)
+                .minTemperature(2000)
                 .duration(80)
                 .buildAndRegister();
 
@@ -67,7 +67,7 @@ public class ChromiteChain {
                 .output(dust, Alumina, 5)
                 .fluidOutputs(Chrome.getFluid(GTValues.L * 2))
                 .duration(80)
-                .temperature(Chrome.getFluid().getTemperature())
+                .minTemperature(Chrome.getFluid().getTemperature())
                 .buildAndRegister();
     }
 

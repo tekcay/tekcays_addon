@@ -10,7 +10,7 @@ import tekcays_addon.api.recipes.recipeproperties.*;
 import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
-import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 import static tekcays_addon.api.utils.recipe.RecipeValidationFunctions.*;
@@ -20,13 +20,14 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
 
     IRecipePropertyStorage getRecipePropertyStorage();
     T getRecipeBuilder();
-    List<RecipeProperty<?>> getRecipePropertiesInstance();
     void setRecipeStatus(EnumValidationResult enumValidationResult);
 
     default void buildHelper() {
         IRecipePropertyStorage recipePropertyStorage = getRecipePropertyStorage();
         if (recipePropertyStorage == null) recipePropertyStorage = new RecipePropertyStorage();
-        for (RecipeProperty<?> recipeProperty : getRecipePropertiesInstance()) {
+        for (Map.Entry<RecipeProperty<?>, Object> entry : getRecipePropertyStorage().getRecipeProperties()) {
+
+            RecipeProperty<?> recipeProperty = entry.getKey();
 
             switch (recipeProperty.getKey()) {
 
@@ -43,7 +44,7 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
                     break;
 
                 case MAX_PRESSURE_PROPERTY:
-                    store((MaxTemperatureProperty) recipeProperty, recipePropertyStorage, 0L);
+                    store((MaxPressureProperty) recipeProperty, recipePropertyStorage, 0L);
                     break;
 
                 case INTERVAL_PRESSURE_PROPERTY:
@@ -113,7 +114,7 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
     }
 
     @Nonnull
-    default T gas(FluidStack fluidStack) {
+    default T pressurizedFluidStack(FluidStack fluidStack) {
         return validate(PressurizedFluidStackProperty.getInstance(), fluidStack, VALIDATE_FLUIDSTACK);
     }
 
@@ -145,7 +146,7 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
                 return true;
 
             case PRESSURIZED_FLUIDSTACK_PROPERTY:
-                this.gas(((FluidStack) value));
+                this.pressurizedFluidStack(((FluidStack) value));
                 return true;
 
             default:
