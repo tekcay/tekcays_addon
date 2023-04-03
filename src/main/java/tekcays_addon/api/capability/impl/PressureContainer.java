@@ -5,18 +5,17 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.capability.IPressureContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.utils.FluidStackHelper;
-import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 
 import static tekcays_addon.api.consts.DataIds.PRESSURIZED_FLUID_STACK;
+import static tekcays_addon.api.consts.NBTKeys.PRESSURE_KEY;
 import static tekcays_addon.api.consts.NetworkIds.PRESSURE;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
@@ -75,7 +74,6 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
 
         return changed;
     }
-
 
     @Override
     public long getPressure() {
@@ -154,13 +152,13 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = super.serializeNBT();
         compound.setTag(PRESSURIZED_FLUID_STACK.getName(), this.setFluidStackNBT(this.pressurizedFluidStack));
-        compound.setLong("pressure", this.pressure);
+        compound.setLong(PRESSURE_KEY, this.pressure);
         return compound;
     }
 
     @Override
     public void deserializeNBT(@Nonnull NBTTagCompound compound) {
-        this.pressure = compound.getLong("pressure");
+        this.pressure = compound.getLong(PRESSURE_KEY);
         this.pressurizedFluidStack = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag(PRESSURIZED_FLUID_STACK.getName()));
 
     }
@@ -169,23 +167,12 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
     public void writeInitialData(PacketBuffer buffer) {
         super.writeInitialData(buffer);
         buffer.writeLong(this.pressure);
-        //buffer.writeCompoundTag(this.setFluidStackNBT());
     }
 
     @Override
     public void receiveInitialData(PacketBuffer buffer) {
         super.receiveInitialData(buffer);
         this.pressure = buffer.readLong();
-
-        /*
-        try {
-            this.fluidStack = FluidStack.loadFluidStackFromNBT(buffer.readCompoundTag());
-            //TKCYALog.logger.info("pressurized fluidStack is {}, with amount of {}", this.fluidStack.amount, this.fluidStack.getLocalizedName());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-         */
     }
 
 
