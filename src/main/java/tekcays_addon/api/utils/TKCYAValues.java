@@ -6,6 +6,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidStack;
 import gregtech.api.unification.ore.OrePrefix;
+import net.minecraftforge.fml.common.Loader;
+import tekcays_addon.TekCaysAddon;
 
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
@@ -13,6 +15,7 @@ import static gregtech.common.items.MetaItems.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.*;
 import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
 
+import java.nio.file.Path;
 import java.util.*;
 
 public class TKCYAValues {
@@ -83,8 +86,16 @@ public class TKCYAValues {
      */
     public static final int STEAM_AIR_COMPRESSOR_PRESSURE_INCREASE = 1000;
 
+    //PATHS
+    public static final Path TKCYA_CONFIG_PATH = Loader.instance().getConfigDir().toPath().resolve(TekCaysAddon.MODID);
+
     //Lists/Arrays
 
+    public static final List<String> DIMENSIONS = new ArrayList<String>(){{
+        add("overworld");
+        add("nether");
+        add("end");
+    }};
 
     public static final List<EnumFacing> HORIZONTALS = new ArrayList<EnumFacing>(){{
        add(EnumFacing.SOUTH);

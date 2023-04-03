@@ -49,9 +49,13 @@ public class TekCaysAddon {
 
     @Mod.EventHandler
     public void onInit(FMLInitializationEvent event) {
+        boolean doesDummyFileExist = TKCYAWorldGenRegistry.INSTANCE.doesDummyFileExist();
+
         if (TKCYAConfigHolder.miscOverhaul.enableTKCYACustomOreGen) {
             try {
-                TKCYAWorldGenRegistry.INSTANCE.addRemoveVeins();
+                if (!doesDummyFileExist) {
+                    TKCYAWorldGenRegistry.INSTANCE.addRemoveVeins();
+                    TKCYAWorldGenRegistry.INSTANCE.createDummyFile();                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
