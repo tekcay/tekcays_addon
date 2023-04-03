@@ -104,6 +104,9 @@ public class TKCYAMetaTileEntities {
     // Drums
     public static MetaTileEntityDrum[] DRUMS = new MetaTileEntityDrum[DRUM_MATERIALS.size()];
 
+    //Controls
+    public static MetaTileEntityPressureController PRESSURE_CONTROLLER;
+
 
 
     //Tanks
@@ -320,6 +323,8 @@ public class TKCYAMetaTileEntities {
         }
 
         startId += MAX_TIER * 5 + 1;
+
+        PRESSURE_CONTROLLER = registerMetaTileEntity(startId++, new MetaTileEntityPressureController(tkcyaId("pressure_controller")));
 
 
     }
