@@ -13,7 +13,6 @@ import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -68,9 +67,19 @@ public class TKCYAWorldGenRegistry {
 
     private static final Map<Path, List<Path>> oreVeinsToAdd = new HashMap<>();
     private static final Map<Path, List<String>> fluidVeinsToAdd = new HashMap<>();
+    private static final Path DUMMY_FILE_PATH = TKCYA_CONFIG_PATH.resolve("worldgen").resolve("deleteToReset");
 
     private TKCYAWorldGenRegistry() {
 
+    }
+
+    public boolean doesDummyFileExist() {
+        return Files.exists(DUMMY_FILE_PATH);
+    }
+
+    public void createDummyFile() throws IOException {
+        Files.createDirectories(DUMMY_FILE_PATH.getParent());
+        Files.createFile(DUMMY_FILE_PATH);
     }
 
     public void addRemoveVeins() throws IOException {
@@ -78,9 +87,9 @@ public class TKCYAWorldGenRegistry {
         TKCYALog.logger.info("Vein Size Before Addition: " + WorldGenRegistry.getOreDeposits().size());
         TKCYALog.logger.info("Fluid Vein Size Before Addition: " + WorldGenRegistry.getBedrockVeinDeposits().size());
 
-        this.removeAllGTVeins();
+        this.removeAllVeins(worldgenRootPath);
 
-        setPath();
+        setPathAndExtractDefinitions();
 
         try {
             WorldGenRegistry.INSTANCE.reinitializeRegisteredVeins();
@@ -107,7 +116,7 @@ public class TKCYAWorldGenRegistry {
                 .forEach(vein -> WorldGenRegistry.INSTANCE.addVeinDefinitions(new BedrockFluidDepositDefinition(vein)));
     }
 
-    public void removeAllGTVeins() {
+    public void removeAllVeins(Path worldgenRootPath) {
         DIMENSIONS.forEach(dimension -> {
             try {
                 FileUtils.forceDelete(new File(worldgenRootPath.resolve("vein").resolve(dimension).toUri()));
@@ -117,7 +126,7 @@ public class TKCYAWorldGenRegistry {
         });
     }
 
-    private static void setPath() {
+    private static void setPathAndExtractDefinitions() {
         FileSystem zipFileSystem = null;
 
         try {
@@ -171,9 +180,6 @@ public class TKCYAWorldGenRegistry {
             Path name = oreVeinJarRootPath.getParent().relativize(jarFile);
             name = getActualVeinName(name);
             oreVeinsToAdd.get(jarFile.getParent()).add(name);
-
-            TKCYALog.logger.info("directory toCreate: {}", worldgenRootPath.resolve(name.getParent()));
-            TKCYALog.logger.info("toCopy: {}", worldgenRootPath.resolve(name));
 
             try {
                 Files.createDirectories(worldgenRootPath.resolve(name.getParent()));
