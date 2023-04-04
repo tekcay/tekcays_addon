@@ -20,10 +20,17 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
+import tekcays_addon.api.metatileentity.gui.MetaTileEntityGuiHandler;
 import tekcays_addon.api.render.TKCYATextures;
 
+import java.util.function.Consumer;
+import java.util.function.IntConsumer;
+import java.util.function.Supplier;
 
-public class CoverDetectorTemperature extends CoverBehavior implements ITickable, CoverWithUI {
+import static tekcays_addon.api.consts.UnitSymbol.KELVIN;
+
+
+public class CoverDetectorTemperature extends CoverBehavior implements ITickable, CoverWithUI, MetaTileEntityGuiHandler {
 
     private boolean isInverted;
     private int temperatureThreshold;
@@ -68,59 +75,15 @@ public class CoverDetectorTemperature extends CoverBehavior implements ITickable
         return EnumActionResult.SUCCESS;
     }
 
-    private void adjustTemperatureThreshold(int amount) {
-        setTemperatureThreshold(MathHelper.clamp(temperatureThreshold + amount, 1, MAX_TEMPERATURE));
-    }
-
-    private void setTemperatureThreshold(int temperatureThreshold) {
-        this.temperatureThreshold = temperatureThreshold;
-        coverHolder.markDirty();
-    }
-
-    protected String getUITitle() {
-        return "Temperature Detector";
-    }
-
-    protected ModularUI buildUI(ModularUI.Builder builder, EntityPlayer player) {
-        return builder.build(this, player);
-    }
-
     @Override
     public ModularUI createUI(EntityPlayer player) {
-        WidgetGroup primaryGroup = new WidgetGroup();
-        primaryGroup.addWidget(new LabelWidget(10, 5, getUITitle()));
-
-        primaryGroup.addWidget(new ImageWidget(44, 20, 62, 20, GuiTextures.DISPLAY));
-
-        primaryGroup.addWidget(new IncrementButtonWidget(136, 20, 30, 20, 1, 10, 100, 1000, this::adjustTemperatureThreshold)
-                .setDefaultTooltip()
-                .setShouldClientCallback(false));
-        primaryGroup.addWidget(new IncrementButtonWidget(10, 20, 34, 20, -1, -10, -100, -1000, this::adjustTemperatureThreshold)
-                .setDefaultTooltip()
-                .setShouldClientCallback(false));
-
-        TextFieldWidget2 textFieldWidget = new TextFieldWidget2(45, 26, 60, 20, () -> Integer.toString(temperatureThreshold), val -> setTemperatureThreshold(Integer.parseInt(val)))
-                .setCentered(true)
-                .setNumbersOnly(1, MAX_TEMPERATURE)
-                .setMaxLength(5);
-        primaryGroup.addWidget(textFieldWidget);
-
-        //Prints Kelvin symbol
-        primaryGroup.addWidget(new LabelWidget(115, 26, "K", TextFormatting.BLACK));
-
-        //Prints the current temperature of the HeatContainer
-        primaryGroup.addWidget(new LabelWidget(15, 46, String.format("Current temperature: %d K", getHeatContainerTemperature()), TextFormatting.BLACK));
-
-        ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 176, 184 + 82)
-                .widget(primaryGroup)
-                .bindPlayerInventory(player.inventory, GuiTextures.SLOT, 7, 184);
-        return buildUI(builder, player);
+        return createUIHelper(player);
     }
 
     private void setInverted() {
         this.isInverted = !this.isInverted;
         if (!this.coverHolder.getWorld().isRemote) {
-            this.coverHolder.writeCoverData(this, 100, b -> b.writeBoolean(this.isInverted));
+            this.coverHolder.writeCoverData(this, 101, b -> b.writeBoolean(this.isInverted));
             this.coverHolder.notifyBlockUpdate();
             this.coverHolder.markDirty();
         }
@@ -145,7 +108,61 @@ public class CoverDetectorTemperature extends CoverBehavior implements ITickable
         }
     }
 
+    @Override
+    public String getUITitle() {
+        return "Temperature Detector";
+    }
 
+    @Override
+    public int getThreshold() {
+        return this.temperatureThreshold;
+    }
+
+    @Override
+    public void setThreshold(int threshold) {
+        this.temperatureThreshold = threshold;
+        coverHolder.markDirty();
+    }
+
+    @Override
+    public void adjustThreshold(int amount) {
+        setThreshold(MathHelper.clamp(getThreshold() + amount, 1, MAX_TEMPERATURE));
+    }
+
+    @Override
+    public String getCurrentMeasureText() {
+        return "Current temperature: %d %s";
+    }
+
+    @Override
+    public int getMaxMeasure() {
+        return MAX_TEMPERATURE;
+    }
+
+    @Override
+    public int getContainerMeasure() {
+        return this.getHeatContainerTemperature();
+    }
+
+    @Override
+    public Supplier<String> convertThresholdToString() {
+        return () -> Integer.toString(getThreshold());
+    }
+
+    @Override
+    public Consumer<String> setThresholdFromString() {
+        return val -> setThreshold(Integer.parseInt(val));
+    }
+
+    @Override
+    public ModularUI buildUI(ModularUI.Builder builder, EntityPlayer player) {
+        return builder.build(this, player);
+    }
+
+    @Override
+    public String getUnit() {
+        return KELVIN;
+    }
 
     @Override
     public boolean canConnectRedstone() {

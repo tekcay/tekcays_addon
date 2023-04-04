@@ -24,6 +24,7 @@ tkcya.machine.electric_casting_table.ev.tooltip=Air speeds up the recipe by §a4
 tkcya.machine.electric_casting_table.iv.tooltip=Air speeds up the recipe by §a40%§7
 
 tkcya.machine.pressure_controller.tooltip.1=Outputs a redstone signal with respect of pressure value
+tkcya.machine.pressure_controller.message=Sets threshold mode to %s
 
 tkcya.machine.casting_table.tooltip=Air speeds up the recipe by §e20%§7
 
