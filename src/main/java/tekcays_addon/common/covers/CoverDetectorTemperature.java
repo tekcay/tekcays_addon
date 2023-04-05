@@ -8,9 +8,7 @@ import codechicken.lib.vec.Matrix4;
 import gregtech.api.cover.CoverBehavior;
 import gregtech.api.cover.CoverWithUI;
 import gregtech.api.cover.ICoverable;
-import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
-import gregtech.api.gui.widgets.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -18,13 +16,15 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.common.capabilities.Capability;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
+import tekcays_addon.api.consts.DetectorModes;
 import tekcays_addon.api.metatileentity.gui.MetaTileEntityGuiHandler;
 import tekcays_addon.api.render.TKCYATextures;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.function.Consumer;
-import java.util.function.IntConsumer;
 import java.util.function.Supplier;
 
 import static tekcays_addon.api.consts.UnitSymbol.KELVIN;
@@ -35,10 +35,12 @@ public class CoverDetectorTemperature extends CoverBehavior implements ITickable
     private boolean isInverted;
     private int temperatureThreshold;
     private final int MAX_TEMPERATURE = 10_000;
+    private DetectorModes detectorModes;
 
     public CoverDetectorTemperature(ICoverable coverHolder, EnumFacing attachedSide) {
         super(coverHolder, attachedSide);
         this.isInverted = false;
+        this.detectorModes = DetectorModes.HIGHER;
     }
 
     @Override
@@ -56,9 +58,11 @@ public class CoverDetectorTemperature extends CoverBehavior implements ITickable
 
         if (this.isInverted) {
             this.setInverted();
+            this.detectorModes = DetectorModes.LOWER;
             playerIn.sendMessage(new TextComponentTranslation("tkcya.cover.temperature_detector.message_temperature_storage_normal"));
         } else {
             this.setInverted();
+            this.detectorModes = DetectorModes.HIGHER;
             playerIn.sendMessage(new TextComponentTranslation("tkcya.cover.temperature_detector.message_temperature_storage_inverted"));
         }
     }
@@ -160,8 +164,13 @@ public class CoverDetectorTemperature extends CoverBehavior implements ITickable
     }
 
     @Override
-    public String getUnit() {
+    public String getUnitSymbol() {
         return KELVIN;
+    }
+
+    @Override
+    public DetectorModes getCurrentDetectorMode() {
+        return this.detectorModes;
     }
 
     @Override

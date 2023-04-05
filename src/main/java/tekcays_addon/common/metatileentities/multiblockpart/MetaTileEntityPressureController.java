@@ -58,16 +58,12 @@ public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPa
         return new MetaTileEntityPressureController(metaTileEntityId);
     }
 
-    DetectorModes getDetectorMode() {
-        return this.pressureControl.getDetectorMode();
-    }
-
     @Override
     public void update() {
         super.update();
         if (getOffsetTimer() % 20 == 0) {
             this.currentPressure = pressureControl.getPressure();
-            switch (getDetectorMode()) {
+            switch (getCurrentDetectorMode()) {
                 case EQUAL:
                     if (currentPressure == getPressureThresholdInBar()) turnRedstoneSignalOn();
                     else turnRedstoneSignalOff();
@@ -111,7 +107,7 @@ public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPa
 
     @Override
     public boolean onScrewdriverClick(EntityPlayer playerIn, EnumHand hand, EnumFacing facing, CuboidRayTraceResult hitResult) {
-        switch (getDetectorMode()) {
+        switch (getCurrentDetectorMode()) {
             case EQUAL:
                 return setDetectorModeAndSendMessage(LOWER, playerIn);
             case LOWER:
@@ -204,8 +200,13 @@ public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPa
     }
 
     @Override
-    public String getUnit() {
+    public String getUnitSymbol() {
         return BAR;
+    }
+
+    @Override
+    public DetectorModes getCurrentDetectorMode() {
+        return this.pressureControl.getDetectorMode();
     }
 
     @Nonnull

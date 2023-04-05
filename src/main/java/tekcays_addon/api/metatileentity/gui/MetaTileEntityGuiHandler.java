@@ -5,6 +5,7 @@ import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextFormatting;
+import tekcays_addon.api.consts.DetectorModes;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -17,16 +18,28 @@ public interface MetaTileEntityGuiHandler {
     void adjustThreshold(int amount);
 
     /**
-     * Must finish by {@code < %d %s >}.
-     * @return
+     * Description of the current measure. Must finish by {@code < %d %s >}.
+     * @return the description as a {@link String}
      */
     String getCurrentMeasureText();
+
+    /**
+     * The max value the threshold can reach.
+     * @return this max value as an {@code int}.
+     */
     int getMaxMeasure();
+
+    /**
+     * The current value of the container.
+     * @return this value as an {@code int}.
+     */
     int getContainerMeasure();
+
     Supplier<String> convertThresholdToString();
     Consumer<String> setThresholdFromString();
     ModularUI buildUI(ModularUI.Builder builder, EntityPlayer player);
-    String getUnit();
+    String getUnitSymbol();
+    DetectorModes getCurrentDetectorMode();
 
     default ModularUI createUIHelper(EntityPlayer player) {
         WidgetGroup primaryGroup = new WidgetGroup();
@@ -47,15 +60,18 @@ public interface MetaTileEntityGuiHandler {
                 .setMaxLength(5);
         primaryGroup.addWidget(textFieldWidget);
 
-        //Prints Kelvin symbol
-        primaryGroup.addWidget(new LabelWidget(115, 26, getUnit(), TextFormatting.BLACK));
+        //Prints the unit symbol
+        primaryGroup.addWidget(new LabelWidget(115, 26, getUnitSymbol(), TextFormatting.BLACK));
 
-        //Prints the current temperature of the HeatContainer
-        primaryGroup.addWidget(new LabelWidget(15, 46, String.format(getCurrentMeasureText(), getContainerMeasure(), getUnit()), TextFormatting.BLACK));
+        //Prints the current measure of the container
+        primaryGroup.addWidget(new LabelWidget(15, 46, String.format(getCurrentMeasureText(), getContainerMeasure(), getUnitSymbol()), TextFormatting.BLACK));
 
-        ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 176, 184 + 82)
+        //Prints the current detector mode
+        primaryGroup.addWidget(new LabelWidget(15, 66, DetectorModes.showDetectorModeText(getCurrentDetectorMode()), TextFormatting.BLACK));
+
+        ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 176, 104 + 82)
                 .widget(primaryGroup)
-                .bindPlayerInventory(player.inventory, GuiTextures.SLOT, 7, 184);
+                .bindPlayerInventory(player.inventory, GuiTextures.SLOT, 7, 104);
         return buildUI(builder, player);
     }
 
