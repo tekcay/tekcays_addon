@@ -5,21 +5,22 @@ import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
 import gregtech.api.gui.ModularUI;
+import gregtech.api.metatileentity.IDataInfoProvider;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -38,9 +39,10 @@ import java.util.function.Supplier;
 
 import static tekcays_addon.api.consts.DetectorModes.*;
 import static tekcays_addon.api.consts.UnitSymbol.BAR;
+import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
 import static tekcays_addon.api.utils.TKCYAValues.MAX_PRESSURE;
 
-public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IPressureControl>, MetaTileEntityGuiHandler {
+public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IPressureControl>, MetaTileEntityGuiHandler, IDataInfoProvider {
 
     private IPressureControl pressureControl;
     private long pressureThreshold;
@@ -65,7 +67,34 @@ public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPa
         super.update();
         if (getOffsetTimer() % 20 == 0) {
             this.currentPressure = pressureControl.getPressure();
+            switch (getDetectorMode()) {
+                case EQUAL:
+                    if (currentPressure == getPressureThresholdInBar()) turnRedstoneSignalOn();
+                    else turnRedstoneSignalOff();
+                    break;
+                case LOWER:
+                    if (currentPressure < getPressureThresholdInBar()) turnRedstoneSignalOn();
+                    else turnRedstoneSignalOff();
+                    break;
+                case HIGHER:
+                    if (currentPressure > getPressureThresholdInBar()) turnRedstoneSignalOn();
+                    else turnRedstoneSignalOff();
+                    break;
+                default:
+            }
         }
+    }
+
+    private int getPressureThresholdInBar() {
+        return (int) (this.pressureThreshold * ATMOSPHERIC_PRESSURE);
+    }
+
+    private void turnRedstoneSignalOn() {
+        this.setOutputRedstoneSignal(getFrontFacing(), 12);
+    }
+
+    private void turnRedstoneSignalOff() {
+        this.setOutputRedstoneSignal(getFrontFacing(), 0);
     }
 
     @Override
@@ -141,7 +170,7 @@ public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPa
 
     @Override
     public void adjustThreshold(int amount) {
-        setThreshold((int) MathHelper.clamp(pressureThreshold + amount, 1, MAX_PRESSURE));
+        setThreshold((int) MathHelper.clamp(pressureThreshold + amount, 0, MAX_PRESSURE));
     }
 
     @Override
@@ -177,5 +206,14 @@ public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPa
     @Override
     public String getUnit() {
         return BAR;
+    }
+
+    @Nonnull
+    @Override
+    public List<ITextComponent> getDataInfo() {
+        List<ITextComponent> list = new ObjectArrayList<>();
+        list.add(new TextComponentTranslation("behavior.tricorder.current_pressure", currentPressure));
+        list.add(new TextComponentTranslation("behavior.tricorder.pressureThreshold", pressureThreshold));
+        return list;
     }
 }

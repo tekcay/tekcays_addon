@@ -581,8 +581,9 @@ behavior.tricorder.heatMultiplier=Heat Multiplier: %d
 behavior.tricorder.can_ignite=Can ignite: %s
 behavior.tricorder.is_burning=Is burning: %s
 
-behavior.tricorder.burn_time_left= Burn Time Left %s ticks
-
+behavior.tricorder.burn_time_left=Burn Time Left %s ticks
+behavior.tricorder.current_pressure=Pressure: %d bar
+behavior.tricorder.pressureThreshold=PressureThreshol: %d bar
 behavior.tricorder.fluid.amount=Fluid amount: %d L
 behavior.tricorder.fluid.name=Fluid name: %s
 behavior.tricorder.air.amount=Air amount: %d L
