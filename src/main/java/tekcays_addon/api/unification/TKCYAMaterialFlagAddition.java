@@ -53,6 +53,10 @@ public class TKCYAMaterialFlagAddition {
         }
 
         Invar.addFlags(GENERATE_ROTOR);
+
+        //Springs
+        StainlessSteel.addFlags(GENERATE_SPRING);
+        Titanium.addFlags(GENERATE_SPRING);
     }
 
     public static void polymersInit() {

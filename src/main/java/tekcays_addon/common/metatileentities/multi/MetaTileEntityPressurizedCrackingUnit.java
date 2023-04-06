@@ -22,9 +22,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.capability.IHeatContainer;
 import tekcays_addon.api.capability.IPressureContainer;
+import tekcays_addon.api.capability.IPressureControl;
 import tekcays_addon.api.capability.impl.HeatContainerList;
 import tekcays_addon.api.metatileentity.multiblock.HeatedPressureContainerMultiblockController;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
+import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.api.utils.recipe.PressureContainerCheckRecipeHelper;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 import tekcays_addon.api.utils.IPressureFormatting;
@@ -35,6 +37,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 import static tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility.*;
+import static tekcays_addon.api.utils.TKCYAValues.*;
 
 
 public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContainerMultiblockController implements PressureContainerCheckRecipeHelper, IPressureFormatting {
@@ -42,15 +45,15 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     private int coilTier;
     private IHeatContainer heatContainer;
     private IPressureContainer pressureContainer;
+    private IPressureControl pressureControl;
     private int volume;
-    private int currentTemp;
-    private long currentPressure;
+    private int currentTemp = ROOM_TEMPERATURE;
+    private long currentPressure = ATMOSPHERIC_PRESSURE;
     private int currentHeat;
 
     public MetaTileEntityPressurizedCrackingUnit(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.PRESSURE_CRACKING);
         this.volume = 1;
-        //this.currentTemp = ROOM_TEMPERATURE;
         this.initializeAbilities();
         //this.initializePressureContainer();
     }
@@ -121,8 +124,15 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     }
 
     private void updateLogic() {
-        heatContainer = new HeatContainerList(getAbilities(TKCYAMultiblockAbility.HEAT_CONTAINER));
-        pressureContainer = getPressureContainer();
+
+        this.pressureContainer = getPressureContainer();
+        this.pressureControl = getPressureControl();
+        this.heatContainer = getHeatContainer();
+
+        if (getOffsetTimer() % 20 == 0) {
+            if (pressureControl != null) pressureControl.setPressure(currentPressure);
+        }
+
         if (pressureContainer == null) return;
         currentPressure = pressureContainer.getPressure();
 
@@ -133,13 +143,7 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     }
 
     private void actualizeTemperature() {
-        heatContainer.setTemperature(TKCYAValues.ROOM_TEMPERATURE + currentHeat / (20));
-    }
-
-    @Override
-    public IPressureContainer getPressureContainer() {
-        List<IPressureContainer> list = getAbilities(PRESSURE_CONTAINER);
-        return list.isEmpty() ? null : list.get(0);
+        heatContainer.setTemperature(ROOM_TEMPERATURE + currentHeat / (20));
     }
 
     @Nonnull

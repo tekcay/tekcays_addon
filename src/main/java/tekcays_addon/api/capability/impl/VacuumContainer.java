@@ -9,14 +9,12 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.capability.IVacuumContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
-import tekcays_addon.api.utils.TKCYALog;
-import tekcays_addon.api.utils.TKCYAValues;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.io.IOException;
 
 import static tekcays_addon.api.consts.DataIds.AIR_FLUID_STACK;
+import static tekcays_addon.api.consts.NBTKeys.PRESSURE_KEY;
 import static tekcays_addon.api.utils.TKCYAValues.ROOM_TEMPERATURE;
 
 public class VacuumContainer extends MTETrait implements IVacuumContainer {
@@ -128,7 +126,7 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = new NBTTagCompound();
-        compound.setLong("pressure", this.pressure);
+        compound.setLong(PRESSURE_KEY, this.pressure);
         compound.setInteger("volume", this.volume);
         //compound.setTag(AIR_FLUID_STACK.getName(), this.setAirFluidStackNBT());
         compound.setInteger("airAmount", this.getAirAmount());
@@ -138,7 +136,7 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
     @Override
     public void deserializeNBT(@Nonnull NBTTagCompound compound) {
         super.deserializeNBT(compound);
-        this.pressure = compound.getLong("pressure");
+        this.pressure = compound.getLong(PRESSURE_KEY);
         this.volume = compound.getInteger("volume");
         this.airFluidStack = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag(AIR_FLUID_STACK.getName()));
         this.airFluidStack = Materials.Air.getFluid(compound.getInteger("airAmount"));
