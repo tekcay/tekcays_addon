@@ -108,7 +108,6 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityPressureController PRESSURE_CONTROLLER;
 
 
-
     //Tanks
     public static TKCYAMetaTileEntityMultiblockTank WOODEN_TANK;
     public static TKCYAMetaTileEntityMultiblockTank STEEL_TANK;
@@ -324,8 +323,7 @@ public class TKCYAMetaTileEntities {
 
         startId += MAX_TIER * 5 + 1;
 
-        PRESSURE_CONTROLLER = registerMetaTileEntity(startId++, new MetaTileEntityPressureController(tkcyaId("pressure_controller")));
-
+        PRESSURE_CONTROLLER = registerMetaTileEntity(startId++, new MetaTileEntityPressureController(tkcyaId("pressure_controller_lv")));
 
     }
 

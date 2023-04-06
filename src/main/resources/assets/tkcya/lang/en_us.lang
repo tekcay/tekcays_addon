@@ -43,7 +43,7 @@ tkcya.machine.electric_cooler.hv.name=Electric Cooler HV
 tkcya.machine.electric_cooler.ev.name=Electric Cooler EV
 tkcya.machine.electric_cooler.iv.name=Electric Cooler IV
 
-tkcya.machine.pressure_controller.name=Pressure Controller
+tkcya.machine.pressure_controller_lv.name=Pressure Controller LV
 
 tkcya.machine.brick_solid_fuel_heater.name=Brick Solid Fuel Heater
 tkcya.machine.material.bronze_solid_fuel_heater.name=Bronze Solid Fuel Heater
