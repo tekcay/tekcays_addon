@@ -4,8 +4,8 @@ import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
 import gregtech.api.capability.IActiveOutputSide;
-import gregtech.api.capability.impl.FilteredFluidHandler;
 import gregtech.api.capability.impl.FluidTankList;
+import gregtech.api.capability.impl.NotifiableFluidTank;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.LabelWidget;
@@ -16,12 +16,8 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidTank;
 import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.metatileentity.FuelHeater;
@@ -31,18 +27,18 @@ import tekcays_addon.api.utils.FuelHeaterTiers;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
-import static gregtech.api.unification.material.Materials.Calcite;
-import static tekcays_addon.api.utils.FuelWithProperties.CALCITE;
 import static tekcays_addon.api.utils.FuelWithProperties.CREOSOTE;
 import static tekcays_addon.api.utils.HeatersMethods.getBurnTime;
 import static tekcays_addon.api.utils.HeatersMethods.isThereEnoughLiquidFuel;
 
 public class MetaTileEntityLiquidFuelHeater extends FuelHeater implements IDataInfoProvider, IActiveOutputSide {
 
+    protected IFluidTank importFluidTank;
+
     public MetaTileEntityLiquidFuelHeater(ResourceLocation metaTileEntityId, FuelHeaterTiers fuelHeater) {
         super(metaTileEntityId, fuelHeater);
         this.heatIncreaseRate = setHeatIncreaseRate(8);
+        this.importFluidTank = new NotifiableFluidTank(1000, this, false);
         initializeInventory();
     }
 
@@ -55,14 +51,13 @@ public class MetaTileEntityLiquidFuelHeater extends FuelHeater implements IDataI
     @Override
     protected void initializeInventory() {
         super.initializeInventory();
-        this.importFluids = this.createImportFluidHandler();
         this.heatContainer = new HeatContainer(this, 0, 20 * heatIncreaseRate);
     }
 
-
     @Override
-    protected FluidTankList createImportFluidHandler() {
-        return new FluidTankList(false, new FluidTank(1000));
+    public FluidTankList createImportFluidHandler() {
+        this.importFluidTank = new NotifiableFluidTank(1000, this, false);
+        return new FluidTankList(false, importFluidTank);
     }
 
     @Override
@@ -74,7 +69,7 @@ public class MetaTileEntityLiquidFuelHeater extends FuelHeater implements IDataI
         return ModularUI.builder(GuiTextures.BACKGROUND, 176, 166)
                 .shouldColor(false)
                 .widget(new LabelWidget(5, 5, getMetaFullName()))
-                .widget(new TankWidget(importFluids.getTankAt(0), 20, 50, 18, 18)
+                .widget(new TankWidget(importFluidTank, 20, 50, 18, 18)
                         .setBackgroundTexture(GuiTextures.FLUID_SLOT)
                         .setAlwaysShowFull(true)
                         .setContainerClicking(true, true))
