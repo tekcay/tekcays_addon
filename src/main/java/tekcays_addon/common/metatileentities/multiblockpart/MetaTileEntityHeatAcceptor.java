@@ -37,8 +37,9 @@ import static tekcays_addon.api.utils.TKCYAValues.VERTICALS;
 public class MetaTileEntityHeatAcceptor extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IHeatContainer>, IDataInfoProvider {
 
     private final IHeatContainer heatContainer;
-    private final int coolingRate = 10 * getTier() * getTier();
-    private final int heatCapacity = getTier() * getTier() * 20000;
+    private final int tierMultiplier = (getTier() + 1) * (getTier() + 1);
+    private final int coolingRate = 10 * tierMultiplier;
+    private final int heatCapacity = tierMultiplier * 20000;
 
     public MetaTileEntityHeatAcceptor(@Nonnull ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
