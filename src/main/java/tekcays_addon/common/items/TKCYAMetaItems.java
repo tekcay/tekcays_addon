@@ -28,6 +28,13 @@ public final class TKCYAMetaItems {
     //Covers
     public static MetaItem<?>.MetaValueItem COVER_TEMPERATURE_DETECTOR;
 
+    //ULV Components
+    public static MetaItem<?>.MetaValueItem ELECTRIC_MOTOR_ULV;
+    public static MetaItem<?>.MetaValueItem ELECTRIC_PUMP_ULV;
+    public static MetaItem<?>.MetaValueItem PISTON_ULV;
+    public static MetaItem<?>.MetaValueItem CONVEYOR_ULV;
+    public static MetaItem<?>.MetaValueItem ROBOT_ARM_ULV;
+
 
     public static void init() {
         TKCYAMetaItem1 metaItem1 = new TKCYAMetaItem1((short) 0);

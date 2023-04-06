@@ -29,5 +29,12 @@ public class TKCYAMetaItem1 extends StandardMetaItem {
         //Covers
         COVER_TEMPERATURE_DETECTOR = addItem(8, "cover.temperature_detector");
 
+        //ULV Components
+        ELECTRIC_MOTOR_ULV = addItem(9, "electric_motor_ulv");
+        ELECTRIC_PUMP_ULV = addItem(10, "electric_pump_ulv");
+        PISTON_ULV = addItem(11, "piston_ulv");
+        CONVEYOR_ULV = addItem(12, "conveyor_ulv");
+        ROBOT_ARM_ULV = addItem(13, "robot_arm_ulv");
+
     }
 }
