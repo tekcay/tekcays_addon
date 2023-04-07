@@ -378,6 +378,13 @@ metaitem.cover.temperature.detector.tooltip=Emits a redstone signal if the tempe
 
 item.mica_pulp.dust=Mica Based Pulp
 
+#ULV Components
+metaitem.electric_motor_ulv.name=ULV Electric Motor
+metaitem.electric_pump_ulv.name=ULV Electric Pump
+metaitem.piston_ulv.name=ULV Piston
+metaitem.conveyor_ulv.name=ULV Conveyor
+metaitem.robot_arm_ulv.name=ULV Robot Arm
+
 # Ore Prefixes
 
 #Others

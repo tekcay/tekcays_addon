@@ -21,6 +21,7 @@ public class TKCYARecipeLoader {
         TKCYAMetaTileEntityLoader.init();
 
         PressureHandler.init();
+        ULVComponentsHandler.init();
 
         if (miscOverhaul.enableFoilOverhaul) foil.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processFoil);
         if (miscOverhaul.enableHarderRotors) HarderRotorsHandler.init();
