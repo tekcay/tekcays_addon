@@ -2,6 +2,8 @@ package tekcays_addon.api.capability.impl;
 
 import gregtech.api.metatileentity.MTETrait;
 import gregtech.api.metatileentity.MetaTileEntity;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
@@ -15,48 +17,19 @@ import javax.annotation.Nullable;
 import static tekcays_addon.api.consts.NBTKeys.*;
 import static tekcays_addon.api.consts.NetworkIds.PRESSURE_CONTROL;
 
-
+@Getter
+@Setter
 public class PressureControl extends MTETrait implements IPressureControl {
 
     private long thresholdPressure;
     private long pressure;
-    private DetectorModes detectorModes;
+    private DetectorModes detectorMode;
 
     public PressureControl(MetaTileEntity metaTileEntity) {
         super(metaTileEntity);
         this.thresholdPressure = 0;
         this.pressure = 0;
-        this.detectorModes = DetectorModes.EQUAL;
-    }
-
-    @Override
-    public long getThresholdPressure() {
-        return thresholdPressure;
-    }
-
-    @Override
-    public long getPressure() {
-        return pressure;
-    }
-
-    @Override
-    public DetectorModes getDetectorMode() {
-        return detectorModes;
-    }
-
-    @Override
-    public void setThresholdPressure(long thresholdPressure) {
-        this.thresholdPressure = thresholdPressure;
-    }
-
-    @Override
-    public void setPressure(long pressure) {
-        this.pressure = pressure;
-    }
-
-    @Override
-    public void setDetectorMode(DetectorModes detectorModes) {
-        this.detectorModes = detectorModes;
+        this.detectorMode = DetectorModes.EQUAL;
     }
 
     @Override
@@ -83,7 +56,7 @@ public class PressureControl extends MTETrait implements IPressureControl {
         NBTTagCompound compound = super.serializeNBT();
         compound.setLong(THRESHOLD_PRESSURE_KEY, this.thresholdPressure);
         compound.setLong(PRESSURE_KEY, this.pressure);
-        compound.setString(DETECTOR_MODE_KEY, this.detectorModes.name());
+        compound.setString(DETECTOR_MODE_KEY, this.detectorMode.name());
         return compound;
     }
 
@@ -91,7 +64,7 @@ public class PressureControl extends MTETrait implements IPressureControl {
     public void deserializeNBT(@Nonnull NBTTagCompound compound) {
         this.pressure = compound.getLong(PRESSURE_KEY);
         this.thresholdPressure = compound.getLong(THRESHOLD_PRESSURE_KEY);
-        this.detectorModes = DetectorModes.valueOf(compound.getString(DETECTOR_MODE_KEY));
+        this.detectorMode = DetectorModes.valueOf(compound.getString(DETECTOR_MODE_KEY));
     }
 
     @Override
@@ -99,7 +72,7 @@ public class PressureControl extends MTETrait implements IPressureControl {
         super.writeInitialData(buffer);
         buffer.writeLong(this.pressure);
         buffer.writeLong(this.thresholdPressure);
-        buffer.writeString(this.detectorModes.name());
+        buffer.writeString(this.detectorMode.name());
     }
 
     @Override
@@ -107,6 +80,6 @@ public class PressureControl extends MTETrait implements IPressureControl {
         super.receiveInitialData(buffer);
         this.pressure = buffer.readLong();
         this.thresholdPressure = buffer.readLong();
-        this.detectorModes = DetectorModes.valueOf(buffer.readString(6));
+        this.detectorMode = DetectorModes.valueOf(buffer.readString(6));
     }
 }
