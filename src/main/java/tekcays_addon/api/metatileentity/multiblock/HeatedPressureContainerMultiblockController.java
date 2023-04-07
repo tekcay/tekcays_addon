@@ -5,18 +5,25 @@ import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.RecipeMap;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.capability.*;
 import tekcays_addon.api.capability.impl.*;
 
 import java.util.List;
 
 import static tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility.*;
+import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
+import static tekcays_addon.api.utils.TKCYAValues.ROOM_TEMPERATURE;
 
 public abstract class HeatedPressureContainerMultiblockController extends RecipeMapMultiblockController implements IPressureMachine, IHeatMachine, IPressureControlMachine {
 
-    private IPressureContainer pressureContainer;
-    private IHeatContainer heatContainer;
-    private IPressureControl pressureControl;
+    protected IPressureContainer pressureContainer;
+    protected IHeatContainer heatContainer;
+    protected IPressureControl pressureControl;
+    protected int volume;
+    protected int currentTemp = ROOM_TEMPERATURE;
+    protected long currentPressure = ATMOSPHERIC_PRESSURE;
+    protected int currentHeat;
 
     public HeatedPressureContainerMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
         super(metaTileEntityId, recipeMap);
@@ -62,5 +69,41 @@ public abstract class HeatedPressureContainerMultiblockController extends Recipe
     @Override
     public IPressureControl getPressureControl() {
         return this.pressureControl;
+    }
+
+    protected void updateLogic() {
+
+        this.pressureContainer = getPressureContainer();
+        this.pressureControl = getPressureControl();
+        this.heatContainer = getHeatContainer();
+
+        if (getOffsetTimer() % 20 == 0) {
+            if (pressureControl != null) pressureControl.setPressure(currentPressure);
+        }
+
+        if (pressureContainer == null) return;
+        currentPressure = pressureContainer.getPressure();
+
+        if (heatContainer == null) return;
+        currentHeat = heatContainer.getHeat();
+        actualizeTemperature();
+        currentTemp = heatContainer.getTemperature();
+
+        if (recipeMapWorkable.isWorking()) {
+            pressureContainer.changePressurizedFluidStack(getPressurizedFluidStack(), - getPressurizedFluidStackRate());
+        }
+    }
+
+    private FluidStack getPressurizedFluidStack() {
+        return this.pressureContainer.getPressurizedFluidStack();
+    }
+
+    //TODO find a formula
+    private int getPressurizedFluidStackRate() {
+        return (int) (getPressurizedFluidStack().amount * currentPressure);
+    }
+
+    private void actualizeTemperature() {
+        heatContainer.setTemperature(ROOM_TEMPERATURE + currentHeat / (20));
     }
 }
