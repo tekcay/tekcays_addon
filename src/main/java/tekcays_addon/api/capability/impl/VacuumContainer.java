@@ -109,11 +109,6 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
         return "VacuumContainer";
     }
 
-    @Override
-    public int getNetworkID() {
-        return 6;
-    }
-
     @Nullable
     @Override
     public <T> T getCapability(Capability<T> capability) {

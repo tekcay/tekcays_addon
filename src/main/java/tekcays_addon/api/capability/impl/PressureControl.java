@@ -13,8 +13,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import static tekcays_addon.api.consts.NBTKeys.*;
-import static tekcays_addon.api.consts.NetworkIds.PRESSURE_CONTROL;
-
 
 public class PressureControl extends MTETrait implements IPressureControl {
 
@@ -62,11 +60,6 @@ public class PressureControl extends MTETrait implements IPressureControl {
     @Override
     public String getName() {
         return "PressureControl";
-    }
-
-    @Override
-    public int getNetworkID() {
-        return PRESSURE_CONTROL;
     }
 
     @Nullable

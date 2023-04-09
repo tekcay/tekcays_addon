@@ -12,8 +12,6 @@ import tekcays_addon.api.utils.TKCYAValues;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import static tekcays_addon.api.consts.NetworkIds.HEAT;
-
 public class HeatContainer extends MTETrait implements IHeatContainer {
 
     private final int minHeat;
@@ -83,12 +81,6 @@ public class HeatContainer extends MTETrait implements IHeatContainer {
         this.temperature = temperature;
         this.metaTileEntity.markDirty();
     }
-
-    @Override
-    public int getNetworkID() {
-        return HEAT;
-    }
-
     @Nullable
     @Override
     public <T> T getCapability(Capability<T> capability) {
