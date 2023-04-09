@@ -1,6 +1,5 @@
 package tekcays_addon.api.worldgen;
 
-
 import gregtech.api.GTValues;
 import gregtech.api.worldgen.config.BedrockFluidDepositDefinition;
 import gregtech.api.worldgen.config.OreDepositDefinition;
