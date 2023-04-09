@@ -37,11 +37,6 @@ public class PressureControl extends MTETrait implements IPressureControl {
         return "PressureControl";
     }
 
-    @Override
-    public int getNetworkID() {
-        return PRESSURE_CONTROL;
-    }
-
     @Nullable
     @Override
     public <T> T getCapability(Capability<T> capability) {
