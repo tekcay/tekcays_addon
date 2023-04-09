@@ -15,7 +15,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import static tekcays_addon.api.consts.NBTKeys.*;
-import static tekcays_addon.api.consts.NetworkIds.PRESSURE_CONTROL;
 
 @Getter
 @Setter
