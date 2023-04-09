@@ -16,7 +16,6 @@ import javax.annotation.Nullable;
 
 import static tekcays_addon.api.consts.DataIds.PRESSURIZED_FLUID_STACK;
 import static tekcays_addon.api.consts.NBTKeys.PRESSURE_KEY;
-import static tekcays_addon.api.consts.NetworkIds.PRESSURE;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
 public class PressureContainer extends MTETrait implements IPressureContainer, FluidStackHelper {
@@ -131,11 +130,6 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
     @Override
     public String getName() {
         return "PressureContainer";
-    }
-
-    @Override
-    public int getNetworkID() {
-        return PRESSURE;
     }
 
     @Nullable

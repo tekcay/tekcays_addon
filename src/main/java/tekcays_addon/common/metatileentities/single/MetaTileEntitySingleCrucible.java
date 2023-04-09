@@ -241,7 +241,7 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
         }
 
         @Override
-        protected boolean checkRecipe(@Nonnull Recipe recipe) {
+        public boolean checkRecipe(@Nonnull Recipe recipe) {
             if (!recipe.hasProperty(NoEnergyTemperatureProperty.getInstance())) return false;
             recipeTemp = recipe.getProperty(NoEnergyTemperatureProperty.getInstance(), 0);
             //numberItem = recipe.getInputs().size();
