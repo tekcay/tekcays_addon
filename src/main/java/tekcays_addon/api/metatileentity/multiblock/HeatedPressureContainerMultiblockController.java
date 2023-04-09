@@ -4,6 +4,7 @@ import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.RecipeMap;
+import lombok.Getter;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.api.capability.*;
 import tekcays_addon.api.capability.impl.*;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import static tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility.*;
 
+@Getter
 public abstract class HeatedPressureContainerMultiblockController extends RecipeMapMultiblockController implements IPressureMachine, IHeatMachine, IPressureControlMachine {
 
     private IPressureContainer pressureContainer;
@@ -49,18 +51,5 @@ public abstract class HeatedPressureContainerMultiblockController extends Recipe
         return predicate;
     }
 
-    @Override
-    public IPressureContainer getPressureContainer() {
-        return this.pressureContainer;
-    }
 
-    @Override
-    public IHeatContainer getHeatContainer() {
-        return this.heatContainer;
-    }
-
-    @Override
-    public IPressureControl getPressureControl() {
-        return this.pressureControl;
-    }
 }
