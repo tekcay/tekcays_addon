@@ -2,6 +2,9 @@ package tekcays_addon.api.capability.impl;
 
 import gregtech.api.metatileentity.MTETrait;
 import gregtech.api.metatileentity.MetaTileEntity;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
@@ -18,13 +21,21 @@ import static tekcays_addon.api.consts.DataIds.PRESSURIZED_FLUID_STACK;
 import static tekcays_addon.api.consts.NBTKeys.PRESSURE_KEY;
 import static tekcays_addon.api.utils.TKCYAValues.*;
 
+@Getter
+@Setter
 public class PressureContainer extends MTETrait implements IPressureContainer, FluidStackHelper {
 
+    @Setter(AccessLevel.NONE)
     protected int volume;
+
+    @Setter(AccessLevel.NONE)
     protected long pressure;
+
+    @Setter(AccessLevel.NONE)
+    private FluidStack pressurizedFluidStack;
+
     protected long minPressure;
     protected long maxPressure;
-    private FluidStack pressurizedFluidStack;
 
     /**
      * Default Pressure container
@@ -43,16 +54,6 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
         this.minPressure = minPressure;
         this.maxPressure = maxPressure;
     }
-    @Override
-    public long getMaxPressure() {
-        return this.maxPressure;
-    }
-
-    @Override
-    public long getMinPressure() {
-        return this.minPressure;
-    }
-
 
     @Override
     public int changePressurizedFluidStack(FluidStack fluidStack, int amount) {
@@ -72,26 +73,6 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
         }
 
         return changed;
-    }
-
-    @Override
-    public long getPressure() {
-        return this.pressure;
-    }
-
-    @Override
-    public boolean canHandleVacuum() {
-        return false;
-    }
-
-    @Override
-    public int getVolume() {
-        return this.volume;
-    }
-
-    @Override
-    public FluidStack getPressurizedFluidStack() {
-        return this.pressurizedFluidStack;
     }
 
     @Override
@@ -128,6 +109,12 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
     }
 
     @Override
+    public boolean canHandleVacuum() {
+        return false;
+    }
+
+    @Nonnull
+    @Override
     public String getName() {
         return "PressureContainer";
     }
@@ -142,6 +129,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
     }
 
 
+    @Nonnull
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = super.serializeNBT();
@@ -158,13 +146,13 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
     }
 
     @Override
-    public void writeInitialData(PacketBuffer buffer) {
+    public void writeInitialData(@Nonnull PacketBuffer buffer) {
         super.writeInitialData(buffer);
         buffer.writeLong(this.pressure);
     }
 
     @Override
-    public void receiveInitialData(PacketBuffer buffer) {
+    public void receiveInitialData(@Nonnull PacketBuffer buffer) {
         super.receiveInitialData(buffer);
         this.pressure = buffer.readLong();
     }
