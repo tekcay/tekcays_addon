@@ -18,12 +18,16 @@ public class TKCYATileCapabilities {
     @CapabilityInject(IPressureControl.class)
     public static Capability<IPressureControl> CAPABILITY_PRESSURE_CONTROL = null;
 
+    @CapabilityInject(IRotationContainer.class)
+    public static Capability<IRotationContainer> CAPABILITY_ROTATIONAL_CONTAINER = null;
+
 
     public static void init() {
         SimpleCapabilityManager.registerCapabilityWithNoDefault(IHeatContainer.class);
         SimpleCapabilityManager.registerCapabilityWithNoDefault(IVacuumContainer.class);
         SimpleCapabilityManager.registerCapabilityWithNoDefault(IPressureContainer.class);
         SimpleCapabilityManager.registerCapabilityWithNoDefault(IPressureControl.class);
+        SimpleCapabilityManager.registerCapabilityWithNoDefault(IRotationContainer.class);
     }
 
 }

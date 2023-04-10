@@ -1,0 +1,88 @@
+package tekcays_addon.api.capability.impl;
+
+import gregtech.api.metatileentity.MTETrait;
+import gregtech.api.metatileentity.MetaTileEntity;
+import lombok.Getter;
+import lombok.Setter;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.common.capabilities.Capability;
+import tekcays_addon.api.capability.IRotationContainer;
+import tekcays_addon.api.capability.NBTHelper;
+import tekcays_addon.api.capability.ParameterHelper;
+import tekcays_addon.api.capability.TKCYATileCapabilities;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
+@Setter
+public class RotationContainer extends MTETrait implements IRotationContainer, NBTHelper {
+
+    private int speed;
+    private int torque;
+    private int power;
+    private int maxSpeed;
+    private int minTorque;
+    private int maxTorque;
+    private int maxPower;
+
+    public RotationContainer(@Nonnull MetaTileEntity metaTileEntity) {
+        super(metaTileEntity);
+    }
+
+    @Nonnull
+    @Override
+    public String getName() {
+        return "RotationContainer";
+    }
+
+    @Nullable
+    @Override
+    public <T> T getCapability(Capability<T> capability) {
+        if (capability == TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER) {
+            return TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER.cast(this);
+        }
+        return null;
+    }
+
+    @Nonnull
+    @Override
+    public NBTTagCompound serializeNBT() {
+        NBTTagCompound compound = super.serializeNBT();
+        return serializeNBTHelper(compound);
+    }
+
+    @Override
+    public void deserializeNBT(@Nonnull NBTTagCompound compound) {
+        deserializeNBTHelper(compound);
+    }
+
+    @Override
+    public void writeInitialData(@Nonnull PacketBuffer buffer) {
+        super.writeInitialData(buffer);
+        writeInitialDataHelper(buffer);
+    }
+
+    @Override
+    public void receiveInitialData(@Nonnull PacketBuffer buffer) {
+        super.receiveInitialData(buffer);
+        receiveInitialDataHelper(buffer);
+    }
+    
+    @Override
+    public List<ParameterHelper<Integer>> getAllIntValues() {
+        List<ParameterHelper<Integer>> parametersValues = new ArrayList<>();
+        parametersValues.add(new ParameterHelper<>("speed", speed, this::setSpeed));
+        parametersValues.add(new ParameterHelper<>("torque", torque, this::setTorque));
+        parametersValues.add(new ParameterHelper<>("power", power, this::setPower));
+        parametersValues.add(new ParameterHelper<>("maxSpeed", maxSpeed, this::setMaxSpeed));
+        parametersValues.add(new ParameterHelper<>("minTorque", minTorque, this::setMinTorque));
+        parametersValues.add(new ParameterHelper<>("maxTorque", maxTorque, this::setMaxTorque));
+        parametersValues.add(new ParameterHelper<>("maxPower", maxPower, this::setMaxPower));
+        return parametersValues;
+    }
+}
