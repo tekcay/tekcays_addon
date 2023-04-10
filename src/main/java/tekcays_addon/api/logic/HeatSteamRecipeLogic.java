@@ -1,14 +1,13 @@
-package tekcays_addon.api.capability.impl;
+package tekcays_addon.api.logic;
 
 import gregtech.api.capability.impl.RecipeLogicSteam;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMap;
-import gregtech.common.ConfigHolder;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.IFluidTank;
-import tekcays_addon.api.capability.IHeatContainer;
-import tekcays_addon.api.capability.IHeatMachine;
+import tekcays_addon.api.capability.containers.IHeatContainer;
+import tekcays_addon.api.capability.machines.IHeatMachine;
 import tekcays_addon.api.recipes.recipeproperties.HeatProperty;
 
 import javax.annotation.Nonnull;

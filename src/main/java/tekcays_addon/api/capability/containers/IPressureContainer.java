@@ -1,10 +1,7 @@
-package tekcays_addon.api.capability;
+package tekcays_addon.api.capability.containers;
 
 
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-
-import javax.annotation.Nullable;
 
 import static tekcays_addon.api.utils.TKCYAValues.*;
 

@@ -18,7 +18,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import tekcays_addon.api.capability.impl.NoEnergyMultiblockLogic;
+import tekcays_addon.api.logic.NoEnergyMultiblockLogic;
 import tekcays_addon.api.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 

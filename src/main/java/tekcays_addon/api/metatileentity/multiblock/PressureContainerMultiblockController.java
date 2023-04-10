@@ -4,10 +4,10 @@ import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.RecipeMap;
 import net.minecraft.util.ResourceLocation;
-import tekcays_addon.api.capability.IPressureContainer;
-import tekcays_addon.api.capability.IPressureMachine;
+import tekcays_addon.api.capability.containers.IPressureContainer;
+import tekcays_addon.api.capability.machines.IPressureMachine;
 import tekcays_addon.api.capability.impl.PressureContainer;
-import tekcays_addon.api.capability.impl.PressureContainerMultiblockRecipeLogic;
+import tekcays_addon.api.logic.PressureContainerMultiblockRecipeLogic;
 import tekcays_addon.api.utils.TKCYAValues;
 
 import java.util.List;

@@ -2,26 +2,19 @@ package tekcays_addon.common.metatileentities.single;
 
 import gregtech.api.GTValues;
 import gregtech.api.capability.GregtechTileCapabilities;
-import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.IFluidTank;
-import tekcays_addon.api.capability.IVacuumContainer;
+import tekcays_addon.api.capability.containers.IVacuumContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.metatileentity.ElectricPressureCompressor;
 import tekcays_addon.api.utils.IPressureVacuum;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.List;
-
-import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
 
 public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor implements IPressureVacuum<IVacuumContainer> {
 

@@ -30,7 +30,7 @@ import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.apache.commons.lang3.ArrayUtils;
-import tekcays_addon.api.capability.IVacuumContainer;
+import tekcays_addon.api.capability.containers.IVacuumContainer;
 
 import javax.annotation.Nullable;
 import java.util.List;

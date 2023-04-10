@@ -4,13 +4,10 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidTank;
-import tekcays_addon.api.capability.IPressureContainer;
-import tekcays_addon.api.capability.IVacuumContainer;
+import tekcays_addon.api.capability.containers.IPressureContainer;
+import tekcays_addon.api.capability.containers.IVacuumContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
-import tekcays_addon.api.capability.impl.VacuumContainer;
 
 
 import static codechicken.lib.util.ClientUtils.getWorld;

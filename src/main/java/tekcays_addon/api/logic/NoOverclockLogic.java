@@ -1,4 +1,4 @@
-package tekcays_addon.api.capability.impl;
+package tekcays_addon.api.logic;
 
 import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;

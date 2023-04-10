@@ -6,8 +6,13 @@ import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.RecipeMap;
 import lombok.Getter;
 import net.minecraft.util.ResourceLocation;
-import tekcays_addon.api.capability.*;
-import tekcays_addon.api.capability.impl.*;
+import tekcays_addon.api.capability.containers.IHeatContainer;
+import tekcays_addon.api.capability.containers.IPressureContainer;
+import tekcays_addon.api.capability.containers.IPressureControl;
+import tekcays_addon.api.capability.list.HeatContainerList;
+import tekcays_addon.api.capability.machines.IHeatMachine;
+import tekcays_addon.api.capability.machines.IPressureControlMachine;
+import tekcays_addon.api.capability.machines.IPressureMachine;
 
 import java.util.List;
 

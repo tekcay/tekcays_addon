@@ -1,4 +1,6 @@
-package tekcays_addon.api.capability;
+package tekcays_addon.api.capability.machines;
+
+import tekcays_addon.api.capability.containers.IHeatContainer;
 
 public interface IHeatMachine {
 

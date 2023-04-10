@@ -4,10 +4,10 @@ import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.RecipeMap;
 import net.minecraft.util.ResourceLocation;
-import tekcays_addon.api.capability.IHeatContainer;
-import tekcays_addon.api.capability.IHeatMachine;
+import tekcays_addon.api.capability.containers.IHeatContainer;
+import tekcays_addon.api.capability.machines.IHeatMachine;
 import tekcays_addon.api.capability.impl.HeatContainer;
-import tekcays_addon.api.capability.impl.HeatContainerMultiblockRecipeLogic;
+import tekcays_addon.api.logic.HeatContainerMultiblockRecipeLogic;
 
 import java.util.List;
 

@@ -33,7 +33,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.Pair;
-import tekcays_addon.api.capability.IHeatContainer;
+import tekcays_addon.api.capability.containers.IHeatContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.render.TKCYATextures;

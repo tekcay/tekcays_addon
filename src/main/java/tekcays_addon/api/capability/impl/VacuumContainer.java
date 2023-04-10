@@ -7,7 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
-import tekcays_addon.api.capability.IVacuumContainer;
+import tekcays_addon.api.capability.containers.IVacuumContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 
 import javax.annotation.Nonnull;

@@ -8,7 +8,7 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
-import tekcays_addon.api.capability.IPressureContainer;
+import tekcays_addon.api.capability.containers.IPressureContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.metatileentity.ElectricPressureCompressor;
 import tekcays_addon.api.utils.PressureContainerHandler;

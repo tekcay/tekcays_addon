@@ -7,7 +7,7 @@ import lombok.Setter;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
-import tekcays_addon.api.capability.IRotationContainer;
+import tekcays_addon.api.capability.containers.IRotationContainer;
 import tekcays_addon.api.capability.NBTHelper;
 import tekcays_addon.api.capability.ParameterHelper;
 import tekcays_addon.api.capability.TKCYATileCapabilities;

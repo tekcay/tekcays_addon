@@ -3,6 +3,7 @@ package tekcays_addon.api.capability;
 import gregtech.api.capability.SimpleCapabilityManager;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
+import tekcays_addon.api.capability.containers.*;
 
 public class TKCYATileCapabilities {
 

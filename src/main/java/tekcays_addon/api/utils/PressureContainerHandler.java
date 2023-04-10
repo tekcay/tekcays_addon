@@ -2,9 +2,7 @@ package tekcays_addon.api.utils;
 
 import gregtech.api.capability.impl.FluidTankList;
 import net.minecraftforge.fluids.FluidStack;
-import tekcays_addon.api.capability.IPressureContainer;
-
-import static tekcays_addon.api.utils.TKCYAValues.NO_FLUID;
+import tekcays_addon.api.capability.containers.IPressureContainer;
 
 public interface PressureContainerHandler {
 

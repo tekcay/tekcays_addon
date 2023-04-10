@@ -1,11 +1,11 @@
-package tekcays_addon.api.capability.impl;
+package tekcays_addon.api.logic;
 
 import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.recipes.Recipe;
 import net.minecraftforge.fluids.FluidStack;
-import tekcays_addon.api.capability.IPressureContainer;
-import tekcays_addon.api.capability.IPressureMachine;
+import tekcays_addon.api.capability.containers.IPressureContainer;
+import tekcays_addon.api.capability.machines.IPressureMachine;
 import tekcays_addon.api.recipes.recipeproperties.MaxPressureProperty;
 import tekcays_addon.api.recipes.recipeproperties.MinPressureProperty;
 import tekcays_addon.api.recipes.recipeproperties.NoCoilTemperatureProperty;

@@ -19,7 +19,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
-import tekcays_addon.api.capability.IPressureContainer;
+import tekcays_addon.api.capability.containers.IPressureContainer;
 import tekcays_addon.api.metatileentity.multiblock.PressureContainerNoEnergyMultiblockController;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;

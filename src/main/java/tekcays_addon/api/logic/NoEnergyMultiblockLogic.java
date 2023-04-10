@@ -1,20 +1,15 @@
-package tekcays_addon.api.capability.impl;
+package tekcays_addon.api.logic;
 
 import gregtech.api.GTValues;
 import gregtech.api.capability.impl.MultiblockRecipeLogic;
-import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.recipes.Recipe;
-import tekcays_addon.api.capability.IPressureContainer;
-import tekcays_addon.api.capability.IPressureMachine;
+import tekcays_addon.api.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
 
-public class PressureContainerNoEnergyMultiblockRecipeLogic extends MultiblockRecipeLogic {
 
-    public PressureContainerNoEnergyMultiblockRecipeLogic(RecipeMapMultiblockController tileEntity) {
+public class NoEnergyMultiblockLogic extends MultiblockRecipeLogic {
+
+    public NoEnergyMultiblockLogic(NoEnergyRecipeMapMultiBlockController tileEntity) {
         super(tileEntity);
-    }
-
-    protected IPressureContainer getPressureContainer() {
-        return ((IPressureMachine) this.metaTileEntity).getPressureContainer();
     }
 
     @Override
@@ -64,5 +59,8 @@ public class PressureContainerNoEnergyMultiblockRecipeLogic extends MultiblockRe
         itemOutputs = null;
         setActive(false); // this marks dirty for us
     }
+
+
+
 
 }

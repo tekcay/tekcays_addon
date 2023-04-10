@@ -1,4 +1,4 @@
-package tekcays_addon.api.capability.impl;
+package tekcays_addon.api.logic;
 
 import gregtech.api.recipes.ingredients.GTRecipeInput;
 import net.minecraft.item.ItemStack;

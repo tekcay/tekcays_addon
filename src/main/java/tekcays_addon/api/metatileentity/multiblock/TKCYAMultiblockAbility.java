@@ -1,10 +1,10 @@
 package tekcays_addon.api.metatileentity.multiblock;
 
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import tekcays_addon.api.capability.IHeatContainer;
-import tekcays_addon.api.capability.IPressureContainer;
-import tekcays_addon.api.capability.IPressureControl;
-import tekcays_addon.api.capability.IVacuumContainer;
+import tekcays_addon.api.capability.containers.IHeatContainer;
+import tekcays_addon.api.capability.containers.IPressureContainer;
+import tekcays_addon.api.capability.containers.IPressureControl;
+import tekcays_addon.api.capability.containers.IVacuumContainer;
 
 @SuppressWarnings("InstantiationOfUtilityClass")
 public class TKCYAMultiblockAbility {

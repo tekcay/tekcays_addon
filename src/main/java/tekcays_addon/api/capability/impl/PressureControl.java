@@ -7,7 +7,7 @@ import lombok.Setter;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
-import tekcays_addon.api.capability.IPressureControl;
+import tekcays_addon.api.capability.containers.IPressureControl;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.consts.DetectorModes;
 

@@ -24,7 +24,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import tekcays_addon.api.capability.IPressureControl;
+import tekcays_addon.api.capability.containers.IPressureControl;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.impl.PressureControl;
 import tekcays_addon.api.consts.DetectorModes;

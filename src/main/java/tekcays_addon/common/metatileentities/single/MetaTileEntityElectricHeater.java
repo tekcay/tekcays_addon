@@ -23,7 +23,7 @@ import net.minecraft.util.*;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import tekcays_addon.api.capability.IHeatContainer;
+import tekcays_addon.api.capability.containers.IHeatContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.impl.HeatContainer;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;

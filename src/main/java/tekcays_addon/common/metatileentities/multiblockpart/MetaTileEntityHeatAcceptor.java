@@ -19,13 +19,12 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import tekcays_addon.api.capability.IHeatContainer;
+import tekcays_addon.api.capability.containers.IHeatContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.api.render.TKCYATextures;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import tekcays_addon.api.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

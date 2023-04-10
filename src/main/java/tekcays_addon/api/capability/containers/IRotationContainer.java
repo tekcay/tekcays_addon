@@ -1,4 +1,4 @@
-package tekcays_addon.api.capability;
+package tekcays_addon.api.capability.containers;
 
 
 public interface IRotationContainer {

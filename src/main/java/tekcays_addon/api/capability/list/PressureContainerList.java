@@ -1,7 +1,7 @@
-package tekcays_addon.api.capability.impl;
+package tekcays_addon.api.capability.list;
 
 import net.minecraftforge.fluids.FluidStack;
-import tekcays_addon.api.capability.IPressureContainer;
+import tekcays_addon.api.capability.containers.IPressureContainer;
 import tekcays_addon.api.utils.FluidStackHelper;
 
 import java.util.List;

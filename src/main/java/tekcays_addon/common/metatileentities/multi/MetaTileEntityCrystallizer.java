@@ -20,11 +20,10 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
-import tekcays_addon.api.capability.impl.NoEnergyMultiblockLogic;
+import tekcays_addon.api.logic.NoEnergyMultiblockLogic;
 import tekcays_addon.api.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
 import tekcays_addon.api.recipes.TKCYARecipeMaps;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 public class MetaTileEntityCrystallizer extends NoEnergyRecipeMapMultiBlockController {

@@ -1,6 +1,6 @@
-package tekcays_addon.api.capability.impl;
+package tekcays_addon.api.capability.list;
 
-import tekcays_addon.api.capability.IHeatContainer;
+import tekcays_addon.api.capability.containers.IHeatContainer;
 
 import java.util.List;
 
