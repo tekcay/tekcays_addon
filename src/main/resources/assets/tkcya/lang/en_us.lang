@@ -5,6 +5,13 @@ tkcya.machine.cluster_mill.hv.name=Cluster Mill HV
 tkcya.machine.cluster_mill.ev.name=Cluster Mill EV
 tkcya.machine.cluster_mill.iv.name=Cluster Mill IV
 
+tkcya.machine.steam_turbine.0.name=Steam Turbine I
+tkcya.machine.steam_turbine.1.name=Steam Turbine II
+tkcya.machine.steam_turbine.2.name=Steam Turbine III
+tkcya.machine.steam_turbine.3.name=Steam Turbine IV
+tkcya.machine.steam_turbine.4.name=Steam Turbine V
+tkcya.machine.steam_turbine.5.name=Steam Turbine VI
+
 tkcya.machine.advanced_polarizer.lv.name=Polarizer LV
 tkcya.machine.advanced_polarizer.mv.name=Polarizer MV
 tkcya.machine.advanced_polarizer.hv.name=Polarizer HV
@@ -469,6 +476,14 @@ tkcya.machine.pressure_hatch.tooltip.pressure=Accepts §aPressure§7, up to §e%
 tkcya.machine.pressure_hatch.tooltip.vacuum.leak=Loses §d%d L/s§7.
 tkcya.machine.pressure_hatch.tooltip.pressure.leak=Loses §a%d L/s§7.
 
+#Steam turbine
+tkcya.machine.steam_turbine.tooltip.1=Consumes §eSteam§7 to spin a wheel and outputs §dDistilled Water§7.
+tkcya.machine.steam_turbine.tooltip.steam_tank=Steam tank: %d L
+tkcya.machine.steam_turbine.tooltip.water_tank=Water tank: %d L
+tkcya.machine.steam_turbine.tooltip.steam_input=Max steam consumption: %d L/s
+tkcya.machine.steam_turbine.tooltip.water_output=Max distilled water output: %d L/s
+tkcya.machine.steam_turbine.tooltip.max_speed=Max speed: %d rpm
+
 tkcya.machine.electric_pressure_compressor.pressure.tooltip.description=Transfer a fluid to the OUTPUT face to increase §aPressure§7.
 tkcya.machine.electric_pressure_compressor.vacuum.tooltip.description=Transfer a fluid from the INPUT face to increase §aVacuum§7.
 tkcya.machine.electric_pressure_compressor.tooltip.transfer=Base transfer rate: %d L/t
@@ -594,6 +609,8 @@ behavior.tricorder.current_pressure=Pressure: %d bar
 behavior.tricorder.pressureThreshold=PressureThreshol: %d bar
 behavior.tricorder.fluid.amount=Fluid amount: %d L
 behavior.tricorder.fluid.name=Fluid name: %s
+behavior.tricorder.steam.amount=Steam amount: %d L
+behavior.tricorder.distilled_water.amount=Distilled amount: %d L
 behavior.tricorder.air.amount=Air amount: %d L
 behavior.tricorder.pressure.pressure=Pressure: %d
 behavior.tricorder.pressure.vacuum=Vacuum: %d
@@ -603,7 +620,10 @@ behavior.tricorder.min_pressure.pressure=Minimum Pressure: %d
 behavior.tricorder.min_pressure.vacuum=Minimum Pressure: %d
 behavior.tricorder.current_pu=%d PU
 behavior.tricorder.current_vu=%d VU
+behavior.tricorder.turbine.steam_consumption=Steam consumption: %d L/t
+behavior.tricorder.turbine.output_rate=Water output rate: %d L/t
+behavior.tricorder.speed=Speed: %d rpm
 
 # Errors
 
-tkcya.multiblock.pattern.error.bricks=§cAll bricks must be the same§r
+tkcya.multiblock.pattern.error.bricks=§cAll bricks must be the same§rbehavior.tricorder.speed=Speed: %d rpm

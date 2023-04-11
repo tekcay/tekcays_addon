@@ -2,6 +2,7 @@ package tekcays_addon.api.utils;
 
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Material;
+import lombok.Getter;
 import net.minecraftforge.fluids.FluidStack;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import static gregtech.api.unification.material.Materials.Calcite;
 import static gregtech.api.unification.material.Materials.Creosote;
 import static tekcays_addon.api.utils.TKCYAValues.SECOND;
 
+@Getter
 public class FuelWithProperties {
 
     private Material material;
@@ -25,18 +27,6 @@ public class FuelWithProperties {
     public FuelWithProperties(FluidStack fluidStack, int burnTime) {
         this.fluidStack = fluidStack;
         this.burnTime = burnTime;
-    }
-
-    public FluidStack getFluidStack() {
-        return this.fluidStack;
-    }
-
-    public int getBurnTime() {
-        return this.burnTime;
-    }
-
-    public Material getMaterial() {
-        return this.material;
     }
 
     public static final FuelWithProperties CREOSOTE = new FuelWithProperties(new FluidStack(Creosote.getFluid(), 100), Creosote, 300);

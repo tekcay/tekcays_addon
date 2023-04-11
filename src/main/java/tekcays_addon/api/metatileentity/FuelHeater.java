@@ -300,7 +300,7 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
 
     @Override
     public boolean isAutoOutputFluids() {
-        return false;
+        return true;
     }
 
     @Override

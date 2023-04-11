@@ -2,6 +2,7 @@ package tekcays_addon.api.utils;
 
 import static gregtech.api.util.GTUtility.isBetweenInclusive;
 import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
+import static tekcays_addon.api.utils.TKCYAValues.STEAM_TO_WATER;
 
 public class UnitsConversions {
 
@@ -12,6 +13,10 @@ public class UnitsConversions {
             return String.format("%d mbar", pressure * 1000 / ATMOSPHERIC_PRESSURE);
         }
         return String.format("%d kbar", pressure / (1000 * ATMOSPHERIC_PRESSURE));
+    }
+
+    public static int convertSteamToWater(int steamAmount) {
+        return steamAmount / STEAM_TO_WATER;
     }
 
 }

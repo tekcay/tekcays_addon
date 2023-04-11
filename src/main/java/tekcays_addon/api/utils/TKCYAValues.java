@@ -32,6 +32,8 @@ public class TKCYAValues {
     public static final String PRESSURIZED_FLUIDSTACK_PROPERTY = "pressurizedFluidStack";
     //Simple Values
 
+    public static final int STEAM_TO_WATER = 8;
+
     public static final Long[] EMPTY_LONG_TWO_ARRAY = new Long[]{0L, 0L};
     public static final Integer[] EMPTY_INT_TWO_ARRAY = new Integer[]{0, 0};
 

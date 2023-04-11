@@ -60,24 +60,6 @@ public interface IRotationContainer {
     }
 
     /**
-     * Change the amount of speed in the container by a given amount
-     *
-     * @param amount   the amount to change by
-     * @param simulate whether to actually change the value or not
-     * @return true if the change is safe, else false
-     */
-    default boolean changeSpeed(int amount, boolean simulate) {
-        if (simulate) return isRotationSafe((getSpeed() + amount) * getTorque());
-        setSpeed(getSpeed() + amount);
-        return true;
-    }
-
-    /**
-     * @return the minimum torque this container can handle
-     */
-    int getMinTorque();
-
-    /**
      * @return the minimum torque this container can handle
      */
     int getMaxTorque();

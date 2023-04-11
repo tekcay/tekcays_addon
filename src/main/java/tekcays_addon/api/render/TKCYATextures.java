@@ -7,7 +7,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.relauncher.Side;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
-import static gregtech.client.renderer.texture.cube.OrientedOverlayRenderer.OverlayFace.*;
 import static tekcays_addon.api.utils.HeatersMethods.*;
 
 @Mod.EventBusSubscriber(modid = TekCaysAddon.MODID, value = Side.CLIENT)
@@ -34,6 +33,9 @@ public class TKCYATextures {
     public static OrientedOverlayRenderer SOLID_FUEL_HEATER = new OrientedOverlayRenderer("generators/solid_heater");
     public static OrientedOverlayRenderer GAS_FUEL_HEATER = new OrientedOverlayRenderer("generators/gas_heater");
 
+    //Rotation
+    public static OrientedOverlayRenderer ROTATION_TURBINE_OVERLAY = new OrientedOverlayRenderer("rotation/turbine/rotation");
+
     // Bricks
     public static SimpleOverlayRenderer[] BRICKS = new SimpleOverlayRenderer[4];
     public static SimpleOverlayRenderer HALF_BRICK;
@@ -44,12 +46,16 @@ public class TKCYATextures {
     public static SimpleOverlayRenderer STEEL_GT;
     public static SimpleOverlayRenderer WHITE_GT;
     public static SimpleOverlayRenderer STAINLESS_STEEL_GT;
+
     //SteamCasing
     public static SimpleOverlayRenderer[] STEAM_CASING = new SimpleOverlayRenderer[5];
 
     //Acceptors
     public static SimpleOverlayRenderer HEAT_ACCEPTOR_HORIZONTALS_OVERLAY;
     public static SimpleOverlayRenderer HEAT_ACCEPTOR_VERTICALS_OVERLAY;
+
+    //Rotation
+    public static SimpleOverlayRenderer ROTATION_WATER_OUTPUT_OVERLAY;
 
     //Cooler
     public static SimpleOverlayRenderer COOLER_COOL_SIDE_OVERLAY;
@@ -91,6 +97,10 @@ public class TKCYATextures {
 
         COOLER_COOL_SIDE_OVERLAY = new SimpleOverlayRenderer("machines/cooler/cool");
         COOLER_HOT_SIDE_OVERLAY = new SimpleOverlayRenderer("machines/cooler/hot");
+
+        //Rotation
+        ROTATION_WATER_OUTPUT_OVERLAY = new SimpleOverlayRenderer("rotation/water_output");
+
 
         //Covers
         DETECTOR_TEMPERATURE = new SimpleOverlayRenderer("cover/overlay_temperature_detector");

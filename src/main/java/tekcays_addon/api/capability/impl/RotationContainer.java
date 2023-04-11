@@ -26,12 +26,14 @@ public class RotationContainer extends MTETrait implements IRotationContainer, N
     private int torque;
     private int power;
     private int maxSpeed;
-    private int minTorque;
     private int maxTorque;
     private int maxPower;
 
-    public RotationContainer(@Nonnull MetaTileEntity metaTileEntity) {
+    public RotationContainer(@Nonnull MetaTileEntity metaTileEntity, int maxPower, int maxSpeed, int maxTorque) {
         super(metaTileEntity);
+        this.maxPower = maxPower;
+        this.maxSpeed = maxSpeed;
+        this.maxTorque = maxTorque;
     }
 
     @Nonnull
@@ -80,7 +82,6 @@ public class RotationContainer extends MTETrait implements IRotationContainer, N
         parametersValues.add(new ParameterHelper<>("torque", torque, this::setTorque));
         parametersValues.add(new ParameterHelper<>("power", power, this::setPower));
         parametersValues.add(new ParameterHelper<>("maxSpeed", maxSpeed, this::setMaxSpeed));
-        parametersValues.add(new ParameterHelper<>("minTorque", minTorque, this::setMinTorque));
         parametersValues.add(new ParameterHelper<>("maxTorque", maxTorque, this::setMaxTorque));
         parametersValues.add(new ParameterHelper<>("maxPower", maxPower, this::setMaxPower));
         return parametersValues;

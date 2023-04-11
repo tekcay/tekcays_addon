@@ -21,7 +21,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import tekcays_addon.api.capability.impl.HeatContainer;
@@ -34,6 +33,7 @@ import tekcays_addon.common.items.TKCYAMetaItems;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static gregtech.api.gui.GuiTextures.*;
 import static gregtech.api.unification.material.Materials.*;
 import static tekcays_addon.api.utils.FuelWithProperties.*;
 
@@ -82,20 +82,20 @@ public class MetaTileEntityGasHeater extends FuelHeater implements IDataInfoProv
     }
 
     protected ModularUI.Builder createUITemplate(EntityPlayer entityPlayer) {
-        return ModularUI.builder(GuiTextures.BACKGROUND, 176, 166)
+        return ModularUI.builder(BACKGROUND, 176, 166)
                 .shouldColor(false)
                 .widget(new LabelWidget(5, 5, getMetaFullName()))
                 .widget(new SlotWidget(importItems, 0, 50, 50, true, true)
-                        .setBackgroundTexture(GuiTextures.SLOT))
+                        .setBackgroundTexture(SLOT))
                 .widget(new TankWidget(importFluidTank, 20, 50, 18, 18)
-                        .setBackgroundTexture(GuiTextures.FLUID_SLOT)
+                        .setBackgroundTexture(FLUID_SLOT)
                         .setAlwaysShowFull(true)
                         .setContainerClicking(true, true))
                 .widget(new TankWidget(exportFluidTank, 80, 50, 18, 18)
-                        .setBackgroundTexture(GuiTextures.FLUID_SLOT)
+                        .setBackgroundTexture(FLUID_SLOT)
                         .setAlwaysShowFull(true)
                         .setContainerClicking(true, true))
-                .bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 0);
+                .bindPlayerInventory(entityPlayer.inventory, SLOT, 0);
     }
 
     @Override
@@ -124,6 +124,7 @@ public class MetaTileEntityGasHeater extends FuelHeater implements IDataInfoProv
 
         if (!isThereGasCollector()) return;
         exportFluids.getTankAt(0).fill(CarbonDioxide.getFluid(10), true);
+        pushFluidsIntoNearbyHandlers(getFrontFacing().getOpposite());
     }
 
     @Override
