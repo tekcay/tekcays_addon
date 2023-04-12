@@ -8,7 +8,7 @@ public interface PressureContainerHandler {
 
     IPressureContainer getPressureContainer();
     int getBaseTransferRate();
-    long getPressure();
+    int getPressure();
     FluidTankList importFluidTanks();
 
     default int drainImportTank(FluidStack fluidStack, int amount, boolean doDrain) {

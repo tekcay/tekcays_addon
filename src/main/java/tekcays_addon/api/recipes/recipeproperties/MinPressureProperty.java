@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
 
 import static tekcays_addon.api.utils.TKCYAValues.MIN_PRESSURE_PROPERTY;
 
-public class MinPressureProperty extends RecipeProperty<Long> implements IPressureFormatting, RecipePropertiesHelper  {
+public class MinPressureProperty extends RecipeProperty<Integer> implements IPressureFormatting, RecipePropertiesHelper  {
 
     @Override
     public String getKey() {
@@ -18,7 +18,7 @@ public class MinPressureProperty extends RecipeProperty<Long> implements IPressu
     private static MinPressureProperty INSTANCE;
 
     private MinPressureProperty() {
-        super(MIN_PRESSURE_PROPERTY, Long.class);
+        super(MIN_PRESSURE_PROPERTY, Integer.class);
     }
 
     public static MinPressureProperty getInstance() {
@@ -28,7 +28,7 @@ public class MinPressureProperty extends RecipeProperty<Long> implements IPressu
 
     @Override
     public void drawInfo(@Nonnull Minecraft minecraft, int x, int y, int color, Object value) {
-        Long casted = castValue(value);
+        Integer casted = castValue(value);
         if (isVacuum(casted)) minecraft.fontRenderer.drawString(I18n.format(
                 "tkcya.recipe.min.pressure", convertPressureToMbar(casted, true)), x, y, color);
         else minecraft.fontRenderer.drawString(I18n.format(

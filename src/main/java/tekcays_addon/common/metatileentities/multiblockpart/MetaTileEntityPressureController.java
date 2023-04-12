@@ -13,6 +13,8 @@ import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -42,11 +44,13 @@ import static tekcays_addon.api.consts.UnitSymbol.BAR;
 import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
 import static tekcays_addon.api.utils.TKCYAValues.MAX_PRESSURE;
 
+@Getter
+@Setter
 public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IPressureControl>, MetaTileEntityGuiHandler, IDataInfoProvider {
 
     private IPressureControl pressureControl;
-    private long pressureThreshold;
-    private long currentPressure;
+    private int threshold;
+    private int currentPressure;
 
     public MetaTileEntityPressureController(@Nonnull ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, 1);
@@ -82,7 +86,7 @@ public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPa
     }
 
     private int getPressureThresholdInBar() {
-        return (int) (this.pressureThreshold * ATMOSPHERIC_PRESSURE);
+        return (int) (this.threshold * ATMOSPHERIC_PRESSURE);
     }
 
     private void turnRedstoneSignalOn() {
@@ -155,18 +159,8 @@ public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPa
     }
 
     @Override
-    public int getThreshold() {
-        return (int) this.pressureThreshold;
-    }
-
-    @Override
-    public void setThreshold(int threshold) {
-        this.pressureThreshold = threshold;
-    }
-
-    @Override
     public void adjustThreshold(int amount) {
-        setThreshold((int) MathHelper.clamp(pressureThreshold + amount, 0, MAX_PRESSURE));
+        setThreshold(MathHelper.clamp(threshold + amount, 0, MAX_PRESSURE));
     }
 
     @Override
@@ -176,12 +170,12 @@ public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPa
 
     @Override
     public int getMaxMeasure() {
-        return (int) MAX_PRESSURE;
+        return MAX_PRESSURE;
     }
 
     @Override
     public int getContainerMeasure() {
-        return (int) this.currentPressure;
+        return this.currentPressure;
     }
 
     @Override
@@ -214,7 +208,7 @@ public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPa
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
         list.add(new TextComponentTranslation("behavior.tricorder.current_pressure", currentPressure));
-        list.add(new TextComponentTranslation("behavior.tricorder.pressureThreshold", pressureThreshold));
+        list.add(new TextComponentTranslation("behavior.tricorder.pressureThreshold", threshold));
         return list;
     }
 }

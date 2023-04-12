@@ -21,7 +21,7 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
     private IPressureContainer pressureContainer;
     private int fluidCapacity;
     private int tierMultiplier = (getTier() * getTier() + 1);
-    private long pressure;
+    private int pressure;
 
     public MetaTileEntityElectricPressureCompressor(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, false, tier);
@@ -90,7 +90,7 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
     }
 
     @Override
-    public long getPressure() {
+    public int getPressure() {
         return pressureContainer.getPressure();
     }
 

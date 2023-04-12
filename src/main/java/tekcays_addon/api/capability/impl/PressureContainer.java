@@ -29,13 +29,13 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
     protected int volume;
 
     @Setter(AccessLevel.NONE)
-    protected long pressure;
+    protected int pressure;
 
     @Setter(AccessLevel.NONE)
     private FluidStack pressurizedFluidStack;
 
-    protected long minPressure;
-    protected long maxPressure;
+    protected int minPressure;
+    protected int maxPressure;
 
     /**
      * Default Pressure container
@@ -49,7 +49,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
      * Default Pressure container
      * {@link IPressureContainer}
      */
-    public PressureContainer(MetaTileEntity metaTileEntity, long minPressure, long maxPressure) {
+    public PressureContainer(MetaTileEntity metaTileEntity, int minPressure, int maxPressure) {
         super(metaTileEntity);
         this.minPressure = minPressure;
         this.maxPressure = maxPressure;
@@ -134,13 +134,13 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = super.serializeNBT();
         compound.setTag(PRESSURIZED_FLUID_STACK.getName(), this.setFluidStackNBT(this.pressurizedFluidStack));
-        compound.setLong(PRESSURE_KEY, this.pressure);
+        compound.setInteger(PRESSURE_KEY, this.pressure);
         return compound;
     }
 
     @Override
     public void deserializeNBT(@Nonnull NBTTagCompound compound) {
-        this.pressure = compound.getLong(PRESSURE_KEY);
+        this.pressure = compound.getInteger(PRESSURE_KEY);
         this.pressurizedFluidStack = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag(PRESSURIZED_FLUID_STACK.getName()));
 
     }
@@ -148,13 +148,13 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
     @Override
     public void writeInitialData(@Nonnull PacketBuffer buffer) {
         super.writeInitialData(buffer);
-        buffer.writeLong(this.pressure);
+        buffer.writeInt(this.pressure);
     }
 
     @Override
     public void receiveInitialData(@Nonnull PacketBuffer buffer) {
         super.receiveInitialData(buffer);
-        this.pressure = buffer.readLong();
+        this.pressure = buffer.readInt();
     }
 
 
