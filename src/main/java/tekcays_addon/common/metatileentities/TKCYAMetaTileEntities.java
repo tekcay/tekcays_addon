@@ -341,12 +341,10 @@ public class TKCYAMetaTileEntities {
 
         PRESSURE_CONTROLLER = registerMetaTileEntity(startId++, new MetaTileEntityPressureController(tkcyaId("pressure_controller_lv")));
 
-        TKCYALog.logger.info("startId : " + startId);
-
-        IntStream.range(0, STEAM_TURBINE.length - 1)
+        IntStream.range(0, STEAM_TURBINE.length)
                 .forEach(i -> STEAM_TURBINE[i] = registerMetaTileEntity(12000 + i, new MetaTileEntitySteamTurbine(tkcyaId("steam_turbine." + i), i)));
 
-        IntStream.range(0, ROTATION_COMPRESSOR.length - 1)
+        IntStream.range(0, ROTATION_COMPRESSOR.length )
                 .forEach(i -> ROTATION_COMPRESSOR[i] = registerMetaTileEntity(12010 + i, new MetaTileEntityRotationCompressor(tkcyaId("rotation_compressor." + i), i)));
 
     }

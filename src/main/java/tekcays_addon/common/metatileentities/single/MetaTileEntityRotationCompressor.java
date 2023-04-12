@@ -85,7 +85,7 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
-        return new MetaTileEntityRotationCompressor(metaTileEntityId, tier);
+        return new MetaTileEntityRotationCompressor(metaTileEntityId, tier - 1);
     }
 
     @Override
@@ -108,7 +108,7 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
 
     @SideOnly(Side.CLIENT)
     protected SimpleOverlayRenderer getBaseRenderer() {
-        return STEAM_CASING[tier];
+        return STEAM_CASING[tier - 1];
     }
 
     @Override

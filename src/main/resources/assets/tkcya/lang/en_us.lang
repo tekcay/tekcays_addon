@@ -12,12 +12,12 @@ tkcya.machine.steam_turbine.3.name=Steam Turbine IV
 tkcya.machine.steam_turbine.4.name=Steam Turbine V
 tkcya.machine.steam_turbine.5.name=Steam Turbine VI
 
-tkcya.machine.rotation_compressure.0.name=Rotation Compressure I
-tkcya.machine.rotation_compressure.1.name=Rotation Compressure II
-tkcya.machine.rotation_compressure.2.name=Rotation Compressure III
-tkcya.machine.rotation_compressure.3.name=Rotation Compressure IV
-tkcya.machine.rotation_compressure.4.name=Rotation Compressure V
-tkcya.machine.rotation_compressure.5.name=Rotation Compressure VI
+tkcya.machine.rotation_compressor.0.name=Rotation Compressor I
+tkcya.machine.rotation_compressor.1.name=Rotation Compressor II
+tkcya.machine.rotation_compressor.2.name=Rotation Compressor III
+tkcya.machine.rotation_compressor.3.name=Rotation Compressor IV
+tkcya.machine.rotation_compressor.4.name=Rotation Compressor V
+tkcya.machine.rotation_compressor.5.name=Rotation Compressor VI
 
 tkcya.machine.advanced_polarizer.lv.name=Polarizer LV
 tkcya.machine.advanced_polarizer.mv.name=Polarizer MV

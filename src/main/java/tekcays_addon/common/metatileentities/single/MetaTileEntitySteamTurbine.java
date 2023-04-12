@@ -39,6 +39,8 @@ import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.containers.IRotationContainer;
 import tekcays_addon.api.capability.impl.RotationContainer;
 import tekcays_addon.api.utils.FluidStackHelper;
+import tekcays_addon.api.utils.TKCYALog;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
@@ -76,7 +78,7 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
-        return new MetaTileEntitySteamTurbine(metaTileEntityId, tier);
+        return new MetaTileEntitySteamTurbine(metaTileEntityId, tier - 1);
     }
 
     @Override
@@ -104,7 +106,7 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
 
     @SideOnly(Side.CLIENT)
     protected SimpleOverlayRenderer getBaseRenderer() {
-        return STEAM_CASING[tier];
+        return STEAM_CASING[tier - 1];
     }
 
     @Override
