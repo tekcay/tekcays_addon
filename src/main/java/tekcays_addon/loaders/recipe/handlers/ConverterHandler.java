@@ -20,7 +20,7 @@ public class ConverterHandler {
         PRIMITIVE_CONVERTING_RECIPES.recipeBuilder()
                 .fluidInputs(PigIron.getFluid(GTValues.L))
                 .fluidOutputs(Iron.getFluid(GTValues.L))
-                .intervalPressure(new Long[]{ATMOSPHERIC_PRESSURE * 6, ATMOSPHERIC_PRESSURE * 10})
+                .intervalPressure(new Integer[]{ATMOSPHERIC_PRESSURE * 6, ATMOSPHERIC_PRESSURE * 10})
                 .intervalTemperature(new Integer[]{PigIron.getFluid().getTemperature(), 2500})
                 .pressurizedFluidStack(Air.getFluid(1))
                 .duration(MINUTE).buildAndRegister();
@@ -29,7 +29,7 @@ public class ConverterHandler {
                 .input(OrePrefix.dust, Calcite)
                 .fluidInputs(PigIron.getFluid(GTValues.L))
                 .fluidOutputs(Steel.getFluid(GTValues.L))
-                .intervalPressure(new Long[]{ATMOSPHERIC_PRESSURE * 4, ATMOSPHERIC_PRESSURE * 5})
+                .intervalPressure(new Integer[]{ATMOSPHERIC_PRESSURE * 4, ATMOSPHERIC_PRESSURE * 5})
                 .intervalTemperature(new Integer[]{PigIron.getFluid().getTemperature(), 2500})
                 .pressurizedFluidStack(Air.getFluid(1))
                 .duration(3 * MINUTE).buildAndRegister();
@@ -40,7 +40,7 @@ public class ConverterHandler {
         CONVERTING_RECIPES.recipeBuilder()
                 .fluidInputs(PigIron.getFluid(GTValues.L))
                 .fluidOutputs(Iron.getFluid(GTValues.L))
-                .intervalPressure(new Long[]{ATMOSPHERIC_PRESSURE * 6, ATMOSPHERIC_PRESSURE * 10})
+                .intervalPressure(new Integer[]{ATMOSPHERIC_PRESSURE * 6, ATMOSPHERIC_PRESSURE * 10})
                 .intervalTemperature(new Integer[]{PigIron.getFluid().getTemperature(), 2500})
                 .pressurizedFluidStack(Air.getFluid(1))
                 .duration(3 * MINUTE).EUt(VA[LV]).buildAndRegister();
@@ -50,7 +50,7 @@ public class ConverterHandler {
                 .notConsumable(IntCircuitIngredient.getIntegratedCircuit(1))
                 .fluidInputs(PigIron.getFluid(GTValues.L))
                 .fluidOutputs(Iron.getFluid(GTValues.L))
-                .intervalPressure(new Long[]{ATMOSPHERIC_PRESSURE * 4, ATMOSPHERIC_PRESSURE * 6})
+                .intervalPressure(new Integer[]{ATMOSPHERIC_PRESSURE * 4, ATMOSPHERIC_PRESSURE * 6})
                 .intervalTemperature(new Integer[]{PigIron.getFluid().getTemperature(), 2500})
                 .pressurizedFluidStack(Oxygen.getFluid(1))
                 .duration(MINUTE).EUt(VA[LV]).buildAndRegister();
@@ -60,7 +60,7 @@ public class ConverterHandler {
                 .input(OrePrefix.dust, Calcite)
                 .fluidInputs(PigIron.getFluid(GTValues.L))
                 .fluidOutputs(Steel.getFluid(GTValues.L))
-                .intervalPressure(new Long[]{ATMOSPHERIC_PRESSURE * 4, ATMOSPHERIC_PRESSURE * 5})
+                .intervalPressure(new Integer[]{ATMOSPHERIC_PRESSURE * 4, ATMOSPHERIC_PRESSURE * 5})
                 .intervalTemperature(new Integer[]{PigIron.getFluid().getTemperature(), 2500})
                 .pressurizedFluidStack(Air.getFluid(1))
                 .duration(3 * MINUTE).EUt(VA[LV]).buildAndRegister();
@@ -71,7 +71,7 @@ public class ConverterHandler {
                 .input(OrePrefix.dust, Calcite)
                 .fluidInputs(PigIron.getFluid(GTValues.L))
                 .fluidOutputs(Steel.getFluid(GTValues.L))
-                .intervalPressure(new Long[]{ATMOSPHERIC_PRESSURE * 3, ATMOSPHERIC_PRESSURE * 4})
+                .intervalPressure(new Integer[]{ATMOSPHERIC_PRESSURE * 3, ATMOSPHERIC_PRESSURE * 4})
                 .intervalTemperature(new Integer[]{PigIron.getFluid().getTemperature(), 2500})
                 .pressurizedFluidStack(Oxygen.getFluid(1))
                 .duration(MINUTE).EUt(VA[LV]).buildAndRegister();
@@ -80,7 +80,7 @@ public class ConverterHandler {
         CONVERTING_RECIPES.recipeBuilder()
                 .fluidInputs(FerriteMixture.getFluid(GTValues.L))
                 .fluidOutputs(NickelZincFerrite.getFluid(GTValues.L))
-                .intervalPressure(new Long[]{ATMOSPHERIC_PRESSURE * 10, ATMOSPHERIC_PRESSURE * 15})
+                .intervalPressure(new Integer[]{ATMOSPHERIC_PRESSURE * 10, ATMOSPHERIC_PRESSURE * 15})
                 .intervalTemperature(new Integer[]{NickelZincFerrite.getFluid().getTemperature(), Titanium.getFluid().getTemperature() + 500})
                 .pressurizedFluidStack(Oxygen.getFluid(1))
                 .duration(200).EUt(VA[MV]).buildAndRegister();
@@ -89,7 +89,7 @@ public class ConverterHandler {
         CONVERTING_RECIPES.recipeBuilder()
                 .fluidInputs(TitaniumTrifluoride.getFluid(GTValues.L * 4))
                 .fluidOutputs(Titanium.getFluid(GTValues.L))
-                .intervalPressure(new Long[]{ATMOSPHERIC_PRESSURE * 10, ATMOSPHERIC_PRESSURE * 15})
+                .intervalPressure(new Integer[]{ATMOSPHERIC_PRESSURE * 10, ATMOSPHERIC_PRESSURE * 15})
                 .intervalTemperature(new Integer[]{Titanium.getFluid().getTemperature(), Titanium.getFluid().getTemperature() + 500})
                 .pressurizedFluidStack(Hydrogen.getFluid(1))
                 .duration(200).EUt(VA[MV]).buildAndRegister();
@@ -100,7 +100,7 @@ public class ConverterHandler {
                 .fluidOutputs(HydrogenFluoride.getFluid(GTValues.L * 3))
                 .fluidInputs(TitaniumTrifluoride.getFluid(GTValues.L * 4))
                 .fluidOutputs(Titanium.getFluid(GTValues.L))
-                .intervalPressure(new Long[]{ATMOSPHERIC_PRESSURE * 10, ATMOSPHERIC_PRESSURE * 15})
+                .intervalPressure(new Integer[]{ATMOSPHERIC_PRESSURE * 10, ATMOSPHERIC_PRESSURE * 15})
                 .intervalTemperature(new Integer[]{Titanium.getFluid().getTemperature(), Titanium.getFluid().getTemperature() + 500})
                 .pressurizedFluidStack(Hydrogen.getFluid(1))
                 .duration(200).EUt(VA[MV]).buildAndRegister();

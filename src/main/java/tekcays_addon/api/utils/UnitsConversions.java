@@ -5,7 +5,7 @@ import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
 
 public class UnitsConversions {
 
-    public static String autoConvertPressureToString(long pressure) {
+    public static String autoConvertPressureToString(int pressure) {
         if (isBetweenInclusive(ATMOSPHERIC_PRESSURE, ATMOSPHERIC_PRESSURE * 1000, pressure)) {
             return String.format("%d bar", pressure / ATMOSPHERIC_PRESSURE);
         } else if (pressure < ATMOSPHERIC_PRESSURE) {

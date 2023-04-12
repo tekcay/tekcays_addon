@@ -48,7 +48,7 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     private IPressureControl pressureControl;
     private int volume;
     private int currentTemp = ROOM_TEMPERATURE;
-    private long currentPressure = ATMOSPHERIC_PRESSURE;
+    private int currentPressure = ATMOSPHERIC_PRESSURE;
     private int currentHeat;
 
     public MetaTileEntityPressurizedCrackingUnit(ResourceLocation metaTileEntityId) {
@@ -173,7 +173,7 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     }
 
     @Override
-    public long getCurrentPressure() {
+    public int getCurrentPressure() {
         return currentPressure;
     }
 

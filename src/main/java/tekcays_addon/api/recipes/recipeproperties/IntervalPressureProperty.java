@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
 
 import static tekcays_addon.api.utils.TKCYAValues.INTERVAL_PRESSURE_PROPERTY;;
 
-public class IntervalPressureProperty extends RecipeProperty<Long[]> implements IPressureFormatting, RecipePropertiesHelper  {
+public class IntervalPressureProperty extends RecipeProperty<Integer[]> implements IPressureFormatting, RecipePropertiesHelper  {
 
     @Override
     public String getKey() {
@@ -18,7 +18,7 @@ public class IntervalPressureProperty extends RecipeProperty<Long[]> implements 
     private static IntervalPressureProperty INSTANCE;
 
     private IntervalPressureProperty() {
-        super(INTERVAL_PRESSURE_PROPERTY, Long[].class);
+        super(INTERVAL_PRESSURE_PROPERTY, Integer[].class);
     }
 
     public static IntervalPressureProperty getInstance() {
@@ -29,7 +29,7 @@ public class IntervalPressureProperty extends RecipeProperty<Long[]> implements 
     //TODO refacto
     @Override
     public void drawInfo(@Nonnull Minecraft minecraft, int x, int y, int color, Object value) {
-        Long[] casted = castValue(value);
+        Integer[] casted = castValue(value);
         String minPressure;
         String maxPressure;
 

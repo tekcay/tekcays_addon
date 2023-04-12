@@ -101,7 +101,7 @@ public class RoastingHandler {
         Material input = roastableMaterial.getMaterial();
         Material output = roastableMaterial.getOutput();
         int fluidAmount = 1000 * getAmountSulfur(input);
-        long pressure = roastableMaterial.getRoastingPressure();
+        int pressure = roastableMaterial.getRoastingPressure();
         int temp = roastableMaterial.getRoastingTemperature();
 
         if (roastableMaterial.getFluidOutput() == null) {

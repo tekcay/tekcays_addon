@@ -85,8 +85,8 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
     //RecipeProperties
 
     @Nonnull
-    default T intervalPressure(Long[] pressures) {
-        return validate(IntervalPressureProperty.getInstance(), pressures, VALIDATE_LONG_ARRAY);
+    default T intervalPressure(Integer[] pressures) {
+        return validate(IntervalPressureProperty.getInstance(), pressures, VALIDATE_INT_ARRAY);
     }
 
     @Nonnull
@@ -104,13 +104,13 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
     }
 
     @Nonnull
-    default T minPressure(long minPressure) {
-        return validate(MinPressureProperty.getInstance(), minPressure, VALIDATE_LONG_POSITIVE);
+    default T minPressure(int minPressure) {
+        return validate(MinPressureProperty.getInstance(), minPressure, VALIDATE_INT_POSITIVE);
     }
 
     @Nonnull
-    default T maxPressure(long maxPressure) {
-        return validate(MaxPressureProperty.getInstance(), maxPressure, VALIDATE_LONG_POSITIVE);
+    default T maxPressure(int maxPressure) {
+        return validate(MaxPressureProperty.getInstance(), maxPressure, VALIDATE_INT_POSITIVE);
     }
 
     @Nonnull
@@ -122,7 +122,7 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
 
         switch (key) {
             case INTERVAL_PRESSURE_PROPERTY:
-                this.intervalPressure(((Long[]) value).clone());
+                this.intervalPressure(((Integer[]) value).clone());
                 return true;
 
             case INTERVAL_TEMPERATURE_PROPERTY:
@@ -138,11 +138,11 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
                 return true;
 
             case MIN_PRESSURE_PROPERTY:
-                this.minPressure(((Number) value).longValue());
+                this.minPressure(((Number) value).intValue());
                 return true;
 
             case MAX_PRESSURE_PROPERTY:
-                this.maxPressure(((Number) value).longValue());
+                this.maxPressure(((Number) value).intValue());
                 return true;
 
             case PRESSURIZED_FLUIDSTACK_PROPERTY:

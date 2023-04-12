@@ -15,7 +15,7 @@ public interface IVacuumContainer extends IPressureFormatting, FluidStackHelper 
     /**
      * @return the amount of pressure in the container in {@code Pa}
      */
-    long getPressure();
+    int getPressure();
 
     /**
      * Set the {@code pressure} in {@code Pa}
@@ -30,12 +30,12 @@ public interface IVacuumContainer extends IPressureFormatting, FluidStackHelper 
     /**
      * @return the maximum pressure this container can handle in {@code Pa}
      */
-    long getMaxPressure();
+    int getMaxPressure();
 
     /**
      * @return the minimum pressure this container can handle in {@code Pa}
      */
-    long getMinPressure();
+    int getMinPressure();
 
     boolean canHandleVacuum();
 
@@ -99,7 +99,7 @@ public interface IVacuumContainer extends IPressureFormatting, FluidStackHelper 
      * @param volume in {@code m3}.
      * @return the corresponding {@code fluidAmount}.
      */
-    default int calculateFluidAmount(long pressure, int temperature, int volume) {
+    default int calculateFluidAmount(int pressure, int temperature, int volume) {
         return (int) ((1.0 * pressure * volume) / (1.0 * PERFECT_GAS_CONSTANT * temperature) ); // n = PV / RT
     }
 

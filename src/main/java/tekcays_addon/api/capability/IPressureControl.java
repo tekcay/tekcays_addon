@@ -4,12 +4,12 @@ import tekcays_addon.api.consts.DetectorModes;
 
 public interface IPressureControl {
 
-    long getThresholdPressure();
-    long getPressure();
+    int getThresholdPressure();
+    int getPressure();
     DetectorModes getDetectorMode();
 
-    void setThresholdPressure(long thresholdPressure);
-    void setPressure(long pressure);
+    void setThresholdPressure(int thresholdPressure);
+    void setPressure(int pressure);
     void setDetectorMode(DetectorModes detectorModes);
 
 
