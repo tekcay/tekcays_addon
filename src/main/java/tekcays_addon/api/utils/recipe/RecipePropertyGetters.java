@@ -34,12 +34,12 @@ public class RecipePropertyGetters {
                 this.recipePropertyStorage.getRecipePropertyValue(MaxTemperatureProperty.getInstance(), 0);
     }
 
-    public long getMinPressure() {
+    public int getMinPressure() {
         return this.recipePropertyStorage == null ? 0 :
                 this.recipePropertyStorage.getRecipePropertyValue(MinPressureProperty.getInstance(), 0);
     }
 
-    public long getMaxPressure() {
+    public int getMaxPressure() {
         return this.recipePropertyStorage == null ? 0 :
                 this.recipePropertyStorage.getRecipePropertyValue(MaxPressureProperty.getInstance(), 0);
     }

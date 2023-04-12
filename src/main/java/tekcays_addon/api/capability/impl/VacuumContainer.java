@@ -19,6 +19,7 @@ import javax.annotation.Nullable;
 import static lombok.AccessLevel.NONE;
 import static tekcays_addon.api.consts.DataIds.AIR_FLUID_STACK;
 import static tekcays_addon.api.consts.NBTKeys.PRESSURE_KEY;
+import static tekcays_addon.api.consts.NBTKeys.VOLUME_KEY;
 import static tekcays_addon.api.utils.TKCYAValues.ROOM_TEMPERATURE;
 
 @Getter
@@ -99,8 +100,8 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = new NBTTagCompound();
-        compound.setLong(PRESSURE_KEY, this.pressure);
-        compound.setInteger("volume", this.volume);
+        compound.setInteger(PRESSURE_KEY, this.pressure);
+        compound.setInteger(VOLUME_KEY, this.volume);
         //compound.setTag(AIR_FLUID_STACK.getName(), this.setAirFluidStackNBT());
         compound.setInteger("airAmount", this.getAirAmount());
         return compound;
@@ -110,7 +111,7 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
     public void deserializeNBT(@Nonnull NBTTagCompound compound) {
         super.deserializeNBT(compound);
         this.pressure = compound.getInteger(PRESSURE_KEY);
-        this.volume = compound.getInteger("volume");
+        this.volume = compound.getInteger(VOLUME_KEY);
         this.airFluidStack = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag(AIR_FLUID_STACK.getName()));
         this.airFluidStack = Materials.Air.getFluid(compound.getInteger("airAmount"));
     }

@@ -62,7 +62,7 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
     private int maxSpeed, maxTorque, maxPower;
     private int speed, torque, power;
     private int baseTransferRate;
-    private long pressure, minPressure, maxPressure;
+    private int pressure, minPressure, maxPressure;
     private final int tier;
     private final int maxSteamConsumption;
     private final int maxWaterOutputRate;
@@ -285,7 +285,7 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
     }
 
     @Override
-    public long getPressure() {
+    public int getPressure() {
         return this.pressure;
     }
 

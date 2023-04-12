@@ -27,7 +27,6 @@ public class NoEnergyPressureRecipeBuilder extends RecipeBuilder<NoEnergyPressur
 
     @SuppressWarnings("unused")
     public NoEnergyPressureRecipeBuilder() {
-
     }
 
     @SuppressWarnings("unused")
@@ -47,18 +46,11 @@ public class NoEnergyPressureRecipeBuilder extends RecipeBuilder<NoEnergyPressur
     @Override
     public boolean applyProperty(@Nonnull String key, Object value) {
         applyPropertyHelper(key, value);
-        /*
-        if (key.equals(PressureProperty.KEY)) {
-            this.pressure(((Number) value).longValue());
-            return true;
-        }
-
-         */
         return super.applyProperty(key, value);
     }
 
     @Nonnull
-    public NoEnergyPressureRecipeBuilder pressure(long pressure) {
+    public NoEnergyPressureRecipeBuilder pressure(int pressure) {
         if (pressure <= 0) {
             GTLog.logger.error("Pressure cannot be less than or equal to 0", new IllegalArgumentException());
             recipeStatus = EnumValidationResult.INVALID;

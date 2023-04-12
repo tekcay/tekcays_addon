@@ -13,8 +13,8 @@ import tekcays_addon.api.recipes.recipeproperties.PressurizedFluidStackProperty;
 
 public class PressureContainerMultiblockRecipeLogic extends MultiblockRecipeLogic {
 
-    private long recipeMinPressure = 0;
-    private long recipeMaxPressure = 0;
+    private int recipeMinPressure = 0;
+    private int recipeMaxPressure = 0;
     private int recipeTemperature = 0;
     private FluidStack recipeGas = null;
 
