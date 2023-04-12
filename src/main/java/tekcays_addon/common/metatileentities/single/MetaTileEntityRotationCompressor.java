@@ -36,64 +36,68 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.ArrayUtils;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
+import tekcays_addon.api.capability.containers.IPressureContainer;
 import tekcays_addon.api.capability.containers.IRotationContainer;
+import tekcays_addon.api.capability.impl.PressureContainer;
 import tekcays_addon.api.capability.impl.RotationContainer;
+import tekcays_addon.api.utils.AdjacentCapabilityHelper;
 import tekcays_addon.api.utils.FluidStackHelper;
+import tekcays_addon.api.utils.PressureContainerHandler;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
-import static gregtech.api.unification.material.Materials.*;
+import static gregtech.api.unification.material.Materials.Steam;
+import static tekcays_addon.api.consts.NBTKeys.IS_RUNNING;
 import static tekcays_addon.api.render.TKCYATextures.*;
 import static tekcays_addon.api.utils.TKCYAValues.STEAM_TO_WATER;
 
-public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide, FluidStackHelper {
+public class MetaTileEntityRotationCompressor extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide, FluidStackHelper, PressureContainerHandler, AdjacentCapabilityHelper<IPressureContainer> {
 
-    private IFluidTank importFluidTank, exportFluidTank;
+    private IFluidTank importFluidTank;
     private RotationContainer rotationContainer;
+    private PressureContainer pressureContainer;
     private int maxSpeed, maxTorque, maxPower;
     private int speed, torque, power;
+    private int baseTransferRate;
+    private long pressure, minPressure, maxPressure;
     private final int tier;
-    private final int maxSteamConsumption, maxWaterOutputRate;
+    private final int maxSteamConsumption;
+    private final int maxWaterOutputRate;
     private int steamConsumption, waterOutputRate;
     private boolean isRunning;
-    private final int steamTankCapacity, waterTankCapacity;
+    private int inputTankCapacity;
 
-    public MetaTileEntitySteamTurbine(ResourceLocation metaTileEntityId, int tier) {
+
+    public MetaTileEntityRotationCompressor(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId);
         this.tier = tier + 1;
         this.maxSteamConsumption = STEAM_TO_WATER * this.tier;
         this.maxWaterOutputRate = this.tier;
         this.maxSpeed = 20 * this.tier;
-        this.steamTankCapacity = 4000 * this.tier;
-        this.waterTankCapacity = 1000 * this.tier;
+        this.inputTankCapacity = 4000 * this.tier;
         this.rotationContainer = new RotationContainer(this, maxPower, maxSpeed, maxTorque);
-        this.importFluidTank = new NotifiableFluidTank(steamTankCapacity, this, false);
-        this.exportFluidTank = new NotifiableFluidTank(waterTankCapacity, this, true);
+        this.importFluidTank = new NotifiableFluidTank(inputTankCapacity, this, false);
         initializeInventory();
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
-        return new MetaTileEntitySteamTurbine(metaTileEntityId, tier);
+        return new MetaTileEntityRotationCompressor(metaTileEntityId, tier);
     }
 
     @Override
     protected void initializeInventory() {
         super.initializeInventory();
         this.rotationContainer = new RotationContainer(this, maxPower, maxSpeed, maxTorque);
-    }
-
-    @Override
-    public FluidTankList createExportFluidHandler() {
-        this.exportFluidTank = new NotifiableFluidTank(waterTankCapacity * tier, this, true);
-        return new FluidTankList(false, exportFluidTank);
+        this.pressureContainer = new PressureContainer(this, minPressure, maxPressure);
     }
 
     @Override
     public FluidTankList createImportFluidHandler() {
-        this.importFluidTank = new NotifiableFluidTank(steamTankCapacity * tier, this, false);
+        this.importFluidTank = new NotifiableFluidTank(inputTankCapacity * tier, this, false);
         return new FluidTankList(false, importFluidTank);
     }
 
@@ -122,10 +126,6 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
         return getFrontFacing().rotateY();
     }
 
-    private EnumFacing getOutputSide() {
-        return getFrontFacing().rotateYCCW();
-    }
-
     private EnumFacing getRotationSide() {
         return getFrontFacing().getOpposite();
     }
@@ -133,11 +133,6 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
     @Nullable
     private FluidStack getImportFluidStack() {
         return importFluidTank.getFluid();
-    }
-
-    @Nullable
-    private FluidStack getExportFluidStack() {
-        return exportFluidTank.getFluid();
     }
 
     private void increment() {
@@ -171,17 +166,10 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
         }
 
         importFluidTank.drain(steamConsumption, true);
-        exportFluidTank.fill(DistilledWater.getFluid(waterOutputRate), true);
         pushFluidsIntoNearbyHandlers(getOutputSide());
         transferRotation();
         increment();
         setRunningState(true);
-
-        if (getExportFluidStack() != null && getExportFluidStack().amount >= waterTankCapacity
-            || steamConsumption > maxSteamConsumption
-            || speed > maxSpeed) {
-            this.doExplosion(2);
-        }
 
     }
 
@@ -227,32 +215,11 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.1"));
-        tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.steam_tank", steamTankCapacity));
-        tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.water_tank", waterTankCapacity));
+        tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.steam_tank", inputTankCapacity));
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.steam_input", maxSteamConsumption));
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.water_output", maxWaterOutputRate));
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.max_speed", maxSpeed));
         super.addInformation(stack, player, tooltip, advanced);
-    }
-
-    @Override
-    public boolean isAutoOutputItems() {
-        return false;
-    }
-
-    @Override
-    public boolean isAutoOutputFluids() {
-        return true;
-    }
-
-    @Override
-    public boolean isAllowInputFromOutputSideItems() {
-        return false;
-    }
-
-    @Override
-    public boolean isAllowInputFromOutputSideFluids() {
-        return false;
     }
 
     @Nonnull
@@ -269,14 +236,14 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         super.writeToNBT(data);
-        data.setBoolean("isRunning", isRunning);
+        data.setBoolean(IS_RUNNING, isRunning);
         return data;
     }
 
     @Override
     public void readFromNBT(NBTTagCompound data) {
         super.readFromNBT(data);
-        this.isRunning = data.getBoolean("isRunning");
+        this.isRunning = data.getBoolean(IS_RUNNING);
     }
 
     @Override
@@ -303,5 +270,57 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
     @Override
     public SoundEvent getSound() {
         return GTSoundEvents.TURBINE;
+    }
+
+    //Implementations
+
+    @Override
+    public IPressureContainer getPressureContainer() {
+        return this.pressureContainer;
+    }
+
+    @Override
+    public int getBaseTransferRate() {
+        return this.baseTransferRate;
+    }
+
+    @Override
+    public long getPressure() {
+        return this.pressure;
+    }
+
+    @Override
+    public FluidTankList importFluidTanks() {
+        return this.importFluids;
+    }
+
+    @Override
+    public EnumFacing getOutputSide() {
+        return getFrontFacing().rotateYCCW();
+    }
+
+    @Override
+    public Capability<IPressureContainer> getCapability() {
+        return TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER;
+    }
+
+    @Override
+    public boolean isAutoOutputItems() {
+        return false;
+    }
+
+    @Override
+    public boolean isAutoOutputFluids() {
+        return true;
+    }
+
+    @Override
+    public boolean isAllowInputFromOutputSideItems() {
+        return false;
+    }
+
+    @Override
+    public boolean isAllowInputFromOutputSideFluids() {
+        return false;
     }
 }

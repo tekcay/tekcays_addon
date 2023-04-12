@@ -1,4 +1,4 @@
-package tekcays_addon.common.metatileentities.single;
+package tekcays_addon.common.metatileentities.single.electric;
 
 import codechicken.lib.raytracer.CuboidRayTraceResult;
 import codechicken.lib.render.CCRenderState;

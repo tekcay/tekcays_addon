@@ -1,4 +1,4 @@
-package tekcays_addon.common.metatileentities.single;
+package tekcays_addon.common.metatileentities.single.electric;
 
 import gregtech.api.GTValues;
 import gregtech.api.capability.GregtechTileCapabilities;

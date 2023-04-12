@@ -1,4 +1,4 @@
-package tekcays_addon.common.metatileentities.single;
+package tekcays_addon.common.metatileentities.single.heaters;
 
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
@@ -28,7 +28,6 @@ import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.metatileentity.FuelHeater;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.utils.FuelHeaterTiers;
-import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
 import javax.annotation.Nullable;

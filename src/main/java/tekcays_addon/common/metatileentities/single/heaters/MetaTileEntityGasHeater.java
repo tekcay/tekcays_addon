@@ -1,4 +1,4 @@
-package tekcays_addon.common.metatileentities.single;
+package tekcays_addon.common.metatileentities.single.heaters;
 
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
@@ -7,7 +7,6 @@ import gregtech.api.capability.IActiveOutputSide;
 import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.capability.impl.NotifiableFluidTank;
 import gregtech.api.capability.impl.NotifiableItemStackHandler;
-import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.LabelWidget;
 import gregtech.api.gui.widgets.SlotWidget;
@@ -15,46 +14,43 @@ import gregtech.api.gui.widgets.TankWidget;
 import gregtech.api.metatileentity.IDataInfoProvider;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import gregtech.api.unification.OreDictUnifier;
-import gregtech.api.unification.ore.OrePrefix;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.capability.impl.HeatContainer;
 import tekcays_addon.api.metatileentity.FuelHeater;
 import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.utils.FuelHeaterTiers;
+import tekcays_addon.api.utils.FuelWithProperties;
+import tekcays_addon.common.items.TKCYAMetaItems;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static gregtech.api.unification.material.Materials.Coke;
-import static tekcays_addon.api.utils.FuelWithProperties.CALCITE;
-import static tekcays_addon.api.utils.HeatersMethods.getBurnTime;
-import static tekcays_addon.api.utils.HeatersMethods.isThereEnoughLiquidFuel;
+import static gregtech.api.gui.GuiTextures.*;
+import static gregtech.api.unification.material.Materials.*;
+import static tekcays_addon.api.utils.FuelWithProperties.*;
 
-public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataInfoProvider, IActiveOutputSide {
+public class MetaTileEntityGasHeater extends FuelHeater implements IDataInfoProvider, IActiveOutputSide {
 
-    protected IFluidTank importFluidTank;
+    protected IFluidTank importFluidTank, exportFluidTank;
 
-    private final Item SOLID_FUEL = OreDictUnifier.get(OrePrefix.dustTiny, Coke).getItem();
-
-    public MetaTileEntityFluidizedHeater(ResourceLocation metaTileEntityId, FuelHeaterTiers fuelHeater) {
+    public MetaTileEntityGasHeater(ResourceLocation metaTileEntityId, FuelHeaterTiers fuelHeater) {
         super(metaTileEntityId, fuelHeater);
-        this.heatIncreaseRate = setHeatIncreaseRate(32);
+        this.heatIncreaseRate = setHeatIncreaseRate(8);
         this.importFluidTank = new NotifiableFluidTank(1000, this, false);
+        this.exportFluidTank = new NotifiableFluidTank(1000, this, true);
         initializeInventory();
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
-        return new MetaTileEntityFluidizedHeater(metaTileEntityId, fuelHeater);
+        return new MetaTileEntityGasHeater(metaTileEntityId, fuelHeater);
     }
 
     @Override
@@ -68,8 +64,9 @@ public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataIn
         return new NotifiableItemStackHandler(1, this, false);
     }
     @Override
-    protected IItemHandlerModifiable createExportItemHandler() {
-        return new ItemStackHandler(1);
+    public FluidTankList createExportFluidHandler() {
+        this.exportFluidTank = new NotifiableFluidTank(1000, this, true);
+        return new FluidTankList(false, exportFluidTank);
     }
 
     @Override
@@ -84,43 +81,55 @@ public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataIn
     }
 
     protected ModularUI.Builder createUITemplate(EntityPlayer entityPlayer) {
-        return ModularUI.builder(GuiTextures.BACKGROUND, 176, 166)
+        return ModularUI.builder(BACKGROUND, 176, 166)
                 .shouldColor(false)
                 .widget(new LabelWidget(5, 5, getMetaFullName()))
-                .widget(new SlotWidget(importItems, 0, 20, 50, true, true)
-                        .setBackgroundTexture(GuiTextures.SLOT))
-                .widget(new SlotWidget(exportItems, 0, 80, 50, true, false)
-                        .setBackgroundTexture(GuiTextures.SLOT))
-                .widget(new TankWidget(importFluidTank, 50, 50, 18, 18)
-                        .setBackgroundTexture(GuiTextures.FLUID_SLOT)
+                .widget(new SlotWidget(importItems, 0, 50, 50, true, true)
+                        .setBackgroundTexture(SLOT))
+                .widget(new TankWidget(importFluidTank, 20, 50, 18, 18)
+                        .setBackgroundTexture(FLUID_SLOT)
                         .setAlwaysShowFull(true)
                         .setContainerClicking(true, true))
-                .bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 0);
+                .widget(new TankWidget(exportFluidTank, 80, 50, 18, 18)
+                        .setBackgroundTexture(FLUID_SLOT)
+                        .setAlwaysShowFull(true)
+                        .setContainerClicking(true, true))
+                .bindPlayerInventory(entityPlayer.inventory, SLOT, 0);
     }
 
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        TKCYATextures.FLUIDIZED_FUEL_HEATER.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isBurning(), true);
+        TKCYATextures.GAS_FUEL_HEATER.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isBurning(), true);
     }
 
-    private boolean isThereCoke() {
-        return importItems.getStackInSlot(0).getItem().equals(SOLID_FUEL);
+    private boolean isThereGasCollector() {
+        return importItems.extractItem(0, 1, true).isItemEqual(TKCYAMetaItems.GAS_COLLECTOR.getStackForm());
     }
 
     @Override
     protected void tryConsumeNewFuel() {
         IFluidTank fuelFluidTank = importFluids.getTankAt(0);
-        if (isThereEnoughLiquidFuel(fuelFluidTank, CALCITE) && isThereCoke()) {
-            fuelFluidTank.drain(CALCITE.getFluidStack().amount, true);
-            importItems.extractItem(0, 1, false);
-            setBurnTimeLeft(getBurnTime(CALCITE, fuelHeater));
-        }
+
+        FluidStack input = fuelFluidTank.getFluid();
+        if (input == null) return;;
+
+        FuelWithProperties fuelWithProperties = getFuelWithProperties(GAS_FUELS_BURNING, input);
+        if (fuelWithProperties == null) return;
+
+        FluidStack fs = fuelWithProperties.getFluidStack();
+        fuelFluidTank.drain(fs.amount, true);
+        setBurnTimeLeft(fuelWithProperties.getBurnTime());
+
+        if (!isThereGasCollector()) return;
+        exportFluids.getTankAt(0).fill(CarbonDioxide.getFluid(10), true);
+        pushFluidsIntoNearbyHandlers(getFrontFacing().getOpposite());
     }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
-        tooltip.add(I18n.format("tkcya.machine.fluidized_fuel_heater.tooltip"));
+        tooltip.add(I18n.format("tkcya.machine.gas_fuel_heater.tooltip.1"));
+        tooltip.add(I18n.format("tkcya.machine.gas_fuel_heater.tooltip.2"));
         super.addInformation(stack, player, tooltip, advanced);
     }
 

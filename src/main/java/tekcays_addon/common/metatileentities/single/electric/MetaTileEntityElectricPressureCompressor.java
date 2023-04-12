@@ -1,19 +1,21 @@
-package tekcays_addon.common.metatileentities.single;
+package tekcays_addon.common.metatileentities.single.electric;
 
 import gregtech.api.GTValues;
 import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.capability.impl.NotifiableFluidTank;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.capability.containers.IPressureContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.metatileentity.ElectricPressureCompressor;
+import tekcays_addon.api.utils.AdjacentCapabilityHelper;
 import tekcays_addon.api.utils.PressureContainerHandler;
 
-public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCompressor implements PressureContainerHandler {
+public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCompressor implements PressureContainerHandler, AdjacentCapabilityHelper<IPressureContainer> {
 
     private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()] * 15/16);
     private IPressureContainer pressureContainer;
@@ -51,7 +53,7 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
         if (energyContainer.getEnergyStored() < ENERGY_BASE_CONSUMPTION) return;
 
         if (!getWorld().isRemote) {
-            pressureContainer = getAdjacentPressureContainer();
+            pressureContainer = getAdjacentCapabilityContainer(this);
             if (pressureContainer != null) {
                 pressure = pressureContainer.getPressure();
                 transferRate = getBaseTransferRate();
@@ -75,19 +77,11 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
         return fluidTank.getFluid();
     }
 
-    private IPressureContainer getAdjacentPressureContainer() {
-        TileEntity te = getWorld().getTileEntity(getPos().offset(getOutputSide()));
-        if (te != null) {
-            return te.getCapability(TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER, getOutputSide().getOpposite());
-        }
-        return null;
-    }
-
     //Implementations
 
     @Override
     public IPressureContainer getPressureContainer() {
-        return getAdjacentPressureContainer();
+        return getAdjacentCapabilityContainer(this);
     }
 
     @Override
@@ -105,4 +99,13 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
         return this.getImportFluids();
     }
 
+    @Override
+    public Capability<IPressureContainer> getCapability() {
+        return TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER;
+    }
+
+    @Override
+    public EnumFacing getOutputSide() {
+        return super.getOutputSide();
+    }
 }

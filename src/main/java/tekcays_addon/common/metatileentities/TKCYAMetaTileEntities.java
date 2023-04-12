@@ -25,15 +25,22 @@ import tekcays_addon.common.metatileentities.multiblockpart.*;
 import tekcays_addon.common.metatileentities.single.*;
 
 import tekcays_addon.common.metatileentities.single.MetaTileEntitySingleCrucible;
+import tekcays_addon.common.metatileentities.single.electric.MetaTileEntityElectricCooler;
+import tekcays_addon.common.metatileentities.single.electric.MetaTileEntityElectricHeater;
+import tekcays_addon.common.metatileentities.single.electric.MetaTileEntityElectricPressureCompressor;
+import tekcays_addon.common.metatileentities.single.electric.MetaTileEntityElectricVacuumPump;
+import tekcays_addon.common.metatileentities.single.heaters.MetaTileEntityFluidizedHeater;
+import tekcays_addon.common.metatileentities.single.heaters.MetaTileEntityGasHeater;
+import tekcays_addon.common.metatileentities.single.heaters.MetaTileEntityLiquidFuelHeater;
+import tekcays_addon.common.metatileentities.single.heaters.MetaTileEntitySolidFuelHeater;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamAutoclave;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamCooler;
 
-import java.util.Arrays;
 import java.util.function.IntFunction;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
+import static tekcays_addon.api.render.TKCYATextures.STEAM_CASING;
 import static tekcays_addon.api.utils.BlastFurnaceUtils.BRICKS;
 import static tekcays_addon.api.utils.FuelHeaterTiers.BRICK;
 import static tekcays_addon.api.utils.FuelHeaterTiers.FUEL_HEATERS;
@@ -90,7 +97,8 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityFluidizedHeater[] FLUIDIZED_FUEL_HEATER = new MetaTileEntityFluidizedHeater[FUEL_HEATERS.size()];
     public static MetaTileEntityGasHeater[] GAS_FUEL_HEATER = new MetaTileEntityGasHeater[FUEL_HEATERS.size()];
 
-    public static MetaTileEntitySteamTurbine[] STEAM_TURBINE = new MetaTileEntitySteamTurbine[TKCYATextures.STEAM_CASING.length];
+    public static MetaTileEntitySteamTurbine[] STEAM_TURBINE = new MetaTileEntitySteamTurbine[STEAM_CASING.length];
+    public static MetaTileEntityRotationCompressor[] ROTATION_COMPRESSOR = new MetaTileEntityRotationCompressor[STEAM_CASING.length];
 
     public static MetaTileEntityRoastingOven ROASTING_OVEN;
     public static MetaTileEntitySpiralSeparator SPIRAL_SEPARATOR;
@@ -337,6 +345,9 @@ public class TKCYAMetaTileEntities {
 
         IntStream.range(0, STEAM_TURBINE.length - 1)
                 .forEach(i -> STEAM_TURBINE[i] = registerMetaTileEntity(12000 + i, new MetaTileEntitySteamTurbine(tkcyaId("steam_turbine." + i), i)));
+
+        IntStream.range(0, ROTATION_COMPRESSOR.length - 1)
+                .forEach(i -> ROTATION_COMPRESSOR[i] = registerMetaTileEntity(12010 + i, new MetaTileEntityRotationCompressor(tkcyaId("rotation_compressor." + i), i)));
 
     }
 

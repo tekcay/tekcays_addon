@@ -37,6 +37,7 @@ import java.util.List;
 
 import static gregtech.api.capability.GregtechDataCodes.UPDATE_OUTPUT_FACING;
 import static net.minecraft.util.EnumFacing.UP;
+import static tekcays_addon.api.consts.NBTKeys.OUTPUT_SIDE;
 
 public abstract class ElectricPressureCompressor extends TieredMetaTileEntity implements IActiveOutputSide {
 
@@ -116,9 +117,6 @@ public abstract class ElectricPressureCompressor extends TieredMetaTileEntity im
         }
     }
 
-
-
-    //To prevent the heater to heat on the bottom face
     @Override
     public boolean isValidFrontFacing(EnumFacing facing) {
         return facing != EnumFacing.DOWN && facing != UP;
@@ -196,14 +194,14 @@ public abstract class ElectricPressureCompressor extends TieredMetaTileEntity im
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         super.writeToNBT(data);
-        data.setInteger("outputSide", getOutputSide().getIndex());
+        data.setInteger(OUTPUT_SIDE, getOutputSide().getIndex());
         return data;
     }
 
     @Override
     public void readFromNBT(NBTTagCompound data) {
         super.readFromNBT(data);
-        this.outputSide = EnumFacing.VALUES[data.getInteger("outputSide")];
+        this.outputSide = EnumFacing.VALUES[data.getInteger(OUTPUT_SIDE)];
     }
 
     @Override
