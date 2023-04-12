@@ -3,6 +3,9 @@ package tekcays_addon.api.capability.impl;
 import gregtech.api.metatileentity.MTETrait;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.unification.material.Materials;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
@@ -13,17 +16,26 @@ import tekcays_addon.api.capability.TKCYATileCapabilities;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import static lombok.AccessLevel.NONE;
 import static tekcays_addon.api.consts.DataIds.AIR_FLUID_STACK;
 import static tekcays_addon.api.consts.NBTKeys.PRESSURE_KEY;
 import static tekcays_addon.api.utils.TKCYAValues.ROOM_TEMPERATURE;
 
+@Getter
+@Setter
 public class VacuumContainer extends MTETrait implements IVacuumContainer {
 
-    protected long minPressure;
-    protected long maxPressure;
-    protected long pressure;
+    @Setter(NONE)
+    protected int minPressure;
+    @Setter(NONE)
+    protected int maxPressure;
+    @Setter(NONE)
+    protected int pressure;
     protected int volume;
     protected FluidStack airFluidStack;
+
+    @Getter(NONE)
+    @Setter(NONE)
     protected boolean canHandleVacuum;
 
     /**
@@ -39,31 +51,11 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
      * Default Vacuum container
      * {@link IVacuumContainer}
      */
-    public VacuumContainer(MetaTileEntity metaTileEntity, boolean canHandleVacuum, long minPressure, long maxPressure) {
+    public VacuumContainer(MetaTileEntity metaTileEntity, boolean canHandleVacuum, int minPressure, int maxPressure) {
         super(metaTileEntity);
         this.canHandleVacuum = canHandleVacuum;
         this.minPressure = minPressure;
         this.maxPressure = maxPressure;
-    }
-
-    @Override
-    public long getMaxPressure() {
-        return this.maxPressure;
-    }
-
-    @Override
-    public long getMinPressure() {
-        return this.minPressure;
-    }
-
-    @Override
-    public long getPressure() {
-        return this.pressure;
-    }
-
-    @Override
-    public boolean canHandleVacuum() {
-        return true;
     }
 
     @Override
@@ -78,25 +70,9 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
         this.metaTileEntity.markDirty();
     }
 
-
     @Override
-    public int getVolume() {
-        return this.volume;
-    }
-
-    @Override
-    public void setVolume(int volume) {
-        this.volume = volume;
-    }
-
-    @Override
-    public FluidStack getAirFluidStack() {
-        return this.airFluidStack;
-    }
-
-    @Override
-    public void setAirFluidStack(FluidStack fluidStack) {
-        this.airFluidStack = fluidStack;
+    public boolean canHandleVacuum() {
+        return true;
     }
 
     @Override
@@ -104,6 +80,7 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
         return false;
     }
 
+    @Nonnull
     @Override
     public String getName() {
         return "VacuumContainer";
@@ -118,6 +95,7 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
         return null;
     }
 
+    @Nonnull
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = new NBTTagCompound();
@@ -131,25 +109,25 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
     @Override
     public void deserializeNBT(@Nonnull NBTTagCompound compound) {
         super.deserializeNBT(compound);
-        this.pressure = compound.getLong(PRESSURE_KEY);
+        this.pressure = compound.getInteger(PRESSURE_KEY);
         this.volume = compound.getInteger("volume");
         this.airFluidStack = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag(AIR_FLUID_STACK.getName()));
         this.airFluidStack = Materials.Air.getFluid(compound.getInteger("airAmount"));
     }
 
     @Override
-    public void writeInitialData(PacketBuffer buffer) {
+    public void writeInitialData(@Nonnull PacketBuffer buffer) {
         super.writeInitialData(buffer);
-        buffer.writeLong(this.pressure);
+        buffer.writeInt(this.pressure);
         buffer.writeInt(this.volume);
         //buffer.writeCompoundTag(this.setAirFluidStackNBT());
         buffer.writeInt(this.getAirAmount());
     }
 
     @Override
-    public void receiveInitialData(PacketBuffer buffer) {
+    public void receiveInitialData(@Nonnull PacketBuffer buffer) {
         super.receiveInitialData(buffer);
-        this.pressure = buffer.readLong();
+        this.pressure = buffer.readInt();
         this.volume = buffer.readInt();
         this.airFluidStack = Materials.Air.getFluid(buffer.readInt());
         /*

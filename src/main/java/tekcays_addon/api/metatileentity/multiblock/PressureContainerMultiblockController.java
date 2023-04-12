@@ -12,6 +12,8 @@ import tekcays_addon.api.utils.TKCYAValues;
 
 import java.util.List;
 
+import static tekcays_addon.api.utils.TKCYAValues.MAX_PRESSURE;
+
 
 public abstract class PressureContainerMultiblockController extends RecipeMapMultiblockController implements IPressureMachine {
 
@@ -27,7 +29,7 @@ public abstract class PressureContainerMultiblockController extends RecipeMapMul
         super.initializeAbilities();
         List<IPressureContainer> list = getAbilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER);
         if (list.isEmpty()) {
-            this.pressureContainer = new PressureContainer(this, 0, TKCYAValues.MAX_PRESSURE);
+            this.pressureContainer = new PressureContainer(this, 0, MAX_PRESSURE);
         } else {
             this.pressureContainer = list.get(0);
         }

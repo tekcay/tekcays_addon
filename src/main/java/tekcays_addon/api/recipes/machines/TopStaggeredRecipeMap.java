@@ -7,7 +7,6 @@ import gregtech.api.gui.widgets.ProgressWidget;
 import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMap;
 import net.minecraftforge.items.IItemHandlerModifiable;
-import tekcays_addon.api.utils.TKCYALog;
 
 import static tekcays_addon.api.utils.TKCYAValues.SLOT_INTERVAL;
 
@@ -15,11 +14,9 @@ public class TopStaggeredRecipeMap<R extends RecipeBuilder<R>> extends RecipeMap
 
     private static final int maxSlots = 4;
 
-    public TopStaggeredRecipeMap(String unlocalizedName,
-                                 int minInputs, int maxInputs, int minOutputs, int maxOutputs,
-                                 int minFluidInputs, int maxFluidInputs, int minFluidOutputs, int maxFluidOutputs,
+    public TopStaggeredRecipeMap(String unlocalizedName, int maxInputs, int maxOutputs, int maxFluidInputs, int maxFluidOutputs,
                                  R defaultRecipe, boolean isHidden) {
-        super(unlocalizedName, minInputs, maxInputs, minOutputs, maxOutputs, minFluidInputs, maxFluidInputs, minFluidOutputs, maxFluidOutputs, defaultRecipe, isHidden);
+        super(unlocalizedName, maxInputs, maxOutputs, maxFluidInputs, maxFluidOutputs, defaultRecipe, isHidden);
     }
 
     @Override

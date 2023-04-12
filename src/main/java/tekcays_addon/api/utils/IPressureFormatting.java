@@ -4,7 +4,7 @@ import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
 
 public interface IPressureFormatting {
 
-    default boolean isVacuum(long pressure) {
+    default boolean isVacuum(int pressure) {
         return pressure < ATMOSPHERIC_PRESSURE;
     }
 
@@ -14,7 +14,7 @@ public interface IPressureFormatting {
      * @param addsUnit
      * @return a {@code String} containing the value of the pressure with its unit.
      */
-    default String convertPressureToMbar(long pressureInPa, boolean addsUnit) {
+    default String convertPressureToMbar(int pressureInPa, boolean addsUnit) {
         //Returns the pressure in mbar
         if (pressureInPa < ATMOSPHERIC_PRESSURE) return String.format((addsUnit ? "%d mbar" : "%d mbar"), (int) (1000.0 * pressureInPa / ATMOSPHERIC_PRESSURE));
         return "error";
@@ -27,7 +27,7 @@ public interface IPressureFormatting {
      * @param addsUnit
      * @return a {@code String} containing the value of the pressure with its unit.
      */
-    default String convertPressureToBar(long pressureInPa, boolean addsUnit) {
+    default String convertPressureToBar(int pressureInPa, boolean addsUnit) {
         //Returns the pressure in kbar
         if (pressureInPa > ATMOSPHERIC_PRESSURE * 1000) {
             return String.format((addsUnit ? "%4.1f kbar" : "%4.1f"), (pressureInPa * 1.0 / (ATMOSPHERIC_PRESSURE * Math.pow(10, 6))));

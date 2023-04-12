@@ -20,8 +20,8 @@ import static tekcays_addon.api.consts.NBTKeys.*;
 @Setter
 public class PressureControl extends MTETrait implements IPressureControl {
 
-    private long thresholdPressure;
-    private long pressure;
+    private int thresholdPressure;
+    private int pressure;
     private DetectorModes detectorMode;
 
     public PressureControl(MetaTileEntity metaTileEntity) {
@@ -31,6 +31,7 @@ public class PressureControl extends MTETrait implements IPressureControl {
         this.detectorMode = DetectorModes.EQUAL;
     }
 
+    @Nonnull
     @Override
     public String getName() {
         return "PressureControl";
@@ -45,35 +46,36 @@ public class PressureControl extends MTETrait implements IPressureControl {
         return null;
     }
 
+    @Nonnull
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = super.serializeNBT();
-        compound.setLong(THRESHOLD_PRESSURE_KEY, this.thresholdPressure);
-        compound.setLong(PRESSURE_KEY, this.pressure);
+        compound.setInteger(THRESHOLD_PRESSURE_KEY, this.thresholdPressure);
+        compound.setInteger(PRESSURE_KEY, this.pressure);
         compound.setString(DETECTOR_MODE_KEY, this.detectorMode.name());
         return compound;
     }
 
     @Override
     public void deserializeNBT(@Nonnull NBTTagCompound compound) {
-        this.pressure = compound.getLong(PRESSURE_KEY);
-        this.thresholdPressure = compound.getLong(THRESHOLD_PRESSURE_KEY);
+        this.pressure = compound.getInteger(PRESSURE_KEY);
+        this.thresholdPressure = compound.getInteger(THRESHOLD_PRESSURE_KEY);
         this.detectorMode = DetectorModes.valueOf(compound.getString(DETECTOR_MODE_KEY));
     }
 
     @Override
-    public void writeInitialData(PacketBuffer buffer) {
+    public void writeInitialData(@Nonnull PacketBuffer buffer) {
         super.writeInitialData(buffer);
-        buffer.writeLong(this.pressure);
-        buffer.writeLong(this.thresholdPressure);
+        buffer.writeInt(this.pressure);
+        buffer.writeInt(this.thresholdPressure);
         buffer.writeString(this.detectorMode.name());
     }
 
     @Override
-    public void receiveInitialData(PacketBuffer buffer) {
+    public void receiveInitialData(@Nonnull PacketBuffer buffer) {
         super.receiveInitialData(buffer);
-        this.pressure = buffer.readLong();
-        this.thresholdPressure = buffer.readLong();
+        this.pressure = buffer.readInt();
+        this.thresholdPressure = buffer.readInt();
         this.detectorMode = DetectorModes.valueOf(buffer.readString(6));
     }
 }

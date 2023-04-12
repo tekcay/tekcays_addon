@@ -1,11 +1,13 @@
 package tekcays_addon.api.utils.roasting;
 
 import gregtech.api.unification.material.Material;
+import lombok.Getter;
 
 import static gregtech.api.unification.material.Materials.*;
 import static tekcays_addon.api.unification.TKCYAMaterials.*;
 import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
 
+@Getter
 public class RoastableMaterial {
 
 
@@ -28,48 +30,29 @@ public class RoastableMaterial {
 
 
     private final Material material;
-    private final int temperature;
-    private final long pressure;
+    private final int roastingTemperature;
+    private final int roastingPressure;
     private Material output;
     private Material fluidOutput;
 
-    public RoastableMaterial(Material material, int temperature, long pressure) {
+    public RoastableMaterial(Material material, int roastingTemperature, int roastingPressure) {
         this.material = material;
-        this.temperature = temperature;
-        this.pressure = pressure;
+        this.roastingTemperature = roastingTemperature;
+        this.roastingPressure = roastingPressure;
     }
 
-    public RoastableMaterial(Material material, int temperature, long pressure, Material output) {
+    public RoastableMaterial(Material material, int roastingTemperature, int roastingPressure, Material output) {
         this.material = material;
-        this.temperature = temperature;
-        this.pressure = pressure;
+        this.roastingTemperature = roastingTemperature;
+        this.roastingPressure = roastingPressure;
         this.output = output;
     }
 
-    public RoastableMaterial(Material material, int temperature, long pressure, Material output, Material fluidOutput) {
+    public RoastableMaterial(Material material, int roastingTemperature, int roastingPressure, Material output, Material fluidOutput) {
         this.material = material;
-        this.temperature = temperature;
-        this.pressure = pressure;
+        this.roastingTemperature = roastingTemperature;
+        this.roastingPressure = roastingPressure;
         this.output = output;
         this.fluidOutput = fluidOutput;
-    }
-
-    public Material getMaterial() {
-        return this.material;
-    }
-
-    public int getRoastingTemperature() {
-        return this.temperature;
-    }
-
-    public long getRoastingPressure() {
-        return this.pressure;
-    }
-    public Material getOutput() {
-        return this.output;
-    }
-
-    public Material getFluidOutput() {
-        return this.fluidOutput;
     }
 }

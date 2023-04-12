@@ -31,11 +31,11 @@ public class PressureContainerMultiblockRecipeLogic extends MultiblockRecipeLogi
     protected void setupRecipe(Recipe recipe) {
         super.setupRecipe(recipe);
         if (recipe.getRecipePropertyStorage() != null && recipe.hasProperty(MinPressureProperty.getInstance())) {
-            this.recipeMinPressure = recipe.getProperty(MinPressureProperty.getInstance(), 0L);
+            this.recipeMinPressure = recipe.getProperty(MinPressureProperty.getInstance(), 0);
         }
 
         if (recipe.getRecipePropertyStorage() != null && recipe.hasProperty(MaxPressureProperty.getInstance())) {
-            this.recipeMaxPressure = recipe.getProperty(MaxPressureProperty.getInstance(), 0L);
+            this.recipeMaxPressure = recipe.getProperty(MaxPressureProperty.getInstance(), 0);
         }
 
         if (recipe.getRecipePropertyStorage() != null && recipe.hasProperty(NoCoilTemperatureProperty.getInstance())) {

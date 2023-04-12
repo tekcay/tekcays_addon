@@ -39,15 +39,14 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     private final IPressureContainer pressureContainer;
     private final int leakingRate;
     private final boolean canHandleVacuum;
-    private final long minPressure;
-    private final long maxPressure;
+    private final int minPressure, maxPressure;
     private final int tierMultiplier = getTier() * getTier() + 1;
 
     public MetaTileEntityPressureHatch(@Nonnull ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
         this.canHandleVacuum = false;
         this.minPressure = ATMOSPHERIC_PRESSURE;
-        this.maxPressure = (long) ATMOSPHERIC_PRESSURE * 10 * tierMultiplier;
+        this.maxPressure = ATMOSPHERIC_PRESSURE * 10 * tierMultiplier;
         this.leakingRate = - 10 * tierMultiplier;
         this.pressureContainer = new PressureContainer(this, minPressure, maxPressure);
         this.pressureContainer.setVolume(1);

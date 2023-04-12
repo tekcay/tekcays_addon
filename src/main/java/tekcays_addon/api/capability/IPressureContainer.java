@@ -1,7 +1,6 @@
 package tekcays_addon.api.capability;
 
 
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nullable;
@@ -26,7 +25,7 @@ public interface IPressureContainer {
     /**
      * @return the amount of pressure in the container in {@code Pa}
      */
-    long getPressure();
+    int getPressure();
 
     /**
      * Set the {@code pressure} in {@code Pa}
@@ -41,12 +40,12 @@ public interface IPressureContainer {
     /**
      * @return the maximum pressure this container can handle in {@code Pa}
      */
-    long getMaxPressure();
+    int getMaxPressure();
 
     /**
      * @return the minimum pressure this container can handle in {@code Pa}
      */
-    long getMinPressure();
+    int getMinPressure();
 
     boolean canHandleVacuum();
 

@@ -4,14 +4,12 @@ import gregtech.api.capability.impl.FluidTankList;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.capability.IPressureContainer;
 
-import static tekcays_addon.api.utils.TKCYAValues.NO_FLUID;
-
 public interface PressureContainerHandler {
 
 
     IPressureContainer getPressureContainer();
     int getBaseTransferRate();
-    long getPressure();
+    int getPressure();
     FluidTankList importFluidTanks();
 
 /*

@@ -19,12 +19,12 @@ public class PressureContainerList implements IPressureContainer, FluidStackHelp
     }
 
     @Override
-    public long getMinPressure() {
+    public int getMinPressure() {
         return getIPressureContainer().getMinPressure();
     }
 
     @Override
-    public long getMaxPressure() {
+    public int getMaxPressure() {
         return getIPressureContainer().getMaxPressure();
     }
 
@@ -65,7 +65,7 @@ public class PressureContainerList implements IPressureContainer, FluidStackHelp
     }
 
     @Override
-    public long getPressure() {
+    public int getPressure() {
         return getIPressureContainer().getPressure();
     }
 

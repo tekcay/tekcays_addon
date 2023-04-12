@@ -14,9 +14,9 @@ public class RecipePropertyGetters {
         this.recipePropertyStorage = recipePropertyStorage;
     }
 
-    public Long[] getIntervalPressure() {
-        return this.recipePropertyStorage == null ? EMPTY_LONG_TWO_ARRAY :
-                this.recipePropertyStorage.getRecipePropertyValue(IntervalPressureProperty.getInstance(), EMPTY_LONG_TWO_ARRAY);
+    public Integer[] getIntervalPressure() {
+        return this.recipePropertyStorage == null ? EMPTY_INT_TWO_ARRAY :
+                this.recipePropertyStorage.getRecipePropertyValue(IntervalPressureProperty.getInstance(), EMPTY_INT_TWO_ARRAY);
     }
 
     public Integer[] getIntervalTemperature() {
@@ -35,13 +35,13 @@ public class RecipePropertyGetters {
     }
 
     public long getMinPressure() {
-        return this.recipePropertyStorage == null ? 0L :
-                this.recipePropertyStorage.getRecipePropertyValue(MinPressureProperty.getInstance(), 0L);
+        return this.recipePropertyStorage == null ? 0 :
+                this.recipePropertyStorage.getRecipePropertyValue(MinPressureProperty.getInstance(), 0);
     }
 
     public long getMaxPressure() {
-        return this.recipePropertyStorage == null ? 0L :
-                this.recipePropertyStorage.getRecipePropertyValue(MaxPressureProperty.getInstance(), 0L);
+        return this.recipePropertyStorage == null ? 0 :
+                this.recipePropertyStorage.getRecipePropertyValue(MaxPressureProperty.getInstance(), 0);
     }
 
     public FluidStack getPressurizedFluidStack() {
