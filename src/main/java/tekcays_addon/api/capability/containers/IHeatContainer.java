@@ -1,11 +1,10 @@
 package tekcays_addon.api.capability.containers;
 
 import tekcays_addon.api.capability.ParameterHelper;
-import tekcays_addon.api.capability.impl.HeatContainer;
 
 import java.util.List;
 
-public interface IHeatContainer extends IContainer<IHeatContainer, HeatContainer> {
+public interface IHeatContainer {
 
     /**
      * @return the amount of heat in the container

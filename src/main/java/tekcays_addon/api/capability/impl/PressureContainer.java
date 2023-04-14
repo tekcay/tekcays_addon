@@ -20,6 +20,7 @@ import javax.annotation.Nullable;
 import static tekcays_addon.api.consts.DataIds.PRESSURIZED_FLUID_STACK;
 import static tekcays_addon.api.consts.NBTKeys.PRESSURE_KEY;
 import static tekcays_addon.api.utils.TKCYAValues.*;
+import static tekcays_addon.api.utils.capability.GetCapabilityHelper.getCapabilityOfContainer;
 
 @Getter
 @Setter

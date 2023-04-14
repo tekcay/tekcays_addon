@@ -36,7 +36,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.ArrayUtils;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
-import tekcays_addon.api.capability.containers.IContainer;
 import tekcays_addon.api.capability.containers.IPressureContainer;
 import tekcays_addon.api.capability.containers.IRotationContainer;
 import tekcays_addon.api.capability.impl.PressureContainer;
@@ -44,7 +43,6 @@ import tekcays_addon.api.capability.impl.RotationContainer;
 import tekcays_addon.api.utils.capability.AdjacentCapabilityHelper;
 import tekcays_addon.api.utils.FluidStackHelper;
 import tekcays_addon.api.utils.PressureContainerHandler;
-import tekcays_addon.api.utils.capability.GetCapabilityHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -52,6 +50,7 @@ import java.util.List;
 
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
 import static gregtech.api.unification.material.Materials.Steam;
+import static tekcays_addon.api.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
 import static tekcays_addon.api.consts.NBTKeys.IS_RUNNING;
 import static tekcays_addon.api.render.TKCYATextures.*;
 import static tekcays_addon.api.utils.TKCYAValues.STEAM_TO_WATER;
@@ -188,7 +187,7 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
         TileEntity te = getWorld().getTileEntity(getPos().offset(getFrontFacing()));
         if (te != null) {
             //Get the Capability of this Tile Entity on the opposite face.
-            IRotationContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER, getFrontFacing().getOpposite());
+            IRotationContainer container = te.getCapability(CAPABILITY_ROTATIONAL_CONTAINER, getFrontFacing().getOpposite());
             if (container != null) {
                 container.setSpeed(speed);
                 container.setPower(power);
@@ -206,19 +205,14 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
     @Nullable
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
 
-        IContainer cap;
-
         if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
-            cap = side == getOutputSide() ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
+            return side == getOutputSide() ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
         }
 
-        cap = GetCapabilityHelper.getCapabilityOnSide(getOutputSide(), side, TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER, rotationContainer);
-        /*
-        if (capability.equals(TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER)) {
-            return side == getRotationSide() ? TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER.cast(rotationContainer) : null;
+        if (capability == CAPABILITY_ROTATIONAL_CONTAINER) {
+            return side == getRotationSide() ? CAPABILITY_ROTATIONAL_CONTAINER.cast(rotationContainer) : null;
         }
 
-         */
         return super.getCapability(capability, side);
     }
 

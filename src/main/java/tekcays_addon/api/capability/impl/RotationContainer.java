@@ -7,6 +7,7 @@ import lombok.Setter;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
+import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.containers.IRotationContainer;
 import tekcays_addon.api.capability.NBTHelper;
 import tekcays_addon.api.capability.ParameterHelper;
@@ -44,7 +45,9 @@ public class RotationContainer extends MTETrait implements IRotationContainer, N
     @Nullable
     @Override
     public <T> T getCapability(Capability<T> capability) {
-        getCapabilityOfContainer(capability, this);
+        if (capability == CAPABILITY_ROTATIONAL_CONTAINER) {
+            return CAPABILITY_ROTATIONAL_CONTAINER.cast(this);
+        }
         return null;
     }
 
@@ -82,20 +85,5 @@ public class RotationContainer extends MTETrait implements IRotationContainer, N
         parametersValues.add(new ParameterHelper<>("maxTorque", maxTorque, this::setMaxTorque));
         parametersValues.add(new ParameterHelper<>("maxPower", maxPower, this::setMaxPower));
         return parametersValues;
-    }
-
-    @Override
-    public Capability<IRotationContainer> getContainerCapability() {
-        return CAPABILITY_ROTATIONAL_CONTAINER;
-    }
-
-    @Override
-    public RotationContainer getContainer() {
-        return this;
-    }
-
-    @Override
-    public CapabilityId getCapabilityId() {
-        return CapabilityId.ROTATION;
     }
 }

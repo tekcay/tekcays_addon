@@ -1,12 +1,7 @@
 package tekcays_addon.api.capability.list;
 
-import net.minecraftforge.common.capabilities.Capability;
 import tekcays_addon.api.capability.ParameterHelper;
-import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.containers.IHeatContainer;
-import tekcays_addon.api.capability.impl.HeatContainer;
-import tekcays_addon.api.consts.CapabilityId;
-import tekcays_addon.api.utils.TKCYALog;
 
 import java.util.Comparator;
 import java.util.List;
@@ -82,20 +77,5 @@ public class HeatContainerList implements IHeatContainer {
     @Override
     public void setTemperature(int temperature) {
         heatContainerList.forEach(iHeatContainer -> iHeatContainer.setTemperature(temperature));
-    }
-
-    @Override
-    public Capability<IHeatContainer> getContainerCapability() {
-        return TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER;
-    }
-
-    @Override
-    public HeatContainer getContainer() {
-        return null;
-    }
-
-    @Override
-    public CapabilityId getCapabilityId() {
-        return CapabilityId.HEAT;
     }
 }

@@ -8,12 +8,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
 import tekcays_addon.api.capability.containers.IPressureControl;
-import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.consts.DetectorModes;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import static tekcays_addon.api.capability.TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTROL;
 import static tekcays_addon.api.consts.NBTKeys.*;
 
 @Getter
@@ -40,8 +40,8 @@ public class PressureControl extends MTETrait implements IPressureControl {
     @Nullable
     @Override
     public <T> T getCapability(Capability<T> capability) {
-        if (capability == TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTROL ) {
-            return TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTROL.cast(this);
+        if (capability == CAPABILITY_PRESSURE_CONTROL ) {
+            return CAPABILITY_PRESSURE_CONTROL.cast(this);
         }
         return null;
     }
