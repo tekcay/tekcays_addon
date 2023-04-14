@@ -53,7 +53,7 @@ import static tekcays_addon.api.utils.TKCYAValues.STEAM_TO_WATER;
 public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide, FluidStackHelper {
 
     private IFluidTank importFluidTank, exportFluidTank;
-    private RotationContainer rotationContainer;
+    private IRotationContainer rotationContainer;
     private int maxSpeed, maxTorque, maxPower;
     private int speed, torque, power;
     private final int tier;
@@ -179,11 +179,14 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
         increment();
         setRunningState(true);
 
+        /*
         if (getExportFluidStack() != null && getExportFluidStack().amount >= waterTankCapacity
             || steamConsumption > maxSteamConsumption
             || speed > maxSpeed) {
             this.doExplosion(2);
         }
+
+         */
 
     }
 
@@ -197,10 +200,10 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
 
     private void transferRotation() {
         //Get the TileEntity that is placed right on top of the Heat.
-        TileEntity te = getWorld().getTileEntity(getPos().offset(getFrontFacing()));
+        TileEntity te = getWorld().getTileEntity(getPos().offset(getRotationSide()));
         if (te != null) {
             //Get the Capability of this Tile Entity on the opposite face.
-            IRotationContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER, getFrontFacing().getOpposite());
+            IRotationContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER, getRotationSide().getOpposite());
             if (container != null) {
                 container.setSpeed(speed);
                 container.setPower(power);

@@ -4,7 +4,6 @@ import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.ColourMultiplier;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregtech.api.capability.GregtechTileCapabilities;
 import gregtech.api.capability.IActiveOutputSide;
 import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.capability.impl.NotifiableFluidTank;
@@ -22,7 +21,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -49,25 +47,21 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
-import static gregtech.api.unification.material.Materials.Steam;
 import static tekcays_addon.api.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
 import static tekcays_addon.api.consts.NBTKeys.IS_RUNNING;
 import static tekcays_addon.api.render.TKCYATextures.*;
-import static tekcays_addon.api.utils.TKCYAValues.STEAM_TO_WATER;
 
 public class MetaTileEntityRotationCompressor extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide, FluidStackHelper, PressureContainerHandler, AdjacentCapabilityHelper<IPressureContainer> {
 
     private IFluidTank importFluidTank;
-    private RotationContainer rotationContainer;
-    private PressureContainer pressureContainer;
-    private int maxSpeed, maxTorque, maxPower;
+    private IRotationContainer rotationContainer;
+    private IPressureContainer pressureContainer;
+    private final int maxSpeed, maxTorque, maxPower;
     private int speed, torque, power;
     private int baseTransferRate;
     private int pressure, minPressure, maxPressure;
     private final int tier;
-    private final int maxSteamConsumption;
-    private final int maxWaterOutputRate;
-    private int steamConsumption, waterOutputRate;
+    private int transferRate;
     private boolean isRunning;
     private int inputTankCapacity;
 
@@ -75,11 +69,10 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
     public MetaTileEntityRotationCompressor(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId);
         this.tier = tier + 1;
-        this.maxSteamConsumption = STEAM_TO_WATER * this.tier;
-        this.maxWaterOutputRate = this.tier;
         this.maxSpeed = 20 * this.tier;
+        this.maxTorque = maxSpeed * 5;
+        this.maxPower = maxSpeed * maxTorque;
         this.inputTankCapacity = 4000 * this.tier;
-        this.rotationContainer = new RotationContainer(this, maxPower, maxSpeed, maxTorque);
         this.importFluidTank = new NotifiableFluidTank(inputTankCapacity, this, false);
         initializeInventory();
     }
@@ -93,7 +86,6 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
     protected void initializeInventory() {
         super.initializeInventory();
         this.rotationContainer = new RotationContainer(this, maxPower, maxSpeed, maxTorque);
-        this.pressureContainer = new PressureContainer(this, minPressure, maxPressure);
     }
 
     @Override
@@ -118,17 +110,21 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
         getBaseRenderer().render(renderState, translation, colouredPipeline);
         ColourMultiplier multiplier = new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
         colouredPipeline = ArrayUtils.add(pipeline, multiplier);
-        Textures.PIPE_IN_OVERLAY.renderSided(getInputSide(), renderState, translation, pipeline);
-        ROTATION_TURBINE_OVERLAY.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isRunning, true);
-        ROTATION_WATER_OUTPUT_OVERLAY.renderSided(getOutputSide(), renderState, translation, pipeline);
+        Textures.PIPE_IN_OVERLAY.renderSided(getImportFluidSide(), renderState, translation, pipeline);
+        ROTATION_STATIC.renderSided(getRotationSide(), renderState, translation, pipeline);
+        ROTATION_WATER_OUTPUT_OVERLAY.renderSided(getPressureSide(), renderState, translation, pipeline);
     }
 
-    private EnumFacing getInputSide() {
-        return getFrontFacing().rotateY();
+    private EnumFacing getImportFluidSide() {
+        return getFrontFacing().getOpposite();
+    }
+
+    private EnumFacing getPressureSide() {
+        return getFrontFacing().rotateYCCW();
     }
 
     private EnumFacing getRotationSide() {
-        return getFrontFacing().getOpposite();
+        return getPressureSide().getOpposite();
     }
 
     @Nullable
@@ -136,42 +132,31 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
         return importFluidTank.getFluid();
     }
 
-    private void increment() {
-        if (getOffsetTimer() % (10 * STEAM_TO_WATER) == 0) {
-            steamConsumption += STEAM_TO_WATER;
-            waterOutputRate ++;
-            speed ++;
-        }
-    }
-
-    private void decrement() {
-        if (getOffsetTimer() % 40 == 0) {
-            steamConsumption = Math.max(steamConsumption - STEAM_TO_WATER, 0);
-            waterOutputRate = Math.max(waterOutputRate - 1, 0);
-            speed = Math.max(speed - 1, 0);
-        }
-    }
-
     @Override
     public void update() {
         super.update();
-        if (getImportFluidStack() == null || !getImportFluidStack().isFluidEqual(Steam.getFluid(1))) {
-            decrement();
-            setRunningState(false);
-            return;
-        }
-        if (getImportFluidStack().amount < steamConsumption) {
-            decrement();
-            setRunningState(false);
-            return;
-        }
+        //Redstone stops fluid transfer
+        if (this.isBlockRedstonePowered()) return;
+        if (rotationContainer.getSpeed() == 0) return;
 
-        importFluidTank.drain(steamConsumption, true);
-        pushFluidsIntoNearbyHandlers(getOutputSide());
-        transferRotation();
-        increment();
-        setRunningState(true);
+        if (!getWorld().isRemote) {
+            pressureContainer = getAdjacentCapabilityContainer(this);
+            if (pressureContainer != null) {
+                pressure = pressureContainer.getPressure();
+                transferRate = getBaseTransferRate();
+            } else {
+                transferRate = 0;
+                return;
+            }
 
+            if (getImportFluidStack() == null) return;
+
+            int toDrain = pressureContainer.changePressurizedFluidStack(getImportFluidStack(), transferRate);
+
+            if (toDrain > 0) {
+                importFluidTank.drain(toDrain, true);
+            }
+        }
     }
 
     public void setRunningState(boolean isRunning) {
@@ -179,20 +164,6 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
         if (!getWorld().isRemote) {
             markDirty();
             writeCustomData(IS_WORKING, buf -> buf.writeBoolean(isRunning));
-        }
-    }
-
-    private void transferRotation() {
-        //Get the TileEntity that is placed right on top of the Heat.
-        TileEntity te = getWorld().getTileEntity(getPos().offset(getFrontFacing()));
-        if (te != null) {
-            //Get the Capability of this Tile Entity on the opposite face.
-            IRotationContainer container = te.getCapability(CAPABILITY_ROTATIONAL_CONTAINER, getFrontFacing().getOpposite());
-            if (container != null) {
-                container.setSpeed(speed);
-                container.setPower(power);
-                container.setTorque(torque);
-            }
         }
     }
 
@@ -204,15 +175,9 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
     @Override
     @Nullable
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
-
-        if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
-            return side == getOutputSide() ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
-        }
-
         if (capability == CAPABILITY_ROTATIONAL_CONTAINER) {
             return side == getRotationSide() ? CAPABILITY_ROTATIONAL_CONTAINER.cast(rotationContainer) : null;
         }
-
         return super.getCapability(capability, side);
     }
 
@@ -220,8 +185,6 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.1"));
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.steam_tank", inputTankCapacity));
-        tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.steam_input", maxSteamConsumption));
-        tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.water_output", maxWaterOutputRate));
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.max_speed", maxSpeed));
         super.addInformation(stack, player, tooltip, advanced);
     }
@@ -232,8 +195,6 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
         List<ITextComponent> list = new ObjectArrayList<>();
         list.add(new TextComponentTranslation("behavior.tricorder.steam.amount", getNullableFluidStackAmount(getImportFluidStack())));
         list.add(new TextComponentTranslation("behavior.tricorder.speed", speed));
-        list.add(new TextComponentTranslation("behavior.tricorder.turbine.steam_consumption", steamConsumption));
-        list.add(new TextComponentTranslation("behavior.tricorder.turbine.output_rate", waterOutputRate));
         return list;
     }
 
@@ -300,7 +261,7 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
 
     @Override
     public EnumFacing getOutputSide() {
-        return getFrontFacing().rotateYCCW();
+        return getPressureSide();
     }
 
     @Override

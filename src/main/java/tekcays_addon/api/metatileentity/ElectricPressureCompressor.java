@@ -32,6 +32,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.apache.commons.lang3.ArrayUtils;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.containers.IVacuumContainer;
+import tekcays_addon.api.render.TKCYATextures;
 import tekcays_addon.api.utils.capability.GetCapabilityHelper;
 
 import javax.annotation.Nonnull;
@@ -94,7 +95,7 @@ public abstract class ElectricPressureCompressor extends TieredMetaTileEntity im
         IVertexOperation[] coloredPipeline = ArrayUtils.add(pipeline, multiplier);
 
         if (canHandleVacuum) Textures.PIPE_IN_OVERLAY.renderSided(getOutputSide(), renderState, translation, pipeline);
-        else Textures.PIPE_OUT_OVERLAY.renderSided(getOutputSide(), renderState, translation, pipeline);
+        else TKCYATextures.ROTATION_WATER_OUTPUT_OVERLAY.renderSided(getOutputSide(), renderState, translation, pipeline);
         Textures.ADV_PUMP_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
     }
 

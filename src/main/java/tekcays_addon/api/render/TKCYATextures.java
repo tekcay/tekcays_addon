@@ -56,6 +56,7 @@ public class TKCYATextures {
 
     //Rotation
     public static SimpleOverlayRenderer ROTATION_WATER_OUTPUT_OVERLAY;
+    public static SimpleOverlayRenderer ROTATION_STATIC;
 
     //Cooler
     public static SimpleOverlayRenderer COOLER_COOL_SIDE_OVERLAY;
@@ -100,6 +101,7 @@ public class TKCYATextures {
 
         //Rotation
         ROTATION_WATER_OUTPUT_OVERLAY = new SimpleOverlayRenderer("rotation/water_output");
+        ROTATION_STATIC = new SimpleOverlayRenderer("rotation/rotation_static");
 
 
         //Covers
