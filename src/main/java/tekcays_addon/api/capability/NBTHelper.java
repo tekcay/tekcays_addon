@@ -12,11 +12,20 @@ public interface NBTHelper {
     List<ParameterHelper<Integer>> getAllIntValues();
 
     @Nonnull
-    default NBTTagCompound serializeNBTHelper(@Nonnull NBTTagCompound compound) {
+    default NBTTagCompound serializeNBTHelper() {
+        NBTTagCompound nbtTagCompound = new NBTTagCompound();
         getAllIntValues().forEach(integerParameterHelper ->
-                compound.setInteger(integerParameterHelper.getName(),
+                nbtTagCompound.setInteger(integerParameterHelper.getName(),
                         integerParameterHelper.getValue()));
-        return compound;
+        return nbtTagCompound;
+    }
+
+    @Nonnull
+    default NBTTagCompound serializeNBTHelper(NBTTagCompound nbtTagCompound) {
+        getAllIntValues().forEach(integerParameterHelper ->
+                nbtTagCompound.setInteger(integerParameterHelper.getName(),
+                        integerParameterHelper.getValue()));
+        return nbtTagCompound;
     }
 
     default void deserializeNBTHelper(@Nonnull NBTTagCompound compound) {

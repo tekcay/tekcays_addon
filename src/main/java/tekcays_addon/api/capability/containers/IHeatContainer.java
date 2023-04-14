@@ -1,10 +1,11 @@
 package tekcays_addon.api.capability.containers;
 
-import tekcays_addon.api.utils.TKCYAValues;
+import tekcays_addon.api.capability.ParameterHelper;
+import tekcays_addon.api.capability.impl.HeatContainer;
 
-import static tekcays_addon.api.utils.TKCYAValues.ROOM_TEMPERATURE;
+import java.util.List;
 
-public interface IHeatContainer {
+public interface IHeatContainer extends IContainer<IHeatContainer, HeatContainer> {
 
     /**
      * @return the amount of heat in the container
@@ -55,41 +56,5 @@ public interface IHeatContainer {
      */
     int getMaxTemperature();
 
-
-    IHeatContainer EMPTY = new IHeatContainer() {
-
-        @Override
-        public int getMinHeat() {
-            return TKCYAValues.MIN_HEAT;
-        }
-
-        @Override
-        public int getMaxHeat() {
-            return TKCYAValues.MAX_HEAT;
-        }
-
-        @Override
-        public int getHeat() {
-            return 0;
-        }
-
-        @Override
-        public int getMaxTemperature() {
-            return TKCYAValues.MAX_HEAT;
-        }
-        @Override
-        public int getTemperature() {
-            return ROOM_TEMPERATURE;
-        }
-
-
-        @Override
-        public void setHeat(int amount) {
-        }
-
-        @Override
-        public void setTemperature(int temperature) {
-        }
-
-    };
+    List<ParameterHelper<Integer>> getAllIntValues();
 }

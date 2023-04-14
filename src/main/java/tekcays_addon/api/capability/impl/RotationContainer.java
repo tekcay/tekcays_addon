@@ -10,7 +10,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import tekcays_addon.api.capability.containers.IRotationContainer;
 import tekcays_addon.api.capability.NBTHelper;
 import tekcays_addon.api.capability.ParameterHelper;
-import tekcays_addon.api.capability.TKCYATileCapabilities;
+import tekcays_addon.api.consts.CapabilityId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -18,16 +18,15 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static tekcays_addon.api.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
+import static tekcays_addon.api.utils.capability.GetCapabilityHelper.getCapabilityOfContainer;
+
 @Getter
 @Setter
 public class RotationContainer extends MTETrait implements IRotationContainer, NBTHelper {
 
-    private int speed;
-    private int torque;
-    private int power;
-    private int maxSpeed;
-    private int maxTorque;
-    private int maxPower;
+    private int speed, torque, power;
+    private int maxSpeed, maxTorque, maxPower;
 
     public RotationContainer(@Nonnull MetaTileEntity metaTileEntity, int maxPower, int maxSpeed, int maxTorque) {
         super(metaTileEntity);
@@ -45,9 +44,7 @@ public class RotationContainer extends MTETrait implements IRotationContainer, N
     @Nullable
     @Override
     public <T> T getCapability(Capability<T> capability) {
-        if (capability == TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER) {
-            return TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER.cast(this);
-        }
+        getCapabilityOfContainer(capability, this);
         return null;
     }
 
@@ -85,5 +82,20 @@ public class RotationContainer extends MTETrait implements IRotationContainer, N
         parametersValues.add(new ParameterHelper<>("maxTorque", maxTorque, this::setMaxTorque));
         parametersValues.add(new ParameterHelper<>("maxPower", maxPower, this::setMaxPower));
         return parametersValues;
+    }
+
+    @Override
+    public Capability<IRotationContainer> getContainerCapability() {
+        return CAPABILITY_ROTATIONAL_CONTAINER;
+    }
+
+    @Override
+    public RotationContainer getContainer() {
+        return this;
+    }
+
+    @Override
+    public CapabilityId getCapabilityId() {
+        return CapabilityId.ROTATION;
     }
 }

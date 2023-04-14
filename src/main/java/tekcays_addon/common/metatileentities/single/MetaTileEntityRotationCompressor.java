@@ -36,13 +36,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.ArrayUtils;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
+import tekcays_addon.api.capability.containers.IContainer;
 import tekcays_addon.api.capability.containers.IPressureContainer;
 import tekcays_addon.api.capability.containers.IRotationContainer;
 import tekcays_addon.api.capability.impl.PressureContainer;
 import tekcays_addon.api.capability.impl.RotationContainer;
-import tekcays_addon.api.utils.AdjacentCapabilityHelper;
+import tekcays_addon.api.utils.capability.AdjacentCapabilityHelper;
 import tekcays_addon.api.utils.FluidStackHelper;
 import tekcays_addon.api.utils.PressureContainerHandler;
+import tekcays_addon.api.utils.capability.GetCapabilityHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -203,12 +205,20 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
     @Override
     @Nullable
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
+
+        IContainer cap;
+
         if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
-            return side == getOutputSide() ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
+            cap = side == getOutputSide() ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
         }
+
+        cap = GetCapabilityHelper.getCapabilityOnSide(getOutputSide(), side, TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER, rotationContainer);
+        /*
         if (capability.equals(TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER)) {
             return side == getRotationSide() ? TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER.cast(rotationContainer) : null;
         }
+
+         */
         return super.getCapability(capability, side);
     }
 

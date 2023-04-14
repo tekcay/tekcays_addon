@@ -1,8 +1,16 @@
 package tekcays_addon.api.capability.list;
 
+import net.minecraftforge.common.capabilities.Capability;
+import tekcays_addon.api.capability.ParameterHelper;
+import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.capability.containers.IHeatContainer;
+import tekcays_addon.api.capability.impl.HeatContainer;
+import tekcays_addon.api.consts.CapabilityId;
+import tekcays_addon.api.utils.TKCYALog;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class HeatContainerList implements IHeatContainer {
 
@@ -14,9 +22,7 @@ public class HeatContainerList implements IHeatContainer {
 
     @Override
     public int getMinHeat() {
-        return heatContainerList.stream()
-                .mapToInt(IHeatContainer::getMinHeat)
-                .sum();
+        return 0;
     }
 
     @Override
@@ -32,11 +38,15 @@ public class HeatContainerList implements IHeatContainer {
      */
     @Override
     public int getMaxTemperature() {
-        int lowestTemp = Integer.MAX_VALUE;
-        for (IHeatContainer heatContainer : heatContainerList) {
-            lowestTemp = Math.min(heatContainer.getMaxTemperature(), lowestTemp);
-        }
-        return lowestTemp;
+        return heatContainerList.stream()
+                .min(Comparator.comparing(IHeatContainer::getTemperature))
+                .orElseThrow(NoSuchElementException::new)
+                .getTemperature();
+    }
+
+    @Override
+    public List<ParameterHelper<Integer>> getAllIntValues() {
+        return null;
     }
 
     @Override
@@ -66,16 +76,26 @@ public class HeatContainerList implements IHeatContainer {
 
     @Override
     public void setHeat(int amount) {
-        for (IHeatContainer heatContainer : heatContainerList) {
-            heatContainer.setHeat(amount);
-        }
+        heatContainerList.forEach(iHeatContainer -> iHeatContainer.setHeat(amount));
     }
 
     @Override
     public void setTemperature(int temperature) {
-        for (IHeatContainer iHeatContainer : heatContainerList) {
-            iHeatContainer.setTemperature(temperature);
-        }
+        heatContainerList.forEach(iHeatContainer -> iHeatContainer.setTemperature(temperature));
     }
 
+    @Override
+    public Capability<IHeatContainer> getContainerCapability() {
+        return TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER;
+    }
+
+    @Override
+    public HeatContainer getContainer() {
+        return null;
+    }
+
+    @Override
+    public CapabilityId getCapabilityId() {
+        return CapabilityId.HEAT;
+    }
 }

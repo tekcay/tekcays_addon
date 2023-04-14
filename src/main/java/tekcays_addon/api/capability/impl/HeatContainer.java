@@ -8,16 +8,25 @@ import lombok.Setter;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
+import tekcays_addon.api.capability.NBTHelper;
+import tekcays_addon.api.capability.ParameterHelper;
+import tekcays_addon.api.capability.containers.IContainer;
 import tekcays_addon.api.capability.containers.IHeatContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
+import tekcays_addon.api.consts.CapabilityId;
 import tekcays_addon.api.utils.TKCYAValues;
+import tekcays_addon.api.utils.capability.GetCapabilityHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+
+import static tekcays_addon.api.utils.capability.GetCapabilityHelper.getCapabilityOfContainer;
 
 @Getter
 @Setter
-public class HeatContainer extends MTETrait implements IHeatContainer {
+public class HeatContainer extends MTETrait implements IHeatContainer, NBTHelper {
 
     private final int minHeat;
     private final int maxHeat;
@@ -66,40 +75,55 @@ public class HeatContainer extends MTETrait implements IHeatContainer {
         this.metaTileEntity.markDirty();
     }
     @Nullable
-    @Override
     public <T> T getCapability(Capability<T> capability) {
-        if (capability == TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER) {
-            return TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER.cast(this);
-        }
+        getCapabilityOfContainer(capability, this);
         return null;
     }
 
     @Nonnull
     @Override
     public NBTTagCompound serializeNBT() {
-        NBTTagCompound compound = new NBTTagCompound();
-        compound.setInteger("heat", this.heat);
-        compound.setInteger("temperature", this.temperature);
-        return compound;
+        NBTTagCompound compound = super.serializeNBT();
+        return serializeNBTHelper(compound);
     }
 
     @Override
     public void deserializeNBT(@Nonnull NBTTagCompound compound) {
-        this.heat = compound.getInteger("heat");
-        this.temperature = compound.getInteger("temperature");
+        deserializeNBTHelper(compound);
     }
 
     @Override
     public void writeInitialData(@Nonnull PacketBuffer buffer) {
         super.writeInitialData(buffer);
-        buffer.writeInt(this.heat);
-        buffer.writeInt(this.temperature);
+        writeInitialDataHelper(buffer);
     }
 
     @Override
     public void receiveInitialData(@Nonnull PacketBuffer buffer) {
         super.receiveInitialData(buffer);
-        this.heat = buffer.readInt();
-        this.temperature = buffer.readInt();
+        receiveInitialDataHelper(buffer);
+    }
+
+    @Override
+    public List<ParameterHelper<Integer>> getAllIntValues() {
+        List<ParameterHelper<Integer>> parametersValues = new ArrayList<>();
+        parametersValues.add(new ParameterHelper<>("heat", heat, this::setHeat));
+        parametersValues.add(new ParameterHelper<>("temperature", temperature, this::setTemperature));
+        return parametersValues;
+    }
+
+    @Override
+    public Capability<IHeatContainer> getContainerCapability() {
+        return TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER;
+    }
+
+    @Override
+    public HeatContainer getContainer() {
+        return this;
+    }
+
+    @Override
+    public CapabilityId getCapabilityId() {
+        return CapabilityId.HEAT;
     }
 }

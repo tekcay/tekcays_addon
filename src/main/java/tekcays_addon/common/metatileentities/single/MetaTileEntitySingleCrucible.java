@@ -130,6 +130,7 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
     @Override
     @Nullable
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
+        //GetCapabilityHelper.getCapability(EnumFacing.DOWN, side, TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER, heatContainer)
         if (capability.equals(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER)) {
             return TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER.cast(heatContainer);
         } else if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {

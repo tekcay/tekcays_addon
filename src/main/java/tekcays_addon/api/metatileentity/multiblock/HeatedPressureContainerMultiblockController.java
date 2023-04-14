@@ -13,6 +13,7 @@ import tekcays_addon.api.capability.list.HeatContainerList;
 import tekcays_addon.api.capability.machines.IHeatMachine;
 import tekcays_addon.api.capability.machines.IPressureControlMachine;
 import tekcays_addon.api.capability.machines.IPressureMachine;
+import tekcays_addon.api.utils.TKCYALog;
 
 import java.util.List;
 
@@ -21,9 +22,9 @@ import static tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility
 @Getter
 public abstract class HeatedPressureContainerMultiblockController extends RecipeMapMultiblockController implements IPressureMachine, IHeatMachine, IPressureControlMachine {
 
-    private IPressureContainer pressureContainer;
-    private IHeatContainer heatContainer;
-    private IPressureControl pressureControl;
+    protected IPressureContainer pressureContainer;
+    protected IHeatContainer heatContainer;
+    protected IPressureControl pressureControl;
 
     public HeatedPressureContainerMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
         super(metaTileEntityId, recipeMap);

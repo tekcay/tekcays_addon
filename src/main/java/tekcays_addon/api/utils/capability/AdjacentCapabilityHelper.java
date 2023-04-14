@@ -1,4 +1,4 @@
-package tekcays_addon.api.utils;
+package tekcays_addon.api.utils.capability;
 
 import gregtech.api.metatileentity.MetaTileEntity;
 import net.minecraft.tileentity.TileEntity;

@@ -1,7 +1,18 @@
 package tekcays_addon.api.capability.containers;
 
 
-public interface IRotationContainer {
+import net.minecraftforge.common.capabilities.Capability;
+import tekcays_addon.api.capability.impl.RotationContainer;
+import tekcays_addon.api.consts.CapabilityId;
+
+public interface IRotationContainer extends IContainer<IRotationContainer, RotationContainer> {
+
+    @Override
+    Capability<IRotationContainer> getContainerCapability();
+    @Override
+    RotationContainer getContainer();
+    @Override
+    CapabilityId getCapabilityId();
 
     /**
      * Set the speed of rotation in the container

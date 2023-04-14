@@ -12,7 +12,7 @@ import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.capability.containers.IPressureContainer;
 import tekcays_addon.api.capability.TKCYATileCapabilities;
 import tekcays_addon.api.metatileentity.ElectricPressureCompressor;
-import tekcays_addon.api.utils.AdjacentCapabilityHelper;
+import tekcays_addon.api.utils.capability.AdjacentCapabilityHelper;
 import tekcays_addon.api.utils.PressureContainerHandler;
 
 public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCompressor implements PressureContainerHandler, AdjacentCapabilityHelper<IPressureContainer> {
