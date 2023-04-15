@@ -21,6 +21,9 @@ public interface IRotationContainer {
      */
     void setPower(int power);
 
+    void setRotationParams(int speed, int torque, int power);
+    void getRotationParams(int speed, int torque, int power);
+
     /**
      * @return speed of the rotation
      */

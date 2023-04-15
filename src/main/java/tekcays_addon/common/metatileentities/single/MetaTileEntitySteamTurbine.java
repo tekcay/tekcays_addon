@@ -47,6 +47,7 @@ import java.util.List;
 
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
 import static gregtech.api.unification.material.Materials.*;
+import static tekcays_addon.api.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
 import static tekcays_addon.api.render.TKCYATextures.*;
 import static tekcays_addon.api.utils.TKCYAValues.STEAM_TO_WATER;
 
@@ -117,14 +118,14 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
         colouredPipeline = ArrayUtils.add(pipeline, multiplier);
         Textures.PIPE_IN_OVERLAY.renderSided(getInputSide(), renderState, translation, pipeline);
         ROTATION_TURBINE_OVERLAY.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isRunning, true);
-        ROTATION_WATER_OUTPUT_OVERLAY.renderSided(getOutputSide(), renderState, translation, pipeline);
+        ROTATION_WATER_OUTPUT_OVERLAY.renderSided(getFluidOutputSide(), renderState, translation, pipeline);
     }
 
     private EnumFacing getInputSide() {
         return getFrontFacing().rotateY();
     }
 
-    private EnumFacing getOutputSide() {
+    private EnumFacing getFluidOutputSide() {
         return getFrontFacing().rotateYCCW();
     }
 
@@ -147,34 +148,41 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
             steamConsumption += STEAM_TO_WATER;
             waterOutputRate ++;
             speed ++;
+            rotationContainer.setSpeed(speed);
         }
     }
 
     private void decrement() {
-        if (getOffsetTimer() % 40 == 0) {
+        if (getOffsetTimer() % 20 == 0) {
             steamConsumption = Math.max(steamConsumption - STEAM_TO_WATER, 0);
             waterOutputRate = Math.max(waterOutputRate - 1, 0);
             speed = Math.max(speed - 1, 0);
+            rotationContainer.setSpeed(speed);
         }
     }
 
     @Override
     public void update() {
         super.update();
+
+        speed = rotationContainer.getSpeed();
+        torque = rotationContainer.getTorque();
+        power = rotationContainer.getPower();
+
+        if (speed == 0) setRunningState(false);
+
         if (getImportFluidStack() == null || !getImportFluidStack().isFluidEqual(Steam.getFluid(1))) {
             decrement();
-            setRunningState(false);
             return;
         }
         if (getImportFluidStack().amount < steamConsumption) {
             decrement();
-            setRunningState(false);
             return;
         }
 
         importFluidTank.drain(steamConsumption, true);
         exportFluidTank.fill(DistilledWater.getFluid(waterOutputRate), true);
-        pushFluidsIntoNearbyHandlers(getOutputSide());
+        pushFluidsIntoNearbyHandlers(getFluidOutputSide());
         transferRotation();
         increment();
         setRunningState(true);
@@ -203,11 +211,9 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
         TileEntity te = getWorld().getTileEntity(getPos().offset(getRotationSide()));
         if (te != null) {
             //Get the Capability of this Tile Entity on the opposite face.
-            IRotationContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER, getRotationSide().getOpposite());
+            IRotationContainer container = te.getCapability(CAPABILITY_ROTATIONAL_CONTAINER, getRotationSide().getOpposite());
             if (container != null) {
-                container.setSpeed(speed);
-                container.setPower(power);
-                container.setTorque(torque);
+                container.setRotationParams(speed, power, torque);
             }
         }
     }
@@ -220,11 +226,20 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
     @Override
     @Nullable
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
-        if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
-            return side == getOutputSide() ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
+
+        if (capability.equals(CAPABILITY_ROTATIONAL_CONTAINER)) {
+            TKCYALog.logger.info("Turbine : {}", side != null ? side.getName() : "");
+
+            TKCYALog.logger.info("Turbine : getRotationSide() {}", getRotationSide().getName());
+            TKCYALog.logger.info("Turbine : getInputSide()) {}", getInputSide().getName());
+            TKCYALog.logger.info("Turbine : getFluidOutputSide() {}", getFluidOutputSide().getName());
         }
-        if (capability.equals(TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER)) {
-            return side == getRotationSide() ? TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER.cast(rotationContainer) : null;
+        if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
+            return side == getFluidOutputSide() ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
+        }
+        if (capability.equals(CAPABILITY_ROTATIONAL_CONTAINER) && side == getRotationSide()) {
+            if (getOffsetTimer() % 20 == 0) TKCYALog.logger.info("Turbine : found capability");
+            return CAPABILITY_ROTATIONAL_CONTAINER.cast(rotationContainer);
         }
         return super.getCapability(capability, side);
     }

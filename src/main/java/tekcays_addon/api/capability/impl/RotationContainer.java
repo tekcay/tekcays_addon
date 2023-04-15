@@ -2,6 +2,7 @@ package tekcays_addon.api.capability.impl;
 
 import gregtech.api.metatileentity.MTETrait;
 import gregtech.api.metatileentity.MetaTileEntity;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,13 +21,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static tekcays_addon.api.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
-import static tekcays_addon.api.utils.capability.GetCapabilityHelper.getCapabilityOfContainer;
 
 @Getter
 @Setter
 public class RotationContainer extends MTETrait implements IRotationContainer, NBTHelper {
 
+    @Setter(AccessLevel.NONE)
     private int speed, torque, power;
+
     private int maxSpeed, maxTorque, maxPower;
 
     public RotationContainer(@Nonnull MetaTileEntity metaTileEntity, int maxPower, int maxSpeed, int maxTorque) {
@@ -34,6 +36,27 @@ public class RotationContainer extends MTETrait implements IRotationContainer, N
         this.maxPower = maxPower;
         this.maxSpeed = maxSpeed;
         this.maxTorque = maxTorque;
+        this.power = 0;
+        this.speed = 0;
+        this.torque = 0;
+    }
+
+    @Override
+    public void setSpeed(int speed) {
+        this.speed = speed;
+        this.metaTileEntity.markDirty();
+    }
+
+    @Override
+    public void setTorque(int torque) {
+        this.torque = torque;
+        this.metaTileEntity.markDirty();
+    }
+
+    @Override
+    public void setPower(int power) {
+        this.power = power;
+        this.metaTileEntity.markDirty();
     }
 
     @Nonnull
@@ -85,5 +108,22 @@ public class RotationContainer extends MTETrait implements IRotationContainer, N
         parametersValues.add(new ParameterHelper<>("maxTorque", maxTorque, this::setMaxTorque));
         parametersValues.add(new ParameterHelper<>("maxPower", maxPower, this::setMaxPower));
         return parametersValues;
+    }
+
+    @Override
+    public void setRotationParams(int speed, int torque, int power) {
+        this.speed = speed;
+        this.torque = torque;
+        this.power = power;
+        this.metaTileEntity.markDirty();
+    }
+
+    @Override
+    public void getRotationParams(int speed, int torque, int power) {
+        speed = this.speed;
+        torque = this.torque;
+        power = this.power;
+        this.metaTileEntity.markDirty();
+
     }
 }

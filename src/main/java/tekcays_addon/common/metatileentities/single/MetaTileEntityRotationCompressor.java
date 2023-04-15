@@ -38,6 +38,7 @@ import tekcays_addon.api.capability.containers.IPressureContainer;
 import tekcays_addon.api.capability.containers.IRotationContainer;
 import tekcays_addon.api.capability.impl.PressureContainer;
 import tekcays_addon.api.capability.impl.RotationContainer;
+import tekcays_addon.api.utils.TKCYALog;
 import tekcays_addon.api.utils.capability.AdjacentCapabilityHelper;
 import tekcays_addon.api.utils.FluidStackHelper;
 import tekcays_addon.api.utils.PressureContainerHandler;
@@ -47,6 +48,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
+import static tekcays_addon.api.capability.TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER;
 import static tekcays_addon.api.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
 import static tekcays_addon.api.consts.NBTKeys.IS_RUNNING;
 import static tekcays_addon.api.render.TKCYATextures.*;
@@ -137,13 +139,17 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
         super.update();
         //Redstone stops fluid transfer
         if (this.isBlockRedstonePowered()) return;
+        //rotationContainer.getRotationParams(speed, torque, power);
+        this.speed = rotationContainer.getSpeed();
+        this.torque = rotationContainer.getTorque();
+        this.power = rotationContainer.getPower();
         if (rotationContainer.getSpeed() == 0) return;
 
         if (!getWorld().isRemote) {
             pressureContainer = getAdjacentCapabilityContainer(this);
             if (pressureContainer != null) {
                 pressure = pressureContainer.getPressure();
-                transferRate = getBaseTransferRate();
+                transferRate = speed;
             } else {
                 transferRate = 0;
                 return;
@@ -175,8 +181,11 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
     @Override
     @Nullable
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
-        if (capability == CAPABILITY_ROTATIONAL_CONTAINER) {
-            return side == getRotationSide() ? CAPABILITY_ROTATIONAL_CONTAINER.cast(rotationContainer) : null;
+        if (capability == CAPABILITY_ROTATIONAL_CONTAINER && side == getRotationSide()) {
+            return CAPABILITY_ROTATIONAL_CONTAINER.cast(rotationContainer);
+        }
+        if (capability == CAPABILITY_PRESSURE_CONTAINER && side == getPressureSide()) {
+            return CAPABILITY_PRESSURE_CONTAINER.cast(pressureContainer);
         }
         return super.getCapability(capability, side);
     }
@@ -186,7 +195,7 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.1"));
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.steam_tank", inputTankCapacity));
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.max_speed", maxSpeed));
-        super.addInformation(stack, player, tooltip, advanced);
+        //super.addInformation(stack, player, tooltip, advanced);
     }
 
     @Nonnull
