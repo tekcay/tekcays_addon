@@ -4,7 +4,6 @@ import lombok.Getter;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import tekcays_addon.api.utils.ListBuilder;
-import tekcays_addon.gtapi.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -42,7 +41,6 @@ public class NBTWrapper {
 
     public static void serializeNBTHelper(@Nonnull NBTTagCompound compound, NBTWrapper... wrappers) {
         Arrays.asList(wrappers).forEach(wrapper -> wrapper.serializeNBT(compound));
-        });
     }
 
     public static void writeInitialDataHelper(@Nonnull PacketBuffer buffer, NBTWrapper... wrappers) {
