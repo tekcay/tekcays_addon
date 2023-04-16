@@ -8,4 +8,11 @@ public class NBTKeys {
     public static final String DETECTOR_MODE_KEY = "detector_mode";
     public static final String IS_RUNNING = "isRunning";
     public static final String OUTPUT_SIDE = "outputSide";
+    public static final String TEMPERATURE_KEY = "temperature";
+    public static final String HEAT_KEY = "heat";
+    public static final String SPEED_KEY = "speed";
+    public static final String TORQUE_KEY = "torque";
+    public static final String POWER_KEY = "power";
+    public static final String STEAM_CONSUMPTION = "steamConsumption";
+    public static final String WATER_OUTPUT_RATE = "waterOutputRate";
 }

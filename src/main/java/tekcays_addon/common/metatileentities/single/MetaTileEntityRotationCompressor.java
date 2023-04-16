@@ -56,10 +56,7 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
     private IFluidTank importFluidTank;
     private IRotationContainer rotationContainer;
     private IPressureContainer pressureContainer;
-    private final int maxSpeed, maxTorque, maxPower;
-    private int speed, torque, power = 0;
     private int baseTransferRate;
-    private int pressure, minPressure, maxPressure;
     private final int tier;
     private int transferRate;
     private boolean isRunning;
@@ -69,23 +66,14 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
     public MetaTileEntityRotationCompressor(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId);
         this.tier = tier + 1;
-        this.maxSpeed = 20 * this.tier;
-        this.maxTorque = maxSpeed * 5;
-        this.maxPower = maxSpeed * maxTorque;
+        this.rotationContainer = new RotationContainer(this, 20 * this.tier, 100 * this.tier, 2000 * this.tier * this.tier);
         this.inputTankCapacity = 4000 * this.tier;
         this.importFluidTank = new NotifiableFluidTank(inputTankCapacity, this, false);
-        initializeInventory();
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
         return new MetaTileEntityRotationCompressor(metaTileEntityId, tier - 1);
-    }
-
-    @Override
-    protected void initializeInventory() {
-        super.initializeInventory();
-        this.rotationContainer = new RotationContainer(this, maxPower, maxSpeed, maxTorque);
     }
 
     @Override
@@ -137,17 +125,12 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
         super.update();
         //Redstone stops fluid transfer
         if (this.isBlockRedstonePowered()) return;
-        //rotationContainer.getRotationParams(speed, torque, power);
-        this.speed = rotationContainer.getSpeed();
-        this.torque = rotationContainer.getTorque();
-        this.power = rotationContainer.getPower();
         if (rotationContainer.getSpeed() == 0) return;
 
         if (!getWorld().isRemote) {
             pressureContainer = getAdjacentCapabilityContainer(this);
             if (pressureContainer != null) {
-                pressure = pressureContainer.getPressure();
-                transferRate = speed;
+                transferRate = rotationContainer.getSpeed();
             } else {
                 transferRate = 0;
                 return;
@@ -192,7 +175,7 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.1"));
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.steam_tank", inputTankCapacity));
-        tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.max_speed", maxSpeed));
+        tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.max_speed", rotationContainer.getMaxSpeed()));
         //super.addInformation(stack, player, tooltip, advanced);
     }
 
@@ -201,7 +184,7 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
         list.add(new TextComponentTranslation("behavior.tricorder.steam.amount", getNullableFluidStackAmount(getImportFluidStack())));
-        list.add(new TextComponentTranslation("behavior.tricorder.speed", speed));
+        list.add(new TextComponentTranslation("behavior.tricorder.speed", rotationContainer.getSpeed()));
         return list;
     }
 
@@ -258,7 +241,7 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
 
     @Override
     public int getPressure() {
-        return this.pressure;
+        return pressureContainer.getPressure();
     }
 
     @Override

@@ -8,16 +8,14 @@ import lombok.Setter;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
-import tekcays_addon.api.nbt.NBTType;
 import tekcays_addon.gtapi.capability.containers.IHeatContainer;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
-import tekcays_addon.api.nbt.NBTWrapper;
 import tekcays_addon.gtapi.utils.TKCYAValues;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import static tekcays_addon.api.nbt.NBTWrapper.*;
+import static tekcays_addon.api.consts.NBTKeys.*;
 
 @Getter
 @Setter
@@ -31,9 +29,6 @@ public class HeatContainer extends MTETrait implements IHeatContainer {
     private int heat;
     @Setter(AccessLevel.NONE)
     private int temperature;
-
-    @Setter(AccessLevel.NONE)
-    private NBTWrapper wrapper = new NBTWrapper(NBTType.INTEGER);
 
     /**
      * Default Heat container
@@ -53,8 +48,6 @@ public class HeatContainer extends MTETrait implements IHeatContainer {
         this.heat = 0;
         this.maxTemperature = maxTemperature;
         this.temperature = TKCYAValues.ROOM_TEMPERATURE;
-        this.wrapper.add("heat", heat, this::setHeat)
-                    .add("temperature", temperature, this::setTemperature);
     }
 
     @Nonnull
@@ -86,25 +79,29 @@ public class HeatContainer extends MTETrait implements IHeatContainer {
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = super.serializeNBT();
-        serializeNBTHelper(compound, wrapper);
+        compound.setInteger(HEAT_KEY, this.heat);
+        compound.setInteger(TEMPERATURE_KEY, this.temperature);
         return compound;
     }
 
     @Override
     public void deserializeNBT(@Nonnull NBTTagCompound compound) {
-        deserializeNBTHelper(compound, wrapper);
+        this.heat = compound.getInteger(HEAT_KEY);
+        this.temperature = compound.getInteger(TEMPERATURE_KEY);
     }
 
     @Override
     public void writeInitialData(@Nonnull PacketBuffer buffer) {
         super.writeInitialData(buffer);
-        writeInitialDataHelper(buffer, wrapper);
+        buffer.writeInt(this.heat);
+        buffer.writeInt(this.temperature);
     }
 
     @Override
     public void receiveInitialData(@Nonnull PacketBuffer buffer) {
         super.receiveInitialData(buffer);
-        receiveInitialDataHelper(buffer, wrapper);
+        this.heat = buffer.readInt();
+        this.temperature = buffer.readInt();
     }
 
 }

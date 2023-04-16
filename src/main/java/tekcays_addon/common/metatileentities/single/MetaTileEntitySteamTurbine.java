@@ -21,7 +21,6 @@ import lombok.Setter;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -36,12 +35,11 @@ import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.ArrayUtils;
-import tekcays_addon.api.nbt.NBTType;
-import tekcays_addon.api.nbt.NBTWrapper;
 import tekcays_addon.gtapi.capability.containers.IRotationContainer;
+import tekcays_addon.gtapi.capability.containers.ISteamConsumer;
 import tekcays_addon.gtapi.capability.impl.RotationContainer;
+import tekcays_addon.gtapi.capability.impl.SteamConsumer;
 import tekcays_addon.gtapi.utils.FluidStackHelper;
-import tekcays_addon.gtapi.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -49,8 +47,6 @@ import java.util.List;
 
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
 import static gregtech.api.unification.material.Materials.*;
-import static tekcays_addon.api.consts.NBTKeys.IS_RUNNING;
-import static tekcays_addon.api.nbt.NBTWrapper.*;
 import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
 import static tekcays_addon.gtapi.render.TKCYATextures.*;
 import static tekcays_addon.gtapi.utils.TKCYAValues.STEAM_TO_WATER;
@@ -59,18 +55,13 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
 
     private IFluidTank importFluidTank, exportFluidTank;
     private IRotationContainer rotationContainer;
+    private ISteamConsumer steamConsumer;
     private int maxSpeed, maxTorque, maxPower;
-    private int speed, torque, power = 0;
     private final int tier;
-    private final int maxSteamConsumption, maxWaterOutputRate;
-    @Setter
-    private int steamConsumption, waterOutputRate = 0;
+    private final int maxSteamConsumption, maxWaterOutputRate ;
     @Setter
     private boolean isRunning;
     private final int steamTankCapacity, waterTankCapacity;
-
-    private NBTWrapper ratesWrapper = new NBTWrapper(NBTType.INTEGER);
-    private NBTWrapper isRunningWrapper = new NBTWrapper(NBTType.BOOLEAN);
 
     public MetaTileEntitySteamTurbine(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId);
@@ -80,15 +71,9 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
         this.maxSpeed = 20 * this.tier;
         this.steamTankCapacity = 4000 * this.tier;
         this.waterTankCapacity = 1000 * this.tier;
-        this.rotationContainer = new RotationContainer(this, maxPower, maxSpeed, maxTorque);
         this.importFluidTank = new NotifiableFluidTank(steamTankCapacity, this, false);
         this.exportFluidTank = new NotifiableFluidTank(waterTankCapacity, this, true);
         initializeInventory();
-
-        this.ratesWrapper.add("steamConsumption", speed, this::setSteamConsumption)
-                         .add("waterOutputRate", torque, this::setWaterOutputRate);
-
-        this.isRunningWrapper.add(IS_RUNNING, isRunning, this::setRunning);
     }
 
     @Override
@@ -99,7 +84,8 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
     @Override
     protected void initializeInventory() {
         super.initializeInventory();
-        this.rotationContainer = new RotationContainer(this, maxPower, maxSpeed, maxTorque);
+        this.rotationContainer = new RotationContainer(this,maxSpeed, maxTorque, maxPower);
+        this.steamConsumer = new SteamConsumer(this);
     }
 
     @Override
@@ -159,19 +145,17 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
 
     private void increment() {
         if (getOffsetTimer() % (10 * STEAM_TO_WATER) == 0) {
-            steamConsumption += STEAM_TO_WATER;
-            waterOutputRate ++;
-            speed ++;
-            rotationContainer.setSpeed(speed);
+            steamConsumer.changeWaterOutputRate(1);
+            steamConsumer.changeSteamConsumption(STEAM_TO_WATER);
+            rotationContainer.changeSpeed(1);
         }
     }
 
     private void decrement() {
         if (getOffsetTimer() % 20 == 0) {
-            steamConsumption = Math.max(steamConsumption - STEAM_TO_WATER, 0);
-            waterOutputRate = Math.max(waterOutputRate - 1, 0);
-            speed = Math.max(speed - 1, 0);
-            rotationContainer.setSpeed(speed);
+            steamConsumer.changeWaterOutputRate(-1);
+            steamConsumer.changeSteamConsumption(-STEAM_TO_WATER);
+            rotationContainer.changeSpeed(-1);
         }
     }
 
@@ -179,23 +163,19 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
     public void update() {
         super.update();
 
-        speed = rotationContainer.getSpeed();
-        torque = rotationContainer.getTorque();
-        power = rotationContainer.getPower();
-
-        if (speed == 0) setRunningState(false);
+        if (rotationContainer.getSpeed() == 0) setRunningState(false);
 
         if (getImportFluidStack() == null || !getImportFluidStack().isFluidEqual(Steam.getFluid(1))) {
             decrement();
             return;
         }
-        if (getImportFluidStack().amount < steamConsumption) {
+        if (getImportFluidStack().amount < steamConsumer.getSteamConsumption()) {
             decrement();
             return;
         }
 
-        importFluidTank.drain(steamConsumption, true);
-        exportFluidTank.fill(DistilledWater.getFluid(waterOutputRate), true);
+        importFluidTank.drain(steamConsumer.getSteamConsumption(), true);
+        exportFluidTank.fill(DistilledWater.getFluid(steamConsumer.getWaterOutputRate()), true);
         pushFluidsIntoNearbyHandlers(getFluidOutputSide());
         transferRotation();
         increment();
@@ -203,8 +183,8 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
 
         /*
         if (getExportFluidStack() != null && getExportFluidStack().amount >= waterTankCapacity
-            || steamConsumption > maxSteamConsumption
-            || speed > maxSpeed) {
+            || steamConsumer.getSteamConsumption() > maxSteamConsumption
+            || rotationContainer.getSpeed() > maxSpeed) {
             this.doExplosion(2);
         }
 
@@ -227,7 +207,7 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
             //Get the Capability of this Tile Entity on the opposite face.
             IRotationContainer container = te.getCapability(CAPABILITY_ROTATIONAL_CONTAINER, getRotationSide().getOpposite());
             if (container != null) {
-                container.setRotationParams(speed, power, torque);
+                container.setRotationParams(rotationContainer);
             }
         }
     }
@@ -240,19 +220,10 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
     @Override
     @Nullable
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
-
-        if (capability.equals(CAPABILITY_ROTATIONAL_CONTAINER)) {
-            TKCYALog.logger.info("Turbine : {}", side != null ? side.getName() : "");
-
-            TKCYALog.logger.info("Turbine : getRotationSide() {}", getRotationSide().getName());
-            TKCYALog.logger.info("Turbine : getInputSide()) {}", getInputSide().getName());
-            TKCYALog.logger.info("Turbine : getFluidOutputSide() {}", getFluidOutputSide().getName());
-        }
         if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
             return side == getFluidOutputSide() ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
         }
         if (capability.equals(CAPABILITY_ROTATIONAL_CONTAINER) && side == getRotationSide()) {
-            if (getOffsetTimer() % 20 == 0) TKCYALog.logger.info("Turbine : found capability");
             return CAPABILITY_ROTATIONAL_CONTAINER.cast(rotationContainer);
         }
         return super.getCapability(capability, side);
@@ -294,35 +265,10 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
         list.add(new TextComponentTranslation("behavior.tricorder.steam.amount", getNullableFluidStackAmount(getImportFluidStack())));
-        list.add(new TextComponentTranslation("behavior.tricorder.speed", speed));
-        list.add(new TextComponentTranslation("behavior.tricorder.turbine.steam_consumption", steamConsumption));
-        list.add(new TextComponentTranslation("behavior.tricorder.turbine.output_rate", waterOutputRate));
+        list.add(new TextComponentTranslation("behavior.tricorder.speed", rotationContainer.getSpeed()));
+        list.add(new TextComponentTranslation("behavior.tricorder.turbine.steam_consumption", steamConsumer.getSteamConsumption()));
+        list.add(new TextComponentTranslation("behavior.tricorder.turbine.output_rate", steamConsumer.getWaterOutputRate()));
         return list;
-    }
-
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound data) {
-        super.writeToNBT(data);
-        serializeNBTHelper(data, ratesWrapper, isRunningWrapper);
-        return data;
-    }
-
-    @Override
-    public void readFromNBT(NBTTagCompound data) {
-        super.readFromNBT(data);
-        deserializeNBTHelper(data, ratesWrapper, isRunningWrapper);
-    }
-
-    @Override
-    public void writeInitialSyncData(PacketBuffer buf) {
-        super.writeInitialSyncData(buf);
-        writeInitialDataHelper(buf, ratesWrapper, isRunningWrapper);
-    }
-
-    @Override
-    public void receiveInitialSyncData(PacketBuffer buf) {
-        super.receiveInitialSyncData(buf);
-        receiveInitialDataHelper(buf, ratesWrapper, isRunningWrapper);
     }
 
     @Override

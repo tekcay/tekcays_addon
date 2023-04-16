@@ -8,15 +8,13 @@ import lombok.Setter;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
-import tekcays_addon.api.nbt.NBTType;
 import tekcays_addon.gtapi.capability.containers.IRotationContainer;
-import tekcays_addon.api.nbt.NBTWrapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import static tekcays_addon.api.consts.NBTKeys.*;
 import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
-import static tekcays_addon.api.nbt.NBTWrapper.*;
 
 @Getter
 @Setter
@@ -24,13 +22,9 @@ public class RotationContainer extends MTETrait implements IRotationContainer {
 
     @Setter(AccessLevel.NONE)
     private int speed, torque, power;
-
     private int maxSpeed, maxTorque, maxPower;
 
-    @Setter(AccessLevel.NONE)
-    private NBTWrapper wrapper = new NBTWrapper(NBTType.INTEGER);
-
-    public RotationContainer(@Nonnull MetaTileEntity metaTileEntity, int maxPower, int maxSpeed, int maxTorque) {
+    public RotationContainer(@Nonnull MetaTileEntity metaTileEntity, int maxSpeed, int maxTorque, int maxPower) {
         super(metaTileEntity);
         this.maxPower = maxPower;
         this.maxSpeed = maxSpeed;
@@ -38,12 +32,6 @@ public class RotationContainer extends MTETrait implements IRotationContainer {
         this.power = 0;
         this.speed = 0;
         this.torque = 0;
-        this.wrapper.add("speed", speed, this::setSpeed)
-                    .add("torque", torque, this::setTorque)
-                    .add("power", power, this::setPower)
-                    .add("maxSpeed", maxSpeed, this::setMaxSpeed)
-                    .add("maxTorque", maxTorque, this::setMaxTorque)
-                    .add("maxPower", maxPower, this::setMaxPower);
     }
 
     @Override
@@ -62,6 +50,21 @@ public class RotationContainer extends MTETrait implements IRotationContainer {
     public void setPower(int power) {
         this.power = power;
         this.metaTileEntity.markDirty();
+    }
+
+    @Override
+    public void changeSpeed(int amount) {
+        this.speed = Math.max(this.speed + amount, 0);
+    }
+
+    @Override
+    public void changeTorque(int amount) {
+        this.torque = Math.max(this.torque + amount, 0);
+    }
+
+    @Override
+    public void changePower(int amount) {
+        this.power = Math.max(this.power + amount, 0);
     }
 
     @Nonnull
@@ -83,25 +86,34 @@ public class RotationContainer extends MTETrait implements IRotationContainer {
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = super.serializeNBT();
-        serializeNBTHelper(compound, wrapper);
+        compound.setInteger(SPEED_KEY, this.speed);
+        compound.setInteger(TORQUE_KEY, this.torque);
+        compound.setInteger(POWER_KEY, this.power);
         return compound;
     }
 
     @Override
     public void deserializeNBT(@Nonnull NBTTagCompound compound) {
-        deserializeNBTHelper(compound, wrapper);
+        this.speed = compound.getInteger(SPEED_KEY);
+        this.torque = compound.getInteger(TORQUE_KEY);
+        this.power = compound.getInteger(POWER_KEY);
+
     }
 
     @Override
     public void writeInitialData(@Nonnull PacketBuffer buffer) {
         super.writeInitialData(buffer);
-        writeInitialDataHelper(buffer, wrapper);
+        buffer.writeInt(this.speed);
+        buffer.writeInt(this.torque);
+        buffer.writeInt(this.power);
     }
 
     @Override
     public void receiveInitialData(@Nonnull PacketBuffer buffer) {
         super.receiveInitialData(buffer);
-        receiveInitialDataHelper(buffer, wrapper);
+        this.speed = buffer.readInt();
+        this.torque = buffer.readInt();
+        this.power = buffer.readInt();
     }
 
     @Override
@@ -113,6 +125,14 @@ public class RotationContainer extends MTETrait implements IRotationContainer {
     }
 
     @Override
+    public void setRotationParams(IRotationContainer rotationContainer) {
+        this.speed = rotationContainer.getSpeed();
+        this.torque = rotationContainer.getTorque();
+        this.power = rotationContainer.getPower();
+        this.metaTileEntity.markDirty();
+    }
+
+    @Override
     public void getRotationParams(int speed, int torque, int power) {
         speed = this.speed;
         torque = this.torque;
@@ -120,4 +140,11 @@ public class RotationContainer extends MTETrait implements IRotationContainer {
         this.metaTileEntity.markDirty();
 
     }
+
+    @Override
+    public void getRotationParams(IRotationContainer rotationContainer) {
+        rotationContainer.setRotationParams(rotationContainer);
+        this.metaTileEntity.markDirty();
+    }
+
 }

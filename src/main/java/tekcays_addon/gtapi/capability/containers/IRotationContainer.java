@@ -2,43 +2,27 @@ package tekcays_addon.gtapi.capability.containers;
 
 public interface IRotationContainer {
 
-    /**
-     * Set the speed of rotation in the container
-     *
-     * @param speed the value of speed to set
-     */
     void setSpeed(int speed);
-
-    /**
-     * Set the torque of rotation in the container
-     *
-     * @param torque the value of torque to set
-     */
     void setTorque(int torque);
-
-    /**
-     * Set the power of rotation in the container
-     */
     void setPower(int power);
-
     void setRotationParams(int speed, int torque, int power);
-    void getRotationParams(int speed, int torque, int power);
+    void setRotationParams(IRotationContainer rotationContainer);
 
-    /**
-     * @return speed of the rotation
-     */
     int getTorque();
-
-    /**
-     * @return speed of the rotation
-     */
     int getSpeed();
-
-    /**
-     * @return power of the rotation
-     */
     int getPower();
+    void getRotationParams(int speed, int torque, int power);
+    void getRotationParams(IRotationContainer rotationContainer);
 
+    int getMaxTorque();
+    int getMaxSpeed();
+    default int getMaxPower() {
+        return getMaxSpeed() * getMaxTorque();
+    }
+
+    void changeSpeed(int amount);
+    void changeTorque(int amount);
+    void changePower(int amount);
 
     /**
      * @return power of the rotation
@@ -59,23 +43,6 @@ public interface IRotationContainer {
      */
     default int calculateSpeed() {
         return getPower() / getTorque();
-    }
-
-    /**
-     * @return the minimum torque this container can handle
-     */
-    int getMaxTorque();
-
-    /**
-     * @return the maximum speed this container can handle
-     */
-    int getMaxSpeed();
-
-    /**
-     * @return the maximum rotation power this container can handle
-     */
-    default int getMaxPower() {
-        return getMaxSpeed() * getMaxTorque();
     }
 
     /**
