@@ -11,7 +11,7 @@ import tekcays_addon.common.items.TKCYAMetaItems;
 import static gregtech.api.recipes.RecipeMaps.*;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.dust;
-import static tekcays_addon.api.unification.TKCYAMaterials.*;
+import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
 
 public class MiscChemicals {
 

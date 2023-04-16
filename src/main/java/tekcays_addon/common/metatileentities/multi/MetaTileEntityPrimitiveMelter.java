@@ -17,10 +17,10 @@ import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.ItemStackHandler;
-import tekcays_addon.api.logic.NoEnergyMultiblockLogic;
-import tekcays_addon.api.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.gtapi.logic.NoEnergyMultiblockLogic;
+import tekcays_addon.gtapi.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
+import tekcays_addon.gtapi.render.TKCYATextures;
 
 public class MetaTileEntityPrimitiveMelter extends NoEnergyRecipeMapMultiBlockController {
 

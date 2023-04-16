@@ -3,10 +3,10 @@ package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.unification.material.Materials;
 import net.minecraft.init.Items;
-import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.gtapi.unification.TKCYAMaterials;
 
-import static tekcays_addon.api.recipes.TKCYARecipeMaps.FERMENTATION_RECIPES;
-import static tekcays_addon.api.utils.TKCYAValues.MINUTE;
+import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.FERMENTATION_RECIPES;
+import static tekcays_addon.gtapi.utils.TKCYAValues.MINUTE;
 
 
 public class FermentationHandler {

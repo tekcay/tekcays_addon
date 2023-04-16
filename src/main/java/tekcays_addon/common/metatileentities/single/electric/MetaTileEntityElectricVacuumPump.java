@@ -8,10 +8,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.IFluidTank;
-import tekcays_addon.api.capability.containers.IVacuumContainer;
-import tekcays_addon.api.capability.TKCYATileCapabilities;
-import tekcays_addon.api.metatileentity.ElectricPressureCompressor;
-import tekcays_addon.api.utils.IPressureVacuum;
+import tekcays_addon.gtapi.capability.containers.IVacuumContainer;
+import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
+import tekcays_addon.gtapi.metatileentity.ElectricPressureCompressor;
+import tekcays_addon.gtapi.utils.IPressureVacuum;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

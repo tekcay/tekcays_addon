@@ -26,12 +26,12 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import tekcays_addon.api.capability.containers.IPressureControl;
-import tekcays_addon.api.capability.TKCYATileCapabilities;
-import tekcays_addon.api.capability.impl.PressureControl;
+import tekcays_addon.gtapi.capability.containers.IPressureControl;
+import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
+import tekcays_addon.gtapi.capability.impl.PressureControl;
 import tekcays_addon.api.consts.DetectorModes;
-import tekcays_addon.api.metatileentity.gui.MetaTileEntityGuiHandler;
-import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
+import tekcays_addon.api.gui.MetaTileEntityGuiHandler;
+import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -41,8 +41,8 @@ import java.util.function.Supplier;
 
 import static tekcays_addon.api.consts.DetectorModes.*;
 import static tekcays_addon.api.consts.UnitSymbol.BAR;
-import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
-import static tekcays_addon.api.utils.TKCYAValues.MAX_PRESSURE;
+import static tekcays_addon.gtapi.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
+import static tekcays_addon.gtapi.utils.TKCYAValues.MAX_PRESSURE;
 
 @Getter
 @Setter

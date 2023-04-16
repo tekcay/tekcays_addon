@@ -27,14 +27,14 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
-import tekcays_addon.api.capability.containers.IHeatContainer;
-import tekcays_addon.api.capability.machines.IHeatMachine;
-import tekcays_addon.api.capability.list.HeatContainerList;
-import tekcays_addon.api.metatileentity.multiblock.HeatContainerNoEnergyMultiblockController;
-import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
-import tekcays_addon.api.recipes.recipeproperties.NoEnergyTemperatureProperty;
-import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.api.utils.TKCYAValues;
+import tekcays_addon.gtapi.capability.containers.IHeatContainer;
+import tekcays_addon.gtapi.capability.machines.IHeatMachine;
+import tekcays_addon.gtapi.capability.list.HeatContainerList;
+import tekcays_addon.gtapi.metatileentity.multiblock.HeatContainerNoEnergyMultiblockController;
+import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
+import tekcays_addon.gtapi.recipes.recipeproperties.NoEnergyTemperatureProperty;
+import tekcays_addon.gtapi.render.TKCYATextures;
+import tekcays_addon.gtapi.utils.TKCYAValues;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
@@ -44,7 +44,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 import static gregtech.api.util.RelativeDirection.*;
-import static tekcays_addon.api.recipes.TKCYARecipeMaps.ADVANCED_BLAST_FURNACE_RECIPES;
+import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.ADVANCED_BLAST_FURNACE_RECIPES;
 
 public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMultiblockController implements IHeatMachine, IDataInfoProvider{
 

@@ -19,17 +19,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidTank;
-import tekcays_addon.api.capability.impl.HeatContainer;
-import tekcays_addon.api.metatileentity.FuelHeater;
-import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.api.utils.FuelHeaterTiers;
+import tekcays_addon.gtapi.capability.impl.HeatContainer;
+import tekcays_addon.gtapi.metatileentity.FuelHeater;
+import tekcays_addon.gtapi.render.TKCYATextures;
+import tekcays_addon.gtapi.utils.FuelHeaterTiers;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static tekcays_addon.api.utils.FuelWithProperties.CREOSOTE;
-import static tekcays_addon.api.utils.HeatersMethods.getBurnTime;
-import static tekcays_addon.api.utils.HeatersMethods.isThereEnoughLiquidFuel;
+import static tekcays_addon.gtapi.utils.FuelWithProperties.CREOSOTE;
+import static tekcays_addon.gtapi.utils.HeatersMethods.getBurnTime;
+import static tekcays_addon.gtapi.utils.HeatersMethods.isThereEnoughLiquidFuel;
 
 public class MetaTileEntityLiquidFuelHeater extends FuelHeater implements IDataInfoProvider, IActiveOutputSide {
 

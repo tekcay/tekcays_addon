@@ -7,16 +7,15 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.utils.MiscMethods;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.FilterBehavior;
 
 import static gregtech.api.recipes.RecipeMaps.LASER_ENGRAVER_RECIPES;
 import static gregtech.api.unification.ore.OrePrefix.*;
-import static tekcays_addon.api.utils.MiscMethods.*;
-import static tekcays_addon.api.utils.TKCYAValues.FILTER_MATERIALS;
-import static tekcays_addon.api.utils.TKCYAValues.MIXTURE_TO_FILTER;
+import static tekcays_addon.gtapi.utils.MiscMethods.*;
+import static tekcays_addon.gtapi.utils.TKCYAValues.FILTER_MATERIALS;
+import static tekcays_addon.gtapi.utils.TKCYAValues.MIXTURE_TO_FILTER;
 import static tekcays_addon.loaders.DamageableItemsLoader.filterStainlessSteel;
 
 public class FiltrationRecipeHandler {

@@ -22,11 +22,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.IItemHandlerModifiable;
-import tekcays_addon.api.capability.impl.HeatContainer;
-import tekcays_addon.api.metatileentity.FuelHeater;
-import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.api.utils.FuelHeaterTiers;
-import tekcays_addon.api.utils.FuelWithProperties;
+import tekcays_addon.gtapi.capability.impl.HeatContainer;
+import tekcays_addon.gtapi.metatileentity.FuelHeater;
+import tekcays_addon.gtapi.render.TKCYATextures;
+import tekcays_addon.gtapi.utils.FuelHeaterTiers;
+import tekcays_addon.gtapi.utils.FuelWithProperties;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
 import javax.annotation.Nullable;
@@ -34,7 +34,7 @@ import java.util.List;
 
 import static gregtech.api.gui.GuiTextures.*;
 import static gregtech.api.unification.material.Materials.*;
-import static tekcays_addon.api.utils.FuelWithProperties.*;
+import static tekcays_addon.gtapi.utils.FuelWithProperties.*;
 
 public class MetaTileEntityGasHeater extends FuelHeater implements IDataInfoProvider, IActiveOutputSide {
 

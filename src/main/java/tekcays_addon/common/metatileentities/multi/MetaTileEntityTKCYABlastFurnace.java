@@ -18,10 +18,10 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
-import tekcays_addon.api.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.recipes.recipeproperties.NoEnergyTemperatureProperty;
-import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.gtapi.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
+import tekcays_addon.gtapi.recipes.recipeproperties.NoEnergyTemperatureProperty;
+import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
@@ -31,7 +31,7 @@ import java.util.List;
 
 
 import static gregtech.api.util.RelativeDirection.*;
-import static tekcays_addon.api.utils.BlastFurnaceUtils.*;
+import static tekcays_addon.gtapi.utils.BlastFurnaceUtils.*;
 
 public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlockController {
 

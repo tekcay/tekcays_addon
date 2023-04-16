@@ -15,15 +15,15 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import tekcays_addon.api.logic.NoOverclockLogic;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.gtapi.logic.NoOverclockLogic;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
+import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 
-import static tekcays_addon.api.logic.DamageItemsLogic.*;
+import static tekcays_addon.gtapi.logic.DamageItemsLogic.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

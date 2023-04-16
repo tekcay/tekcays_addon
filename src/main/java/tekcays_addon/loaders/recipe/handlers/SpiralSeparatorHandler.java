@@ -1,16 +1,14 @@
 package tekcays_addon.loaders.recipe.handlers;
 
 import net.minecraft.item.ItemStack;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.utils.TKCYALog;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static gregtech.api.GregTechAPI.MATERIAL_REGISTRY;
 import static gregtech.api.unification.ore.OrePrefix.dustTiny;
-import static tekcays_addon.api.utils.MiscMethods.*;
-import static tekcays_addon.api.utils.TKCYAValues.DUST_MIXTURE_WITH_NBT;
+import static tekcays_addon.gtapi.utils.MiscMethods.*;
+import static tekcays_addon.gtapi.utils.TKCYAValues.DUST_MIXTURE_WITH_NBT;
 
 public class SpiralSeparatorHandler {
 

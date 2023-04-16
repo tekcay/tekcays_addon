@@ -24,10 +24,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
-import tekcays_addon.api.capability.impl.HeatContainer;
-import tekcays_addon.api.metatileentity.FuelHeater;
-import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.api.utils.FuelHeaterTiers;
+import tekcays_addon.gtapi.capability.impl.HeatContainer;
+import tekcays_addon.gtapi.metatileentity.FuelHeater;
+import tekcays_addon.gtapi.render.TKCYATextures;
+import tekcays_addon.gtapi.utils.FuelHeaterTiers;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
 import javax.annotation.Nullable;
@@ -35,7 +35,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import static tekcays_addon.api.utils.HeatersMethods.getBurnTime;
+import static tekcays_addon.gtapi.utils.HeatersMethods.getBurnTime;
 
 public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataInfoProvider, IActiveOutputSide, IFuelable {
 

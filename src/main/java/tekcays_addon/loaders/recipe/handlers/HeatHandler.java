@@ -11,10 +11,10 @@ import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 
 
 import static gregtech.api.unification.material.Materials.*;
-import static tekcays_addon.api.unification.TKCYAMaterials.*;
+import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
-import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.curvedPlate;
-import static tekcays_addon.api.utils.FuelHeaterTiers.FUEL_HEATERS;
+import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.curvedPlate;
+import static tekcays_addon.gtapi.utils.FuelHeaterTiers.FUEL_HEATERS;
 
 
 public class HeatHandler {

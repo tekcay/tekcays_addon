@@ -21,16 +21,16 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import tekcays_addon.api.capability.containers.IVacuumContainer;
-import tekcays_addon.api.capability.TKCYATileCapabilities;
-import tekcays_addon.api.capability.impl.VacuumContainer;
-import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
+import tekcays_addon.gtapi.capability.containers.IVacuumContainer;
+import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
+import tekcays_addon.gtapi.capability.impl.VacuumContainer;
+import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
+import static tekcays_addon.gtapi.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
 
 public class MetaTileEntityVacuumHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IVacuumContainer>, IDataInfoProvider {
 

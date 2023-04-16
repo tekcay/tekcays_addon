@@ -7,8 +7,8 @@ import gregtech.common.blocks.MetaBlocks;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static gregtech.api.unification.ore.OrePrefix.block;
-import static tekcays_addon.api.recipes.TKCYARecipeMaps.COKING;
-import static tekcays_addon.api.utils.TKCYAValues.MINUTE;
+import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.COKING;
+import static tekcays_addon.gtapi.utils.TKCYAValues.MINUTE;
 import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.COKE_OVEN;
 
 public class CokeOvenRecipeHandler {

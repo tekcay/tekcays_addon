@@ -2,15 +2,15 @@ package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.metatileentity.multiblock.CleanroomType;
 import gregtech.api.recipes.ingredients.IntCircuitIngredient;
-import tekcays_addon.api.utils.TKCYAValues;
+import tekcays_addon.gtapi.utils.TKCYAValues;
 
 import static gregtech.api.GTValues.LV;
 import static gregtech.api.GTValues.VA;
 import static gregtech.api.recipes.RecipeMaps.CHEMICAL_RECIPES;
 import static gregtech.api.recipes.RecipeMaps.LARGE_CHEMICAL_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
-import static tekcays_addon.api.unification.TKCYAMaterials.HighDensityPolyethylene;
-import static tekcays_addon.api.unification.TKCYAMaterials.Polypropylene;
+import static tekcays_addon.gtapi.unification.TKCYAMaterials.HighDensityPolyethylene;
+import static tekcays_addon.gtapi.unification.TKCYAMaterials.Polypropylene;
 
 public class PolymerHandler {
     

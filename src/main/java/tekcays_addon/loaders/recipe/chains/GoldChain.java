@@ -5,16 +5,16 @@ import gregtech.api.recipes.ingredients.nbtmatch.NBTCondition;
 import gregtech.api.recipes.ingredients.nbtmatch.NBTMatcher;
 import gregtech.api.unification.stack.MaterialStack;
 import net.minecraftforge.fluids.FluidStack;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.unification.TKCYAMaterials;
-import tekcays_addon.api.utils.MiscMethods;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
+import tekcays_addon.gtapi.unification.TKCYAMaterials;
+import tekcays_addon.gtapi.utils.MiscMethods;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
 
 import static gregtech.api.recipes.RecipeMaps.CHEMICAL_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
-import static tekcays_addon.api.unification.TKCYAMaterials.*;
+import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
 import static tekcays_addon.loaders.DamageableItemsLoader.electrodeSilver;
 
 

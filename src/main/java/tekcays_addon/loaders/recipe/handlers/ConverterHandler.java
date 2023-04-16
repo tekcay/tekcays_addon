@@ -7,10 +7,10 @@ import tekcays_addon.common.items.TKCYAMetaItems;
 
 import static gregtech.api.GTValues.*;
 import static gregtech.api.unification.material.Materials.*;
-import static tekcays_addon.api.recipes.TKCYARecipeMaps.CONVERTING_RECIPES;
-import static tekcays_addon.api.recipes.TKCYARecipeMaps.PRIMITIVE_CONVERTING_RECIPES;
-import static tekcays_addon.api.unification.TKCYAMaterials.*;
-import static tekcays_addon.api.utils.TKCYAValues.*;
+import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.CONVERTING_RECIPES;
+import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.PRIMITIVE_CONVERTING_RECIPES;
+import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
+import static tekcays_addon.gtapi.utils.TKCYAValues.*;
 
 public class ConverterHandler {
 

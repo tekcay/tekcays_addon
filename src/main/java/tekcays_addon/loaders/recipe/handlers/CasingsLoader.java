@@ -3,7 +3,7 @@ package tekcays_addon.loaders.recipe.handlers;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.recipes.ingredients.IntCircuitIngredient;
 import gregtech.api.unification.ore.OrePrefix;
-import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.gtapi.unification.TKCYAMaterials;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 

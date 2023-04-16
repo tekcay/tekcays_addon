@@ -23,20 +23,20 @@ import net.minecraft.util.*;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import tekcays_addon.api.capability.containers.IHeatContainer;
-import tekcays_addon.api.capability.TKCYATileCapabilities;
-import tekcays_addon.api.capability.impl.HeatContainer;
+import tekcays_addon.gtapi.capability.containers.IHeatContainer;
+import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
+import tekcays_addon.gtapi.capability.impl.HeatContainer;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 import org.apache.commons.lang3.ArrayUtils;
-import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.gtapi.render.TKCYATextures;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
 import static net.minecraft.util.EnumFacing.*;
-import static tekcays_addon.api.utils.TKCYAValues.EU_TO_HU;
+import static tekcays_addon.gtapi.utils.TKCYAValues.EU_TO_HU;
 
 public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implements IDataInfoProvider, IActiveOutputSide {
 

@@ -16,14 +16,11 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraftforge.common.capabilities.Capability;
-import tekcays_addon.api.capability.TKCYATileCapabilities;
+import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.api.consts.DetectorModes;
-import tekcays_addon.api.metatileentity.gui.MetaTileEntityGuiHandler;
-import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.api.gui.MetaTileEntityGuiHandler;
+import tekcays_addon.gtapi.render.TKCYATextures;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 

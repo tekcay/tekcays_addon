@@ -10,11 +10,10 @@ import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.metatileentities.storage.MetaTileEntityDrum;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.TekCaysAddon;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.api.unification.TKCYAMaterials;
-import tekcays_addon.api.utils.FuelHeaterTiers;
-import tekcays_addon.api.utils.TKCYALog;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
+import tekcays_addon.gtapi.render.TKCYATextures;
+import tekcays_addon.gtapi.unification.TKCYAMaterials;
+import tekcays_addon.gtapi.utils.FuelHeaterTiers;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
@@ -40,11 +39,11 @@ import java.util.function.IntFunction;
 import java.util.stream.IntStream;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
-import static tekcays_addon.api.render.TKCYATextures.STEAM_CASING;
-import static tekcays_addon.api.utils.BlastFurnaceUtils.BRICKS;
-import static tekcays_addon.api.utils.FuelHeaterTiers.BRICK;
-import static tekcays_addon.api.utils.FuelHeaterTiers.FUEL_HEATERS;
-import static tekcays_addon.api.utils.TKCYAValues.DRUM_MATERIALS;
+import static tekcays_addon.gtapi.render.TKCYATextures.STEAM_CASING;
+import static tekcays_addon.gtapi.utils.BlastFurnaceUtils.BRICKS;
+import static tekcays_addon.gtapi.utils.FuelHeaterTiers.BRICK;
+import static tekcays_addon.gtapi.utils.FuelHeaterTiers.FUEL_HEATERS;
+import static tekcays_addon.gtapi.utils.TKCYAValues.DRUM_MATERIALS;
 
 public class TKCYAMetaTileEntities {
 

@@ -19,19 +19,19 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import tekcays_addon.api.capability.containers.IHeatContainer;
-import tekcays_addon.api.capability.TKCYATileCapabilities;
-import tekcays_addon.api.capability.impl.HeatContainer;
-import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
-import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.gtapi.capability.containers.IHeatContainer;
+import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
+import tekcays_addon.gtapi.capability.impl.HeatContainer;
+import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
+import tekcays_addon.gtapi.render.TKCYATextures;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static tekcays_addon.api.utils.TKCYAValues.HORIZONTALS;
-import static tekcays_addon.api.utils.TKCYAValues.VERTICALS;
+import static tekcays_addon.gtapi.utils.TKCYAValues.HORIZONTALS;
+import static tekcays_addon.gtapi.utils.TKCYAValues.VERTICALS;
 
 public class MetaTileEntityHeatAcceptor extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IHeatContainer>, IDataInfoProvider {
 

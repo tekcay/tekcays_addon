@@ -2,7 +2,7 @@ package tekcays_addon.common.covers;
 
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.TekCaysAddon;
-import tekcays_addon.api.utils.TKCYALog;
+import tekcays_addon.gtapi.utils.TKCYALog;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
 import static gregtech.common.covers.CoverBehaviors.registerBehavior;

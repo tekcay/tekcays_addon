@@ -33,25 +33,23 @@ import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.ArrayUtils;
-import tekcays_addon.api.capability.TKCYATileCapabilities;
-import tekcays_addon.api.capability.containers.IPressureContainer;
-import tekcays_addon.api.capability.containers.IRotationContainer;
-import tekcays_addon.api.capability.impl.PressureContainer;
-import tekcays_addon.api.capability.impl.RotationContainer;
-import tekcays_addon.api.utils.TKCYALog;
-import tekcays_addon.api.utils.capability.AdjacentCapabilityHelper;
-import tekcays_addon.api.utils.FluidStackHelper;
-import tekcays_addon.api.utils.PressureContainerHandler;
+import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
+import tekcays_addon.gtapi.capability.containers.IPressureContainer;
+import tekcays_addon.gtapi.capability.containers.IRotationContainer;
+import tekcays_addon.gtapi.capability.impl.RotationContainer;
+import tekcays_addon.api.capability.AdjacentCapabilityHelper;
+import tekcays_addon.gtapi.utils.FluidStackHelper;
+import tekcays_addon.gtapi.utils.PressureContainerHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
-import static tekcays_addon.api.capability.TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER;
-import static tekcays_addon.api.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
+import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER;
+import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
 import static tekcays_addon.api.consts.NBTKeys.IS_RUNNING;
-import static tekcays_addon.api.render.TKCYATextures.*;
+import static tekcays_addon.gtapi.render.TKCYATextures.*;
 
 public class MetaTileEntityRotationCompressor extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide, FluidStackHelper, PressureContainerHandler, AdjacentCapabilityHelper<IPressureContainer> {
 
@@ -59,7 +57,7 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
     private IRotationContainer rotationContainer;
     private IPressureContainer pressureContainer;
     private final int maxSpeed, maxTorque, maxPower;
-    private int speed, torque, power;
+    private int speed, torque, power = 0;
     private int baseTransferRate;
     private int pressure, minPressure, maxPressure;
     private final int tier;

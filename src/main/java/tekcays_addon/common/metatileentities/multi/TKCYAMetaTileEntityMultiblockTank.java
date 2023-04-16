@@ -19,7 +19,6 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiblockWithDisplayBase;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.recipes.ModHandler;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.properties.FluidPipeProperties;
@@ -40,8 +39,8 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import org.lwjgl.input.Keyboard;
-import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.gtapi.render.TKCYATextures;
+import tekcays_addon.gtapi.unification.TKCYAMaterials;
 import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 
 import javax.annotation.Nonnull;

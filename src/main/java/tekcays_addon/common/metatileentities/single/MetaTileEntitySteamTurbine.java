@@ -17,6 +17,7 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import gregtech.core.sound.GTSoundEvents;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import lombok.Setter;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -35,11 +36,12 @@ import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.ArrayUtils;
-import tekcays_addon.api.capability.TKCYATileCapabilities;
-import tekcays_addon.api.capability.containers.IRotationContainer;
-import tekcays_addon.api.capability.impl.RotationContainer;
-import tekcays_addon.api.utils.FluidStackHelper;
-import tekcays_addon.api.utils.TKCYALog;
+import tekcays_addon.api.nbt.NBTType;
+import tekcays_addon.api.nbt.NBTWrapper;
+import tekcays_addon.gtapi.capability.containers.IRotationContainer;
+import tekcays_addon.gtapi.capability.impl.RotationContainer;
+import tekcays_addon.gtapi.utils.FluidStackHelper;
+import tekcays_addon.gtapi.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -47,21 +49,28 @@ import java.util.List;
 
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
 import static gregtech.api.unification.material.Materials.*;
-import static tekcays_addon.api.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
-import static tekcays_addon.api.render.TKCYATextures.*;
-import static tekcays_addon.api.utils.TKCYAValues.STEAM_TO_WATER;
+import static tekcays_addon.api.consts.NBTKeys.IS_RUNNING;
+import static tekcays_addon.api.nbt.NBTWrapper.*;
+import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
+import static tekcays_addon.gtapi.render.TKCYATextures.*;
+import static tekcays_addon.gtapi.utils.TKCYAValues.STEAM_TO_WATER;
 
 public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide, FluidStackHelper {
 
     private IFluidTank importFluidTank, exportFluidTank;
     private IRotationContainer rotationContainer;
     private int maxSpeed, maxTorque, maxPower;
-    private int speed, torque, power;
+    private int speed, torque, power = 0;
     private final int tier;
     private final int maxSteamConsumption, maxWaterOutputRate;
-    private int steamConsumption, waterOutputRate;
+    @Setter
+    private int steamConsumption, waterOutputRate = 0;
+    @Setter
     private boolean isRunning;
     private final int steamTankCapacity, waterTankCapacity;
+
+    private NBTWrapper ratesWrapper = new NBTWrapper(NBTType.INTEGER);
+    private NBTWrapper isRunningWrapper = new NBTWrapper(NBTType.BOOLEAN);
 
     public MetaTileEntitySteamTurbine(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId);
@@ -75,6 +84,11 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
         this.importFluidTank = new NotifiableFluidTank(steamTankCapacity, this, false);
         this.exportFluidTank = new NotifiableFluidTank(waterTankCapacity, this, true);
         initializeInventory();
+
+        this.ratesWrapper.add("steamConsumption", speed, this::setSteamConsumption)
+                         .add("waterOutputRate", torque, this::setWaterOutputRate);
+
+        this.isRunningWrapper.add(IS_RUNNING, isRunning, this::setRunning);
     }
 
     @Override
@@ -289,26 +303,26 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         super.writeToNBT(data);
-        data.setBoolean("isRunning", isRunning);
+        serializeNBTHelper(data, ratesWrapper, isRunningWrapper);
         return data;
     }
 
     @Override
     public void readFromNBT(NBTTagCompound data) {
         super.readFromNBT(data);
-        this.isRunning = data.getBoolean("isRunning");
+        deserializeNBTHelper(data, ratesWrapper, isRunningWrapper);
     }
 
     @Override
     public void writeInitialSyncData(PacketBuffer buf) {
         super.writeInitialSyncData(buf);
-        buf.writeBoolean(this.isRunning);
+        writeInitialDataHelper(buf, ratesWrapper, isRunningWrapper);
     }
 
     @Override
     public void receiveInitialSyncData(PacketBuffer buf) {
         super.receiveInitialSyncData(buf);
-        this.isRunning = buf.readBoolean();
+        receiveInitialDataHelper(buf, ratesWrapper, isRunningWrapper);
     }
 
     @Override
