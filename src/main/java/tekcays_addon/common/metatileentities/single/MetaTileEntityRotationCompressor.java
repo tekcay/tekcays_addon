@@ -69,6 +69,7 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
         this.rotationContainer = new RotationContainer(this, 20 * this.tier, 100 * this.tier, 2000 * this.tier * this.tier);
         this.inputTankCapacity = 4000 * this.tier;
         this.importFluidTank = new NotifiableFluidTank(inputTankCapacity, this, false);
+        super.initializeInventory();
     }
 
     @Override

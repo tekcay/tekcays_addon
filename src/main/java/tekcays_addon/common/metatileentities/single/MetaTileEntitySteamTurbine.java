@@ -56,7 +56,6 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
     private IFluidTank importFluidTank, exportFluidTank;
     private IRotationContainer rotationContainer;
     private ISteamConsumer steamConsumer;
-    private int maxSpeed, maxTorque, maxPower;
     private final int tier;
     private final int maxSteamConsumption, maxWaterOutputRate ;
     @Setter
@@ -68,24 +67,18 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
         this.tier = tier + 1;
         this.maxSteamConsumption = STEAM_TO_WATER * this.tier;
         this.maxWaterOutputRate = this.tier;
-        this.maxSpeed = 20 * this.tier;
         this.steamTankCapacity = 4000 * this.tier;
         this.waterTankCapacity = 1000 * this.tier;
         this.importFluidTank = new NotifiableFluidTank(steamTankCapacity, this, false);
         this.exportFluidTank = new NotifiableFluidTank(waterTankCapacity, this, true);
-        initializeInventory();
+        this.rotationContainer = new RotationContainer(this, 20 * this.tier, 0, 0);
+        this.steamConsumer = new SteamConsumer(this);
+        super.initializeInventory();
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
         return new MetaTileEntitySteamTurbine(metaTileEntityId, tier - 1);
-    }
-
-    @Override
-    protected void initializeInventory() {
-        super.initializeInventory();
-        this.rotationContainer = new RotationContainer(this,maxSpeed, maxTorque, maxPower);
-        this.steamConsumer = new SteamConsumer(this);
     }
 
     @Override
@@ -144,18 +137,18 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
     }
 
     private void increment() {
-        if (getOffsetTimer() % (10 * STEAM_TO_WATER) == 0) {
-            steamConsumer.changeWaterOutputRate(1);
-            steamConsumer.changeSteamConsumption(STEAM_TO_WATER);
-            rotationContainer.changeSpeed(1);
-        }
+        changeParameters(30, 1, STEAM_TO_WATER, 1);
     }
 
     private void decrement() {
-        if (getOffsetTimer() % 20 == 0) {
-            steamConsumer.changeWaterOutputRate(-1);
-            steamConsumer.changeSteamConsumption(-STEAM_TO_WATER);
-            rotationContainer.changeSpeed(-1);
+        changeParameters(20, -1, -STEAM_TO_WATER, -1);
+    }
+
+    private void changeParameters(int offSetTimer, int waterOutputRate, int steamConsumption, int speed) {
+        if (getOffsetTimer() % offSetTimer == 0) {
+            steamConsumer.changeWaterOutputRate(waterOutputRate);
+            steamConsumer.changeSteamConsumption(steamConsumption);
+            rotationContainer.changeSpeed(speed);
         }
     }
 
@@ -236,7 +229,7 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.water_tank", waterTankCapacity));
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.steam_input", maxSteamConsumption));
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.water_output", maxWaterOutputRate));
-        tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.max_speed", maxSpeed));
+        tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.max_speed", rotationContainer.getMaxSpeed()));
         super.addInformation(stack, player, tooltip, advanced);
     }
 
