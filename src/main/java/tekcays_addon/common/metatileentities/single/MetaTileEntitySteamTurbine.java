@@ -229,7 +229,7 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.water_tank", waterTankCapacity));
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.steam_input", maxSteamConsumption));
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.water_output", maxWaterOutputRate));
-        tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.max_speed", rotationContainer.getMaxSpeed()));
+        tooltip.add(I18n.format("tkcya.general.rotation.maxspeed", rotationContainer.getMaxSpeed()));
         super.addInformation(stack, player, tooltip, advanced);
     }
 

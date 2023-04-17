@@ -98,6 +98,7 @@ public class TKCYAMetaTileEntities {
 
     public static MetaTileEntitySteamTurbine[] STEAM_TURBINE = new MetaTileEntitySteamTurbine[STEAM_CASING.length];
     public static MetaTileEntityRotationCompressor[] ROTATION_COMPRESSOR = new MetaTileEntityRotationCompressor[STEAM_CASING.length];
+    public static MetaTileEntityDynamo[] DYNAMOS = new MetaTileEntityDynamo[MAX_TIER];
 
     public static MetaTileEntityRoastingOven ROASTING_OVEN;
     public static MetaTileEntitySpiralSeparator SPIRAL_SEPARATOR;
@@ -345,6 +346,9 @@ public class TKCYAMetaTileEntities {
 
         IntStream.range(0, ROTATION_COMPRESSOR.length )
                 .forEach(i -> ROTATION_COMPRESSOR[i] = registerMetaTileEntity(12010 + i, new MetaTileEntityRotationCompressor(tkcyaId("rotation_compressor." + i), i)));
+
+        IntStream.range(0, DYNAMOS.length )
+                .forEach(i -> DYNAMOS[i] = registerMetaTileEntity(12020 + i, new MetaTileEntityDynamo(tkcyaId("dynamo." + i), i)));
 
     }
 

@@ -20,4 +20,5 @@ public interface AdjacentCapabilityHelper<T> {
         }
         return null;
     }
+
 }

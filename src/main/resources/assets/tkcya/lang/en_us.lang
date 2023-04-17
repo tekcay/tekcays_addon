@@ -12,6 +12,13 @@ tkcya.machine.steam_turbine.3.name=Steam Turbine IV
 tkcya.machine.steam_turbine.4.name=Steam Turbine V
 tkcya.machine.steam_turbine.5.name=Steam Turbine VI
 
+tkcya.machine.dynamo.0.name=Dynamo ULV
+tkcya.machine.dynamo.1.name=Dynamo LV
+tkcya.machine.dynamo.2.name=Dynamo MV
+tkcya.machine.dynamo.3.name=Dynamo HV
+tkcya.machine.dynamo.4.name=Dynamo EV
+tkcya.machine.dynamo.5.name=Dynamo IV
+
 tkcya.machine.rotation_compressor.0.name=Rotation Compressor I
 tkcya.machine.rotation_compressor.1.name=Rotation Compressor II
 tkcya.machine.rotation_compressor.2.name=Rotation Compressor III
@@ -489,7 +496,9 @@ tkcya.machine.steam_turbine.tooltip.steam_tank=Steam tank: %d L
 tkcya.machine.steam_turbine.tooltip.water_tank=Water tank: %d L
 tkcya.machine.steam_turbine.tooltip.steam_input=Max steam consumption: %d L/s
 tkcya.machine.steam_turbine.tooltip.water_output=Max distilled water output: %d L/s
-tkcya.machine.steam_turbine.tooltip.max_speed=Max speed: %d rpm
+
+#Dynamo
+tkcya.machine.dynamo.tooltip.1=Transforms rotational power into electricity.
 
 tkcya.machine.electric_pressure_compressor.pressure.tooltip.description=Transfer a fluid to the OUTPUT face to increase §aPressure§7.
 tkcya.machine.electric_pressure_compressor.vacuum.tooltip.description=Transfer a fluid from the INPUT face to increase §aVacuum§7.
@@ -514,6 +523,16 @@ tekcays_addon.multiblock.fuel_melter.tooltip.1=Temperature: §a%d K§7.
 tekcays_addon.multiblock.fuel_melter.tooltip.2=Not enough energy can be input to reach the target!
 tekcays_addon.multiblock.fuel_melter.tooltip.4=Consumption: %d L/t.
 tekcays_addon.multiblock.fuel_melter.tooltip.5=Target temperature: §a%d K§7.
+
+#General tooltips
+
+#Rotation
+tkcya.general.rotation.maxspeed=Max speed: %d rpm
+tkcya.general.rotation.maxtorque=Max torque: %d Nm
+tkcya.general.rotation.maxpower=Max power: %d W
+tkcya.general.rotation.speed=Speed: %d rpm
+tkcya.general.rotation.torque=Torque: %d Nm
+tkcya.general.rotation.power=Power: %d W
 
 tekcays_addon.recipe.melter_temperature=Temperature: %dK
 

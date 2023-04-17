@@ -35,6 +35,7 @@ public class TKCYATextures {
 
     //Rotation
     public static OrientedOverlayRenderer ROTATION_TURBINE_OVERLAY = new OrientedOverlayRenderer("rotation/turbine/rotation");
+    public static OrientedOverlayRenderer DYNAMO_OVERLAY = new OrientedOverlayRenderer("dynamo");
 
     // Bricks
     public static SimpleOverlayRenderer[] BRICKS = new SimpleOverlayRenderer[4];
