@@ -1,15 +1,11 @@
 package tekcays_addon.gtapi.capability.containers;
 
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
-import static tekcays_addon.gtapi.utils.TKCYAValues.*;
+import static tekcays_addon.gtapi.consts.TKCYAValues.*;
 
 public interface IPressureContainer {
 

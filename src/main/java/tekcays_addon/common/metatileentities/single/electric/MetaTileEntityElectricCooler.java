@@ -39,7 +39,7 @@ import java.util.List;
 
 import static net.minecraft.util.EnumFacing.DOWN;
 import static net.minecraft.util.EnumFacing.UP;
-import static tekcays_addon.gtapi.utils.TKCYAValues.EU_TO_HU;
+import static tekcays_addon.gtapi.consts.TKCYAValues.EU_TO_HU;
 
 public class MetaTileEntityElectricCooler extends TieredMetaTileEntity implements IDataInfoProvider, IActiveOutputSide {
 

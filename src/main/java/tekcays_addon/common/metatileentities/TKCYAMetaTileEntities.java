@@ -43,7 +43,7 @@ import static tekcays_addon.gtapi.render.TKCYATextures.STEAM_CASING;
 import static tekcays_addon.gtapi.utils.BlastFurnaceUtils.BRICKS;
 import static tekcays_addon.gtapi.utils.FuelHeaterTiers.BRICK;
 import static tekcays_addon.gtapi.utils.FuelHeaterTiers.FUEL_HEATERS;
-import static tekcays_addon.gtapi.utils.TKCYAValues.DRUM_MATERIALS;
+import static tekcays_addon.gtapi.consts.TKCYAValues.DRUM_MATERIALS;
 
 public class TKCYAMetaTileEntities {
 
@@ -99,6 +99,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntitySteamTurbine[] STEAM_TURBINE = new MetaTileEntitySteamTurbine[STEAM_CASING.length];
     public static MetaTileEntityRotationCompressor[] ROTATION_COMPRESSOR = new MetaTileEntityRotationCompressor[STEAM_CASING.length];
     public static MetaTileEntityDynamo[] DYNAMOS = new MetaTileEntityDynamo[MAX_TIER];
+    public static MetaTileEntityDieselGenerator[] DIESEL_GENERATOR = new MetaTileEntityDieselGenerator[MAX_TIER];
 
     public static MetaTileEntityRoastingOven ROASTING_OVEN;
     public static MetaTileEntitySpiralSeparator SPIRAL_SEPARATOR;
@@ -349,6 +350,9 @@ public class TKCYAMetaTileEntities {
 
         IntStream.range(0, DYNAMOS.length )
                 .forEach(i -> DYNAMOS[i] = registerMetaTileEntity(12020 + i, new MetaTileEntityDynamo(tkcyaId("dynamo." + i), i)));
+
+        IntStream.range(0, DIESEL_GENERATOR.length )
+                .forEach(i -> DIESEL_GENERATOR[i] = registerMetaTileEntity(12030 + i, new MetaTileEntityDieselGenerator(tkcyaId("diesel_generator." + i), i)));
 
     }
 

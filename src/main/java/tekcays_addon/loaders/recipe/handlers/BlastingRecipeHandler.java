@@ -19,8 +19,8 @@ import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.*;
-import static tekcays_addon.gtapi.utils.TKCYAValues.MINUTE;
-import static tekcays_addon.gtapi.utils.TKCYAValues.SECOND;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MINUTE;
+import static tekcays_addon.gtapi.consts.TKCYAValues.SECOND;
 import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.*;
 
 public class BlastingRecipeHandler {

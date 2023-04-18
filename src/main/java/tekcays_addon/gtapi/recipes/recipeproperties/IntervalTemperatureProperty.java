@@ -7,7 +7,7 @@ import tekcays_addon.api.recipeproperties.RecipePropertiesHelper;
 
 import javax.annotation.Nonnull;
 
-import static tekcays_addon.gtapi.utils.TKCYAValues.INTERVAL_TEMPERATURE_PROPERTY;
+import static tekcays_addon.gtapi.consts.TKCYAValues.INTERVAL_TEMPERATURE_PROPERTY;
 
 ;
 

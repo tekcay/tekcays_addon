@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
-import static tekcays_addon.gtapi.utils.TKCYAValues.MOLD_MATERIALS;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MOLD_MATERIALS;
 
 
 public class CastingRecipeHandler {

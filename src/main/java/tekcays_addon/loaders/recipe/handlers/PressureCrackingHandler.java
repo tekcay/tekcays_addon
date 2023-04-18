@@ -7,8 +7,8 @@ import static gregtech.api.GTValues.*;
 import static gregtech.api.unification.material.Materials.*;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
 import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.PRESSURE_CRACKING;
-import static tekcays_addon.gtapi.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
-import static tekcays_addon.gtapi.utils.TKCYAValues.MINIMUM_FLUID_STACK_AMOUNT;
+import static tekcays_addon.gtapi.consts.TKCYAValues.ATMOSPHERIC_PRESSURE;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MINIMUM_FLUID_STACK_AMOUNT;
 
 public class PressureCrackingHandler {
     

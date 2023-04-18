@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.function.Function;
 
-import static tekcays_addon.gtapi.utils.TKCYAValues.*;
+import static tekcays_addon.gtapi.consts.TKCYAValues.*;
 
 public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
 

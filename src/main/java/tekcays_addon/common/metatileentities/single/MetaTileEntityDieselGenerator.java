@@ -15,6 +15,7 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
+import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import gregtech.core.sound.GTSoundEvents;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import lombok.Setter;
@@ -32,13 +33,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.ArrayUtils;
+import tekcays_addon.api.capability.AdjacentCapabilityHelper;
+import tekcays_addon.api.metatileentity.IFreeFace;
 import tekcays_addon.gtapi.capability.containers.IRotationContainer;
-import tekcays_addon.gtapi.capability.containers.ISteamConsumer;
 import tekcays_addon.gtapi.capability.impl.RotationContainer;
-import tekcays_addon.gtapi.capability.impl.SteamConsumer;
 import tekcays_addon.gtapi.utils.FluidStackHelper;
 
 import javax.annotation.Nonnull;
@@ -46,46 +49,38 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
-import static gregtech.api.unification.material.Materials.*;
+import static gregtech.api.unification.material.Materials.Steam;
 import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
 import static tekcays_addon.gtapi.render.TKCYATextures.*;
-import static tekcays_addon.gtapi.consts.TKCYAValues.STEAM_TO_WATER;
 
-public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide, FluidStackHelper {
+public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide, IFreeFace, AdjacentCapabilityHelper<IFluidHandler>, FluidStackHelper {
 
-    private IFluidTank importFluidTank, exportFluidTank;
+    private IFluidTank importFuelTank;
     private IRotationContainer rotationContainer;
-    private ISteamConsumer steamConsumer;
     private final int tier;
+    private int fuelTankCapacity;
+    private int fuelConsumption;
+    private int carbonDioxideOutputRate;
     @Setter
     private boolean isRunning;
-    private final int steamTankCapacity, waterTankCapacity;
 
-    public MetaTileEntitySteamTurbine(ResourceLocation metaTileEntityId, int tier) {
+    public MetaTileEntityDieselGenerator(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId);
         this.tier = tier + 1;
-        this.steamTankCapacity = 4000 * this.tier;
-        this.waterTankCapacity = 1000 * this.tier;
+        this.fuelTankCapacity = 1000 * this.tier;
         this.rotationContainer = new RotationContainer(this, 20 * this.tier, 0, 0);
-        this.steamConsumer = new SteamConsumer(this, STEAM_TO_WATER * this.tier, this.tier);
         super.initializeInventory();
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
-        return new MetaTileEntitySteamTurbine(metaTileEntityId, tier - 1);
+        return new MetaTileEntityDieselGenerator(metaTileEntityId, tier - 1);
     }
-
-    @Override
-    public FluidTankList createExportFluidHandler() {
-        this.exportFluidTank = new NotifiableFluidTank(waterTankCapacity * tier, this, true);
-        return new FluidTankList(false, exportFluidTank);
-    }
-
+    
     @Override
     public FluidTankList createImportFluidHandler() {
-        this.importFluidTank = new NotifiableFluidTank(steamTankCapacity * tier, this, false);
-        return new FluidTankList(false, importFluidTank);
+        this.importFuelTank = new NotifiableFluidTank(fuelTankCapacity, this, false);
+        return new FluidTankList(false, importFuelTank);
     }
 
     @Override
@@ -94,27 +89,22 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
     }
 
     @SideOnly(Side.CLIENT)
-    protected SimpleOverlayRenderer getBaseRenderer() {
-        return STEAM_CASING[tier - 1];
+    protected SimpleSidedCubeRenderer getBaseRenderer() {
+        return Textures.VOLTAGE_CASINGS[tier];
     }
 
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
+        super.renderMetaTileEntity(renderState, translation, pipeline);
         IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline, new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
         getBaseRenderer().render(renderState, translation, colouredPipeline);
-        ColourMultiplier multiplier = new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
-        colouredPipeline = ArrayUtils.add(pipeline, multiplier);
         Textures.PIPE_IN_OVERLAY.renderSided(getInputSide(), renderState, translation, pipeline);
         ROTATION_TURBINE_OVERLAY.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isRunning, true);
-        ROTATION_WATER_OUTPUT_OVERLAY.renderSided(getFluidOutputSide(), renderState, translation, pipeline);
+        ROTATION_WATER_OUTPUT_OVERLAY.renderSided(getOutputSide(), renderState, translation, pipeline);
     }
 
     private EnumFacing getInputSide() {
         return getFrontFacing().rotateY();
-    }
-
-    private EnumFacing getFluidOutputSide() {
-        return getFrontFacing().rotateYCCW();
     }
 
     private EnumFacing getRotationSide() {
@@ -123,26 +113,19 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
 
     @Nullable
     private FluidStack getImportFluidStack() {
-        return importFluidTank.getFluid();
-    }
-
-    @Nullable
-    private FluidStack getExportFluidStack() {
-        return exportFluidTank.getFluid();
+        return importFuelTank.getFluid();
     }
 
     private void increment() {
-        changeParameters(30, 1, STEAM_TO_WATER, 1);
+        changeParameters(30, 1, 1, 1);
     }
 
     private void decrement() {
-        changeParameters(20, -1, -STEAM_TO_WATER, -1);
+        changeParameters(20, -1, -1, -1);
     }
 
-    private void changeParameters(int offSetTimer, int waterOutputRate, int steamConsumption, int speed) {
+    private void changeParameters(int offSetTimer, int speed, int fuelConsumption, int carbonDioxideOutputRate) {
         if (getOffsetTimer() % offSetTimer == 0) {
-            steamConsumer.changeWaterOutputRate(waterOutputRate);
-            steamConsumer.changeSteamConsumption(steamConsumption);
             rotationContainer.changeSpeed(speed);
         }
     }
@@ -157,14 +140,15 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
             decrement();
             return;
         }
-        if (getImportFluidStack().amount < steamConsumer.getSteamConsumption()) {
+        if (getImportFluidStack().amount < fuelConsumption) {
             decrement();
             return;
         }
 
-        importFluidTank.drain(steamConsumer.getSteamConsumption(), true);
-        exportFluidTank.fill(DistilledWater.getFluid(steamConsumer.getWaterOutputRate()), true);
-        pushFluidsIntoNearbyHandlers(getFluidOutputSide());
+        if (!canOutputCarbonDioxide()) this.doExplosion(1);
+
+        importFuelTank.drain(fuelConsumption, true);
+        pushFluidsIntoNearbyHandlers(getOutputSide());
         transferRotation();
         increment();
         setRunningState(true);
@@ -178,6 +162,19 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
 
          */
 
+    }
+
+    private boolean isOutputSideFree() {
+        return checkFaceFree(this.getPos(), getOutputSide());
+    }
+
+    @Nullable
+    private IFluidHandler getAdjacentFluidHandler() {
+        return getAdjacentCapabilityContainer(this);
+    }
+
+    private boolean canOutputCarbonDioxide() {
+        return isOutputSideFree() || getAdjacentFluidHandler() != null;
     }
 
     public void setRunningState(boolean isRunning) {
@@ -209,7 +206,7 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
     @Nullable
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
         if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
-            return side == getFluidOutputSide() ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
+            return side == getOutputSide() ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
         }
         if (capability.equals(CAPABILITY_ROTATIONAL_CONTAINER) && side == getRotationSide()) {
             return CAPABILITY_ROTATIONAL_CONTAINER.cast(rotationContainer);
@@ -220,9 +217,6 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.1"));
-        tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.steam_tank", steamTankCapacity));
-        tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.water_tank", waterTankCapacity));
-        steamConsumer.addTooltip(tooltip);
         rotationContainer.addTooltip(tooltip);
         super.addInformation(stack, player, tooltip, advanced);
     }
@@ -253,8 +247,6 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
         List<ITextComponent> list = new ObjectArrayList<>();
         list.add(new TextComponentTranslation("behavior.tricorder.steam.amount", getNullableFluidStackAmount(getImportFluidStack())));
         list.add(new TextComponentTranslation("behavior.tricorder.speed", rotationContainer.getSpeed()));
-        list.add(new TextComponentTranslation("behavior.tricorder.turbine.steam_consumption", steamConsumer.getSteamConsumption()));
-        list.add(new TextComponentTranslation("behavior.tricorder.turbine.output_rate", steamConsumer.getWaterOutputRate()));
         return list;
     }
 
@@ -270,5 +262,15 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
     @Override
     public SoundEvent getSound() {
         return GTSoundEvents.TURBINE;
+    }
+
+    @Override
+    public EnumFacing getOutputSide() {
+        return getFrontFacing().rotateYCCW();
+    }
+
+    @Override
+    public Capability<IFluidHandler> getCapability() {
+        return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY;
     }
 }

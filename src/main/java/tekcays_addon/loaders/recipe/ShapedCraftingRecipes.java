@@ -13,7 +13,7 @@ import tekcays_addon.common.items.TKCYAMetaItems;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static net.minecraft.init.Blocks.IRON_BARS;
 import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.*;
-import static tekcays_addon.gtapi.utils.TKCYAValues.MOLD_MATERIALS;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MOLD_MATERIALS;
 
 public class ShapedCraftingRecipes{
 

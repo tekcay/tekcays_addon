@@ -8,7 +8,7 @@ import tekcays_addon.api.units.IPressureFormatting;
 
 import javax.annotation.Nonnull;
 
-import static tekcays_addon.gtapi.utils.TKCYAValues.MAX_PRESSURE_PROPERTY;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MAX_PRESSURE_PROPERTY;
 
 public class MaxPressureProperty extends RecipeProperty<Integer> implements IPressureFormatting, RecipePropertiesHelper {
 

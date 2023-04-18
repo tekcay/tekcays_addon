@@ -30,8 +30,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static tekcays_addon.gtapi.utils.TKCYAValues.HORIZONTALS;
-import static tekcays_addon.gtapi.utils.TKCYAValues.VERTICALS;
+import static tekcays_addon.gtapi.consts.TKCYAValues.HORIZONTALS;
+import static tekcays_addon.gtapi.consts.TKCYAValues.VERTICALS;
 
 public class MetaTileEntityHeatAcceptor extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IHeatContainer>, IDataInfoProvider {
 

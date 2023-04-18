@@ -12,6 +12,8 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.TieredMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.util.GTUtility;
+import gregtech.client.renderer.texture.Textures;
+import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,6 +26,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.ArrayUtils;
 import tekcays_addon.gtapi.capability.containers.IRotationContainer;
 import tekcays_addon.gtapi.capability.impl.RotationContainer;
@@ -39,7 +43,7 @@ import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_RO
 import static tekcays_addon.api.consts.NBTKeys.IS_RUNNING;
 import static tekcays_addon.gtapi.render.TKCYATextures.*;
 
-public class MetaTileEntityDynamo extends TieredMetaTileEntity implements IDataInfoProvider, AdjacentCapabilityHelper<IEnergyContainer> {
+public class MetaTileEntityDynamo extends MetaTileEntity implements IDataInfoProvider, AdjacentCapabilityHelper<IEnergyContainer> {
 
     private IRotationContainer rotationContainer;
     private IEnergyContainer energyContainer;
@@ -51,7 +55,7 @@ public class MetaTileEntityDynamo extends TieredMetaTileEntity implements IDataI
 
 
     public MetaTileEntityDynamo(ResourceLocation metaTileEntityId, int tier) {
-        super(metaTileEntityId, tier);
+        super(metaTileEntityId);
         this.tier = tier + 1;
         this.maxEnergyOutput = GTValues.V[tier] * 15/16;
         this.rotationContainer = new RotationContainer(this, 20 * this.tier, 100 * this.tier, 2000 * this.tier * this.tier);
@@ -68,12 +72,16 @@ public class MetaTileEntityDynamo extends TieredMetaTileEntity implements IDataI
         return null;
     }
 
+    @SideOnly(Side.CLIENT)
+    protected SimpleSidedCubeRenderer getBaseRenderer() {
+        return Textures.VOLTAGE_CASINGS[tier];
+    }
+
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        ColourMultiplier multiplier = new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
-        IVertexOperation[] coloredPipeline = ArrayUtils.add(pipeline, multiplier);
-        DYNAMO_OVERLAY.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), false, false);
+        IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline, new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
+        getBaseRenderer().render(renderState, translation, colouredPipeline);
     }
 
     private EnumFacing getRotationSide() {

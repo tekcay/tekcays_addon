@@ -12,7 +12,7 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import tekcays_addon.gtapi.unification.TKCYAMaterials;
-import tekcays_addon.gtapi.utils.TKCYAValues;
+import tekcays_addon.gtapi.consts.TKCYAValues;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 
@@ -23,7 +23,7 @@ import static gregtech.api.recipes.RecipeMaps.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags.POLYMER;
 import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.*;
-import static tekcays_addon.gtapi.utils.TKCYAValues.*;
+import static tekcays_addon.gtapi.consts.TKCYAValues.*;
 import static tekcays_addon.loaders.recipe.handlers.CastingRecipeHandler.MOLD_PRODUCTION;
 
 public class TKCYAPartsRecipeHandler {

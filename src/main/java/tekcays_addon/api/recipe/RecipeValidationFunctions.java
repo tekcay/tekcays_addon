@@ -4,8 +4,8 @@ import net.minecraftforge.fluids.FluidStack;
 
 import java.util.function.Function;
 
-import static tekcays_addon.gtapi.utils.TKCYAValues.EMPTY_INT_TWO_ARRAY;
-import static tekcays_addon.gtapi.utils.TKCYAValues.EMPTY_LONG_TWO_ARRAY;
+import static tekcays_addon.gtapi.consts.TKCYAValues.EMPTY_INT_TWO_ARRAY;
+import static tekcays_addon.gtapi.consts.TKCYAValues.EMPTY_LONG_TWO_ARRAY;
 
 public class RecipeValidationFunctions {
 

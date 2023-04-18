@@ -1,4 +1,4 @@
-package tekcays_addon.gtapi.utils;
+package tekcays_addon.gtapi.consts;
 
 import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.unification.material.Material;

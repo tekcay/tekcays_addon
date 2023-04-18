@@ -21,7 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.unification.TKCYAMaterials;
-import tekcays_addon.gtapi.utils.TKCYAValues;
+import tekcays_addon.gtapi.consts.TKCYAValues;
 
 import static gregtech.api.GTValues.LV;
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;

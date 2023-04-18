@@ -36,7 +36,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 import static net.minecraft.util.EnumFacing.*;
-import static tekcays_addon.gtapi.utils.TKCYAValues.EU_TO_HU;
+import static tekcays_addon.gtapi.consts.TKCYAValues.EU_TO_HU;
 
 public class MetaTileEntityElectricHeater extends TieredMetaTileEntity implements IDataInfoProvider, IActiveOutputSide {
 

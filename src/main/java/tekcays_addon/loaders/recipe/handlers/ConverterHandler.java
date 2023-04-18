@@ -10,7 +10,7 @@ import static gregtech.api.unification.material.Materials.*;
 import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.CONVERTING_RECIPES;
 import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.PRIMITIVE_CONVERTING_RECIPES;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
-import static tekcays_addon.gtapi.utils.TKCYAValues.*;
+import static tekcays_addon.gtapi.consts.TKCYAValues.*;
 
 public class ConverterHandler {
 

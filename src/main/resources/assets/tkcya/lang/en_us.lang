@@ -19,6 +19,13 @@ tkcya.machine.dynamo.3.name=Dynamo HV
 tkcya.machine.dynamo.4.name=Dynamo EV
 tkcya.machine.dynamo.5.name=Dynamo IV
 
+tkcya.machine.diesel_generator.0.name=Diesel Generator I
+tkcya.machine.diesel_generator.1.name=Diesel Generator II
+tkcya.machine.diesel_generator.2.name=Diesel Generator III
+tkcya.machine.diesel_generator.3.name=Diesel Generator IV
+tkcya.machine.diesel_generator.4.name=Diesel Generator V
+tkcya.machine.diesel_generator.5.name=Diesel Generator VI
+
 tkcya.machine.rotation_compressor.0.name=Rotation Compressor I
 tkcya.machine.rotation_compressor.1.name=Rotation Compressor II
 tkcya.machine.rotation_compressor.2.name=Rotation Compressor III
@@ -191,8 +198,6 @@ tkcya.machine.electric_vacuum_pump.lv.name=Vacuum Pump I
 tkcya.machine.electric_vacuum_pump.mv.name=Vacuum Pump II
 tkcya.machine.electric_vacuum_pump.hv.name=Vacuum Pump III
 tkcya.machine.electric_vacuum_pump.ev.name=Vacuum Pump IV
-
-
 
 tkcya.machine.crystallizer.name=Crystallizer
 tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer

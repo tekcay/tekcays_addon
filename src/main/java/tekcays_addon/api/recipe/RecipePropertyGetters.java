@@ -4,7 +4,7 @@ import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.gtapi.recipes.recipeproperties.*;
 
-import static tekcays_addon.gtapi.utils.TKCYAValues.*;
+import static tekcays_addon.gtapi.consts.TKCYAValues.*;
 
 public class RecipePropertyGetters {
 

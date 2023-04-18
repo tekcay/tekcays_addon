@@ -7,7 +7,7 @@ import tekcays_addon.gtapi.recipes.recipeproperties.*;
 
 import javax.annotation.Nonnull;
 
-import static tekcays_addon.gtapi.utils.TKCYAValues.EMPTY_INT_TWO_ARRAY;
+import static tekcays_addon.gtapi.consts.TKCYAValues.EMPTY_INT_TWO_ARRAY;
 
 public interface PressureContainerCheckRecipeHelper {
 

@@ -8,7 +8,7 @@ import java.util.List;
 
 import static gregtech.api.unification.ore.OrePrefix.dustTiny;
 import static tekcays_addon.gtapi.utils.MiscMethods.*;
-import static tekcays_addon.gtapi.utils.TKCYAValues.DUST_MIXTURE_WITH_NBT;
+import static tekcays_addon.gtapi.consts.TKCYAValues.DUST_MIXTURE_WITH_NBT;
 
 public class SpiralSeparatorHandler {
 

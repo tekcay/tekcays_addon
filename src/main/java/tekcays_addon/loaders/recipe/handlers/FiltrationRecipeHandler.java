@@ -14,8 +14,8 @@ import tekcays_addon.common.items.behaviors.FilterBehavior;
 import static gregtech.api.recipes.RecipeMaps.LASER_ENGRAVER_RECIPES;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static tekcays_addon.gtapi.utils.MiscMethods.*;
-import static tekcays_addon.gtapi.utils.TKCYAValues.FILTER_MATERIALS;
-import static tekcays_addon.gtapi.utils.TKCYAValues.MIXTURE_TO_FILTER;
+import static tekcays_addon.gtapi.consts.TKCYAValues.FILTER_MATERIALS;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MIXTURE_TO_FILTER;
 import static tekcays_addon.loaders.DamageableItemsLoader.filterStainlessSteel;
 
 public class FiltrationRecipeHandler {

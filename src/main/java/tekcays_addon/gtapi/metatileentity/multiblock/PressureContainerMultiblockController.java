@@ -11,7 +11,7 @@ import tekcays_addon.gtapi.logic.PressureContainerMultiblockRecipeLogic;
 
 import java.util.List;
 
-import static tekcays_addon.gtapi.utils.TKCYAValues.MAX_PRESSURE;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MAX_PRESSURE;
 
 
 public abstract class PressureContainerMultiblockController extends RecipeMapMultiblockController implements IPressureMachine {

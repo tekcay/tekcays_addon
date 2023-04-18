@@ -30,7 +30,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static tekcays_addon.gtapi.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
+import static tekcays_addon.gtapi.consts.TKCYAValues.ATMOSPHERIC_PRESSURE;
 
 public class MetaTileEntityVacuumHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IVacuumContainer>, IDataInfoProvider {
 

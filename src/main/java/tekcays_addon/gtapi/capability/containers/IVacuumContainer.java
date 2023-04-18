@@ -7,8 +7,8 @@ import tekcays_addon.gtapi.utils.FluidStackHelper;
 import tekcays_addon.api.units.IPressureFormatting;
 
 import static gregtech.api.unification.material.Materials.Air;
-import static tekcays_addon.gtapi.utils.TKCYAValues.*;
-import static tekcays_addon.gtapi.utils.TKCYAValues.ROOM_TEMPERATURE;
+import static tekcays_addon.gtapi.consts.TKCYAValues.*;
+import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
 
 public interface IVacuumContainer extends IPressureFormatting, FluidStackHelper {
 

@@ -8,7 +8,7 @@ import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMap;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
-import static tekcays_addon.gtapi.utils.TKCYAValues.SLOT_INTERVAL;
+import static tekcays_addon.gtapi.consts.TKCYAValues.SLOT_INTERVAL;
 
 public class TopStaggeredRecipeMap<R extends RecipeBuilder<R>> extends RecipeMap<R> {
 

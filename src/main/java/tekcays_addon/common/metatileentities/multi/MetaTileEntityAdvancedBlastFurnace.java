@@ -34,7 +34,7 @@ import tekcays_addon.gtapi.metatileentity.multiblock.HeatContainerNoEnergyMultib
 import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.gtapi.recipes.recipeproperties.NoEnergyTemperatureProperty;
 import tekcays_addon.gtapi.render.TKCYATextures;
-import tekcays_addon.gtapi.utils.TKCYAValues;
+import tekcays_addon.gtapi.consts.TKCYAValues;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;

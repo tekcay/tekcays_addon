@@ -52,7 +52,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static tekcays_addon.gtapi.utils.TKCYAValues.ROOM_TEMPERATURE;
+import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
 
 public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDataInfoProvider {
 

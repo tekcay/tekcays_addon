@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static gregtech.api.unification.material.Materials.Air;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.MixtureToFilter;
-import static tekcays_addon.gtapi.utils.TKCYAValues.*;
+import static tekcays_addon.gtapi.consts.TKCYAValues.*;
 
 public class MiscMethods {
 

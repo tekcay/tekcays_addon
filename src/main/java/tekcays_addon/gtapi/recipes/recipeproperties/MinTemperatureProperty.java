@@ -6,7 +6,7 @@ import net.minecraft.client.resources.I18n;
 
 import javax.annotation.Nonnull;
 
-import static tekcays_addon.gtapi.utils.TKCYAValues.MIN_TEMPERATURE_PROPERTY;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MIN_TEMPERATURE_PROPERTY;
 
 public class MinTemperatureProperty extends RecipeProperty<Integer> {
 

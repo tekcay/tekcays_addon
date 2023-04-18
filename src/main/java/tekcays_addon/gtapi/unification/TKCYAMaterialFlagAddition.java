@@ -8,7 +8,7 @@ import tekcays_addon.gtapi.utils.roasting.RoastableMaterial;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags.*;
-import static tekcays_addon.gtapi.utils.TKCYAValues.*;
+import static tekcays_addon.gtapi.consts.TKCYAValues.*;
 import static tekcays_addon.loaders.recipe.handlers.RoastingHandler.ROASTABLE_MATERIALS;
 
 public class TKCYAMaterialFlagAddition {

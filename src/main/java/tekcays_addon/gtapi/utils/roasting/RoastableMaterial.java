@@ -5,7 +5,7 @@ import lombok.Getter;
 
 import static gregtech.api.unification.material.Materials.*;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
-import static tekcays_addon.gtapi.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
+import static tekcays_addon.gtapi.consts.TKCYAValues.ATMOSPHERIC_PRESSURE;
 
 @Getter
 public class RoastableMaterial {

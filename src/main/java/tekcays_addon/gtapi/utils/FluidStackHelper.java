@@ -6,7 +6,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nullable;
 
-import static tekcays_addon.gtapi.utils.TKCYAValues.NO_FLUID;
+import static tekcays_addon.gtapi.consts.TKCYAValues.NO_FLUID;
 
 public interface FluidStackHelper {
 

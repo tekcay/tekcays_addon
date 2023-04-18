@@ -16,7 +16,7 @@ import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.*;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
-import static tekcays_addon.gtapi.utils.TKCYAValues.SECOND;
+import static tekcays_addon.gtapi.consts.TKCYAValues.SECOND;
 import static tekcays_addon.gtapi.utils.roasting.RoastingRecipeHandlerMethods.getDustMixtureStackWithNBT;
 import static tekcays_addon.loaders.DamageableItemsLoader.electrodeCarbon;
 

@@ -9,7 +9,7 @@ import java.util.List;
 
 import static gregtech.api.unification.material.Materials.Calcite;
 import static gregtech.api.unification.material.Materials.Creosote;
-import static tekcays_addon.gtapi.utils.TKCYAValues.SECOND;
+import static tekcays_addon.gtapi.consts.TKCYAValues.SECOND;
 
 @Getter
 public class FuelWithProperties {

@@ -8,7 +8,7 @@ import tekcays_addon.api.units.IPressureFormatting;
 
 import javax.annotation.Nonnull;
 
-import static tekcays_addon.gtapi.utils.TKCYAValues.INTERVAL_PRESSURE_PROPERTY;;
+import static tekcays_addon.gtapi.consts.TKCYAValues.INTERVAL_PRESSURE_PROPERTY;;
 
 public class IntervalPressureProperty extends RecipeProperty<Integer[]> implements IPressureFormatting, RecipePropertiesHelper {
 

@@ -1,6 +1,6 @@
 package tekcays_addon.api.units;
 
-import static tekcays_addon.gtapi.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
+import static tekcays_addon.gtapi.consts.TKCYAValues.ATMOSPHERIC_PRESSURE;
 
 public interface IPressureFormatting {
 

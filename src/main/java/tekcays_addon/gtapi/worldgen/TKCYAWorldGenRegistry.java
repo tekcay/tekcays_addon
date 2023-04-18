@@ -19,7 +19,7 @@ import java.nio.file.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static tekcays_addon.gtapi.utils.TKCYAValues.DIMENSIONS;
+import static tekcays_addon.gtapi.consts.TKCYAValues.DIMENSIONS;
 
 /////////////////////////////////////////////////////////
 // Thanks to Tech22 https://github.com/GregTechCEu/gregicality-multiblocks/blob/worldgen-example/src/main/java/gregicality/machines/api/worldgen/GCYMWorldGenRegistry.java

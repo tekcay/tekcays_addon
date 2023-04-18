@@ -12,7 +12,7 @@ import tekcays_addon.common.items.TKCYAMetaItems;
 import static gregtech.api.unification.material.Materials.Glass;
 import static gregtech.api.unification.ore.OrePrefix.dust;
 import static tekcays_addon.gtapi.utils.Glass.*;
-import static tekcays_addon.gtapi.utils.TKCYAValues.MOLD_MATERIALS;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MOLD_MATERIALS;
 
 public class GlassHandler {
 

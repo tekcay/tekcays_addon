@@ -41,8 +41,8 @@ import java.util.function.Supplier;
 
 import static tekcays_addon.api.consts.DetectorModes.*;
 import static tekcays_addon.api.consts.UnitSymbol.BAR;
-import static tekcays_addon.gtapi.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
-import static tekcays_addon.gtapi.utils.TKCYAValues.MAX_PRESSURE;
+import static tekcays_addon.gtapi.consts.TKCYAValues.ATMOSPHERIC_PRESSURE;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MAX_PRESSURE;
 
 @Getter
 @Setter

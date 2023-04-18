@@ -8,7 +8,7 @@ import tekcays_addon.api.units.IPressureFormatting;
 
 import javax.annotation.Nonnull;
 
-import static tekcays_addon.gtapi.utils.TKCYAValues.MIN_PRESSURE_PROPERTY;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MIN_PRESSURE_PROPERTY;
 
 public class MinPressureProperty extends RecipeProperty<Integer> implements IPressureFormatting, RecipePropertiesHelper {
 

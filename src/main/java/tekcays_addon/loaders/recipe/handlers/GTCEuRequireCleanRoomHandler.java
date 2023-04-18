@@ -2,7 +2,7 @@ package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.metatileentity.multiblock.CleanroomType;
 import gregtech.api.recipes.ingredients.IntCircuitIngredient;
-import tekcays_addon.gtapi.utils.TKCYAValues;
+import tekcays_addon.gtapi.consts.TKCYAValues;
 
 import static gregtech.api.GTValues.LV;
 import static gregtech.api.GTValues.VA;

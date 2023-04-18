@@ -6,7 +6,7 @@ import net.minecraft.init.Items;
 import tekcays_addon.gtapi.unification.TKCYAMaterials;
 
 import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.FERMENTATION_RECIPES;
-import static tekcays_addon.gtapi.utils.TKCYAValues.MINUTE;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MINUTE;
 
 
 public class FermentationHandler {

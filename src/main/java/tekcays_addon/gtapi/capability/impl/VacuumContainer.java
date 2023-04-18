@@ -19,7 +19,7 @@ import static lombok.AccessLevel.NONE;
 import static tekcays_addon.api.consts.DataIds.AIR_FLUID_STACK;
 import static tekcays_addon.api.consts.NBTKeys.PRESSURE_KEY;
 import static tekcays_addon.api.consts.NBTKeys.VOLUME_KEY;
-import static tekcays_addon.gtapi.utils.TKCYAValues.ROOM_TEMPERATURE;
+import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
 
 @Getter
 @Setter

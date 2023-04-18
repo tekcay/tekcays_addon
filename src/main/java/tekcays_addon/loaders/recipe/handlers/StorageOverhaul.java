@@ -20,7 +20,7 @@ import static gregtech.api.unification.ore.OrePrefix.stickLong;
 import static gregtech.common.blocks.BlockSteamCasing.SteamCasingType.WOOD_WALL;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.GalvanizedSteel;
 import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.curvedPlate;
-import static tekcays_addon.gtapi.utils.TKCYAValues.DRUM_MATERIALS;
+import static tekcays_addon.gtapi.consts.TKCYAValues.DRUM_MATERIALS;
 import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.DRUMS;
 
 public class StorageOverhaul {

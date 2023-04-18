@@ -8,7 +8,7 @@ import tekcays_addon.api.recipeproperties.RecipePropertiesHelper;
 
 import javax.annotation.Nonnull;
 
-import static tekcays_addon.gtapi.utils.TKCYAValues.PRESSURIZED_FLUIDSTACK_PROPERTY;
+import static tekcays_addon.gtapi.consts.TKCYAValues.PRESSURIZED_FLUIDSTACK_PROPERTY;
 
 public class PressurizedFluidStackProperty extends RecipeProperty<FluidStack> implements RecipePropertiesHelper {
 

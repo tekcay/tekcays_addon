@@ -12,7 +12,7 @@ import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 
 import static codechicken.lib.util.ClientUtils.getWorld;
 import static gregtech.api.unification.material.Materials.Air;
-import static tekcays_addon.gtapi.utils.TKCYAValues.MINIMUM_FLUID_STACK_AMOUNT;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MINIMUM_FLUID_STACK_AMOUNT;
 
 public interface IPressureVacuum<T extends IVacuumContainer> {
 
