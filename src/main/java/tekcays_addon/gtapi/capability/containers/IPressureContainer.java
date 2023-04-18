@@ -1,7 +1,13 @@
 package tekcays_addon.gtapi.capability.containers;
 
 
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 import static tekcays_addon.gtapi.utils.TKCYAValues.*;
 
@@ -87,5 +93,6 @@ public interface IPressureContainer {
         return (int) ((1.0 * fluidAmount * PERFECT_GAS_CONSTANT * temperature) / (volume * FLUID_MULTIPLIER_PRESSURE)); // P = nRT / V
     }
 
+    void addTooltip(List<String> tooltip, int leakingRate);
 
 }

@@ -34,6 +34,12 @@ public class SteamConsumer extends MTETrait implements ISteamConsumer {
         this.waterOutputRate = 0;
     }
 
+    public SteamConsumer(@Nonnull MetaTileEntity metaTileEntity, int steamConsumption, int waterOutputRate) {
+        super(metaTileEntity);
+        this.steamConsumption = steamConsumption;
+        this.waterOutputRate = waterOutputRate;
+    }
+
     @Override
     public void setSteamConsumption(int steamConsumption) {
         this.steamConsumption = steamConsumption;

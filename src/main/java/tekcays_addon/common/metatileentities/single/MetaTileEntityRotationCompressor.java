@@ -53,7 +53,8 @@ import static tekcays_addon.gtapi.render.TKCYATextures.*;
 
 public class MetaTileEntityRotationCompressor extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide, FluidStackHelper, PressureContainerHandler, AdjacentCapabilityHelper<IPressureContainer> {
 
-    private IFluidTank importFluidTank;
+    private IFluidTank  importSteamTank;
+    private IFluidTank  importLubTank;
     private IRotationContainer rotationContainer;
     private IPressureContainer pressureContainer;
     private int baseTransferRate;
@@ -66,9 +67,9 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
     public MetaTileEntityRotationCompressor(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId);
         this.tier = tier + 1;
-        this.rotationContainer = new RotationContainer(this, 20 * this.tier, 100 * this.tier, 2000 * this.tier * this.tier);
+        this.rotationContainer = new RotationContainer(this, 20 * this.tier, 100 * this.tier, (int) (2000 * Math.pow(this.tier * this.tier, 2)));
         this.inputTankCapacity = 4000 * this.tier;
-        this.importFluidTank = new NotifiableFluidTank(inputTankCapacity, this, false);
+
         super.initializeInventory();
     }
 
@@ -79,8 +80,9 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
 
     @Override
     public FluidTankList createImportFluidHandler() {
-        this.importFluidTank = new NotifiableFluidTank(inputTankCapacity * tier, this, false);
-        return new FluidTankList(false, importFluidTank);
+        this.importSteamTank = new NotifiableFluidTank(inputTankCapacity, this, false);
+        this.importLubTank = new NotifiableFluidTank(inputTankCapacity / 1000, this, false);
+        return new FluidTankList(false, importSteamTank, importLubTank);
     }
 
     @Override
@@ -117,8 +119,13 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
     }
 
     @Nullable
-    private FluidStack getImportFluidStack() {
-        return importFluidTank.getFluid();
+    private FluidStack getImportSteamFluidStack() {
+        return importSteamTank.getFluid();
+    }
+
+    @Nullable
+    private FluidStack getImportLubFluidStack() {
+        return importLubTank.getFluid();
     }
 
     @Override
@@ -127,6 +134,8 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
         //Redstone stops fluid transfer
         if (this.isBlockRedstonePowered()) return;
         if (rotationContainer.getSpeed() == 0) return;
+
+        importLubTank.drain(rotationContainer.getSpeed() / 2, true);
 
         if (!getWorld().isRemote) {
             pressureContainer = getAdjacentCapabilityContainer(this);
@@ -137,12 +146,12 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
                 return;
             }
 
-            if (getImportFluidStack() == null) return;
+            if (getImportSteamFluidStack() == null) return;
 
-            int toDrain = pressureContainer.changePressurizedFluidStack(getImportFluidStack(), transferRate);
+            int toDrain = pressureContainer.changePressurizedFluidStack(getImportSteamFluidStack(), transferRate);
 
             if (toDrain > 0) {
-                importFluidTank.drain(toDrain, true);
+                importSteamTank.drain(toDrain, true);
             }
         }
     }
@@ -176,7 +185,7 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.1"));
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.steam_tank", inputTankCapacity));
-        tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.max_speed", rotationContainer.getMaxSpeed()));
+        rotationContainer.addTooltip(tooltip);
         //super.addInformation(stack, player, tooltip, advanced);
     }
 
@@ -184,7 +193,8 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
-        list.add(new TextComponentTranslation("behavior.tricorder.steam.amount", getNullableFluidStackAmount(getImportFluidStack())));
+        list.add(new TextComponentTranslation("behavior.tricorder.steam.amount", getNullableFluidStackAmount(getImportSteamFluidStack())));
+        list.add(new TextComponentTranslation("behavior.tricorder.lub.amount", getNullableFluidStackAmount(getImportLubFluidStack())));
         list.add(new TextComponentTranslation("behavior.tricorder.speed", rotationContainer.getSpeed()));
         return list;
     }

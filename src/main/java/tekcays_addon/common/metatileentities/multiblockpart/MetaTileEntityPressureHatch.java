@@ -80,10 +80,9 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.pressure", convertPressureToBar(maxPressure, true)));
-        tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.pressure.leak", Math.abs(leakingRate)));
+        pressureContainer.addTooltip(tooltip, leakingRate);
     }
 
     @Override

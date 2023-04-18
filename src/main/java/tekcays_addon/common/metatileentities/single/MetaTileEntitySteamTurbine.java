@@ -57,7 +57,6 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
     private IRotationContainer rotationContainer;
     private ISteamConsumer steamConsumer;
     private final int tier;
-    private final int maxSteamConsumption, maxWaterOutputRate ;
     @Setter
     private boolean isRunning;
     private final int steamTankCapacity, waterTankCapacity;
@@ -65,14 +64,10 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
     public MetaTileEntitySteamTurbine(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId);
         this.tier = tier + 1;
-        this.maxSteamConsumption = STEAM_TO_WATER * this.tier;
-        this.maxWaterOutputRate = this.tier;
         this.steamTankCapacity = 4000 * this.tier;
         this.waterTankCapacity = 1000 * this.tier;
-        this.importFluidTank = new NotifiableFluidTank(steamTankCapacity, this, false);
-        this.exportFluidTank = new NotifiableFluidTank(waterTankCapacity, this, true);
         this.rotationContainer = new RotationContainer(this, 20 * this.tier, 0, 0);
-        this.steamConsumer = new SteamConsumer(this);
+        this.steamConsumer = new SteamConsumer(this, STEAM_TO_WATER * this.tier, this.tier);
         super.initializeInventory();
     }
 
@@ -227,9 +222,8 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.1"));
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.steam_tank", steamTankCapacity));
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.water_tank", waterTankCapacity));
-        tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.steam_input", maxSteamConsumption));
-        tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.water_output", maxWaterOutputRate));
-        tooltip.add(I18n.format("tkcya.general.rotation.maxspeed", rotationContainer.getMaxSpeed()));
+        steamConsumer.addTooltip(tooltip);
+        rotationContainer.addTooltip(tooltip);
         super.addInformation(stack, player, tooltip, advanced);
     }
 

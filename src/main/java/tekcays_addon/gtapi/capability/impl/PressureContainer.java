@@ -5,10 +5,12 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
+import tekcays_addon.api.units.IPressureFormatting;
 import tekcays_addon.gtapi.capability.containers.IPressureContainer;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.utils.FluidStackHelper;
@@ -17,13 +19,15 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 
+import java.util.List;
+
 import static tekcays_addon.api.consts.DataIds.PRESSURIZED_FLUID_STACK;
 import static tekcays_addon.api.consts.NBTKeys.PRESSURE_KEY;
 import static tekcays_addon.gtapi.utils.TKCYAValues.*;
 
 @Getter
 @Setter
-public class PressureContainer extends MTETrait implements IPressureContainer, FluidStackHelper {
+public class PressureContainer extends MTETrait implements IPressureContainer, IPressureFormatting, FluidStackHelper {
 
     @Setter(AccessLevel.NONE)
     protected int volume;
@@ -106,6 +110,12 @@ public class PressureContainer extends MTETrait implements IPressureContainer, F
     @Override
     public void setPressure(int temperature) {
         setPressure();
+    }
+
+    @Override
+    public void addTooltip(List<String> tooltip, int leakingRate) {
+        tooltip.add(I18n.format("tkcya.general.pressure.tooltip.pressure", convertPressureToBar(getMaxPressure(), true)));
+        tooltip.add(I18n.format("tkcya.general.pressure.tooltip.pressure.leak", Math.abs(leakingRate)));
     }
 
     @Override

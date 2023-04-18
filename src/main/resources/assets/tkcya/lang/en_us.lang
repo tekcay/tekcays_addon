@@ -486,16 +486,12 @@ tkcya.machine.heat_acceptor.tooltip.3=Capacity: §c%dk HU§7.
 
 #Pressure hatch
 tkcya.machine.pressure_hatch.tooltip.vacuum=Accepts §dVacuum§7, down to §e%s§7.
-tkcya.machine.pressure_hatch.tooltip.pressure=Accepts §aPressure§7, up to §e%s§7.
 tkcya.machine.pressure_hatch.tooltip.vacuum.leak=Loses §d%d L/s§7.
-tkcya.machine.pressure_hatch.tooltip.pressure.leak=Loses §a%d L/s§7.
 
 #Steam turbine
 tkcya.machine.steam_turbine.tooltip.1=Consumes §eSteam§7 to spin a wheel and outputs §dDistilled Water§7.
 tkcya.machine.steam_turbine.tooltip.steam_tank=Steam tank: %d L
 tkcya.machine.steam_turbine.tooltip.water_tank=Water tank: %d L
-tkcya.machine.steam_turbine.tooltip.steam_input=Max steam consumption: %d L/s
-tkcya.machine.steam_turbine.tooltip.water_output=Max distilled water output: %d L/s
 
 #Dynamo
 tkcya.machine.dynamo.tooltip.1=Transforms rotational power into electricity.
@@ -527,12 +523,20 @@ tekcays_addon.multiblock.fuel_melter.tooltip.5=Target temperature: §a%d K§7.
 #General tooltips
 
 #Rotation
-tkcya.general.rotation.maxspeed=Max speed: %d rpm
-tkcya.general.rotation.maxtorque=Max torque: %d Nm
-tkcya.general.rotation.maxpower=Max power: %d W
+tkcya.general.rotation.maxspeed=Max speed: §f%d rpm§7
+tkcya.general.rotation.maxtorque=Max torque: §f%d Nm§7
+tkcya.general.rotation.maxpower=Max power: §f%d W§7
 tkcya.general.rotation.speed=Speed: %d rpm
 tkcya.general.rotation.torque=Torque: %d Nm
 tkcya.general.rotation.power=Power: %d W
+
+#Steam consumer
+tkcya.general.steam_consumer.tooltip.steam_input=Max steam consumption: §f%d L/s§7
+tkcya.general.steam_consumer.tooltip.water_output=Max distilled water output: §f%d L/s§7
+
+#Pressure
+tkcya.general.pressure.tooltip.pressure=Accepts §aPressure§7, up to §e%s§7.
+tkcya.general.pressure.tooltip.pressure.leak=Loses §a%d L/s§7.
 
 tekcays_addon.recipe.melter_temperature=Temperature: %dK
 
@@ -636,6 +640,7 @@ behavior.tricorder.pressureThreshold=PressureThreshol: %d bar
 behavior.tricorder.fluid.amount=Fluid amount: %d L
 behavior.tricorder.fluid.name=Fluid name: %s
 behavior.tricorder.steam.amount=Steam amount: %d L
+behavior.tricorder.lub.amount=Lub amount: %d L
 behavior.tricorder.distilled_water.amount=Distilled amount: %d L
 behavior.tricorder.air.amount=Air amount: %d L
 behavior.tricorder.pressure.pressure=Pressure: %d

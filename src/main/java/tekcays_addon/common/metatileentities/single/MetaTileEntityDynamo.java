@@ -124,7 +124,7 @@ public class MetaTileEntityDynamo extends TieredMetaTileEntity implements IDataI
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         tooltip.add(I18n.format("tkcya.machine.dynamo.tooltip.1"));
-        tooltip.add(I18n.format("tkcya.general.rotation.maxspeed", rotationContainer.getMaxSpeed()));
+        rotationContainer.addTooltip(tooltip);
         tooltip.add(I18n.format("gregtech.universal.tooltip.voltage_out", maxEnergyOutput, GTValues.VNF[tier]));
         super.addInformation(stack, player, tooltip, advanced);
     }
@@ -133,7 +133,6 @@ public class MetaTileEntityDynamo extends TieredMetaTileEntity implements IDataI
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
-        //list.add(new TextComponentTranslation("behavior.tricorder.steam.amount", getNullableFluidStackAmount(getImportFluidStack())));
         list.add(new TextComponentTranslation("behavior.tricorder.speed", rotationContainer.getSpeed()));
         return list;
     }

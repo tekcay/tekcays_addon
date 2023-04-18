@@ -1,5 +1,9 @@
 package tekcays_addon.gtapi.capability.containers;
 
+import net.minecraft.client.resources.I18n;
+
+import java.util.List;
+
 public interface IRotationContainer {
 
     void setSpeed(int speed);
@@ -53,10 +57,16 @@ public interface IRotationContainer {
     }
 
     /**
-     * @param Power the power of rotation to check
+     * @param power the power of rotation to check
      * @return true if the rotation power is safe for the container, else false
      */
-    default boolean isRotationSafe(int Power) {
-        return Power <= getMaxPower();
+    default boolean isRotationSafe(int power) {
+        return power <= getMaxPower();
+    }
+
+    default void addTooltip(List<String> tooltip) {
+        tooltip.add(I18n.format("tkcya.general.rotation.maxspeed", getMaxSpeed()));
+        tooltip.add(I18n.format("tkcya.general.rotation.maxtorque", getMaxTorque()));
+        tooltip.add(I18n.format("tkcya.general.rotation.maxpower", getMaxPower()));
     }
 }
