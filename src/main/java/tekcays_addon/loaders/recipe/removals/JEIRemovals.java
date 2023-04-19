@@ -17,6 +17,8 @@ public class JEIRemovals implements IModPlugin { {
         IJeiHelpers jeiHelpers = registry.getJeiHelpers();
         IIngredientBlacklist ingredientBlacklist = jeiHelpers.getIngredientBlacklist();
 
+
+
         if (TKCYAConfigHolder.miscOverhaul.enableMagneticOverhaul) {
             for (int i = GTValues.LV; i < GTValues.UV + 1; i++) {
                 ingredientBlacklist.addIngredientToBlacklist(POLARIZER[i].getStackForm());

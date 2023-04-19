@@ -142,6 +142,11 @@ public class TKCYARecipeMaps {
             "steam_autoclave", 2, 1, 0, 0, new SimpleRecipeBuilder(), false)
             .setSound(GTSoundEvents.COMPRESSOR);
 
+    @ZenProperty
+    public static final RecipeMap<PrimitiveRecipeBuilder> DIESEL_GENERATOR = new RecipeMap<>(
+            "diesel_generator", 0, 0, 1, 1, new PrimitiveRecipeBuilder(), false)
+            .setSound(GTSoundEvents.MOTOR);
+
 
 
 }

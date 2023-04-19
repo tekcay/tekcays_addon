@@ -14,7 +14,6 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
-import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import gregtech.core.sound.GTSoundEvents;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -42,6 +41,8 @@ import tekcays_addon.api.capability.AdjacentCapabilityHelper;
 import tekcays_addon.api.metatileentity.IFreeFace;
 import tekcays_addon.gtapi.capability.containers.IRotationContainer;
 import tekcays_addon.gtapi.capability.impl.RotationContainer;
+import tekcays_addon.gtapi.logic.DieselLogic;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.utils.FluidStackHelper;
 
 import javax.annotation.Nonnull;
@@ -61,6 +62,7 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
     private int fuelTankCapacity;
     private int fuelConsumption;
     private int carbonDioxideOutputRate;
+    protected DieselLogic workableHandler;
     @Setter
     private boolean isRunning;
 
@@ -69,6 +71,7 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
         this.tier = tier + 1;
         this.fuelTankCapacity = 1000 * this.tier;
         this.rotationContainer = new RotationContainer(this, 20 * this.tier, 0, 0);
+        this.workableHandler = new DieselLogic(this, TKCYARecipeMaps.DIESEL_GENERATOR);
         super.initializeInventory();
     }
 

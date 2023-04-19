@@ -278,6 +278,7 @@ recipemap.roasting.name=Roasting
 recipemap.spiral_separation.name=Spiral Separation
 recipemap.coking.name=Coking
 recipemap.steam_autoclave.name=Autoclave
+recipemap.diesel_generator.name=Diesel generator
 
 # Materials
 
