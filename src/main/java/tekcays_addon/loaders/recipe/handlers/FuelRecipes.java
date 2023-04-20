@@ -15,15 +15,15 @@ public class FuelRecipes {
                 .buildAndRegister();
 
         TKCYARecipeMaps.DIESEL_GENERATOR.recipeBuilder()
-                .fluidInputs(SulfuricLightFuel.getFluid(4))
+                .fluidInputs(SulfuricLightFuel.getFluid(1))
                 .fluidOutputs(CarbonDioxide.getFluid(1))
-                .duration(5)
+                .duration(1)
                 .buildAndRegister();
 
         TKCYARecipeMaps.DIESEL_GENERATOR.recipeBuilder()
-                .fluidInputs(Methanol.getFluid(4))
+                .fluidInputs(Methanol.getFluid(1))
                 .fluidOutputs(CarbonDioxide.getFluid(1))
-                .duration(8)
+                .duration(2)
                 .buildAndRegister();
 
         TKCYARecipeMaps.DIESEL_GENERATOR.recipeBuilder()
@@ -33,9 +33,9 @@ public class FuelRecipes {
                 .buildAndRegister();
 
         TKCYARecipeMaps.DIESEL_GENERATOR.recipeBuilder()
-                .fluidInputs(Octane.getFluid(2))
+                .fluidInputs(Octane.getFluid(1))
                 .fluidOutputs(CarbonDioxide.getFluid(1))
-                .duration(5)
+                .duration(2)
                 .buildAndRegister();
 
         TKCYARecipeMaps.DIESEL_GENERATOR.recipeBuilder()
@@ -57,15 +57,15 @@ public class FuelRecipes {
                 .buildAndRegister();
 
         TKCYARecipeMaps.DIESEL_GENERATOR.recipeBuilder()
-                .fluidInputs(CetaneBoostedDiesel.getFluid(2))
+                .fluidInputs(CetaneBoostedDiesel.getFluid(1))
                 .fluidOutputs(CarbonDioxide.getFluid(1))
-                .duration(45)
+                .duration(23)
                 .buildAndRegister();
 
         TKCYARecipeMaps.DIESEL_GENERATOR.recipeBuilder()
-                .fluidInputs(RocketFuel.getFluid(16))
+                .fluidInputs(RocketFuel.getFluid(1))
                 .fluidOutputs(CarbonDioxide.getFluid(1))
-                .duration(125)
+                .duration(8)
                 .buildAndRegister();
 
         TKCYARecipeMaps.DIESEL_GENERATOR.recipeBuilder()
@@ -86,6 +86,7 @@ public class FuelRecipes {
                 .duration(10)
                 .buildAndRegister();
 
+        /*
         TKCYARecipeMaps.DIESEL_GENERATOR.recipeBuilder()
                 .fluidInputs(OilLight.getFluid(32))
                 .fluidOutputs(CarbonDioxide.getFluid(1))
@@ -97,6 +98,8 @@ public class FuelRecipes {
                 .fluidOutputs(CarbonDioxide.getFluid(1))
                 .duration(15)
                 .buildAndRegister();
+
+         */
 
     }
 }

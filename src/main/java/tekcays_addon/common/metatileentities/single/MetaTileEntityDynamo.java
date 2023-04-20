@@ -82,6 +82,7 @@ public class MetaTileEntityDynamo extends MetaTileEntity implements IDataInfoPro
         super.renderMetaTileEntity(renderState, translation, pipeline);
         IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline, new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
         getBaseRenderer().render(renderState, translation, colouredPipeline);
+        DYNAMO_OVERLAY.renderOrientedState(renderState, translation, colouredPipeline, getFrontFacing(), isRunning,true);
     }
 
     private EnumFacing getRotationSide() {

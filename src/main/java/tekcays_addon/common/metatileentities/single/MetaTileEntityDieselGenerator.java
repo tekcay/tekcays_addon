@@ -12,6 +12,7 @@ import gregtech.api.gui.ModularUI;
 import gregtech.api.metatileentity.IDataInfoProvider;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.recipes.Recipe;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
@@ -41,16 +42,19 @@ import tekcays_addon.api.capability.AdjacentCapabilityHelper;
 import tekcays_addon.api.metatileentity.IFreeFace;
 import tekcays_addon.gtapi.capability.containers.IRotationContainer;
 import tekcays_addon.gtapi.capability.impl.RotationContainer;
-import tekcays_addon.gtapi.logic.DieselLogic;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.utils.FluidStackHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
+import static gregtech.api.unification.material.Materials.CarbonDioxide;
 import static gregtech.api.unification.material.Materials.Steam;
+import static java.util.Collections.*;
 import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
 import static tekcays_addon.gtapi.render.TKCYATextures.*;
 
@@ -61,8 +65,9 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
     private final int tier;
     private int fuelTankCapacity;
     private int fuelConsumption;
+    private Recipe recipe;
     private int carbonDioxideOutputRate;
-    protected DieselLogic workableHandler;
+    //protected DieselLogic workableHandler;
     @Setter
     private boolean isRunning;
 
@@ -71,7 +76,7 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
         this.tier = tier + 1;
         this.fuelTankCapacity = 1000 * this.tier;
         this.rotationContainer = new RotationContainer(this, 20 * this.tier, 0, 0);
-        this.workableHandler = new DieselLogic(this, TKCYARecipeMaps.DIESEL_GENERATOR);
+        //this.workableHandler = new DieselLogic(this, TKCYARecipeMaps.DIESEL_GENERATOR);
         super.initializeInventory();
     }
 
@@ -101,6 +106,8 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
         super.renderMetaTileEntity(renderState, translation, pipeline);
         IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline, new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
         getBaseRenderer().render(renderState, translation, colouredPipeline);
+
+        //TODO maybe add all those textures in the rtation turbine overlay diredctoy ?
         Textures.PIPE_IN_OVERLAY.renderSided(getInputSide(), renderState, translation, pipeline);
         ROTATION_TURBINE_OVERLAY.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isRunning, true);
         ROTATION_WATER_OUTPUT_OVERLAY.renderSided(getOutputSide(), renderState, translation, pipeline);
@@ -119,6 +126,10 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
         return importFuelTank.getFluid();
     }
 
+    private FluidStack getImportFluidStackForRecipe() {
+        return new FluidStack(getImportFluidStack().getFluid(), 1);
+    }
+
     private void increment() {
         changeParameters(30, 1, 1, 1);
     }
@@ -133,38 +144,49 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
         }
     }
 
+    @Nullable
+    private Recipe getRecipe() {
+        return TKCYARecipeMaps.DIESEL_GENERATOR.find(emptyList(), singleton(getImportFluidStackForRecipe()), (Objects::nonNull));
+    }
+
     @Override
     public void update() {
         super.update();
 
         if (rotationContainer.getSpeed() == 0) setRunningState(false);
 
-        if (getImportFluidStack() == null || !getImportFluidStack().isFluidEqual(Steam.getFluid(1))) {
+        if (getImportFluidStack() == null) {
             decrement();
             return;
         }
+
+        recipe = getRecipe();
+        if (recipe == null) {
+            decrement();
+            return;
+        }
+
+        fuelConsumption = rotationContainer.getSpeed() * tier;
+
         if (getImportFluidStack().amount < fuelConsumption) {
             decrement();
             return;
         }
 
-        if (!canOutputCarbonDioxide()) this.doExplosion(1);
+        if (getOffsetTimer() % recipe.getDuration() == 0) {
 
-        importFuelTank.drain(fuelConsumption, true);
-        pushFluidsIntoNearbyHandlers(getOutputSide());
-        transferRotation();
-        increment();
-        setRunningState(true);
+            importFuelTank.drain(fuelConsumption, true);
+            transferRotation();
+            increment();
+            setRunningState(true);
 
-        /*
-        if (getExportFluidStack() != null && getExportFluidStack().amount >= waterTankCapacity
-            || steamConsumer.getSteamConsumption() > maxSteamConsumption
-            || rotationContainer.getSpeed() > maxSpeed) {
-            this.doExplosion(2);
+            IFluidHandler handler = getAdjacentFluidHandler();
+            if (handler != null) {
+                handler.fill(CarbonDioxide.getFluid(fuelConsumption), true);
+            } else if (!isOutputSideFree()) {
+                this.doExplosion(1);
+            }
         }
-
-         */
-
     }
 
     private boolean isOutputSideFree() {
@@ -174,10 +196,6 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
     @Nullable
     private IFluidHandler getAdjacentFluidHandler() {
         return getAdjacentCapabilityContainer(this);
-    }
-
-    private boolean canOutputCarbonDioxide() {
-        return isOutputSideFree() || getAdjacentFluidHandler() != null;
     }
 
     public void setRunningState(boolean isRunning) {
