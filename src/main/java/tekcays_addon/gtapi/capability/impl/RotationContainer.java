@@ -5,6 +5,7 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
@@ -18,6 +19,7 @@ import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_RO
 
 @Getter
 @Setter
+@ToString
 public class RotationContainer extends MTETrait implements IRotationContainer {
 
     @Setter(AccessLevel.NONE)
@@ -54,7 +56,7 @@ public class RotationContainer extends MTETrait implements IRotationContainer {
 
     @Override
     public void changeSpeed(int amount) {
-        this.speed = Math.max(this.speed + amount, 0);
+        setSpeed(Math.max(this.speed + amount, 0));
     }
 
     @Override

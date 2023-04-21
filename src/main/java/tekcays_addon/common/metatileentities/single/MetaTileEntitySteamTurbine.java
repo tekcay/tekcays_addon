@@ -169,15 +169,10 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
         increment();
         setRunningState(true);
 
-        /*
         if (getExportFluidStack() != null && getExportFluidStack().amount >= waterTankCapacity
-            || steamConsumer.getSteamConsumption() > maxSteamConsumption
-            || rotationContainer.getSpeed() > maxSpeed) {
-            this.doExplosion(2);
+            || rotationContainer.getSpeed() > rotationContainer.getMaxSpeed()) {
+            this.doExplosion(1);
         }
-
-         */
-
     }
 
     public void setRunningState(boolean isRunning) {

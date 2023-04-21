@@ -42,20 +42,19 @@ import tekcays_addon.api.capability.AdjacentCapabilityHelper;
 import tekcays_addon.api.metatileentity.IFreeFace;
 import tekcays_addon.gtapi.capability.containers.IRotationContainer;
 import tekcays_addon.gtapi.capability.impl.RotationContainer;
-import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
+import tekcays_addon.gtapi.logic.DieselLogic;
 import tekcays_addon.gtapi.utils.FluidStackHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
 import static gregtech.api.unification.material.Materials.CarbonDioxide;
-import static gregtech.api.unification.material.Materials.Steam;
 import static java.util.Collections.*;
 import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
+import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.DIESEL_GENERATOR;
 import static tekcays_addon.gtapi.render.TKCYATextures.*;
 
 public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide, IFreeFace, AdjacentCapabilityHelper<IFluidHandler>, FluidStackHelper {
@@ -65,18 +64,19 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
     private final int tier;
     private int fuelTankCapacity;
     private int fuelConsumption;
-    private Recipe recipe;
+    private final int BASE_FUEL_CONSUMPTION;
     private int carbonDioxideOutputRate;
-    //protected DieselLogic workableHandler;
+    protected DieselLogic workableHandler;
     @Setter
     private boolean isRunning;
 
     public MetaTileEntityDieselGenerator(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId);
         this.tier = tier + 1;
+        this.BASE_FUEL_CONSUMPTION = (int) Math.pow(this.tier, 2);
         this.fuelTankCapacity = 1000 * this.tier;
-        this.rotationContainer = new RotationContainer(this, 20 * this.tier, 0, 0);
-        //this.workableHandler = new DieselLogic(this, TKCYARecipeMaps.DIESEL_GENERATOR);
+        this.rotationContainer = new RotationContainer(this, 20 * this.tier, this.tier * 2, 0);
+        this.workableHandler = new DieselLogic(this, DIESEL_GENERATOR);
         super.initializeInventory();
     }
 
@@ -138,39 +138,45 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
         changeParameters(20, -1, -1, -1);
     }
 
-    private void changeParameters(int offSetTimer, int speed, int fuelConsumption, int carbonDioxideOutputRate) {
-        if (getOffsetTimer() % offSetTimer == 0) {
+    private void changeParameters(int offSetTimer, int speed, int fuelConsumptionChange, int carbonDioxideOutputRateChange) {
+        if (getOffsetTimer() % offSetTimer == 0 && rotationContainer.getSpeed() < rotationContainer.getMaxSpeed()) {
+            fuelConsumption = Math.max(fuelConsumption + fuelConsumptionChange, 0);
+            carbonDioxideOutputRate = Math.max(carbonDioxideOutputRate + carbonDioxideOutputRateChange, 0);
             rotationContainer.changeSpeed(speed);
         }
     }
 
     @Nullable
     private Recipe getRecipe() {
-        return TKCYARecipeMaps.DIESEL_GENERATOR.find(emptyList(), singleton(getImportFluidStackForRecipe()), (Objects::nonNull));
+        return DIESEL_GENERATOR.find(emptyList(), singleton(getImportFluidStackForRecipe()), (Objects::nonNull));
     }
 
     @Override
     public void update() {
-        super.update();
 
-        if (rotationContainer.getSpeed() == 0) setRunningState(false);
+        FluidStack fluidStack = getImportFluidStack();
 
-        if (getImportFluidStack() == null) {
+        if (fluidStack == null) {
             decrement();
             return;
         }
 
-        recipe = getRecipe();
+        Recipe recipe = getRecipe();
         if (recipe == null) {
             decrement();
             return;
         }
 
-        fuelConsumption = rotationContainer.getSpeed() * tier;
+        fuelConsumption = rotationContainer.getSpeed() * BASE_FUEL_CONSUMPTION;
 
-        if (getImportFluidStack().amount < fuelConsumption) {
+        if (fluidStack.amount < fuelConsumption) {
             decrement();
             return;
+        }
+
+        if (rotationContainer.getMaxSpeed() > 0) {
+            decrement();
+            if (getOffsetTimer() % 20 == 0) setRunningState(false);
         }
 
         if (getOffsetTimer() % recipe.getDuration() == 0) {
