@@ -8,8 +8,6 @@ import gregtech.api.gui.ModularUI;
 import gregtech.api.metatileentity.IDataInfoProvider;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
-import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -26,14 +24,11 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import tekcays_addon.api.detectors.DetectorControllerHelper;
-import tekcays_addon.gtapi.capability.containers.IContainerControl;
+import tekcays_addon.gtapi.capability.containers.IContainerDetector;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
-import tekcays_addon.gtapi.capability.containers.IPressureContainer;
-import tekcays_addon.gtapi.capability.impl.ContainerControl;
+import tekcays_addon.gtapi.capability.impl.ContainerDetector;
 import tekcays_addon.api.consts.DetectorModes;
 import tekcays_addon.api.gui.CoverGuiHandler;
-import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -50,13 +45,13 @@ import static tekcays_addon.gtapi.consts.TKCYAValues.MAX_PRESSURE;
 @Setter
 public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPart implements CoverGuiHandler, IDataInfoProvider {
 
-    private IContainerControl pressureControl;
+    private IContainerDetector pressureControl;
     private int threshold;
     private int currentPressure;
 
     public MetaTileEntityPressureController(@Nonnull ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, 1);
-        this.pressureControl = new ContainerControl(this);
+        this.pressureControl = new ContainerDetector(this);
     }
 
     @Override
@@ -111,8 +106,8 @@ public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPa
     @Override
     @Nullable
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
-        if (capability.equals(TKCYATileCapabilities.CAPABILITY_CONTAINER_CONTROL)) {
-            return TKCYATileCapabilities.CAPABILITY_CONTAINER_CONTROL.cast(pressureControl);
+        if (capability.equals(TKCYATileCapabilities.CAPABILITY_CONTAINER_DETECTOR)) {
+            return TKCYATileCapabilities.CAPABILITY_CONTAINER_DETECTOR.cast(pressureControl);
         }
         return super.getCapability(capability, side);
     }

@@ -2,7 +2,7 @@ package tekcays_addon.gtapi.capability.containers;
 
 import tekcays_addon.api.consts.DetectorModes;
 
-public interface IContainerControl {
+public interface IContainerDetector {
 
     int getThreshold();
     int getCurrentValue();

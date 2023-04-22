@@ -10,7 +10,6 @@ import java.util.function.Consumer;
 public interface DetectorControllerHelper {
 
     EnumFacing getFrontFacing();
-    //Function<ContainerStructuring, Integer> getCurrentValue();
 
     /**
      *

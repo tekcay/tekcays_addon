@@ -17,4 +17,5 @@ public class NBTKeys {
     public static final String WATER_OUTPUT_RATE_KEY = "waterOutputRate";
     public static final String IS_INVERTED_KEY = "isInverted";
     public static final String THRESHOLD_KEY = "threshold";
+    public static final String CURRENT_VALUE_KEY = "threshold";
 }

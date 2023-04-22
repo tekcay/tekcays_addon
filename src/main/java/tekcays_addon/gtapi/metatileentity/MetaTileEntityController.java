@@ -29,10 +29,9 @@ import tekcays_addon.api.consts.DetectorModes;
 import tekcays_addon.api.detectors.ControllerDetectorWrapper;
 import tekcays_addon.api.detectors.DetectorControllerHelper;
 import tekcays_addon.api.gui.CoverGuiHandler;
-import tekcays_addon.gtapi.capability.containers.IContainerControl;
-import tekcays_addon.gtapi.capability.impl.ContainerControl;
+import tekcays_addon.gtapi.capability.containers.IContainerDetector;
+import tekcays_addon.gtapi.capability.impl.ContainerDetector;
 import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
-import tekcays_addon.gtapi.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -43,19 +42,19 @@ import java.util.function.Supplier;
 import static tekcays_addon.api.consts.DetectorModes.changeDetectModeAndSendMessage;
 import static tekcays_addon.gtapi.consts.TKCYAValues.MAX_PRESSURE;
 
-public class MetaTileEntityController extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IContainerControl>, CoverGuiHandler, IDataInfoProvider, DetectorControllerHelper {
+public class MetaTileEntityController extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IContainerDetector>, CoverGuiHandler, IDataInfoProvider, DetectorControllerHelper {
 
     @Getter
     @Setter
     private int threshold;
-    private IContainerControl containerControl;
+    private IContainerDetector containerControl;
     private int currentValue;
     private final ControllerDetectorWrapper wrapper;
 
     public MetaTileEntityController(@Nonnull ResourceLocation metaTileEntityId, ControllerDetectorWrapper wrapper) {
         super(metaTileEntityId, 1);
         this.wrapper = wrapper;
-        this.containerControl = new ContainerControl(this);
+        this.containerControl = new ContainerDetector(this);
     }
 
     @Override
@@ -93,12 +92,12 @@ public class MetaTileEntityController extends MetaTileEntityMultiblockPart imple
     }
 
     @Override
-    public MultiblockAbility<IContainerControl> getAbility() {
+    public MultiblockAbility<IContainerDetector> getAbility() {
         return TKCYAMultiblockAbility.CONTAINER_CONTROL;
     }
 
     @Override
-    public void registerAbilities(List<IContainerControl> abilityList) {
+    public void registerAbilities(List<IContainerDetector> abilityList) {
         abilityList.add(this.containerControl);
     }
 

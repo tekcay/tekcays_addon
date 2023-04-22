@@ -16,8 +16,8 @@ public class TKCYATileCapabilities {
     @CapabilityInject(IPressureContainer.class)
     public static Capability<IPressureContainer> CAPABILITY_PRESSURE_CONTAINER = null;
 
-    @CapabilityInject(IContainerControl.class)
-    public static Capability<IContainerControl> CAPABILITY_CONTAINER_CONTROL = null;
+    @CapabilityInject(IContainerDetector.class)
+    public static Capability<IContainerDetector> CAPABILITY_CONTAINER_DETECTOR = null;
 
     @CapabilityInject(IRotationContainer.class)
     public static Capability<IRotationContainer> CAPABILITY_ROTATIONAL_CONTAINER = null;
@@ -30,7 +30,7 @@ public class TKCYATileCapabilities {
         SimpleCapabilityManager.registerCapabilityWithNoDefault(IHeatContainer.class);
         SimpleCapabilityManager.registerCapabilityWithNoDefault(IVacuumContainer.class);
         SimpleCapabilityManager.registerCapabilityWithNoDefault(IPressureContainer.class);
-        SimpleCapabilityManager.registerCapabilityWithNoDefault(IContainerControl.class);
+        SimpleCapabilityManager.registerCapabilityWithNoDefault(IContainerDetector.class);
         SimpleCapabilityManager.registerCapabilityWithNoDefault(IRotationContainer.class);
         SimpleCapabilityManager.registerCapabilityWithNoDefault(ISteamConsumer.class);
     }
