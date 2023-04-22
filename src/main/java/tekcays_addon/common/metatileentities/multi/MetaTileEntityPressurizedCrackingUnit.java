@@ -7,7 +7,6 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
-import gregtech.api.recipes.Recipe;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing;
@@ -19,11 +18,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
-import tekcays_addon.api.recipe.PressureContainerCheckRecipeHelper;
 import tekcays_addon.api.units.IPressureFormatting;
-import tekcays_addon.gtapi.capability.containers.IContainerDetector;
-import tekcays_addon.gtapi.capability.containers.IHeatContainer;
 import tekcays_addon.gtapi.metatileentity.multiblock.HeatedPressureContainerMultiblockController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
@@ -34,16 +29,18 @@ import java.util.List;
 import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.HEAT_CONTAINER;
 
 
-public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContainerMultiblockController implements PressureContainerCheckRecipeHelper, IPressureFormatting {
+public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContainerMultiblockController implements IPressureFormatting {
 
     private int coilTier;
-    private String displayedPressure = getCurrentPressureWithUnit();
-    private int dislayedTemp = currentTemp;
+    private String displayedPressure;
+    private int displayedTemp;
 
     public MetaTileEntityPressurizedCrackingUnit(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.PRESSURE_CRACKING);
         this.volume = 1;
         this.initializeAbilities();
+        this.displayedPressure = getCurrentPressureWithUnit();
+        this.displayedTemp = currentTemp;
     }
 
     @Override
@@ -51,6 +48,7 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
         return new MetaTileEntityPressurizedCrackingUnit(metaTileEntityId);
     }
 
+    @Nonnull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
@@ -85,12 +83,12 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
         super.addDisplayText(textList);
         if (getOffsetTimer() % 20 == 0) {
             displayedPressure = getCurrentPressureWithUnit();
-            dislayedTemp = currentTemp;
+            displayedTemp = getCurrentTemperature();
         }
         if (isStructureFormed()) {
             textList.add(new TextComponentTranslation("gregtech.multiblock.cracking_unit.energy", 100 - 10 * coilTier));
             textList.add(new TextComponentTranslation("tkcya.machine.text.pressurized.fluid", pressureContainer.getPressurizedFluidStackLocalizedName(), displayedPressure));
-            textList.add(new TextComponentTranslation("tkcya.machine.text.temperature", dislayedTemp));
+            textList.add(new TextComponentTranslation("tkcya.machine.text.temperature", displayedTemp));
         }
     }
 
@@ -128,41 +126,11 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
         this.coilTier = -1;
     }
 
-    protected int getCoilTier() {
-        return this.coilTier;
-    }
-
-    @Override
-    public int getCurrentPressure() {
-        return currentPressure;
-    }
-
     @Override
     public int getCurrentTemperature() {
-        return currentTemp;
+        return heatContainer.getTemperature();
     }
 
-    //Implementation
-    @Override
-    public FluidStack getFluidStack() {
-        return pressureContainer.getPressurizedFluidStack();
-    }
-
-    @Override
-    public IHeatContainer getHeatContainer() {
-        return this.heatContainer;
-    }
-
-
-    @Override
-    public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        return checkRecipeHelper(recipe, consumeIfSuccess);
-    }
-
-    @Override
-    public IContainerDetector getPressureControl() {
-        return containerDetector;
-    }
 
 
     /*
