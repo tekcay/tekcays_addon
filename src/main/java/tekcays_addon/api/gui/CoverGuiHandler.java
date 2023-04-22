@@ -4,13 +4,18 @@ import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.*;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import tekcays_addon.api.consts.DetectorModes;
 
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public interface MetaTileEntityGuiHandler {
+import static tekcays_addon.api.consts.DetectorModes.showDetectorModeText;
+
+public interface CoverGuiHandler {
 
     String getUITitle();
     int getThreshold();
@@ -41,6 +46,14 @@ public interface MetaTileEntityGuiHandler {
     String getUnitSymbol();
     DetectorModes getCurrentDetectorMode();
 
+    default void displayDetectorMode(List<ITextComponent> textList) {
+        textList.add(new TextComponentString(showDetectorModeText(getCurrentDetectorMode())));
+    }
+
+    default void displayCurrentValue(List<ITextComponent> textList) {
+        textList.add(new TextComponentString(String.format(getCurrentMeasureText(), getContainerMeasure(), getUnitSymbol())));
+    }
+
     default ModularUI createUIHelper(EntityPlayer player) {
         WidgetGroup primaryGroup = new WidgetGroup();
         primaryGroup.addWidget(new LabelWidget(10, 5, getUITitle()));
@@ -64,10 +77,10 @@ public interface MetaTileEntityGuiHandler {
         primaryGroup.addWidget(new LabelWidget(115, 26, getUnitSymbol(), TextFormatting.BLACK));
 
         //Prints the current measure of the container
-        primaryGroup.addWidget(new LabelWidget(15, 46, String.format(getCurrentMeasureText(), getContainerMeasure(), getUnitSymbol()), TextFormatting.BLACK));
+        primaryGroup.addWidget(new AdvancedTextWidget(15, 46, this::displayCurrentValue, 0));
 
         //Prints the current detector mode
-        primaryGroup.addWidget(new LabelWidget(15, 66, DetectorModes.showDetectorModeText(getCurrentDetectorMode()), TextFormatting.BLACK));
+        primaryGroup.addWidget(new AdvancedTextWidget(15, 66, this::displayDetectorMode, 0));
 
         ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 176, 104 + 82)
                 .widget(primaryGroup)

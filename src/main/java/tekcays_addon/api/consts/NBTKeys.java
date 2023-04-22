@@ -13,6 +13,8 @@ public class NBTKeys {
     public static final String SPEED_KEY = "speed";
     public static final String TORQUE_KEY = "torque";
     public static final String POWER_KEY = "power";
-    public static final String STEAM_CONSUMPTION = "steamConsumption";
-    public static final String WATER_OUTPUT_RATE = "waterOutputRate";
+    public static final String STEAM_CONSUMPTION_KEY = "steamConsumption";
+    public static final String WATER_OUTPUT_RATE_KEY = "waterOutputRate";
+    public static final String IS_INVERTED_KEY = "isInverted";
+    public static final String THRESHOLD_KEY = "threshold";
 }

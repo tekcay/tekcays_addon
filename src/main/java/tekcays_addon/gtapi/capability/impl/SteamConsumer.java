@@ -76,15 +76,15 @@ public class SteamConsumer extends MTETrait implements ISteamConsumer {
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = super.serializeNBT();
-        compound.setInteger(STEAM_CONSUMPTION, this.steamConsumption);
-        compound.setInteger(WATER_OUTPUT_RATE, this.waterOutputRate);
+        compound.setInteger(STEAM_CONSUMPTION_KEY, this.steamConsumption);
+        compound.setInteger(WATER_OUTPUT_RATE_KEY, this.waterOutputRate);
         return compound;
     }
 
     @Override
     public void deserializeNBT(@Nonnull NBTTagCompound compound) {
-        this.steamConsumption = compound.getInteger(STEAM_CONSUMPTION);
-        this.waterOutputRate = compound.getInteger(WATER_OUTPUT_RATE);
+        this.steamConsumption = compound.getInteger(STEAM_CONSUMPTION_KEY);
+        this.waterOutputRate = compound.getInteger(WATER_OUTPUT_RATE_KEY);
     }
 
     @Override

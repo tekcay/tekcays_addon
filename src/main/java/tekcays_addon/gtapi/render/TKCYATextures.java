@@ -65,6 +65,11 @@ public class TKCYATextures {
 
     //Covers
     public static SimpleOverlayRenderer DETECTOR_TEMPERATURE;
+    public static SimpleOverlayRenderer DETECTOR_PRESSURE;
+    public static SimpleOverlayRenderer DETECTOR_VACUUM;
+    public static SimpleOverlayRenderer DETECTOR_SPEED;
+    public static SimpleOverlayRenderer DETECTOR_TORQUE;
+    public static SimpleOverlayRenderer DETECTOR_ROTATION_POWER;
 
 
     public static void preInit() {
@@ -107,5 +112,10 @@ public class TKCYATextures {
 
         //Covers
         DETECTOR_TEMPERATURE = new SimpleOverlayRenderer("cover/overlay_temperature_detector");
+        DETECTOR_PRESSURE = new SimpleOverlayRenderer("cover/overlay_pressure_detector");
+        DETECTOR_VACUUM = new SimpleOverlayRenderer("cover/overlay_vacuum_detector");
+        DETECTOR_SPEED = new SimpleOverlayRenderer("cover/overlay_speed_detector");
+        DETECTOR_TORQUE = new SimpleOverlayRenderer("cover/overlay_torque_detector");
+        DETECTOR_ROTATION_POWER = new SimpleOverlayRenderer("cover/overlay_rotation_power_detector");
     }
 }

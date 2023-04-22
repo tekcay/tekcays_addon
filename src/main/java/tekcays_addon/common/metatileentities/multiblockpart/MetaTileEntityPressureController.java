@@ -30,7 +30,7 @@ import tekcays_addon.gtapi.capability.containers.IPressureControl;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.capability.impl.PressureControl;
 import tekcays_addon.api.consts.DetectorModes;
-import tekcays_addon.api.gui.MetaTileEntityGuiHandler;
+import tekcays_addon.api.gui.CoverGuiHandler;
 import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 
 import javax.annotation.Nonnull;
@@ -46,7 +46,7 @@ import static tekcays_addon.gtapi.consts.TKCYAValues.MAX_PRESSURE;
 
 @Getter
 @Setter
-public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IPressureControl>, MetaTileEntityGuiHandler, IDataInfoProvider {
+public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IPressureControl>, CoverGuiHandler, IDataInfoProvider {
 
     private IPressureControl pressureControl;
     private int threshold;
@@ -105,10 +105,9 @@ public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPa
 
     private boolean setDetectorModeAndSendMessage(DetectorModes detectorModes, EntityPlayer player) {
         this.pressureControl.setDetectorMode(detectorModes);
-        player.sendMessage(new TextComponentTranslation("tkcya.machine.pressure_controller.message", detectorModes));
+        player.sendMessage(new TextComponentTranslation("tkcya.covers.detectors.mods." + detectorModes.toString()));
         return true;
     }
-
     @Override
     public boolean onScrewdriverClick(EntityPlayer playerIn, EnumHand hand, EnumFacing facing, CuboidRayTraceResult hitResult) {
         switch (getCurrentDetectorMode()) {
@@ -124,7 +123,7 @@ public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPa
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tkcya.machine.pressure_controller.tooltip.1"));
     }
@@ -152,6 +151,7 @@ public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPa
     protected ModularUI createUI(EntityPlayer entityPlayer) {
         return createUIHelper(entityPlayer);
     }
+
 
     @Override
     public String getUITitle() {
@@ -198,7 +198,7 @@ public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPa
         return BAR;
     }
 
-    @Override
+
     public DetectorModes getCurrentDetectorMode() {
         return this.pressureControl.getDetectorMode();
     }

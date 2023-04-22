@@ -400,8 +400,17 @@ metaitem.electrode.name=%s Electrode
 metaitem.electrode.tooltip=For electrolysis
 metaitem.filter.name=%s Filter
 metaitem.filter.tooltip=For filtration duh
-metaitem.cover.temperature_detector.name=Cover Temperature Detector
+
+
+
+metaitem.cover.temperature_detector.name=Temperature Detector Cover
 metaitem.cover.temperature.detector.tooltip=Emits a redstone signal if the temperature exceeds a specified value (as Cover). Right click with a Screwdriver while sneaking to invert redstone signal.
+
+metaitem.cover.pressure_detector.name=Pressure Detector Cover
+metaitem.cover.vacuum_detector.name=Vacuum Detector Cover
+metaitem.cover.speed_detector.name=Speed Detector Cover
+metaitem.cover.torque_detector.name=Torque Detector Cover
+metaitem.cover.rotation_power_detector.name=Rotation Power Detector Cover
 
 item.mica_pulp.dust=Mica Based Pulp
 
@@ -544,6 +553,11 @@ tkcya.general.steam_consumer.tooltip.water_output=Max distilled water output: §
 tkcya.general.pressure.tooltip.pressure=Accepts §aPressure§7, up to §e%s§7.
 tkcya.general.pressure.tooltip.pressure.leak=Loses §a%d L/s§7.
 
+#Covers
+tkcya.covers.detectors.mods.HIGHER=Outputs redstone if the measured value exceeds the threshold.
+tkcya.covers.detectors.mods.LOWER=Outputs redstone if the threshold exceeds the measured value.
+tkcya.covers.detectors.mods.EQUAL=Outputs redstone if the measured value equals the threshold.
+
 tekcays_addon.recipe.melter_temperature=Temperature: %dK
 
 tkcya.temperature.display=Temperature: %dK
@@ -620,10 +634,6 @@ tkcya.electric_heater.tooltip.1=Outputs §c%s HU/t§7 on the §eFRONT§7 side.
 tkcya.electric_cooler.tooltip.1=For cooling.
 tkcya.electric_cooler.tooltip.2=Outputs §b%d CU/t§7 on the §eFRONT§7 face.
 tkcya.electric_cooler.tooltip.3=Outputs §c%d HU/t§7 on the §eBACK§7 face.
-
-#Covers
-tkcya.cover.temperature_detector.message_temperature_storage_normal=Monitoring Normal Temperature Storage
-tkcya.cover.temperature_detector.message_temperature_storage_inverted=Monitoring Inverted Temperature Storage
 
 ##Buttons in covers
 cover.cover.detector.inverted=I

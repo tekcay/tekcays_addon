@@ -1,6 +1,8 @@
 package tekcays_addon.gtapi.capability.containers;
 
-public interface IHeatContainer {
+import tekcays_addon.api.ContainerStructuring;
+
+public interface IHeatContainer extends ContainerStructuring {
 
     /**
      * @return the amount of heat in the container
