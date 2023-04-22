@@ -1,4 +1,4 @@
-package tekcays_addon.gtapi.metatileentity;
+package tekcays_addon.common.metatileentities.multiblockpart;
 
 import codechicken.lib.raytracer.CuboidRayTraceResult;
 import codechicken.lib.render.CCRenderState;
@@ -88,7 +88,7 @@ public class MetaTileEntityController extends MetaTileEntityMultiblockPart imple
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("tkcya.machine.pressure_controller.tooltip.1"));
+        tooltip.add(I18n.format("tkcya.machine.multiblock_detector.tooltip.1"));
     }
 
     @Override

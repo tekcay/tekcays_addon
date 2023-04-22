@@ -542,6 +542,8 @@ tekcays_addon.multiblock.fuel_melter.tooltip.5=Target temperature: §a%d K§7.
 
 #General tooltips
 
+tkcya.machine.multiblock_detector.tooltip.1=Outputs a redstone signal following the value of the container.
+
 #Rotation
 tkcya.general.rotation.maxspeed=Max speed: §f%d rpm§7
 tkcya.general.rotation.maxtorque=Max torque: §f%d Nm§7
