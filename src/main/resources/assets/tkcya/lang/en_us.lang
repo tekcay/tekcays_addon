@@ -5,6 +5,34 @@ tkcya.machine.cluster_mill.hv.name=Cluster Mill HV
 tkcya.machine.cluster_mill.ev.name=Cluster Mill EV
 tkcya.machine.cluster_mill.iv.name=Cluster Mill IV
 
+tkcya.machine.steam_turbine.0.name=Steam Turbine I
+tkcya.machine.steam_turbine.1.name=Steam Turbine II
+tkcya.machine.steam_turbine.2.name=Steam Turbine III
+tkcya.machine.steam_turbine.3.name=Steam Turbine IV
+tkcya.machine.steam_turbine.4.name=Steam Turbine V
+tkcya.machine.steam_turbine.5.name=Steam Turbine VI
+
+tkcya.machine.dynamo.0.name=Dynamo ULV
+tkcya.machine.dynamo.1.name=Dynamo LV
+tkcya.machine.dynamo.2.name=Dynamo MV
+tkcya.machine.dynamo.3.name=Dynamo HV
+tkcya.machine.dynamo.4.name=Dynamo EV
+tkcya.machine.dynamo.5.name=Dynamo IV
+
+tkcya.machine.diesel_generator.0.name=Diesel Generator I
+tkcya.machine.diesel_generator.1.name=Diesel Generator II
+tkcya.machine.diesel_generator.2.name=Diesel Generator III
+tkcya.machine.diesel_generator.3.name=Diesel Generator IV
+tkcya.machine.diesel_generator.4.name=Diesel Generator V
+tkcya.machine.diesel_generator.5.name=Diesel Generator VI
+
+tkcya.machine.rotation_compressor.0.name=Rotation Compressor I
+tkcya.machine.rotation_compressor.1.name=Rotation Compressor II
+tkcya.machine.rotation_compressor.2.name=Rotation Compressor III
+tkcya.machine.rotation_compressor.3.name=Rotation Compressor IV
+tkcya.machine.rotation_compressor.4.name=Rotation Compressor V
+tkcya.machine.rotation_compressor.5.name=Rotation Compressor VI
+
 tkcya.machine.advanced_polarizer.lv.name=Polarizer LV
 tkcya.machine.advanced_polarizer.mv.name=Polarizer MV
 tkcya.machine.advanced_polarizer.hv.name=Polarizer HV
@@ -43,7 +71,12 @@ tkcya.machine.electric_cooler.hv.name=Electric Cooler HV
 tkcya.machine.electric_cooler.ev.name=Electric Cooler EV
 tkcya.machine.electric_cooler.iv.name=Electric Cooler IV
 
-tkcya.machine.pressure_controller_lv.name=Pressure Controller LV
+tkcya.machine.pressure_controller.name=Pressure Multiblock Detector
+tkcya.machine.vacuum_controller.name=Vacuum Multiblock Detector
+tkcya.machine.temperature_controller.name=Temperature Multiblock Detector
+tkcya.machine.speed_controller.name=Speed Multiblock Detector
+tkcya.machine.torque_controller.name=Torque Multiblock Detector
+tkcya.machine.rotation_power_controller.name=Rotation Power Multiblock Detector
 
 tkcya.machine.brick_solid_fuel_heater.name=Brick Solid Fuel Heater
 tkcya.machine.material.bronze_solid_fuel_heater.name=Bronze Solid Fuel Heater
@@ -171,8 +204,6 @@ tkcya.machine.electric_vacuum_pump.mv.name=Vacuum Pump II
 tkcya.machine.electric_vacuum_pump.hv.name=Vacuum Pump III
 tkcya.machine.electric_vacuum_pump.ev.name=Vacuum Pump IV
 
-
-
 tkcya.machine.crystallizer.name=Crystallizer
 tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer
 tkcya.machine.filter.name=Filter
@@ -252,6 +283,7 @@ recipemap.roasting.name=Roasting
 recipemap.spiral_separation.name=Spiral Separation
 recipemap.coking.name=Coking
 recipemap.steam_autoclave.name=Autoclave
+recipemap.diesel_generator.name=Diesel generator
 
 # Materials
 
@@ -373,8 +405,17 @@ metaitem.electrode.name=%s Electrode
 metaitem.electrode.tooltip=For electrolysis
 metaitem.filter.name=%s Filter
 metaitem.filter.tooltip=For filtration duh
-metaitem.cover.temperature_detector.name=Cover Temperature Detector
+
+
+
+metaitem.cover.temperature_detector.name=Temperature Detector Cover
 metaitem.cover.temperature.detector.tooltip=Emits a redstone signal if the temperature exceeds a specified value (as Cover). Right click with a Screwdriver while sneaking to invert redstone signal.
+
+metaitem.cover.pressure_detector.name=Pressure Detector Cover
+metaitem.cover.vacuum_detector.name=Vacuum Detector Cover
+metaitem.cover.speed_detector.name=Speed Detector Cover
+metaitem.cover.torque_detector.name=Torque Detector Cover
+metaitem.cover.rotation_power_detector.name=Rotation Power Detector Cover
 
 item.mica_pulp.dust=Mica Based Pulp
 
@@ -465,9 +506,15 @@ tkcya.machine.heat_acceptor.tooltip.3=Capacity: §c%dk HU§7.
 
 #Pressure hatch
 tkcya.machine.pressure_hatch.tooltip.vacuum=Accepts §dVacuum§7, down to §e%s§7.
-tkcya.machine.pressure_hatch.tooltip.pressure=Accepts §aPressure§7, up to §e%s§7.
 tkcya.machine.pressure_hatch.tooltip.vacuum.leak=Loses §d%d L/s§7.
-tkcya.machine.pressure_hatch.tooltip.pressure.leak=Loses §a%d L/s§7.
+
+#Steam turbine
+tkcya.machine.steam_turbine.tooltip.1=Consumes §eSteam§7 to spin a wheel and outputs §dDistilled Water§7.
+tkcya.machine.steam_turbine.tooltip.steam_tank=Steam tank: %d L
+tkcya.machine.steam_turbine.tooltip.water_tank=Water tank: %d L
+
+#Dynamo
+tkcya.machine.dynamo.tooltip.1=Transforms rotational power into electricity.
 
 tkcya.machine.electric_pressure_compressor.pressure.tooltip.description=Transfer a fluid to the OUTPUT face to increase §aPressure§7.
 tkcya.machine.electric_pressure_compressor.vacuum.tooltip.description=Transfer a fluid from the INPUT face to increase §aVacuum§7.
@@ -492,6 +539,31 @@ tekcays_addon.multiblock.fuel_melter.tooltip.1=Temperature: §a%d K§7.
 tekcays_addon.multiblock.fuel_melter.tooltip.2=Not enough energy can be input to reach the target!
 tekcays_addon.multiblock.fuel_melter.tooltip.4=Consumption: %d L/t.
 tekcays_addon.multiblock.fuel_melter.tooltip.5=Target temperature: §a%d K§7.
+
+#General tooltips
+
+tkcya.machine.multiblock_detector.tooltip.1=Outputs a redstone signal following the value of the container.
+
+#Rotation
+tkcya.general.rotation.maxspeed=Max speed: §f%d rpm§7
+tkcya.general.rotation.maxtorque=Max torque: §f%d Nm§7
+tkcya.general.rotation.maxpower=Max power: §f%d W§7
+tkcya.general.rotation.speed=Speed: %d rpm
+tkcya.general.rotation.torque=Torque: %d Nm
+tkcya.general.rotation.power=Power: %d W
+
+#Steam consumer
+tkcya.general.steam_consumer.tooltip.steam_input=Max steam consumption: §f%d L/s§7
+tkcya.general.steam_consumer.tooltip.water_output=Max distilled water output: §f%d L/s§7
+
+#Pressure
+tkcya.general.pressure.tooltip.pressure=Accepts §aPressure§7, up to §e%s§7.
+tkcya.general.pressure.tooltip.pressure.leak=Loses §a%d L/s§7.
+
+#Covers
+tkcya.covers.detectors.mods.HIGHER=Outputs redstone if the measured value exceeds the threshold.
+tkcya.covers.detectors.mods.LOWER=Outputs redstone if the threshold exceeds the measured value.
+tkcya.covers.detectors.mods.EQUAL=Outputs redstone if the measured value equals the threshold.
 
 tekcays_addon.recipe.melter_temperature=Temperature: %dK
 
@@ -570,10 +642,6 @@ tkcya.electric_cooler.tooltip.1=For cooling.
 tkcya.electric_cooler.tooltip.2=Outputs §b%d CU/t§7 on the §eFRONT§7 face.
 tkcya.electric_cooler.tooltip.3=Outputs §c%d HU/t§7 on the §eBACK§7 face.
 
-#Covers
-tkcya.cover.temperature_detector.message_temperature_storage_normal=Monitoring Normal Temperature Storage
-tkcya.cover.temperature_detector.message_temperature_storage_inverted=Monitoring Inverted Temperature Storage
-
 ##Buttons in covers
 cover.cover.detector.inverted=I
 cover.cover.detector.normal=N
@@ -594,6 +662,9 @@ behavior.tricorder.current_pressure=Pressure: %d bar
 behavior.tricorder.pressureThreshold=PressureThreshol: %d bar
 behavior.tricorder.fluid.amount=Fluid amount: %d L
 behavior.tricorder.fluid.name=Fluid name: %s
+behavior.tricorder.steam.amount=Steam amount: %d L
+behavior.tricorder.lub.amount=Lub amount: %d L
+behavior.tricorder.distilled_water.amount=Distilled amount: %d L
 behavior.tricorder.air.amount=Air amount: %d L
 behavior.tricorder.pressure.pressure=Pressure: %d
 behavior.tricorder.pressure.vacuum=Vacuum: %d
@@ -603,7 +674,10 @@ behavior.tricorder.min_pressure.pressure=Minimum Pressure: %d
 behavior.tricorder.min_pressure.vacuum=Minimum Pressure: %d
 behavior.tricorder.current_pu=%d PU
 behavior.tricorder.current_vu=%d VU
+behavior.tricorder.turbine.steam_consumption=Steam consumption: %d L/t
+behavior.tricorder.turbine.output_rate=Water output rate: %d L/t
+behavior.tricorder.speed=Speed: %d rpm
 
 # Errors
 
-tkcya.multiblock.pattern.error.bricks=§cAll bricks must be the same§r
+tkcya.multiblock.pattern.error.bricks=§cAll bricks must be the same§rbehavior.tricorder.speed=Speed: %d rpm

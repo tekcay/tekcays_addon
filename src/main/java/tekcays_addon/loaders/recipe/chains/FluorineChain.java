@@ -10,8 +10,8 @@ import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.Materials.Water;
 import static gregtech.api.unification.ore.OrePrefix.dust;
 import static gregtech.api.unification.ore.OrePrefix.dustTiny;
-import static tekcays_addon.api.recipes.TKCYARecipeMaps.ELECTROLYSIS;
-import static tekcays_addon.api.unification.TKCYAMaterials.*;
+import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.ELECTROLYSIS;
+import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
 import static tekcays_addon.loaders.DamageableItemsLoader.*;
 
 public class FluorineChain {

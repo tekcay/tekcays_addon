@@ -28,8 +28,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.gtapi.render.TKCYATextures;
+import tekcays_addon.gtapi.unification.TKCYAMaterials;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

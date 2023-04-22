@@ -6,7 +6,7 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMufflerHatch;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.ItemStackHandler;
-import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
 public class MetaTileEntityPrimitiveMufflerHatch extends MetaTileEntityMufflerHatch {

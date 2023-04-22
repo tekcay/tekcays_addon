@@ -4,23 +4,16 @@ import gregtech.api.recipes.ModHandler;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
-import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.UnificationEntry;
 import gregtech.common.blocks.BlockMachineCasing;
 import gregtech.common.blocks.MetaBlocks;
-import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
-import tekcays_addon.api.unification.TKCYAMaterials;
-import tekcays_addon.common.blocks.TKCYAMetaBlocks;
-import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.items.TKCYAMetaItems;
-import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 
 import static gregtech.api.unification.ore.OrePrefix.*;
-import static gregtech.common.blocks.BlockSteamCasing.SteamCasingType.WOOD_WALL;
 import static net.minecraft.init.Blocks.IRON_BARS;
-import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
-import static tekcays_addon.api.utils.TKCYAValues.MOLD_MATERIALS;
+import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.*;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MOLD_MATERIALS;
 
 public class ShapedCraftingRecipes{
 

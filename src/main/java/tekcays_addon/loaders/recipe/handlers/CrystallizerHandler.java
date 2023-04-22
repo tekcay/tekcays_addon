@@ -4,7 +4,7 @@ import gregtech.api.GTValues;
 import gregtech.api.unification.material.Materials;
 
 import gregtech.common.items.MetaItems;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
 
 public class CrystallizerHandler {

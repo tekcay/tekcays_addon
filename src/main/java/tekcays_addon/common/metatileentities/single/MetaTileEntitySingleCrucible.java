@@ -39,20 +39,20 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.Pair;
-import tekcays_addon.api.capability.IHeatContainer;
-import tekcays_addon.api.capability.TKCYATileCapabilities;
-import tekcays_addon.api.capability.impl.SingleBlockPrimitiveRecipeLogic;
-import tekcays_addon.api.capability.impl.HeatContainer;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.recipes.recipeproperties.NoEnergyTemperatureProperty;
-import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.gtapi.capability.containers.IHeatContainer;
+import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
+import tekcays_addon.gtapi.logic.SingleBlockPrimitiveRecipeLogic;
+import tekcays_addon.gtapi.capability.impl.HeatContainer;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
+import tekcays_addon.gtapi.recipes.recipeproperties.NoEnergyTemperatureProperty;
+import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static tekcays_addon.api.utils.TKCYAValues.ROOM_TEMPERATURE;
+import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
 
 public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDataInfoProvider {
 
@@ -130,6 +130,7 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
     @Override
     @Nullable
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
+        //GetCapabilityHelper.getCapability(EnumFacing.DOWN, side, TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER, heatContainer)
         if (capability.equals(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER)) {
             return TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER.cast(heatContainer);
         } else if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {

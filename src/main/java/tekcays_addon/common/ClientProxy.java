@@ -1,6 +1,6 @@
 package tekcays_addon.common;
 
-import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.Mod;

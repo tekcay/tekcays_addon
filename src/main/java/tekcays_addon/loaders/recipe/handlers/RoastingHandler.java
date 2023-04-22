@@ -3,8 +3,8 @@ package tekcays_addon.loaders.recipe.handlers;
 import gregtech.api.unification.material.Material;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.utils.roasting.RoastableMaterial;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
+import tekcays_addon.gtapi.utils.roasting.RoastableMaterial;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
 import java.util.ArrayList;
@@ -12,8 +12,8 @@ import java.util.List;
 
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.dust;
-import static tekcays_addon.api.utils.roasting.RoastableMaterial.*;
-import static tekcays_addon.api.utils.roasting.RoastingRecipeHandlerMethods.*;
+import static tekcays_addon.gtapi.utils.roasting.RoastableMaterial.*;
+import static tekcays_addon.gtapi.utils.roasting.RoastingRecipeHandlerMethods.*;
 
 public class RoastingHandler {
 

@@ -9,8 +9,8 @@ import static gregtech.api.recipes.RecipeMaps.CHEMICAL_RECIPES;
 import static gregtech.api.recipes.RecipeMaps.LARGE_CHEMICAL_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.dust;
-import static tekcays_addon.api.recipes.TKCYARecipeMaps.ADVANCED_BLAST_FURNACE_RECIPES;
-import static tekcays_addon.api.unification.TKCYAMaterials.*;
+import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.ADVANCED_BLAST_FURNACE_RECIPES;
+import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
 
 public class ChromiteChain {
 
