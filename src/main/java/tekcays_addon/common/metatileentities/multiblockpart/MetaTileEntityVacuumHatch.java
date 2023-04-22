@@ -21,26 +21,23 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import tekcays_addon.api.capability.IVacuumContainer;
-import tekcays_addon.api.capability.TKCYATileCapabilities;
-import tekcays_addon.api.capability.impl.VacuumContainer;
-import tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility;
-import tekcays_addon.api.utils.TKCYALog;
+import tekcays_addon.gtapi.capability.containers.IVacuumContainer;
+import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
+import tekcays_addon.gtapi.capability.impl.VacuumContainer;
+import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
+import static tekcays_addon.gtapi.consts.TKCYAValues.ATMOSPHERIC_PRESSURE;
 
 public class MetaTileEntityVacuumHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IVacuumContainer>, IDataInfoProvider {
 
     private final IVacuumContainer vacuumContainer;
     private final int leakingRate;
     private final boolean canHandleVacuum;
-    private final long minPressure;
-    private final long maxPressure;
-    private final int volume;
+    private final int minPressure, maxPressure, volume;
     private final int tierMultiplier = getTier() * getTier() + 1;
 
     public MetaTileEntityVacuumHatch(@Nonnull ResourceLocation metaTileEntityId, int tier) {

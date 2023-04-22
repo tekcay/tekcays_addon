@@ -1,10 +1,6 @@
 package tekcays_addon.common.items;
 
 import gregtech.api.items.metaitem.MetaItem;
-import net.minecraft.item.ItemStack;
-import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
-
-import static gregtech.api.unification.material.Materials.*;
 
 
 public final class TKCYAMetaItems {
@@ -27,6 +23,11 @@ public final class TKCYAMetaItems {
 
     //Covers
     public static MetaItem<?>.MetaValueItem COVER_TEMPERATURE_DETECTOR;
+    public static MetaItem<?>.MetaValueItem COVER_SPEED_DETECTOR;
+    public static MetaItem<?>.MetaValueItem COVER_TORQUE_DETECTOR;
+    public static MetaItem<?>.MetaValueItem COVER_ROTATION_POWER_DETECTOR;
+    public static MetaItem<?>.MetaValueItem COVER_PRESSURE_DETECTOR;
+    public static MetaItem<?>.MetaValueItem COVER_VACUUM_DETECTOR;
 
     //ULV Components
     public static MetaItem<?>.MetaValueItem ELECTRIC_MOTOR_ULV;

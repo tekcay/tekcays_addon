@@ -21,15 +21,14 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.input.Keyboard;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.recipes.recipeproperties.NoCoilTemperatureProperty;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
+import tekcays_addon.gtapi.recipes.recipeproperties.NoCoilTemperatureProperty;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

@@ -1,7 +1,7 @@
 package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.unification.ore.OrePrefix;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
 import static gregtech.api.unification.material.Materials.*;
 

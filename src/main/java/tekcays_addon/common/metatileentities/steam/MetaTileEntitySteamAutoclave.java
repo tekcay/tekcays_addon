@@ -11,7 +11,7 @@ import gregtech.client.renderer.texture.Textures;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.IItemHandlerModifiable;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
 public class MetaTileEntitySteamAutoclave extends SteamMetaTileEntity {
 

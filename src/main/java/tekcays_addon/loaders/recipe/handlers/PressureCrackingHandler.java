@@ -5,10 +5,10 @@ import gregtech.api.unification.material.Material;
 
 import static gregtech.api.GTValues.*;
 import static gregtech.api.unification.material.Materials.*;
-import static tekcays_addon.api.unification.TKCYAMaterials.*;
-import static tekcays_addon.api.recipes.TKCYARecipeMaps.PRESSURE_CRACKING;
-import static tekcays_addon.api.utils.TKCYAValues.ATMOSPHERIC_PRESSURE;
-import static tekcays_addon.api.utils.TKCYAValues.MINIMUM_FLUID_STACK_AMOUNT;
+import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
+import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.PRESSURE_CRACKING;
+import static tekcays_addon.gtapi.consts.TKCYAValues.ATMOSPHERIC_PRESSURE;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MINIMUM_FLUID_STACK_AMOUNT;
 
 public class PressureCrackingHandler {
     
@@ -36,7 +36,7 @@ public class PressureCrackingHandler {
                 .notConsumable(new IntCircuitIngredient(1))
                 .fluidInputs(Methane.getFluid(1000))
                 .fluidOutputs(LightlySteamCrackedMethane.getFluid(1000))
-                .intervalPressure(new Long[]{ATMOSPHERIC_PRESSURE * 10, ATMOSPHERIC_PRESSURE * 12})
+                .intervalPressure(new Integer[]{ATMOSPHERIC_PRESSURE * 10, ATMOSPHERIC_PRESSURE * 12})
                 .intervalTemperature(new Integer[]{400, 500})
                 .pressurizedFluidStack(Steam.getFluid(MINIMUM_FLUID_STACK_AMOUNT))
                 .duration(120).EUt(120).buildAndRegister();
@@ -46,7 +46,7 @@ public class PressureCrackingHandler {
                 .notConsumable(new IntCircuitIngredient(2))
                 .fluidInputs(Methane.getFluid(1000))
                 .fluidOutputs(ModeratelySteamCrackedMethane.getFluid(1000))
-                .intervalPressure(new Long[]{ATMOSPHERIC_PRESSURE * 50, ATMOSPHERIC_PRESSURE * 55})
+                .intervalPressure(new Integer[]{ATMOSPHERIC_PRESSURE * 50, ATMOSPHERIC_PRESSURE * 55})
                 .intervalTemperature(new Integer[]{500, 600})
                 .pressurizedFluidStack(Steam.getFluid(MINIMUM_FLUID_STACK_AMOUNT))
                 .duration(120).EUt(180).buildAndRegister();
@@ -56,7 +56,7 @@ public class PressureCrackingHandler {
                 .notConsumable(new IntCircuitIngredient(3))
                 .fluidInputs(Methane.getFluid(1000))
                 .fluidOutputs(SeverelySteamCrackedMethane.getFluid(1000))
-                .intervalPressure(new Long[]{ATMOSPHERIC_PRESSURE * 100, ATMOSPHERIC_PRESSURE * 120})
+                .intervalPressure(new Integer[]{ATMOSPHERIC_PRESSURE * 100, ATMOSPHERIC_PRESSURE * 120})
                 .intervalTemperature(new Integer[]{700, 800})
                 .pressurizedFluidStack(Steam.getFluid(MINIMUM_FLUID_STACK_AMOUNT))
                 .duration(120).EUt(240).buildAndRegister();
@@ -69,7 +69,7 @@ public class PressureCrackingHandler {
                 .notConsumable(new IntCircuitIngredient(1))
                 .fluidInputs(raw.getFluid(1000))
                 .fluidOutputs(hydroCracked.getFluid(1000))
-                .intervalPressure(new Long[]{ATMOSPHERIC_PRESSURE * 10, ATMOSPHERIC_PRESSURE * 12})
+                .intervalPressure(new Integer[]{ATMOSPHERIC_PRESSURE * 10, ATMOSPHERIC_PRESSURE * 12})
                 .intervalTemperature(new Integer[]{400, 500})
                 .pressurizedFluidStack(Hydrogen.getFluid(MINIMUM_FLUID_STACK_AMOUNT))
                 .duration(80).EUt(VA[MV]).buildAndRegister();
@@ -78,7 +78,7 @@ public class PressureCrackingHandler {
                 .notConsumable(new IntCircuitIngredient(2))
                 .fluidInputs(raw.getFluid(1000))
                 .fluidOutputs(steamCracked.getFluid(1000))
-                .intervalPressure(new Long[]{ATMOSPHERIC_PRESSURE * 10, ATMOSPHERIC_PRESSURE * 12})
+                .intervalPressure(new Integer[]{ATMOSPHERIC_PRESSURE * 10, ATMOSPHERIC_PRESSURE * 12})
                 .intervalTemperature(new Integer[]{400, 500})
                 .pressurizedFluidStack(Steam.getFluid(MINIMUM_FLUID_STACK_AMOUNT))
                 .duration(80).EUt(240).buildAndRegister();
@@ -90,7 +90,7 @@ public class PressureCrackingHandler {
                 .notConsumable(new IntCircuitIngredient(3))
                 .fluidInputs(raw.getFluid(1000))
                 .fluidOutputs(hydroCracked.getFluid(1000))
-                .intervalPressure(new Long[]{ATMOSPHERIC_PRESSURE * 50, ATMOSPHERIC_PRESSURE * 55})
+                .intervalPressure(new Integer[]{ATMOSPHERIC_PRESSURE * 50, ATMOSPHERIC_PRESSURE * 55})
                 .intervalTemperature(new Integer[]{500, 600})
                 .pressurizedFluidStack(Hydrogen.getFluid(MINIMUM_FLUID_STACK_AMOUNT))
                 .duration(120).EUt(180).buildAndRegister();
@@ -99,7 +99,7 @@ public class PressureCrackingHandler {
                 .notConsumable(new IntCircuitIngredient(4))
                 .fluidInputs(raw.getFluid(1000))
                 .fluidOutputs(steamCracked.getFluid(1000))
-                .intervalPressure(new Long[]{ATMOSPHERIC_PRESSURE * 50, ATMOSPHERIC_PRESSURE * 55})
+                .intervalPressure(new Integer[]{ATMOSPHERIC_PRESSURE * 50, ATMOSPHERIC_PRESSURE * 55})
                 .intervalTemperature(new Integer[]{500, 600})
                 .pressurizedFluidStack(Steam.getFluid(MINIMUM_FLUID_STACK_AMOUNT))
                 .duration(120).EUt(360).buildAndRegister();
@@ -111,7 +111,7 @@ public class PressureCrackingHandler {
                 .notConsumable(new IntCircuitIngredient(5))
                 .fluidInputs(raw.getFluid(1000))
                 .fluidOutputs(hydroCracked.getFluid(1000))
-                .intervalPressure(new Long[]{ATMOSPHERIC_PRESSURE * 100, ATMOSPHERIC_PRESSURE * 120})
+                .intervalPressure(new Integer[]{ATMOSPHERIC_PRESSURE * 100, ATMOSPHERIC_PRESSURE * 120})
                 .intervalTemperature(new Integer[]{700, 800})
                 .pressurizedFluidStack(Hydrogen.getFluid(MINIMUM_FLUID_STACK_AMOUNT))
                 .duration(160).EUt(240).buildAndRegister();
@@ -120,7 +120,7 @@ public class PressureCrackingHandler {
                 .notConsumable(new IntCircuitIngredient(6))
                 .fluidInputs(raw.getFluid(1000))
                 .fluidOutputs(steamCracked.getFluid(1000))
-                .intervalPressure(new Long[]{ATMOSPHERIC_PRESSURE * 100, ATMOSPHERIC_PRESSURE * 120})
+                .intervalPressure(new Integer[]{ATMOSPHERIC_PRESSURE * 100, ATMOSPHERIC_PRESSURE * 120})
                 .intervalTemperature(new Integer[]{700, 800})
                 .pressurizedFluidStack(Steam.getFluid(MINIMUM_FLUID_STACK_AMOUNT))
                 .duration(160).EUt(VA[HV]).buildAndRegister();

@@ -19,6 +19,7 @@ public class TKCYARecipeLoader {
     public static void load() {
 
         TKCYAMetaTileEntityLoader.init();
+        FuelRecipes.init();
 
         PressureHandler.init();
         ULVComponentsHandler.init();

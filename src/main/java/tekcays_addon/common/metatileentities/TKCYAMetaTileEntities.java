@@ -10,10 +10,11 @@ import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.metatileentities.storage.MetaTileEntityDrum;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.TekCaysAddon;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.api.unification.TKCYAMaterials;
-import tekcays_addon.api.utils.FuelHeaterTiers;
+import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityController;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
+import tekcays_addon.gtapi.render.TKCYATextures;
+import tekcays_addon.gtapi.unification.TKCYAMaterials;
+import tekcays_addon.gtapi.utils.FuelHeaterTiers;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
@@ -24,16 +25,27 @@ import tekcays_addon.common.metatileentities.multiblockpart.*;
 import tekcays_addon.common.metatileentities.single.*;
 
 import tekcays_addon.common.metatileentities.single.MetaTileEntitySingleCrucible;
+import tekcays_addon.common.metatileentities.single.electric.MetaTileEntityElectricCooler;
+import tekcays_addon.common.metatileentities.single.electric.MetaTileEntityElectricHeater;
+import tekcays_addon.common.metatileentities.single.electric.MetaTileEntityElectricPressureCompressor;
+import tekcays_addon.common.metatileentities.single.electric.MetaTileEntityElectricVacuumPump;
+import tekcays_addon.common.metatileentities.single.heaters.MetaTileEntityFluidizedHeater;
+import tekcays_addon.common.metatileentities.single.heaters.MetaTileEntityGasHeater;
+import tekcays_addon.common.metatileentities.single.heaters.MetaTileEntityLiquidFuelHeater;
+import tekcays_addon.common.metatileentities.single.heaters.MetaTileEntitySolidFuelHeater;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamAutoclave;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamCooler;
 
 import java.util.function.IntFunction;
+import java.util.stream.IntStream;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
-import static tekcays_addon.api.utils.BlastFurnaceUtils.BRICKS;
-import static tekcays_addon.api.utils.FuelHeaterTiers.BRICK;
-import static tekcays_addon.api.utils.FuelHeaterTiers.FUEL_HEATERS;
-import static tekcays_addon.api.utils.TKCYAValues.DRUM_MATERIALS;
+import static tekcays_addon.api.consts.ContainerControllerWrappers.*;
+import static tekcays_addon.gtapi.render.TKCYATextures.STEAM_CASING;
+import static tekcays_addon.gtapi.utils.BlastFurnaceUtils.BRICKS;
+import static tekcays_addon.gtapi.utils.FuelHeaterTiers.BRICK;
+import static tekcays_addon.gtapi.utils.FuelHeaterTiers.FUEL_HEATERS;
+import static tekcays_addon.gtapi.consts.TKCYAValues.DRUM_MATERIALS;
 
 public class TKCYAMetaTileEntities {
 
@@ -86,6 +98,11 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityFluidizedHeater[] FLUIDIZED_FUEL_HEATER = new MetaTileEntityFluidizedHeater[FUEL_HEATERS.size()];
     public static MetaTileEntityGasHeater[] GAS_FUEL_HEATER = new MetaTileEntityGasHeater[FUEL_HEATERS.size()];
 
+    public static MetaTileEntitySteamTurbine[] STEAM_TURBINE = new MetaTileEntitySteamTurbine[STEAM_CASING.length];
+    public static MetaTileEntityRotationCompressor[] ROTATION_COMPRESSOR = new MetaTileEntityRotationCompressor[STEAM_CASING.length];
+    public static MetaTileEntityDynamo[] DYNAMOS = new MetaTileEntityDynamo[MAX_TIER];
+    public static MetaTileEntityDieselGenerator[] DIESEL_GENERATOR = new MetaTileEntityDieselGenerator[MAX_TIER];
+
     public static MetaTileEntityRoastingOven ROASTING_OVEN;
     public static MetaTileEntitySpiralSeparator SPIRAL_SEPARATOR;
 
@@ -105,7 +122,13 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityDrum[] DRUMS = new MetaTileEntityDrum[DRUM_MATERIALS.size()];
 
     //Controls
-    public static MetaTileEntityPressureController PRESSURE_CONTROLLER;
+    public static MetaTileEntityController MULTIBLOCK_PRESSURE_DETECTOR;
+    public static MetaTileEntityController MULTIBLOCK_VACUUM_DETECTOR;
+    public static MetaTileEntityController MULTIBLOCK_TEMPERATURE_DETECTOR;
+    public static MetaTileEntityController MULTIBLOCK_SPEED_DETECTOR;
+    public static MetaTileEntityController MULTIBLOCK_TORQUE_DETECTOR;
+    public static MetaTileEntityController MULTIBLOCK_ROTATION_POWER_DETECTOR;
+
 
 
     //Tanks
@@ -285,7 +308,9 @@ public class TKCYAMetaTileEntities {
             LIQUID_FUEL_HEATER[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityLiquidFuelHeater(tkcyaId(setName.apply(j++)), fuelHeater));
             FLUIDIZED_FUEL_HEATER[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityFluidizedHeater(tkcyaId(setName.apply(j++)), fuelHeater));
             GAS_FUEL_HEATER[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityGasHeater(tkcyaId(setName.apply(j)), fuelHeater));
+
         }
+
 
         startId = Math.max(startId, startId + FUEL_HEATERS.size() * FUEL_HEATERS_TYPES.length + 1);
 
@@ -323,11 +348,28 @@ public class TKCYAMetaTileEntities {
 
         startId += MAX_TIER * 5 + 1;
 
-        PRESSURE_CONTROLLER = registerMetaTileEntity(startId++, new MetaTileEntityPressureController(tkcyaId("pressure_controller_lv")));
+        MULTIBLOCK_PRESSURE_DETECTOR = registerMetaTileEntity(startId++, new MetaTileEntityController(tkcyaId("pressure_controller"), CONTROL_PRESSURE_DETECTOR));
+        MULTIBLOCK_VACUUM_DETECTOR = registerMetaTileEntity(startId++, new MetaTileEntityController(tkcyaId("vacuum_controller"), CONTROL_VACUUM_DETECTOR));
+        MULTIBLOCK_TEMPERATURE_DETECTOR = registerMetaTileEntity(startId++, new MetaTileEntityController(tkcyaId("temperature_controller"), CONTROL_TEMPERATURE_DETECTOR));
+        MULTIBLOCK_SPEED_DETECTOR = registerMetaTileEntity(startId++, new MetaTileEntityController(tkcyaId("speed_controller"), CONTROL_SPEED_DETECTOR));
+        MULTIBLOCK_TORQUE_DETECTOR = registerMetaTileEntity(startId++, new MetaTileEntityController(tkcyaId("torque_controller"), CONTROL_TORQUE_DETECTOR));
+        MULTIBLOCK_ROTATION_POWER_DETECTOR = registerMetaTileEntity(startId++, new MetaTileEntityController(tkcyaId("rotation_power_controller"), CONTROL_ROTATION_POWER_DETECTOR));
+
+        IntStream.range(0, STEAM_TURBINE.length)
+                .forEach(i -> STEAM_TURBINE[i] = registerMetaTileEntity(12000 + i, new MetaTileEntitySteamTurbine(tkcyaId("steam_turbine." + i), i)));
+
+        IntStream.range(0, ROTATION_COMPRESSOR.length )
+                .forEach(i -> ROTATION_COMPRESSOR[i] = registerMetaTileEntity(12010 + i, new MetaTileEntityRotationCompressor(tkcyaId("rotation_compressor." + i), i)));
+
+        IntStream.range(0, DYNAMOS.length )
+                .forEach(i -> DYNAMOS[i] = registerMetaTileEntity(12020 + i, new MetaTileEntityDynamo(tkcyaId("dynamo." + i), i)));
+
+        IntStream.range(0, DIESEL_GENERATOR.length )
+                .forEach(i -> DIESEL_GENERATOR[i] = registerMetaTileEntity(12030 + i, new MetaTileEntityDieselGenerator(tkcyaId("diesel_generator." + i), i)));
 
     }
 
-    private static ResourceLocation tkcyaId(String name) {
+    static ResourceLocation tkcyaId(String name) {
         return new ResourceLocation(TekCaysAddon.MODID, name);
     }
 

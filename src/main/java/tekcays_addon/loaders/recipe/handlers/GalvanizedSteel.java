@@ -19,16 +19,16 @@ import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.unification.TKCYAMaterials;
-import tekcays_addon.api.utils.TKCYAValues;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
+import tekcays_addon.gtapi.unification.TKCYAMaterials;
+import tekcays_addon.gtapi.consts.TKCYAValues;
 
 import static gregtech.api.GTValues.LV;
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.plate;
-import static tekcays_addon.api.recipes.TKCYARecipeMaps.ELECTROLYSIS;
-import static tekcays_addon.api.unification.TKCYAMaterials.GalvanizedSteel;
+import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.ELECTROLYSIS;
+import static tekcays_addon.gtapi.unification.TKCYAMaterials.GalvanizedSteel;
 import static tekcays_addon.loaders.DamageableItemsLoader.electrodeZinc;
 
 public class GalvanizedSteel {

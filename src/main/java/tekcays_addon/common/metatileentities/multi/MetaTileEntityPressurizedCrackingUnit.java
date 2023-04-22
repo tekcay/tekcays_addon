@@ -20,37 +20,30 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
-import tekcays_addon.api.capability.IHeatContainer;
-import tekcays_addon.api.metatileentity.multiblock.HeatedPressureContainerMultiblockController;
-import tekcays_addon.api.utils.recipe.PressureContainerCheckRecipeHelper;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.utils.IPressureFormatting;
+import tekcays_addon.api.recipe.PressureContainerCheckRecipeHelper;
+import tekcays_addon.api.units.IPressureFormatting;
+import tekcays_addon.gtapi.capability.containers.IContainerDetector;
+import tekcays_addon.gtapi.capability.containers.IHeatContainer;
+import tekcays_addon.gtapi.metatileentity.multiblock.HeatedPressureContainerMultiblockController;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static tekcays_addon.api.metatileentity.multiblock.TKCYAMultiblockAbility.*;
+import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.HEAT_CONTAINER;
 
 
 public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContainerMultiblockController implements PressureContainerCheckRecipeHelper, IPressureFormatting {
 
     private int coilTier;
+    private String displayedPressure = getCurrentPressureWithUnit();
+    private int dislayedTemp = currentTemp;
 
     public MetaTileEntityPressurizedCrackingUnit(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.PRESSURE_CRACKING);
         this.volume = 1;
         this.initializeAbilities();
-        //this.initializePressureContainer();
-    }
-
-
-    protected void initializePressureContainer() {
-        this.pressureContainer = getPressureContainer();
-        if (this.pressureContainer == null) return;
-        //this.pressureContainer.setVolume(volume);
-        //this.pressureContainer.initializeAirFluidStack();
-        //this.pressureContainer.setPressure();
     }
 
     @Override
@@ -90,15 +83,19 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
         super.addDisplayText(textList);
+        if (getOffsetTimer() % 20 == 0) {
+            displayedPressure = getCurrentPressureWithUnit();
+            dislayedTemp = currentTemp;
+        }
         if (isStructureFormed()) {
             textList.add(new TextComponentTranslation("gregtech.multiblock.cracking_unit.energy", 100 - 10 * coilTier));
-            textList.add(new TextComponentTranslation("tkcya.machine.text.pressurized.fluid", pressureContainer.getPressurizedFluidStackLocalizedName(), getCurrentPressureWithUnit()));
-            textList.add(new TextComponentTranslation("tkcya.machine.text.temperature", currentTemp));
+            textList.add(new TextComponentTranslation("tkcya.machine.text.pressurized.fluid", pressureContainer.getPressurizedFluidStackLocalizedName(), displayedPressure));
+            textList.add(new TextComponentTranslation("tkcya.machine.text.temperature", dislayedTemp));
         }
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("gregtech.machine.cracker.tooltip.1"));
     }
@@ -118,7 +115,7 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
-        initializePressureContainer();
+        initializeAbilities();
         Object type = context.get("CoilType");
         if (type instanceof IHeatingCoilBlockStats) {
             this.coilTier = ((IHeatingCoilBlockStats) type).getTier();
@@ -136,7 +133,7 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     }
 
     @Override
-    public long getCurrentPressure() {
+    public int getCurrentPressure() {
         return currentPressure;
     }
 
@@ -160,6 +157,11 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
         return checkRecipeHelper(recipe, consumeIfSuccess);
+    }
+
+    @Override
+    public IContainerDetector getPressureControl() {
+        return containerDetector;
     }
 
 

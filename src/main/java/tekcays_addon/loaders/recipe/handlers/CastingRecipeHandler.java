@@ -5,13 +5,13 @@ import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.items.MetaItems;
-import tekcays_addon.api.unification.material.ore.TKCYAOrePrefix;
+import tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
-import static tekcays_addon.api.utils.TKCYAValues.MOLD_MATERIALS;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MOLD_MATERIALS;
 
 
 public class CastingRecipeHandler {

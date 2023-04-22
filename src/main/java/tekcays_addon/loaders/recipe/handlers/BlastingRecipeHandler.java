@@ -6,22 +6,21 @@ import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.stack.UnificationEntry;
 import gregtech.common.blocks.BlockMachineCasing;
-import gregtech.common.blocks.BlockSteamCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.gtapi.unification.TKCYAMaterials;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
-import static tekcays_addon.api.recipes.TKCYARecipeMaps.*;
-import static tekcays_addon.api.utils.TKCYAValues.MINUTE;
-import static tekcays_addon.api.utils.TKCYAValues.SECOND;
+import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.*;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MINUTE;
+import static tekcays_addon.gtapi.consts.TKCYAValues.SECOND;
 import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.*;
 
 public class BlastingRecipeHandler {

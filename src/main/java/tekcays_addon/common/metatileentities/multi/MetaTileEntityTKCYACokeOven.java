@@ -15,18 +15,16 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
-import tekcays_addon.api.capability.impl.NoEnergyMultiblockLogic;
-import tekcays_addon.api.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.gtapi.logic.NoEnergyMultiblockLogic;
+import tekcays_addon.gtapi.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.List;
 
 import static gregtech.api.util.RelativeDirection.*;
-import static tekcays_addon.api.utils.BlastFurnaceUtils.*;
+import static tekcays_addon.gtapi.utils.BlastFurnaceUtils.*;
 
 public class MetaTileEntityTKCYACokeOven extends NoEnergyRecipeMapMultiBlockController {
 

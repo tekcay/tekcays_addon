@@ -12,7 +12,7 @@ import gregtech.common.items.MetaItems;
 
 import static gregtech.api.recipes.RecipeMaps.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
-import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.*;
+import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.*;
 
 public class HarderRotorsHandler {
 

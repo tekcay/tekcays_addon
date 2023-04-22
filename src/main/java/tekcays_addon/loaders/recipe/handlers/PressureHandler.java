@@ -7,16 +7,16 @@ import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.UnificationEntry;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
-import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.gtapi.unification.TKCYAMaterials;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
-import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.curvedPlate;
+import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.curvedPlate;
 import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.*;
 
 public class PressureHandler {
 
     public static void init() {
-        ModHandler.addShapedRecipe(true, "pressure_controller_lv", PRESSURE_CONTROLLER.getStackForm(),
+        ModHandler.addShapedRecipe(true, "pressure_controller_lv", MULTIBLOCK_PRESSURE_DETECTOR.getStackForm(),
                 "CPC", "SMS", "PRP",
                 'P', new UnificationEntry(curvedPlate, Materials.Steel),
                 'C', new UnificationEntry(OrePrefix.circuit, MarkerMaterials.Tier.LV),

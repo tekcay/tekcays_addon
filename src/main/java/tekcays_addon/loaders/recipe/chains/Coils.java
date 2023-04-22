@@ -11,8 +11,8 @@ import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
+import tekcays_addon.gtapi.unification.TKCYAMaterials;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
 import static gregtech.api.GTValues.*;

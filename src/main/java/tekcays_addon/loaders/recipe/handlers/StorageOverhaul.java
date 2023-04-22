@@ -8,7 +8,7 @@ import gregtech.api.unification.stack.UnificationEntry;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
-import tekcays_addon.api.unification.TKCYAMaterials;
+import tekcays_addon.gtapi.unification.TKCYAMaterials;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
@@ -18,9 +18,9 @@ import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.plate;
 import static gregtech.api.unification.ore.OrePrefix.stickLong;
 import static gregtech.common.blocks.BlockSteamCasing.SteamCasingType.WOOD_WALL;
-import static tekcays_addon.api.unification.TKCYAMaterials.GalvanizedSteel;
-import static tekcays_addon.api.unification.material.ore.TKCYAOrePrefix.curvedPlate;
-import static tekcays_addon.api.utils.TKCYAValues.DRUM_MATERIALS;
+import static tekcays_addon.gtapi.unification.TKCYAMaterials.GalvanizedSteel;
+import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.curvedPlate;
+import static tekcays_addon.gtapi.consts.TKCYAValues.DRUM_MATERIALS;
 import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.DRUMS;
 
 public class StorageOverhaul {

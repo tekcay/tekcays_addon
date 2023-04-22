@@ -17,9 +17,8 @@ import gregtech.client.renderer.texture.Textures;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.render.TKCYATextures;
-import tekcays_addon.api.utils.TKCYALog;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
+import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.common.items.behaviors.FilterBehavior;
 
 import javax.annotation.Nonnull;
