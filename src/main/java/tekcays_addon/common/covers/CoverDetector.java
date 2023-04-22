@@ -15,18 +15,22 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
+import tekcays_addon.api.ContainerStructuring;
 import tekcays_addon.api.consts.DetectorModes;
-import tekcays_addon.api.covers.CoverDetectorWrapper;
+import tekcays_addon.api.detectors.CoverDetectorWrapper;
+import tekcays_addon.api.detectors.DetectorControllerHelper;
 import tekcays_addon.api.gui.CoverGuiHandler;
+import tekcays_addon.gtapi.utils.TKCYALog;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static tekcays_addon.api.consts.DetectorModes.*;
 import static tekcays_addon.api.consts.NBTKeys.*;
 
 
-public class CoverDetector extends CoverBehavior implements ITickable, CoverWithUI, CoverGuiHandler {
+public class CoverDetector extends CoverBehavior implements ITickable, CoverWithUI, CoverGuiHandler, DetectorControllerHelper {
 
     private int threshold;
     private final CoverDetectorWrapper wrapper;
@@ -174,5 +178,10 @@ public class CoverDetector extends CoverBehavior implements ITickable, CoverWith
     public void readInitialSyncData(PacketBuffer packetBuffer) {
         this.detectorMode = DetectorModes.valueOf(packetBuffer.readString(6));
         this.threshold = packetBuffer.readInt();
+    }
+
+    @Override
+    public EnumFacing getFrontFacing() {
+        return null;
     }
 }

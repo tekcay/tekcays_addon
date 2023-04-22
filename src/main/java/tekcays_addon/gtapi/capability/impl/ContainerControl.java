@@ -7,41 +7,41 @@ import lombok.Setter;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
-import tekcays_addon.gtapi.capability.containers.IPressureControl;
+import tekcays_addon.gtapi.capability.containers.IContainerControl;
 import tekcays_addon.api.consts.DetectorModes;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTROL;
+import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_CONTAINER_CONTROL;
 import static tekcays_addon.api.consts.NBTKeys.*;
 
 @Getter
 @Setter
-public class PressureControl extends MTETrait implements IPressureControl {
+public class ContainerControl extends MTETrait implements IContainerControl {
 
-    private int thresholdPressure;
-    private int pressure;
+    private int threshold;
+    private int currentValue;
     private DetectorModes detectorMode;
 
-    public PressureControl(MetaTileEntity metaTileEntity) {
+    public ContainerControl(MetaTileEntity metaTileEntity) {
         super(metaTileEntity);
-        this.thresholdPressure = 0;
-        this.pressure = 0;
+        this.threshold = 0;
+        this.currentValue = 0;
         this.detectorMode = DetectorModes.EQUAL;
     }
 
     @Nonnull
     @Override
     public String getName() {
-        return "PressureControl";
+        return "ContainerControl";
     }
 
     @Nullable
     @Override
     public <T> T getCapability(Capability<T> capability) {
-        if (capability == CAPABILITY_PRESSURE_CONTROL ) {
-            return CAPABILITY_PRESSURE_CONTROL.cast(this);
+        if (capability == CAPABILITY_CONTAINER_CONTROL) {
+            return CAPABILITY_CONTAINER_CONTROL.cast(this);
         }
         return null;
     }
@@ -50,32 +50,32 @@ public class PressureControl extends MTETrait implements IPressureControl {
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = super.serializeNBT();
-        compound.setInteger(THRESHOLD_PRESSURE_KEY, this.thresholdPressure);
-        compound.setInteger(PRESSURE_KEY, this.pressure);
+        compound.setInteger(THRESHOLD_PRESSURE_KEY, this.threshold);
+        compound.setInteger(PRESSURE_KEY, this.currentValue);
         compound.setString(DETECTOR_MODE_KEY, this.detectorMode.name());
         return compound;
     }
 
     @Override
     public void deserializeNBT(@Nonnull NBTTagCompound compound) {
-        this.pressure = compound.getInteger(PRESSURE_KEY);
-        this.thresholdPressure = compound.getInteger(THRESHOLD_PRESSURE_KEY);
+        this.currentValue = compound.getInteger(PRESSURE_KEY);
+        this.threshold = compound.getInteger(THRESHOLD_PRESSURE_KEY);
         this.detectorMode = DetectorModes.valueOf(compound.getString(DETECTOR_MODE_KEY));
     }
 
     @Override
     public void writeInitialData(@Nonnull PacketBuffer buffer) {
         super.writeInitialData(buffer);
-        buffer.writeInt(this.pressure);
-        buffer.writeInt(this.thresholdPressure);
+        buffer.writeInt(this.currentValue);
+        buffer.writeInt(this.threshold);
         buffer.writeString(this.detectorMode.name());
     }
 
     @Override
     public void receiveInitialData(@Nonnull PacketBuffer buffer) {
         super.receiveInitialData(buffer);
-        this.pressure = buffer.readInt();
-        this.thresholdPressure = buffer.readInt();
+        this.currentValue = buffer.readInt();
+        this.threshold = buffer.readInt();
         this.detectorMode = DetectorModes.valueOf(buffer.readString(6));
     }
 }

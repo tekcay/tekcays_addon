@@ -1,11 +1,11 @@
 package tekcays_addon.gtapi.capability.machines;
 
-import tekcays_addon.gtapi.capability.containers.IPressureControl;
+import tekcays_addon.gtapi.capability.containers.IContainerControl;
 
 public interface IPressureControlMachine {
 
     /**
      * @return the pressureControl of this machine
      */
-    IPressureControl getPressureControl();
+    IContainerControl getPressureControl();
 }

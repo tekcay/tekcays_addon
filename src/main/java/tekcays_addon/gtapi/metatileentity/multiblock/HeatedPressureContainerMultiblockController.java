@@ -8,7 +8,7 @@ import lombok.Getter;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.gtapi.capability.containers.IHeatContainer;
 import tekcays_addon.gtapi.capability.containers.IPressureContainer;
-import tekcays_addon.gtapi.capability.containers.IPressureControl;
+import tekcays_addon.gtapi.capability.containers.IContainerControl;
 import tekcays_addon.gtapi.capability.list.HeatContainerList;
 import tekcays_addon.gtapi.capability.machines.IHeatMachine;
 import tekcays_addon.gtapi.capability.machines.IPressureControlMachine;
@@ -23,7 +23,7 @@ public abstract class HeatedPressureContainerMultiblockController extends Recipe
 
     protected IPressureContainer pressureContainer;
     protected IHeatContainer heatContainer;
-    protected IPressureControl pressureControl;
+    protected IContainerControl containerControl;
 
     public HeatedPressureContainerMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
         super(metaTileEntityId, recipeMap);
@@ -38,8 +38,8 @@ public abstract class HeatedPressureContainerMultiblockController extends Recipe
         List<IPressureContainer> list = getAbilities(PRESSURE_CONTAINER);
         this.pressureContainer = list.isEmpty() ? null : list.get(0);
 
-        List<IPressureControl> list2 = getAbilities(PRESSURE_CONTROL);
-        this.pressureControl = list2.isEmpty() ? null : list2.get(0);
+        List<IContainerControl> list2 = getAbilities(CONTAINER_CONTROL);
+        this.containerControl = list2.isEmpty() ? null : list2.get(0);
     }
 
     @Override
@@ -52,7 +52,7 @@ public abstract class HeatedPressureContainerMultiblockController extends Recipe
         TraceabilityPredicate predicate = super.autoAbilities(checkEnergyIn, checkMaintenance, checkItemIn, checkItemOut, checkFluidIn, checkFluidOut, checkMuffler);
         predicate = predicate
                 .or(abilities(PRESSURE_CONTAINER)).setExactLimit(1)
-                .or(abilities(PRESSURE_CONTROL)).setExactLimit(1);
+                .or(abilities(CONTAINER_CONTROL)).setExactLimit(1);
         return predicate;
     }
 

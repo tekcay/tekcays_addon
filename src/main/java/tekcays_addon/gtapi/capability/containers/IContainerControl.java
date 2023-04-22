@@ -2,14 +2,14 @@ package tekcays_addon.gtapi.capability.containers;
 
 import tekcays_addon.api.consts.DetectorModes;
 
-public interface IPressureControl {
+public interface IContainerControl {
 
-    int getThresholdPressure();
-    int getPressure();
+    int getThreshold();
+    int getCurrentValue();
     DetectorModes getDetectorMode();
 
-    void setThresholdPressure(int thresholdPressure);
-    void setPressure(int pressure);
+    void setThreshold(int threshold);
+    void setCurrentValue(int value);
     void setDetectorMode(DetectorModes detectorModes);
 
 

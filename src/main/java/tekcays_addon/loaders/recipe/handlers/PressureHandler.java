@@ -16,7 +16,7 @@ import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.*;
 public class PressureHandler {
 
     public static void init() {
-        ModHandler.addShapedRecipe(true, "pressure_controller_lv", PRESSURE_CONTROLLER.getStackForm(),
+        ModHandler.addShapedRecipe(true, "pressure_controller_lv", MULTIBLOCK_PRESSURE_DETECTOR.getStackForm(),
                 "CPC", "SMS", "PRP",
                 'P', new UnificationEntry(curvedPlate, Materials.Steel),
                 'C', new UnificationEntry(OrePrefix.circuit, MarkerMaterials.Tier.LV),

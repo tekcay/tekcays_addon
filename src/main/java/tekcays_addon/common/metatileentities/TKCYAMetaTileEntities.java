@@ -10,6 +10,7 @@ import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.metatileentities.storage.MetaTileEntityDrum;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.TekCaysAddon;
+import tekcays_addon.gtapi.metatileentity.MetaTileEntityController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.gtapi.unification.TKCYAMaterials;
@@ -39,6 +40,7 @@ import java.util.function.IntFunction;
 import java.util.stream.IntStream;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
+import static tekcays_addon.api.consts.ContainerControllerWrappers.*;
 import static tekcays_addon.gtapi.render.TKCYATextures.STEAM_CASING;
 import static tekcays_addon.gtapi.utils.BlastFurnaceUtils.BRICKS;
 import static tekcays_addon.gtapi.utils.FuelHeaterTiers.BRICK;
@@ -120,7 +122,13 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityDrum[] DRUMS = new MetaTileEntityDrum[DRUM_MATERIALS.size()];
 
     //Controls
-    public static MetaTileEntityPressureController PRESSURE_CONTROLLER;
+    public static MetaTileEntityController MULTIBLOCK_PRESSURE_DETECTOR;
+    public static MetaTileEntityController MULTIBLOCK_VACUUM_DETECTOR;
+    public static MetaTileEntityController MULTIBLOCK_TEMPERATURE_DETECTOR;
+    public static MetaTileEntityController MULTIBLOCK_SPEED_DETECTOR;
+    public static MetaTileEntityController MULTIBLOCK_TORQUE_DETECTOR;
+    public static MetaTileEntityController MULTIBLOCK_ROTATION_POWER_DETECTOR;
+
 
 
     //Tanks
@@ -340,7 +348,12 @@ public class TKCYAMetaTileEntities {
 
         startId += MAX_TIER * 5 + 1;
 
-        PRESSURE_CONTROLLER = registerMetaTileEntity(startId++, new MetaTileEntityPressureController(tkcyaId("pressure_controller_lv")));
+        MULTIBLOCK_PRESSURE_DETECTOR = registerMetaTileEntity(startId++, new MetaTileEntityController(tkcyaId("pressure_controller"), CONTROL_PRESSURE_DETECTOR));
+        MULTIBLOCK_VACUUM_DETECTOR = registerMetaTileEntity(startId++, new MetaTileEntityController(tkcyaId("vacuum_controller"), CONTROL_VACUUM_DETECTOR));
+        MULTIBLOCK_TEMPERATURE_DETECTOR = registerMetaTileEntity(startId++, new MetaTileEntityController(tkcyaId("temperature_controller"), CONTROL_TEMPERATURE_DETECTOR));
+        MULTIBLOCK_SPEED_DETECTOR = registerMetaTileEntity(startId++, new MetaTileEntityController(tkcyaId("speed_controller"), CONTROL_SPEED_DETECTOR));
+        MULTIBLOCK_TORQUE_DETECTOR = registerMetaTileEntity(startId++, new MetaTileEntityController(tkcyaId("torque_controller"), CONTROL_TORQUE_DETECTOR));
+        MULTIBLOCK_ROTATION_POWER_DETECTOR = registerMetaTileEntity(startId++, new MetaTileEntityController(tkcyaId("rotation_power_controller"), CONTROL_ROTATION_POWER_DETECTOR));
 
         IntStream.range(0, STEAM_TURBINE.length)
                 .forEach(i -> STEAM_TURBINE[i] = registerMetaTileEntity(12000 + i, new MetaTileEntitySteamTurbine(tkcyaId("steam_turbine." + i), i)));

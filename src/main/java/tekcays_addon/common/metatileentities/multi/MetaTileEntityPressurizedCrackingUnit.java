@@ -20,6 +20,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
+import tekcays_addon.gtapi.capability.containers.IContainerControl;
 import tekcays_addon.gtapi.capability.containers.IHeatContainer;
 import tekcays_addon.gtapi.metatileentity.multiblock.HeatedPressureContainerMultiblockController;
 import tekcays_addon.api.recipe.PressureContainerCheckRecipeHelper;
@@ -113,7 +114,7 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     private void updateLogic() {
 
         if (getOffsetTimer() % 20 == 0) {
-            if (pressureControl != null) pressureControl.setPressure(currentPressure);
+            if (containerControl != null) containerControl.setCurrentValue(currentPressure);
         }
 
         if (pressureContainer == null) return;
@@ -180,6 +181,11 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
         return checkRecipeHelper(recipe, consumeIfSuccess);
+    }
+
+    @Override
+    public IContainerControl getPressureControl() {
+        return containerControl;
     }
 
 
