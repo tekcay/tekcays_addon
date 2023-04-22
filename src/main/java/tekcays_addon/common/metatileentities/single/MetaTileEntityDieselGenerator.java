@@ -67,11 +67,13 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
     private final int BASE_FUEL_CONSUMPTION;
     private int carbonDioxideOutputRate;
     protected DieselLogic workableHandler;
+    private int recipeDuration;
     @Setter
     private boolean isRunning;
 
     public MetaTileEntityDieselGenerator(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId);
+        this.recipeDuration = 10;
         this.tier = tier + 1;
         this.BASE_FUEL_CONSUMPTION = (int) Math.pow(this.tier, 2);
         this.fuelTankCapacity = 1000 * this.tier;
@@ -131,17 +133,15 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
     }
 
     private void increment() {
-        changeParameters(30, 1, 1, 1);
+        changeParameters(30, 1);
     }
 
     private void decrement() {
-        changeParameters(20, -1, -1, -1);
+        changeParameters(20, -1);
     }
 
-    private void changeParameters(int offSetTimer, int speed, int fuelConsumptionChange, int carbonDioxideOutputRateChange) {
+    private void changeParameters(int offSetTimer, int speed) {
         if (getOffsetTimer() % offSetTimer == 0 && rotationContainer.getSpeed() < rotationContainer.getMaxSpeed()) {
-            fuelConsumption = Math.max(fuelConsumption + fuelConsumptionChange, 0);
-            carbonDioxideOutputRate = Math.max(carbonDioxideOutputRate + carbonDioxideOutputRateChange, 0);
             rotationContainer.changeSpeed(speed);
         }
     }
@@ -154,6 +154,7 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
     @Override
     public void update() {
 
+        if (getOffsetTimer() % recipeDuration == 0) {
         FluidStack fluidStack = getImportFluidStack();
 
         if (fluidStack == null) {
@@ -163,11 +164,13 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
 
         Recipe recipe = getRecipe();
         if (recipe == null) {
+            recipeDuration = 10;
             decrement();
             return;
-        }
+        } else recipeDuration = recipe.getDuration();
 
-        fuelConsumption = rotationContainer.getSpeed() * BASE_FUEL_CONSUMPTION;
+        fuelConsumption = (rotationContainer.getSpeed() / 10) + BASE_FUEL_CONSUMPTION;
+        carbonDioxideOutputRate = fuelConsumption;
 
         if (fluidStack.amount < fuelConsumption) {
             decrement();
@@ -178,8 +181,6 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
             decrement();
             if (getOffsetTimer() % 20 == 0) setRunningState(false);
         }
-
-        if (getOffsetTimer() % recipe.getDuration() == 0) {
 
             importFuelTank.drain(fuelConsumption, true);
             transferRotation();
