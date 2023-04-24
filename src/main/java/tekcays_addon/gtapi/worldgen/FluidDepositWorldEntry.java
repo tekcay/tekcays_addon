@@ -2,56 +2,51 @@ package tekcays_addon.gtapi.worldgen;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.minecraft.nbt.NBTTagCompound;
 
 import javax.annotation.Nonnull;
 
-import static tekcays_addon.gtapi.consts.FluidDepositValues.FLUID_AMOUNT;
-import static tekcays_addon.gtapi.worldgen.FluidDepositHandler.veinList;
+import static tekcays_addon.gtapi.consts.DepositValues.*;
+import static tekcays_addon.gtapi.worldgen.FluidDepositHandler.veinList2;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
-public class FluidVeinWorldEntry {
-    private FluidDepositDefinition vein;
+public class FluidDepositWorldEntry {
+    private FluidDepositDefinition fluidDepositDefinition;
     private int fluidAmount;
+    private int depth;
 
-    private FluidVeinWorldEntry() {
-
-    }
-
-    @SuppressWarnings("unused")
-    public void setOperationsRemaining(int amount) {
-        this.fluidAmount = amount;
-    }
-
-    public void decreaseOperations(int amount) {
+    public void decreaseFluidAmount(int amount) {
         fluidAmount = Math.max(0, fluidAmount - amount);
     }
 
     public NBTTagCompound writeToNBT() {
         NBTTagCompound tag = new NBTTagCompound();
         tag.setInteger(FLUID_AMOUNT, fluidAmount);
-        if (vein != null) {
-            tag.setString("vein", vein.getDepositName());
+        tag.setInteger(DEPTH, depth);
+        if (fluidDepositDefinition != null) {
+            tag.setString(VEIN, fluidDepositDefinition.getDepositName());
         }
         return tag;
     }
 
     @Nonnull
-    public static FluidVeinWorldEntry readFromNBT(@Nonnull NBTTagCompound tag) {
-        FluidVeinWorldEntry info = new FluidVeinWorldEntry();
+    public static FluidDepositWorldEntry readFromNBT(@Nonnull NBTTagCompound tag) {
+        FluidDepositWorldEntry info = new FluidDepositWorldEntry();
         info.fluidAmount = tag.getInteger(FLUID_AMOUNT);
+        info.depth = tag.getInteger(DEPTH);
 
-        if (tag.hasKey("vein")) {
-            String s = tag.getString("vein");
-            for (FluidDepositDefinition definition : veinList.keySet()) {
+        if (tag.hasKey(VEIN)) {
+            String s = tag.getString(VEIN);
+            for (FluidDepositDefinition definition : veinList2.keySet()) {
                 if (s.equalsIgnoreCase(definition.getDepositName()))
-                    info.vein = definition;
+                    info.fluidDepositDefinition = definition;
             }
         }
-
         return info;
     }
 }

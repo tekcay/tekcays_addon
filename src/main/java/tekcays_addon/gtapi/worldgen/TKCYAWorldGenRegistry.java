@@ -1,13 +1,13 @@
 package tekcays_addon.gtapi.worldgen;
 
+import com.google.gson.JsonObject;
 import gregtech.api.GTValues;
-import gregtech.api.worldgen.config.BedrockFluidDepositDefinition;
+import gregtech.api.util.FileUtility;
 import gregtech.api.worldgen.config.OreDepositDefinition;
 import gregtech.api.worldgen.config.WorldGenRegistry;
 import net.minecraftforge.fml.common.Loader;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import tekcays_addon.TekCaysAddon;
 import tekcays_addon.gtapi.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
@@ -19,40 +19,16 @@ import java.nio.file.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static tekcays_addon.api.config.Paths.*;
+import static tekcays_addon.gtapi.consts.DepositValues.*;
 import static tekcays_addon.gtapi.consts.TKCYAValues.DIMENSIONS;
 
-/////////////////////////////////////////////////////////
-// Thanks to Tech22 https://github.com/GregTechCEu/gregicality-multiblocks/blob/worldgen-example/src/main/java/gregicality/machines/api/worldgen/GCYMWorldGenRegistry.java
-//////////////////////////////////////////////////////////
 
 public class TKCYAWorldGenRegistry {
 
     public static final TKCYAWorldGenRegistry INSTANCE = new TKCYAWorldGenRegistry();
-    private static final String VEIN_PATH = "/assets/tkcya/worldgen/vein";
-    private static final String FLUID_PATH = "/assets/tkcya/worldgen/fluid";
 
     private static final Path configPath = Loader.instance().getConfigDir().toPath().resolve(GTValues.MODID);
-    private static final Path TKCYA_CONFIG_PATH = Loader.instance().getConfigDir().toPath().resolve(TekCaysAddon.MODID);
-
-    /**
-     * The path of the worldgen folder in the config folder
-     */
-    private static final Path worldgenRootPath = configPath.resolve("worldgen");
-
-    /**
-     * The path of the worldgen folder in the config folder
-     */
-    private static final Path tkcyaWorldgenRootPath = TKCYA_CONFIG_PATH.resolve("worldgen");
-
-    /**
-     * The path of the physical vein folder in the config folder
-     */
-    private static final Path oreVeinRootPath = tkcyaWorldgenRootPath.resolve("vein");
-
-    /**
-     * The path of the bedrock fluid vein folder in the config folder
-     */
-    private static final Path bedrockFluidVeinRootPath = tkcyaWorldgenRootPath.resolve("fluid");
 
     /**
      * The Path for representing the vein folder in the vein folder in the assets folder in the Gregtech resources folder in the jar
@@ -62,14 +38,25 @@ public class TKCYAWorldGenRegistry {
     /**
      * The Path for representing the fluid folder in the vein folder in the assets folder in the Gregtech resources folder in the jar
      */
-    private static Path bedrockFluidJarRootPath;
+    private static Path fluidDepositJarRootPath;
 
     private static final Map<Path, List<Path>> oreVeinsToAdd = new HashMap<>();
-    private static final Map<Path, List<String>> fluidVeinsToAdd = new HashMap<>();
-    private static final Path DUMMY_FILE_PATH = TKCYA_CONFIG_PATH.resolve("worldgen").resolve("deleteToReset");
+    private static final Map<Path, List<Path>> fluidVeinsToAdd = new HashMap<>();
+
+    private final List<FluidDepositDefinition> fluidDepositDefinitions = new ArrayList<>();
+    private final List<OreDepositDefinition> oreDepositDefinitions = new ArrayList<>();
+    private static final Path DUMMY_FILE_PATH = TKCYA_CONFIG_WORLDGEN_PATH.resolve("deleteToReset");
 
     private TKCYAWorldGenRegistry() {
 
+    }
+
+    public static List<FluidDepositDefinition> getFluidDeposits() {
+        return Collections.unmodifiableList(INSTANCE.fluidDepositDefinitions);
+    }
+
+    public static List<OreDepositDefinition> getOreDeposit() {
+        return Collections.unmodifiableList(INSTANCE.oreDepositDefinitions);
     }
 
     public boolean doesDummyFileExist() {
@@ -81,17 +68,66 @@ public class TKCYAWorldGenRegistry {
         Files.createFile(DUMMY_FILE_PATH);
     }
 
+    private void registerDeposits() {
+        oreVeinsToAdd.values().stream()
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList())
+                .forEach(this::registerOreDeposit);
+
+        fluidVeinsToAdd.values().stream()
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList())
+                .forEach(this::registerFluidDeposit);
+    }
+
+    private void registerFluidDeposit(Path fluidDepositFile) {
+
+        // Finds the file name to create the Definition with
+        String depositName = TKCYA_CONFIG_FLUID_DEPOSIT_PATH.relativize(fluidDepositFile).toString();
+
+        JsonObject element = FileUtility.tryExtractFromFile(fluidDepositFile);
+        try {
+            // Creates the deposit definition and initializes various components based on the json entries in the file
+            FluidDepositDefinition deposit = new FluidDepositDefinition(depositName);
+            deposit.initializeFromConfig(element);
+            // Adds the registered definition to the list of all registered definitions
+            fluidDepositDefinitions.add(deposit);
+        } catch (
+                RuntimeException exception) {
+            TKCYALog.logger.error("Failed to parse worldgen definition {} on path {}", depositName, fluidDepositFile, exception);
+        }
+    }
+
+    private void registerOreDeposit(Path oreDepositFile) {
+
+        // Finds the file name to create the Definition with
+        String depositName = TKCYA_CONFIG_ORE_DEPOSIT_PATH.relativize(oreDepositFile).toString();
+
+        JsonObject element = FileUtility.tryExtractFromFile(oreDepositFile);
+        try {
+            // Creates the deposit definition and initializes various components based on the json entries in the file
+            OreDepositDefinition deposit = new OreDepositDefinition(depositName);
+            deposit.initializeFromConfig(element);
+            // Adds the registered definition to the list of all registered definitions
+            oreDepositDefinitions.add(deposit);
+        } catch (
+                RuntimeException exception) {
+            TKCYALog.logger.error("Failed to parse worldgen definition {} on path {}", depositName, oreDepositFile, exception);
+        }
+    }
+
     public void addRemoveVeins() throws IOException {
 
         TKCYALog.logger.info("Vein Size Before Addition: " + WorldGenRegistry.getOreDeposits().size());
         TKCYALog.logger.info("Fluid Vein Size Before Addition: " + WorldGenRegistry.getBedrockVeinDeposits().size());
 
-        this.removeAllVeins(worldgenRootPath);
+        this.removeAllVeins(GT_WORLD_GEN_ROOT_PATH);
 
         setPathAndExtractDefinitions();
 
         try {
             WorldGenRegistry.INSTANCE.reinitializeRegisteredVeins();
+            TKCYAWorldGenRegistry.INSTANCE.registerDeposits();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -101,24 +137,10 @@ public class TKCYAWorldGenRegistry {
 
     }
 
-    public void addVeins() {
-        oreVeinsToAdd.values().stream()
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList())
-                .forEach(vein -> WorldGenRegistry.INSTANCE.addVeinDefinitions(new OreDepositDefinition(vein.toString())));
-    }
-
-    public void addFluidVeins() {
-        fluidVeinsToAdd.values().stream()
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList())
-                .forEach(vein -> WorldGenRegistry.INSTANCE.addVeinDefinitions(new BedrockFluidDepositDefinition(vein)));
-    }
-
-    public void removeAllVeins(Path worldgenRootPath) {
+    public void removeAllVeins(Path GT_WORLD_GEN_ROOT_PATH) {
         DIMENSIONS.forEach(dimension -> {
             try {
-                FileUtils.forceDelete(new File(worldgenRootPath.resolve("vein").resolve(dimension).toUri()));
+                FileUtils.forceDelete(new File(GT_WORLD_GEN_ROOT_PATH.resolve(VEIN).resolve(dimension).toUri()));
             } catch (IOException e) {
                 TKCYALog.logger.info("Directory {} already removed", dimension);
             }
@@ -133,17 +155,17 @@ public class TKCYAWorldGenRegistry {
 
             if (sampleUri.getScheme().equals("jar") || sampleUri.getScheme().equals("zip")) {
                 zipFileSystem = FileSystems.newFileSystem(sampleUri, Collections.emptyMap());
-                oreVeinJarRootPath = zipFileSystem.getPath(VEIN_PATH);
-                bedrockFluidJarRootPath = zipFileSystem.getPath(FLUID_PATH);
+                oreVeinJarRootPath = zipFileSystem.getPath(TKCYA_JAR_ORE_DEPOSIT_PATH);
+                fluidDepositJarRootPath = zipFileSystem.getPath(TKCYA_JAR_FLUID_DEPOSIT_PATH);
             } else if (sampleUri.getScheme().equals("file")) {
-                oreVeinJarRootPath = Paths.get(TKCYAWorldGenRegistry.class.getResource(VEIN_PATH).toURI());
-                bedrockFluidJarRootPath = Paths.get(TKCYAWorldGenRegistry.class.getResource(FLUID_PATH).toURI());
+                oreVeinJarRootPath = Paths.get(TKCYAWorldGenRegistry.class.getResource(TKCYA_JAR_ORE_DEPOSIT_PATH).toURI());
+                fluidDepositJarRootPath = Paths.get(TKCYAWorldGenRegistry.class.getResource(TKCYA_JAR_FLUID_DEPOSIT_PATH).toURI());
             } else {
                 throw new IllegalStateException("Unable to locate absolute path to TKCYA worldgen root directory: " + sampleUri);
             }
 
-            extractVeinDefinitionsFromJar(oreVeinJarRootPath, oreVeinRootPath, "vein");
-            extractVeinDefinitionsFromJar(bedrockFluidJarRootPath, bedrockFluidVeinRootPath, "fluid");
+            extractVeinDefinitionsFromJar(oreVeinJarRootPath, TKCYA_CONFIG_ORE_DEPOSIT_PATH, VEIN);
+            extractVeinDefinitionsFromJar(fluidDepositJarRootPath, TKCYA_CONFIG_FLUID_DEPOSIT_PATH, FLUID);
 
         } catch (URISyntaxException | IOException impossible) {
             //this is impossible, since getResource always returns valid URI
@@ -173,20 +195,37 @@ public class TKCYAWorldGenRegistry {
     }
 
     private static void extractAndCopy(List<Path> paths, String type) throws RuntimeException {
-        paths.forEach(jarFile -> {
-            oreVeinsToAdd.computeIfAbsent(jarFile.getParent(), k -> new ArrayList<>());
+        if (type.equals(VEIN)) {
+            paths.forEach(jarFile -> {
+                oreVeinsToAdd.computeIfAbsent(jarFile.getParent(), k -> new ArrayList<>());
 
-            Path name = oreVeinJarRootPath.getParent().relativize(jarFile);
-            name = getActualVeinName(name);
-            oreVeinsToAdd.get(jarFile.getParent()).add(name);
+                Path name = oreVeinJarRootPath.getParent().relativize(jarFile);
+                name = getActualVeinName(name);
+                oreVeinsToAdd.get(jarFile.getParent()).add(name);
 
-            try {
-                Files.createDirectories(worldgenRootPath.resolve(name.getParent()));
-                Files.copy(jarFile, worldgenRootPath.resolve(name), StandardCopyOption.REPLACE_EXISTING);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
+                try {
+                    Files.createDirectories(TKCYA_CONFIG_WORLDGEN_PATH.resolve(name.getParent()));
+                    Files.copy(jarFile, TKCYA_CONFIG_WORLDGEN_PATH.resolve(name), StandardCopyOption.REPLACE_EXISTING);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        } else {
+            paths.forEach(jarFile -> {
+                oreVeinsToAdd.computeIfAbsent(jarFile.getParent(), k -> new ArrayList<>());
+
+                Path name = oreVeinJarRootPath.getParent().relativize(jarFile);
+                name = getActualVeinName(name);
+                oreVeinsToAdd.get(jarFile.getParent()).add(name);
+
+                try {
+                    Files.createDirectories(TKCYA_CONFIG_WORLDGEN_PATH.resolve(name.getParent()));
+                    Files.copy(jarFile, TKCYA_CONFIG_WORLDGEN_PATH.resolve(name), StandardCopyOption.REPLACE_EXISTING);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
     }
 
     @Nonnull
