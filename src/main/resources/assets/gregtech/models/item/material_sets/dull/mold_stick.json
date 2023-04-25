@@ -1,6 +1,5 @@
 {"parent": "item/generated", 
  "textures": 
- {"layer0": "tkcya:items/material_sets/dull/mold_stick", 
- "layer1": "tkcya:items/material_sets/dull/mold_stick_overlay" 
+ {"layer0": "tkcya:items/material_sets/dull/mold_stick"
  } 
  }

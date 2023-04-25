@@ -14,11 +14,11 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
-import tekcays_addon.api.render.TKCYATextures;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
+import tekcays_addon.gtapi.render.TKCYATextures;
+import tekcays_addon.common.blocks.blocks.BlockBrick;
 
 import javax.annotation.Nonnull;
 
@@ -44,9 +44,8 @@ public class MetaTileEntityPrimitiveBath extends RecipeMapPrimitiveMultiblockCon
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
-        return TKCYATextures.MC_BRICK;
+        return TKCYATextures.BRICKS[BlockBrick.BRICK];
     }
-
 
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
@@ -54,10 +53,13 @@ public class MetaTileEntityPrimitiveBath extends RecipeMapPrimitiveMultiblockCon
         getFrontOverlay().renderOrientedState(renderState, translation, pipeline, getFrontFacing(), recipeMapWorkable.isActive(), recipeMapWorkable.isWorkingEnabled());
     }
 
+    /*
     @Override
     public int getLightValueForPart(IMultiblockPart sourcePart) {
         return sourcePart == null && recipeMapWorkable.isActive() ? 15 : 0;
     }
+
+     */
 
 
     @Override

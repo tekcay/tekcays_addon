@@ -17,10 +17,9 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 
 import net.minecraft.entity.player.EntityPlayer;
-
 import net.minecraft.util.ResourceLocation;
 
-import tekcays_addon.api.recipes.TKCYARecipeMaps;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
 
 import javax.annotation.Nonnull;
@@ -58,10 +57,13 @@ public class MetaTileEntityCastingTable extends RecipeMapPrimitiveMultiblockCont
         getFrontOverlay().renderOrientedState(renderState, translation, pipeline, getFrontFacing(), recipeMapWorkable.isActive(), recipeMapWorkable.isWorkingEnabled());
     }
 
+    /*
     @Override
     public int getLightValueForPart(IMultiblockPart sourcePart) {
         return sourcePart == null && recipeMapWorkable.isActive() ? 15 : 0;
     }
+
+     */
 
     /*
     @Override

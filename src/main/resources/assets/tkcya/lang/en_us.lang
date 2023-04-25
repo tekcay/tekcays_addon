@@ -5,6 +5,34 @@ tkcya.machine.cluster_mill.hv.name=Cluster Mill HV
 tkcya.machine.cluster_mill.ev.name=Cluster Mill EV
 tkcya.machine.cluster_mill.iv.name=Cluster Mill IV
 
+tkcya.machine.steam_turbine.0.name=Steam Turbine I
+tkcya.machine.steam_turbine.1.name=Steam Turbine II
+tkcya.machine.steam_turbine.2.name=Steam Turbine III
+tkcya.machine.steam_turbine.3.name=Steam Turbine IV
+tkcya.machine.steam_turbine.4.name=Steam Turbine V
+tkcya.machine.steam_turbine.5.name=Steam Turbine VI
+
+tkcya.machine.dynamo.0.name=Dynamo ULV
+tkcya.machine.dynamo.1.name=Dynamo LV
+tkcya.machine.dynamo.2.name=Dynamo MV
+tkcya.machine.dynamo.3.name=Dynamo HV
+tkcya.machine.dynamo.4.name=Dynamo EV
+tkcya.machine.dynamo.5.name=Dynamo IV
+
+tkcya.machine.diesel_generator.0.name=Diesel Generator I
+tkcya.machine.diesel_generator.1.name=Diesel Generator II
+tkcya.machine.diesel_generator.2.name=Diesel Generator III
+tkcya.machine.diesel_generator.3.name=Diesel Generator IV
+tkcya.machine.diesel_generator.4.name=Diesel Generator V
+tkcya.machine.diesel_generator.5.name=Diesel Generator VI
+
+tkcya.machine.rotation_compressor.0.name=Rotation Compressor I
+tkcya.machine.rotation_compressor.1.name=Rotation Compressor II
+tkcya.machine.rotation_compressor.2.name=Rotation Compressor III
+tkcya.machine.rotation_compressor.3.name=Rotation Compressor IV
+tkcya.machine.rotation_compressor.4.name=Rotation Compressor V
+tkcya.machine.rotation_compressor.5.name=Rotation Compressor VI
+
 tkcya.machine.advanced_polarizer.lv.name=Polarizer LV
 tkcya.machine.advanced_polarizer.mv.name=Polarizer MV
 tkcya.machine.advanced_polarizer.hv.name=Polarizer HV
@@ -17,25 +45,169 @@ tkcya.machine.electric_casting_table.hv.name=Electric Casting Table HV
 tkcya.machine.electric_casting_table.ev.name=Electric Casting Table EV
 tkcya.machine.electric_casting_table.iv.name=Electric Casting Table IV
 
-tkcya.machine.electric_casting_table.lv.tooltip=Air speeds up the recipe by %d40%
-tkcya.machine.electric_casting_table.mv.tooltip=Air speeds up the recipe by %d40%
-tkcya.machine.electric_casting_table.hv.tooltip=Air speeds up the recipe by %d40%
-tkcya.machine.electric_casting_table.ev.tooltip=Air speeds up the recipe by %d40%
-tkcya.machine.electric_casting_table.iv.tooltip=Air speeds up the recipe by %d40%
+tkcya.machine.electric_casting_table.lv.tooltip=Air speeds up the recipe by §a40%§7
+tkcya.machine.electric_casting_table.mv.tooltip=Air speeds up the recipe by §a40%§7
+tkcya.machine.electric_casting_table.hv.tooltip=Air speeds up the recipe by §a40%§7
+tkcya.machine.electric_casting_table.ev.tooltip=Air speeds up the recipe by §a40%§7
+tkcya.machine.electric_casting_table.iv.tooltip=Air speeds up the recipe by §a40%§7
+
+tkcya.machine.pressure_controller.tooltip.1=Outputs a redstone signal with respect of pressure value
+tkcya.machine.pressure_controller.message=Sets threshold mode to %s
+
+tkcya.machine.casting_table.tooltip=Air speeds up the recipe by §e20%§7
+
+tkcya.machine.steam_air_compressor.name=Steam Air Compressor
+tkcya.machine.steam_autoclave.name=Autoclave
+
+tkcya.machine.electric_heater.lv.name=Electric Heater LV
+tkcya.machine.electric_heater.mv.name=Electric Heater MV
+tkcya.machine.electric_heater.hv.name=Electric Heater HV
+tkcya.machine.electric_heater.ev.name=Electric Heater EV
+tkcya.machine.electric_heater.iv.name=Electric Heater IV
+
+tkcya.machine.electric_cooler.lv.name=Electric Cooler LV
+tkcya.machine.electric_cooler.mv.name=Electric Cooler MV
+tkcya.machine.electric_cooler.hv.name=Electric Cooler HV
+tkcya.machine.electric_cooler.ev.name=Electric Cooler EV
+tkcya.machine.electric_cooler.iv.name=Electric Cooler IV
+
+tkcya.machine.pressure_controller.name=Pressure Multiblock Detector
+tkcya.machine.vacuum_controller.name=Vacuum Multiblock Detector
+tkcya.machine.temperature_controller.name=Temperature Multiblock Detector
+tkcya.machine.speed_controller.name=Speed Multiblock Detector
+tkcya.machine.torque_controller.name=Torque Multiblock Detector
+tkcya.machine.rotation_power_controller.name=Rotation Power Multiblock Detector
+
+tkcya.machine.brick_solid_fuel_heater.name=Brick Solid Fuel Heater
+tkcya.machine.material.bronze_solid_fuel_heater.name=Bronze Solid Fuel Heater
+tkcya.machine.material.steel_solid_fuel_heater.name=Steel Solid Fuel Heater
+tkcya.machine.material.invar_solid_fuel_heater.name=Invar Solid Fuel Heater
+tkcya.machine.material.titanium_solid_fuel_heater.name=Titanium Solid Fuel Heater
+tkcya.machine.material.tungsten_steel_solid_fuel_heater.name=Tungsten Steel Solid Fuel Heater
+
+tkcya.machine.material.bronze_liquid_fuel_heater.name=Bronze Liquid Fuel Heater
+tkcya.machine.material.steel_liquid_fuel_heater.name=Steel Liquid Fuel Heater
+tkcya.machine.material.invar_liquid_fuel_heater.name=Invar Liquid Fuel Heater
+tkcya.machine.material.titanium_liquid_fuel_heater.name=Titanium Liquid Fuel Heater
+tkcya.machine.material.tungsten_steel_liquid_fuel_heater.name=Tungsten Steel Liquid Fuel Heater
+
+tkcya.machine.material.bronze_fluidized_fuel_heater.name=Bronze Fluidized Fuel Heater
+tkcya.machine.material.steel_fluidized_fuel_heater.name=Steel Fluidized Fuel Heater
+tkcya.machine.material.invar_fluidized_fuel_heater.name=Invar Fluidized Fuel Heater
+tkcya.machine.material.titanium_fluidized_fuel_heater.name=Titanium Fluidized Fuel Heater
+tkcya.machine.material.tungsten_steel_fluidized_fuel_heater.name=Tungsten Steel Fluidized Fuel Heater
+
+tkcya.machine.material.bronze_gas_fuel_heater.name=Bronze Gas Fuel Heater
+tkcya.machine.material.steel_gas_fuel_heater.name=Steel Gas Fuel Heater
+tkcya.machine.material.invar_gas_fuel_heater.name=Invar Gas Fuel Heater
+tkcya.machine.material.titanium_gas_fuel_heater.name=Titanium Gas Fuel Heater
+tkcya.machine.material.tungsten_steel_gas_fuel_heater.name=Tungsten Steel Gas Fuel Heater
 
 tkcya.machine.steam_cooler_bronze.name=Steam Cooler
 tkcya.machine.steam_cooler_steel.name=High Pressure Steam Cooler
+tkcya.machine.muffler_hatch.primitive.name=Primitive Muffler Hatch
 
-tkcya.machine.steam_cooler_bronze.tooltip=Air speeds up the recipe by %d20%
-tkcya.machine.steam_cooler_steel.tooltip=Air speeds up the recipe by %d20%
-
+tkcya.machine.primitive_converter.name=Primitive Converter
 tkcya.machine.primitive_melter.name=Primitive Melter
 tkcya.machine.electric_melter.name=Electric Melter
 tkcya.machine.fuel_melter.name=Fuel Melter
+tkcya.machine.primitive_fermenter.name=Primitive Fermenter
 tkcya.machine.alloying_crucible.name=Alloying Crucible
 tkcya.machine.casting_table.name=Casting Table
-tkcya.machine.electric_pressure_blast_furnace.name=Electric Pressure Blast Furnace
+tkcya.machine.converter.name=Converter
 tkcya.machine.primitive_bath.name=Primitive Bath
+tkcya.machine.pressurized_cracking_unit.name=High Pressure Cracking Unit
+tkcya.machine.roasting_oven.name=Roasting Oven
+tkcya.machine.spiral_separator.name=Spiral Separator
+
+#Blast Furnaces
+tkcya.machine.brick_blast_furnace.name=Primitive Brick Blast Furnace
+tkcya.machine.fireclay_brick_blast_furnace.name=Primitive Fireclay Brick Blast Furnace
+tkcya.machine.reinforced_brick_blast_furnace.name=Primitive Reinforced Brick Blast Furnace
+tkcya.machine.strong_brick_blast_furnace.name=Primitive Strong Brick Blast Furnace
+
+#Advanced Blast Furnaces
+tkcya.machine.brick_advanced_blast_furnace.name=Brick Advanced Blast Furnace
+tkcya.machine.fireclay_brick_advanced_blast_furnace.name=Fireclay Brick Advanced Blast Furnace
+tkcya.machine.reinforced_brick_advanced_blast_furnace.name=Reinforced Brick Advanced Blast Furnace
+tkcya.machine.strong_brick_advanced_blast_furnace.name=Strong Brick Advanced Blast Furnace
+
+#BlastFurnace Hatches
+tkcya.machine.brick_import_fluid_hatch.name=Brick Import Fluid Hatch
+tkcya.machine.fireclay_brick_import_fluid_hatch.name=Fireclay Brick Import Fluid Hatch
+tkcya.machine.reinforced_brick_import_fluid_hatch.name=Reinforced Brick Import Fluid Hatch
+tkcya.machine.strong_brick_import_fluid_hatch.name=Strong Brick Blast Import Fluid Hatch
+
+tkcya.machine.brick_export_fluid_hatch.name=Brick Export Fluid Hatch
+tkcya.machine.fireclay_brick_export_fluid_hatch.name=Fireclay Brick Export Fluid Hatch
+tkcya.machine.reinforced_brick_export_fluid_hatch.name=Reinforced Brick Export Fluid Hatch
+tkcya.machine.strong_brick_export_fluid_hatch.name=Strong Brick Blast Export Fluid Hatch
+
+tkcya.machine.brick_import_item_bus.name=Brick Import Item Bus
+tkcya.machine.fireclay_brick_import_item_bus.name=Fireclay Brick Import Item Bus
+tkcya.machine.reinforced_brick_import_item_bus.name=Reinforced Brick Import Item Bus
+tkcya.machine.strong_brick_import_item_bus.name=Strong Brick Blast Import Item Bus
+
+tkcya.machine.brick_export_item_bus.name=Brick Export Item Bus
+tkcya.machine.fireclay_brick_export_item_bus.name=Fireclay Brick Export Item Bus
+tkcya.machine.reinforced_brick_export_item_bus.name=Reinforced Brick Export Item Bus
+tkcya.machine.strong_brick_export_item_bus.name=Strong Brick Blast Export Item Bus
+
+#Muffler
+tkcya.machine.brick_muffler.name=Brick Muffler
+tkcya.machine.fireclay_brick_muffler.name=Fireclay Brick Muffler
+tkcya.machine.reinforced_brick_muffler.name=Reinforced Brick Muffler
+tkcya.machine.strong_brick_muffler.name=Strong Brick Blast Muffler
+
+#Crucibles
+tkcya.machine.brick_single_crucible.name=Brick Crucible
+tkcya.machine.fireclay_brick_single_crucible.name=Fireclay Brick Crucible
+tkcya.machine.reinforced_brick_single_crucible.name=Reinforced Brick Crucible
+tkcya.machine.strong_brick_single_crucible.name=Strong Brick Crucible
+
+#HeatAcceptors
+tkcya.machine.heat_acceptor.ulv.name=Heat Acceptor I
+tkcya.machine.heat_acceptor.lv.name=Heat Acceptor II
+tkcya.machine.heat_acceptor.mv.name=Heat Acceptor III
+tkcya.machine.heat_acceptor.hv.name=Heat Acceptor IV
+tkcya.machine.heat_acceptor.ev.name=Heat Acceptor V
+tkcya.machine.heat_acceptor.iv.name=Heat Acceptor VI
+
+#Pressure/Vacuum Hatches
+tkcya.machine.pressure_hatch.ulv.name=Pressure Hatch
+tkcya.machine.pressure_hatch.lv.name=Pressure Hatch I
+tkcya.machine.pressure_hatch.mv.name=Pressure Hatch II
+tkcya.machine.pressure_hatch.hv.name=Pressure Hatch III
+tkcya.machine.pressure_hatch.ev.name=Pressure Hatch IV
+tkcya.machine.pressure_hatch.iv.name=Pressure Hatch V
+tkcya.machine.pressure_hatch.luv.name=Pressure Hatch VI
+
+tkcya.machine.vacuum_hatch.ulv.name=Vacuum Hatch
+tkcya.machine.vacuum_hatch.lv.name=Vacuum Hatch I
+tkcya.machine.vacuum_hatch.mv.name=Vacuum Hatch II
+tkcya.machine.vacuum_hatch.hv.name=Vacuum Hatch III
+tkcya.machine.vacuum_hatch.ev.name=Vacuum Hatch IV
+tkcya.machine.vacuum_hatch.iv.name=Vacuum Hatch V
+tkcya.machine.vacuum_hatch.luv.name=Vacuum Hatch VI
+
+#Pressure Compressor
+tkcya.machine.electric_compressor.ulv.name=Electric Compressor
+tkcya.machine.electric_compressor.lv.name=Electric Compressor I
+tkcya.machine.electric_compressor.mv.name=Electric Compressor II
+tkcya.machine.electric_compressor.hv.name=Electric Compressor III
+tkcya.machine.electric_compressor.ev.name=Electric Compressor IV
+
+
+tkcya.machine.electric_vacuum_pump.ulv.name=Vacuum Pump
+tkcya.machine.electric_vacuum_pump.lv.name=Vacuum Pump I
+tkcya.machine.electric_vacuum_pump.mv.name=Vacuum Pump II
+tkcya.machine.electric_vacuum_pump.hv.name=Vacuum Pump III
+tkcya.machine.electric_vacuum_pump.ev.name=Vacuum Pump IV
+
+tkcya.machine.crystallizer.name=Crystallizer
+tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer
+tkcya.machine.filter.name=Filter
+tkcya.machine.coke_oven=Coke Oven
 
 tkcya.machine.modulable_steel_tank.name=Steel Tank
 
@@ -45,11 +217,49 @@ tkcya.multiblock.primitive_melter.description=A multiblock for melting ores and 
 tkcya.multiblock.electric_melter.description=A multiblock for melting ores and pure materials using electricity
 tkcya.multiblock.alloying_crucible.description=A multiblock for alloying molten metals
 
+# multiblock tank
 
+tkcya.machine.multiblock.tank.wood.name=Wooden Tank
+tkcya.machine.multiblock.tank.steel.name=Steel Tank
+tkcya.machine.multiblock.tank.galvanized_steel.name=Galvanized Steel Tank
+tkcya.machine.multiblock.tank.stainless_steel.name=Stainless Steel Tank
 
-# hatches
+# Tank valves
+
+tkcya.machine.multiblock.valve.steel.name=Steel Tank Valve
+tkcya.machine.multiblock.valve.galvanized_steel.name=Galvanized Steel Tank Valve
+tkcya.machine.multiblock.valve.stainless_steel.name=Stainless Steel Tank Valve
+
+# drums
+tkcya.machine.drum.material.treated_wood.name=Wooden Drum
+tkcya.machine.drum.material.bronze.name=Bronze Drum
+tkcya.machine.drum.material.steel.name=Steel Drum
+tkcya.machine.drum.material.aluminium.name=Aluminium Drum
+tkcya.machine.drum.material.galvanized_steel.name=Galvanized Steel Drum
+tkcya.machine.drum.material.stainless_steel.name=Stainless Steel Drum
+tkcya.machine.drum.material.tungsten_steel.name=Tungsten Steel Drum
+tkcya.machine.drum.material.titanium.name=Titanium Drum
+tkcya.machine.drum.material.polytetrafluoroethylene.name=Teflon Drum
+tkcya.machine.drum.material.polypropylene.name=Polypropylene Drum
+tkcya.machine.drum.material.high_density_polyethylene.name=HDPE Drum
 
 # casings
+tile.large_multiblock_casing.monel_casing.name=Monel Casing
+
+# bricks
+tile.block_brick.brick.name=Brick
+tile.block_brick.reinforced_brick.name=Reinforced Brick
+tile.block_brick.fireclay_brick.name=Fireclay Brick
+tile.block_brick.strong_brick.name=Strong Brick
+
+## tooltips
+tile.block_brick.tooltip.heat=Max temperature: §c%,d K
+tile.block_brick.tooltip.density=Density: §b%d
+
+# walls
+tile.large_multiblock_casing.steel_wall.name=Steel Wall
+tile.large_multiblock_casing.galvanized_steel_wall.name=Galvanized Steel Wall
+tile.large_multiblock_casing.stainless_steel_wall.name=Stainless Steel Wall
 
 
 
@@ -58,10 +268,24 @@ recipemap.cluster_mill.name=Cluster Mill
 recipemap.advanced_polarizer.name=Polarizing
 recipemap.primitive_melter.name=Melting
 recipemap.electric_melter.name=Melting
+recipemap.fermentation.name=Fermentation
 recipemap.alloying_crucible.name=Alloying
 recipemap.casting_table.name=Casting
 recipemap.primitive_bath.name=Bath
 recipemap.electric_casting_table.name=Casting
+recipemap.blasting.name=Blasting
+recipemap.advanced_blasting.name=Advanced Blasting
+recipemap.converting.name=Converting
+recipemap.primitive_converting.name=Primitive Converting
+recipemap.crystallization.name=Crystallization
+recipemap.electrolysis.name=Electrolysis
+recipemap.filtration.name=Filtration
+recipemap.pressure_cracking.name=Cracking
+recipemap.roasting.name=Roasting
+recipemap.spiral_separation.name=Spiral Separation
+recipemap.coking.name=Coking
+recipemap.steam_autoclave.name=Autoclave
+recipemap.diesel_generator.name=Diesel generator
 
 # Materials
 material.unpure_bronze=Unpure Bronze
@@ -69,15 +293,98 @@ material.unpure_steel=Unpure Steel
 material.unpure_copper=Unpure Copper
 material.unpure_tin=Unpure Tin
 material.unpure_iron=Unpure Iron
-material.galvanized_steel=Galvanized Steel
 
+##Alloys/Intermediates
+material.pig_iron=Pig Iron
 
+##NoFormula
 material.ceramic=Ceramic
 material.mica_pulp=Mica Based
 material.fuel=Burnable Fuel
+material.hot_flue_gas=Hot Flue Gas
+material.flue_gas=Flue Gas
+material.melon_oil=Melon Oil
+material.pumpkin_oil=Pumpkin Oil
+material.mixture_to_filter=Mixture To Filter
+material.lightly_steam_cracked_methane=Lightly Steam Cracked Methane
+material.moderately_steam_cracked_methane=Moderately Steam Cracked Methane
+material.severely_steam_cracked_methane=Severly Steam Cracked Methane
+material.chalcogen_anode_mud=Chalcogen Anode Mud
+
+##Misc
 material.hot_air=Hot Air
+material.very_hot_air=Very Hot Air
+material.potassium_metabisulfite=Potassium MetaBisulfite
+material.potassium_hydroxide=Potassium Hydroxide
+
 fluid.fuel.tooltip=To be used in the fuel consuming machines
+
+##GoldChain
+material.precious_metal=Precious Metal
+material.gold_alloy=Gold Alloy
+material.gold_leach=Gold Leach
+material.copper_leach=Copper Leach
+
+## FluorideChain
+material.potassium_bifluoride=Potassium Bifluoride
+material.fluorite=Fluorite
+material.calcium_sulfonate=Calcium Sulfonate
+material.lithium_fluoride=Lithium Fluoride
+material.sodium_fluoride=Sodium Fluoride
+material.potassium_fluoride=Potassium Fluoride
+material.lithium_hydroxide=Lithium Hydroxide
+material.hydrogen_fluoride=Hydrogen Fluoride
+material.hydrogen_chloride=Hydrogen Chloride
+material.hydrogen_bromide=Hydrogen Bromide
+material.hydrogen_iodide=Hydrogen Iodide
+
+##ZincChain
+material.iron_sulfate=Iron Sulfate
+material.zinc_sulfate=Zinc Sulfate
+material.zinc_leaching_solution=Zinc Leaching Solution
+material.zinc_leaching_residue=Zinc Leaching Residue
+material.tannic_acid=Tannic Acid
+material.germanic_acid_solution=Germanic Acid Solution
+material.zinc_oxide=Zinc Oxide
+
+##BauxiteChain
+material.aluminium_fluoride=Aluminium Fluoride
+material.potassium_aluminate=Potassium Aluminate
+material.sodium_aluminate=Sodium Aluminate
+material.cryolite=Cryolite
+material.hexafluorosilic_acid=Hexafluorosilic Acid
+
+##ChromiteChain
+material.sodium_chromate=Sodium Chromate
+material.sodium_dichromate=Sodium Dichromate
+material.chromium_oxide=Chromium Oxide
+material.sodium_carbonate=Sodium Carbonate
+material.sodium_sulfate=Sodium Sulfate
+material.potassium_sulfate=Potassium Sulfate
+
+##MolybdenumChain
+material.molybdenum_trioxide=Molybdenum Trioxide
+material.molybdenum_flue=Molybdenum Flue
+
+#MoreRoastable
+material.kesterite=Kesterite
+material.stannite=Stannite
+material.aresenopyrite=Arsenopyrite
+
+##RoastingOutput
+material.cuprite=Cuprite
+
+
+##Alloys
 material.galvanized_steel=Galvanized Steel
+material.monel=Monel
+material.constantan=Constantan
+material.silicon_carbide=Silicon Carbide
+
+##Polymers
+material.high_density_polyethylene=High Density Polyethylene (HDPE)
+material.polypropylene=Polypropylene
+
 material.hydrogen_fluorine=Hydrogen Fluorine
 material.hydrogen_chlorine=Hydrogen Chlorine
 material.hydrogen_bromine=Hydrogen Bromine
@@ -86,14 +393,46 @@ material.hydrogen_iodine=Hydrogen Iodine
 # fluids
 tkcya.fluid.molten=Molten %s
 
+#MetaItems
+
 metaitem.mica.sheet.name=Mica Based Sheet
 metaitem.mica_insulator.sheet.name=Mica Insulator Sheet
 metaitem.mica_insulator.foil.name=Mica Insulator Foil
 metaitem.gas_collector.name=Gas Collector
+metaitem.dust_mixture.name=Dust Mixture
+
+#Damageable Items
+metaitem.electrode.name=%s Electrode
+metaitem.electrode.tooltip=For electrolysis
+metaitem.filter.name=%s Filter
+metaitem.filter.tooltip=For filtration duh
+
+
+
+metaitem.cover.temperature_detector.name=Temperature Detector Cover
+metaitem.cover.temperature.detector.tooltip=Emits a redstone signal if the temperature exceeds a specified value (as Cover). Right click with a Screwdriver while sneaking to invert redstone signal.
+
+metaitem.cover.pressure_detector.name=Pressure Detector Cover
+metaitem.cover.vacuum_detector.name=Vacuum Detector Cover
+metaitem.cover.speed_detector.name=Speed Detector Cover
+metaitem.cover.torque_detector.name=Torque Detector Cover
+metaitem.cover.rotation_power_detector.name=Rotation Power Detector Cover
 
 item.mica_pulp.dust=Mica Based Pulp
 
+#ULV Components
+metaitem.electric_motor_ulv.name=ULV Electric Motor
+metaitem.electric_pump_ulv.name=ULV Electric Pump
+metaitem.piston_ulv.name=ULV Piston
+metaitem.conveyor_ulv.name=ULV Conveyor
+metaitem.robot_arm_ulv.name=ULV Robot Arm
+
 # Ore Prefixes
+
+#Others
+item.material.oreprefix.electrode=%s Electrode
+
+## Molds
 item.material.oreprefix.moldEmpty=%s Mold Empty
 item.material.oreprefix.moldIngot=%s Mold Ingot
 item.material.oreprefix.moldPlate=%s Mold Plate
@@ -107,12 +446,86 @@ item.material.oreprefix.moldCylinder=%s Mold Cylinder
 item.material.oreprefix.moldRotor=%s Mold Rotor
 item.material.oreprefix.moldRing=%s Mold Ring
 item.material.oreprefix.moldCasing=%s Mold Casing
+item.material.oreprefix.moldBottle=%s Mold Bottle
+item.material.oreprefix.moldBlock=%s Mold Block
+
+##Other
+item.material.oreprefix.curvedPlate=%s Curved Plate
+
+#Tooltips
+
+tkcya.machine.tooltip.consumption=Consumes §a%d EU/t§7 when active.
+
+#Can run recipe in parallel
+tkcya.machine.parallel_ability.tooltip=Can run recipes in parallel.
+
+#Brick density
+tekcays_addon.machine.brick_density.tooltip=The amount of §cHU§7 to reach a certain temperature (§aT§7) depends of the Brick density (§bB§7), the Coil max temperature (§eC§7) and the amount of additional floors (§dF§7) added to the structure.
+tekcays_addon.machine.heat_to_temperature.formula.tooltip=The formula is as follows: §aT§7 = 298 + §cHU§7 / (%d * §bB§7 * (§eC§7 / 1000) * §dF§7)
+
+#Temperature fire
+tekcays_addon.machine.temperature_explode.tooltitp=Catches §cFIRE§7 and §cEXPLODES§7 if too hot !
+
+#Heaters
+tkcya.machine.liquid_fuel_heater.tooltip=§bRecipe:§7 Consumes Creosote.
+tkcya.machine.solid_fuel_heater.tooltip=§bRecipe:§7 Consumes solid fuel like coal.
+tkcya.machine.fluidized_fuel_heater.tooltip=§bRecipe:§7 Consumes molten Calcite and tiny dust of Coke.
+
+tkcya.machine.gas_fuel_heater.tooltip.1=§bRecipe:§7 Consumes gas.
+tkcya.machine.gas_fuel_heater.tooltip.2=Put a Gas Collector in to recover waste gas.
+
+# Steam Air Compressor
+tkcya.steam_air_compressor.tooltip.1=Pressurize air.
+tkcya.steam_air_compressor.tooltip.2=Consumes %sL of Steam per second.
 
 
-tekcays_addon.multiblock.electric_melter.tooltip.1=Temperature: §a%dK§7.
-tekcays_addon.multiblock.electric_melter.tooltip.2=Not enough energy can be inputted to reach the target!
+tkcya.machine.no_overclock.tooltip=No overclock
+tkcya.machine.height.tooltip=Height: %d
+tkcya.machine.redstone.inverse.tooltip=Can be stopped with a redstone signal.
+tkcya.machine.free_front_face.tooltip=The front face must be free.
+tkcya.machine.energy_conversion_efficiency=§eEfficency:§7 %s
+tkcya.machine.pressure_decrease.tooltip=Decreases the pressure by §b%sPa§7 per second while running.
+tkcya.machine.pressure_increase.tooltip=Increases the pressure by §b%sPa§7 per second while running.
+
+tkcya.machine.primitive_converter.tooltip.1=Only runs recipes is the required pressure is set.
+
+#Single block crucible
+tkcya.machine.single_crucible.tooltip.1=Only runs recipes is the required temperature is set.
+tkcya.machine.single_crucible.tooltip.2=Accept §cHU§7.
+tkcya.machine.single_crucible.tooltip.3=Causes fire and explodes if too hot!
+tkcya.machine.single_crucible.tooltip.4=Auto-outputs fluid.
+
+#Fermenter
+tkcya.machine.primitive_fermenter.tooltip.1=Max Parallel: §e%s§7
+
+tkcya.machine.spiral_separator.tooltip.1=Run §a1§7 parallel recipe per §a2§7 additional floors.
+
+#Heat acceptors
+tkcya.machine.heat_acceptor.tooltip.1=Accepts §cHEAT§7 on §eANY§7 side.
+tkcya.machine.heat_acceptor.tooltip.2=Loses §c%d HU/s§7.
+tkcya.machine.heat_acceptor.tooltip.3=Capacity: §c%dk HU§7.
+
+#Pressure hatch
+tkcya.machine.pressure_hatch.tooltip.vacuum=Accepts §dVacuum§7, down to §e%s§7.
+tkcya.machine.pressure_hatch.tooltip.vacuum.leak=Loses §d%d L/s§7.
+
+#Steam turbine
+tkcya.machine.steam_turbine.tooltip.1=Consumes §eSteam§7 to spin a wheel and outputs §dDistilled Water§7.
+tkcya.machine.steam_turbine.tooltip.steam_tank=Steam tank: %d L
+tkcya.machine.steam_turbine.tooltip.water_tank=Water tank: %d L
+
+#Dynamo
+tkcya.machine.dynamo.tooltip.1=Transforms rotational power into electricity.
+
+tkcya.machine.electric_pressure_compressor.pressure.tooltip.description=Transfer a fluid to the OUTPUT face to increase §aPressure§7.
+tkcya.machine.electric_pressure_compressor.vacuum.tooltip.description=Transfer a fluid from the INPUT face to increase §aVacuum§7.
+tkcya.machine.electric_pressure_compressor.tooltip.transfer=Base transfer rate: %d L/t
+tkcya.machine.electric_pressure_compressor.tooltip.fluid_capacity=Fluid capacity: %d L.
+
+tekcays_addon.multiblock.electric_melter.tooltip.1=Temperature: §a%d K§7.
+tekcays_addon.multiblock.electric_melter.tooltip.2=Not enough energy can be input to reach the target!
 tekcays_addon.multiblock.electric_melter.tooltip.4=Consumption: %d EU/t.
-tekcays_addon.multiblock.electric_melter.tooltip.5=Target temperature: §a%dK§7.
+tekcays_addon.multiblock.electric_melter.tooltip.5=Target temperature: §a%d K§7.
 
 tekcays_addon.machine.electric_melter.tooltip.1=Only runs recipes if the required temperature is set.
 tekcays_addon.machine.electric_melter.tooltip.2=The §aEU§7 per tick required is exponentially related to the current temperature.
@@ -123,23 +536,152 @@ tekcays_addon.machine.fuel_melter.tooltip.2=The §aL§7 per tick required is exp
 tekcays_addon.machine.fuel_melter.tooltip.3=The target temperature is set by the coils.
 tekcays_addon.machine.fuel_melter.tooltip.4=The temperature increasing speed is set by the fireboxes.
 
-tekcays_addon.multiblock.fuel_melter.tooltip.1=Temperature: §a%dK§7.
-tekcays_addon.multiblock.fuel_melter.tooltip.2=Not enough energy can be inputted to reach the target!
+tekcays_addon.multiblock.fuel_melter.tooltip.1=Temperature: §a%d K§7.
+tekcays_addon.multiblock.fuel_melter.tooltip.2=Not enough energy can be input to reach the target!
 tekcays_addon.multiblock.fuel_melter.tooltip.4=Consumption: %d L/t.
-tekcays_addon.multiblock.fuel_melter.tooltip.5=Target temperature: §a%dK§7.
+tekcays_addon.multiblock.fuel_melter.tooltip.5=Target temperature: §a%d K§7.
+
+#General tooltips
+
+tkcya.machine.multiblock_detector.tooltip.1=Outputs a redstone signal following the value of the container.
+
+#Rotation
+tkcya.general.rotation.maxspeed=Max speed: §f%d rpm§7
+tkcya.general.rotation.maxtorque=Max torque: §f%d Nm§7
+tkcya.general.rotation.maxpower=Max power: §f%d W§7
+tkcya.general.rotation.speed=Speed: %d rpm
+tkcya.general.rotation.torque=Torque: %d Nm
+tkcya.general.rotation.power=Power: %d W
+
+#Steam consumer
+tkcya.general.steam_consumer.tooltip.steam_input=Max steam consumption: §f%d L/s§7
+tkcya.general.steam_consumer.tooltip.water_output=Max distilled water output: §f%d L/s§7
+
+#Pressure
+tkcya.general.pressure.tooltip.pressure=Accepts §aPressure§7, up to §e%s§7.
+tkcya.general.pressure.tooltip.pressure.leak=Loses §a%d L/s§7.
+
+#Covers
+tkcya.covers.detectors.mods.HIGHER=Outputs redstone if the measured value exceeds the threshold.
+tkcya.covers.detectors.mods.LOWER=Outputs redstone if the threshold exceeds the measured value.
+tkcya.covers.detectors.mods.EQUAL=Outputs redstone if the measured value equals the threshold.
 
 tekcays_addon.recipe.melter_temperature=Temperature: %dK
 
-tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.1=Temperature: §a%dK§7.
-tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.7=Pressure: §a%d bar§7.
-tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.2=Not enough energy can be inputted to reach the target!
-tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.4=Consumption: %d EU/t.
-tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.5=Target temperature: §a%dK§7.
-tekcays_addon.multiblock.electric_pressure_blast_furnace.tooltip.6=Target pressure: §a%d bar§7.
+tkcya.temperature.display=Temperature: %dK
+tkcya.heat_multiplier.display=Heat multiplier: %d
+tkcya.max_temperature.display= Max temperature: %d
 
-tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.1=Only runs recipes if the required temperature and pressure are set.
-tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.2=The §aEU§7 per tick required is exponentially related to the current temperature and pressure.
-tekcays_addon.machine.electric_pressure_blast_furnace.tooltip.3=The target temperature and the temperature increasing speed are set by the coils.
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.1=Only runs recipes if the required temperature is set.
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.3=Each additional floor increases the parallel limit by §e%d§7.
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.4=Max temperature: §e%,d K.
+
+tkcya.machine.advanced_blast_furnace.tooltip.1=Each additional floor (§dF§7) increases the parallel limit by §e%d§7.
+tkcya.machine.advanced_blast_furnace.tooltip.2=§eMax temperature§7 is set at the lowest value between the Bricks max temperature and the Coils max temperature.
+
+
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.2a=Requires air and coal.
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.3a=The temperature increasing speed can be improved by using hot air and coke.
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.4a=Max temperature: §e%,d K.
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.5a=Gas collector in the input bus allows hot gases recovery.
+tekcays_addon.machine.tkcya_blast_furnace.tooltip.6a=LV Sensor in the input displays stored heat (mainly for debug purpose)
+
+tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.1=Temperature: §a%d K§7.
+tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.2=Not enough gas
+tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.4=Consumption: %d L/t of %s.
+tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.5=Consumption: 0 L/t.
+tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.6=Target temperature: §a%d K§7.
+tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.7=Not enough solid fuel
+
+#For debugging
+tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.8=Stored heat from gas: %d
+tekcays_addon.multiblock.tkcya_blast_furnace.tooltip.9=Stored heat from solid: %d
+
+tekcays_addon.recipe.tkcya_blast_furnace_temperature=Temperature: %dK
+
+tekcays_addon.multiblock.electric_converter.tooltip.1=Temperature: §a%d K§7.
+tekcays_addon.multiblock.electric_converter.tooltip.7=Pressure: §a%s bar§7.
+tekcays_addon.multiblock.electric_converter.tooltip.2=Not enough energy can be input to reach the target!
+tekcays_addon.multiblock.electric_converter.tooltip.4=Consumption: %d EU/t.
+tekcays_addon.multiblock.electric_converter.tooltip.5=Target temperature: §a%d K§7.
+tekcays_addon.multiblock.electric_converter.tooltip.6=Target pressure: §a%s bar§7.
+
+tekcays_addon.machine.electric_converter.tooltip.1=Only runs recipes if the required temperature and pressure are set.
+tekcays_addon.machine.electric_converter.tooltip.2=The §aEU§7 per tick required is exponentially related to the current temperature and pressure.
+tekcays_addon.machine.electric_converter.tooltip.3=The target temperature and the temperature increasing speed are set by the coils.
+
+tekcays_addon.recipe.blasting_temperature=Temperature: %dK
+tekcays_addon.recipe.blasting_pressure=Pressure: %d bar
+tkcya.recipe.heat=%d HU/t
+tkcya.recipe.temperature=Temperature: %d K
+tkcya.recipe.interval.pressure=Pressure: %s - %s
+tkcya.recipe.interval.temperature=Temperature: %d - %d K
+tkcya.recipe.pressure=Pressure: %s
+tkcya.recipe.vacuum=Vacuum: %s
+tkcya.recipe.min.pressure=Min. pressure: %s
+tkcya.recipe.max.pressure=Max. pressure: %s
+tkcya.recipe.pressurized-fluid-stack=Gas: %s
+
+tekcays_addon.machine.advanced_electrolyzer.tooltip.1=Performs electrolysis of chemicals in solution.
+tekcays_addon.machine.advanced_electrolyzer.tooltip.2=Requires two electrodes, a cathode and an anode, to perform its recipes.
+tekcays_addon.machine.advanced_electrolyzer.tooltip.3=Electrodes take damage during recipe running.
+tekcays_addon.machine.advanced_electrolyzer.tooltip.4=Removal of the electrode while a recipe is running  will cause explosion!
+
+tkcya.machine.text.pressurized.fluid=Fluid: %s %s
+tkcya.machine.text.pressure=Current pressure: %s
+tkcya.machine.text.temperature=Current temperature: %s K
+tkcya.max_parallel.tooltip=Max Parallel: §e%s§7
+
+#Heaters
+tkcya.heater.tooltip.1=For heating.
+tkcya.heater.tooltip.2=Outputs §c%s HU/t§7 on the §eTOP§7 side.
+tkcya.machine.fuel_heater.ignition.tooltip=Ignition by right-clicking on the §eFRONT§7 side with wood sticks while sneaking (%s chance).
+tkcya.electric_heater.tooltip.1=Outputs §c%s HU/t§7 on the §eFRONT§7 side.
+
+#Electric Cooler
+tkcya.electric_cooler.tooltip.1=For cooling.
+tkcya.electric_cooler.tooltip.2=Outputs §b%d CU/t§7 on the §eFRONT§7 face.
+tkcya.electric_cooler.tooltip.3=Outputs §c%d HU/t§7 on the §eBACK§7 face.
+
+##Buttons in covers
+cover.cover.detector.inverted=I
+cover.cover.detector.normal=N
+
+#Tricorder
+
+behavior.tricorder.currentTemp=Current Temp: %s K
+behavior.tricorder.current_heat=Current Heat: %s HU
+behavior.tricorder.min_heat=Minimum Heat: %s HU
+behavior.tricorder.max_heat=Maximum Heat: %s HU
+
+behavior.tricorder.heatMultiplier=Heat Multiplier: %d
+behavior.tricorder.can_ignite=Can ignite: %s
+behavior.tricorder.is_burning=Is burning: %s
+
+behavior.tricorder.burn_time_left=Burn Time Left %s ticks
+behavior.tricorder.current_pressure=Pressure: %d bar
+behavior.tricorder.pressureThreshold=PressureThreshol: %d bar
+behavior.tricorder.fluid.amount=Fluid amount: %d L
+behavior.tricorder.fluid.name=Fluid name: %s
+behavior.tricorder.steam.amount=Steam amount: %d L
+behavior.tricorder.lub.amount=Lub amount: %d L
+behavior.tricorder.distilled_water.amount=Distilled amount: %d L
+behavior.tricorder.air.amount=Air amount: %d L
+behavior.tricorder.pressure.pressure=Pressure: %d
+behavior.tricorder.pressure.vacuum=Vacuum: %d
+behavior.tricorder.max_pressure.pressure=Maximum Pressure: %d
+behavior.tricorder.max_pressure.vacuum=Maximum Pressure: %d
+behavior.tricorder.min_pressure.pressure=Minimum Pressure: %d
+behavior.tricorder.min_pressure.vacuum=Minimum Pressure: %d
+behavior.tricorder.current_pu=%d PU
+behavior.tricorder.current_vu=%d VU
+behavior.tricorder.turbine.steam_consumption=Steam consumption: %d L/t
+behavior.tricorder.turbine.output_rate=Water output rate: %d L/t
+behavior.tricorder.speed=Speed: %d rpm
+
+# Errors
+
+tkcya.multiblock.pattern.error.bricks=§cAll bricks must be the same§rbehavior.tricorder.speed=Speed: %d rpm
 
 
 ##Modulable Tanks

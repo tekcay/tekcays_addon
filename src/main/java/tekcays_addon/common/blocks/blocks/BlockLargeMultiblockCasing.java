@@ -20,29 +20,16 @@ public class BlockLargeMultiblockCasing extends VariantBlock<BlockLargeMultibloc
         setResistance(10.0f);
         setSoundType(SoundType.METAL);
         setHarvestLevel("pickaxe", 2);
-        setDefaultState(getState(CasingType.MACERATOR_CASING));
-    }
-
-    @Override
-    public boolean canCreatureSpawn(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EntityLiving.SpawnPlacementType type) {
-        return false;
+        setDefaultState(getState(CasingType.MONEL_CASING));
     }
 
     public enum CasingType implements IStringSerializable {
 
-        MACERATOR_CASING("macerator_casing"),
-        HIGH_TEMPERATURE_CASING("blast_casing"),
-        ASSEMBLING_CASING("assembler_casing"),
-        STRESS_PROOF_CASING("stress_proof_casing"),
-        CORROSION_PROOF_CASING("corrosion_proof_casing"),
-        VIBRATION_SAFE_CASING("vibration_safe_casing"),
-        WATERTIGHT_CASING("watertight_casing"),
-        CUTTER_CASING("cutter_casing"),
-        NONCONDUCTING_CASING("nonconducting_casing"),
-        MIXER_CASING("mixer_casing"),
-        ENGRAVER_CASING("engraver_casing"),
-        ATOMIC_CASING("atomic_casing"),
-        STEAM_CASING("steam_casing");
+        MONEL_CASING("monel_casing"),
+
+        STEEL_WALL("steel_wall"),
+        GALVANIZED_STEEL_WALL("galvanized_steel_wall"),
+        STAINLESS_STEEL_WALL("stainless_steel_wall");
 
         private final String name;
 

@@ -1,13 +1,15 @@
 package tekcays_addon.common;
 
-import tekcays_addon.api.unification.TKCYAMaterials;
-import tekcays_addon.api.unification.material.ore.TKCYAOrePrefixAdditions;
-import tekcays_addon.api.unification.material.properties.TKCYAPropertyAddition;
+import tekcays_addon.gtapi.unification.TKCYAMaterials;
+import tekcays_addon.gtapi.unification.material.ore.OreDictAdditions;
+import tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefixAdditions;
+import tekcays_addon.gtapi.unification.material.properties.TKCYAPropertyAddition;
 import tekcays_addon.TekCaysAddon;
 import gregtech.api.GregTechAPI;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import tekcays_addon.gtapi.utils.MaterialHelper;
 
 @Mod.EventBusSubscriber(modid = TekCaysAddon.MODID)
 public class TKCYAEventHandlers {
@@ -16,11 +18,16 @@ public class TKCYAEventHandlers {
     public static void registerMaterials(GregTechAPI.MaterialEvent event) {
         TKCYAMaterials.init();
         TKCYAPropertyAddition.init();
+        OreDictAdditions.misc();
+        TKCYAOrePrefixAdditions.miscInit();
+        MaterialHelper.init();
+
 
         if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
-
             TKCYAOrePrefixAdditions.moldsInit();
             TKCYAOrePrefixAdditions.moldsTooltip();
+
+
         }
     }
 
