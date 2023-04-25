@@ -35,10 +35,12 @@ import tekcays_addon.common.metatileentities.single.heaters.MetaTileEntityLiquid
 import tekcays_addon.common.metatileentities.single.heaters.MetaTileEntitySolidFuelHeater;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamAutoclave;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamCooler;
+import tekcays_addon.gtapi.utils.TKCYALog;
 
 import java.util.function.IntFunction;
 import java.util.stream.IntStream;
 
+import static gregtech.api.unification.material.Materials.*;
 import static gregtech.common.metatileentities.MetaTileEntities.*;
 import static tekcays_addon.api.consts.ContainerControllerWrappers.*;
 import static tekcays_addon.gtapi.render.TKCYATextures.STEAM_CASING;
@@ -132,15 +134,11 @@ public class TKCYAMetaTileEntities {
 
 
     //Tanks
-    public static TKCYAMetaTileEntityMultiblockTank WOODEN_TANK;
-    public static TKCYAMetaTileEntityMultiblockTank STEEL_TANK;
-    public static TKCYAMetaTileEntityMultiblockTank GALVANIZED_STEEL_TANK;
-    public static TKCYAMetaTileEntityMultiblockTank STAINLESS_STEEL_TANK;
     public static TKCYAMetaTileEntityTankValve STEEL_TANK_VALVE;
     public static TKCYAMetaTileEntityTankValve GALVANIZED_STEEL_TANK_VALVE;
     public static TKCYAMetaTileEntityTankValve STAINLESS_STEEL_TANK_VALVE;
 
-    public static MetaTileEntityModulableMultiblockTank MODULABLE_STEEL_TANK;
+    public static MetaTileEntityModulableMultiblockTank[] MODULABLE_TANK = new MetaTileEntityModulableMultiblockTank[4];
 
 
     public static void init() {
@@ -245,23 +243,6 @@ public class TKCYAMetaTileEntities {
 
         if (TKCYAConfigHolder.storageOverhaul.enableMultiblockTanksOverhaul) {
 
-            WOODEN_TANK = registerMetaTileEntity(startId++, new TKCYAMetaTileEntityMultiblockTank(tkcyaId("multiblock.tank.wood"),
-                    Materials.TreatedWood,
-                    MetaBlocks.STEAM_CASING.getState(BlockSteamCasing.SteamCasingType.WOOD_WALL),
-                    250000));
-            STEEL_TANK = registerMetaTileEntity(startId++, new TKCYAMetaTileEntityMultiblockTank(tkcyaId("multiblock.tank.steel"),
-                    Materials.Steel,
-                    TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.STEEL_WALL),
-                    250000));
-            GALVANIZED_STEEL_TANK = registerMetaTileEntity(startId++, new TKCYAMetaTileEntityMultiblockTank(tkcyaId("multiblock.tank.galvanized_steel"),
-                    TKCYAMaterials.GalvanizedSteel,
-                    TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL),
-                    250000));
-            STAINLESS_STEEL_TANK = registerMetaTileEntity(startId++, new TKCYAMetaTileEntityMultiblockTank(tkcyaId("multiblock.tank.stainless_steel"),
-                    Materials.StainlessSteel,
-                    TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.STAINLESS_STEEL_WALL),
-                    250000));
-
             STEEL_TANK_VALVE = registerMetaTileEntity(startId++, new TKCYAMetaTileEntityTankValve(tkcyaId("multiblock.valve.steel"),
                     Materials.Steel));
             GALVANIZED_STEEL_TANK_VALVE = registerMetaTileEntity(startId++, new TKCYAMetaTileEntityTankValve(tkcyaId("multiblock.valve.galvanized_steel"),
@@ -288,7 +269,7 @@ public class TKCYAMetaTileEntities {
 
         ROASTING_OVEN = registerMetaTileEntity(startId++, new MetaTileEntityRoastingOven(tkcyaId("roasting_oven")));
         SPIRAL_SEPARATOR = registerMetaTileEntity(startId++, new MetaTileEntitySpiralSeparator(tkcyaId("spiral_separator")));
-        
+
         ROASTING_OVEN = registerMetaTileEntity(startId++, new MetaTileEntityRoastingOven(tkcyaId("roasting_oven")));
         SPIRAL_SEPARATOR = registerMetaTileEntity(startId++, new MetaTileEntitySpiralSeparator(tkcyaId("spiral_separator")));
 
@@ -369,12 +350,16 @@ public class TKCYAMetaTileEntities {
         IntStream.range(0, DIESEL_GENERATOR.length )
                 .forEach(i -> DIESEL_GENERATOR[i] = registerMetaTileEntity(12030 + i, new MetaTileEntityDieselGenerator(tkcyaId("diesel_generator." + i), i)));
 
-    }
+        TKCYALog.logger.info("id : {}", startId);
 
-    if (TKCYAConfigHolder.miscOverhaul.enableModulableTanks) {
-        MODULABLE_STEEL_TANK = registerMetaTileEntity(12025, new MetaTileEntityModulableMultiblockTank(tkcyaId("modulable_steel_tank"), true, 1000 * 1000));
-    }
+        if (TKCYAConfigHolder.miscOverhaul.enableModulableTanks) {
+            MODULABLE_TANK[0] = registerMetaTileEntity(12025, new MetaTileEntityModulableMultiblockTank(tkcyaId("modulable_wood_tank"), TreatedWood, 1000 * 1000));
+            MODULABLE_TANK[1] = registerMetaTileEntity(12026, new MetaTileEntityModulableMultiblockTank(tkcyaId("modulable_steel_tank"), Steel, 1000 * 1000));
+            MODULABLE_TANK[2] = registerMetaTileEntity(12027, new MetaTileEntityModulableMultiblockTank(tkcyaId("modulable_galvanized_steel_tank"), TKCYAMaterials.GalvanizedSteel, 1000 * 1000));
+            MODULABLE_TANK[3] = registerMetaTileEntity(12028, new MetaTileEntityModulableMultiblockTank(tkcyaId("modulable_stainless_steel_tank"), StainlessSteel, 1000 * 1000));
+        }
 
+    }
 
     static ResourceLocation tkcyaId(String name) {
         return new ResourceLocation(TekCaysAddon.MODID, name);

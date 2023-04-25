@@ -1,16 +1,9 @@
 package tekcays_addon.common.metatileentities.multi;
 
-import codechicken.lib.raytracer.CuboidRayTraceResult;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregtech.api.capability.impl.FilteredFluidHandler;
-import gregtech.api.capability.impl.FluidHandlerProxy;
 import gregtech.api.capability.impl.FluidTankList;
-import gregtech.api.gui.GuiTextures;
-import gregtech.api.gui.ModularUI;
-import gregtech.api.gui.widgets.LabelWidget;
-import gregtech.api.gui.widgets.TankWidget;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -18,21 +11,13 @@ import gregtech.api.metatileentity.multiblock.MultiblockWithDisplayBase;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
-import gregtech.api.pattern.TraceabilityPredicate;
+import gregtech.api.unification.material.Material;
+import gregtech.api.unification.material.properties.FluidPipeProperties;
+import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
-import gregtech.common.blocks.BlockMetalCasing;
-import gregtech.common.blocks.BlockSteamCasing;
-import gregtech.common.blocks.MetaBlocks;
-import gregtech.common.metatileentities.MetaTileEntities;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
@@ -40,58 +25,48 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
+import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import static gregtech.api.unification.material.Materials.TreatedWood;
 import static gregtech.api.util.RelativeDirection.*;
+import static tekcays_addon.api.metatileentity.Predicates.isAir;
+import static tekcays_addon.api.metatileentity.TankMethods.getBaseTextureForTank;
+import static tekcays_addon.api.metatileentity.TankMethods.*;
 
 public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplayBase {
-
-    private final boolean isMetal;
     private final int capacity;
     private int actualCapacity;
+    private Material material;
 
-    public MetaTileEntityModulableMultiblockTank(ResourceLocation metaTileEntityId, boolean isMetal, int capacity) {
+    public MetaTileEntityModulableMultiblockTank(ResourceLocation metaTileEntityId, Material material, int capacity) {
         super(metaTileEntityId);
-        this.isMetal = isMetal;
+        this.material = material;
         this.capacity = capacity;
-        //resetAbilities();
+        this.actualCapacity = capacity;
+        initializeInventory();
     }
 
-    protected void initializeAbilities() {
-        this.importFluids = new FluidTankList(true, makeFluidTanks());
-        this.exportFluids = importFluids;
-        this.fluidInventory = new FluidHandlerProxy(this.importFluids, this.exportFluids);
-    }
+    @Override
+    protected void initializeInventory() {
+        super.initializeInventory();
 
-    /*
-    protected void resetAbilities() {
-        this.importFluids = new FluidTankList(true);
-        this.exportFluids = importFluids;
-        this.fluidInventory = new FluidHandlerProxy(this.importFluids, this.exportFluids);
-    }
-    
-     */
+        FluidTank tank = createFilteredFluidHandler(actualCapacity, material);
+        FluidTankList tankList = new FluidTankList(true, tank);
 
-    @Nonnull
-    private List<FluidTank> makeFluidTanks() {
-        List<FluidTank> fluidTankList = new ArrayList<>(1);
-        fluidTankList.add(new FilteredFluidHandler(actualCapacity).setFillPredicate(
-                fluidStack -> isMetal || (!fluidStack.getFluid().isGaseous() && fluidStack.getFluid().getTemperature() <= 325)
-        ));
-        return fluidTankList;
+        this.importFluids = tankList;
+        this.exportFluids = tankList;
+        this.fluidInventory = tank;
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTileEntityModulableMultiblockTank(metaTileEntityId, isMetal, capacity);
+        return new MetaTileEntityModulableMultiblockTank(metaTileEntityId, material, capacity);
     }
 
     @Override
@@ -99,6 +74,7 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
      ;
     }
 
+    @Nonnull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
@@ -107,53 +83,23 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
                 .aisle("XXX", "XIX", "XXX").setRepeatable(1,11)
                 .aisle("XXX", "XXX", "XXX")
                 .where('S', selfPredicate())
-                .where('I', isIndicatorPredicate())
-                .where('X', states(getCasingState()).setMinGlobalLimited(23)
-                        .or(metaTileEntities(getValve()).setMaxGlobalLimited(2)))
+                .where('I', isAir("modulableTankHeight"))
+                .where('X', states(getBlockState(material))
+                        .or(metaTileEntities(getValve(material)).setExactLimit(2)))
                 .where(' ', air())
                 .build();
-    }
-
-
-    // This function is highly useful for detecting the length of this multiblock. FROM GTFO
-
-    public static TraceabilityPredicate isIndicatorPredicate() {
-
-        return new TraceabilityPredicate((blockWorldState) -> {
-            if (air().test(blockWorldState)) {
-                blockWorldState.getMatchContext().increment("modulableTankHeight", 1);
-                return true;
-            } else
-                return false;
-        });
     }
 
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
-        initializeAbilities();
         int height = context.getOrDefault("modulableTankHeight", 1) + 1;
         this.actualCapacity = this.capacity * height;
     }
 
-
-    private IBlockState getCasingState() {
-        if (isMetal)
-            return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.STEEL_SOLID);
-        return MetaBlocks.STEAM_CASING.getState(BlockSteamCasing.SteamCasingType.WOOD_WALL);
-    }
-
-    private MetaTileEntity getValve() {
-        if (isMetal)
-            return MetaTileEntities.STEEL_TANK_VALVE;
-        return MetaTileEntities.WOODEN_TANK_VALVE;
-    }
-
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
-        if (isMetal)
-            return Textures.SOLID_STEEL_CASING;
-        return Textures.WOOD_WALL;
+        return getBaseTextureForTank(material);
     }
 
     @Override
@@ -171,8 +117,6 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
                .divide(BigDecimal.valueOf(this.actualCapacity), 1, BigDecimal.ROUND_UP).toString()
                + "% Filled";
     }
-
-
 
     public String getTankContent() {
         return isTankEmpty() ? "Empty"
@@ -194,32 +138,6 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound data) {
-        super.writeToNBT(data);
-        data.setInteger("actualCapacity", this.actualCapacity);
-        return data;
-    }
-
-    @Override
-    public void readFromNBT(NBTTagCompound data) {
-        super.readFromNBT(data);
-        this.actualCapacity = data.getInteger("actualCapacity");
-    }
-
-    @Override
-    public void writeInitialSyncData(PacketBuffer buf) {
-        super.writeInitialSyncData(buf);
-        buf.writeInt(this.actualCapacity);
-    }
-
-    @Override
-    public void receiveInitialSyncData(PacketBuffer buf) {
-        super.receiveInitialSyncData(buf);
-        this.actualCapacity = buf.readInt();
-    }
-
-
-    @Override
     protected void addDisplayText(List<ITextComponent> textList) {
 
         if (!this.isStructureFormed()) {
@@ -235,9 +153,20 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tkcya.multiblock.modulable_tank.tooltip"));
         tooltip.add(I18n.format("tkcya.machine.modulable_tank.capacity", capacity, "per layer."));
+        if (material.equals(TreatedWood)) {
+            tooltip.add(I18n.format("gregtech.fluid_pipe.max_temperature", 340));
+        } else {
+            FluidPipeProperties pipeProperties = material.getProperty(PropertyKey.FLUID_PIPE);
+            if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+                tooltip.add(I18n.format("gregtech.fluid_pipe.max_temperature", pipeProperties.getMaxFluidTemperature()));
+                if (pipeProperties.isAcidProof()) tooltip.add(I18n.format("gregtech.fluid_pipe.acid_proof"));
+            } else {
+                tooltip.add(I18n.format("gregtech.tooltip.fluid_pipe_hold_shift"));
+            }
+        }
     }
 }

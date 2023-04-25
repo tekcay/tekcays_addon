@@ -86,6 +86,13 @@ public class TKCYAMetaTileEntityTankValve extends MetaTileEntityMultiblockPart i
     @Override
     protected void initializeInventory() {
         super.initializeInventory();
+        initializeDummyInventory();
+    }
+
+    /**
+     * When this block is not connected to any multiblock it uses dummy inventory to prevent problems with capability checks
+     */
+    private void initializeDummyInventory() {
         this.fluidInventory = new FluidHandlerProxy(new FluidTankList(false), new FluidTankList(false));
     }
 
@@ -101,11 +108,7 @@ public class TKCYAMetaTileEntityTankValve extends MetaTileEntityMultiblockPart i
     @Override
     public void addToMultiBlock(MultiblockControllerBase controllerBase) {
         super.addToMultiBlock(controllerBase);
-        if (getFrontFacing() == EnumFacing.DOWN) {
-            this.fluidInventory = new FluidHandlerProxy(new FluidTankList(false), controllerBase.getImportFluids());
-        } else {
-            this.fluidInventory = new FluidHandlerProxy(new FluidTankList(false, controllerBase.getImportFluids()), controllerBase.getImportFluids());
-        }
+        this.fluidInventory = controllerBase.getFluidInventory(); //directly use controllers fluid inventory as there is no reason to proxy it
     }
 
     private void reinitializeFluidInventory(EnumFacing facing) {
@@ -120,7 +123,7 @@ public class TKCYAMetaTileEntityTankValve extends MetaTileEntityMultiblockPart i
     @Override
     public void removeFromMultiBlock(MultiblockControllerBase controllerBase) {
         super.removeFromMultiBlock(controllerBase);
-        this.fluidInventory = new FluidHandlerProxy(new FluidTankList(false), new FluidTankList(false));
+        initializeDummyInventory();
     }
 
     @Override
@@ -157,5 +160,18 @@ public class TKCYAMetaTileEntityTankValve extends MetaTileEntityMultiblockPart i
     public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("gregtech.tank_valve.tooltip"));
+    }
+
+
+    @Override
+    public boolean needsSneakToRotate() {
+        return true;
+    }
+
+    @Override
+    public void addToolUsages(ItemStack stack, @Nullable World world, List<String> tooltip, boolean advanced) {
+        tooltip.add(I18n.format("gregtech.tool_action.screwdriver.access_covers"));
+        tooltip.add(I18n.format("gregtech.tool_action.wrench.set_facing"));
+        super.addToolUsages(stack, world, tooltip, advanced);
     }
 }

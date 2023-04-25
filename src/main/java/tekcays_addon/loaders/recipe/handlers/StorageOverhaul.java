@@ -15,13 +15,12 @@ import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
-import static gregtech.api.unification.ore.OrePrefix.plate;
-import static gregtech.api.unification.ore.OrePrefix.stickLong;
+import static gregtech.api.unification.ore.OrePrefix.*;
 import static gregtech.common.blocks.BlockSteamCasing.SteamCasingType.WOOD_WALL;
+import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.*;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.GalvanizedSteel;
 import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.curvedPlate;
 import static tekcays_addon.gtapi.consts.TKCYAValues.DRUM_MATERIALS;
-import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.DRUMS;
 
 public class StorageOverhaul {
 
@@ -41,22 +40,22 @@ public class StorageOverhaul {
     public static void shapesRecipesTanksAndValves() {
 
         //Tanks
-        ModHandler.addShapedRecipe(true, "wood_tank", TKCYAMetaTileEntities.WOODEN_TANK.getStackForm(),
+        ModHandler.addShapedRecipe(true, "wood_tank", MODULABLE_TANK[0].getStackForm(),
                 " R ", "rCs", " R ",
                 'R', new UnificationEntry(OrePrefix.ring, Materials.Lead),
                 'C', MetaBlocks.STEAM_CASING.getItemVariant(WOOD_WALL));
 
-        ModHandler.addShapedRecipe(true, "steel_tank", TKCYAMetaTileEntities.STEEL_TANK.getStackForm(),
+        ModHandler.addShapedRecipe(true, "steel_tank", MODULABLE_TANK[1].getStackForm(),
                 " R ", "hCw", " R ",
                 'R', new UnificationEntry(OrePrefix.ring, Materials.Steel),
                 'C', TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.STEEL_WALL));
 
-        ModHandler.addShapedRecipe(true, "stainless_steel_tank", TKCYAMetaTileEntities.STAINLESS_STEEL_TANK.getStackForm(),
+        ModHandler.addShapedRecipe(true, "stainless_steel_tank", MODULABLE_TANK[3].getStackForm(),
                 " R ", "hCw", " R ",
                 'R', new UnificationEntry(OrePrefix.ring, Materials.StainlessSteel),
                 'C', TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.STAINLESS_STEEL_WALL));
 
-        ModHandler.addShapedRecipe(true, "galvanized_steel_tank", TKCYAMetaTileEntities.GALVANIZED_STEEL_TANK.getStackForm(),
+        ModHandler.addShapedRecipe(true, "galvanized_steel_tank", MODULABLE_TANK[2].getStackForm(),
                 " R ", "hCw", " R ",
                 'R', new UnificationEntry(OrePrefix.ring, TKCYAMaterials.GalvanizedSteel),
                 'C', TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL));

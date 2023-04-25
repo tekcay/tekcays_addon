@@ -209,6 +209,9 @@ tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer
 tkcya.machine.filter.name=Filter
 tkcya.machine.coke_oven=Coke Oven
 
+tkcya.machine.modulable_wood_tank.name=Wood Tank
+tkcya.machine.modulable_galvanized_steel_tank.name=Galvanized Steel Tank
+tkcya.machine.modulable_stainless_steel_tank.name=Stainless Steel Tank
 tkcya.machine.modulable_steel_tank.name=Steel Tank
 
 
