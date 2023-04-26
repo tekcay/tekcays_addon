@@ -1,4 +1,4 @@
-package tekcays_addon.common.metatileentities.multi;
+package tekcays_addon.common.metatileentities.multiblockpart;
 
 import codechicken.lib.raytracer.CuboidRayTraceResult;
 import codechicken.lib.render.CCRenderState;
@@ -161,7 +161,6 @@ public class TKCYAMetaTileEntityTankValve extends MetaTileEntityMultiblockPart i
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("gregtech.tank_valve.tooltip"));
     }
-
 
     @Override
     public boolean needsSneakToRotate() {

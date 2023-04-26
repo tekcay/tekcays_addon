@@ -57,6 +57,14 @@ public class TankMethods {
         return null;
     }
 
+    @Nullable
+    public static int[] getMinMaxPressure(Material material) {
+        if (material.equals(Steel)) return new int[]{0, 20};
+        if (material.equals(GalvanizedSteel)) return new int[]{0, 100};
+        if (material.equals(StainlessSteel)) return new int[]{0, 200};
+        return null;
+    }
+
     public static boolean canContainThisFluid(FluidStack fluid, Material material) {
 
         if (!canHandleFluidTemperature(fluid.getFluid(), material)) return false;

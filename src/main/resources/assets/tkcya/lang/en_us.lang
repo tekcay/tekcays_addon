@@ -214,6 +214,10 @@ tkcya.machine.modulable_galvanized_steel_tank.name=Galvanized Steel Tank
 tkcya.machine.modulable_stainless_steel_tank.name=Stainless Steel Tank
 tkcya.machine.modulable_steel_tank.name=Steel Tank
 
+tkcya.machine.pressurized_galvanized_steel_tank.name=Pressurized Galvanized Steel Tank
+tkcya.machine.pressurized_stainless_steel_tank.name=Pressurized Stainless Steel Tank
+tkcya.machine.pressurized_steel_tank.name=Pressurized Steel Tank
+
 
 # multiblock descriptions
 tkcya.multiblock.primitive_melter.description=A multiblock for melting ores and pure materials using combustible
@@ -562,6 +566,8 @@ tkcya.general.steam_consumer.tooltip.water_output=Max distilled water output: §
 
 #Pressure
 tkcya.general.pressure.tooltip.pressure=Accepts §aPressure§7, up to §e%s§7.
+tkcya.general.pressure.tooltip.current_pressure=Current pressure: %s
+tkcya.general.pressure.tooltip.max_pressure=Max pressure: %s
 tkcya.general.pressure.tooltip.pressure.leak=Loses §a%d L/s§7.
 
 #Covers
@@ -689,7 +695,7 @@ tkcya.multiblock.pattern.error.bricks=§cAll bricks must be the same§rbehavior.
 
 ##Modulable Tanks
 tkcya.multiblock.modulable_tank.tooltip=Fill and drain through the tank valves.
-tkcya.multiblock.modulable_tank.content=Content: %s
+tkcya.multiblock.modulable_tank.content=%s
 tkcya.multiblock.modulable_tank.capacity=Capacity: %d kL
 tkcya.multiblock.modulable_tank.fill.percentage=%s
 tkcya.machine.modulable_tank.capacity=Capacity: %,d L %s

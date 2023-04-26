@@ -5,8 +5,6 @@ import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.util.GTUtility;
-import gregtech.common.blocks.BlockSteamCasing;
-import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.metatileentities.storage.MetaTileEntityDrum;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.TekCaysAddon;
@@ -16,9 +14,7 @@ import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.gtapi.unification.TKCYAMaterials;
 import tekcays_addon.gtapi.utils.FuelHeaterTiers;
 import tekcays_addon.common.TKCYAConfigHolder;
-import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
-import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.metatileentities.multi.*;
 
 import tekcays_addon.common.metatileentities.multiblockpart.*;
@@ -43,6 +39,7 @@ import java.util.stream.IntStream;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.common.metatileentities.MetaTileEntities.*;
 import static tekcays_addon.api.consts.ContainerControllerWrappers.*;
+import static tekcays_addon.gtapi.consts.TKCYAValues.ATMOSPHERIC_PRESSURE;
 import static tekcays_addon.gtapi.render.TKCYATextures.STEAM_CASING;
 import static tekcays_addon.gtapi.utils.BlastFurnaceUtils.BRICKS;
 import static tekcays_addon.gtapi.utils.FuelHeaterTiers.BRICK;
@@ -139,6 +136,7 @@ public class TKCYAMetaTileEntities {
     public static TKCYAMetaTileEntityTankValve STAINLESS_STEEL_TANK_VALVE;
 
     public static MetaTileEntityModulableMultiblockTank[] MODULABLE_TANK = new MetaTileEntityModulableMultiblockTank[4];
+    public static MetaTileEntityPressurizedMultiblockTank[] PRESSURIZED_TANK = new MetaTileEntityPressurizedMultiblockTank[3];
 
 
     public static void init() {
@@ -357,6 +355,10 @@ public class TKCYAMetaTileEntities {
             MODULABLE_TANK[1] = registerMetaTileEntity(12026, new MetaTileEntityModulableMultiblockTank(tkcyaId("modulable_steel_tank"), Steel, 1000 * 1000));
             MODULABLE_TANK[2] = registerMetaTileEntity(12027, new MetaTileEntityModulableMultiblockTank(tkcyaId("modulable_galvanized_steel_tank"), TKCYAMaterials.GalvanizedSteel, 1000 * 1000));
             MODULABLE_TANK[3] = registerMetaTileEntity(12028, new MetaTileEntityModulableMultiblockTank(tkcyaId("modulable_stainless_steel_tank"), StainlessSteel, 1000 * 1000));
+
+            PRESSURIZED_TANK[0] = registerMetaTileEntity(12040, new MetaTileEntityPressurizedMultiblockTank(tkcyaId("pressurized_steel_tank"), Steel, 10 * ATMOSPHERIC_PRESSURE));
+            PRESSURIZED_TANK[1] = registerMetaTileEntity(12041, new MetaTileEntityPressurizedMultiblockTank(tkcyaId("pressurized_galvanized_steel_tank"), TKCYAMaterials.GalvanizedSteel, 50 * ATMOSPHERIC_PRESSURE));
+            PRESSURIZED_TANK[2] = registerMetaTileEntity(12042, new MetaTileEntityPressurizedMultiblockTank(tkcyaId("pressurized_stainless_steel_tank"), StainlessSteel, 100 * ATMOSPHERIC_PRESSURE));
         }
 
     }
