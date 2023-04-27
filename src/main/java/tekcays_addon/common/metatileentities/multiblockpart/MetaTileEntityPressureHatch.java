@@ -66,10 +66,6 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
         pressureContainer.setPressure();
     }
 
-    public IPressureContainer getPressureContainer() {
-        return this.pressureContainer;
-    }
-
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);

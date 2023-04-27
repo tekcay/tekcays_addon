@@ -33,6 +33,20 @@ tkcya.machine.rotation_compressor.3.name=Rotation Compressor IV
 tkcya.machine.rotation_compressor.4.name=Rotation Compressor V
 tkcya.machine.rotation_compressor.5.name=Rotation Compressor VI
 
+tkcya.machine.decompressor.0.name=Decompressor I
+tkcya.machine.decompressor.1.name=Decompressor II
+tkcya.machine.decompressor.2.name=Decompressor III
+tkcya.machine.decompressor.3.name=Decompressor IV
+tkcya.machine.decompressor.4.name=Decompressor V
+tkcya.machine.decompressor.5.name=Decompressor VI
+
+tkcya.machine.decompression_hatch.0.name=Decompression Hatch I
+tkcya.machine.decompression_hatch.1.name=Decompression Hatch II
+tkcya.machine.decompression_hatch.2.name=Decompression Hatch III
+tkcya.machine.decompression_hatch.3.name=Decompression Hatch IV
+tkcya.machine.decompression_hatch.4.name=Decompression Hatch V
+tkcya.machine.decompression_hatch.5.name=Decompression Hatch VI
+
 tkcya.machine.advanced_polarizer.lv.name=Polarizer LV
 tkcya.machine.advanced_polarizer.mv.name=Polarizer MV
 tkcya.machine.advanced_polarizer.hv.name=Polarizer HV
@@ -699,3 +713,7 @@ tkcya.multiblock.modulable_tank.content=%s
 tkcya.multiblock.modulable_tank.capacity=Capacity: %d kL
 tkcya.multiblock.modulable_tank.fill.percentage=%s
 tkcya.machine.modulable_tank.capacity=Capacity: %,d L %s
+
+##Pressurized Tank
+tkcya.multiblock.pressurized_tank.explosion=Explodes if the pressure exceeds max pressure.
+tkcya.multiblock.pressurized_tank.volume_layer=Each additional layer in the structure increase the volume of stored gas that can be stored.

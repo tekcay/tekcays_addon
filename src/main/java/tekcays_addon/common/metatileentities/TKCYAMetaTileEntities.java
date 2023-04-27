@@ -67,6 +67,10 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityPressureHatch[] PRESSURE_HATCH = new MetaTileEntityPressureHatch[PRESSURE_HATCH_MAX_TIER + 1];
     public static MetaTileEntityVacuumHatch[] VACUUM_HATCH = new MetaTileEntityVacuumHatch[PRESSURE_HATCH_MAX_TIER + 1];
 
+    //DECOMPRESSORS
+    public static MetaTileEntityDecompressor[] DECOMPRESSOR = new MetaTileEntityDecompressor[MAX_TIER];
+    public static MetaTileEntityDecompressionHatch[] DECOMPRESSION_HATCH = new MetaTileEntityDecompressionHatch[MAX_TIER];
+
     //ELECTRIC PRESSURE COMPRESSOR
     public static int PRESSURE_COMPRESSOR_SINGLE_MAX_TIER = GTValues.IV;
     public static String[] ELECTRIC_PRESSURE_COMPRESSORS_TYPE = {"electric_vacuum_pump.", "electric_compressor."};
@@ -360,6 +364,12 @@ public class TKCYAMetaTileEntities {
             PRESSURIZED_TANK[1] = registerMetaTileEntity(12041, new MetaTileEntityPressurizedMultiblockTank(tkcyaId("pressurized_galvanized_steel_tank"), TKCYAMaterials.GalvanizedSteel, 50 * ATMOSPHERIC_PRESSURE));
             PRESSURIZED_TANK[2] = registerMetaTileEntity(12042, new MetaTileEntityPressurizedMultiblockTank(tkcyaId("pressurized_stainless_steel_tank"), StainlessSteel, 100 * ATMOSPHERIC_PRESSURE));
         }
+
+        IntStream.range(0, DECOMPRESSOR.length )
+                .forEach(i -> DECOMPRESSOR[i] = registerMetaTileEntity(12050 + i, new MetaTileEntityDecompressor(tkcyaId("decompressor." + i), i)));
+
+        IntStream.range(0, DECOMPRESSION_HATCH.length )
+                .forEach(i -> DECOMPRESSION_HATCH[i] = registerMetaTileEntity(12060 + i, new MetaTileEntityDecompressionHatch(tkcyaId("decompression_hatch." + i), i)));
 
     }
 

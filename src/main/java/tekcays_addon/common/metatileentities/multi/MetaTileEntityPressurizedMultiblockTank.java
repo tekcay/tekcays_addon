@@ -25,12 +25,14 @@ import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
 import tekcays_addon.api.units.IPressureFormatting;
 import tekcays_addon.gtapi.capability.containers.IPressureContainer;
+import tekcays_addon.gtapi.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static gregtech.api.unification.material.Materials.Hydrogen;
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.metatileentity.Predicates.isAir;
 import static tekcays_addon.api.metatileentity.TankMethods.*;
@@ -72,7 +74,16 @@ public class MetaTileEntityPressurizedMultiblockTank extends MultiblockWithDispl
 
     @Override
     protected void updateFormedValid() {
-        if (getOffsetTimer() % 20 == 0) this.pressureContainer = getPressureContainer();
+        if (getOffsetTimer() % 20 == 0) {
+            pressureContainer = getPressureContainer();
+            if (pressureContainer != null) {
+                //pressureContainer.changePressurizedFluidStack(Hydrogen.getFluid(1), 10);
+
+                if (pressureContainer.getPressure() > maxPressure) {
+                    this.explodeMultiblock(5);
+                }
+            }
+        }
     }
 
     @Nonnull
@@ -87,6 +98,7 @@ public class MetaTileEntityPressurizedMultiblockTank extends MultiblockWithDispl
                 .where('I', isAir("height"))
                 .where('X', states(getBlockState(material))
                         .or(abilities(PRESSURE_CONTAINER).setExactLimit(1))
+                        .or(abilities(DECOMPRESSOR_CONTAINER).setExactLimit(1))
                         .or(abilities(CONTAINER_CONTROL).setMaxGlobalLimited(1)))
                 .where(' ', air())
                 .build();
@@ -160,6 +172,7 @@ public class MetaTileEntityPressurizedMultiblockTank extends MultiblockWithDispl
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tkcya.multiblock.modulable_tank.tooltip"));
         tooltip.add(I18n.format("tkcya.general.pressure.tooltip.max_pressure", getPressureWithUnit(maxPressure)));
-        //tooltip.add(I18n.format("tkcya.machine.modulable_tank.capacity", capacity, "per layer."));
+        tooltip.add(I18n.format("tkcya.multiblock.pressurized_tank.volume_layer"));
+        tooltip.add(I18n.format("tkcya.multiblock.pressurized_tank.explosion"));
     }
 }

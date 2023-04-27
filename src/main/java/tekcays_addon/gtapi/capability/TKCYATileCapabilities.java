@@ -25,6 +25,9 @@ public class TKCYATileCapabilities {
     @CapabilityInject(ISteamConsumer.class)
     public static Capability<ISteamConsumer> CAPABILITY_STEAM_CONSUMER_CONTAINER = null;
 
+    @CapabilityInject(IDecompression.class)
+    public static Capability<IDecompression> CAPABILITY_DECOMPRESSION_CONTAINER = null;
+
 
     public static void init() {
         SimpleCapabilityManager.registerCapabilityWithNoDefault(IHeatContainer.class);
@@ -33,6 +36,7 @@ public class TKCYATileCapabilities {
         SimpleCapabilityManager.registerCapabilityWithNoDefault(IContainerDetector.class);
         SimpleCapabilityManager.registerCapabilityWithNoDefault(IRotationContainer.class);
         SimpleCapabilityManager.registerCapabilityWithNoDefault(ISteamConsumer.class);
+        SimpleCapabilityManager.registerCapabilityWithNoDefault(IDecompression.class);
     }
 
 }
