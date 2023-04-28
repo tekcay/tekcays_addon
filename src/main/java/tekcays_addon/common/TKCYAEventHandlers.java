@@ -9,7 +9,6 @@ import gregtech.api.GregTechAPI;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import tekcays_addon.gtapi.utils.MaterialHelper;
 
 @Mod.EventBusSubscriber(modid = TekCaysAddon.MODID)
 public class TKCYAEventHandlers {
@@ -20,14 +19,10 @@ public class TKCYAEventHandlers {
         TKCYAPropertyAddition.init();
         OreDictAdditions.misc();
         TKCYAOrePrefixAdditions.miscInit();
-        MaterialHelper.init();
-
 
         if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
             TKCYAOrePrefixAdditions.moldsInit();
             TKCYAOrePrefixAdditions.moldsTooltip();
-
-
         }
     }
 

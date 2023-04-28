@@ -41,10 +41,6 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
     protected int minPressure;
     protected int maxPressure;
 
-    /**
-     * Default Pressure container
-     * {@link IPressureContainer}
-     */
     public PressureContainer(MetaTileEntity metaTileEntity) {
         super(metaTileEntity);
     }
@@ -56,6 +52,11 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
     public PressureContainer(MetaTileEntity metaTileEntity, int minPressure, int maxPressure) {
         super(metaTileEntity);
         this.minPressure = minPressure;
+        this.maxPressure = maxPressure;
+    }
+
+    public PressureContainer(MetaTileEntity metaTileEntity, int maxPressure) {
+        super(metaTileEntity);
         this.maxPressure = maxPressure;
     }
 

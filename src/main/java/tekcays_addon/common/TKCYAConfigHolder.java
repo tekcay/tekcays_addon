@@ -63,6 +63,9 @@ public class TKCYAConfigHolder {
         @Config.Comment({"Rotors can not be made in extruder anymore, they also require curved plates adds a recipe in the assembler", "Default: true"})
         public boolean enableHarderRotors = true;
 
+        @Config.Comment({"Multiblock tanks capacity depends of their height", "Default: true"})
+        public boolean enableModulableTanks = true;
+
     }
 
     public static class MachinesOptions {

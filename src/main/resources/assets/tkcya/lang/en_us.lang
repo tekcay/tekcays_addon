@@ -33,6 +33,20 @@ tkcya.machine.rotation_compressor.3.name=Rotation Compressor IV
 tkcya.machine.rotation_compressor.4.name=Rotation Compressor V
 tkcya.machine.rotation_compressor.5.name=Rotation Compressor VI
 
+tkcya.machine.decompressor.0.name=Decompressor I
+tkcya.machine.decompressor.1.name=Decompressor II
+tkcya.machine.decompressor.2.name=Decompressor III
+tkcya.machine.decompressor.3.name=Decompressor IV
+tkcya.machine.decompressor.4.name=Decompressor V
+tkcya.machine.decompressor.5.name=Decompressor VI
+
+tkcya.machine.decompression_hatch.0.name=Decompression Hatch I
+tkcya.machine.decompression_hatch.1.name=Decompression Hatch II
+tkcya.machine.decompression_hatch.2.name=Decompression Hatch III
+tkcya.machine.decompression_hatch.3.name=Decompression Hatch IV
+tkcya.machine.decompression_hatch.4.name=Decompression Hatch V
+tkcya.machine.decompression_hatch.5.name=Decompression Hatch VI
+
 tkcya.machine.advanced_polarizer.lv.name=Polarizer LV
 tkcya.machine.advanced_polarizer.mv.name=Polarizer MV
 tkcya.machine.advanced_polarizer.hv.name=Polarizer HV
@@ -209,6 +223,15 @@ tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer
 tkcya.machine.filter.name=Filter
 tkcya.machine.coke_oven=Coke Oven
 
+tkcya.machine.modulable_wood_tank.name=Wood Tank
+tkcya.machine.modulable_galvanized_steel_tank.name=Galvanized Steel Tank
+tkcya.machine.modulable_stainless_steel_tank.name=Stainless Steel Tank
+tkcya.machine.modulable_steel_tank.name=Steel Tank
+
+tkcya.machine.pressurized_galvanized_steel_tank.name=Pressurized Galvanized Steel Tank
+tkcya.machine.pressurized_stainless_steel_tank.name=Pressurized Stainless Steel Tank
+tkcya.machine.pressurized_steel_tank.name=Pressurized Steel Tank
+
 
 # multiblock descriptions
 tkcya.multiblock.primitive_melter.description=A multiblock for melting ores and pure materials using combustible
@@ -286,7 +309,6 @@ recipemap.steam_autoclave.name=Autoclave
 recipemap.diesel_generator.name=Diesel generator
 
 # Materials
-
 material.unpure_bronze=Unpure Bronze
 material.unpure_steel=Unpure Steel
 material.unpure_copper=Unpure Copper
@@ -552,12 +574,17 @@ tkcya.general.rotation.speed=Speed: %d rpm
 tkcya.general.rotation.torque=Torque: %d Nm
 tkcya.general.rotation.power=Power: %d W
 
+tkcya.general.transfer_rate=Base transfer rate: %d L/t
+tkcya.general.fluid_capacity=Fluid capacity: %d L.
+
 #Steam consumer
 tkcya.general.steam_consumer.tooltip.steam_input=Max steam consumption: §f%d L/s§7
 tkcya.general.steam_consumer.tooltip.water_output=Max distilled water output: §f%d L/s§7
 
 #Pressure
 tkcya.general.pressure.tooltip.pressure=Accepts §aPressure§7, up to §e%s§7.
+tkcya.general.pressure.tooltip.current_pressure=Current pressure: %s
+tkcya.general.pressure.tooltip.max_pressure=Max pressure: %s
 tkcya.general.pressure.tooltip.pressure.leak=Loses §a%d L/s§7.
 
 #Covers
@@ -681,3 +708,24 @@ behavior.tricorder.speed=Speed: %d rpm
 # Errors
 
 tkcya.multiblock.pattern.error.bricks=§cAll bricks must be the same§rbehavior.tricorder.speed=Speed: %d rpm
+
+
+##Modulable Tanks
+tkcya.multiblock.modulable_tank.tooltip=Fill and drain through the tank valves.
+tkcya.multiblock.modulable_tank.content=%s
+tkcya.multiblock.modulable_tank.capacity=Capacity: %d kL
+tkcya.multiblock.modulable_tank.fill.percentage=%s
+tkcya.machine.modulable_tank.capacity=Capacity: %,d L %s
+
+#Decompressor
+tkcya.machine.decompressor.tooltip.1=Decompresses pressurized FluidStack.
+tkcya.machine.decompressor.tooltip.2=FRONT FACE auto-outputs fluid.
+tkcya.machine.decompressor.tooltip.3=ANY FACE can be connected to a Decompression Hatch.
+
+#Decompression Hatch
+tkcya.machine.decompression_hatch.tooltip.1=Provides a way to interact with a pressurized gas container.
+tkcya.machine.decompression_hatch.tooltip.2=Connect it to a Decompressor in order to retrieve th pressurized gas.
+
+##Pressurized Tank
+tkcya.multiblock.pressurized_tank.explosion=Explodes if the pressure exceeds max pressure.
+tkcya.multiblock.pressurized_tank.volume_layer=Each additional layer in the structure increase the volume of stored gas that can be stored.

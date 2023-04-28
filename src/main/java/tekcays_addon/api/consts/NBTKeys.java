@@ -18,4 +18,6 @@ public class NBTKeys {
     public static final String IS_INVERTED_KEY = "isInverted";
     public static final String THRESHOLD_KEY = "threshold";
     public static final String CURRENT_VALUE_KEY = "threshold";
+    public static final String IS_ACTIVE = "isActive";
+    public static final String IS_ABLE_TO_DECOMPRESS = "isAbletoDecompress";
 }
