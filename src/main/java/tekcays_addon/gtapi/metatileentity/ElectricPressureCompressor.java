@@ -10,6 +10,7 @@ import gregtech.api.capability.IActiveOutputSide;
 import gregtech.api.capability.impl.NotifiableFluidTank;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
+import gregtech.api.gui.widgets.AdvancedTextWidget;
 import gregtech.api.gui.widgets.LabelWidget;
 import gregtech.api.gui.widgets.TankWidget;
 import gregtech.api.util.GTUtility;
@@ -19,6 +20,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.IFluidTank;
@@ -63,11 +66,15 @@ public abstract class ElectricPressureCompressor extends WrenchAbleTieredMetaTil
 
     protected abstract int getCurrentTransferRate();
 
+    protected void displayTransferRate(List<ITextComponent> textList) {
+        textList.add(new TextComponentString(String.format("Transfer rate: %d L/t", getCurrentTransferRate())));
+    }
+
     protected ModularUI.Builder createUITemplate(EntityPlayer entityPlayer) {
         return ModularUI.builder(GuiTextures.BACKGROUND, 176, 166)
                 .shouldColor(false)
                 .widget(new LabelWidget(5, 5, getMetaFullName()))
-                .widget(new LabelWidget(5, 25, String.format("Transfer rate: %d L/t", getCurrentTransferRate())))
+                .widget(new AdvancedTextWidget(5, 25, this::displayTransferRate, 0))
                 .widget(new TankWidget(fluidTank, 20, 60, 18, 18)
                         .setBackgroundTexture(GuiTextures.FLUID_SLOT)
                         .setAlwaysShowFull(true)

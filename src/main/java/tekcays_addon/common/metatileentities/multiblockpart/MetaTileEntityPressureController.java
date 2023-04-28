@@ -38,7 +38,6 @@ import java.util.function.Supplier;
 
 import static tekcays_addon.api.consts.DetectorModes.*;
 import static tekcays_addon.api.consts.UnitSymbol.BAR;
-import static tekcays_addon.gtapi.consts.TKCYAValues.ATMOSPHERIC_PRESSURE;
 import static tekcays_addon.gtapi.consts.TKCYAValues.MAX_PRESSURE;
 
 @Getter
@@ -68,10 +67,6 @@ public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPa
         }
     }
 
-    private int getPressureThresholdInBar() {
-        return (int) (this.threshold * ATMOSPHERIC_PRESSURE);
-    }
-
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
@@ -90,19 +85,6 @@ public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPa
         tooltip.add(I18n.format("tkcya.machine.pressure_controller.tooltip.1"));
     }
 
-    /*
-    @Override
-    public MultiblockAbility<IContainerControl> getAbility() {
-        return TKCYAMultiblockAbility.CONTAINER_CONTROL;
-    }
-
-    @Override
-    public void registerAbilities(List<IContainerControl> abilityList) {
-        abilityList.add(pressureControl);
-    }
-
-     */
-
     @Override
     @Nullable
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
@@ -116,7 +98,6 @@ public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPa
     protected ModularUI createUI(EntityPlayer entityPlayer) {
         return createUIHelper(entityPlayer);
     }
-
 
     @Override
     public String getUITitle() {
