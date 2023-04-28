@@ -4,44 +4,33 @@ import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
 import gregtech.api.gui.ModularUI;
-import gregtech.api.metatileentity.IDataInfoProvider;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.MultiblockControllerBase;
-import gregtech.api.util.GTTransferUtils;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import tekcays_addon.api.units.IPressureFormatting;
 import tekcays_addon.common.metatileentities.multi.MetaTileEntityPressurizedMultiblockTank;
-import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
-import tekcays_addon.gtapi.capability.containers.IContainerDetector;
 import tekcays_addon.gtapi.capability.containers.IDecompression;
 import tekcays_addon.gtapi.capability.containers.IPressureContainer;
-import tekcays_addon.gtapi.capability.impl.PressureContainer;
 import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
-import tekcays_addon.gtapi.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static gregtech.api.unification.material.Materials.Steam;
 import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_DECOMPRESSION_CONTAINER;
-import static tekcays_addon.gtapi.consts.TKCYAValues.ATMOSPHERIC_PRESSURE;
 
 public class MetaTileEntityDecompressionHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IDecompression> {
 
@@ -92,7 +81,6 @@ public class MetaTileEntityDecompressionHatch extends MetaTileEntityMultiblockPa
                 IFluidHandler fluidHandler = decompression.getFluidHandler();
                 if (fluidHandler == null) return;
 
-                fluidHandler.fill(Steam.getFluid(10), true);
                 int filledAmount = fluidHandler.fill(fluidStack, true);
                 if (filledAmount == 0) {
                     decompression.setActivity(false);
@@ -118,6 +106,8 @@ public class MetaTileEntityDecompressionHatch extends MetaTileEntityMultiblockPa
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
+        tooltip.add(I18n.format("tkcya.machine.decompression_hatch.tooltip.1"));
+        tooltip.add(I18n.format("tkcya.general.transfer_rate", transferRate));
         super.addInformation(stack, player, tooltip, advanced);
     }
 

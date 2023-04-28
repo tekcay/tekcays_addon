@@ -574,6 +574,9 @@ tkcya.general.rotation.speed=Speed: %d rpm
 tkcya.general.rotation.torque=Torque: %d Nm
 tkcya.general.rotation.power=Power: %d W
 
+tkcya.general.transfer_rate=Base transfer rate: %d L/t
+tkcya.general.fluid_capacity=Fluid capacity: %d L.
+
 #Steam consumer
 tkcya.general.steam_consumer.tooltip.steam_input=Max steam consumption: §f%d L/s§7
 tkcya.general.steam_consumer.tooltip.water_output=Max distilled water output: §f%d L/s§7
@@ -713,6 +716,15 @@ tkcya.multiblock.modulable_tank.content=%s
 tkcya.multiblock.modulable_tank.capacity=Capacity: %d kL
 tkcya.multiblock.modulable_tank.fill.percentage=%s
 tkcya.machine.modulable_tank.capacity=Capacity: %,d L %s
+
+#Decompressor
+tkcya.machine.decompressor.tooltip.1=Decompresses pressurized FluidStack.
+tkcya.machine.decompressor.tooltip.2=FRONT FACE auto-outputs fluid.
+tkcya.machine.decompressor.tooltip.3=ANY FACE can be connected to a Decompression Hatch.
+
+#Decompression Hatch
+tkcya.machine.decompression_hatch.tooltip.1=Provides a way to interact with a pressurized gas container.
+tkcya.machine.decompression_hatch.tooltip.2=Connect it to a Decompressor in order to retrieve th pressurized gas.
 
 ##Pressurized Tank
 tkcya.multiblock.pressurized_tank.explosion=Explodes if the pressure exceeds max pressure.

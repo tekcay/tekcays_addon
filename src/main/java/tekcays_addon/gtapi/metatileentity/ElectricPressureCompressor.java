@@ -26,7 +26,6 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.apache.commons.lang3.ArrayUtils;
 import tekcays_addon.api.metatileentity.WrenchAbleTieredMetaTileEntity;
-import tekcays_addon.gtapi.capability.containers.IVacuumContainer;
 import tekcays_addon.gtapi.render.TKCYATextures;
 
 import javax.annotation.Nonnull;
@@ -116,8 +115,8 @@ public abstract class ElectricPressureCompressor extends WrenchAbleTieredMetaTil
         super.addInformation(stack, player, tooltip, advanced);
         if (canHandleVacuum) tooltip.add(I18n.format("tkcya.machine.electric_pressure_compressor.vacuum.tooltip.description"));
         else tooltip.add(I18n.format("tkcya.machine.electric_pressure_compressor.pressure.tooltip.description"));
-        tooltip.add(I18n.format("tkcya.machine.electric_pressure_compressor.tooltip.transfer", BASE_TRANSFER_RATE));
-        tooltip.add(I18n.format("tkcya.machine.electric_pressure_compressor.tooltip.fluid_capacity", fluidCapacity));
+        tooltip.add(I18n.format("tkcya.general.transfer_rate", BASE_TRANSFER_RATE));
+        tooltip.add(I18n.format("tkcya.general.fluid_capacity", fluidCapacity));
         tooltip.add(I18n.format("gregtech.universal.tooltip.max_voltage_in", energyContainer.getInputVoltage(), GTValues.VNF[getTier()]));
         tooltip.add(I18n.format("tkcya.machine.tooltip.consumption", ENERGY_BASE_CONSUMPTION));
         tooltip.add(I18n.format("gregtech.universal.tooltip.energy_storage_capacity", energyContainer.getEnergyCapacity()));

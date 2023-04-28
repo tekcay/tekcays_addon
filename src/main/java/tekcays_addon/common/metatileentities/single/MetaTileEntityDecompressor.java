@@ -15,60 +15,67 @@ import gregtech.api.gui.widgets.TankWidget;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.TieredMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.util.GTTransferUtils;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
-import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import gregtech.core.sound.GTSoundEvents;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidTank;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.apache.commons.lang3.ArrayUtils;
-import tekcays_addon.api.metatileentity.WrenchAbleTieredMetaTileEntity;
 import tekcays_addon.gtapi.capability.containers.IDecompression;
 import tekcays_addon.gtapi.capability.impl.DecompressionContainer;
-import tekcays_addon.gtapi.render.TKCYATextures;
+import tekcays_addon.gtapi.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class MetaTileEntityDecompressor extends WrenchAbleTieredMetaTileEntity implements IActiveOutputSide {
+public class MetaTileEntityDecompressor extends TieredMetaTileEntity implements IActiveOutputSide {
 
-    private IFluidTank exportFluidTank;
+    private IFluidTank importFluidTank;
     private final IDecompression decompression;
     private final int tankCapacity;
     private EnumFacing outputSide;
+    private final int tier;
     private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()]);
 
     public MetaTileEntityDecompressor(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
+        this.tier = tier;
         this.tankCapacity = 1000 * (tier + 1);
         super.initializeInventory();
         this.decompression = new DecompressionContainer(this, fluidInventory);
-        this.outputSide = getFrontFacing().getOpposite();
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
         return new MetaTileEntityDecompressor(metaTileEntityId, tier);
     }
-    
+
     @Override
     public FluidTankList createImportFluidHandler() {
-        this.exportFluidTank = new NotifiableFluidTank(tankCapacity, this, true);
-        return new FluidTankList(false, exportFluidTank);
+        this.importFluidTank = new NotifiableFluidTank(tankCapacity, this, false);
+        return new FluidTankList(false, importFluidTank);
     }
 
     @Override
     public void update() {
         super.update();
+        if (isBlockRedstonePowered()) {
+            decompression.setActivity(false);
+            decompression.setCompressAbility(false);
+            return;
+        }
         if (energyContainer.getEnergyStored() > ENERGY_BASE_CONSUMPTION) {
             decompression.setCompressAbility(true);
         }
@@ -76,7 +83,18 @@ public class MetaTileEntityDecompressor extends WrenchAbleTieredMetaTileEntity i
             decompression.setCompressAbility(false);
             return;
         }
-            if (decompression.isActive()) energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
+            if (decompression.isActive()) {
+                energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
+                BlockPos pos = this.getPos().offset(getFrontFacing());
+                TileEntity tileEntity = getWorld().getTileEntity(pos);
+                if (tileEntity == null) return;
+
+                IFluidHandler fluidHandler = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, getFrontFacing().getOpposite());
+                if (fluidHandler == null) return;
+
+                GTTransferUtils.transferFluids(importFluids, fluidHandler);
+                pushFluidsIntoNearbyHandlers(getFrontFacing());
+            }
     }
 
     @Override
@@ -87,7 +105,7 @@ public class MetaTileEntityDecompressor extends WrenchAbleTieredMetaTileEntity i
     protected ModularUI.Builder createUITemplate(@Nonnull EntityPlayer entityPlayer) {
         return ModularUI.defaultBuilder()
                 .widget(new LabelWidget(6, 6, getMetaFullName()))
-                .widget(new TankWidget(exportFluidTank, 52, 18, 72, 61)
+                .widget(new TankWidget(importFluidTank, 52, 18, 72, 61)
                         .setBackgroundTexture(GuiTextures.SLOT)
                         .setContainerClicking(true, true))
                 .bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 0);
@@ -99,12 +117,18 @@ public class MetaTileEntityDecompressor extends WrenchAbleTieredMetaTileEntity i
         IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline, new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
         getBaseRenderer().render(renderState, translation, colouredPipeline);
         Textures.PIPE_OUT_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
-        TKCYATextures.ROTATION_WATER_OUTPUT_OVERLAY.renderSided(getOutputSide(), renderState, translation, pipeline);
     }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
-        tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.1"));
+        tooltip.add(I18n.format("tkcya.machine.decompressor.tooltip.1"));
+        tooltip.add(I18n.format("tkcya.machine.decompressor.tooltip.2"));
+        tooltip.add(I18n.format("tkcya.machine.decompressor.tooltip.3"));
+        tooltip.add(I18n.format("tkcya.general.fluid_capacity", tankCapacity));
+        tooltip.add(I18n.format("gregtech.universal.tooltip.max_voltage_in", energyContainer.getInputVoltage(), GTValues.VNF[getTier()]));
+        tooltip.add(I18n.format("tkcya.machine.tooltip.consumption", ENERGY_BASE_CONSUMPTION));
+        tooltip.add(I18n.format("gregtech.universal.tooltip.energy_storage_capacity", energyContainer.getEnergyCapacity()));
+        tooltip.add(I18n.format("tkcya.machine.redstone.inverse.tooltip"));
         super.addInformation(stack, player, tooltip, advanced);
     }
 
