@@ -5,6 +5,7 @@ import gregtech.api.worldgen.config.IWorldgenDefinition;
 import gregtech.api.worldgen.config.OreDepositDefinition;
 import gregtech.api.worldgen.config.WorldConfigUtils;
 import lombok.Getter;
+import lombok.ToString;
 import net.minecraft.world.WorldProvider;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -16,6 +17,7 @@ import java.util.function.Predicate;
 import static tekcays_addon.gtapi.consts.DepositValues.*;
 
 @Getter
+@ToString
 public class FluidDepositDefinition implements IWorldgenDefinition {
 
     private static final String NAME = "name";

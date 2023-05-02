@@ -15,6 +15,7 @@ public class DepositValues {
     public static final String MAX_DEPTH = "max_depth";
     public static final String WEIGHT = "weight";
     public static final String FLUID = "fluid";
+    public static final String DIM_ID = "dim_id";
 
     public static final String ORE_DEPOSITS = "ore_deposits";
 

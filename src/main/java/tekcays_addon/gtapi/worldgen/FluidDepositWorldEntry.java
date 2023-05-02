@@ -9,7 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import javax.annotation.Nonnull;
 
 import static tekcays_addon.gtapi.consts.DepositValues.*;
-import static tekcays_addon.gtapi.worldgen.FluidDepositHandler.veinList2;
+import static tekcays_addon.gtapi.worldgen.FluidDepositHandler.fluidDepositionToWeight;
 
 @Getter
 @Setter
@@ -42,7 +42,7 @@ public class FluidDepositWorldEntry {
 
         if (tag.hasKey(VEIN)) {
             String s = tag.getString(VEIN);
-            for (FluidDepositDefinition definition : veinList2.keySet()) {
+            for (FluidDepositDefinition definition : fluidDepositionToWeight.keySet()) {
                 if (s.equalsIgnoreCase(definition.getDepositName()))
                     info.fluidDepositDefinition = definition;
             }

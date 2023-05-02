@@ -3,14 +3,11 @@ package tekcays_addon.gtapi.worldgen;
 import gregtech.api.GregTechAPI;
 import gregtech.api.util.XSTR;
 import gregtech.api.worldgen.bedrockFluids.ChunkPosDimension;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldProvider;
-import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
-import tekcays_addon.gtapi.network.PacketFluidDepositList;
+import tekcays_addon.gtapi.network.PacketFluidDepositToDimension;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -18,7 +15,7 @@ import java.util.*;
 
 public class FluidDepositHandler {
 
-    public final static LinkedHashMap<FluidDepositDefinition, Integer> veinList2 = new LinkedHashMap<>();
+    public final static LinkedHashMap<FluidDepositDefinition, Integer> fluidDepositionToWeight = new LinkedHashMap<>();
     private final static Map<Integer, HashMap<Integer, Integer>> totalWeightMap = new HashMap<>();
     public final static List<FluidDepositDefinition> veinList = new ArrayList<>();
     public static HashMap<ChunkPosDimension, FluidDepositWorldEntry> veinCache = new HashMap<>();
@@ -45,18 +42,15 @@ public class FluidDepositHandler {
 
             int query = world.getChunk(chunkX / VEIN_CHUNK_SIZE, chunkZ / VEIN_CHUNK_SIZE).getRandomWithSeed(90210).nextInt();
 
-            int totalWeight = getTotalWeight(world.provider, biome);
-            if (totalWeight > 0) {
-                int weight = Math.abs(query % totalWeight);
-
+            int weight = query;
 
                 veinList.forEach(fluidDepositDefinition -> {
 
 
                 });
 
-                for (Map.Entry<FluidDepositDefinition, Integer> entry : veinList2.entrySet()) {
-                    int veinWeight = entry.getValue() + entry.getKey().getBiomeWeightModifier().apply(biome);
+                for (Map.Entry<FluidDepositDefinition, Integer> entry : fluidDepositionToWeight.entrySet()) {
+                    int veinWeight = entry.getValue();
                     if (veinWeight > 0 && entry.getKey().getDimensionFilter().test(world.provider)) {
                         weight -= veinWeight;
                         if (weight < 0) {
@@ -67,6 +61,7 @@ public class FluidDepositHandler {
                 }
             }
 
+        /*
             Random random = new XSTR(31L * 31 * chunkX + chunkZ * 31L + Long.hashCode(world.getSeed()));
 
             int currentFluidAmount = 0;
@@ -94,14 +89,19 @@ public class FluidDepositHandler {
             worldEntry = new FluidDepositWorldEntry(definition, currentFluidAmount, depth);
             veinCache.put(coords, worldEntry);
         }
+
+         */
         return worldEntry;
     }
+
 
     /**
      * Gets the total weight of all veins for the given dimension ID and biome type
      * @param provider The WorldProvider whose dimension to check
      * @return The total weight associated with the dimension/biome pair
      */
+
+    /*
     public static int getTotalWeight(@Nonnull WorldProvider provider) {
         int dim = provider.getDimension();
         if (!totalWeightMap.containsKey(dim)) {
@@ -125,12 +125,15 @@ public class FluidDepositHandler {
         return totalWeight;
     }
 
+     */
+
+
     /**
      * Adds a vein to the pool of veins
      * @param definition the vein to add
      */
     public static void addFluidDeposit(FluidDepositDefinition definition) {
-        veinList2.put(definition, definition.getWeight());
+        fluidDepositionToWeight.put(definition, definition.getWeight());
     }
 
     public static void recalculateChances(boolean mutePackets) {
@@ -141,7 +144,7 @@ public class FluidDepositHandler {
                 if (entry.getKey() != null && entry.getValue() != null)
                     packetMap.put(entry.getValue(), entry.getValue().getFluidDepositDefinition().getWeight());
             }
-            GregTechAPI.networkHandler.sendToAll(new PacketFluidDepositList(packetMap));
+            GregTechAPI.networkHandler.sendToAll(new PacketFluidDepositToDimension(packetMap));
         }
     }
 

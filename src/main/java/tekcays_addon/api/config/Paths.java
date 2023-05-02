@@ -20,6 +20,6 @@ public class Paths {
     public static final Path TKCYA_CONFIG_WORLDGEN_PATH = TKCYA_CONFIG_PATH.resolve(WORLDGEN);
     public static final Path TKCYA_CONFIG_FLUID_DEPOSIT_PATH = TKCYA_CONFIG_WORLDGEN_PATH.resolve(FLUID_DEPOSITS);
     public static final Path TKCYA_CONFIG_ORE_DEPOSIT_PATH = TKCYA_CONFIG_WORLDGEN_PATH.resolve(ORE_DEPOSITS);
-    public static final String TKCYA_JAR_ORE_DEPOSIT_PATH = "/assets/tkcya/worldgen/vein";
-    public static final String TKCYA_JAR_FLUID_DEPOSIT_PATH = "/assets/tkcya/worldgen/fluid";
+    public static final String TKCYA_JAR_ORE_DEPOSIT_PATH = "/assets/tkcya/worldgen/ore_deposits/overworld";
+    public static final String TKCYA_JAR_FLUID_DEPOSIT_PATH = "/assets/tkcya/worldgen/fluid_deposits/overworld";
 }
