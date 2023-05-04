@@ -32,7 +32,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import static gregtech.api.util.RelativeDirection.*;
-import static tekcays_addon.gtapi.utils.BlastFurnaceUtils.*;
+import static tekcays_addon.api.metatileentity.predicates.BrickHatchesPredicates.*;
 
 public class MetaTileEntityPrimitiveConverter extends PressureContainerNoEnergyMultiblockController {
 
@@ -54,16 +54,13 @@ public class MetaTileEntityPrimitiveConverter extends PressureContainerNoEnergyM
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
-
     }
-
 
     @Override
     public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tkcya.machine.primitive_converter.tooltip.1"));
     }
-
 
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {

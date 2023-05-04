@@ -31,7 +31,7 @@ import java.util.List;
 
 
 import static gregtech.api.util.RelativeDirection.*;
-import static tekcays_addon.gtapi.utils.BlastFurnaceUtils.*;
+import static tekcays_addon.api.metatileentity.predicates.BrickHatchesPredicates.*;
 
 public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlockController {
 
