@@ -2,7 +2,6 @@ package tekcays_addon;
 
 import gregtech.api.GregTechAPI;
 import gregtech.api.cover.CoverDefinition;
-import gregtech.api.worldgen.config.WorldGenRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
@@ -54,8 +53,9 @@ public class TekCaysAddon {
         if (TKCYAConfigHolder.miscOverhaul.enableTKCYACustomOreGen) {
             try {
                 if (!doesDummyFileExist) {
-                    TKCYAWorldGenRegistry.INSTANCE.addRemoveVeins();
-                    TKCYAWorldGenRegistry.INSTANCE.createDummyFile();
+                    TKCYAWorldGenRegistry.INSTANCE.removeAndAddVeins();
+                    TKCYAWorldGenRegistry.INSTANCE.initializeRegistry();
+                    //TKCYAWorldGenRegistry.INSTANCE.createDummyFile();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
