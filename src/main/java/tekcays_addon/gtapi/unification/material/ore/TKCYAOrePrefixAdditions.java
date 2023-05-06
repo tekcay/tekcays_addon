@@ -1,31 +1,33 @@
 package tekcays_addon.gtapi.unification.material.ore;
 
-import gregtech.common.items.MetaItems;
+import static gregtech.common.items.MetaItems.addOrePrefix;
+import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.*;
 
 public class TKCYAOrePrefixAdditions {
 
     public static void moldsInit(){
-        MetaItems.addOrePrefix(TKCYAOrePrefix.moldEmpty);
-        MetaItems.addOrePrefix(TKCYAOrePrefix.moldIngot);
-        MetaItems.addOrePrefix(TKCYAOrePrefix.moldPlate);
-        MetaItems.addOrePrefix(TKCYAOrePrefix.moldStick);
-        MetaItems.addOrePrefix(TKCYAOrePrefix.moldStickLong);
-        MetaItems.addOrePrefix(TKCYAOrePrefix.moldGear);
-        MetaItems.addOrePrefix(TKCYAOrePrefix.moldGearSmall);
-        MetaItems.addOrePrefix(TKCYAOrePrefix.moldBolt);
-        MetaItems.addOrePrefix(TKCYAOrePrefix.moldBall);
-        MetaItems.addOrePrefix(TKCYAOrePrefix.moldCylinder);
-        MetaItems.addOrePrefix(TKCYAOrePrefix.moldRing);
-        MetaItems.addOrePrefix(TKCYAOrePrefix.moldRotor);
-        MetaItems.addOrePrefix(TKCYAOrePrefix.moldCasing);
-        MetaItems.addOrePrefix(TKCYAOrePrefix.moldBottle);
-        MetaItems.addOrePrefix(TKCYAOrePrefix.moldBlock);
+        addOrePrefix(moldEmpty);
+        addOrePrefix(moldIngot);
+        addOrePrefix(moldPlate);
+        addOrePrefix(moldStick);
+        addOrePrefix(moldStickLong);
+        addOrePrefix(moldGear);
+        addOrePrefix(moldGearSmall);
+        addOrePrefix(moldBolt);
+        addOrePrefix(moldBall);
+        addOrePrefix(moldCylinder);
+        addOrePrefix(moldRing);
+        addOrePrefix(moldRotor);
+        addOrePrefix(moldCasing);
+        addOrePrefix(moldBottle);
+        addOrePrefix(moldBlock);
+
+        //mold.setMarkerPrefix(true);
     }
 
-
     public static void miscInit(){
-        MetaItems.addOrePrefix(TKCYAOrePrefix.bottleGlass);
-        MetaItems.addOrePrefix(TKCYAOrePrefix.curvedPlate);
+        addOrePrefix(bottleGlass);
+        addOrePrefix(curvedPlate);
     }
 
 

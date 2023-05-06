@@ -2,8 +2,12 @@ package tekcays_addon.common.metatileentities.multiblockpart;
 
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.unification.ore.OrePrefix;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityItemBus;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -15,9 +19,14 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
+@Setter
+@Getter
 public class MetaTileEntityBrickCastingBus extends MetaTileEntityItemBus {
 
+    @Setter(AccessLevel.NONE)
     private final BlockBrick.BrickType brick;
+    private OrePrefix orePrefix;
+    private boolean isRedstoneActivated;
 
     public MetaTileEntityBrickCastingBus(ResourceLocation metaTileEntityId, boolean isExportHatch, BlockBrick.BrickType brick) {
         super(metaTileEntityId, 0, isExportHatch);
@@ -28,6 +37,12 @@ public class MetaTileEntityBrickCastingBus extends MetaTileEntityItemBus {
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityBrickCastingBus(metaTileEntityId, isExportHatch, brick);
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        setRedstoneActivated(this.isRedstoneActivated);
     }
 
     public BlockBrick.BrickType getBrick() {
