@@ -19,8 +19,6 @@ public class GlassHandler {
      public static void init() {
 
          GLASS_STUFF.add(BLOCK_GLASS);
-         GLASS_STUFF.add(BOTTLE);
-         GLASS_STUFF.add(GLASS_TUBE);
 
         for (Glass glass : GLASS_STUFF) {
 

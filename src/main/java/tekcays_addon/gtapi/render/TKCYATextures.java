@@ -64,13 +64,52 @@ public class TKCYATextures {
     public static SimpleOverlayRenderer COOLER_HOT_SIDE_OVERLAY;
 
     //Covers
+    
+    ////Detectors
     public static SimpleOverlayRenderer DETECTOR_TEMPERATURE;
     public static SimpleOverlayRenderer DETECTOR_PRESSURE;
     public static SimpleOverlayRenderer DETECTOR_VACUUM;
     public static SimpleOverlayRenderer DETECTOR_SPEED;
     public static SimpleOverlayRenderer DETECTOR_TORQUE;
     public static SimpleOverlayRenderer DETECTOR_ROTATION_POWER;
-
+    
+    ////Molds
+    public static SimpleOverlayRenderer COVER_MOLD_INGOT_CERAMIC;
+    public static SimpleOverlayRenderer COVER_MOLD_PLATE_CERAMIC;
+    public static SimpleOverlayRenderer COVER_MOLD_STICK_CERAMIC;
+    public static SimpleOverlayRenderer COVER_MOLD_STICK_LONG_CERAMIC;
+    public static SimpleOverlayRenderer COVER_MOLD_GEAR_CERAMIC;
+    public static SimpleOverlayRenderer COVER_MOLD_GEAR_SMALL_CERAMIC;
+    public static SimpleOverlayRenderer COVER_MOLD_BOLT_CERAMIC;
+    public static SimpleOverlayRenderer COVER_MOLD_RING_CERAMIC;
+    public static SimpleOverlayRenderer COVER_MOLD_BLOCK_CERAMIC;
+    public static SimpleOverlayRenderer COVER_MOLD_INGOT_STEEL;
+    public static SimpleOverlayRenderer COVER_MOLD_PLATE_STEEL;
+    public static SimpleOverlayRenderer COVER_MOLD_STICK_STEEL;
+    public static SimpleOverlayRenderer COVER_MOLD_STICK_LONG_STEEL;
+    public static SimpleOverlayRenderer COVER_MOLD_GEAR_STEEL;
+    public static SimpleOverlayRenderer COVER_MOLD_GEAR_SMALL_STEEL;
+    public static SimpleOverlayRenderer COVER_MOLD_BOLT_STEEL;
+    public static SimpleOverlayRenderer COVER_MOLD_RING_STEEL;
+    public static SimpleOverlayRenderer COVER_MOLD_BLOCK_STEEL;
+    public static SimpleOverlayRenderer COVER_MOLD_INGOT_TUNGSTEN_CARBIDE;
+    public static SimpleOverlayRenderer COVER_MOLD_PLATE_TUNGSTEN_CARBIDE;
+    public static SimpleOverlayRenderer COVER_MOLD_STICK_TUNGSTEN_CARBIDE;
+    public static SimpleOverlayRenderer COVER_MOLD_STICK_LONG_TUNGSTEN_CARBIDE;
+    public static SimpleOverlayRenderer COVER_MOLD_GEAR_TUNGSTEN_CARBIDE;
+    public static SimpleOverlayRenderer COVER_MOLD_GEAR_SMALL_TUNGSTEN_CARBIDE;
+    public static SimpleOverlayRenderer COVER_MOLD_BOLT_TUNGSTEN_CARBIDE;
+    public static SimpleOverlayRenderer COVER_MOLD_RING_TUNGSTEN_CARBIDE;
+    public static SimpleOverlayRenderer COVER_MOLD_BLOCK_TUNGSTEN_CARBIDE;
+    public static SimpleOverlayRenderer COVER_MOLD_INGOT_CARBON;
+    public static SimpleOverlayRenderer COVER_MOLD_PLATE_CARBON;
+    public static SimpleOverlayRenderer COVER_MOLD_STICK_CARBON;
+    public static SimpleOverlayRenderer COVER_MOLD_STICK_LONG_CARBON;
+    public static SimpleOverlayRenderer COVER_MOLD_GEAR_CARBON;
+    public static SimpleOverlayRenderer COVER_MOLD_GEAR_SMALL_CARBON;
+    public static SimpleOverlayRenderer COVER_MOLD_BOLT_CARBON;
+    public static SimpleOverlayRenderer COVER_MOLD_RING_CARBON;
+    public static SimpleOverlayRenderer COVER_MOLD_BLOCK_CARBON;
 
     public static void preInit() {
         // Simple Machines
@@ -111,11 +150,50 @@ public class TKCYATextures {
 
 
         //Covers
-        DETECTOR_TEMPERATURE = new SimpleOverlayRenderer("cover/overlay_temperature_detector");
-        DETECTOR_PRESSURE = new SimpleOverlayRenderer("cover/overlay_pressure_detector");
-        DETECTOR_VACUUM = new SimpleOverlayRenderer("cover/overlay_vacuum_detector");
-        DETECTOR_SPEED = new SimpleOverlayRenderer("cover/overlay_speed_detector");
-        DETECTOR_TORQUE = new SimpleOverlayRenderer("cover/overlay_torque_detector");
-        DETECTOR_ROTATION_POWER = new SimpleOverlayRenderer("cover/overlay_rotation_power_detector");
+        ////Detectors
+        DETECTOR_TEMPERATURE = new SimpleOverlayRenderer("cover/detector/overlay_temperature_detector");
+        DETECTOR_PRESSURE = new SimpleOverlayRenderer("cover/detector/overlay_pressure_detector");
+        DETECTOR_VACUUM = new SimpleOverlayRenderer("cover/detector/overlay_vacuum_detector");
+        DETECTOR_SPEED = new SimpleOverlayRenderer("cover/detector/overlay_speed_detector");
+        DETECTOR_TORQUE = new SimpleOverlayRenderer("cover/detector/overlay_torque_detector");
+        DETECTOR_ROTATION_POWER = new SimpleOverlayRenderer("cover/detector/overlay_rotation_power_detector");
+
+        ////Molds
+        COVER_MOLD_INGOT_CERAMIC = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_ingot_ceramic");
+        COVER_MOLD_PLATE_CERAMIC = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_plate_ceramic");
+        COVER_MOLD_STICK_CERAMIC = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_stick_ceramic");
+        COVER_MOLD_STICK_LONG_CERAMIC = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_stick_long_ceramic");
+        COVER_MOLD_GEAR_CERAMIC = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_gear_ceramic");
+        COVER_MOLD_GEAR_SMALL_CERAMIC = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_gear_small_ceramic");
+        COVER_MOLD_BOLT_CERAMIC = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_bolt_ceramic");
+        COVER_MOLD_RING_CERAMIC = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_ring_ceramic");
+        COVER_MOLD_BLOCK_CERAMIC = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_block_ceramic");
+        COVER_MOLD_INGOT_STEEL = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_ingot_steel");
+        COVER_MOLD_PLATE_STEEL = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_plate_steel");
+        COVER_MOLD_STICK_STEEL = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_stick_steel");
+        COVER_MOLD_STICK_LONG_STEEL = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_stick_long_steel");
+        COVER_MOLD_GEAR_STEEL = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_gear_steel");
+        COVER_MOLD_GEAR_SMALL_STEEL = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_gear_small_steel");
+        COVER_MOLD_BOLT_STEEL = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_bolt_steel");
+        COVER_MOLD_RING_STEEL = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_ring_steel");
+        COVER_MOLD_BLOCK_STEEL = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_block_steel");
+        COVER_MOLD_INGOT_TUNGSTEN_CARBIDE = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_ingot_tungsten_carbide");
+        COVER_MOLD_PLATE_TUNGSTEN_CARBIDE = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_plate_tungsten_carbide");
+        COVER_MOLD_STICK_TUNGSTEN_CARBIDE = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_stick_tungsten_carbide");
+        COVER_MOLD_STICK_LONG_TUNGSTEN_CARBIDE = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_stick_long_tungsten_carbide");
+        COVER_MOLD_GEAR_TUNGSTEN_CARBIDE = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_gear_tungsten_carbide");
+        COVER_MOLD_GEAR_SMALL_TUNGSTEN_CARBIDE = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_gear_small_tungsten_carbide");
+        COVER_MOLD_BOLT_TUNGSTEN_CARBIDE = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_bolt_tungsten_carbide");
+        COVER_MOLD_RING_TUNGSTEN_CARBIDE = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_ring_tungsten_carbide");
+        COVER_MOLD_BLOCK_TUNGSTEN_CARBIDE = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_block_tungsten_carbide");
+        COVER_MOLD_INGOT_CARBON = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_ingot_carbon");
+        COVER_MOLD_PLATE_CARBON = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_plate_carbon");
+        COVER_MOLD_STICK_CARBON = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_stick_carbon");
+        COVER_MOLD_STICK_LONG_CARBON = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_stick_long_carbon");
+        COVER_MOLD_GEAR_CARBON = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_gear_carbon");
+        COVER_MOLD_GEAR_SMALL_CARBON = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_gear_small_carbon");
+        COVER_MOLD_BOLT_CARBON = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_bolt_carbon");
+        COVER_MOLD_RING_CARBON = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_ring_carbon");
+        COVER_MOLD_BLOCK_CARBON = new SimpleOverlayRenderer("cover/mold/overlay_cover_mold_block_carbon");
     }
 }

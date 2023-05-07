@@ -14,12 +14,7 @@ public class TKCYAOrePrefixAdditions {
         addOrePrefix(moldGear);
         addOrePrefix(moldGearSmall);
         addOrePrefix(moldBolt);
-        addOrePrefix(moldBall);
-        addOrePrefix(moldCylinder);
         addOrePrefix(moldRing);
-        addOrePrefix(moldRotor);
-        addOrePrefix(moldCasing);
-        addOrePrefix(moldBottle);
         addOrePrefix(moldBlock);
 
         //mold.setMarkerPrefix(true);

@@ -1,7 +1,9 @@
 package tekcays_addon.gtapi.consts;
 
+import com.google.common.collect.Maps;
 import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.unification.material.Material;
+import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidStack;
@@ -158,8 +160,10 @@ public class TKCYAValues {
         add(Carbon);
     }};
 
-    public static final List<OrePrefix> MOLDS = new ArrayList<>(Arrays.asList(moldEmpty, moldIngot, moldPlate, moldStick, moldStickLong, moldGear,
-            moldGearSmall, moldBolt, moldBall, moldCylinder, moldRing, moldRotor, moldCasing, moldBottle, moldBlock));
+    public static final List<OrePrefix> MOLDS = new ArrayList<>(Arrays.asList(moldIngot, moldPlate, moldStick, moldStickLong, moldGear,
+            moldGearSmall, moldBolt, moldRing, moldBlock));
+
+    public static final Map<List<OrePrefix>, List<Material>> MOLDS_OREPREFIX_TO_MOLDS_MATERIAL = Collections.singletonMap(MOLDS, MOLD_MATERIALS);
 
     public static final List<OrePrefix> POLARIZING_PREFIXES = new ArrayList<>(Arrays.asList(stick, stickLong, plate, ingot, plateDense, rotor, bolt, screw, wireFine, foil, dust, ring));
 
