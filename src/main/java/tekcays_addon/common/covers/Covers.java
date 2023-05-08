@@ -7,6 +7,7 @@ import tekcays_addon.gtapi.utils.TKCYALog;
 
 import static gregtech.common.covers.CoverBehaviors.registerBehavior;
 import static tekcays_addon.api.consts.DetectorWrappers.*;
+import static tekcays_addon.api.covers.molds.CoverMoldWrapper.*;
 import static tekcays_addon.common.items.TKCYAMetaItems.*;
 import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.*;
 import static tekcays_addon.gtapi.render.TKCYATextures.*;
@@ -43,15 +44,88 @@ public class Covers {
 
         TKCYALog.logger.info("Registering mold covers...");
 
-        /*
-        for (CoverMoldWrapper wrapper : COVER_MOLD_WRAPPERS) {
-            for (Material material : MOLD_MATERIALS) {
-                registerBehavior(new ResourceLocation(TekCaysAddon.MODID, wrapper.getMoldPrefix().name()), MetaItems.ELECTRIC_MOTOR_EV,
-                        (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, wrapper, material));
-            })
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_INGOT_CERAMIC_WRAPPER.getPathln()), COVER_MOLD_INGOT_CERAMIC,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_INGOT_CERAMIC_WRAPPER));
+        TKCYALog.logger.info("#################################");
+        TKCYALog.logger.info("#################################");
+        TKCYALog.logger.info("#################################");
+        TKCYALog.logger.info("#################################");
+        TKCYALog.logger.info("#################################");
+        TKCYALog.logger.info("#################################");
+        TKCYALog.logger.info("#################################");
+        TKCYALog.logger.info(COVER_MOLD_INGOT_CERAMIC_WRAPPER.getPathln());
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_PLATE_CERAMIC_WRAPPER.getPathln()), COVER_MOLD_PLATE_CERAMIC,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_PLATE_CERAMIC_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_STICK_CERAMIC_WRAPPER.getPathln()), COVER_MOLD_STICK_CERAMIC,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_STICK_CERAMIC_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_STICK_LONG_CERAMIC_WRAPPER.getPathln()), COVER_MOLD_STICK_LONG_CERAMIC,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_STICK_LONG_CERAMIC_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_GEAR_CERAMIC_WRAPPER.getPathln()), COVER_MOLD_GEAR_CERAMIC,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_GEAR_CERAMIC_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_GEAR_SMALL_CERAMIC_WRAPPER.getPathln()), COVER_MOLD_GEAR_SMALL_CERAMIC,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_GEAR_SMALL_CERAMIC_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_BOLT_CERAMIC_WRAPPER.getPathln()), COVER_MOLD_BOLT_CERAMIC,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_BOLT_CERAMIC_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_RING_CERAMIC_WRAPPER.getPathln()), COVER_MOLD_RING_CERAMIC,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_RING_CERAMIC_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_BLOCK_CERAMIC_WRAPPER.getPathln()), COVER_MOLD_BLOCK_CERAMIC,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_BLOCK_CERAMIC_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_INGOT_STEEL_WRAPPER.getPathln()), COVER_MOLD_INGOT_STEEL,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_INGOT_STEEL_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_PLATE_STEEL_WRAPPER.getPathln()), COVER_MOLD_PLATE_STEEL,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_PLATE_STEEL_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_STICK_STEEL_WRAPPER.getPathln()), COVER_MOLD_STICK_STEEL,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_STICK_STEEL_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_STICK_LONG_STEEL_WRAPPER.getPathln()), COVER_MOLD_STICK_LONG_STEEL,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_STICK_LONG_STEEL_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_GEAR_STEEL_WRAPPER.getPathln()), COVER_MOLD_GEAR_STEEL,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_GEAR_STEEL_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_GEAR_SMALL_STEEL_WRAPPER.getPathln()), COVER_MOLD_GEAR_SMALL_STEEL,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_GEAR_SMALL_STEEL_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_BOLT_STEEL_WRAPPER.getPathln()), COVER_MOLD_BOLT_STEEL,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_BOLT_STEEL_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_RING_STEEL_WRAPPER.getPathln()), COVER_MOLD_RING_STEEL,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_RING_STEEL_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_BLOCK_STEEL_WRAPPER.getPathln()), COVER_MOLD_BLOCK_STEEL,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_BLOCK_STEEL_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_INGOT_TUNGSTEN_CARBIDE_WRAPPER.getPathln()), COVER_MOLD_INGOT_TUNGSTEN_CARBIDE,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_INGOT_TUNGSTEN_CARBIDE_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_PLATE_TUNGSTEN_CARBIDE_WRAPPER.getPathln()), COVER_MOLD_PLATE_TUNGSTEN_CARBIDE,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_PLATE_TUNGSTEN_CARBIDE_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_STICK_TUNGSTEN_CARBIDE_WRAPPER.getPathln()), COVER_MOLD_STICK_TUNGSTEN_CARBIDE,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_STICK_TUNGSTEN_CARBIDE_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_STICK_LONG_TUNGSTEN_CARBIDE_WRAPPER.getPathln()), COVER_MOLD_STICK_LONG_TUNGSTEN_CARBIDE,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_STICK_LONG_TUNGSTEN_CARBIDE_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_GEAR_TUNGSTEN_CARBIDE_WRAPPER.getPathln()), COVER_MOLD_GEAR_TUNGSTEN_CARBIDE,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_GEAR_TUNGSTEN_CARBIDE_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_GEAR_SMALL_TUNGSTEN_CARBIDE_WRAPPER.getPathln()), COVER_MOLD_GEAR_SMALL_TUNGSTEN_CARBIDE,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_GEAR_SMALL_TUNGSTEN_CARBIDE_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_BOLT_TUNGSTEN_CARBIDE_WRAPPER.getPathln()), COVER_MOLD_BOLT_TUNGSTEN_CARBIDE,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_BOLT_TUNGSTEN_CARBIDE_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_RING_TUNGSTEN_CARBIDE_WRAPPER.getPathln()), COVER_MOLD_RING_TUNGSTEN_CARBIDE,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_RING_TUNGSTEN_CARBIDE_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_BLOCK_TUNGSTEN_CARBIDE_WRAPPER.getPathln()), COVER_MOLD_BLOCK_TUNGSTEN_CARBIDE,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_BLOCK_TUNGSTEN_CARBIDE_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_INGOT_CARBON_WRAPPER.getPathln()), COVER_MOLD_INGOT_CARBON,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_INGOT_CARBON_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_PLATE_CARBON_WRAPPER.getPathln()), COVER_MOLD_PLATE_CARBON,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_PLATE_CARBON_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_STICK_CARBON_WRAPPER.getPathln()), COVER_MOLD_STICK_CARBON,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_STICK_CARBON_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_STICK_LONG_CARBON_WRAPPER.getPathln()), COVER_MOLD_STICK_LONG_CARBON,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_STICK_LONG_CARBON_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_GEAR_CARBON_WRAPPER.getPathln()), COVER_MOLD_GEAR_CARBON,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_GEAR_CARBON_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_GEAR_SMALL_CARBON_WRAPPER.getPathln()), COVER_MOLD_GEAR_SMALL_CARBON,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_GEAR_SMALL_CARBON_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_BOLT_CARBON_WRAPPER.getPathln()), COVER_MOLD_BOLT_CARBON,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_BOLT_CARBON_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_RING_CARBON_WRAPPER.getPathln()), COVER_MOLD_RING_CARBON,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_RING_CARBON_WRAPPER));
+        registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_BLOCK_CARBON_WRAPPER.getPathln()), COVER_MOLD_BLOCK_CARBON,
+                (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_BLOCK_CARBON_WRAPPER));
 
-        }
 
-         */
+
     }
 }
