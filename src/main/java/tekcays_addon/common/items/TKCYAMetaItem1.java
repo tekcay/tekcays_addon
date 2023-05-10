@@ -3,14 +3,8 @@ package tekcays_addon.common.items;
 import gregtech.api.items.metaitem.StandardMetaItem;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 import tekcays_addon.common.items.behaviors.FilterBehavior;
-import tekcays_addon.gtapi.consts.TKCYAValues;
-import tekcays_addon.gtapi.utils.TKCYALog;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static tekcays_addon.common.items.TKCYAMetaItems.*;
-import static tekcays_addon.gtapi.consts.TKCYAValues.MOLDS;
-import static tekcays_addon.gtapi.consts.TKCYAValues.MOLDS_OREPREFIX_TO_MOLDS_MATERIAL;
 
 public class TKCYAMetaItem1 extends StandardMetaItem {
 
