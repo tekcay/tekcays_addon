@@ -46,14 +46,6 @@ public class Covers {
 
         registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_INGOT_CERAMIC_WRAPPER.getPathln()), COVER_MOLD_INGOT_CERAMIC,
                 (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_INGOT_CERAMIC_WRAPPER));
-        TKCYALog.logger.info("#################################");
-        TKCYALog.logger.info("#################################");
-        TKCYALog.logger.info("#################################");
-        TKCYALog.logger.info("#################################");
-        TKCYALog.logger.info("#################################");
-        TKCYALog.logger.info("#################################");
-        TKCYALog.logger.info("#################################");
-        TKCYALog.logger.info(COVER_MOLD_INGOT_CERAMIC_WRAPPER.getPathln());
         registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_PLATE_CERAMIC_WRAPPER.getPathln()), COVER_MOLD_PLATE_CERAMIC,
                 (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_PLATE_CERAMIC_WRAPPER));
         registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_STICK_CERAMIC_WRAPPER.getPathln()), COVER_MOLD_STICK_CERAMIC,

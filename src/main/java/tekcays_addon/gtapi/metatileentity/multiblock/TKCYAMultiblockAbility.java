@@ -12,5 +12,6 @@ public class TKCYAMultiblockAbility {
     public static final MultiblockAbility<IContainerDetector> CONTAINER_CONTROL = new MultiblockAbility<>("pressure_control");
     public static final MultiblockAbility<IRotationContainer> ROTATION_CONTAINER = new MultiblockAbility<>("rotation_container");
     public static final MultiblockAbility<IDecompression> DECOMPRESSOR_CONTAINER = new MultiblockAbility<>("decompressor_container");
+    public static final MultiblockAbility<IMoldCoverable> MOLD_COVERABLE_CONTAINER = new MultiblockAbility<>("mold_coverable_container");
 
 }

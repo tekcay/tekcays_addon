@@ -1,15 +1,13 @@
 package tekcays_addon.gtapi.capability.containers;
 
-import gregtech.api.unification.ore.OrePrefix;
-import groovyjarjarantlr4.v4.runtime.misc.Nullable;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.capabilities.Capability;
-import tekcays_addon.api.consts.CapabilityId;
+import gregtech.api.unification.material.Materials;
+import tekcays_addon.api.covers.molds.CoverMoldWrapper;
 
-import javax.annotation.Nonnull;
+public interface IMoldCoverable {
 
-public interface IMoldCoverable<T, U extends T> {
-
-    OrePrefix getOrePrefixOutput();
+    CoverMoldWrapper getCoverMoldWrapper();
+    boolean canMoldCoverBePlaced();
+    default int getNeededFluidAmount() {
+        return (int) getCoverMoldWrapper().getOutputPrefix().getMaterialAmount(Materials.Air);
+    }
 }

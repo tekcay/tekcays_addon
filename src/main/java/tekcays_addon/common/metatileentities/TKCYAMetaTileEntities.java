@@ -214,7 +214,7 @@ public class TKCYAMetaTileEntities {
                 BRICK_EXPORT_FLUID_HATCH[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityBrickFluidHatch(tkcyaId(setName.apply(j++)), true, brick));
                 BRICK_EXPORT_ITEM_BUS[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityBrickItemBus(tkcyaId(setName.apply(j++)), true, brick));
                 BRICK_IMPORT_ITEM_BUS[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityBrickItemBus(tkcyaId(setName.apply(j++)), false, brick));
-                BRICK_CASTING_BUS[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityBrickCastingBus(tkcyaId(setName.apply(j++)), true, brick));
+                BRICK_CASTING_BUS[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityBrickCastingBus(tkcyaId(setName.apply(j++)), brick));
                 BRICK_CASTING_FLUID_INPUT[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityBrickCastingFluidInput(tkcyaId(setName.apply(j++)), false, brick));
                 PRIMITIVE_MUFFLER[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityPrimitiveMufflerHatch(tkcyaId(setName.apply(j++)), brick));
                 SINGLE_CRUCIBLE[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntitySingleCrucible(tkcyaId(setName.apply(j++)), brick));

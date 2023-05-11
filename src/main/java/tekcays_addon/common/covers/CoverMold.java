@@ -11,6 +11,7 @@ import lombok.Getter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.*;
 import tekcays_addon.api.covers.molds.CoverMoldWrapper;
+import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 
 @Getter
 public class CoverMold extends CoverBehavior implements ITickable {
@@ -23,8 +24,7 @@ public class CoverMold extends CoverBehavior implements ITickable {
 
     @Override
     public boolean canAttach() {
-        return true;
-        //return coverHolder.getCapability(wrapper.getCapability(), null) != null;
+        return coverHolder.getCapability(TKCYATileCapabilities.CAPABILITY_MOLD_COVERABLE, EnumFacing.UP) != null;
     }
 
     @Override
