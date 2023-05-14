@@ -36,6 +36,10 @@ public final class TKCYAMetaItems {
     ////Molds
     public static List<MetaItem<?>.MetaValueItem> MOLDS = new ArrayList<>();
 
+    public static MetaItem<?>.MetaValueItem EMPTY_MOLD_CERAMIC;
+    public static MetaItem<?>.MetaValueItem EMPTY_MOLD_STEEL;
+    public static MetaItem<?>.MetaValueItem EMPTY_MOLD_CARBON;
+    public static MetaItem<?>.MetaValueItem EMPTY_MOLD_TUNGSTEN_CARBIDE;
     public static MetaItem<?>.MetaValueItem COVER_MOLD_INGOT_CERAMIC;
     public static MetaItem<?>.MetaValueItem COVER_MOLD_PLATE_CERAMIC;
     public static MetaItem<?>.MetaValueItem COVER_MOLD_STICK_CERAMIC;

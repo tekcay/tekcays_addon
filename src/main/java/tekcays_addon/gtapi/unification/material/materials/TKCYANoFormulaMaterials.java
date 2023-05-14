@@ -5,6 +5,7 @@ import gregtech.api.unification.material.Material;
 
 import static gregtech.api.unification.material.Materials.Methane;
 import static gregtech.api.unification.material.Materials.Steam;
+import static gregtech.api.unification.material.info.MaterialFlags.GENERATE_PLATE;
 import static gregtech.api.unification.material.info.MaterialIconSet.*;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
 
@@ -14,6 +15,8 @@ public class TKCYANoFormulaMaterials {
 
         Ceramic = new Material.Builder(id++, "ceramic")
                 .dust(1).ingot()
+                .ingot()
+                .flags(GENERATE_PLATE)
                 .fluid()
                 .fluidTemp(2500)
                 .color(0xf6ad30).iconSet(DULL)

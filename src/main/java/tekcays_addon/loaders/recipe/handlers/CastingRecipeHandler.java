@@ -1,8 +1,7 @@
 package tekcays_addon.loaders.recipe.handlers;
 
-import gregtech.api.unification.material.Material;
+import gregtech.api.unification.material.MarkerMaterials;
 import gregtech.api.unification.material.Materials;
-import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.items.MetaItems;
 import tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix;
@@ -11,7 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
-import static tekcays_addon.gtapi.consts.TKCYAValues.MOLD_MATERIALS;
 
 
 public class CastingRecipeHandler {
@@ -21,6 +19,7 @@ public class CastingRecipeHandler {
 
     public static void init(){
 
+        /*
         MOLD_PRODUCTION.put(OrePrefix.ingot, TKCYAOrePrefix.moldIngot);
         MOLD_PRODUCTION.put(OrePrefix.plate, TKCYAOrePrefix.moldPlate);
         MOLD_PRODUCTION.put(OrePrefix.stick, TKCYAOrePrefix.moldStick);
@@ -35,24 +34,27 @@ public class CastingRecipeHandler {
         MOLD_PRODUCTION.put(OrePrefix.ring, TKCYAOrePrefix.moldRing);
         MOLD_PRODUCTION.put(OrePrefix.block, TKCYAOrePrefix.moldBlock);
 
+
+
         MOLD_PRODUCTION.keySet().forEach(prefix ->
         prefix.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processCasting));
 
+
+         */
     }
 
     public static void misc() {
 
         //Phenolic Circuit Board
-        for (Material m : MOLD_MATERIALS) {
-            ASSEMBLER_RECIPES.recipeBuilder()
-                    .input(OrePrefix.dust, Materials.Wood)
-                    .fluidInputs(Materials.Glue.getFluid(50))
-                    .notConsumable(TKCYAOrePrefix.moldPlate, m)
-                    .output(MetaItems.PHENOLIC_BOARD)
-                    .duration(30)
-                    .EUt(7)
-                    .buildAndRegister();
-        }
+        ASSEMBLER_RECIPES.recipeBuilder()
+                .input(OrePrefix.dust, Materials.Wood)
+                .fluidInputs(Materials.Glue.getFluid(50))
+                .notConsumable(TKCYAOrePrefix.moldPlate, MarkerMaterials.Empty)
+                .output(MetaItems.PHENOLIC_BOARD)
+                .duration(30)
+                .EUt(7)
+                .buildAndRegister();
+
     }
     
 }

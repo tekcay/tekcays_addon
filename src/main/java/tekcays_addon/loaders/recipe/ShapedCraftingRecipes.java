@@ -37,8 +37,6 @@ public class ShapedCraftingRecipes{
                     "   ", "hS ", "   ", 'S', new UnificationEntry(moldEmpty, m));
             ModHandler.addShapedRecipe("mold_ring" + m.getUnlocalizedName(), OreDictUnifier.get(moldRing, m),
                     "   ", " S ", " x ", 'S', new UnificationEntry(moldEmpty, m));
-
-        
         }
     }
 

@@ -47,7 +47,7 @@ public class TKCYARecipeLoader {
             GlassHandler.init();
             ShapedCraftingRecipes.molds();
             ShapedCraftingRecipes.gasCollector();
-            TKCYAPartsRecipeHandler.processMolds();
+            //TKCYAPartsRecipeHandler.processMolds();
             ItemsRemovalHandler.molds();
             RecipesRemovalHandler.removeMoldsAndUsage();
         }
