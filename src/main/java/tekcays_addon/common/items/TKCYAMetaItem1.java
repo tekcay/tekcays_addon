@@ -47,10 +47,10 @@ public class TKCYAMetaItem1 extends StandardMetaItem {
         CONVEYOR_ULV = addItem(203, "conveyor_ulv");
         ROBOT_ARM_ULV = addItem(204, "robot_arm_ulv");
 
-        EMPTY_MOLD_CERAMIC = addItem(68, "cover.mold.empty_ceramic").setUnificationData(moldEmpty, MarkerMaterials.Empty).setUnificationData(moldEmpty, Ceramic);
-        EMPTY_MOLD_STEEL = addItem(69, "cover.mold.empty_steel").setUnificationData(moldEmpty, MarkerMaterials.Empty).setUnificationData(moldEmpty, Steel);
-        EMPTY_MOLD_TUNGSTEN_CARBIDE = addItem(70, "cover.mold.empty_tungsten_carbide").setUnificationData(moldEmpty, MarkerMaterials.Empty).setUnificationData(moldEmpty, TungstenCarbide);
-        EMPTY_MOLD_CARBON = addItem(71, "cover.mold.empty_carbon").setUnificationData(moldEmpty, MarkerMaterials.Empty).setUnificationData(moldEmpty, Carbon);
+        EMPTY_MOLD_CERAMIC = addItem(68, "mold.empty_ceramic").setUnificationData(moldEmpty, MarkerMaterials.Empty).setUnificationData(moldEmpty, Ceramic);
+        EMPTY_MOLD_STEEL = addItem(69, "mold.empty_steel").setUnificationData(moldEmpty, MarkerMaterials.Empty).setUnificationData(moldEmpty, Steel);
+        EMPTY_MOLD_TUNGSTEN_CARBIDE = addItem(70, "mold.empty_tungsten_carbide").setUnificationData(moldEmpty, MarkerMaterials.Empty).setUnificationData(moldEmpty, TungstenCarbide);
+        EMPTY_MOLD_CARBON = addItem(71, "mold.empty_carbon").setUnificationData(moldEmpty, MarkerMaterials.Empty).setUnificationData(moldEmpty, Carbon);
 
         COVER_MOLD_INGOT_CERAMIC = addItem(72, "cover.mold.ingot_ceramic").setUnificationData(moldIngot, MarkerMaterials.Empty).setUnificationData(moldIngot, Ceramic);
         COVER_MOLD_PLATE_CERAMIC = addItem(73, "cover.mold.plate_ceramic").setUnificationData(moldPlate, MarkerMaterials.Empty).setUnificationData(moldPlate, Ceramic);
@@ -60,7 +60,7 @@ public class TKCYAMetaItem1 extends StandardMetaItem {
         COVER_MOLD_GEAR_SMALL_CERAMIC = addItem(77, "cover.mold.gear_small_ceramic").setUnificationData(moldGearSmall, MarkerMaterials.Empty).setUnificationData(moldGearSmall, Ceramic);
         COVER_MOLD_BOLT_CERAMIC = addItem(78, "cover.mold.bolt_ceramic").setUnificationData(moldBolt, MarkerMaterials.Empty).setUnificationData(moldBolt, Ceramic);
         COVER_MOLD_RING_CERAMIC = addItem(79, "cover.mold.ring_ceramic").setUnificationData(moldRing, MarkerMaterials.Empty).setUnificationData(moldRing, Ceramic);
-        COVER_MOLD_BLOCK_CERAMIC = addItem(80, "cover.mold.block_ceramic").setUnificationData(moldBlock, MarkerMaterials.Empty).setUnificationData(moldBlock, Ceramic);
+
         COVER_MOLD_INGOT_STEEL = addItem(82, "cover.mold.ingot_steel").setUnificationData(moldIngot, MarkerMaterials.Empty).setUnificationData(moldIngot, Steel);
         COVER_MOLD_PLATE_STEEL = addItem(83, "cover.mold.plate_steel").setUnificationData(moldPlate, MarkerMaterials.Empty).setUnificationData(moldPlate, Steel);
         COVER_MOLD_STICK_STEEL = addItem(84, "cover.mold.stick_steel").setUnificationData(moldStick, MarkerMaterials.Empty).setUnificationData(moldStick, Steel);
@@ -69,7 +69,7 @@ public class TKCYAMetaItem1 extends StandardMetaItem {
         COVER_MOLD_GEAR_SMALL_STEEL = addItem(87, "cover.mold.gear_small_steel").setUnificationData(moldGearSmall, MarkerMaterials.Empty).setUnificationData(moldGearSmall, Steel);
         COVER_MOLD_BOLT_STEEL = addItem(88, "cover.mold.bolt_steel").setUnificationData(moldBolt, MarkerMaterials.Empty).setUnificationData(moldBolt, Steel);
         COVER_MOLD_RING_STEEL = addItem(89, "cover.mold.ring_steel").setUnificationData(moldRing, MarkerMaterials.Empty).setUnificationData(moldRing, Steel);
-        COVER_MOLD_BLOCK_STEEL = addItem(90, "cover.mold.block_steel").setUnificationData(moldBlock, MarkerMaterials.Empty).setUnificationData(moldBlock, Steel);
+
         COVER_MOLD_INGOT_TUNGSTEN_CARBIDE = addItem(92, "cover.mold.ingot_tungsten_carbide").setUnificationData(moldIngot, MarkerMaterials.Empty).setUnificationData(moldIngot, TungstenCarbide);
         COVER_MOLD_PLATE_TUNGSTEN_CARBIDE = addItem(93, "cover.mold.plate_tungsten_carbide").setUnificationData(moldPlate, MarkerMaterials.Empty).setUnificationData(moldPlate, TungstenCarbide);
         COVER_MOLD_STICK_TUNGSTEN_CARBIDE = addItem(94, "cover.mold.stick_tungsten_carbide").setUnificationData(moldStick, MarkerMaterials.Empty).setUnificationData(moldStick, TungstenCarbide);
@@ -78,7 +78,7 @@ public class TKCYAMetaItem1 extends StandardMetaItem {
         COVER_MOLD_GEAR_SMALL_TUNGSTEN_CARBIDE = addItem(97, "cover.mold.gear_small_tungsten_carbide").setUnificationData(moldGearSmall, MarkerMaterials.Empty).setUnificationData(moldGearSmall, TungstenCarbide);
         COVER_MOLD_BOLT_TUNGSTEN_CARBIDE = addItem(98, "cover.mold.bolt_tungsten_carbide").setUnificationData(moldBolt, MarkerMaterials.Empty).setUnificationData(moldBolt, TungstenCarbide);
         COVER_MOLD_RING_TUNGSTEN_CARBIDE = addItem(99, "cover.mold.ring_tungsten_carbide").setUnificationData(moldRing, MarkerMaterials.Empty).setUnificationData(moldRing, TungstenCarbide);
-        COVER_MOLD_BLOCK_TUNGSTEN_CARBIDE = addItem(100, "cover.mold.block_tungsten_carbide").setUnificationData(moldBlock, MarkerMaterials.Empty).setUnificationData(moldBlock, TungstenCarbide);
+
         COVER_MOLD_INGOT_CARBON = addItem(102, "cover.mold.ingot_carbon").setUnificationData(moldIngot, MarkerMaterials.Empty).setUnificationData(moldIngot, Carbon);
         COVER_MOLD_PLATE_CARBON = addItem(103, "cover.mold.plate_carbon").setUnificationData(moldPlate, MarkerMaterials.Empty).setUnificationData(moldPlate, Carbon);
         COVER_MOLD_STICK_CARBON = addItem(104, "cover.mold.stick_carbon").setUnificationData(moldStick, MarkerMaterials.Empty).setUnificationData(moldStick, Carbon);
@@ -87,8 +87,11 @@ public class TKCYAMetaItem1 extends StandardMetaItem {
         COVER_MOLD_GEAR_SMALL_CARBON = addItem(107, "cover.mold.gear_small_carbon").setUnificationData(moldGearSmall, MarkerMaterials.Empty).setUnificationData(moldGearSmall, Carbon);
         COVER_MOLD_BOLT_CARBON = addItem(108, "cover.mold.bolt_carbon").setUnificationData(moldBolt, MarkerMaterials.Empty).setUnificationData(moldBolt, Carbon);
         COVER_MOLD_RING_CARBON = addItem(109, "cover.mold.ring_carbon").setUnificationData(moldRing, MarkerMaterials.Empty).setUnificationData(moldRing, Carbon);
-        COVER_MOLD_BLOCK_CARBON = addItem(110, "cover.mold.block_carbon").setUnificationData(moldBlock, MarkerMaterials.Empty).setUnificationData(moldBlock, Carbon);
 
+        //COVER_MOLD_BLOCK_CERAMIC = addItem(80, "cover.mold.block_ceramic").setUnificationData(moldBlock, MarkerMaterials.Empty).setUnificationData(moldBlock, Ceramic);
+        //COVER_MOLD_BLOCK_STEEL = addItem(90, "cover.mold.block_steel").setUnificationData(moldBlock, MarkerMaterials.Empty).setUnificationData(moldBlock, Steel);
+        //COVER_MOLD_BLOCK_CARBON = addItem(110, "cover.mold.block_carbon").setUnificationData(moldBlock, MarkerMaterials.Empty).setUnificationData(moldBlock, Carbon);
+        //COVER_MOLD_BLOCK_TUNGSTEN_CARBIDE = addItem(100, "cover.mold.block_tungsten_carbide").setUnificationData(moldBlock, MarkerMaterials.Empty).setUnificationData(moldBlock, TungstenCarbide);
 
 
     }
