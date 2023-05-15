@@ -76,7 +76,7 @@ public class CastingRecipeHandler {
                     "hf", "PP", "PP", 'P', new UnificationEntry(plate, m));
 
             ModHandler.addShapedRecipe("mold_ingot" + m.getUnlocalizedName(), OreDictUnifier.get(moldIngot, m),
-                    "   ", " S ", " h ", 'S', new UnificationEntry(moldEmpty, m));
+                    " h ", " S ", "   ", 'S', new UnificationEntry(moldEmpty, m));
 
             ModHandler.addShapedRecipe("mold_bolt" + m.getUnlocalizedName(), OreDictUnifier.get(moldBolt, m),
                     "   ", " S ", "  h", 'S', new UnificationEntry(moldEmpty, m));
@@ -84,14 +84,20 @@ public class CastingRecipeHandler {
             ModHandler.addShapedRecipe("mold_gear" + m.getUnlocalizedName(), OreDictUnifier.get(moldGear, m),
                     "   ", " Sh", "   ", 'S', new UnificationEntry(moldEmpty, m));
 
+            ModHandler.addShapedRecipe("mold_stick" + m.getUnlocalizedName(), OreDictUnifier.get(moldStick, m),
+                    "   ", " S ", " h ", 'S', new UnificationEntry(moldEmpty, m));
+
+            ModHandler.addShapedRecipe("mold_stick_long" + m.getUnlocalizedName(), OreDictUnifier.get(moldStickLong, m),
+                    "   ", "hS ", "   ", 'S', new UnificationEntry(moldEmpty, m));
+
             ModHandler.addShapedRecipe("mold_gear_small" + m.getUnlocalizedName(), OreDictUnifier.get(moldGearSmall, m),
                     "   ", " S ", "h  ", 'S', new UnificationEntry(moldEmpty, m));
 
             ModHandler.addShapedRecipe("mold_plate" + m.getUnlocalizedName(), OreDictUnifier.get(moldPlate, m),
-                    " h ", " S ", "   ", 'S', new UnificationEntry(moldEmpty, m));
+                    "h  ", " S ", "   ", 'S', new UnificationEntry(moldEmpty, m));
 
             ModHandler.addShapedRecipe("mold_ring" + m.getUnlocalizedName(), OreDictUnifier.get(moldRing, m),
-                    " h ", " S ", " x ", 'S', new UnificationEntry(moldEmpty, m));
+                    "  h", " S ", "   ", 'S', new UnificationEntry(moldEmpty, m));
 
             /*
                         ModHandler.addShapedRecipe("mold_block" + m.getUnlocalizedName(), OreDictUnifier.get(moldBlock, m),
