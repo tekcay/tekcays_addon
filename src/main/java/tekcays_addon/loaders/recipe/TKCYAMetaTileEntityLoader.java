@@ -27,10 +27,13 @@ public class TKCYAMetaTileEntityLoader {
                     "NPN", "CHC", "NPN",
                     'P', PUMP, 'N', PIPE_NORMAL, 'H', HULL, 'C', CIRCUIT);
 
+            /*
             ModHandler.addShapedRecipe(true, "casting_table", CASTING_TABLE.getStackForm(),
                     "PPP", "PhP", "PPP", 'P', MetaItems.COKE_OVEN_BRICK);
             ModHandler.addShapedRecipe(true, "primitive_fermenter", PRIMITIVE_FERMENTER.getStackForm(),
                     " h ", " P ", " w ", 'P', MetaBlocks.STEAM_CASING.getItemVariant(WOOD_WALL));
+
+             */
         }
 
         if (TKCYAConfigHolder.miscOverhaul.enableMagneticOverhaul) {

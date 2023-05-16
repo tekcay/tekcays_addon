@@ -50,10 +50,7 @@ public class TKCYAPartsRecipeHandler {
 
 
     public static void initPolarizing(){
-
-        for (OrePrefix orePrefix : TKCYAValues.POLARIZING_PREFIXES) {
-            orePrefix.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processPolarizing);
-        }
+        POLARIZING_PREFIXES.forEach(orePrefix -> orePrefix.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processPolarizing));
     }
 
     public static void removeAlloySmelter() {

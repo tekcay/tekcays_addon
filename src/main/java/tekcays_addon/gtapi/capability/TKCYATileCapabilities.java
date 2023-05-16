@@ -28,6 +28,9 @@ public class TKCYATileCapabilities {
     @CapabilityInject(IDecompression.class)
     public static Capability<IDecompression> CAPABILITY_DECOMPRESSION_CONTAINER = null;
 
+    @CapabilityInject(IMoldCoverable.class)
+    public static Capability<IMoldCoverable> CAPABILITY_MOLD_COVERABLE = null;
+
 
     public static void init() {
         SimpleCapabilityManager.registerCapabilityWithNoDefault(IHeatContainer.class);
@@ -37,6 +40,7 @@ public class TKCYATileCapabilities {
         SimpleCapabilityManager.registerCapabilityWithNoDefault(IRotationContainer.class);
         SimpleCapabilityManager.registerCapabilityWithNoDefault(ISteamConsumer.class);
         SimpleCapabilityManager.registerCapabilityWithNoDefault(IDecompression.class);
+        SimpleCapabilityManager.registerCapabilityWithNoDefault(IMoldCoverable.class);
     }
 
 }

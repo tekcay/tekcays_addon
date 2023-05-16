@@ -111,7 +111,7 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
         super.deserializeNBT(compound);
         this.pressure = compound.getInteger(PRESSURE_KEY);
         this.volume = compound.getInteger(VOLUME_KEY);
-        this.airFluidStack = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag(AIR_FLUID_STACK.getName()));
+        this.airFluidStack = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag(AIR_FLUID_STACK.name()));
         this.airFluidStack = Materials.Air.getFluid(compound.getInteger("airAmount"));
     }
 

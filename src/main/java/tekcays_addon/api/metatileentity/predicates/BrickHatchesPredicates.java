@@ -1,4 +1,4 @@
-package tekcays_addon.gtapi.utils;
+package tekcays_addon.api.metatileentity.predicates;
 
 import gregtech.api.pattern.TraceabilityPredicate;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
@@ -12,7 +12,7 @@ import java.util.List;
 import static gregtech.api.metatileentity.multiblock.MultiblockControllerBase.metaTileEntities;
 import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.*;
 
-public class BlastFurnaceUtils {
+public class BrickHatchesPredicates {
 
     public static final List<BlockBrick.BrickType> BRICKS = new ArrayList<BlockBrick.BrickType>() {{
        add(BlockBrick.BrickType.BRICK);
@@ -49,8 +49,6 @@ public class BlastFurnaceUtils {
         }
         return metaTileEntities(BRICK_IMPORT_ITEM_BUS[0]);
     }
-
-
 
     public static TraceabilityPredicate getBrickMuffler(BlockBrick.BrickType brick) {
         for (MetaTileEntityPrimitiveMufflerHatch mte : PRIMITIVE_MUFFLER) {

@@ -44,7 +44,7 @@ public class TKCYAMaterialFlagAddition {
 
 
         //Molds Check with MOLD_MATERIALS
-        MOLD_MATERIALS.forEach(material -> material.addFlags(GENERATE_MOLDS));
+        //MOLD_MATERIALS.forEach(material -> material.addFlags(GENERATE_MOLDS));
 
         //Generate curved plate
         for (Material m : DRUM_MATERIALS) {
@@ -57,6 +57,9 @@ public class TKCYAMaterialFlagAddition {
         //Springs
         StainlessSteel.addFlags(GENERATE_SPRING);
         Titanium.addFlags(GENERATE_SPRING);
+
+        //For molds
+        Carbon.addFlags(GENERATE_PLATE);
     }
 
     public static void polymersInit() {

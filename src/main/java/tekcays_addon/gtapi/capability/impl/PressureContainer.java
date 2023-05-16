@@ -144,7 +144,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = super.serializeNBT();
-        compound.setTag(PRESSURIZED_FLUID_STACK.getName(), this.setFluidStackNBT(this.pressurizedFluidStack));
+        compound.setTag(PRESSURIZED_FLUID_STACK.name(), this.setFluidStackNBT(this.pressurizedFluidStack));
         compound.setInteger(PRESSURE_KEY, this.pressure);
         return compound;
     }
@@ -152,7 +152,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
     @Override
     public void deserializeNBT(@Nonnull NBTTagCompound compound) {
         this.pressure = compound.getInteger(PRESSURE_KEY);
-        this.pressurizedFluidStack = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag(PRESSURIZED_FLUID_STACK.getName()));
+        this.pressurizedFluidStack = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag(PRESSURIZED_FLUID_STACK.name()));
 
     }
 

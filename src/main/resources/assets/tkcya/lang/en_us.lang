@@ -429,7 +429,6 @@ metaitem.filter.name=%s Filter
 metaitem.filter.tooltip=For filtration duh
 
 
-
 metaitem.cover.temperature_detector.name=Temperature Detector Cover
 metaitem.cover.temperature.detector.tooltip=Emits a redstone signal if the temperature exceeds a specified value (as Cover). Right click with a Screwdriver while sneaking to invert redstone signal.
 
@@ -438,6 +437,47 @@ metaitem.cover.vacuum_detector.name=Vacuum Detector Cover
 metaitem.cover.speed_detector.name=Speed Detector Cover
 metaitem.cover.torque_detector.name=Torque Detector Cover
 metaitem.cover.rotation_power_detector.name=Rotation Power Detector Cover
+
+## Mold Covers
+metaitem.cover.mold.ingot_ceramic.name=Cover Mold Ingot Ceramic
+metaitem.cover.mold.plate_ceramic.name=Cover Mold Plate Ceramic
+metaitem.cover.mold.stick_ceramic.name=Cover Mold Stick Ceramic
+metaitem.cover.mold.stick_long_ceramic.name=Cover Mold Stick Long Ceramic
+metaitem.cover.mold.gear_ceramic.name=Cover Mold Gear Ceramic
+metaitem.cover.mold.gear_small_ceramic.name=Cover Mold Gear Small Ceramic
+metaitem.cover.mold.bolt_ceramic.name=Cover Mold Bolt Ceramic
+metaitem.cover.mold.ring_ceramic.name=Cover Mold Ring Ceramic
+metaitem.cover.mold.block_ceramic.name=Cover Mold Block Ceramic
+metaitem.cover.mold.ingot_steel.name=Cover Mold Ingot Steel
+metaitem.cover.mold.plate_steel.name=Cover Mold Plate Steel
+metaitem.cover.mold.stick_steel.name=Cover Mold Stick Steel
+metaitem.cover.mold.stick_long_steel.name=Cover Mold Stick Long Steel
+metaitem.cover.mold.gear_steel.name=Cover Mold Gear Steel
+metaitem.cover.mold.gear_small_steel.name=Cover Mold Gear Small Steel
+metaitem.cover.mold.bolt_steel.name=Cover Mold Bolt Steel
+metaitem.cover.mold.ring_steel.name=Cover Mold Ring Steel
+metaitem.cover.mold.block_steel.name=Cover Mold Block Steel
+metaitem.cover.mold.ingot_tungsten_carbide.name=Cover Mold Ingot Tungsten Carbide
+metaitem.cover.mold.plate_tungsten_carbide.name=Cover Mold Plate Tungsten Carbide
+metaitem.cover.mold.stick_tungsten_carbide.name=Cover Mold Stick Tungsten Carbide
+metaitem.cover.mold.stick_long_tungsten_carbide.name=Cover Mold Stick Long Tungsten Carbide
+metaitem.cover.mold.gear_tungsten_carbide.name=Cover Mold Gear Tungsten Carbide
+metaitem.cover.mold.gear_small_tungsten_carbide.name=Cover Mold Gear Small Tungsten Carbide
+metaitem.cover.mold.bolt_tungsten_carbide.name=Cover Mold Bolt Tungsten Carbide
+metaitem.cover.mold.ring_tungsten_carbide.name=Cover Mold Ring Tungsten Carbide
+metaitem.cover.mold.block_tungsten_carbide.name=Cover Mold Block Tungsten Carbide
+metaitem.cover.mold.ingot_carbon.name=Cover Mold Ingot Carbon
+metaitem.cover.mold.plate_carbon.name=Cover Mold Plate Carbon
+metaitem.cover.mold.stick_carbon.name=Cover Mold Stick Carbon
+metaitem.cover.mold.stick_long_carbon.name=Cover Mold Stick Long Carbon
+metaitem.cover.mold.gear_carbon.name=Cover Mold Gear Carbon
+metaitem.cover.mold.gear_small_carbon.name=Cover Mold Gear Small Carbon
+metaitem.cover.mold.bolt_carbon.name=Cover Mold Bolt Carbon
+metaitem.cover.mold.ring_carbon.name=Cover Mold Ring Carbon
+metaitem.cover.mold.block_carbon.name=Cover Mold Block Carbon
+
+
+
 
 item.mica_pulp.dust=Mica Based Pulp
 

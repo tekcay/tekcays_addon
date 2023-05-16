@@ -6,9 +6,6 @@ import static gregtech.api.unification.material.info.MaterialFlags.GENERATE_PLAT
 
 public class TKCYAMaterialFlags {
 
-    public static final MaterialFlag GENERATE_MOLDS = new MaterialFlag.Builder("mold")
-            .requireFlags(GENERATE_PLATE)
-            .build();
 
     public static final MaterialFlag GENERATE_CURVED_PLATE = new MaterialFlag.Builder("curvedPlate")
             .requireFlags(GENERATE_PLATE)

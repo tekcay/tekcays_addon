@@ -41,7 +41,7 @@ import static gregtech.common.metatileentities.MetaTileEntities.*;
 import static tekcays_addon.api.consts.ContainerControllerWrappers.*;
 import static tekcays_addon.gtapi.consts.TKCYAValues.ATMOSPHERIC_PRESSURE;
 import static tekcays_addon.gtapi.render.TKCYATextures.STEAM_CASING;
-import static tekcays_addon.gtapi.utils.BlastFurnaceUtils.BRICKS;
+import static tekcays_addon.api.metatileentity.predicates.BrickHatchesPredicates.BRICKS;
 import static tekcays_addon.gtapi.utils.FuelHeaterTiers.BRICK;
 import static tekcays_addon.gtapi.utils.FuelHeaterTiers.FUEL_HEATERS;
 import static tekcays_addon.gtapi.consts.TKCYAValues.DRUM_MATERIALS;
@@ -82,7 +82,6 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityPrimitiveFermenter PRIMITIVE_FERMENTER;
     public static MetaTileEntityPrimitiveConverter PRIMITIVE_CONVERTER;
     public static MetaTileEntityAlloyingCrucible ALLOYING_CRUCIBLE;
-    public static MetaTileEntityCastingTable CASTING_TABLE;
     public static MetaTileEntitySteamCooler STEAM_COOLER_BRONZE;
     public static MetaTileEntitySteamCooler STEAM_COOLER_STEEL;
     public static MetaTileEntityElectricConverter CONVERTER;
@@ -111,15 +110,18 @@ public class TKCYAMetaTileEntities {
 
 
     //Brick MTES
-    public static String[] BRICK_MTES = {"_blast_furnace", "_advanced_blast_furnace", "_import_fluid_hatch", "_export_fluid_hatch", "_export_item_bus", "_import_item_bus", "_muffler", "_single_crucible"};
+    public static String[] BRICK_MTES = {"_blast_furnace", "_advanced_blast_furnace", "_import_fluid_hatch", "_export_fluid_hatch", "_export_item_bus", "_import_item_bus", "_casting_bus", "_casting_fluid_input", "_muffler", "_single_crucible", "_casting_table"};
     public static MetaTileEntityTKCYABlastFurnace[] BLAST_FURNACE = new MetaTileEntityTKCYABlastFurnace[BRICKS.size()];
     public static MetaTileEntityAdvancedBlastFurnace[] ADVANCED_BLAST_FURNACE = new MetaTileEntityAdvancedBlastFurnace[BRICKS.size()];
     public static MetaTileEntityBrickFluidHatch[] BRICK_IMPORT_FLUID_HATCH = new MetaTileEntityBrickFluidHatch[BRICKS.size()];
     public static MetaTileEntityBrickFluidHatch[] BRICK_EXPORT_FLUID_HATCH = new MetaTileEntityBrickFluidHatch[BRICKS.size()];
     public static MetaTileEntityBrickItemBus[] BRICK_EXPORT_ITEM_BUS = new MetaTileEntityBrickItemBus[BRICKS.size()];
     public static MetaTileEntityBrickItemBus[] BRICK_IMPORT_ITEM_BUS = new MetaTileEntityBrickItemBus[BRICKS.size()];
+    public static MetaTileEntityBrickCastingBus[] BRICK_CASTING_BUS = new MetaTileEntityBrickCastingBus[BRICKS.size()];
+    public static MetaTileEntityBrickCastingFluidInput[] BRICK_CASTING_FLUID_INPUT = new MetaTileEntityBrickCastingFluidInput[BRICKS.size()];
     public static MetaTileEntityPrimitiveMufflerHatch[] PRIMITIVE_MUFFLER = new MetaTileEntityPrimitiveMufflerHatch[BRICKS.size()];
     public static MetaTileEntitySingleCrucible[] SINGLE_CRUCIBLE = new MetaTileEntitySingleCrucible[BRICKS.size()];
+    public static MetaTileEntityCastingTable[] CASTING_TABLE = new MetaTileEntityCastingTable[BRICKS.size()];
 
     // Drums
     public static MetaTileEntityDrum[] DRUMS = new MetaTileEntityDrum[DRUM_MATERIALS.size()];
@@ -177,7 +179,6 @@ public class TKCYAMetaTileEntities {
         startId = Math.max(startId, startId + 2);
 
         if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
-            CASTING_TABLE = registerMetaTileEntity(startId++, new MetaTileEntityCastingTable(tkcyaId("casting_table")));
 
             registerSimpleMetaTileEntity(ELECTRIC_CASTING_TABLE, startId++, "electric_casting_table", TKCYARecipeMaps.ELECTRIC_CASTING_RECIPES,
                     TKCYATextures.CASTING_TABLE_OVERLAY, true, TKCYAMetaTileEntities::tkcyaId, GTUtility.hvCappedTankSizeFunction);
@@ -213,8 +214,11 @@ public class TKCYAMetaTileEntities {
                 BRICK_EXPORT_FLUID_HATCH[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityBrickFluidHatch(tkcyaId(setName.apply(j++)), true, brick));
                 BRICK_EXPORT_ITEM_BUS[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityBrickItemBus(tkcyaId(setName.apply(j++)), true, brick));
                 BRICK_IMPORT_ITEM_BUS[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityBrickItemBus(tkcyaId(setName.apply(j++)), false, brick));
+                BRICK_CASTING_BUS[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityBrickCastingBus(tkcyaId(setName.apply(j++)), brick));
+                BRICK_CASTING_FLUID_INPUT[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityBrickCastingFluidInput(tkcyaId(setName.apply(j++)), false, brick));
                 PRIMITIVE_MUFFLER[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityPrimitiveMufflerHatch(tkcyaId(setName.apply(j++)), brick));
-                SINGLE_CRUCIBLE[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntitySingleCrucible(tkcyaId(setName.apply(j)), brick));
+                SINGLE_CRUCIBLE[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntitySingleCrucible(tkcyaId(setName.apply(j++)), brick));
+                CASTING_TABLE[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityCastingTable(tkcyaId(setName.apply(j)), brick));
 
             }
         }
