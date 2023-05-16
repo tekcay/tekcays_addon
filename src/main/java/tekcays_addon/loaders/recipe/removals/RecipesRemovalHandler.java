@@ -14,7 +14,7 @@ import static gregtech.api.unification.material.Materials.*;
 
 public class RecipesRemovalHandler {
     
-    public static void shapedComponentsRecipes() {
+    public static void shapedComponentsRecipesRemoval() {
         ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_MV.getStackForm());
         ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PISTON_MV.getStackForm());
         ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PUMP_MV.getStackForm());
@@ -53,7 +53,7 @@ public class RecipesRemovalHandler {
 
     public static void removeMoldsAndUsage() {
 
-        for (MetaItem.MetaValueItem mvi : MetaItems.SHAPE_MOLDS) {
+        for (MetaItem<?>.MetaValueItem mvi : MetaItems.SHAPE_MOLDS) {
             if (mvi.isItemEqual(MetaItems.SHAPE_EMPTY.getStackForm())) continue;
             ModHandler.removeRecipeByOutput(mvi.getStackForm());
         }

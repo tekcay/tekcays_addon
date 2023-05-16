@@ -27,7 +27,7 @@ public class TKCYARecipeLoader {
         if (miscOverhaul.enableFoilOverhaul) foil.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processFoil);
         if (miscOverhaul.enableHarderRotors) HarderRotorsHandler.init();
         if (miscOverhaul.enableCoilOverhaul) Coils.init();
-        if (miscOverhaul.disableComponentsShapesRecipes) RecipesRemovalHandler.shapedComponentsRecipes();
+        if (miscOverhaul.disableComponentsShapesRecipes) RecipesRemovalHandler.shapedComponentsRecipesRemoval();
         if (miscOverhaul.enableMagneticOverhaul) TKCYAPartsRecipeHandler.initPolarizing();
         if (meltingOverhaul.enableMeltingOverhaul) TKCYAPartsRecipeHandler.removeExtractor();
         if (energyOverhaul.disableGasTurbinesOverhaul) BurningGasBoilerRecipeHandler.init();
@@ -69,11 +69,7 @@ public class TKCYARecipeLoader {
         if (miscOverhaul.enableElectrolysisOverhaul) {
             TKCYAPartsRecipeHandler.initElectrode();
             ElectrolysisHandler.init();
-            //TODO : creates an issue with GCYS removing recipe
-            /**
-             * {@link gregicality.science.loaders.recipe.oreprocessing.PlatinumGroupProcessing}
-             */
-            //GTRecipeHandler.removeAllRecipes(RecipeMaps.ELECTROLYZER_RECIPES);
+            GTRecipeHandler.removeAllRecipes(RecipeMaps.ELECTROLYZER_RECIPES);
         }
 
         if (storageOverhaul.enableDrumsOverhaul) {
