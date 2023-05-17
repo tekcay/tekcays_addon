@@ -19,6 +19,13 @@ tkcya.machine.dynamo.3.name=Dynamo HV
 tkcya.machine.dynamo.4.name=Dynamo EV
 tkcya.machine.dynamo.5.name=Dynamo IV
 
+tkcya.machine.electric_pump.0.name=Electric Pump ULV
+tkcya.machine.electric_pump.1.name=Electric Pump LV
+tkcya.machine.electric_pump.2.name=Electric Pump MV
+tkcya.machine.electric_pump.3.name=Electric Pump HV
+tkcya.machine.electric_pump.4.name=Electric Pump EV
+tkcya.machine.electric_pump.5.name=Electric Pump IV
+
 tkcya.machine.diesel_generator.0.name=Diesel Generator I
 tkcya.machine.diesel_generator.1.name=Diesel Generator II
 tkcya.machine.diesel_generator.2.name=Diesel Generator III
@@ -538,6 +545,8 @@ tkcya.machine.gas_fuel_heater.tooltip.2=Put a Gas Collector in to recover waste 
 # Steam Air Compressor
 tkcya.steam_air_compressor.tooltip.1=Pressurize air.
 tkcya.steam_air_compressor.tooltip.2=Consumes %sL of Steam per second.
+
+tkcya.electric_pump.tooltip.1=Transfer rate: §b%dL/t
 
 
 tkcya.machine.no_overclock.tooltip=No overclock

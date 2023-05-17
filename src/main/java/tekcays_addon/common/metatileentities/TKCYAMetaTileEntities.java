@@ -9,6 +9,7 @@ import gregtech.common.metatileentities.storage.MetaTileEntityDrum;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.TekCaysAddon;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityController;
+import tekcays_addon.common.metatileentities.single.electric.*;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.gtapi.unification.TKCYAMaterials;
@@ -21,10 +22,6 @@ import tekcays_addon.common.metatileentities.multiblockpart.*;
 import tekcays_addon.common.metatileentities.single.*;
 
 import tekcays_addon.common.metatileentities.single.MetaTileEntitySingleCrucible;
-import tekcays_addon.common.metatileentities.single.electric.MetaTileEntityElectricCooler;
-import tekcays_addon.common.metatileentities.single.electric.MetaTileEntityElectricHeater;
-import tekcays_addon.common.metatileentities.single.electric.MetaTileEntityElectricPressureCompressor;
-import tekcays_addon.common.metatileentities.single.electric.MetaTileEntityElectricVacuumPump;
 import tekcays_addon.common.metatileentities.single.heaters.MetaTileEntityFluidizedHeater;
 import tekcays_addon.common.metatileentities.single.heaters.MetaTileEntityGasHeater;
 import tekcays_addon.common.metatileentities.single.heaters.MetaTileEntityLiquidFuelHeater;
@@ -77,6 +74,9 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityElectricPressureCompressor[] PRESSURE_COMPRESSOR = new MetaTileEntityElectricPressureCompressor[PRESSURE_COMPRESSOR_SINGLE_MAX_TIER + 1];
     public static MetaTileEntityElectricVacuumPump[] VACUUM_PUMP = new MetaTileEntityElectricVacuumPump[PRESSURE_COMPRESSOR_SINGLE_MAX_TIER + 1];
 
+
+    //ELECTRIC FORMER COVERS
+    public static MetaTileEntityElectricPump[] ELECTRIC_PUMPS = new MetaTileEntityElectricPump[MAX_TIER];
 
     public static MetaTileEntityPrimitiveMelter PRIMITIVE_MELTER;
     public static MetaTileEntityPrimitiveFermenter PRIMITIVE_FERMENTER;
@@ -374,6 +374,9 @@ public class TKCYAMetaTileEntities {
 
         IntStream.range(0, DECOMPRESSION_HATCH.length )
                 .forEach(i -> DECOMPRESSION_HATCH[i] = registerMetaTileEntity(12060 + i, new MetaTileEntityDecompressionHatch(tkcyaId("decompression_hatch." + i), i)));
+
+        IntStream.range(0, ELECTRIC_PUMPS.length )
+                .forEach(i -> ELECTRIC_PUMPS[i] = registerMetaTileEntity(12070 + i, new MetaTileEntityElectricPump(tkcyaId("electric_pump." + i), i)));
 
     }
 
