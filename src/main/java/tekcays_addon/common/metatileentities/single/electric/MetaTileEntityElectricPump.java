@@ -4,28 +4,20 @@ import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.ColourMultiplier;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregtech.api.GTValues;
-import gregtech.api.capability.GregtechTileCapabilities;
-import gregtech.api.capability.IActiveOutputSide;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.util.GTTransferUtils;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
-import gregtech.core.sound.GTSoundEvents;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.apache.commons.lang3.ArrayUtils;
-import tekcays_addon.api.metatileentity.WrenchAbleTieredMetaTileEntity;
+import tekcays_addon.api.metatileentity.TransferMetaTileEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -33,14 +25,12 @@ import java.util.List;
 
 import static codechicken.lib.fluid.FluidUtils.FLUID_HANDLER;
 
-public class MetaTileEntityElectricPump extends WrenchAbleTieredMetaTileEntity implements IActiveOutputSide {
-    private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()] / 2);
+public class MetaTileEntityElectricPump extends TransferMetaTileEntity {
+
     private final int TRANSFER_RATE = (int) Math.pow((getTier() + 1) * 2, 2);
-    private boolean isRunning;
 
     public MetaTileEntityElectricPump(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
-        this.isRunning = false;
     }
 
     @Override
@@ -66,26 +56,8 @@ public class MetaTileEntityElectricPump extends WrenchAbleTieredMetaTileEntity i
     }
 
     @Override
-    public void update() {
-        super.update();
-        if (!getWorld().isRemote) {
-            if (this.isBlockRedstonePowered() || energyContainer.getEnergyStored() < ENERGY_BASE_CONSUMPTION) {
-                isRunning = false;
-                return;
-            }
-            if (tryTransferFluid()) {
-                energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
-                isRunning = true;
-            }
-        }
-    }
-
-    private boolean tryTransferFluid() {
-        TileEntity inputTe = getWorld().getTileEntity(getPos().offset(getFrontFacing()));
-        if (inputTe == null) return false;
-
-        TileEntity outputTe = getWorld().getTileEntity(getPos().offset(getOutputSide()));
-        if (outputTe == null) return false;
+    protected boolean tryTransfer() {
+        if (!getTileEntities()) return false;
 
         IFluidHandler inputFluidHandler = inputTe.getCapability(FLUID_HANDLER, getFrontFacing().getOpposite());
         if (inputFluidHandler == null) return false;
@@ -107,42 +79,4 @@ public class MetaTileEntityElectricPump extends WrenchAbleTieredMetaTileEntity i
         tooltip.add(I18n.format("tkcya.machine.redstone.inverse.tooltip"));
     }
 
-    @Override
-    @Nullable
-    public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
-        if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
-            return side == getFrontFacing() ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
-        }
-        return super.getCapability(capability, side);
-    }
-
-    @Override
-    public SoundEvent getSound() {
-        return GTSoundEvents.MOTOR;
-    }
-
-    @Override
-    public boolean isActive() {
-        return this.isRunning;
-    }
-
-    @Override
-    public boolean isAutoOutputItems() {
-        return false;
-    }
-
-    @Override
-    public boolean isAutoOutputFluids() {
-        return true;
-    }
-
-    @Override
-    public boolean isAllowInputFromOutputSideItems() {
-        return false;
-    }
-
-    @Override
-    public boolean isAllowInputFromOutputSideFluids() {
-        return false;
-    }
 }
