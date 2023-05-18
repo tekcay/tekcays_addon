@@ -37,6 +37,7 @@ public class FluidDepositDefinition implements IWorldgenDefinition {
         this.depositName = depositName;
     }
     private static int getIntFromConfig(@Nonnull JsonObject configRoot, String configField) {
+        TKCYALog.logger.info(configField + configRoot.get(configField).getAsJsonObject().get(configField).getAsInt());
         return Math.max(0, Math.min(100, configRoot.get(configField).getAsJsonObject().get(configField).getAsInt()));
     }
 

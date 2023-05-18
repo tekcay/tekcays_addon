@@ -17,9 +17,9 @@ public class Paths {
      */
     public static final Path GT_WORLD_GEN_ROOT_PATH = GT_CONFIG_PATH.resolve(WORLDGEN);
     public static final Path TKCYA_CONFIG_PATH = CONFIG_PATH.resolve(TekCaysAddon.MODID);
-    public static final Path TKCYA_CONFIG_WORLDGEN_PATH = TKCYA_CONFIG_PATH.resolve(WORLDGEN);
-    public static final Path TKCYA_CONFIG_FLUID_DEPOSIT_PATH = TKCYA_CONFIG_WORLDGEN_PATH.resolve(FLUID_DEPOSITS);
-    public static final Path TKCYA_CONFIG_ORE_DEPOSIT_PATH = TKCYA_CONFIG_WORLDGEN_PATH.resolve(ORE_DEPOSITS);
+    public static final Path GT_CONFIG_WORLDGEN_PATH = GT_CONFIG_PATH.resolve(WORLDGEN);
+    public static final Path GT_CONFIG_FLUID_DEPOSIT_PATH = GT_CONFIG_WORLDGEN_PATH.resolve(FLUID);
+    public static final Path GT_CONFIG_ORE_DEPOSIT_PATH = GT_CONFIG_WORLDGEN_PATH.resolve(VEIN);
     public static final String TKCYA_JAR_ORE_DEPOSIT_PATH = "/assets/tkcya/worldgen/ore_deposits/overworld";
     public static final String TKCYA_JAR_FLUID_DEPOSIT_PATH = "/assets/tkcya/worldgen/fluid_deposits/overworld";
 }
