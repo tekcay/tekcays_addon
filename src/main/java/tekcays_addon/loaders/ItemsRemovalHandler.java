@@ -28,5 +28,11 @@ public class ItemsRemovalHandler {
 
     }
 
+    public static void prospectors() {
+        PROSPECTOR_LV.setInvisible();
+        PROSPECTOR_HV.setInvisible();
+        PROSPECTOR_LUV.setInvisible();
+    }
+
 
 }

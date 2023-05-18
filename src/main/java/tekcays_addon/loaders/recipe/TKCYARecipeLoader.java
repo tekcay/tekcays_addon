@@ -104,6 +104,7 @@ public class TKCYARecipeLoader {
         GTCEuRequireCleanRoomHandler.init();
         //Must be called in the end
         FiltrationRecipeHandler.init();
+        ItemsRemovalHandler.prospectors();
     }
 
 

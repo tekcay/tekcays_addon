@@ -36,6 +36,11 @@ public final class TKCYAMetaItems {
     public static MetaItem<?>.MetaValueItem CONVEYOR_ULV;
     public static MetaItem<?>.MetaValueItem ROBOT_ARM_ULV;
 
+    //Prospectors
+    public static MetaItem<?>.MetaValueItem TKCYA_PROSPECTOR_LV;
+    public static MetaItem<?>.MetaValueItem TKCYA_PROSPECTOR_HV;
+    public static MetaItem<?>.MetaValueItem TKCYA_PROSPECTOR_LUV;
+
 
     public static void init() {
         TKCYAMetaItem1 metaItem1 = new TKCYAMetaItem1((short) 0);

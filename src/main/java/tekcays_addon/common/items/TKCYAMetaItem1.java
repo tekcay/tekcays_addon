@@ -1,8 +1,15 @@
 package tekcays_addon.common.items;
 
+import gregtech.api.GTValues;
+import gregtech.api.GregTechAPI;
+import gregtech.api.items.metaitem.ElectricStats;
 import gregtech.api.items.metaitem.StandardMetaItem;
+import gregtech.common.items.behaviors.ProspectorScannerBehavior;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 import tekcays_addon.common.items.behaviors.FilterBehavior;
+import tekcays_addon.common.items.behaviors.TKCYAProspectorScannerBehavior;
+
+import static gregtech.common.items.MetaItems.*;
 import static tekcays_addon.common.items.TKCYAMetaItems.*;
 
 public class TKCYAMetaItem1 extends StandardMetaItem {
@@ -40,6 +47,19 @@ public class TKCYAMetaItem1 extends StandardMetaItem {
         PISTON_ULV = addItem(22, "piston_ulv");
         CONVEYOR_ULV = addItem(23, "conveyor_ulv");
         ROBOT_ARM_ULV = addItem(24, "robot_arm_ulv");
+
+        TKCYA_PROSPECTOR_LV = addItem(466, "prospector.lv")
+                .addComponents(ElectricStats.createElectricItem(100_000L, GTValues.LV), new TKCYAProspectorScannerBehavior(2, GTValues.LV))
+                .setMaxStackSize(1)
+                .setCreativeTabs(GregTechAPI.TAB_GREGTECH_TOOLS);
+        TKCYA_PROSPECTOR_HV = addItem(467, "prospector.hv")
+                .addComponents(ElectricStats.createElectricItem(1_600_000L, GTValues.HV), new TKCYAProspectorScannerBehavior(3, GTValues.HV))
+                .setMaxStackSize(1)
+                .setCreativeTabs(GregTechAPI.TAB_GREGTECH_TOOLS);
+        TKCYA_PROSPECTOR_LUV = addItem(468, "prospector.luv")
+                .addComponents(ElectricStats.createElectricItem(1_000_000_000L, GTValues.LuV), new TKCYAProspectorScannerBehavior(5, GTValues.LuV))
+                .setMaxStackSize(1)
+                .setCreativeTabs(GregTechAPI.TAB_GREGTECH_TOOLS);
 
     }
 }
