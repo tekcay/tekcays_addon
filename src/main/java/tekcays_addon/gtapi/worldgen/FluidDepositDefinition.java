@@ -37,12 +37,12 @@ public class FluidDepositDefinition implements IWorldgenDefinition {
         this.depositName = depositName;
     }
     private static int getIntFromConfig(@Nonnull JsonObject configRoot, String configField) {
-        TKCYALog.logger.info(configField + configRoot.get(configField).getAsJsonObject().get(configField).getAsInt());
-        return Math.max(0, Math.min(100, configRoot.get(configField).getAsJsonObject().get(configField).getAsInt()));
+        return Math.max(0, Math.max(100, configRoot.get(configField).getAsInt()));
     }
 
     @Override
     public boolean initializeFromConfig(@Nonnull JsonObject configRoot) {
+        TKCYALog.logger.info("initialize fluid deposit definitions from config");
         // the weight value for determining which vein will appear
         this.weight = getIntFromConfig(configRoot, WEIGHT);
         this.minFluidAmount = getIntFromConfig(configRoot, MIN_FLUID_AMOUNT);

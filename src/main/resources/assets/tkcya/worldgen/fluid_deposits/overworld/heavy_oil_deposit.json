@@ -3,5 +3,7 @@
   "name": "Heavy Oil Deposit",
   "min_fluid_amount": 100000,
   "max_fluid_amount": 500000,
+  "min_depth": 65,
+  "max_depth": 5000,
   "fluid": "oil_heavy"
 }

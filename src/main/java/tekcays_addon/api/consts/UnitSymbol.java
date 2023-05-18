@@ -9,4 +9,5 @@ public class UnitSymbol {
     public static final String WATT = "W";
     public static final String mBAR = "mbar";
     public static final String kBAR = "kbar";
+    public static final String LITER = "L";
 }

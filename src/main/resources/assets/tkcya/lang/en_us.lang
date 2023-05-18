@@ -642,6 +642,11 @@ tkcya.electric_cooler.tooltip.1=For cooling.
 tkcya.electric_cooler.tooltip.2=Outputs §b%d CU/t§7 on the §eFRONT§7 face.
 tkcya.electric_cooler.tooltip.3=Outputs §c%d HU/t§7 on the §eBACK§7 face.
 
+tkcya.jei.fluid.min_depth=Min. depth: %d m
+tkcya.jei.fluid.max_depth=Max. depth: %d m
+tkcya.jei.fluid.min_fluid_amount=Min. fluid amount: %s
+tkcya.jei.fluid.max_fluid_amount=Max. fluid amount: %s
+
 ##Buttons in covers
 cover.cover.detector.inverted=I
 cover.cover.detector.normal=N

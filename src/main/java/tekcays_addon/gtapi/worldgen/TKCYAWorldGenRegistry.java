@@ -130,7 +130,7 @@ public class TKCYAWorldGenRegistry {
 
         setPathAndExtractDefinitions();
 
-        WorldGenRegistry.INSTANCE.reinitializeRegisteredVeins();
+        //TKCYAWorldGenRegistry.INSTANCE.reinitializeRegisteredVeins();
 
         TKCYAWorldGenRegistry.INSTANCE.registerDeposits();
 
