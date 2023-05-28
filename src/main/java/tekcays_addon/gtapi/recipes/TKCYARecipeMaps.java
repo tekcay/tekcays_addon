@@ -84,8 +84,8 @@ public class TKCYARecipeMaps {
             "crystallization", 1, 1, 3, 0, new PrimitiveRecipeBuilder(), false);
 
     @ZenProperty
-    public static final RecipeMap<SimpleRecipeBuilder> ELECTROLYSIS = new RecipeMap<>(
-            "electrolysis", 5, 2, 3, 3, new SimpleRecipeBuilder(), false)
+    public static final RecipeMap<MultiAmperageRecipeBuilder> ELECTROLYSIS = new RecipeMap<>(
+            "electrolysis", 5, 2, 3, 3, new MultiAmperageRecipeBuilder(), false)
             .setSound(GTSoundEvents.ELECTROLYZER);
 
     @ZenProperty

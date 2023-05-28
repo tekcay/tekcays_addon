@@ -24,6 +24,7 @@ public class ElectrolysisHandler {
                 .notConsumable(TKCYAMetaItems.GAS_COLLECTOR)
                 .fluidInputs(DistilledWater.getFluid(1000))
                 .fluidOutputs(Hydrogen.getFluid(2000), Oxygen.getFluid(1000))
+                .amperage(2)
                 .duration(100)
                 .EUt(120)
                 .buildAndRegister();

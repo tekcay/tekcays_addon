@@ -15,19 +15,21 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import tekcays_addon.gtapi.logic.NoOverclockLogic;
-import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
-import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
-
-import static tekcays_addon.gtapi.logic.DamageItemsLogic.*;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
+import tekcays_addon.gtapi.recipes.recipeproperties.MultiAmperageProperty;
+import tekcays_addon.gtapi.render.TKCYATextures;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
+import static tekcays_addon.gtapi.logic.DamageItemsLogic.*;
 
 public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockController {
 
@@ -35,12 +37,16 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
     private final List<ItemStack> electrodeInInventory = new ArrayList<>();
     private final HashSet<String> currentRecipeNonConsummIngredient = new HashSet<>();
     private final HashSet<String> nonConsummInInventory = new HashSet<>();
+    private int recipeEUt;
+    private long recipeAmperage;
+    private long currentAmperage;
+    private Recipe currentRecipe;
+
 
     //TODO Proper blocks and textures
 
     public MetaTileEntityAdvancedElectrolyzer(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.ELECTROLYSIS);
-        this.recipeMapWorkable = new NoOverclockLogic(this);
     }
 
     @Override
@@ -48,6 +54,15 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
         return new MetaTileEntityAdvancedElectrolyzer(metaTileEntityId);
     }
 
+    private void setCurrentRecipe() {
+        currentRecipe = this.recipeMap.findRecipe(getEnergyContainer().getInputVoltage(), getImportItems(), getInputFluidInventory());
+        if (currentRecipe != null) {
+            recipeAmperage = currentRecipe.getProperty(MultiAmperageProperty.getInstance(), 0L);
+            recipeEUt = currentRecipe.getEUt();
+        }
+    }
+
+    @Nonnull
     @Override
     protected BlockPattern createStructurePattern() { //TODO MutiblockStructure
         return FactoryBlockPattern.start()
@@ -75,6 +90,39 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
                 electrodeInInventory.add(electrodeStack);
             }
         }
+    }
+
+    @Override
+    public void update() {
+        //super.update();
+        if (!this.isActive()) {
+
+            setCurrentRecipe();
+            if (currentRecipe == null) return;
+
+        } else {
+            if (currentRecipe == null) return;
+            currentAmperage = getEnergyContainer().getInputAmperage();
+            if (currentAmperage < recipeAmperage) {
+                invalidate();
+                return;
+            }
+
+            if (!drawEnergy(true)) {
+                invalidate();
+                return;
+            }
+            drawEnergy(false);
+
+        }
+    }
+
+    public boolean drawEnergy(boolean simulate) {
+        long resultEnergy = getEnergyContainer().getEnergyStored() - (recipeEUt * recipeAmperage);
+        if (resultEnergy >= 0L && resultEnergy <= getEnergyContainer().getEnergyCapacity()) {
+            if (!simulate) getEnergyContainer().changeEnergy(-recipeEUt * recipeAmperage);
+            return true;
+        } else return false;
     }
 
 
@@ -116,8 +164,8 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        inputs = recipe.getInputs();
-        return true;
+        if (inputs != recipe.getInputs()) return false;
+        return recipe.getProperty(MultiAmperageProperty.getInstance(), 0L) >= getEnergyContainer().getInputAmperage();
     }
 
     @Override

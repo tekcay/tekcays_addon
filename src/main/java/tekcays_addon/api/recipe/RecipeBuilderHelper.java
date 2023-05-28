@@ -58,6 +58,10 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
                     store((PressurizedFluidStackProperty) recipeProperty, recipePropertyStorage, null);
                     break;
 
+                case AMPERAGE:
+                    store((MultiAmperageProperty) recipeProperty, recipePropertyStorage, null);
+                    break;
+
                 default:
                     break;
             }
@@ -117,6 +121,11 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
         return validate(PressurizedFluidStackProperty.getInstance(), fluidStack, RecipeValidationFunctions.VALIDATE_FLUIDSTACK);
     }
 
+    @Nonnull
+    default T amperage(long amperage) {
+        return validate(MultiAmperageProperty.getInstance(), amperage, RecipeValidationFunctions.VALIDATE_LONG_POSITIVE);
+    }
+
     default boolean applyPropertyHelper(@Nonnull String key, Object value) {
 
         switch (key) {
@@ -146,6 +155,10 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
 
             case PRESSURIZED_FLUIDSTACK_PROPERTY:
                 this.pressurizedFluidStack(((FluidStack) value));
+                return true;
+
+            case AMPERAGE:
+                this.amperage(((Number) value).longValue());
                 return true;
 
             default:
