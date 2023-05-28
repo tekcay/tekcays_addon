@@ -111,6 +111,9 @@ public class TKCYATextures {
     public static SimpleOverlayRenderer COVER_MOLD_RING_CARBON_TEXTURE;
     public static SimpleOverlayRenderer COVER_MOLD_BLOCK_CARBON_TEXTURE;
 
+    //Misc
+    public static SimpleOverlayRenderer DIRT;
+
 
     public static void preInit() {
         // Simple Machines
@@ -197,7 +200,8 @@ public class TKCYATextures {
         COVER_MOLD_RING_CARBON_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_ring_carbon");
         COVER_MOLD_BLOCK_CARBON_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_block_carbon");
 
-
+        //Misc
+        DIRT = new SimpleOverlayRenderer("dirt");
 
     }
 }
