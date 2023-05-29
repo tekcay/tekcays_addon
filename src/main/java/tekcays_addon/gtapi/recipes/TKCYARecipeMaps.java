@@ -92,6 +92,10 @@ public class TKCYARecipeMaps {
     public static final RecipeMap<PrimitiveRecipeBuilder> FILTRATION = new RecipeMap<>(
             "filtration", 1, 1, 1, 1, new PrimitiveRecipeBuilder(), false);
 
+    @ZenProperty
+    public static final RecipeMap<PrimitiveRecipeBuilder> PRIMITIVE_FURNACE = new RecipeMap<>(
+            "primitive_furnace", 2, 1, 0, 0, new PrimitiveRecipeBuilder(), false);
+
     /**
      * When using a fluid for two different recipes, it's MANDATORY to use an {@code ntCircuitIngredient}.
      * <pre>

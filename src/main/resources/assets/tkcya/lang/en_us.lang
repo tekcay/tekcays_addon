@@ -133,6 +133,7 @@ tkcya.machine.primitive_bath.name=Primitive Bath
 tkcya.machine.pressurized_cracking_unit.name=High Pressure Cracking Unit
 tkcya.machine.roasting_oven.name=Roasting Oven
 tkcya.machine.spiral_separator.name=Spiral Separator
+tkcya.machine.primitive_furnace.name=Primitive Furnace
 
 #Blast Furnaces
 tkcya.machine.brick_blast_furnace.name=Primitive Brick Blast Furnace
@@ -282,6 +283,8 @@ tile.large_multiblock_casing.steel_wall.name=Steel Wall
 tile.large_multiblock_casing.galvanized_steel_wall.name=Galvanized Steel Wall
 tile.large_multiblock_casing.stainless_steel_wall.name=Stainless Steel Wall
 
+# dirts
+tile.block_dirt.dirt.name=Neutralized Dirt
 
 
 # RecipeMaps
@@ -307,6 +310,7 @@ recipemap.spiral_separation.name=Spiral Separation
 recipemap.coking.name=Coking
 recipemap.steam_autoclave.name=Autoclave
 recipemap.diesel_generator.name=Diesel generator
+recipemap.primitive_furnace.name=Primitive heating
 
 # Materials
 material.unpure_bronze=Unpure Bronze

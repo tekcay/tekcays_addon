@@ -6,6 +6,7 @@ import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.relauncher.Side;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
+import tekcays_addon.common.blocks.blocks.BlockDirt;
 
 import static tekcays_addon.gtapi.utils.HeatersMethods.*;
 
@@ -112,7 +113,7 @@ public class TKCYATextures {
     public static SimpleOverlayRenderer COVER_MOLD_BLOCK_CARBON_TEXTURE;
 
     //Misc
-    public static SimpleOverlayRenderer DIRT;
+    public static SimpleOverlayRenderer[] DIRTS = new SimpleOverlayRenderer[1];
 
 
     public static void preInit() {
@@ -201,7 +202,7 @@ public class TKCYATextures {
         COVER_MOLD_BLOCK_CARBON_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_block_carbon");
 
         //Misc
-        DIRT = new SimpleOverlayRenderer("dirt");
+        DIRTS[BlockDirt.DIRT] = new SimpleOverlayRenderer("block_dirt/dirt");
 
     }
 }

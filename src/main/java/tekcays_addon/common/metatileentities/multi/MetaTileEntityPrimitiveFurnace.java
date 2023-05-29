@@ -18,6 +18,8 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
+import tekcays_addon.common.blocks.TKCYAMetaBlocks;
+import tekcays_addon.common.blocks.blocks.BlockDirt;
 import tekcays_addon.gtapi.logic.NoEnergyMultiblockLogic;
 import tekcays_addon.gtapi.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
@@ -29,10 +31,9 @@ import static gregtech.api.util.RelativeDirection.*;
 
 public class MetaTileEntityPrimitiveFurnace extends NoEnergyRecipeMapMultiBlockController {
     private final IBlockState grassPath = Blocks.GRASS_PATH.getDefaultState();
-    private final IBlockState dirt = Blocks.DIRT.getDefaultState();
-
+    private final IBlockState dirt = TKCYAMetaBlocks.BLOCK_DIRT.getState(BlockDirt.DirtType.DIRT);
     public MetaTileEntityPrimitiveFurnace(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.COKING);
+        super(metaTileEntityId, TKCYARecipeMaps.PRIMITIVE_FURNACE);
         this.recipeMapWorkable = new NoEnergyMultiblockLogic(this);
     }
 
@@ -105,7 +106,7 @@ public class MetaTileEntityPrimitiveFurnace extends NoEnergyRecipeMapMultiBlockC
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
-        return TKCYATextures.DIRT;
+        return TKCYATextures.DIRTS[BlockDirt.DIRT];
     }
 
     @Override
