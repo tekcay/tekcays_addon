@@ -749,6 +749,9 @@ behavior.tricorder.turbine.steam_consumption=Steam consumption: %d L/t
 behavior.tricorder.turbine.output_rate=Water output rate: %d L/t
 behavior.tricorder.speed=Speed: %d rpm
 
+behavior.tricorder.fuel_amount=Fuel amount: %d sticks
+behavior.tricorder.waste_amount=Waste amount: %d ash
+
 # Errors
 
 tkcya.multiblock.pattern.error.bricks=§cAll bricks must be the same§rbehavior.tricorder.speed=Speed: %d rpm
