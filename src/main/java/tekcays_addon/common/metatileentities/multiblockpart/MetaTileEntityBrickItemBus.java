@@ -2,12 +2,15 @@ package tekcays_addon.common.metatileentities.multiblockpart;
 
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityItemBus;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
@@ -27,6 +30,11 @@ public class MetaTileEntityBrickItemBus extends MetaTileEntityItemBus {
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityBrickItemBus(metaTileEntityId, isExportHatch, brick);
+    }
+
+    @Override
+    public MultiblockAbility<IItemHandlerModifiable> getAbility() {
+        return isExportHatch ? TKCYAMultiblockAbility.BRICK_EXPORT_ITEMS : TKCYAMultiblockAbility.BRICK_IMPORT_ITEMS;
     }
 
     public BlockBrick.BrickType getBrick() {
