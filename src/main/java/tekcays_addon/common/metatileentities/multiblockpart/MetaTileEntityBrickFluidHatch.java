@@ -3,6 +3,7 @@ package tekcays_addon.common.metatileentities.multiblockpart;
 import gregtech.api.capability.impl.NotifiableFluidTank;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityFluidHatch;
 import net.minecraft.client.resources.I18n;
@@ -10,6 +11,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
@@ -37,6 +41,11 @@ public class MetaTileEntityBrickFluidHatch extends MetaTileEntityFluidHatch {
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityBrickFluidHatch(metaTileEntityId, isExportHatch, brick);
+    }
+
+    @Override
+    public MultiblockAbility<IFluidTank> getAbility() {
+        return isExportHatch ? TKCYAMultiblockAbility.BRICK_EXPORT_FLUIDS : TKCYAMultiblockAbility.BRICK_IMPORT_FLUIDS;
     }
 
     @Override
