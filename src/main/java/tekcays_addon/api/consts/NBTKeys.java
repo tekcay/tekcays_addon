@@ -20,4 +20,5 @@ public class NBTKeys {
     public static final String CURRENT_VALUE_KEY = "threshold";
     public static final String IS_ACTIVE = "isActive";
     public static final String IS_ABLE_TO_DECOMPRESS = "isAbletoDecompress";
+    public static final String HIT_NUMBER = "hitNumber";
 }
