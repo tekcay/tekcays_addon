@@ -117,6 +117,8 @@ tkcya.machine.material.invar_gas_fuel_heater.name=Invar Gas Fuel Heater
 tkcya.machine.material.titanium_gas_fuel_heater.name=Titanium Gas Fuel Heater
 tkcya.machine.material.tungsten_steel_gas_fuel_heater.name=Tungsten Steel Gas Fuel Heater
 
+tkcya.machine.axe_support.name=Axe Support
+
 tkcya.machine.steam_cooler_bronze.name=Steam Cooler
 tkcya.machine.steam_cooler_steel.name=High Pressure Steam Cooler
 tkcya.machine.muffler_hatch.primitive.name=Primitive Muffler Hatch
@@ -223,7 +225,7 @@ tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer
 tkcya.machine.filter.name=Filter
 tkcya.machine.coke_oven=Coke Oven
 
-tkcya.machine.modulable_wood_tank.name=Wood Tank
+tkcya.machine.modulable_wood.tank.name=Wood Tank
 tkcya.machine.modulable_galvanized_steel_tank.name=Galvanized Steel Tank
 tkcya.machine.modulable_stainless_steel_tank.name=Stainless Steel Tank
 tkcya.machine.modulable_steel_tank.name=Steel Tank
@@ -272,6 +274,14 @@ tile.block_brick.brick.name=Brick
 tile.block_brick.reinforced_brick.name=Reinforced Brick
 tile.block_brick.fireclay_brick.name=Fireclay Brick
 tile.block_brick.strong_brick.name=Strong Brick
+
+# cut trees
+tile.block_cut_wood.oak.name=Cut Oak Log
+tile.block_cut_wood.acacia.name=Cut Acacia Log
+tile.block_cut_wood.jungle.name=Cut Jungle Log
+tile.block_cut_wood.rubber.name=Cut Rubber Log
+tile.block_cut_wood.birch.name=Cut Birch Log
+tile.block_cut_wood.spruce.name=Cut Spruce Log
 
 ## tooltips
 tile.block_brick.tooltip.heat=Max temperature: §c%,d K

@@ -155,11 +155,6 @@ public class MetaTileEntityAxeSupport extends MetaTileEntity {
         getBaseRenderer().render(renderState, translation, colouredPipeline);
         ColourMultiplier multiplier = new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
         colouredPipeline = ArrayUtils.add(pipeline, multiplier);
-        TKCYATextures.HEAT_ACCEPTOR_VERTICALS_OVERLAY.renderSided(UP, renderState, translation, pipeline);
-        TKCYATextures.BRICKS[BlockBrick.BrickType.BRICK.getTextureId()].renderSided(DOWN, renderState, translation, pipeline);
-        TKCYATextures.HALF_BRICK.renderSided(getFrontFacing().getOpposite(), renderState, translation, pipeline);
-        TKCYATextures.HALF_BRICK.renderSided(getFrontFacing().rotateY(), renderState, translation, pipeline);
-        TKCYATextures.HALF_BRICK.renderSided(getFrontFacing().rotateYCCW(), renderState, translation, pipeline);
     }
 
     @Override
