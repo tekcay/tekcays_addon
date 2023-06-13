@@ -29,6 +29,7 @@ public class BlockCutWood extends VariantBlock<BlockCutWood.CutWoodType> {
     public static final String TRANSLATION_KEY = "block_cut_wood";
     public static final String LOG = "log";
     public static final String PLANK = "planks";
+    public static final String SLAB = "wooden_slab";
 
     public BlockCutWood() {
         super(Material.WOOD);

@@ -15,6 +15,7 @@ import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
@@ -43,15 +44,10 @@ public class MetaTileEntityAxeSupport extends MetaTileEntity {
     private BlockPos upperBlockPos;
     private BlockCutWood.CutWoodType woodType;
     private IBlockState upperBlockState;
+    private String blockName;
 
     public MetaTileEntityAxeSupport(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId);
-    }
-
-    @Override
-    public void update() {
-        super.update();
-
     }
 
     @Override
@@ -77,7 +73,8 @@ public class MetaTileEntityAxeSupport extends MetaTileEntity {
             if (toolClasses.iterator().next().equals(ToolClasses.AXE)) {
                 onAxeClick();
             } else if (toolClasses.iterator().next().equals(ToolClasses.SAW)) {
-                onSawClick();
+                blockName = BlockCutWood.getInfo(upperBlockState)[0];
+                onSawClick(playerIn);
             }
         }
         return true;
@@ -89,26 +86,46 @@ public class MetaTileEntityAxeSupport extends MetaTileEntity {
         return upperBlock.equals(Blocks.AIR.getDefaultState());
     }
 
-    private void incrementAndTryDestroy(BlockPos blockPos, IBlockState toAdd) {
+    private boolean incrementAndTryDestroy(BlockPos blockPos, IBlockState toAdd) {
         hitNumber++;
+        ;
         if (hitNumber == HIT_NUMBER_TO_TRANSFORM) {
             getWorld().setBlockState(blockPos, toAdd);
             hitNumber = 0;
+            return true;
         }
+        return false;
     }
 
-    private void onSawClick() {
+    private boolean incrementAndTryDestroy(BlockPos blockPos) {
+        hitNumber++;
+
+        if (hitNumber == HIT_NUMBER_TO_TRANSFORM) {
+            getWorld().destroyBlock(blockPos, false);
+            hitNumber = 0;
+            return true;
+        }
+        return false;
+    }
+
+    private void onSawClick(EntityPlayer player) {
 
         IBlockState plank = BlockCutWood.getPlankFromCutWood(upperBlock);
-        if (plank != null && BlockCutWood.getInfo(upperBlockState)[0].equals(BlockCutWood.TRANSLATION_KEY)) {
+        if (plank != null && blockName.equals(BlockCutWood.TRANSLATION_KEY)) {
             incrementAndTryDestroy(upperBlockPos, plank);
             return;
         }
 
         IBlockState slab = BlockCutWood.getSlabFromPlank(upperBlock);
-        if (plank != null && BlockCutWood.getInfo(upperBlockState)[0].equals(BlockCutWood.PLANK)) {
-            incrementAndTryDestroy(upperBlockPos, slab);
+        if (plank != null && slab != null && blockName.equals(BlockCutWood.PLANK)) {
+            if (!incrementAndTryDestroy(upperBlockPos, slab)) return;
+            slab.getBlock().dropBlockAsItem(getWorld(), upperBlockPos, slab, 0);
             return;
+        }
+
+        if (blockName.equals(BlockCutWood.SLAB)) {
+            if (!incrementAndTryDestroy(upperBlockPos)) return;
+            player.addItemStackToInventory(new ItemStack(Items.STICK, 4));
         }
 
         hitNumber = 0;
