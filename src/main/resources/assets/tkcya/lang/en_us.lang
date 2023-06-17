@@ -281,6 +281,7 @@ tile.block_brick.strong_brick.name=Strong Brick
 
 # cut trees
 tile.block_cut_wood.oak.name=Cut Oak Log
+tile.block_cut_wood.dark_oak.name=Cut Dark Oak Log
 tile.block_cut_wood.acacia.name=Cut Acacia Log
 tile.block_cut_wood.jungle.name=Cut Jungle Log
 tile.block_cut_wood.rubber.name=Cut Rubber Log

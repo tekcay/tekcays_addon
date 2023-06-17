@@ -113,7 +113,7 @@ public class TKCYATextures {
     
     //Ct trees
     public static SimpleOverlayRenderer LOG_ACACIA_TOP;
-    public static SimpleOverlayRenderer LOG_BIG_OAK_TOP;
+    public static SimpleOverlayRenderer LOG_DARK_OAK_TOP;
     public static SimpleOverlayRenderer LOG_BIRCH_TOP;
     public static SimpleOverlayRenderer LOG_JUNGLE_TOP;
     public static SimpleOverlayRenderer LOG_OAK_TOP;
@@ -207,7 +207,7 @@ public class TKCYATextures {
         
         //Cut trees
         LOG_ACACIA_TOP = new SimpleOverlayRenderer("trees/log_acacia_top");
-        LOG_BIG_OAK_TOP = new SimpleOverlayRenderer("trees/log_big_oak_top");
+        LOG_DARK_OAK_TOP = new SimpleOverlayRenderer("trees/log_dark_oak_top");
         LOG_BIRCH_TOP = new SimpleOverlayRenderer("trees/log_birch_top");
         LOG_JUNGLE_TOP = new SimpleOverlayRenderer("trees/log_jungle_top");
         LOG_OAK_TOP = new SimpleOverlayRenderer("trees/log_oak_top");

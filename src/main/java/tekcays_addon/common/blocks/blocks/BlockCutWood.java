@@ -61,6 +61,9 @@ public class BlockCutWood extends VariantBlock<BlockCutWood.CutWoodType> {
 
         } else if (block.equals(getLog(BlockPlanks.EnumType.JUNGLE))) {
             return CutWoodType.JUNGLE;
+
+        } else if (block.equals(getLog(BlockPlanks.EnumType.DARK_OAK))) {
+            return CutWoodType.DARK_OAK;
         }
 
         return null;
