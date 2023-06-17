@@ -23,7 +23,6 @@ public class TKCYARecipeLoader {
 
         PressureHandler.init();
         ULVComponentsHandler.init();
-        AxeSupportRecipes.init();
 
         if (miscOverhaul.enableFoilOverhaul) foil.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processFoil);
         if (miscOverhaul.enableHarderRotors) HarderRotorsHandler.init();
@@ -124,6 +123,8 @@ public class TKCYARecipeLoader {
         if (meltingOverhaul.enableCastingOverhaul) {
             CastingRecipeHandler.init();
         }
+
+        AxeSupportRecipes.init();
 
     }
 

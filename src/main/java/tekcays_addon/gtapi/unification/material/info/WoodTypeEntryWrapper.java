@@ -113,7 +113,7 @@ public class WoodTypeEntryWrapper {
             .registerAllUnificationInfo()
             .build();
 
-    private static final WoodTypeEntry TREATED_WOOD_ENTRY = new WoodTypeEntry.Builder(GTValues.MODID, "treated")
+    public static final WoodTypeEntry TREATED_WOOD_ENTRY = new WoodTypeEntry.Builder(GTValues.MODID, "treated")
             .planks(MetaBlocks.PLANKS.getItemVariant(BlockGregPlanks.BlockType.TREATED_PLANK), null)
             .door(MetaItems.TREATED_WOOD_DOOR.getStackForm(), null)
             .slab(new ItemStack(MetaBlocks.WOOD_SLAB, 1, 1)).addSlabRecipe()
