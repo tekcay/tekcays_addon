@@ -186,6 +186,7 @@ public class BlockCutWood extends VariantBlock<BlockCutWood.CutWoodType> {
 
         ACACIA("acacia", BlockPlanks.EnumType.ACACIA),
         BIRCH("birch", BlockPlanks.EnumType.BIRCH),
+        DARK_OAK("dark_oak", BlockPlanks.EnumType.DARK_OAK),
         JUNGLE("jungle", BlockPlanks.EnumType.JUNGLE),
         OAK("oak", BlockPlanks.EnumType.OAK),
         RUBBER("rubber", null),

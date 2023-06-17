@@ -70,6 +70,10 @@ tkcya.machine.pressure_controller.message=Sets threshold mode to %s
 
 tkcya.machine.casting_table.tooltip=Air speeds up the recipe by §e20%§7
 
+tkcya.machine.axe_support.tooltip.1=Workstation for wood. Place the block on the TOP face.
+tkcya.machine.axe_support.tooltip.2=Right-click while sneaking with an axe to turn logs into cut wood.
+tkcya.machine.axe_support.tooltip.3=Right-click while sneaking with an axe to turn logs into cut wood.
+
 tkcya.machine.steam_air_compressor.name=Steam Air Compressor
 tkcya.machine.steam_autoclave.name=Autoclave
 
@@ -317,6 +321,7 @@ recipemap.spiral_separation.name=Spiral Separation
 recipemap.coking.name=Coking
 recipemap.steam_autoclave.name=Autoclave
 recipemap.diesel_generator.name=Diesel generator
+recipemap.log_cutting.name=Wood work
 
 # Materials
 material.unpure_bronze=Unpure Bronze

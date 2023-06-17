@@ -23,6 +23,7 @@ public class TKCYAOrePrefixAdditions {
     public static void miscInit(){
         addOrePrefix(bottleGlass);
         addOrePrefix(curvedPlate);
+        addOrePrefix(cutWood);
     }
 
 
