@@ -148,9 +148,8 @@ public class TKCYARecipeMaps {
             .setSound(GTSoundEvents.MOTOR);
 
     @ZenProperty
-    public static final RecipeMap<PrimitiveRecipeBuilder> LOG_CUTING = new RecipeMap<>(
-            "log_cutting", 2, 1, 0, 0, new PrimitiveRecipeBuilder(), false)
-            .setSound(GTSoundEvents.CHAINSAW_TOOL);
+    public static final RecipeMap<ToolRecipeBuilder> LOG_CUTING = new RecipeMap<>(
+            "log_cutting", 1, 1, 0, 0, new ToolRecipeBuilder(), false);
 
 
 
