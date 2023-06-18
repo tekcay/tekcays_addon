@@ -107,6 +107,7 @@ public class TKCYAMetaTileEntities {
 
     public static MetaTileEntityRoastingOven ROASTING_OVEN;
     public static MetaTileEntitySpiralSeparator SPIRAL_SEPARATOR;
+    public static MetaTileEntityPrimitiveFurnace PRIMITIVE_FURNACE;
 
 
     //Brick MTES
@@ -278,6 +279,7 @@ public class TKCYAMetaTileEntities {
 
         ROASTING_OVEN = registerMetaTileEntity(startId++, new MetaTileEntityRoastingOven(tkcyaId("roasting_oven")));
         SPIRAL_SEPARATOR = registerMetaTileEntity(startId++, new MetaTileEntitySpiralSeparator(tkcyaId("spiral_separator")));
+        PRIMITIVE_FURNACE = registerMetaTileEntity(startId++, new MetaTileEntityPrimitiveFurnace(tkcyaId("primitive_furnace")));
 
 
         //id 11177 to 11194

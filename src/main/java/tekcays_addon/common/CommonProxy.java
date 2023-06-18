@@ -46,16 +46,18 @@ public class CommonProxy {
 
         registry.register(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING);
         registry.register(TKCYAMetaBlocks.BLOCK_BRICK);
+        registry.register(TKCYAMetaBlocks.BLOCK_DIRT);
     }
 
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
-        TKCYALog.logger.info("Registering Items...");
+        TKCYALog.logger.info("Registering blocks items...");
         IForgeRegistry<Item> registry = event.getRegistry();
 
         registry.register(createItemBlock(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING, VariantItemBlock::new));
         registry.register(createItemBlock(TKCYAMetaBlocks.BLOCK_BRICK, VariantItemBlock::new));
+        registry.register(createItemBlock(TKCYAMetaBlocks.BLOCK_DIRT, VariantItemBlock::new));
     }
 
     private static <T extends Block> ItemBlock createItemBlock(T block, Function<T, ItemBlock> producer) {

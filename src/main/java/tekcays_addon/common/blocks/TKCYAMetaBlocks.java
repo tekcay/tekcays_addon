@@ -1,7 +1,5 @@
 package tekcays_addon.common.blocks;
 
-import tekcays_addon.common.blocks.blocks.BlockBrick;
-import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
@@ -11,6 +9,9 @@ import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import tekcays_addon.common.blocks.blocks.BlockBrick;
+import tekcays_addon.common.blocks.blocks.BlockDirt;
+import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 
 public class TKCYAMetaBlocks {
 
@@ -20,6 +21,7 @@ public class TKCYAMetaBlocks {
 
     public static BlockLargeMultiblockCasing LARGE_MULTIBLOCK_CASING;
     public static BlockBrick BLOCK_BRICK;
+    public static BlockDirt BLOCK_DIRT;
 
     public static void init() {
         LARGE_MULTIBLOCK_CASING = new BlockLargeMultiblockCasing();
@@ -27,12 +29,16 @@ public class TKCYAMetaBlocks {
 
         BLOCK_BRICK = new BlockBrick();
         BLOCK_BRICK.setRegistryName("block_brick");
+
+        BLOCK_DIRT = new BlockDirt();
+        BLOCK_DIRT.setRegistryName("block_dirt");
     }
 
     @SideOnly(Side.CLIENT)
     public static void registerItemModels() {
         registerItemModel(LARGE_MULTIBLOCK_CASING);
         registerItemModel(BLOCK_BRICK);
+        registerItemModel(BLOCK_DIRT);
     }
 
     @SideOnly(Side.CLIENT)
