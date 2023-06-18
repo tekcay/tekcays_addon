@@ -45,6 +45,10 @@ public class TKCYAValues {
      */
     public static final float CLEANROOM_MULTIPLIER = 1.2f;
 
+    //Modid
+    public static final String MC_ID = "minecraft";
+    public static final String GT_ID = "gregtech";
+
 
     //// ENERGY_TYPE_RATIOS
 

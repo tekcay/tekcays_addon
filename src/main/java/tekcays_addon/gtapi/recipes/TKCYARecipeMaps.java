@@ -153,7 +153,7 @@ public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<ToolRecipeBuilder> LOG_CUTING = new RecipeMap<>(
-            "log_cutting", 1, 1, 0, 0, new ToolRecipeBuilder(), false);
+            "log_cutting", 2, 1, 0, 0, new ToolRecipeBuilder(), false);
 
 
 
