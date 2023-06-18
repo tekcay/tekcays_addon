@@ -56,19 +56,14 @@ public class AxeSupportRecipes {
                 .output(OrePrefix.stick, Wood, 4)
                 .buildAndRegister();
 
-        WoodTypeEntry treatedWoodEntry = WoodTypeEntryWrapper.TREATED_WOOD_ENTRY;
-
         ModHandler.removeRecipeByOutput(new ItemStack(Items.STICK, 4));
         ModHandler.removeRecipeByOutput(OreDictUnifier.get(OrePrefix.stick, TreatedWood, 4));
 
     }
 
     private static void recipeRemoval(WoodTypeEntry entry) {
-
         ModHandler.removeRecipeByName("minecraft:" + entry.woodName + "_planks");
         ModHandler.removeRecipeByName("minecraft:" + entry.woodName + "_wooden_slab");
-
     }
-
 
 }
