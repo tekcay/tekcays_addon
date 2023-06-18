@@ -1,17 +1,13 @@
 package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.items.toolitem.ToolOreDict;
-import gregtech.api.recipes.GTRecipeHandler;
 import gregtech.api.recipes.ModHandler;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.util.GTUtility;
 import gregtech.loaders.WoodTypeEntry;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ShapelessRecipes;
-import net.minecraft.util.ResourceLocation;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.unification.material.info.WoodTypeEntryWrapper;
 
@@ -42,8 +38,7 @@ public class AxeSupportRecipes {
                     .outputs(GTUtility.copyAmount(2, entry.getWoodTypeEntry().slab.copy()))
                     .buildAndRegister();
 
-            recipeRemoval(entry.getWoodTypeEntry(), Items.STICK);
-
+            recipeRemoval(entry.getWoodTypeEntry());
         }
 
         TKCYARecipeMaps.LOG_CUTING.recipeBuilder()
@@ -61,17 +56,18 @@ public class AxeSupportRecipes {
                 .output(OrePrefix.stick, Wood, 4)
                 .buildAndRegister();
 
-        recipeRemoval(WoodTypeEntryWrapper.TREATED_WOOD_ENTRY, OreDictUnifier.get(OrePrefix.stick, TreatedWood).getItem());
+        WoodTypeEntry treatedWoodEntry = WoodTypeEntryWrapper.TREATED_WOOD_ENTRY;
 
-        ModHandler.removeRecipeByName(new ResourceLocation("minecraft:planks"));
-        ModHandler.removeRecipeByName(new ResourceLocation("minecraft:wooden_slab"));
+        ModHandler.removeRecipeByOutput(new ItemStack(Items.STICK, 4));
+        ModHandler.removeRecipeByOutput(OreDictUnifier.get(OrePrefix.stick, TreatedWood, 4));
 
     }
 
-    private static void recipeRemoval(WoodTypeEntry entry, Item item) {
-        ModHandler.removeRecipeByOutput(entry.planks);
-        ModHandler.removeRecipeByOutput(entry.slab);
-        ModHandler.removeRecipeByOutput(new ItemStack(item));
+    private static void recipeRemoval(WoodTypeEntry entry) {
+
+        ModHandler.removeRecipeByName("minecraft:" + entry.woodName + "_planks");
+        ModHandler.removeRecipeByName("minecraft:" + entry.woodName + "_wooden_slab");
+
     }
 
 
