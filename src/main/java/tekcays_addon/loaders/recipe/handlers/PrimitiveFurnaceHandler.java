@@ -18,7 +18,6 @@ import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.PRIMITIVE_FURNACE;
 
 public class PrimitiveFurnaceHandler {
 
-    private static final List<StoneType> STONES = Arrays.asList(ANDESITE,BASALT, BLACK_GRANITE, GRANITE);
     public static void init() {
         additions();
         removals();
