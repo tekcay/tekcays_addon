@@ -11,8 +11,14 @@ import gregtech.api.items.toolitem.ToolHelper;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.recipes.RecipeMap;
+import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.unification.OreDictUnifier;
+import gregtech.api.unification.material.Materials;
+import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.util.GTUtility;
+import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
+import gregtech.common.items.MetaItems;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,6 +32,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.b3d.B3DModel;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.ArrayUtils;
@@ -76,7 +83,7 @@ public class MetaTileEntityAxeSupport extends MetaTileEntity {
             upperBlockState = upperBlock.getBlock().getDefaultState();
 
             if (toolClasses.iterator().next().equals(ToolClasses.AXE)) {
-                onAxeClick();
+                onAxeClick(playerIn);
             } else if (toolClasses.iterator().next().equals(ToolClasses.SAW)) {
                 blockName = BlockCutWood.getInfo(upperBlockState)[0];
                 onSawClick(playerIn);
@@ -91,11 +98,11 @@ public class MetaTileEntityAxeSupport extends MetaTileEntity {
         return upperBlock.equals(Blocks.AIR.getDefaultState());
     }
 
-    private boolean incrementAndTryDestroy(BlockPos blockPos, IBlockState toAdd) {
+    private boolean incrementAndTryDestroy(BlockPos blockPos, IBlockState toAdd, EntityPlayer player) {
         hitNumber++;
-        ;
         if (hitNumber == HIT_NUMBER_TO_TRANSFORM) {
             getWorld().setBlockState(blockPos, toAdd);
+            woodPulpToInventory(player);
             hitNumber = 0;
             return true;
         }
@@ -113,17 +120,22 @@ public class MetaTileEntityAxeSupport extends MetaTileEntity {
         return false;
     }
 
+    private void woodPulpToInventory(EntityPlayer player) {
+        ItemStack stack = OreDictUnifier.get(OrePrefix.dust, Materials.Wood);
+        player.addItemStackToInventory(stack);
+    }
+
     private void onSawClick(EntityPlayer player) {
 
         IBlockState plank = BlockCutWood.getPlankFromCutWood(upperBlock);
         if (plank != null && blockName.equals(BlockCutWood.TRANSLATION_KEY)) {
-            incrementAndTryDestroy(upperBlockPos, plank);
+            incrementAndTryDestroy(upperBlockPos, plank, player);
             return;
         }
 
         IBlockState slab = BlockCutWood.getSlabFromPlank(upperBlock);
         if (plank != null && slab != null && blockName.equals(BlockCutWood.PLANK)) {
-            if (!incrementAndTryDestroy(upperBlockPos, slab)) return;
+            if (!incrementAndTryDestroy(upperBlockPos, slab, player)) return;
             slab.getBlock().dropBlockAsItem(getWorld(), upperBlockPos, slab, 0);
             return;
         }
@@ -131,17 +143,18 @@ public class MetaTileEntityAxeSupport extends MetaTileEntity {
         if (blockName.equals(BlockCutWood.SLAB)) {
             if (!incrementAndTryDestroy(upperBlockPos)) return;
             player.addItemStackToInventory(new ItemStack(Items.STICK, 4));
+            woodPulpToInventory(player);
         }
 
         hitNumber = 0;
     }
 
-    private void onAxeClick() {
+    private void onAxeClick(EntityPlayer player) {
         woodType = BlockCutWood.getCutWoodTypeFromLog(upperBlock);
 
         if (woodType != null) {
             IBlockState toAdd = TKCYAMetaBlocks.BLOCK_CUT_WOOD.getState(woodType);
-            incrementAndTryDestroy(upperBlockPos, toAdd);
+            incrementAndTryDestroy(upperBlockPos, toAdd, player);
             return;
         }
         hitNumber = 0;
@@ -149,7 +162,7 @@ public class MetaTileEntityAxeSupport extends MetaTileEntity {
 
     @SideOnly(Side.CLIENT)
     protected SimpleOverlayRenderer getBaseRenderer() {
-        return TKCYATextures.STEAM_CASING[1];
+        return TKCYATextures.DIRTS[0];
     }
 
     @Override
@@ -158,11 +171,16 @@ public class MetaTileEntityAxeSupport extends MetaTileEntity {
         getBaseRenderer().render(renderState, translation, colouredPipeline);
         ColourMultiplier multiplier = new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
         colouredPipeline = ArrayUtils.add(pipeline, multiplier);
+        Textures.CRAFTING_TABLE.renderOriented(renderState, translation, pipeline, EnumFacing.SOUTH);
+        Textures.CRAFTING_TABLE.renderOriented(renderState, translation, pipeline, EnumFacing.NORTH);
+        Textures.CRAFTING_TABLE.renderOriented(renderState, translation, pipeline, EnumFacing.EAST);
+        Textures.CRAFTING_TABLE.renderOriented(renderState, translation, pipeline, EnumFacing.WEST);
     }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         tooltip.add(I18n.format("tkcya.machine.axe_support.tooltip.1"));
+        tooltip.add(I18n.format("tkcya.machine.axe_support.tooltip.2"));
         super.addInformation(stack, player, tooltip, advanced);
     }
 

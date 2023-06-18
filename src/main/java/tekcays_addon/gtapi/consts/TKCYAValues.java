@@ -48,6 +48,7 @@ public class TKCYAValues {
     //Modid
     public static final String MC_ID = "minecraft";
     public static final String GT_ID = "gregtech";
+    public static final String TKCYA_ID = "tkcya";
 
 
     //// ENERGY_TYPE_RATIOS

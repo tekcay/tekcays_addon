@@ -70,9 +70,8 @@ tkcya.machine.pressure_controller.message=Sets threshold mode to %s
 
 tkcya.machine.casting_table.tooltip=Air speeds up the recipe by §e20%§7
 
-tkcya.machine.axe_support.tooltip.1=Workstation for wood. Place the block on the TOP face.
-tkcya.machine.axe_support.tooltip.2=Right-click while sneaking with an axe to turn logs into cut wood.
-tkcya.machine.axe_support.tooltip.3=Right-click while sneaking with an axe to turn logs into cut wood.
+tkcya.machine.axe_support.tooltip.1=Workstation for wood. Place the wood block on the TOP face.
+tkcya.machine.axe_support.tooltip.2=Sneak right click with the tool.
 
 tkcya.machine.steam_air_compressor.name=Steam Air Compressor
 tkcya.machine.steam_autoclave.name=Autoclave
@@ -227,6 +226,7 @@ tkcya.machine.crystallizer.name=Crystallizer
 tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer
 tkcya.machine.filter.name=Filter
 tkcya.machine.coke_oven=Coke Oven
+tkcya.machine.axe_support.name=Wood Workstation
 
 tkcya.machine.modulable_wood_tank.name=Wood Tank
 tkcya.machine.modulable_galvanized_steel_tank.name=Galvanized Steel Tank
