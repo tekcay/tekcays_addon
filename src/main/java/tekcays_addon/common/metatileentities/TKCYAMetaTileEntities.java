@@ -10,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import tekcays_addon.TekCaysAddon;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityController;
 import tekcays_addon.common.metatileentities.primitive.MetaTileEntityAxeSupport;
+import tekcays_addon.common.metatileentities.single.electric.*;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.gtapi.unification.TKCYAMaterials;
@@ -78,6 +79,10 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityElectricPressureCompressor[] PRESSURE_COMPRESSOR = new MetaTileEntityElectricPressureCompressor[PRESSURE_COMPRESSOR_SINGLE_MAX_TIER + 1];
     public static MetaTileEntityElectricVacuumPump[] VACUUM_PUMP = new MetaTileEntityElectricVacuumPump[PRESSURE_COMPRESSOR_SINGLE_MAX_TIER + 1];
 
+
+    //ELECTRIC FORMER COVERS
+    public static MetaTileEntityElectricPump[] ELECTRIC_PUMPS = new MetaTileEntityElectricPump[MAX_TIER];
+    public static MetaTileEntityElectricConveyor[] ELECTRIC_CONVEYORS = new MetaTileEntityElectricConveyor[MAX_TIER];
 
     public static MetaTileEntityPrimitiveMelter PRIMITIVE_MELTER;
     public static MetaTileEntityPrimitiveFermenter PRIMITIVE_FERMENTER;
@@ -375,14 +380,19 @@ public class TKCYAMetaTileEntities {
             PRESSURIZED_TANK[2] = registerMetaTileEntity(12042, new MetaTileEntityPressurizedMultiblockTank(tkcyaId("pressurized_stainless_steel_tank"), StainlessSteel, 100 * ATMOSPHERIC_PRESSURE));
         }
 
-        IntStream.range(0, DECOMPRESSOR.length )
+        IntStream.range(0, MAX_TIER)
                 .forEach(i -> DECOMPRESSOR[i] = registerMetaTileEntity(12050 + i, new MetaTileEntityDecompressor(tkcyaId("decompressor." + i), i)));
 
-        IntStream.range(0, DECOMPRESSION_HATCH.length )
+        IntStream.range(0, MAX_TIER)
                 .forEach(i -> DECOMPRESSION_HATCH[i] = registerMetaTileEntity(12060 + i, new MetaTileEntityDecompressionHatch(tkcyaId("decompression_hatch." + i), i)));
 
-        AXE_SUPPORT = registerMetaTileEntity(12070, new MetaTileEntityAxeSupport(tkcyaId("axe_support")));
+        IntStream.range(0, MAX_TIER)
+                .forEach(i -> ELECTRIC_PUMPS[i] = registerMetaTileEntity(12070 + i, new MetaTileEntityElectricPump(tkcyaId("electric_pump." + i), i)));
 
+        IntStream.range(0, MAX_TIER)
+                .forEach(i -> ELECTRIC_CONVEYORS[i] = registerMetaTileEntity(12080 + i, new MetaTileEntityElectricConveyor(tkcyaId("electric_conveyor." + i), i)));
+
+        AXE_SUPPORT = registerMetaTileEntity(12090, new MetaTileEntityAxeSupport(tkcyaId("axe_support")));
     }
 
     static ResourceLocation tkcyaId(String name) {
