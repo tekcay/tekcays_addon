@@ -3,6 +3,7 @@ package tekcays_addon.common;
 import gregtech.api.GTValues;
 import gregtech.api.recipes.crafttweaker.MetaItemBracketHandler;
 import net.minecraftforge.fml.common.Loader;
+import tekcays_addon.gtapi.unification.material.ore.OreDictAdditions;
 import tekcays_addon.gtapi.utils.FuelWithProperties;
 import tekcays_addon.gtapi.utils.TKCYALog;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
@@ -47,17 +48,19 @@ public class CommonProxy {
         registry.register(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING);
         registry.register(TKCYAMetaBlocks.BLOCK_BRICK);
         registry.register(TKCYAMetaBlocks.BLOCK_DIRT);
+        registry.register(TKCYAMetaBlocks.BLOCK_CUT_WOOD);
     }
 
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
-        TKCYALog.logger.info("Registering blocks items...");
+        TKCYALog.logger.info("Registering Items...");
         IForgeRegistry<Item> registry = event.getRegistry();
 
         registry.register(createItemBlock(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING, VariantItemBlock::new));
         registry.register(createItemBlock(TKCYAMetaBlocks.BLOCK_BRICK, VariantItemBlock::new));
         registry.register(createItemBlock(TKCYAMetaBlocks.BLOCK_DIRT, VariantItemBlock::new));
+        registry.register(createItemBlock(TKCYAMetaBlocks.BLOCK_CUT_WOOD, VariantItemBlock::new));
     }
 
     private static <T extends Block> ItemBlock createItemBlock(T block, Function<T, ItemBlock> producer) {
@@ -73,6 +76,8 @@ public class CommonProxy {
         // Main recipe registration
         // This is called AFTER GregTech registers recipes, so
         // anything here is safe to call removals in
+        OreDictAdditions.woodOreInit();
+
         DamageableItemsLoader.initElectrodes();
         DamageableItemsLoader.initFilters();
         TKCYARecipeLoader.load();

@@ -9,6 +9,7 @@ import gregtech.common.metatileentities.storage.MetaTileEntityDrum;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.TekCaysAddon;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityController;
+import tekcays_addon.common.metatileentities.primitive.MetaTileEntityAxeSupport;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.gtapi.unification.TKCYAMaterials;
@@ -144,6 +145,9 @@ public class TKCYAMetaTileEntities {
 
     public static MetaTileEntityModulableMultiblockTank[] MODULABLE_TANK = new MetaTileEntityModulableMultiblockTank[4];
     public static MetaTileEntityPressurizedMultiblockTank[] PRESSURIZED_TANK = new MetaTileEntityPressurizedMultiblockTank[3];
+
+    //Primitive
+    public static MetaTileEntityAxeSupport AXE_SUPPORT;
 
 
     public static void init() {
@@ -376,6 +380,8 @@ public class TKCYAMetaTileEntities {
 
         IntStream.range(0, DECOMPRESSION_HATCH.length )
                 .forEach(i -> DECOMPRESSION_HATCH[i] = registerMetaTileEntity(12060 + i, new MetaTileEntityDecompressionHatch(tkcyaId("decompression_hatch." + i), i)));
+
+        AXE_SUPPORT = registerMetaTileEntity(12070, new MetaTileEntityAxeSupport(tkcyaId("axe_support")));
 
     }
 

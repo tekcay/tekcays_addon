@@ -151,6 +151,10 @@ public class TKCYARecipeMaps {
             "diesel_generator", 0, 0, 1, 1, new PrimitiveRecipeBuilder(), false)
             .setSound(GTSoundEvents.MOTOR);
 
+    @ZenProperty
+    public static final RecipeMap<ToolRecipeBuilder> LOG_CUTING = new RecipeMap<>(
+            "log_cutting", 3, 2, 0, 0, new ToolRecipeBuilder(), false);
+
 
 
 }

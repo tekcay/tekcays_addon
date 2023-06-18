@@ -126,6 +126,8 @@ public class TKCYARecipeLoader {
             CastingRecipeHandler.init();
         }
 
+        AxeSupportRecipes.init();
+
     }
 
 }

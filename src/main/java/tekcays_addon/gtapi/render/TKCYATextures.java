@@ -111,6 +111,14 @@ public class TKCYATextures {
     public static SimpleOverlayRenderer COVER_MOLD_BOLT_CARBON_TEXTURE;
     public static SimpleOverlayRenderer COVER_MOLD_RING_CARBON_TEXTURE;
     public static SimpleOverlayRenderer COVER_MOLD_BLOCK_CARBON_TEXTURE;
+    
+    //Ct trees
+    public static SimpleOverlayRenderer LOG_ACACIA_TOP;
+    public static SimpleOverlayRenderer LOG_DARK_OAK_TOP;
+    public static SimpleOverlayRenderer LOG_BIRCH_TOP;
+    public static SimpleOverlayRenderer LOG_JUNGLE_TOP;
+    public static SimpleOverlayRenderer LOG_OAK_TOP;
+    public static SimpleOverlayRenderer LOG_SPRUCE_TOP;
 
     //Misc
     public static SimpleOverlayRenderer[] DIRTS = new SimpleOverlayRenderer[1];
@@ -200,6 +208,14 @@ public class TKCYATextures {
         COVER_MOLD_BOLT_CARBON_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_bolt_carbon");
         COVER_MOLD_RING_CARBON_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_ring_carbon");
         COVER_MOLD_BLOCK_CARBON_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_block_carbon");
+        
+        //Cut trees
+        LOG_ACACIA_TOP = new SimpleOverlayRenderer("trees/log_acacia_top");
+        LOG_DARK_OAK_TOP = new SimpleOverlayRenderer("trees/log_dark_oak_top");
+        LOG_BIRCH_TOP = new SimpleOverlayRenderer("trees/log_birch_top");
+        LOG_JUNGLE_TOP = new SimpleOverlayRenderer("trees/log_jungle_top");
+        LOG_OAK_TOP = new SimpleOverlayRenderer("trees/log_oak_top");
+        LOG_SPRUCE_TOP = new SimpleOverlayRenderer("trees/log_spruce_top");
 
         //Misc
         DIRTS[BlockDirt.DIRT] = new SimpleOverlayRenderer("block_dirt/dirt");

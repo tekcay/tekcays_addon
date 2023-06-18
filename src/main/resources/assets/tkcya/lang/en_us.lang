@@ -70,6 +70,9 @@ tkcya.machine.pressure_controller.message=Sets threshold mode to %s
 
 tkcya.machine.casting_table.tooltip=Air speeds up the recipe by §e20%§7
 
+tkcya.machine.axe_support.tooltip.1=Workstation for wood. Place the wood block on the TOP face.
+tkcya.machine.axe_support.tooltip.2=Sneak right click with the tool.
+
 tkcya.machine.steam_air_compressor.name=Steam Air Compressor
 tkcya.machine.steam_autoclave.name=Autoclave
 
@@ -223,6 +226,7 @@ tkcya.machine.crystallizer.name=Crystallizer
 tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer
 tkcya.machine.filter.name=Filter
 tkcya.machine.coke_oven=Coke Oven
+tkcya.machine.axe_support.name=Wood Workstation
 
 tkcya.machine.modulable_wood_tank.name=Wood Tank
 tkcya.machine.modulable_galvanized_steel_tank.name=Galvanized Steel Tank
@@ -274,6 +278,15 @@ tile.block_brick.reinforced_brick.name=Reinforced Brick
 tile.block_brick.fireclay_brick.name=Fireclay Brick
 tile.block_brick.strong_brick.name=Strong Brick
 
+# cut trees
+tile.block_cut_wood.oak.name=Cut Oak Log
+tile.block_cut_wood.dark_oak.name=Cut Dark Oak Log
+tile.block_cut_wood.acacia.name=Cut Acacia Log
+tile.block_cut_wood.jungle.name=Cut Jungle Log
+tile.block_cut_wood.rubber.name=Cut Rubber Log
+tile.block_cut_wood.birch.name=Cut Birch Log
+tile.block_cut_wood.spruce.name=Cut Spruce Log
+
 ## tooltips
 tile.block_brick.tooltip.heat=Max temperature: §c%,d K
 tile.block_brick.tooltip.density=Density: §b%d
@@ -311,6 +324,7 @@ recipemap.coking.name=Coking
 recipemap.steam_autoclave.name=Autoclave
 recipemap.diesel_generator.name=Diesel generator
 recipemap.primitive_furnace.name=Primitive heating
+recipemap.log_cutting.name=Wood work
 
 # Materials
 material.unpure_bronze=Unpure Bronze

@@ -1,5 +1,6 @@
 package tekcays_addon.api.recipe;
 
+import gregtech.api.items.toolitem.ToolOreDict;
 import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
 import gregtech.api.recipes.recipeproperties.RecipeProperty;
@@ -56,6 +57,10 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
 
                 case PRESSURIZED_FLUIDSTACK_PROPERTY:
                     store((PressurizedFluidStackProperty) recipeProperty, recipePropertyStorage, null);
+                    break;
+
+                case TOOL_ORE_DICT_PROPERTY:
+                    store((ToolProperty) recipeProperty, recipePropertyStorage, ToolOreDict.toolWrench);
                     break;
 
                 default:
@@ -117,6 +122,11 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
         return validate(PressurizedFluidStackProperty.getInstance(), fluidStack, RecipeValidationFunctions.VALIDATE_FLUIDSTACK);
     }
 
+    @Nonnull
+    default T toolOreDict(ToolOreDict toolOreDict) {
+        return validate(ToolProperty.getInstance(), toolOreDict, RecipeValidationFunctions.VALIDATE_TOOL_ORE);
+    }
+
     default boolean applyPropertyHelper(@Nonnull String key, Object value) {
 
         switch (key) {
@@ -148,10 +158,13 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
                 this.pressurizedFluidStack(((FluidStack) value));
                 return true;
 
+            case TOOL_ORE_DICT_PROPERTY:
+                this.toolOreDict(((ToolOreDict) value));
+                return true;
+
             default:
-                break;
+                return false;
         }
-        return false;
     }
 
 
