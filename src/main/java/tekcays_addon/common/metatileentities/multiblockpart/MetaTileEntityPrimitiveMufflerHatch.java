@@ -1,11 +1,15 @@
 package tekcays_addon.common.metatileentities.multiblockpart;
 
+import gregtech.api.capability.IMufflerHatch;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMufflerHatch;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
+import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 
@@ -25,6 +29,11 @@ public class MetaTileEntityPrimitiveMufflerHatch extends MetaTileEntityMufflerHa
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityPrimitiveMufflerHatch(metaTileEntityId, brick);
+    }
+
+    @Override
+    public MultiblockAbility<IMufflerHatch> getAbility() {
+        return TKCYAMultiblockAbility.BRICK_MUFFLER_HATCH;
     }
 
     @Override

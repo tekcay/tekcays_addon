@@ -88,6 +88,8 @@ public class TKCYARecipeLoader {
             CokeOvenRecipeHandler.init();
         }
 
+        PrimitiveFurnaceHandler.init();
+
         CasingsLoader.init();
         ChemicalChains.init();
         MineralChains.init();
@@ -123,6 +125,8 @@ public class TKCYARecipeLoader {
         if (meltingOverhaul.enableCastingOverhaul) {
             CastingRecipeHandler.init();
         }
+
+        AxeSupportRecipes.init();
 
     }
 

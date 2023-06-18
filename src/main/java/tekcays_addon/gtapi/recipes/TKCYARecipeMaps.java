@@ -92,6 +92,10 @@ public class TKCYARecipeMaps {
     public static final RecipeMap<PrimitiveRecipeBuilder> FILTRATION = new RecipeMap<>(
             "filtration", 1, 1, 1, 1, new PrimitiveRecipeBuilder(), false);
 
+    @ZenProperty
+    public static final RecipeMap<PrimitiveRecipeBuilder> PRIMITIVE_FURNACE = new RecipeMap<>(
+            "primitive_furnace", 2, 2, 0, 0, new PrimitiveRecipeBuilder(), false);
+
     /**
      * When using a fluid for two different recipes, it's MANDATORY to use an {@code ntCircuitIngredient}.
      * <pre>
@@ -146,6 +150,10 @@ public class TKCYARecipeMaps {
     public static final RecipeMap<PrimitiveRecipeBuilder> DIESEL_GENERATOR = new RecipeMap<>(
             "diesel_generator", 0, 0, 1, 1, new PrimitiveRecipeBuilder(), false)
             .setSound(GTSoundEvents.MOTOR);
+
+    @ZenProperty
+    public static final RecipeMap<ToolRecipeBuilder> LOG_CUTING = new RecipeMap<>(
+            "log_cutting", 3, 2, 0, 0, new ToolRecipeBuilder(), false);
 
 
 

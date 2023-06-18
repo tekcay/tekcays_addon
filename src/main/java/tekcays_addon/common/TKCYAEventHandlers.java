@@ -1,5 +1,6 @@
 package tekcays_addon.common;
 
+import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.gtapi.unification.TKCYAMaterials;
 import tekcays_addon.gtapi.unification.material.ore.OreDictAdditions;
 import tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefixAdditions;
@@ -15,15 +16,19 @@ public class TKCYAEventHandlers {
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void registerMaterials(GregTechAPI.MaterialEvent event) {
+        TKCYAMetaBlocks.init();
         TKCYAMaterials.init();
         TKCYAPropertyAddition.init();
-        OreDictAdditions.misc();
         TKCYAOrePrefixAdditions.miscInit();
+
+        OreDictAdditions.misc();
 
         if (TKCYAConfigHolder.meltingOverhaul.enableCastingOverhaul) {
             TKCYAOrePrefixAdditions.moldsInit();
             TKCYAOrePrefixAdditions.moldsTooltip();
         }
+
+
     }
 
     @SubscribeEvent
