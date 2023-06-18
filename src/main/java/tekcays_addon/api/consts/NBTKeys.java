@@ -20,5 +20,12 @@ public class NBTKeys {
     public static final String CURRENT_VALUE_KEY = "threshold";
     public static final String IS_ACTIVE = "isActive";
     public static final String IS_ABLE_TO_DECOMPRESS = "isAbletoDecompress";
+    public static final String EFFICIENCY_KEY = "efficiency";
+    public static final String WASTE_ORE_DICT_KEY = "wasteOreDict";
+    public static final String WASTE_KEY = "waste";
+    public static final String WASTE_PER_SEC_KEY = "wastePerSecAmount";
+    public static final String WASTE_AMOUNT_KEY = "wasteAmount";
+    public static final String FUEL_AMOUNT_KEY = "fuelAmount";
     public static final String HIT_NUMBER = "hitNumber";
+
 }

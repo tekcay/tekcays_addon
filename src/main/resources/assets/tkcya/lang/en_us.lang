@@ -121,8 +121,6 @@ tkcya.machine.material.invar_gas_fuel_heater.name=Invar Gas Fuel Heater
 tkcya.machine.material.titanium_gas_fuel_heater.name=Titanium Gas Fuel Heater
 tkcya.machine.material.tungsten_steel_gas_fuel_heater.name=Tungsten Steel Gas Fuel Heater
 
-tkcya.machine.axe_support.name=Axe Support
-
 tkcya.machine.steam_cooler_bronze.name=Steam Cooler
 tkcya.machine.steam_cooler_steel.name=High Pressure Steam Cooler
 tkcya.machine.muffler_hatch.primitive.name=Primitive Muffler Hatch
@@ -139,6 +137,7 @@ tkcya.machine.primitive_bath.name=Primitive Bath
 tkcya.machine.pressurized_cracking_unit.name=High Pressure Cracking Unit
 tkcya.machine.roasting_oven.name=Roasting Oven
 tkcya.machine.spiral_separator.name=Spiral Separator
+tkcya.machine.primitive_furnace.name=Primitive Furnace
 
 #Blast Furnaces
 tkcya.machine.brick_blast_furnace.name=Primitive Brick Blast Furnace
@@ -229,7 +228,7 @@ tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer
 tkcya.machine.filter.name=Filter
 tkcya.machine.coke_oven=Coke Oven
 
-tkcya.machine.modulable_wood.tank.name=Wood Tank
+tkcya.machine.modulable_wood_tank.name=Wood Tank
 tkcya.machine.modulable_galvanized_steel_tank.name=Galvanized Steel Tank
 tkcya.machine.modulable_stainless_steel_tank.name=Stainless Steel Tank
 tkcya.machine.modulable_steel_tank.name=Steel Tank
@@ -297,6 +296,8 @@ tile.large_multiblock_casing.steel_wall.name=Steel Wall
 tile.large_multiblock_casing.galvanized_steel_wall.name=Galvanized Steel Wall
 tile.large_multiblock_casing.stainless_steel_wall.name=Stainless Steel Wall
 
+# dirts
+tile.block_dirt.dirt.name=Neutralized Dirt
 
 
 # RecipeMaps
@@ -322,6 +323,7 @@ recipemap.spiral_separation.name=Spiral Separation
 recipemap.coking.name=Coking
 recipemap.steam_autoclave.name=Autoclave
 recipemap.diesel_generator.name=Diesel generator
+recipemap.primitive_furnace.name=Primitive heating
 recipemap.log_cutting.name=Wood work
 
 # Materials
@@ -760,6 +762,9 @@ behavior.tricorder.current_vu=%d VU
 behavior.tricorder.turbine.steam_consumption=Steam consumption: %d L/t
 behavior.tricorder.turbine.output_rate=Water output rate: %d L/t
 behavior.tricorder.speed=Speed: %d rpm
+
+behavior.tricorder.fuel_amount=Fuel amount: %d sticks
+behavior.tricorder.waste_amount=Waste amount: %d ash
 
 # Errors
 
