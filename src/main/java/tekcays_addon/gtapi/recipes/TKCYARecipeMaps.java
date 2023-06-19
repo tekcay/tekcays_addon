@@ -155,6 +155,10 @@ public class TKCYARecipeMaps {
     public static final RecipeMap<ToolRecipeBuilder> LOG_CUTING = new RecipeMap<>(
             "log_cutting", 3, 2, 0, 0, new ToolRecipeBuilder(), false);
 
+    @ZenProperty
+    public static final RecipeMap<PrimitiveRecipeBuilder> BLOCK_MAKING = new RecipeMap<>(
+            "block_cutting", 6, 2, 1, 0, new PrimitiveRecipeBuilder(), false);
+
 
 
 }

@@ -245,15 +245,6 @@ public class BlastingRecipeHandler {
                 'B', TKCYAMetaBlocks.BLOCK_BRICK.getItemVariant(BlockBrick.BrickType.REINFORCED_BRICK));
 
 
-        ASSEMBLER_RECIPES.recipeBuilder()
-                .input(pipeNormalFluid, Potin)
-                .inputs(MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.ULV))
-                .outputs(MetaTileEntities.HULL[0].getStackForm())
-                .EUt(8)
-                .duration(5 * SECOND)
-                .buildAndRegister();
-
-
     }
 
 }

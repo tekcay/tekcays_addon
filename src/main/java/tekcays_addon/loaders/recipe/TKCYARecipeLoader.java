@@ -91,6 +91,7 @@ public class TKCYARecipeLoader {
         PrimitiveFurnaceHandler.init();
 
         CasingsLoader.init();
+        HarderHullCasingHandler.init();
         ChemicalChains.init();
         MineralChains.init();
         PolymerHandler.init();

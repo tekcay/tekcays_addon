@@ -339,6 +339,7 @@ recipemap.steam_autoclave.name=Autoclave
 recipemap.diesel_generator.name=Diesel generator
 recipemap.primitive_furnace.name=Primitive heating
 recipemap.log_cutting.name=Wood work
+recipemap.block_making.name=Block Making
 
 # Materials
 material.unpure_bronze=Unpure Bronze

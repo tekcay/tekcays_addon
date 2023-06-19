@@ -51,7 +51,6 @@ public class GalvanizedSteel {
                     .output(orePrefix, GalvanizedSteel)
                     .duration((int) (10 + 4 * Steel.getMass() * orePrefix.getMaterialAmount(Steel) / GTValues.M))
                     .buildAndRegister();
-
         }
     }
 
@@ -78,19 +77,10 @@ public class GalvanizedSteel {
 
         //LV Machine Casing
         ASSEMBLER_RECIPES.recipeBuilder()
-                .input(OrePrefix.plate, GalvanizedSteel, 8)
+                .input(OrePrefix.plate, GalvanizedSteel, 6)
                 .circuitMeta(8)
                 .outputs(MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.LV))
                 .duration(50)
-                .EUt(16)
-                .buildAndRegister();
-
-        //ULV Machine Casing
-        ASSEMBLER_RECIPES.recipeBuilder()
-                .input(OrePrefix.plate, Materials.Potin, 8)
-                .circuitMeta(8)
-                .outputs(MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.ULV))
-                .duration(25)
                 .EUt(16)
                 .buildAndRegister();
 
@@ -146,14 +136,6 @@ public class GalvanizedSteel {
     public static void componentsGTCEuRecipesRemoval() {
         // Assembler recipes
 
-        // LV Machine Casing
-        GTRecipeHandler.removeRecipesByInputs(RecipeMaps.ASSEMBLER_RECIPES,
-                new ItemStack[] {
-                        OreDictUnifier.get(OrePrefix.plate, Steel, 8),
-                        IntCircuitIngredient.getIntegratedCircuit(8)},
-                new FluidStack[] {});
-
-
         //LV Motor
         GTRecipeHandler.removeRecipesByInputs(RecipeMaps.ASSEMBLER_RECIPES,
                 new ItemStack[] {
@@ -191,20 +173,6 @@ public class GalvanizedSteel {
                         MetaItems.ELECTRIC_PISTON_LV.getStackForm(),
                         OreDictUnifier.get(OrePrefix.cableGtSingle, Materials.Tin, 3)},
                 new FluidStack[] {});
-
-
-
-        //Shaped recipes
-
-        //LV Machine Casing
-        ModHandler.removeRecipeByOutput(MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.LV));
-
-        //ULV Machine Casing
-        ModHandler.removeRecipeByOutput(MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.ULV));
-
-        //ULV Machine Hull
-        ModHandler.removeRecipeByOutput(MetaTileEntities.HULL[0].getStackForm());
-
 
         //LV Motor
         ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_LV.getStackForm());
