@@ -10,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import tekcays_addon.TekCaysAddon;
 import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityController;
 import tekcays_addon.common.metatileentities.primitive.MetaTileEntityAxeSupport;
+import tekcays_addon.common.metatileentities.primitive.MetaTileEntityCast;
 import tekcays_addon.common.metatileentities.single.electric.*;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.render.TKCYATextures;
@@ -129,6 +130,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityPrimitiveMufflerHatch[] PRIMITIVE_MUFFLER = new MetaTileEntityPrimitiveMufflerHatch[BRICKS.size()];
     public static MetaTileEntitySingleCrucible[] SINGLE_CRUCIBLE = new MetaTileEntitySingleCrucible[BRICKS.size()];
     public static MetaTileEntityCastingTable[] CASTING_TABLE = new MetaTileEntityCastingTable[BRICKS.size()];
+    public static MetaTileEntityCast[] CASTS = new MetaTileEntityCast[BRICKS.size()];
 
     // Drums
     public static MetaTileEntityDrum[] DRUMS = new MetaTileEntityDrum[DRUM_MATERIALS.size()];
@@ -393,6 +395,9 @@ public class TKCYAMetaTileEntities {
                 .forEach(i -> ELECTRIC_CONVEYORS[i] = registerMetaTileEntity(12080 + i, new MetaTileEntityElectricConveyor(tkcyaId("electric_conveyor." + i), i)));
 
         AXE_SUPPORT = registerMetaTileEntity(12090, new MetaTileEntityAxeSupport(tkcyaId("axe_support")));
+
+        IntStream.range(0, BRICKS.size())
+                .forEach(i -> CASTS[i] = registerMetaTileEntity(12100 + i, new MetaTileEntityCast(tkcyaId("casts." + i))));
     }
 
     static ResourceLocation tkcyaId(String name) {
