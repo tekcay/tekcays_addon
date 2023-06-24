@@ -397,7 +397,7 @@ public class TKCYAMetaTileEntities {
         AXE_SUPPORT = registerMetaTileEntity(12090, new MetaTileEntityAxeSupport(tkcyaId("axe_support")));
 
         IntStream.range(0, BRICKS.size())
-                .forEach(i -> CASTS[i] = registerMetaTileEntity(12100 + i, new MetaTileEntityCast(tkcyaId("casts." + i))));
+                .forEach(i -> CASTS[i] = registerMetaTileEntity(12100 + i, new MetaTileEntityCast(tkcyaId("casts." + i), i)));
     }
 
     static ResourceLocation tkcyaId(String name) {
