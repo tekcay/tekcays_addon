@@ -37,7 +37,7 @@ import java.util.List;
 
 import static tekcays_addon.gtapi.utils.HeatersMethods.getBurnTime;
 
-public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataInfoProvider, IActiveOutputSide, IFuelable {
+public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataInfoProvider, IActiveOutputSide {
 
     private final int HEAT_BASE_INCREASE = 8;
     private final ItemStackHandler containerInventory;
@@ -122,19 +122,7 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
     @SideOnly(Side.CLIENT)
     protected SimpleOverlayRenderer getBaseRenderer() {
         return fuelHeater.equals(FuelHeaterTiers.BRICK) ? TKCYATextures.BRICKS[BlockBrick.BRICK] : TKCYATextures.STEAM_CASING[fuelHeater.getTextureId()];
-    }
-
-    //For TOP, needs to implement IFuelable
-    @Override
-    public Collection<IFuelInfo> getFuels() {
-        ItemStack fuelInSlot = importItems.extractItem(0, Integer.MAX_VALUE, true);
-        if (fuelInSlot == ItemStack.EMPTY)
-            return Collections.emptySet();
-        final int fuelRemaining = fuelInSlot.getCount();
-        final int fuelCapacity = importItems.getSlotLimit(0);
-        final long burnTime = (long) fuelRemaining * getBurnTime(fuelInSlot, fuelHeater);
-        return Collections.singleton(new ItemFuelInfo(fuelInSlot, fuelRemaining, fuelCapacity, 1, burnTime));
-    }
+}
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {

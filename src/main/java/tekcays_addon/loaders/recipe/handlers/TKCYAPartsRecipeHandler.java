@@ -82,7 +82,7 @@ public class TKCYAPartsRecipeHandler {
 
         Material magneticMaterial = property.getMagneticMaterial();
 
-        GTRecipeHandler.removeAllRecipes(POLARIZER_RECIPES);
+        //GTRecipeHandler.removeAllRecipes(POLARIZER_RECIPES);
 
         if (magneticMaterial != null && polarizingPrefix.doGenerateItem(magneticMaterial)) {
                 ItemStack magneticStack = OreDictUnifier.get(polarizingPrefix, magneticMaterial);
@@ -100,15 +100,15 @@ public class TKCYAPartsRecipeHandler {
 
 
     public static void processAlloySmelter(OrePrefix prefix, Material material, IngotProperty property) {
-        GTRecipeHandler.removeAllRecipes(ALLOY_SMELTER_RECIPES);
+        //GTRecipeHandler.removeAllRecipes(ALLOY_SMELTER_RECIPES);
     }
 
     public static void processExtractor(OrePrefix prefix, Material material, IngotProperty property) {
-        GTRecipeHandler.removeAllRecipes(EXTRACTOR_RECIPES);
+        //GTRecipeHandler.removeAllRecipes(EXTRACTOR_RECIPES);
     }
 
     public static void processCasting(OrePrefix prefix, Material material, IngotProperty ingotProperty) {
-        GTRecipeHandler.removeAllRecipes(FLUID_SOLIDFICATION_RECIPES);
+        //GTRecipeHandler.removeAllRecipes(FLUID_SOLIDFICATION_RECIPES);
 
         for (Material m : MOLD_MATERIALS) {
             if (!material.hasProperty(PropertyKey.FLUID)) continue;

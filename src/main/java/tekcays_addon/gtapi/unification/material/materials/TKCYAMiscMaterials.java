@@ -8,20 +8,21 @@ import gregtech.api.unification.material.info.MaterialIconSet;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.DISABLE_DECOMPOSITION;
 import static gregtech.api.unification.material.info.MaterialIconSet.*;
+import static gregtech.api.util.GTUtility.gregtechId;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
 
 public class TKCYAMiscMaterials {
 
     public static int init(int id){
 
-        HotAir = new Material.Builder(id++, "hot_air")
+        HotAir = new Material.Builder(id++, gregtechId( "hot_air"))
                 .fluid(FluidTypes.GAS, true)
                 .flags(DISABLE_DECOMPOSITION)
                 .components(Materials.Air, 1)
                 .color(0xe08b41)
                 .build();
 
-        VeryHotAir = new Material.Builder(id++, "very_hot_air")
+        VeryHotAir = new Material.Builder(id++, gregtechId( "very_hot_air"))
                 .fluid(FluidTypes.GAS, true)
                 .fluidTemp(1800)
                 .components(Materials.Air, 1)
@@ -29,7 +30,7 @@ public class TKCYAMiscMaterials {
                 .build();
 
         //GoldChain
-        PreciousMetal = new Material.Builder(id++, "precious_metal")
+        PreciousMetal = new Material.Builder(id++, gregtechId( "precious_metal"))
                 .dust().ore().fluid()
                 .fluidTemp(1337)
                 .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
@@ -40,7 +41,7 @@ public class TKCYAMiscMaterials {
                 .build();
         PreciousMetal.setFormula("Au?");
 
-        GoldAlloy = new Material.Builder(id++, "gold_alloy")
+        GoldAlloy = new Material.Builder(id++, gregtechId( "gold_alloy"))
                 .ingot().fluid()
                 .fluidTemp(1000) //TODO
                 .flags(DISABLE_DECOMPOSITION)
@@ -50,14 +51,14 @@ public class TKCYAMiscMaterials {
                 .build();
         GoldAlloy.setFormula("Cu3Au?", true);
 
-        GoldLeach = new Material.Builder(id++, "gold_leach")
+        GoldLeach = new Material.Builder(id++, gregtechId( "gold_leach"))
                 .dust()
                 .iconSet(SHINY)
                 .color(0xB99023)
                 .build();
         GoldLeach.setFormula("CuAu?", true);
 
-        CopperLeach = new Material.Builder(id++, "copper_leach")
+        CopperLeach = new Material.Builder(id++, gregtechId( "copper_leach"))
                 .dust()
                 .iconSet(SHINY)
                 .flags(DISABLE_DECOMPOSITION)
@@ -66,14 +67,14 @@ public class TKCYAMiscMaterials {
                 .build();
         CopperLeach.setFormula("Cu?", true);
 
-        PotassiumBisulfate = new Material.Builder(id++, "potassium_bisulfate")
+        PotassiumBisulfate = new Material.Builder(id++, gregtechId( "potassium_bisulfate"))
                 .dust()
                 .iconSet(DULL)
                 .color(0xB99022)
                 .build();
         PotassiumBisulfate.setFormula("KHSO4", true);
 
-        ChloroauricAcid = new Material.Builder(id++, "chloroauric_acid")
+        ChloroauricAcid = new Material.Builder(id++, gregtechId( "chloroauric_acid"))
                 .fluid(FluidTypes.ACID)
                 .color(0xfcb13b)
                 .build();
@@ -82,7 +83,7 @@ public class TKCYAMiscMaterials {
 
 
         //FluorineChain
-        PotassiumBifluoride = new Material.Builder(id++, "potassium_bifluoride")
+        PotassiumBifluoride = new Material.Builder(id++, gregtechId( "potassium_bifluoride"))
                 .ingot().fluid(FluidTypes.ACID)
                 .fluidTemp(512)
                 .flags(DISABLE_DECOMPOSITION)
@@ -90,35 +91,35 @@ public class TKCYAMiscMaterials {
                 .components(Potassium, 1, Hydrogen, 1, Fluorine, 2)
                 .build();
 
-        Fluorite = new Material.Builder(id++, "fluorite")
+        Fluorite = new Material.Builder(id++, gregtechId( "fluorite"))
                 .dust().ore()
                 .flags(DISABLE_DECOMPOSITION)
                 .color(0x009933).iconSet(MaterialIconSet.BRIGHT)
                 .components(Calcium, 1, Fluorine, 2)
                 .build();
 
-        CalciumSulfonate = new Material.Builder(id++, "calcium_sulfonate")
+        CalciumSulfonate = new Material.Builder(id++, gregtechId( "calcium_sulfonate"))
                 .dust()
                 .flags(DISABLE_DECOMPOSITION)
                 .color(0xFF6400).iconSet(MaterialIconSet.BRIGHT)
                 .components(Calcium, 1, Sulfur, 1, Oxygen, 4)
                 .build();
 
-        LithiumFluoride = new Material.Builder(id++, "lithium_fluoride")
+        LithiumFluoride = new Material.Builder(id++, gregtechId( "lithium_fluoride"))
                 .dust()
                 .flags(DISABLE_DECOMPOSITION)
                 .color(0x757575).iconSet(MaterialIconSet.DULL)
                 .components(Lithium, 1, Fluorine, 1)
                 .build();
 
-        SodiumFluoride = new Material.Builder(id++, "sodium_fluoride")
+        SodiumFluoride = new Material.Builder(id++, gregtechId( "sodium_fluoride"))
                 .dust()
                 .flags(DISABLE_DECOMPOSITION)
                 .color((Sodium.getMaterialRGB() + Fluorine.getMaterialRGB()) / 2).iconSet(MaterialIconSet.DULL)
                 .components(Sodium, 1, Fluorine, 1)
                 .build();
 
-        PotassiumFluoride = new Material.Builder(id++, "potassium_fluoride")
+        PotassiumFluoride = new Material.Builder(id++, gregtechId( "potassium_fluoride"))
                 .dust()
                 .flags(DISABLE_DECOMPOSITION)
                 .color(0xFDFDFD).iconSet(MaterialIconSet.DULL)
@@ -126,35 +127,35 @@ public class TKCYAMiscMaterials {
                 .build();
 
 
-        LithiumHydroxide = new Material.Builder(id++, "lithium_hydroxide")
+        LithiumHydroxide = new Material.Builder(id++, gregtechId( "lithium_hydroxide"))
                 .dust()
                 .flags(DISABLE_DECOMPOSITION)
                 .color((Lithium.getMaterialRGB() + Oxygen.getMaterialRGB() + Hydrogen.getMaterialRGB()) / 3).iconSet(MaterialIconSet.DULL)
                 .components(Lithium, 1, Oxygen, 1, Hydrogen, 1)
                 .build();
 
-        HydrogenFluoride = new Material.Builder(id++, "hydrogen_fluoride")
+        HydrogenFluoride = new Material.Builder(id++, gregtechId( "hydrogen_fluoride"))
                 .fluid(FluidTypes.GAS)
                 .flags(DISABLE_DECOMPOSITION)
                 .color((Hydrogen.getMaterialRGB() + Fluorine.getMaterialRGB()) / 2)
                 .components(Hydrogen, 1, Fluorine, 1)
                 .build();
 
-        HydrogenChloride = new Material.Builder(id++, "hydrogen_chloride")
+        HydrogenChloride = new Material.Builder(id++, gregtechId( "hydrogen_chloride"))
                 .fluid(FluidTypes.GAS)
                 .flags(DISABLE_DECOMPOSITION)
                 .color((Hydrogen.getMaterialRGB() + Chlorine.getMaterialRGB()) / 2)
                 .components(Hydrogen, 1, Chlorine, 1)
                 .build();
 
-        HydrogenBromide = new Material.Builder(id++, "hydrogen_bromide")
+        HydrogenBromide = new Material.Builder(id++, gregtechId( "hydrogen_bromide"))
                 .fluid(FluidTypes.GAS)
                 .flags(DISABLE_DECOMPOSITION)
                 .color((Hydrogen.getMaterialRGB() + Bromine.getMaterialRGB()) / 2)
                 .components(Hydrogen, 1, Bromine, 1)
                 .build();
 
-        HydrogenIodide = new Material.Builder(id++, "hydrogen_iodide")
+        HydrogenIodide = new Material.Builder(id++, gregtechId( "hydrogen_iodide"))
                 .fluid(FluidTypes.GAS)
                 .flags(DISABLE_DECOMPOSITION)
                 .color((Hydrogen.getMaterialRGB() + Iodine.getMaterialRGB()) / 2)
@@ -168,71 +169,71 @@ public class TKCYAMiscMaterials {
 
         //Zinc chain
 
-        ZincOxide = new Material.Builder(id++, "zinc_oxide")
+        ZincOxide = new Material.Builder(id++, gregtechId( "zinc_oxide"))
                 .dust()
                 .flags(DISABLE_DECOMPOSITION)
                 .color((Zinc.getMaterialRGB() + Oxygen.getMaterialRGB()) / 2)
                 .components(Zinc, 1, Oxygen, 1)
                 .build();
 
-        IronSulfate = new Material.Builder(id++, "iron_sulfate")
+        IronSulfate = new Material.Builder(id++, gregtechId( "iron_sulfate"))
                 .dust()
                 .flags(DISABLE_DECOMPOSITION)
                 .color(Iron.getMaterialRGB() + Sulfur.getMaterialRGB() + Oxygen.getMaterialRGB() / 3)
                 .components(Iron, 1, Sulfur, 1, Oxygen, 4)
                 .build();
 
-        ZincSulfate = new Material.Builder(id++, "zinc_sulfate")
+        ZincSulfate = new Material.Builder(id++, gregtechId( "zinc_sulfate"))
                 .dust()
                 .flags(DISABLE_DECOMPOSITION)
                 .color(Zinc.getMaterialRGB() + Sulfur.getMaterialRGB() + Oxygen.getMaterialRGB() / 3)
                 .components(Zinc, 1, Sulfur, 1, Oxygen, 4)
                 .build();
 
-        ZincLeachingSolution = new Material.Builder(id++, "zinc_leaching_solution")
+        ZincLeachingSolution = new Material.Builder(id++, gregtechId( "zinc_leaching_solution"))
                 .fluid(FluidTypes.ACID)
                 .color(Germanium.getMaterialRGB() + Oxygen.getMaterialRGB() + Zinc.getMaterialRGB() / 3)
                 .build();
         ZincLeachingSolution.setFormula("Zn?");
 
-        ZincLeachingResidue = new Material.Builder(id++, "zinc_leaching_residue")
+        ZincLeachingResidue = new Material.Builder(id++, gregtechId( "zinc_leaching_residue"))
                 .fluid(FluidTypes.ACID)
                 .color(Germanium.getMaterialRGB() + Oxygen.getMaterialRGB() / 2)
                 .build();
         ZincLeachingResidue.setFormula("Ge?");
 
-        GermanicAcidSolution = new Material.Builder(id++, "germanic_acid_solution")
+        GermanicAcidSolution = new Material.Builder(id++, gregtechId( "germanic_acid_solution"))
                 .fluid(FluidTypes.ACID)
                 .color(Germanium.getMaterialRGB() + SulfuricAcid.getMaterialRGB() / 2)
                 .build();
         GermanicAcidSolution.setFormula("H4GeO4", true);
 
-        TannicAcid = new Material.Builder(id++, "tannic_acid")
+        TannicAcid = new Material.Builder(id++, gregtechId( "tannic_acid"))
                 .fluid(FluidTypes.ACID)
                 .color(554242)
                 .build();
         TannicAcid.setFormula("C76H52O46", true);
 
-        GermaniumChloride = new Material.Builder(id++, "germanium_chloride")
+        GermaniumChloride = new Material.Builder(id++, gregtechId( "germanium_chloride"))
                 .dust()
                 .color(Germanium.getMaterialRGB() + Chlorine.getMaterialRGB() * 4 / 5)
                 .build();
         GermaniumChloride.setFormula("GeCl4", true);
 
-        GermaniumOxide = new Material.Builder(id++, "germanium_oxide")
+        GermaniumOxide = new Material.Builder(id++, gregtechId( "germanium_oxide"))
                 .dust()
                 .color(Germanium.getMaterialRGB() + Oxygen.getMaterialRGB() * 2 / 3)
                 .build();
         GermaniumOxide.setFormula("GeO2", true);
 
-        PotassiumMetaBisulfite = new Material.Builder(id++, "potassium_metabisulfite")
+        PotassiumMetaBisulfite = new Material.Builder(id++, gregtechId( "potassium_metabisulfite"))
                 .dust()
                 .color(Potassium.getMaterialRGB() * 2 + Sulfur.getMaterialRGB() * 2 + Obsidian.getMaterialRGB() * 5 / 9)
                 .build();
         PotassiumMetaBisulfite.setFormula("K2S2O5", true);
 
         //More roastable ores
-        Kesterite = new Material.Builder(id++, "kesterite")
+        Kesterite = new Material.Builder(id++, gregtechId( "kesterite"))
                 .dust().ore()
                 .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
                 .flags(DISABLE_DECOMPOSITION)
@@ -241,7 +242,7 @@ public class TKCYAMiscMaterials {
                 .color(0x577b5b)
                 .build();
 
-        Stannite = new Material.Builder(id++, "stannite")
+        Stannite = new Material.Builder(id++, gregtechId( "stannite"))
                 .dust().ore()
                 .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
                 .flags(DISABLE_DECOMPOSITION)
@@ -250,7 +251,7 @@ public class TKCYAMiscMaterials {
                 .color(0x91a95e)
                 .build();
 
-        Arsenopyrite = new Material.Builder(id++, "arsenopyrite")
+        Arsenopyrite = new Material.Builder(id++, gregtechId( "arsenopyrite"))
                 .dust().ore()
                 .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
                 .flags(DISABLE_DECOMPOSITION)
@@ -260,7 +261,7 @@ public class TKCYAMiscMaterials {
                 .build();
 
         //Roasting outputs
-        Cuprite = new Material.Builder(id++, "cuprite")
+        Cuprite = new Material.Builder(id++, gregtechId( "cuprite"))
                 .dust().ore()
                 .addOreByproducts(Materials.Cobalt, Materials.Copper, Materials.Iron)
                 .flags(DISABLE_DECOMPOSITION)
@@ -270,7 +271,7 @@ public class TKCYAMiscMaterials {
                 .build();
 
         //BauxiteChain
-        PotassiumAluminate = new Material.Builder(id++, "potassium_aluminate")
+        PotassiumAluminate = new Material.Builder(id++, gregtechId( "potassium_aluminate"))
                 .dust()
                 .flags(DISABLE_DECOMPOSITION)
                 .components(Potassium, 1, Aluminium, 1, Oxygen, 3)
@@ -278,7 +279,7 @@ public class TKCYAMiscMaterials {
                 .color(Copper.getMaterialRGB() * 2 + Oxygen.getMaterialRGB() / 3)
                 .build();
 
-        SodiumAluminate = new Material.Builder(id++, "sodium_aluminate")
+        SodiumAluminate = new Material.Builder(id++, gregtechId( "sodium_aluminate"))
                 .dust()
                 .flags(DISABLE_DECOMPOSITION)
                 .components(Sodium, 1, Aluminium, 1, Oxygen, 3)
@@ -286,26 +287,26 @@ public class TKCYAMiscMaterials {
                 .color(Copper.getMaterialRGB() * 2 + Oxygen.getMaterialRGB() / 3)
                 .build();
 
-        AluminiumFluoride = new Material.Builder(id++, "aluminium_fluoride")
+        AluminiumFluoride = new Material.Builder(id++, gregtechId( "aluminium_fluoride"))
                 .dust()
                 .fluidTemp(1560)
                 .color((Aluminium.getMaterialRGB() + Fluorine.getMaterialRGB() * 3)/ 4)
                 .build();
         AluminiumFluoride.setFormula("AlF3", true);
 
-        Cryolite = new Material.Builder(id++, "cryolite")
+        Cryolite = new Material.Builder(id++, gregtechId( "cryolite"))
                 .fluidTemp(1285)
                 .color((Aluminium.getMaterialRGB() + Fluorine.getMaterialRGB() * 3)/ 4)
                 .build();
         Cryolite.setFormula("Na3AlF6", true);
 
-        HexafluorosilicAcid = new Material.Builder(id++, "hexafluorosilic_acid")
+        HexafluorosilicAcid = new Material.Builder(id++, gregtechId( "hexafluorosilic_acid"))
                 .fluidTemp(298)
                 .color((Aluminium.getMaterialRGB() + Fluorine.getMaterialRGB() * 3)/ 4)
                 .build();
         HexafluorosilicAcid.setFormula("H2SiF6", true);
 
-        AluminiumHydroxide = new Material.Builder(id++, "aluminium_hydroxide")
+        AluminiumHydroxide = new Material.Builder(id++, gregtechId( "aluminium_hydroxide"))
                 .dust()
                 .fluidTemp(573)
                 .components(Aluminium, 1, Oxygen, 3, Hydrogen, 3)
@@ -314,7 +315,7 @@ public class TKCYAMiscMaterials {
                 .build();
         AluminiumHydroxide.setFormula("Al(OH)3", true);
 
-        Alumina = new Material.Builder(id++, "alumina")
+        Alumina = new Material.Builder(id++, gregtechId( "alumina"))
                 .fluidTemp(2345)
                 .color(Aluminium.getMaterialRGB() * 2 + (Oxygen.getMaterialRGB())/ 5)
                 .build();
@@ -323,46 +324,46 @@ public class TKCYAMiscMaterials {
 
 
         //Chromite Chain
-        SodiumChromate = new Material.Builder(id++, "sodium_chromate")
+        SodiumChromate = new Material.Builder(id++, gregtechId( "sodium_chromate"))
                 .dust()
                 .color(0xe6d62c)
                 .build();
         SodiumChromate.setFormula("Na2CrO4", true);
 
-        SodiumDichromate = new Material.Builder(id++, "sodium_dichromate")
+        SodiumDichromate = new Material.Builder(id++, gregtechId( "sodium_dichromate"))
                 .dust()
                 .color(0xdb822e)
                 .build();
         SodiumDichromate.setFormula("Na2Cr2O7", true);
 
-        ChromiumOxide = new Material.Builder(id++, "chromium_oxide")
+        ChromiumOxide = new Material.Builder(id++, gregtechId( "chromium_oxide"))
                 .dust()
                 .color(0x69c765)
                 .build();
         ChromiumOxide.setFormula("Cr2O3", true);
 
-        SodiumCarbonate = new Material.Builder(id++, "sodium_carbonate")
+        SodiumCarbonate = new Material.Builder(id++, gregtechId( "sodium_carbonate"))
                 .dust()
                 .color(0xdeddd1)
                 .build();
         SodiumCarbonate.setFormula("Na2CO3", true);
 
 
-        PotassiumSulfate = new Material.Builder(id++, "potassium_sulfate")
+        PotassiumSulfate = new Material.Builder(id++, gregtechId( "potassium_sulfate"))
                 .dust()
                 .color(0xdeddd1)
                 .build();
         PotassiumSulfate.setFormula("K2SO4", true);
 
         //Mo chain
-        MolybdenumTrioxide = new Material.Builder(id++, "molybdenum_trioxide")
+        MolybdenumTrioxide = new Material.Builder(id++, gregtechId( "molybdenum_trioxide"))
                 .dust()
                 .fluidTemp(795 + 273)
                 .color((Molybdenum.getMaterialRGB() + Oxygen.getMaterialRGB()) / 4)
                 .build();
         MolybdenumTrioxide.setFormula("MoO3", true);
 
-        MolybdenumFlue = new Material.Builder(id++, "molybdenum_flue")
+        MolybdenumFlue = new Material.Builder(id++, gregtechId( "molybdenum_flue"))
                 .dust()
                 .fluid()
                 .color(Molybdenum.getMaterialRGB())
@@ -370,56 +371,56 @@ public class TKCYAMiscMaterials {
         MolybdenumFlue.setFormula("Mo?", true);
 
         //Vitriols
-        BlueVitriol = new Material.Builder(id++, "blue_vitriol")
+        BlueVitriol = new Material.Builder(id++, gregtechId( "blue_vitriol"))
                 .fluid(FluidTypes.ACID)
                 .color(0x350092)
                 .build();
         BlueVitriol.setFormula("H2SO4 + Cu?", true);
 
-        GrayVitriol = new Material.Builder(id++, "gray_vitriol")
+        GrayVitriol = new Material.Builder(id++, gregtechId( "gray_vitriol"))
                 .fluid(FluidTypes.ACID)
                 .color(0xbab6b6)
                 .build();
         GrayVitriol.setFormula("H2SO4 + Mn?", true);
 
-        PinkVitriol = new Material.Builder(id++, "pink_vitriol")
+        PinkVitriol = new Material.Builder(id++, gregtechId( "pink_vitriol"))
                 .fluid(FluidTypes.ACID)
                 .color(0xf6b7c9)
                 .build();
         PinkVitriol.setFormula("H2SO4 + Mg?", true);
 
-        GreenVitriol = new Material.Builder(id++, "green_vitriol")
+        GreenVitriol = new Material.Builder(id++, gregtechId( "green_vitriol"))
                 .fluid(FluidTypes.ACID)
                 .color(0x5ba304)
                 .build();
         GreenVitriol.setFormula("H2SO4 + Fe?", true);
 
-        WhiteVitriol = new Material.Builder(id++, "white_vitriol")
+        WhiteVitriol = new Material.Builder(id++, gregtechId( "white_vitriol"))
                 .fluid(FluidTypes.ACID)
                 .color(0xf7f7f7)
                 .build();
         WhiteVitriol.setFormula("H2SO4 + Zn?", true);
 
-        ClayVitriol = new Material.Builder(id++, "clay_vitriol")
+        ClayVitriol = new Material.Builder(id++, gregtechId( "clay_vitriol"))
                 .fluid(FluidTypes.ACID)
                 .color(0xc49963)
                 .build();
         ClayVitriol.setFormula("H2SO4 + Al2O3?", true);
 
-        CyanVitriol = new Material.Builder(id++, "cyan_vitriol")
+        CyanVitriol = new Material.Builder(id++, gregtechId( "cyan_vitriol"))
                 .fluid(FluidTypes.ACID)
                 .color(0x09b6c6)
                 .build();
         CyanVitriol.setFormula("H2SO4 + Ni?", true);
 
-        RedVitriol = new Material.Builder(id++, "red_vitriol")
+        RedVitriol = new Material.Builder(id++, gregtechId( "red_vitriol"))
                 .fluid(FluidTypes.ACID)
                 .color(0xd41501)
                 .build();
         RedVitriol.setFormula("H2SO4 + Fe?", true);
 
         //Others
-        PotassiumHydroxide = new Material.Builder(id++, "potassium_hydroxide")
+        PotassiumHydroxide = new Material.Builder(id++, gregtechId( "potassium_hydroxide"))
                 .dust()
                 .components(Potassium, 1, Oxygen, 1, Hydrogen, 1)
                 .flags(DISABLE_DECOMPOSITION)

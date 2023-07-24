@@ -1,7 +1,6 @@
 package tekcays_addon.loaders.recipe.handlers;
 
 
-import gregtech.api.GregTechAPI;
 import gregtech.api.recipes.ingredients.GTRecipeFluidInput;
 import gregtech.api.recipes.ingredients.GTRecipeInput;
 import gregtech.api.unification.material.Material;
@@ -9,17 +8,18 @@ import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.api.unification.stack.MaterialStack;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
-import static gregtech.api.GTValues.L;
-import static gregtech.api.unification.material.Materials.Carbon;
-
 import java.util.ArrayList;
 import java.util.Collection;
+
+import static gregtech.api.GTValues.L;
+import static gregtech.api.unification.material.Materials.Carbon;
+import static tekcays_addon.api.MaterialHelper.getAllMaterials;
 
 public class TKCYAAlloyingCrucibleRecipeHandler {
 
     public static void init() {
 
-        for (Material material : GregTechAPI.MATERIAL_REGISTRY) {
+        for (Material material : getAllMaterials() ) {
             if (!material.hasProperty(PropertyKey.FLUID)) continue;
             if (material.getFluid().getTemperature() <= 300) continue;
             register(material);
