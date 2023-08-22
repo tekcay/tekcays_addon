@@ -5,13 +5,14 @@ import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.info.MaterialFlags;
 import tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags;
 
+import static gregtech.api.util.GTUtility.gregtechId;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
 
 public class TKCYAPolymers {
 
     public static int init(int id) {
 
-        HighDensityPolyethylene = new Material.Builder(id++, "high_density_polyethylene")
+        HighDensityPolyethylene = new Material.Builder(id++, gregtechId("high_density_polyethylene"))
                 .ingot().fluid()
                 .fluidPipeProperties(410, 50, true)
                 .flags(MaterialFlags.GENERATE_LONG_ROD, MaterialFlags.GENERATE_PLATE, MaterialFlags.GENERATE_FOIL,
@@ -21,7 +22,7 @@ public class TKCYAPolymers {
                 .build();
         HighDensityPolyethylene.setFormula("(" + HighDensityPolyethylene.getChemicalFormula() + ")n", true);
 
-        Polypropylene = new Material.Builder(id++, "polypropylene")
+        Polypropylene = new Material.Builder(id++, gregtechId("polypropylene"))
                 .ingot().fluid()
                 .fluidPipeProperties(420, 50, true, true, false, false)
                 .flags(MaterialFlags.GENERATE_LONG_ROD, MaterialFlags.GENERATE_PLATE, MaterialFlags.GENERATE_FOIL,

@@ -1,22 +1,22 @@
 package tekcays_addon;
 
+import gregtech.GTInternalTags;
 import gregtech.api.GregTechAPI;
 import gregtech.api.cover.CoverDefinition;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
-import tekcays_addon.gtapi.utils.TKCYALog;
-import tekcays_addon.gtapi.worldgen.TKCYAWorldGenRegistry;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import tekcays_addon.common.CommonProxy;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.covers.Covers;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
-import gregtech.api.GTValues;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
+import tekcays_addon.gtapi.utils.TKCYALog;
+import tekcays_addon.gtapi.worldgen.TKCYAWorldGenRegistry;
 
 import java.io.IOException;
 
@@ -25,7 +25,7 @@ import static gregtech.api.GregTechAPI.COVER_REGISTRY;
 @Mod(   modid        = TekCaysAddon.MODID,
         name         = TekCaysAddon.NAME,
         version      = TekCaysAddon.VERSION,
-        dependencies = GTValues.MOD_VERSION_DEP)
+        dependencies = GTInternalTags.DEP_VERSION_STRING)
 public class TekCaysAddon {
 
     public static final String MODID = "tkcya";

@@ -1,34 +1,28 @@
 package tekcays_addon.gtapi.utils;
 
-import gregtech.api.GregTechAPI;
 import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.items.metaitem.MetaItem;
-import gregtech.api.unification.material.Material;
-import gregtech.api.unification.stack.MaterialStack;
 import gregtech.api.unification.OreDictUnifier;
+import gregtech.api.unification.material.Material;
 import gregtech.api.unification.ore.OrePrefix;
+import gregtech.api.unification.stack.MaterialStack;
 import gregtech.api.util.GTTransferUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
-import tekcays_addon.gtapi.unification.TKCYAMaterials;
 import tekcays_addon.common.items.TKCYAMetaItems;
+import tekcays_addon.gtapi.unification.TKCYAMaterials;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
 import static gregtech.api.unification.material.Materials.Air;
-import static tekcays_addon.gtapi.unification.TKCYAMaterials.MixtureToFilter;
+import static tekcays_addon.api.MaterialHelper.getAllMaterials;
 import static tekcays_addon.gtapi.consts.TKCYAValues.*;
+import static tekcays_addon.gtapi.unification.TKCYAMaterials.MixtureToFilter;
 
 public class MiscMethods {
 
@@ -80,7 +74,7 @@ public class MiscMethods {
         return 0;
     }
     public static Material getMaterialFromUnlocalizedName(String unlocalizedName) {
-        for (Material m : GregTechAPI.MATERIAL_REGISTRY) {
+        for (Material m : getAllMaterials() ) {
             if (m.getUnlocalizedName().equals(unlocalizedName)) return m;
         }
         return null;

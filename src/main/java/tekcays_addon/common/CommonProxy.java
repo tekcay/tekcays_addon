@@ -1,8 +1,5 @@
 package tekcays_addon.common;
 
-import gregtech.api.GTValues;
-import gregtech.api.recipes.crafttweaker.MetaItemBracketHandler;
-import net.minecraftforge.fml.common.Loader;
 import tekcays_addon.gtapi.unification.material.ore.OreDictAdditions;
 import tekcays_addon.gtapi.utils.FuelWithProperties;
 import tekcays_addon.gtapi.utils.TKCYALog;
@@ -93,9 +90,5 @@ public class CommonProxy {
     public static void registerRecipesLowest(RegistryEvent.Register<IRecipe> event) {
         TKCYALog.logger.info("Running late material handlers...");
         TKCYARecipeLoader.loadLatest();
-
-        if (Loader.isModLoaded(GTValues.MODID_CT)) {
-            MetaItemBracketHandler.rebuildComponentRegistry();
-        }
     }
 }

@@ -1,6 +1,6 @@
 package tekcays_addon.api.units;
 
-import static gregtech.api.util.GTUtility.isBetweenInclusive;
+import static tekcays_addon.api.utils.Misc.isBetweenInclusive;
 import static tekcays_addon.gtapi.consts.TKCYAValues.ATMOSPHERIC_PRESSURE;
 import static tekcays_addon.gtapi.consts.TKCYAValues.STEAM_TO_WATER;
 
