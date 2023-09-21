@@ -151,6 +151,7 @@ tkcya.machine.pressurized_cracking_unit.name=High Pressure Cracking Unit
 tkcya.machine.roasting_oven.name=Roasting Oven
 tkcya.machine.spiral_separator.name=Spiral Separator
 tkcya.machine.primitive_furnace.name=Primitive Furnace
+tkcya.machine.batch_distillation_tower.name=Batch Distillation Tower
 
 #Blast Furnaces
 tkcya.machine.brick_blast_furnace.name=Primitive Brick Blast Furnace
