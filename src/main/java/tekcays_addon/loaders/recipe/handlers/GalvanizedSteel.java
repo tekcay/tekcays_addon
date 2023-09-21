@@ -38,8 +38,6 @@ public class GalvanizedSteel {
 
         for (OrePrefix orePrefix : TKCYAValues.STEEL_TO_GALVANIZED_OREPREFIXES) {
 
-            TKCYALog.logger.info("orePrefixName in Bath : " + orePrefix.name());
-
             RecipeMaps.CHEMICAL_BATH_RECIPES.recipeBuilder()
                     .input(orePrefix, Steel)
                     .fluidInputs(Zinc.getFluid((int) (orePrefix.getMaterialAmount(Steel) * GTValues.L / (GTValues.M * 9)) * 2))
@@ -60,8 +58,6 @@ public class GalvanizedSteel {
 
     public static void galvanizingSteelElectrolysis() {
         for (OrePrefix orePrefix : TKCYAValues.STEEL_TO_GALVANIZED_OREPREFIXES) {
-
-            TKCYALog.logger.info("orePrefixName in Electrolysis : " + orePrefix.name());
 
             ELECTROLYSIS.recipeBuilder()
                     .input(orePrefix, Steel)
