@@ -174,7 +174,7 @@ public class TKCYAValues {
     public static final List<OrePrefix> POLARIZING_PREFIXES = new ArrayList<>(Arrays.asList(stick, stickLong, plate, ingot, plateDense, rotor, bolt, screw, wireFine, foil, dust, ring));
 
     public static final OrePrefix[] STEEL_TO_GALVANIZED_OREPREFIXES = new OrePrefix[]{
-        ingot, plate, plateDouble, stick, stickLong, bolt, screw, ring, rotor, spring, springSmall, gear, gearSmall, frameGt, block};
+        ingot, plate, plateDouble, plateDense, stick, stickLong, bolt, screw, ring, rotor, spring, springSmall, gear, gearSmall, frameGt, block};
 
    public static final Material[] ELECTRODE_MATERIALS = new Material[]{
            Gold, Copper, Platinum, Carbon, Steel, Iridium, Aluminium};

@@ -18,7 +18,7 @@ public class TKCYAAlloys {
                 .ingot(3)
                 .fluidPipeProperties(2000, 100, true, true, true, false)
                 .flags(EXT2_METAL, GENERATE_ROTOR, GENERATE_SMALL_GEAR, GENERATE_SPRING,
-                        GENERATE_SPRING_SMALL, GENERATE_FRAME, GENERATE_GEAR,
+                        GENERATE_SPRING_SMALL, GENERATE_FRAME, GENERATE_GEAR, GENERATE_DOUBLE_PLATE, GENERATE_DENSE,
                         NO_UNIFICATION, NO_SMELTING, DISABLE_DECOMPOSITION)
                 .components(Steel, 9, Zinc, 1)
                 .color(0xf5f8fa).iconSet(METALLIC)
