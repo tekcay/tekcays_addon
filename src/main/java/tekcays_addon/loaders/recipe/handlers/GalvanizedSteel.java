@@ -22,6 +22,7 @@ import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.unification.TKCYAMaterials;
 import tekcays_addon.gtapi.consts.TKCYAValues;
+import tekcays_addon.gtapi.utils.TKCYALog;
 
 import static gregtech.api.GTValues.LV;
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
@@ -36,6 +37,8 @@ public class GalvanizedSteel {
     public static void galvanizingSteelBath(){
 
         for (OrePrefix orePrefix : TKCYAValues.STEEL_TO_GALVANIZED_OREPREFIXES) {
+
+            TKCYALog.logger.info("orePrefixName in Bath : " + orePrefix.name());
 
             RecipeMaps.CHEMICAL_BATH_RECIPES.recipeBuilder()
                     .input(orePrefix, Steel)
@@ -57,6 +60,8 @@ public class GalvanizedSteel {
 
     public static void galvanizingSteelElectrolysis() {
         for (OrePrefix orePrefix : TKCYAValues.STEEL_TO_GALVANIZED_OREPREFIXES) {
+
+            TKCYALog.logger.info("orePrefixName in Electrolysis : " + orePrefix.name());
 
             ELECTROLYSIS.recipeBuilder()
                     .input(orePrefix, Steel)
