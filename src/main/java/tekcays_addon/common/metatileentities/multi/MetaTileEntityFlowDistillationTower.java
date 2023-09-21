@@ -32,18 +32,16 @@ import java.util.List;
 
 import static gregtech.api.util.RelativeDirection.*;
 
-public class MetaTileEntityBatchDistillationTower extends RecipeMapPrimitiveMultiblockController {
+public class MetaTileEntityFlowDistillationTower extends RecipeMapPrimitiveMultiblockController {
 
-    public MetaTileEntityBatchDistillationTower(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.BATCH_DISTILLATION);
+    public MetaTileEntityFlowDistillationTower(ResourceLocation metaTileEntityId) {
+        super(metaTileEntityId, TKCYARecipeMaps.FLOW_DISTILLATION);
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTileEntityBatchDistillationTower(metaTileEntityId);
+        return new MetaTileEntityFlowDistillationTower(metaTileEntityId);
     }
-
-    //Add heaters
 
     @Nonnull
     @Override
@@ -58,9 +56,8 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapPrimitiveMult
                 .aisle("    ", " CC ", " CC ", "    ").setRepeatable(6)
                 .aisle("FFFF", "FCCF", "FLCF", "F FF")
                 .aisle("    ", " CC ", " CC ", "    ").setRepeatable(6)
-                .aisle("    ", " CC ", " LI ", "    ")
+                .aisle("    ", " IC ", " LC ", "    ")
                 .where('A', states(getCasingState())
-                        .or(abilities(MultiblockAbility.IMPORT_ITEMS).setExactLimit(1))
                         .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1))
                         .or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1)))
                 .where('M', selfPredicate())
@@ -75,7 +72,7 @@ public class MetaTileEntityBatchDistillationTower extends RecipeMapPrimitiveMult
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
-        return TKCYATextures.WHITE_GT;
+        return TKCYATextures.STAINLESS_STEEL_GT;
     }
 
     protected IBlockState getCasingState() {

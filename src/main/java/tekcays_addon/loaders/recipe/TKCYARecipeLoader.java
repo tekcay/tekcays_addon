@@ -88,6 +88,8 @@ public class TKCYARecipeLoader {
             CokeOvenRecipeHandler.init();
         }
 
+        PetroChemistry.init();
+
         PrimitiveFurnaceHandler.init();
 
         CasingsLoader.init();

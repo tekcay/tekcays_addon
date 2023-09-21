@@ -99,6 +99,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityPressurizedCrackingUnit PRESSURIZED_CRACKING_UNIT;
     public static MetaTileEntitySteamAutoclave STEAM_AUTOCLAVE;
     public static MetaTileEntityBatchDistillationTower BATCH_DISTILLATION_TOWER;
+    public static MetaTileEntityFlowDistillationTower FLOW_DISTILLATION_TOWER;
 
     //FUEL HEATERS
     public static String[] FUEL_HEATERS_TYPES = {"_solid_fuel_heater", "_liquid_fuel_heater", "_fluidized_fuel_heater", "_gas_fuel_heater"};
@@ -396,6 +397,7 @@ public class TKCYAMetaTileEntities {
         AXE_SUPPORT = registerMetaTileEntity(12090, new MetaTileEntityAxeSupport(tkcyaId("axe_support")));
 
         BATCH_DISTILLATION_TOWER = registerMetaTileEntity(12091, new MetaTileEntityBatchDistillationTower(tkcyaId("batch_distillation_tower")));
+        FLOW_DISTILLATION_TOWER = registerMetaTileEntity(12092, new MetaTileEntityFlowDistillationTower(tkcyaId("flow_distillation_tower")));
 
     }
 
