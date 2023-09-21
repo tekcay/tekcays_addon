@@ -102,7 +102,7 @@ public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<PrimitiveRecipeBuilder> FLOW_DISTILLATION = new RecipeMap<>(
-            "batch_distillation", 0, 0, 2, 5, new PrimitiveRecipeBuilder(), false);
+            "flow_distillation", 0, 0, 2, 5, new PrimitiveRecipeBuilder(), false);
 
     /**
      * When using a fluid for two different recipes, it's MANDATORY to use an {@code ntCircuitIngredient}.
