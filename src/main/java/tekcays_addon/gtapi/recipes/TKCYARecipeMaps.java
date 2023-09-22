@@ -10,6 +10,7 @@ import gregtech.core.sound.GTSoundEvents;
 import stanhebben.zenscript.annotations.ZenExpansion;
 import stanhebben.zenscript.annotations.ZenProperty;
 import tekcays_addon.gtapi.recipes.builders.*;
+import tekcays_addon.gtapi.recipes.machines.TopStaggeredFluidsRecipeMap;
 import tekcays_addon.gtapi.recipes.machines.TopStaggeredRecipeMap;
 
 
@@ -97,8 +98,8 @@ public class TKCYARecipeMaps {
             "primitive_furnace", 2, 2, 0, 0, new PrimitiveRecipeBuilder(), false);
 
     @ZenProperty
-    public static final RecipeMap<PrimitiveRecipeBuilder> BATCH_DISTILLATION = new RecipeMap<>(
-            "batch_distillation", 1, 0, 2, 5, new PrimitiveRecipeBuilder(), false);
+    public static final RecipeMap<PrimitiveRecipeBuilder> BATCH_DISTILLATION = new TopStaggeredFluidsRecipeMap<>(
+            "batch_distillation", 1, 0, 1, 5, new PrimitiveRecipeBuilder(), false);
 
     @ZenProperty
     public static final RecipeMap<PrimitiveRecipeBuilder> FLOW_DISTILLATION = new RecipeMap<>(

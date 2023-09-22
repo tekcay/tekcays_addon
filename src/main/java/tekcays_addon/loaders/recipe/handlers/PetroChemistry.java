@@ -10,7 +10,6 @@ public class PetroChemistry {
         TKCYARecipeMaps.BATCH_DISTILLATION.recipeBuilder()
                 .notConsumable(new IntCircuitIngredient(1))
                 .fluidInputs(Materials.Oil.getFluid(1000))
-                .fluidInputs(Materials.Water.getFluid(2000))
                 .fluidOutputs(Materials.SulfuricHeavyFuel.getFluid(50))
                 .fluidOutputs(Materials.SulfuricLightFuel.getFluid(100))
                 .fluidOutputs(Materials.Steam.getFluid(50))
