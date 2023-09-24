@@ -98,12 +98,12 @@ public class TKCYARecipeMaps {
             "primitive_furnace", 2, 2, 0, 0, new PrimitiveRecipeBuilder(), false);
 
     @ZenProperty
-    public static final RecipeMap<PrimitiveRecipeBuilder> BATCH_DISTILLATION = new TopStaggeredFluidsRecipeMap<>(
-            "batch_distillation", 1, 0, 1, 5, new PrimitiveRecipeBuilder(), false);
+    public static final RecipeMap<NoEnergyFluidTimeRecipeBuilder> BATCH_DISTILLATION = new TopStaggeredFluidsRecipeMap<>(
+            "batch_distillation", 1, 0, 1, 5, new NoEnergyFluidTimeRecipeBuilder(), false);
 
     @ZenProperty
     public static final RecipeMap<PrimitiveRecipeBuilder> FLOW_DISTILLATION = new RecipeMap<>(
-            "flow_distillation", 0, 0, 2, 5, new PrimitiveRecipeBuilder(), false);
+            "flow_distillation", 1, 0, 2, 5, new PrimitiveRecipeBuilder(), false);
 
     /**
      * When using a fluid for two different recipes, it's MANDATORY to use an {@code ntCircuitIngredient}.

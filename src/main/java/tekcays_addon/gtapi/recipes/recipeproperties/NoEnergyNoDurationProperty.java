@@ -1,6 +1,5 @@
 package tekcays_addon.gtapi.recipes.recipeproperties;
 
-import gregtech.api.items.toolitem.ToolOreDict;
 import gregtech.api.recipes.recipeproperties.RecipeProperty;
 import net.minecraft.client.Minecraft;
 import tekcays_addon.api.recipeproperties.RecipePropertiesHelper;

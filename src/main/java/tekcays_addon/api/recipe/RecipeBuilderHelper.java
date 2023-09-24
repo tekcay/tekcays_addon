@@ -7,6 +7,7 @@ import gregtech.api.recipes.recipeproperties.RecipeProperty;
 import gregtech.api.recipes.recipeproperties.RecipePropertyStorage;
 import gregtech.api.util.EnumValidationResult;
 import net.minecraftforge.fluids.FluidStack;
+import tekcays_addon.api.recipeproperties.FluidOutputTime;
 import tekcays_addon.gtapi.recipes.recipeproperties.*;
 import tekcays_addon.gtapi.utils.TKCYALog;
 
@@ -63,6 +64,10 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
                     store((ToolProperty) recipeProperty, recipePropertyStorage, ToolOreDict.toolWrench);
                     break;
 
+                case FLUID_OUTPUT_TIME:
+                    store((FluidOutputTimeProperty) recipeProperty, recipePropertyStorage, null);
+                    break;
+
                 default:
                     break;
             }
@@ -72,7 +77,6 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
     default <U extends RecipeProperty<?>> void store(U recipeProperty, IRecipePropertyStorage recipePropertyStorage, Object defaultValue) {
         recipePropertyStorage.store(recipeProperty, defaultValue);
     }
-
 
     default <U> T validate(RecipeProperty<?> recipeProperty, U value, Function<U, String> validate) {
         T recipeBuilder = getRecipeBuilder();
@@ -127,43 +131,51 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
         return validate(ToolProperty.getInstance(), toolOreDict, RecipeValidationFunctions.VALIDATE_TOOL_ORE);
     }
 
-    default boolean applyPropertyHelper(@Nonnull String key, Object value) {
+    @Nonnull
+    default T fluidOutputTime(FluidOutputTime[] fluidOutputTime) {
+        return validate(FluidOutputTimeProperty.getInstance(), fluidOutputTime, RecipeValidationFunctions.VALIDATE_FLUID_OUTPUT_TIME);
+    }
+
+    default void applyPropertyHelper(@Nonnull String key, Object value) {
 
         switch (key) {
             case INTERVAL_PRESSURE_PROPERTY:
                 this.intervalPressure(((Integer[]) value).clone());
-                return true;
+                return;
 
             case INTERVAL_TEMPERATURE_PROPERTY:
                 this.intervalTemperature(((Integer[]) value).clone());
-                return true;
+                return;
 
             case MIN_TEMPERATURE_PROPERTY:
                 this.minTemperature(((Number) value).intValue());
-                return true;
+                return;
 
             case MAX_TEMPERATURE_PROPERTY:
                 this.maxTemperature(((Number) value).intValue());
-                return true;
+                return;
 
             case MIN_PRESSURE_PROPERTY:
                 this.minPressure(((Number) value).intValue());
-                return true;
+                return;
 
             case MAX_PRESSURE_PROPERTY:
                 this.maxPressure(((Number) value).intValue());
-                return true;
+                return;
 
             case PRESSURIZED_FLUIDSTACK_PROPERTY:
                 this.pressurizedFluidStack(((FluidStack) value));
-                return true;
+                return;
 
             case TOOL_ORE_DICT_PROPERTY:
                 this.toolOreDict(((ToolOreDict) value));
-                return true;
+                return;
+
+            case FLUID_OUTPUT_TIME:
+                this.fluidOutputTime(((FluidOutputTime[]) value));
+                return;
 
             default:
-                return false;
         }
     }
 

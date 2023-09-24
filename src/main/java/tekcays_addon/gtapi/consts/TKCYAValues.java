@@ -33,8 +33,10 @@ public class TKCYAValues {
     public static final String MAX_TEMPERATURE_PROPERTY = "maxTemperature";
     public static final String PRESSURIZED_FLUIDSTACK_PROPERTY = "pressurizedFluidStack";
     public static final String TOOL_ORE_DICT_PROPERTY = "toolOreDict";
-    //Simple Values
+    public static final String FLUID_OUTPUT_TIME = "fluidOutputTime";
+    public static final String DURATION = "duration";
 
+    //Simple Values
     public static final int STEAM_TO_WATER = 8;
 
     public static final Long[] EMPTY_LONG_TWO_ARRAY = new Long[]{0L, 0L};

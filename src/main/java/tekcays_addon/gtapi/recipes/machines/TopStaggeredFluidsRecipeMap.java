@@ -17,8 +17,13 @@ public class TopStaggeredFluidsRecipeMap<R extends RecipeBuilder<R>> extends Rec
 
     @Override
     public ModularUI.Builder createJeiUITemplate(IItemHandlerModifiable importItems, IItemHandlerModifiable exportItems, FluidTankList importFluids, FluidTankList exportFluids, int yOffset) {
-        ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 176, 150)
-                .widget(new ProgressWidget(200, 37, 2, 18, 18, GuiTextures.PROGRESS_BAR_ARROW, ProgressWidget.MoveType.HORIZONTAL));
+        ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 176, 350)
+                .widget(new ProgressWidget(200, 37, 1, 18, 18, GuiTextures.PROGRESS_BAR_ARROW, ProgressWidget.MoveType.HORIZONTAL))
+                .widget(new ProgressWidget(2000, 81, 1, 18, 18, GuiTextures.PROGRESS_BAR_ARROW, ProgressWidget.MoveType.HORIZONTAL))
+                .widget(new ProgressWidget(4000, 81, 23, 18, 18, GuiTextures.PROGRESS_BAR_ARROW, ProgressWidget.MoveType.HORIZONTAL))
+                .widget(new ProgressWidget(6000, 81, 45, 18, 18, GuiTextures.PROGRESS_BAR_ARROW, ProgressWidget.MoveType.HORIZONTAL))
+                .widget(new ProgressWidget(8000, 81, 67, 18, 18, GuiTextures.PROGRESS_BAR_ARROW, ProgressWidget.MoveType.HORIZONTAL))
+                .widget(new ProgressWidget(10000, 81, 89, 18, 18, GuiTextures.PROGRESS_BAR_ARROW, ProgressWidget.MoveType.HORIZONTAL));
 
         addSlot(builder, 15, 1, 0, null, importFluids, true, false);
         addSlot(builder, 15, 23, 0, importItems, null, false, false);
