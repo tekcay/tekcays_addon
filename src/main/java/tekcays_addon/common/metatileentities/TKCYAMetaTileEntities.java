@@ -147,9 +147,13 @@ public class TKCYAMetaTileEntities {
     public static TKCYAMetaTileEntityTankValve STEEL_TANK_VALVE;
     public static TKCYAMetaTileEntityTankValve GALVANIZED_STEEL_TANK_VALVE;
     public static TKCYAMetaTileEntityTankValve STAINLESS_STEEL_TANK_VALVE;
+    public static TKCYAMetaTileEntityTankValve STEEL_CRATE_VALVE;
+    public static TKCYAMetaTileEntityTankValve GALVANIZED_STEEL_CRATE_VALVE;
+    public static TKCYAMetaTileEntityTankValve STAINLESS_STEEL_CRATE_VALVE;
 
     public static MetaTileEntityModulableMultiblockTank[] MODULABLE_TANK = new MetaTileEntityModulableMultiblockTank[4];
     public static MetaTileEntityPressurizedMultiblockTank[] PRESSURIZED_TANK = new MetaTileEntityPressurizedMultiblockTank[3];
+    public static MetaTileEntityModulableMultiblockCrate[] MODULABLE_CRATE = new MetaTileEntityModulableMultiblockCrate[4];
 
     //Primitive
     public static MetaTileEntityAxeSupport AXE_SUPPORT;
@@ -393,6 +397,11 @@ public class TKCYAMetaTileEntities {
                 .forEach(i -> ELECTRIC_CONVEYORS[i] = registerMetaTileEntity(12080 + i, new MetaTileEntityElectricConveyor(tkcyaId("electric_conveyor." + i), i)));
 
         AXE_SUPPORT = registerMetaTileEntity(12090, new MetaTileEntityAxeSupport(tkcyaId("axe_support")));
+
+        MODULABLE_CRATE[0] = registerMetaTileEntity(12105, new MetaTileEntityModulableMultiblockCrate(tkcyaId("modulable_wood_crate"), TreatedWood, 1000 * 1000));
+        MODULABLE_CRATE[1] = registerMetaTileEntity(12106, new MetaTileEntityModulableMultiblockCrate(tkcyaId("modulable_steel_crate"), Steel, 1000 * 1000));
+        MODULABLE_CRATE[2] = registerMetaTileEntity(12107, new MetaTileEntityModulableMultiblockCrate(tkcyaId("modulable_galvanized_steel_crate"), TKCYAMaterials.GalvanizedSteel, 1000 * 1000));
+        MODULABLE_CRATE[3] = registerMetaTileEntity(12108, new MetaTileEntityModulableMultiblockCrate(tkcyaId("modulable_stainless_steel_crate"), StainlessSteel, 1000 * 1000));
     }
 
     static ResourceLocation tkcyaId(String name) {

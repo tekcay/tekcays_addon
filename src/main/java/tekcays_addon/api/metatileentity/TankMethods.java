@@ -1,6 +1,7 @@
 package tekcays_addon.api.metatileentity;
 
 import gregtech.api.capability.impl.FilteredFluidHandler;
+import gregtech.api.capability.impl.FilteredItemHandler;
 import gregtech.api.fluids.MaterialFluid;
 import gregtech.api.fluids.MetaFluids;
 import gregtech.api.fluids.fluidType.FluidType;
@@ -11,9 +12,11 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockSteamCasing;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.gtapi.render.TKCYATextures;
 
@@ -87,8 +90,12 @@ public class TankMethods {
 
     public static FluidTank createFilteredFluidHandler(int capacity, Material material) {
 
-        return new FilteredFluidHandler(capacity).setFillPredicate(
+        return new FilteredFluidHandler(capacity).setFilter(
                 fluidStack -> canContainThisFluid(fluidStack, material));
+    }
+    public static ItemStackHandler createFilteredItemHandler(int capacity) {
+
+        return new FilteredItemHandler(capacity);
     }
 
     public static void createPressurizedFilteredFluidHandler(int capacity, Material material) {

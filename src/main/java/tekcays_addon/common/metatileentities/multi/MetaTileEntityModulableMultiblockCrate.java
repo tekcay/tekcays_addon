@@ -3,9 +3,6 @@ package tekcays_addon.common.metatileentities.multi;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregtech.api.capability.impl.FilteredFluidHandler;
-import gregtech.api.capability.impl.FluidTankList;
-import gregtech.api.capability.impl.PropertyFluidFilter;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -27,6 +24,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
+import net.minecraftforge.items.ItemStackHandler;
 import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nonnull;
@@ -39,13 +37,12 @@ import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.metatileentity.Predicates.isAir;
 import static tekcays_addon.api.metatileentity.TankMethods.*;
 
-public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplayBase {
+public class MetaTileEntityModulableMultiblockCrate extends MultiblockWithDisplayBase {
     private final int capacity;
     private int actualCapacity;
     private Material material;
-    private FilteredFluidHandler tank;
 
-    public MetaTileEntityModulableMultiblockTank(ResourceLocation metaTileEntityId, Material material, int capacity) {
+    public MetaTileEntityModulableMultiblockCrate(ResourceLocation metaTileEntityId, Material material, int capacity) {
         super(metaTileEntityId);
         this.material = material;
         this.capacity = capacity;
@@ -54,22 +51,24 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
     }
 
     @Override
-    public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTileEntityModulableMultiblockTank(metaTileEntityId, material, capacity);
+    protected void initializeInventory() {
+        super.initializeInventory();
+
+        ItemStackHandler crate = createFilteredItemHandler(actualCapacity);
+
+        this.importItems = crate;
+        this.exportItems = crate;
+        this.itemInventory = crate;
     }
 
     @Override
-    protected void initializeInventory() {
-        super.initializeInventory();
-        tank = new FilteredFluidHandler(this.capacity);
-        tank.setFilter(new PropertyFluidFilter(340, false, false, false, false));
-        this.exportFluids = this.importFluids = new FluidTankList(true, tank);
-        this.fluidInventory = tank;
+    public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
+        return new MetaTileEntityModulableMultiblockCrate(metaTileEntityId, material, capacity);
     }
 
     @Override
     protected void updateFormedValid() {
-        tank.setCapacity(actualCapacity);
+     ;
     }
 
     @Nonnull
@@ -91,7 +90,7 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
-        int height = context.getOrDefault("modulableTankHeight", 0) + 1;
+        int height = context.getOrDefault("modulableTankHeight", 1) + 1;
         this.actualCapacity = this.capacity * height;
     }
 
@@ -106,21 +105,21 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
     }
 
     public boolean isTankEmpty() {
-        return this.importFluids.getTankAt(0).drain(Integer.MAX_VALUE, false) == null;
+        return this.importItems.getStackInSlot(0).getCount() == 0;
     }
 
     public String getFillPercentage() {
        return isTankEmpty() ? "0% Filled"
-                : BigDecimal.valueOf(100 * this.importFluids.getTankAt(0).getFluidAmount())
+                : BigDecimal.valueOf(100 * this.importItems.getStackInSlot(0).getCount())
                .divide(BigDecimal.valueOf(this.actualCapacity), 1, BigDecimal.ROUND_UP).toString()
                + "% Filled";
     }
 
-    public String getTankContent() {
+    public String getCrateContent() {
         return isTankEmpty() ? "Empty"
-                : this.importFluids.getTankAt(0).getFluidAmount() / 1000
-                + " kL of "
-                + this.importFluids.getTankAt(0).getFluid().getLocalizedName();
+                : this.importItems.getStackInSlot(0).getCount() / 1000
+                + " k of "
+                + this.importItems.getStackInSlot(0).getDisplayName();
     }
 
     @Override
@@ -143,8 +142,8 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
             tooltip.setStyle((new Style()).setColor(TextFormatting.GRAY));
             textList.add((new TextComponentTranslation("gregtech.multiblock.invalid_structure")).setStyle((new Style()).setColor(TextFormatting.RED).setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
         } else {
-            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.content", getTankContent()));
-            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.capacity", this.actualCapacity / 1000));
+            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.content", getCrateContent()));
+            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_crate.capacity", this.actualCapacity / 1000));
             textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.fill.percentage", getFillPercentage()));
         }
 
@@ -154,7 +153,7 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
     public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tkcya.multiblock.modulable_tank.tooltip"));
-        tooltip.add(I18n.format("tkcya.machine.modulable_tank.capacity", actualCapacity, "per layer."));
+        tooltip.add(I18n.format("tkcya.machine.modulable_tank.capacity", capacity, "per layer."));
         if (material.equals(TreatedWood)) {
             tooltip.add(I18n.format("gregtech.fluid_pipe.max_temperature", 340));
         } else {
