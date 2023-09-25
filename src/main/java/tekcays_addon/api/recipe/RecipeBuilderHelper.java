@@ -77,8 +77,7 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
         recipePropertyStorage.store(recipeProperty, defaultValue);
     }
 
-
-    default <U> T validate(RecipeProperty<?> recipeProperty, U value, Function<U, String> validate) {
+    default <U> T validate(RecipeProperty<?> recipeProperty, U value, @Nonnull Function<U, String> validate) {
         T recipeBuilder = getRecipeBuilder();
         String errorMessage = validate.apply(value);
 
@@ -132,8 +131,13 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
     }
 
     @Nonnull
-    default T amperage(long amperage) {
-        return validate(MultiAmperageProperty.getInstance(), amperage, RecipeValidationFunctions.VALIDATE_LONG_POSITIVE);
+    default T amperage(int amperage) {
+        return validate(MultiAmperageProperty.getInstance(), amperage, RecipeValidationFunctions.VALIDATE_INT_POSITIVE);
+    }
+
+    @Nonnull
+    default T voltage(int voltage) {
+        return validate(VoltageProperty.getInstance(), voltage, RecipeValidationFunctions.VALIDATE_INT_POSITIVE);
     }
 
     default boolean applyPropertyHelper(@Nonnull String key, Object value) {
@@ -172,7 +176,11 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
                 return true;
 
             case AMPERAGE:
-                this.amperage(((Number) value).longValue());
+                this.amperage(((Number) value).intValue());
+                return true;
+
+            case VOLTAGE:
+                this.voltage(((Number) value).intValue());
                 return true;
 
             default:

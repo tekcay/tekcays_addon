@@ -8,6 +8,7 @@ import gregtech.api.util.EnumValidationResult;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import tekcays_addon.api.recipe.RecipeBuilderHelper;
 import tekcays_addon.gtapi.recipes.recipeproperties.MultiAmperageProperty;
+import tekcays_addon.gtapi.recipes.recipeproperties.VoltageProperty;
 
 import javax.annotation.Nonnull;
 
@@ -43,6 +44,7 @@ public class MultiAmperageRecipeBuilder extends RecipeBuilder<MultiAmperageRecip
     public String toString() {
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
+                .append(VoltageProperty.getInstance().getKey())
                 .append(MultiAmperageProperty.getInstance().getKey())
                 .toString();
     }

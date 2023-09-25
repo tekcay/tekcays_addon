@@ -14,9 +14,12 @@ public class MultiAmperageLogic extends MultiblockRecipeLogic {
         super(tileEntity);
     }
 
+    /*
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
         return recipe.getProperty(MultiAmperageProperty.getInstance(), 0L) >= getEnergyContainer().getInputAmperage();
     }
+
+     */
 
     @Override
     public boolean drawEnergy(int recipeEUt, boolean simulate) {

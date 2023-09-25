@@ -19,6 +19,7 @@ import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
+import tekcays_addon.gtapi.consts.TKCYAValues;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.recipes.recipeproperties.MultiAmperageProperty;
 import tekcays_addon.gtapi.render.TKCYATextures;
@@ -80,7 +81,7 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
         TKCYALog.logger.info("Input voltage : {},\ngetImportItems : {}, \ngetInputFluidInventory: {}", getEnergyContainer().getInputVoltage(), getImportItemsName(), getImportFluidName());
         currentRecipe = this.recipeMap.findRecipe(getEnergyContainer().getInputVoltage(), getImportItems(), getInputFluidInventory());
         if (currentRecipe != null) {
-            recipeAmperage = currentRecipe.getProperty(MultiAmperageProperty.getInstance(), 0L);
+            recipeAmperage = currentRecipe.getProperty(MultiAmperageProperty.getInstance(), 0);
             recipeEUt = currentRecipe.getEUt();
             TKCYALog.logger.info("current recipe is not null, recipe amperage is {}, recipe EUt is {}", recipeAmperage, recipeEUt);
         }
@@ -189,11 +190,14 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
     //CheckRecipe
     /////////////////
 
+    /*
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
         if (inputs != recipe.getInputs()) return false;
-        return recipe.getProperty(MultiAmperageProperty.getInstance(), 0L) >= getEnergyContainer().getInputAmperage();
+        return recipe.getProperty(MultiAmperageProperty.getInstance(), TKCYAValues.EMPTY_INT_TWO_ARRAY) >= getEnergyContainer().getInputAmperage();
     }
+
+     */
 
     @Override
     public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {

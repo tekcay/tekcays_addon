@@ -7,32 +7,31 @@ import tekcays_addon.api.recipeproperties.RecipePropertiesHelper;
 
 import javax.annotation.Nonnull;
 
-public class MultiAmperageProperty extends RecipeProperty<Integer> implements RecipePropertiesHelper {
+public class VoltageProperty extends RecipeProperty<Integer> implements RecipePropertiesHelper {
 
-    public static final String KEY = "amperage";
+    public static final String KEY = "voltage";
 
     @Override
     public String getKey() {
         return KEY;
     }
 
-    private static MultiAmperageProperty INSTANCE;
+    private static VoltageProperty INSTANCE;
 
-    private MultiAmperageProperty() {
+    private VoltageProperty() {
         super(KEY, Integer.class);
     }
 
-    public static MultiAmperageProperty getInstance() {
+    public static VoltageProperty getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new MultiAmperageProperty();
+            INSTANCE = new VoltageProperty();
         }
         return INSTANCE;
     }
 
     @Override
     public void drawInfo(@Nonnull Minecraft minecraft, int x, int y, int color, Object value) {
-        Integer amperage = castValue(value);
-        minecraft.fontRenderer.drawString(I18n.format("tkcya.recipe.amperage", amperage), x, y, color);
+        minecraft.fontRenderer.drawString(I18n.format("tkcya.recipe.voltage", castValue(value)), x, y, color);
     }
 
 
