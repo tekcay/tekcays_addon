@@ -32,6 +32,7 @@ public class TKCYAValues {
     public static final String MIN_TEMPERATURE_PROPERTY = "minTemperature";
     public static final String MAX_TEMPERATURE_PROPERTY = "maxTemperature";
     public static final String PRESSURIZED_FLUIDSTACK_PROPERTY = "pressurizedFluidStack";
+    public static final String TOOL_ORE_DICT_PROPERTY = "toolOreDict";
     public static final String AMPERAGE = "amperage";
     //Simple Values
 
@@ -44,6 +45,11 @@ public class TKCYAValues {
      * Improves the yield by {20%}.
      */
     public static final float CLEANROOM_MULTIPLIER = 1.2f;
+
+    //Modid
+    public static final String MC_ID = "minecraft";
+    public static final String GT_ID = "gregtech";
+    public static final String TKCYA_ID = "tkcya";
 
 
     //// ENERGY_TYPE_RATIOS
@@ -169,7 +175,7 @@ public class TKCYAValues {
     public static final List<OrePrefix> POLARIZING_PREFIXES = new ArrayList<>(Arrays.asList(stick, stickLong, plate, ingot, plateDense, rotor, bolt, screw, wireFine, foil, dust, ring));
 
     public static final OrePrefix[] STEEL_TO_GALVANIZED_OREPREFIXES = new OrePrefix[]{
-        ingot, plate, plateDouble, stick, stickLong, bolt, screw, ring, rotor, spring, springSmall, gear, gearSmall, frameGt, block};
+        ingot, plate, plateDouble, plateDense, stick, stickLong, bolt, screw, ring, rotor, spring, springSmall, gear, gearSmall, frameGt, block};
 
    public static final Material[] ELECTRODE_MATERIALS = new Material[]{
            Gold, Copper, Platinum, Carbon, Steel, Iridium, Aluminium};

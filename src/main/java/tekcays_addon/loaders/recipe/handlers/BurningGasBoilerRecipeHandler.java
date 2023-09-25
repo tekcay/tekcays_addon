@@ -2,6 +2,7 @@ package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.recipes.GTRecipeHandler;
 import gregtech.api.recipes.RecipeMaps;
+import tekcays_addon.gtapi.utils.TKCYALog;
 
 import static gregtech.api.GTValues.LV;
 import static gregtech.api.GTValues.V;
@@ -11,7 +12,7 @@ public class BurningGasBoilerRecipeHandler {
 
     public static void init() {
 
-        GTRecipeHandler.removeAllRecipes(RecipeMaps.GAS_TURBINE_FUELS);
+        //GTRecipeHandler.removeAllRecipes(RecipeMaps.GAS_TURBINE_FUELS);
 
         //gas turbine fuels
         RecipeMaps.GAS_TURBINE_FUELS.recipeBuilder()

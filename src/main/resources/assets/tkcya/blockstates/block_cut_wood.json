@@ -1,0 +1,55 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube_all",
+    "textures": {
+      "all": "gregtech:blocks/rendering_error"
+    }
+  },
+  "variants": {
+    "variant": {
+      "acacia": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/trees/log_acacia_top"
+        }
+      },
+      "birch": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/trees/log_birch_top"
+        }
+      },
+      "jungle": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/trees/log_jungle_top"
+        }
+      },
+      "oak": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/trees/log_oak_top"
+        }
+      },
+      "rubber": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/trees/log_rubber_top"
+        }
+      },
+      "dark_oak": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/trees/log_dark_oak_top"
+        }
+      },
+      "spruce": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/trees/log_spruce_top"
+        }
+      }
+    }
+  }
+}

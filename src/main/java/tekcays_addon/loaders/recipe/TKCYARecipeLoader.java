@@ -38,7 +38,7 @@ public class TKCYARecipeLoader {
 
         if (meltingOverhaul.enableAlloyingOverhaul) {
             TKCYAPartsRecipeHandler.removeAlloySmelter();
-            GTRecipeHandler.removeAllRecipes(RecipeMaps.PRIMITIVE_BLAST_FURNACE_RECIPES);
+            //GTRecipeHandler.removeAllRecipes(RecipeMaps.PRIMITIVE_BLAST_FURNACE_RECIPES);
         }
 
         if (meltingOverhaul.enableCastingOverhaul) {
@@ -69,7 +69,7 @@ public class TKCYARecipeLoader {
         if (miscOverhaul.enableElectrolysisOverhaul) {
             TKCYAPartsRecipeHandler.initElectrode();
             ElectrolysisHandler.init();
-            GTRecipeHandler.removeAllRecipes(RecipeMaps.ELECTROLYZER_RECIPES);
+            //GTRecipeHandler.removeAllRecipes(RecipeMaps.ELECTROLYZER_RECIPES);
         }
 
         if (storageOverhaul.enableDrumsOverhaul) {
@@ -87,6 +87,8 @@ public class TKCYARecipeLoader {
         if (miscOverhaul.enableCokeOvenOverhaul) {
             CokeOvenRecipeHandler.init();
         }
+
+        PrimitiveFurnaceHandler.init();
 
         CasingsLoader.init();
         ChemicalChains.init();
@@ -123,6 +125,8 @@ public class TKCYARecipeLoader {
         if (meltingOverhaul.enableCastingOverhaul) {
             CastingRecipeHandler.init();
         }
+
+        AxeSupportRecipes.init();
 
     }
 
