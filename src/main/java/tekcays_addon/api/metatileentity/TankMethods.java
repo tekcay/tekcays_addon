@@ -3,16 +3,13 @@ package tekcays_addon.api.metatileentity;
 import gregtech.api.capability.impl.FilteredFluidHandler;
 import gregtech.api.capability.impl.FilteredItemHandler;
 import gregtech.api.fluids.MaterialFluid;
-import gregtech.api.fluids.MetaFluids;
 import gregtech.api.fluids.fluidType.FluidType;
-import gregtech.api.fluids.fluidType.FluidTypes;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockSteamCasing;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -34,11 +31,20 @@ import static tekcays_addon.gtapi.unification.TKCYAMaterials.GalvanizedSteel;
 public class TankMethods {
 
     @Nullable
-    public static MetaTileEntity getValve(Material material) {
+    public static MetaTileEntity getTankValve(Material material) {
         if (material.equals(TreatedWood)) return WOODEN_TANK_VALVE;
         if (material.equals(Steel)) return STEEL_TANK_VALVE;
         if (material.equals(GalvanizedSteel)) return GALVANIZED_STEEL_TANK_VALVE;
         if (material.equals(StainlessSteel)) return STAINLESS_STEEL_TANK_VALVE;
+        return null;
+    }
+
+    @Nullable
+    public static MetaTileEntity getCrateValve(Material material) {
+        if (material.equals(TreatedWood)) return TREATED_WOOD_CRATE_VALVE;
+        if (material.equals(Steel)) return STEEL_CRATE_VALVE;
+        if (material.equals(GalvanizedSteel)) return GALVANIZED_STEEL_CRATE_VALVE;
+        if (material.equals(StainlessSteel)) return STAINLESS_STEEL_CRATE_VALVE;
         return null;
     }
 

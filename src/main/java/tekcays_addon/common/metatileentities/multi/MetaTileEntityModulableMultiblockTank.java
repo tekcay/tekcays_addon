@@ -42,7 +42,7 @@ import static tekcays_addon.api.metatileentity.TankMethods.*;
 public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplayBase {
     private final int capacity;
     private int actualCapacity;
-    private Material material;
+    private final Material material;
     private FilteredFluidHandler tank;
 
     public MetaTileEntityModulableMultiblockTank(ResourceLocation metaTileEntityId, Material material, int capacity) {
@@ -83,7 +83,7 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
                 .where('S', selfPredicate())
                 .where('I', isAir("modulableTankHeight"))
                 .where('X', states(getBlockState(material))
-                        .or(metaTileEntities(getValve(material)).setExactLimit(2)))
+                        .or(metaTileEntities(getTankValve(material)).setExactLimit(2)))
                 .where(' ', air())
                 .build();
     }

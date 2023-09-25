@@ -5,6 +5,7 @@ import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.util.GTUtility;
+import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityCrateValve;
 import gregtech.common.metatileentities.storage.MetaTileEntityDrum;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.TekCaysAddon;
@@ -147,9 +148,11 @@ public class TKCYAMetaTileEntities {
     public static TKCYAMetaTileEntityTankValve STEEL_TANK_VALVE;
     public static TKCYAMetaTileEntityTankValve GALVANIZED_STEEL_TANK_VALVE;
     public static TKCYAMetaTileEntityTankValve STAINLESS_STEEL_TANK_VALVE;
-    public static TKCYAMetaTileEntityTankValve STEEL_CRATE_VALVE;
-    public static TKCYAMetaTileEntityTankValve GALVANIZED_STEEL_CRATE_VALVE;
-    public static TKCYAMetaTileEntityTankValve STAINLESS_STEEL_CRATE_VALVE;
+    
+    public static MetaTileEntityCrateValve TREATED_WOOD_CRATE_VALVE;
+    public static MetaTileEntityCrateValve STEEL_CRATE_VALVE;
+    public static MetaTileEntityCrateValve GALVANIZED_STEEL_CRATE_VALVE;
+    public static MetaTileEntityCrateValve STAINLESS_STEEL_CRATE_VALVE;
 
     public static MetaTileEntityModulableMultiblockTank[] MODULABLE_TANK = new MetaTileEntityModulableMultiblockTank[4];
     public static MetaTileEntityPressurizedMultiblockTank[] PRESSURIZED_TANK = new MetaTileEntityPressurizedMultiblockTank[3];
@@ -398,10 +401,15 @@ public class TKCYAMetaTileEntities {
 
         AXE_SUPPORT = registerMetaTileEntity(12090, new MetaTileEntityAxeSupport(tkcyaId("axe_support")));
 
-        MODULABLE_CRATE[0] = registerMetaTileEntity(12105, new MetaTileEntityModulableMultiblockCrate(tkcyaId("modulable_wood_crate"), TreatedWood, 1000 * 1000));
-        MODULABLE_CRATE[1] = registerMetaTileEntity(12106, new MetaTileEntityModulableMultiblockCrate(tkcyaId("modulable_steel_crate"), Steel, 1000 * 1000));
-        MODULABLE_CRATE[2] = registerMetaTileEntity(12107, new MetaTileEntityModulableMultiblockCrate(tkcyaId("modulable_galvanized_steel_crate"), TKCYAMaterials.GalvanizedSteel, 1000 * 1000));
-        MODULABLE_CRATE[3] = registerMetaTileEntity(12108, new MetaTileEntityModulableMultiblockCrate(tkcyaId("modulable_stainless_steel_crate"), StainlessSteel, 1000 * 1000));
+        MODULABLE_CRATE[0] = registerMetaTileEntity(12105, new MetaTileEntityModulableMultiblockCrate(tkcyaId("modulable_wood_crate"), TreatedWood, 5000));
+        MODULABLE_CRATE[1] = registerMetaTileEntity(12106, new MetaTileEntityModulableMultiblockCrate(tkcyaId("modulable_steel_crate"), Steel, 10000));
+        MODULABLE_CRATE[2] = registerMetaTileEntity(12107, new MetaTileEntityModulableMultiblockCrate(tkcyaId("modulable_galvanized_steel_crate"), TKCYAMaterials.GalvanizedSteel, 10000));
+        MODULABLE_CRATE[3] = registerMetaTileEntity(12108, new MetaTileEntityModulableMultiblockCrate(tkcyaId("modulable_stainless_steel_crate"), StainlessSteel, 10000));
+
+        TREATED_WOOD_CRATE_VALVE = registerMetaTileEntity(12109, new MetaTileEntityCrateValve(tkcyaId("wood_crate_valve"), TreatedWood));
+        STEEL_CRATE_VALVE = registerMetaTileEntity(12110, new MetaTileEntityCrateValve(tkcyaId("steel_crate_valve"), Steel));
+        GALVANIZED_STEEL_CRATE_VALVE = registerMetaTileEntity(12111, new MetaTileEntityCrateValve(tkcyaId("galvanized_steel_crate_valve"), TKCYAMaterials.GalvanizedSteel));
+        STAINLESS_STEEL_CRATE_VALVE = registerMetaTileEntity(12112, new MetaTileEntityCrateValve(tkcyaId("stainless_steel_crate_valve"), StainlessSteel));
     }
 
     static ResourceLocation tkcyaId(String name) {

@@ -1,11 +1,9 @@
 package tekcays_addon.common.metatileentities.multiblockpart;
 
-import codechicken.lib.raytracer.CuboidRayTraceResult;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregtech.api.capability.impl.FluidHandlerProxy;
-import gregtech.api.capability.impl.FluidTankList;
+import gregtech.api.capability.impl.ItemHandlerList;
 import gregtech.api.capability.impl.ItemHandlerProxy;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.metatileentity.MetaTileEntity;
@@ -24,35 +22,32 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.gtapi.unification.TKCYAMaterials;
-import tekcays_addon.gtapi.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Collections;
 import java.util.List;
 
-public class MetaTileEntityCrateValve extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IItemHandler> {
+public class MetaTileEntityItemValve extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IItemHandler> {
 
     private final Material material;
 
-    public MetaTileEntityCrateValve(ResourceLocation metaTileEntityId, Material material) {
+    public MetaTileEntityItemValve(ResourceLocation metaTileEntityId, Material material) {
         super(metaTileEntityId, 0);
         this.material = material;
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTileEntityCrateValve(metaTileEntityId, material);
+        return new MetaTileEntityItemValve(metaTileEntityId, material);
     }
 
     @Override
@@ -80,55 +75,40 @@ public class MetaTileEntityCrateValve extends MetaTileEntityMultiblockPart imple
     @Override
     public void update() {
         super.update();
-
-        /*
-
-        if (getOffsetTimer() % 20 == 0) {
-
-            TKCYALog.logger.info("VALVE : itemInventory.getStackInSlot(0).getDisplayName()" + itemInventory.getStackInSlot(0).getDisplayName());
-            TKCYALog.logger.info("VALVE : importItems.getStackInSlot(0).getDisplayName()" + importItems.getStackInSlot(0).getDisplayName());
-        }
-
-         */
-
         if (!getWorld().isRemote && getOffsetTimer() % 5 == 0L && isAttachedToMultiBlock() && getFrontFacing() == EnumFacing.DOWN) {
             TileEntity tileEntity = getWorld().getTileEntity(getPos().offset(getFrontFacing()));
             IItemHandler iItemHandler = tileEntity == null ? null : tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, getFrontFacing().getOpposite());
             if (iItemHandler != null) {
-                GTTransferUtils.moveInventoryItems(itemInventory, iItemHandler);
+                GTTransferUtils.moveInventoryItems(iItemHandler, itemInventory);
             }
         }
     }
 
-
-    /*
     @Override
     protected void initializeInventory() {
         super.initializeInventory();
         initializeDummyInventory();
     }
 
-
-     //When this block is not connected to any multiblock it uses dummy inventory to prevent problems with capability checks
-
+    /**
+     * When this block is not connected to any multiblock it uses dummy inventory to prevent problems with capability checks
+     */
     private void initializeDummyInventory() {
-        //this.itemInventory = new ItemHandlerProxy(new ItemStackHandler(), new ItemStackHandler());
-        this.itemInventory = new ItemHandlerProxy(i);
+        //this.itemInventory = new ItemHandlerProxy(new ItemHandlerList(Collections.singleton()));
+        this.itemInventory = new ItemHandlerProxy(new ItemStackHandler(0), new ItemStackHandler(0));
+    }
+
+    @Override
+    public void addToMultiBlock(MultiblockControllerBase controllerBase) {
+        super.addToMultiBlock(controllerBase);
+        this.itemInventory = controllerBase.getItemInventory();
+        //this.itemInventory = new ItemHandlerProxy(controllerBase.getImportItems(), controllerBase.getExportItems());
     }
 
     @Override
     public void removeFromMultiBlock(MultiblockControllerBase controllerBase) {
         super.removeFromMultiBlock(controllerBase);
         initializeDummyInventory();
-    }
-
-     */
-
-
-    @Override
-    public void addToMultiBlock(MultiblockControllerBase controllerBase) {
-        super.addToMultiBlock(controllerBase);
-        this.itemInventory = controllerBase.getItemInventory(); //directly use controllers fluid inventory as there is no reason to proxy it
     }
 
     @Override
@@ -147,14 +127,24 @@ public class MetaTileEntityCrateValve extends MetaTileEntityMultiblockPart imple
     }
 
     @Override
+    public MultiblockAbility<IItemHandler> getAbility() {
+        return TKCYAMultiblockAbility.CRATE_VALVE;
+    }
+
+    @Override
+    public void registerAbilities(@Nonnull List<IItemHandler> abilityList) {
+        abilityList.add(this.getImportItems());
+    }
+
+    @Override
     protected boolean shouldSerializeInventories() {
         return false;
     }
 
     @Override
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("gregtech.tank_valve.tooltip"));
+        tooltip.add(I18n.format("gregtech.crate_valve.tooltip"));
     }
 
     @Override
@@ -167,15 +157,5 @@ public class MetaTileEntityCrateValve extends MetaTileEntityMultiblockPart imple
         tooltip.add(I18n.format("gregtech.tool_action.screwdriver.access_covers"));
         tooltip.add(I18n.format("gregtech.tool_action.wrench.set_facing"));
         super.addToolUsages(stack, world, tooltip, advanced);
-    }
-
-    @Override
-    public MultiblockAbility<IItemHandler> getAbility() {
-        return TKCYAMultiblockAbility.CRATE_VALVE;
-    }
-
-    @Override
-    public void registerAbilities(List<IItemHandler> abilityList) {
-        abilityList.add(this.getImportItems());
     }
 }

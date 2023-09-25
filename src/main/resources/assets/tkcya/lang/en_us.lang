@@ -256,6 +256,11 @@ tkcya.machine.pressurized_galvanized_steel_tank.name=Pressurized Galvanized Stee
 tkcya.machine.pressurized_stainless_steel_tank.name=Pressurized Stainless Steel Tank
 tkcya.machine.pressurized_steel_tank.name=Pressurized Steel Tank
 
+tkcya.machine.wood_crate_valve.name=Wood Crate Access Hatch
+tkcya.machine.steel_crate_valve.name=Wood Crate Access Hatch
+tkcya.machine.galvanized_steel_crate_valve.name=Galvanized Steel Crate Access Hatch
+tkcya.machine.stainless_steel_crate_valve.name=Stainless Steel Crate Access Hatch
+
 
 # multiblock descriptions
 tkcya.multiblock.primitive_melter.description=A multiblock for melting ores and pure materials using combustible
