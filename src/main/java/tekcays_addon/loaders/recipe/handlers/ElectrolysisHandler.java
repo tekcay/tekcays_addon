@@ -25,8 +25,7 @@ public class ElectrolysisHandler {
                 .fluidInputs(DistilledWater.getFluid(1000))
                 .fluidOutputs(Hydrogen.getFluid(2000), Oxygen.getFluid(1000))
                 .duration(100)
-                .voltage(120/2)
-                .EUt(120)
+                .voltage(60)
                 .amperage(2)
                 .buildAndRegister();
 
@@ -37,7 +36,7 @@ public class ElectrolysisHandler {
                 .fluidInputs(DistilledWater.getFluid(1000))
                 .fluidOutputs(Hydrogen.getFluid(2000), Oxygen.getFluid(1000))
                 .duration(100)
-                .EUt(120)
+                .voltage(120)
                 .buildAndRegister();
 
         ELECTROLYSIS.recipeBuilder()
@@ -47,7 +46,7 @@ public class ElectrolysisHandler {
                 .fluidInputs(DistilledWater.getFluid(1000))
                 .fluidOutputs(Hydrogen.getFluid(2000), Oxygen.getFluid(1000))
                 .duration(100)
-                .EUt(120)
+                .voltage(120)
                 .buildAndRegister();
 
 
@@ -58,7 +57,7 @@ public class ElectrolysisHandler {
                 .output(OrePrefix.dust, Copper)
                 .chancedOutput(OrePrefix.dust, ChalcogenAnodeMud, 500, 0)
                 .duration(100)
-                .EUt(60)
+                .voltage(60)
                 .buildAndRegister();
 
         ELECTROLYSIS.recipeBuilder()
@@ -69,7 +68,7 @@ public class ElectrolysisHandler {
                 .output(OrePrefix.dust, Copper)
                 .chancedOutput(OrePrefix.dust, ChalcogenAnodeMud, 500, 0)
                 .duration(100)
-                .EUt(80)
+                .voltage(80)
                 .buildAndRegister();
 
         doVitriols(BlueVitriol, Copper, 1);
@@ -91,7 +90,7 @@ public class ElectrolysisHandler {
                 .fluidOutputs(SulfuricAcid.getFluid(1000))
                 .output(OrePrefix.dust, output, amount)
                 .duration(100)
-                .EUt(60)
+                .voltage(60)
                 .buildAndRegister();
 
         ELECTROLYSIS.recipeBuilder()
@@ -101,7 +100,7 @@ public class ElectrolysisHandler {
                 .fluidOutputs(SulfuricAcid.getFluid(1000), Oxygen.getFluid(1000))
                 .output(OrePrefix.dust, output, amount)
                 .duration(100)
-                .EUt(80)
+                .voltage(80)
                 .buildAndRegister();
 
     }
