@@ -155,6 +155,10 @@ public class TKCYARecipeMaps {
     public static final RecipeMap<ToolRecipeBuilder> LOG_CUTING = new RecipeMap<>(
             "log_cutting", 3, 2, 0, 0, new ToolRecipeBuilder(), false);
 
+    @ZenProperty
+    public static final RecipeMap<MultiAmperageRecipeBuilder> MULTI_AMPERAGE_RECIPE_BUILDER_RECIPE_MAP = new RecipeMap<>(
+            "multiAmperageTest", 3, 2, 2, 2, new MultiAmperageRecipeBuilder(), false);
+
 
 
 }

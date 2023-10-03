@@ -1,13 +1,21 @@
 package tekcays_addon.gtapi.logic;
 
+import gregtech.api.capability.GregtechCapabilities;
 import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.recipes.Recipe;
+import lombok.Getter;
+import lombok.Setter;
+import net.minecraft.util.EnumFacing;
+import tekcays_addon.gtapi.metatileentity.multiblock.MultiAmperageMultiblockController;
 import tekcays_addon.gtapi.recipes.builders.MultiAmperageRecipeBuilder;
 import tekcays_addon.gtapi.recipes.recipeproperties.MultiAmperageProperty;
 import tekcays_addon.gtapi.recipes.recipeproperties.VoltageProperty;
+import tekcays_addon.gtapi.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
+
+import static gregtech.api.util.RelativeDirection.FRONT;
 
 /**
  * A {@link MultiblockRecipeLogic} that works only with recipes built with {@link MultiAmperageRecipeBuilder}.
@@ -18,11 +26,17 @@ import javax.annotation.Nonnull;
  *  <br>
  *  <br>
  */
+@Setter
+@Getter
 public class MultiAmperageLogic extends MultiblockRecipeLogic {
 
-    public MultiAmperageLogic(RecipeMapMultiblockController tileEntity) {
+    public MultiAmperageLogic(MultiAmperageMultiblockController tileEntity) {
         super(tileEntity);
     }
+
+    protected int toConsumeEUt;
+    protected int recipeAmperage;
+    protected int recipeVoltage;
 
     /**
      * Overclock is disabled.
@@ -36,8 +50,7 @@ public class MultiAmperageLogic extends MultiblockRecipeLogic {
     }
 
     public long getAmperage() {
-        RecipeMapMultiblockController controller = (RecipeMapMultiblockController) metaTileEntity;
-        return controller.getEnergyContainer().getInputAmperage();
+        return this.getEnergyContainer().getInputAmperage();
     }
 
     public long getVoltage() {
@@ -67,18 +80,28 @@ public class MultiAmperageLogic extends MultiblockRecipeLogic {
 
     @Override
     public void update() {
-        if (recipeEUt == 0) return;
+        if (metaTileEntity.getOffsetTimer() % 20 == 0) {
+            TKCYALog.logger.info("Voltage : " + getVoltage());
+            TKCYALog.logger.info("Amperage : " + getAmperage());
+            TKCYALog.logger.info("RecipeAmperage : " + getRecipeAmperage());
+            TKCYALog.logger.info("RecipeVoltage : " + getRecipeVoltage());
+            TKCYALog.logger.info("toConsumeEUt : " + getToConsumeEUt());
+        }
 
-        if (drawEnergy(recipeEUt, true)) {
-            setActive(true);
-            drawEnergy(recipeEUt, false);
-        } else setActive(false);
+        if (toConsumeEUt == 0) return;
+
+        if (drawEnergy(toConsumeEUt, true)) {
+            TKCYALog.logger.info("it did drain");
+            drawEnergy(toConsumeEUt, false);
+        } else invalidate();
     }
 
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe) {
-        recipeEUt = getEUt(recipe);
+        setRecipeAmperage(getRecipeAmperage(recipe));
+        setRecipeVoltage(getRecipeVoltage(recipe));
+        setToConsumeEUt(getEUt(recipe));
         return isAmperageValid(recipe) && isVoltageValid(recipe);
     }
 

@@ -114,6 +114,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityRoastingOven ROASTING_OVEN;
     public static MetaTileEntitySpiralSeparator SPIRAL_SEPARATOR;
     public static MetaTileEntityPrimitiveFurnace PRIMITIVE_FURNACE;
+    public static MetaTileEntityMultiAmperageTest MULTI_AMPERAGE_TEST;
 
 
     //Brick MTES
@@ -393,7 +394,12 @@ public class TKCYAMetaTileEntities {
                 .forEach(i -> ELECTRIC_CONVEYORS[i] = registerMetaTileEntity(12080 + i, new MetaTileEntityElectricConveyor(tkcyaId("electric_conveyor." + i), i)));
 
         AXE_SUPPORT = registerMetaTileEntity(12090, new MetaTileEntityAxeSupport(tkcyaId("axe_support")));
+
+        MULTI_AMPERAGE_TEST = registerMetaTileEntity(12130, new MetaTileEntityMultiAmperageTest(tkcyaId("test")));
+
+
     }
+
 
     static ResourceLocation tkcyaId(String name) {
         return new ResourceLocation(TekCaysAddon.MODID, name);
