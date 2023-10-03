@@ -3,16 +3,36 @@ package tekcays_addon.gtapi.logic;
 import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.recipes.Recipe;
+import tekcays_addon.gtapi.recipes.builders.MultiAmperageRecipeBuilder;
 import tekcays_addon.gtapi.recipes.recipeproperties.MultiAmperageProperty;
 import tekcays_addon.gtapi.recipes.recipeproperties.VoltageProperty;
 
 import javax.annotation.Nonnull;
 
-
+/**
+ * A {@link MultiblockRecipeLogic} that works only with recipes built with {@link MultiAmperageRecipeBuilder}.
+ * Recipes will drain energy with a specific {@code voltage} and {@code amperage}.
+ * <br>
+ * <br>
+ * <b>!!IMPORTANT!!</b>: overclock is <b>disabled!</b>
+ *  <br>
+ *  <br>
+ */
 public class MultiAmperageLogic extends MultiblockRecipeLogic {
 
-    public MultiAmperageLogic(RecipeMapMultiblockController tileEntity, MultiAmperageProperty multiAmperageProperty) {
+    public MultiAmperageLogic(RecipeMapMultiblockController tileEntity) {
         super(tileEntity);
+    }
+
+    /**
+     * Overclock is disabled.
+     * @param recipe the recipe to run
+     * @return
+     */
+    @Nonnull
+    @Override
+    protected int[] calculateOverclock(Recipe recipe) {
+        return new int[]{0, recipe.getDuration()};
     }
 
     public long getAmperage() {
