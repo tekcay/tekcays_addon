@@ -3,7 +3,9 @@ package tekcays_addon.common.metatileentities.multi;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
+import gregtech.api.capability.impl.FilteredFluidHandler;
 import gregtech.api.capability.impl.FluidTankList;
+import gregtech.api.capability.impl.PropertyFluidFilter;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -25,7 +27,6 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidTank;
 import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nonnull;
@@ -36,13 +37,13 @@ import java.util.List;
 import static gregtech.api.unification.material.Materials.TreatedWood;
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.metatileentity.Predicates.isAir;
-import static tekcays_addon.api.metatileentity.TankMethods.getBaseTextureForTank;
 import static tekcays_addon.api.metatileentity.TankMethods.*;
 
 public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplayBase {
     private final int capacity;
     private int actualCapacity;
-    private Material material;
+    private final Material material;
+    private FilteredFluidHandler tank;
 
     public MetaTileEntityModulableMultiblockTank(ResourceLocation metaTileEntityId, Material material, int capacity) {
         super(metaTileEntityId);
@@ -53,25 +54,22 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
     }
 
     @Override
-    protected void initializeInventory() {
-        super.initializeInventory();
-
-        FluidTank tank = createFilteredFluidHandler(actualCapacity, material);
-        FluidTankList tankList = new FluidTankList(true, tank);
-
-        this.importFluids = tankList;
-        this.exportFluids = tankList;
-        this.fluidInventory = tank;
-    }
-
-    @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityModulableMultiblockTank(metaTileEntityId, material, capacity);
     }
 
     @Override
+    protected void initializeInventory() {
+        super.initializeInventory();
+        tank = new FilteredFluidHandler(this.capacity);
+        tank.setFilter(new PropertyFluidFilter(340, false, false, false, false));
+        this.exportFluids = this.importFluids = new FluidTankList(true, tank);
+        this.fluidInventory = tank;
+    }
+
+    @Override
     protected void updateFormedValid() {
-     ;
+        tank.setCapacity(actualCapacity);
     }
 
     @Nonnull
@@ -85,7 +83,7 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
                 .where('S', selfPredicate())
                 .where('I', isAir("modulableTankHeight"))
                 .where('X', states(getBlockState(material))
-                        .or(metaTileEntities(getValve(material)).setExactLimit(2)))
+                        .or(metaTileEntities(getTankValve(material)).setExactLimit(2)))
                 .where(' ', air())
                 .build();
     }
@@ -93,7 +91,7 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
-        int height = context.getOrDefault("modulableTankHeight", 1) + 1;
+        int height = context.getOrDefault("modulableTankHeight", 0) + 1;
         this.actualCapacity = this.capacity * height;
     }
 
@@ -156,7 +154,7 @@ public class MetaTileEntityModulableMultiblockTank extends MultiblockWithDisplay
     public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tkcya.multiblock.modulable_tank.tooltip"));
-        tooltip.add(I18n.format("tkcya.machine.modulable_tank.capacity", capacity, "per layer."));
+        tooltip.add(I18n.format("tkcya.machine.modulable_tank.capacity", actualCapacity, "per layer."));
         if (material.equals(TreatedWood)) {
             tooltip.add(I18n.format("gregtech.fluid_pipe.max_temperature", 340));
         } else {

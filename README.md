@@ -10,8 +10,13 @@ TKCYA requires [**GregTech CE: Unofficial** **(GTCEu)**](https://github.com/Greg
 ### Overhauls
 * Electrolysis overhaul: most recipes were removed, replaced by new ones that need electrodes which take damage
 * Cracking overhaul: cracking now requires both temperature and pressure
-* Storage overhaul: all of the quantum chest and tanks/super tanks are gone, and drums and multiblock tanks are nerfed. Multiblock tanks follow drum behavior and can only handle specific fluid depending upon the material they are made of. More drums and multiblock tanks can be made, e.g. in Galvanized Steel.
 * Custom oregen: removed native metal ores, including iron, tin, gold, zinc and aluminium
+
+* Storage overhaul:
+
+    * all of the quantum chest and tanks/super tanks are removed
+    * multiblock tanks follow drum behavior and can only handle specific fluid property depending upon the material they are made of
+    * quantum chests are replaced by multiblock crates
 
 ### Components
 * Magnetic: magnetic materials are made with magnetite in a new 2-slots Polarizer
