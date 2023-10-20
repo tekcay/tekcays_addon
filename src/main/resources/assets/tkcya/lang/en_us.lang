@@ -247,9 +247,19 @@ tkcya.machine.modulable_galvanized_steel_tank.name=Galvanized Steel Tank
 tkcya.machine.modulable_stainless_steel_tank.name=Stainless Steel Tank
 tkcya.machine.modulable_steel_tank.name=Steel Tank
 
+tkcya.machine.modulable_wood_crate.name=Wood Crate
+tkcya.machine.modulable_galvanized_steel_crate.name=Galvanized Steel Crate
+tkcya.machine.modulable_stainless_steel_crate.name=Stainless Steel Crate
+tkcya.machine.modulable_steel_crate.name=Steel Crate
+
 tkcya.machine.pressurized_galvanized_steel_tank.name=Pressurized Galvanized Steel Tank
 tkcya.machine.pressurized_stainless_steel_tank.name=Pressurized Stainless Steel Tank
 tkcya.machine.pressurized_steel_tank.name=Pressurized Steel Tank
+
+tkcya.machine.wood_crate_valve.name=Wood Crate Access Hatch
+tkcya.machine.steel_crate_valve.name=Wood Crate Access Hatch
+tkcya.machine.galvanized_steel_crate_valve.name=Galvanized Steel Crate Access Hatch
+tkcya.machine.stainless_steel_crate_valve.name=Stainless Steel Crate Access Hatch
 
 
 # multiblock descriptions
@@ -797,6 +807,9 @@ tkcya.multiblock.modulable_tank.content=%s
 tkcya.multiblock.modulable_tank.capacity=Capacity: %d kL
 tkcya.multiblock.modulable_tank.fill.percentage=%s
 tkcya.machine.modulable_tank.capacity=Capacity: %,d L %s
+
+##Modulable Crates
+tkcya.multiblock.modulable_crate.capacity=Capacity: %d k
 
 #Decompressor
 tkcya.machine.decompressor.tooltip.1=Decompresses pressurized FluidStack.
