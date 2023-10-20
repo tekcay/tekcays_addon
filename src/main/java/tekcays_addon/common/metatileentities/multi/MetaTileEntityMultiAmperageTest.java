@@ -3,7 +3,6 @@ package tekcays_addon.common.metatileentities.multi;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.client.renderer.ICubeRenderer;
@@ -15,7 +14,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
-import tekcays_addon.gtapi.logic.MultiAmperageLogic;
 import tekcays_addon.gtapi.metatileentity.multiblock.MultiAmperageMultiblockController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.render.TKCYATextures;
@@ -28,7 +26,6 @@ public class MetaTileEntityMultiAmperageTest extends MultiAmperageMultiblockCont
 
     public MetaTileEntityMultiAmperageTest(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.MULTI_AMPERAGE_RECIPE_BUILDER_RECIPE_MAP);
-        this.recipeMapWorkable = new MultiAmperageLogic(this);
     }
 
     @Override

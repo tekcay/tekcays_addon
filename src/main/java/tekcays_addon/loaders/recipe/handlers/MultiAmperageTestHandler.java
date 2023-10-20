@@ -1,5 +1,7 @@
 package tekcays_addon.loaders.recipe.handlers;
 
+import gregtech.api.GTValues;
+
 import static gregtech.api.unification.material.Materials.*;
 import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.MULTI_AMPERAGE_RECIPE_BUILDER_RECIPE_MAP;
 
@@ -13,8 +15,9 @@ public class MultiAmperageTestHandler {
                 .fluidInputs(DistilledWater.getFluid(1000))
                 .fluidOutputs(Hydrogen.getFluid(2000), Oxygen.getFluid(1000))
                 .duration(100)
-                .voltage(30)
-                .amperage(2)
+                .EUt(90)
+                .voltageTier(GTValues.LV)
+                .amperage(3)
                 .buildAndRegister();
     }
 

@@ -723,7 +723,7 @@ tkcya.recipe.min.pressure=Min. pressure: %s
 tkcya.recipe.max.pressure=Max. pressure: %s
 tkcya.recipe.pressurized-fluid-stack=Gas: %s
 tkcya.recipe.amperage=Amperage: %d A
-tkcya.recipe.voltage=Voltage: %d EU/t
+tkcya.recipe.voltage=Voltage: %d
 
 tekcays_addon.machine.advanced_electrolyzer.tooltip.1=Performs electrolysis of chemicals in solution.
 tekcays_addon.machine.advanced_electrolyzer.tooltip.2=Requires two electrodes, a cathode and an anode, to perform its recipes.
@@ -788,6 +788,7 @@ behavior.tricorder.waste_amount=Waste amount: %d ash
 # Errors
 
 tkcya.multiblock.pattern.error.bricks=§cAll bricks must be the same§rbehavior.tricorder.speed=Speed: %d rpm
+tkcya.multiblock.same.energy_hatches=All the energy hatches must be of the same tier.
 
 
 ##Modulable Tanks
