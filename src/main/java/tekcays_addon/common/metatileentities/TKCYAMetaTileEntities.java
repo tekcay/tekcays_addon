@@ -115,6 +115,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityRoastingOven ROASTING_OVEN;
     public static MetaTileEntitySpiralSeparator SPIRAL_SEPARATOR;
     public static MetaTileEntityPrimitiveFurnace PRIMITIVE_FURNACE;
+    public static MetaTileEntityMultiAmperageTest MULTI_AMPERAGE_TEST;
 
 
     //Brick MTES
@@ -148,7 +149,7 @@ public class TKCYAMetaTileEntities {
     public static TKCYAMetaTileEntityTankValve STEEL_TANK_VALVE;
     public static TKCYAMetaTileEntityTankValve GALVANIZED_STEEL_TANK_VALVE;
     public static TKCYAMetaTileEntityTankValve STAINLESS_STEEL_TANK_VALVE;
-    
+
     public static MetaTileEntityCrateValve TREATED_WOOD_CRATE_VALVE;
     public static MetaTileEntityCrateValve STEEL_CRATE_VALVE;
     public static MetaTileEntityCrateValve GALVANIZED_STEEL_CRATE_VALVE;
@@ -401,6 +402,7 @@ public class TKCYAMetaTileEntities {
 
         AXE_SUPPORT = registerMetaTileEntity(12090, new MetaTileEntityAxeSupport(tkcyaId("axe_support")));
 
+
         MODULABLE_CRATE[0] = registerMetaTileEntity(12105, new MetaTileEntityModulableMultiblockCrate(tkcyaId("modulable_wood_crate"), TreatedWood, 5000));
         MODULABLE_CRATE[1] = registerMetaTileEntity(12106, new MetaTileEntityModulableMultiblockCrate(tkcyaId("modulable_steel_crate"), Steel, 10000));
         MODULABLE_CRATE[2] = registerMetaTileEntity(12107, new MetaTileEntityModulableMultiblockCrate(tkcyaId("modulable_galvanized_steel_crate"), TKCYAMaterials.GalvanizedSteel, 10000));
@@ -410,7 +412,10 @@ public class TKCYAMetaTileEntities {
         STEEL_CRATE_VALVE = registerMetaTileEntity(12110, new MetaTileEntityCrateValve(tkcyaId("steel_crate_valve"), Steel));
         GALVANIZED_STEEL_CRATE_VALVE = registerMetaTileEntity(12111, new MetaTileEntityCrateValve(tkcyaId("galvanized_steel_crate_valve"), TKCYAMaterials.GalvanizedSteel));
         STAINLESS_STEEL_CRATE_VALVE = registerMetaTileEntity(12112, new MetaTileEntityCrateValve(tkcyaId("stainless_steel_crate_valve"), StainlessSteel));
+
+        MULTI_AMPERAGE_TEST = registerMetaTileEntity(12130, new MetaTileEntityMultiAmperageTest(tkcyaId("test")));
     }
+
 
     static ResourceLocation tkcyaId(String name) {
         return new ResourceLocation(TekCaysAddon.MODID, name);

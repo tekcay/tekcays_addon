@@ -89,7 +89,7 @@ public class TKCYARecipeLoader {
         }
 
         PrimitiveFurnaceHandler.init();
-
+        MultiAmperageTestHandler.init();
         CasingsLoader.init();
         ChemicalChains.init();
         MineralChains.init();
