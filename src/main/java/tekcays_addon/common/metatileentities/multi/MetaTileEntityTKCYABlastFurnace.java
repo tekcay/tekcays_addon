@@ -127,6 +127,5 @@ public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlock
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityTKCYABlastFurnace(metaTileEntityId, brick);
     }
-
 }
 

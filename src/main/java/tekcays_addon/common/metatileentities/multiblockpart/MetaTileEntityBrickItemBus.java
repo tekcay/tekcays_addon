@@ -21,7 +21,7 @@ public class MetaTileEntityBrickItemBus extends MetaTileEntityItemBus {
 
     private final BlockBrick.BrickType brick;
 
-    public MetaTileEntityBrickItemBus(ResourceLocation metaTileEntityId, boolean isExportHatch, BlockBrick.BrickType brick) {
+    public MetaTileEntityBrickItemBus(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick, boolean isExportHatch) {
         super(metaTileEntityId, 0, isExportHatch);
         this.brick = brick;
         initializeInventory();
@@ -29,7 +29,7 @@ public class MetaTileEntityBrickItemBus extends MetaTileEntityItemBus {
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTileEntityBrickItemBus(metaTileEntityId, isExportHatch, brick);
+        return new MetaTileEntityBrickItemBus(metaTileEntityId, brick, isExportHatch);
     }
 
     @Override
