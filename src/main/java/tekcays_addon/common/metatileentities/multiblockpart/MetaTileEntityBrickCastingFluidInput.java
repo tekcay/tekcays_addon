@@ -27,7 +27,7 @@ public class MetaTileEntityBrickCastingFluidInput extends MetaTileEntityFluidHat
     private final FluidTank fluidTank;
     private final BlockBrick.BrickType brick;
 
-    public MetaTileEntityBrickCastingFluidInput(ResourceLocation metaTileEntityId, boolean isExportHatch, BlockBrick.BrickType brick) {
+    public MetaTileEntityBrickCastingFluidInput(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick, boolean isExportHatch) {
         super(metaTileEntityId, 0, isExportHatch);
         this.fluidTank = new NotifiableFluidTank(INITIAL_INVENTORY_SIZE, this, isExportHatch);
         this.brick = brick;
@@ -40,7 +40,7 @@ public class MetaTileEntityBrickCastingFluidInput extends MetaTileEntityFluidHat
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTileEntityBrickFluidHatch(metaTileEntityId, isExportHatch, brick);
+        return new MetaTileEntityBrickFluidHatch(metaTileEntityId, brick, isExportHatch);
     }
 
     @Override
