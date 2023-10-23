@@ -30,7 +30,6 @@ public class FuelHeaterTiers {
      * Contains all the {@code FuelHeater}s registered.
      */
     public static List<FuelHeaterTiers> FUEL_HEATERS = new ArrayList<FuelHeaterTiers>() {{
-        add(BRICK);
         add(INVAR);
         add(BRONZE);
         add(STEEL);
@@ -42,6 +41,10 @@ public class FuelHeaterTiers {
         this.material = material;
         this.efficiency = efficiency;
         this.powerMultiplier = powerMultiplier;
+    }
+
+    public String getMaterialName() {
+        return this.getMaterial().getUnlocalizedName();
     }
 
 

@@ -6,54 +6,41 @@ import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.util.GTUtility;
-import tekcays_addon.api.utils.TriFunction;
-import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityCrateValve;
 import gregtech.common.metatileentities.storage.MetaTileEntityDrum;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.TekCaysAddon;
-import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityController;
-import tekcays_addon.common.metatileentities.primitive.MetaTileEntityAxeSupport;
-import tekcays_addon.common.metatileentities.single.electric.*;
-import tekcays_addon.gtapi.consts.TKCYAValues;
-import tekcays_addon.gtapi.metatileentity.FuelHeater;
-import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
-import tekcays_addon.gtapi.render.TKCYATextures;
-import tekcays_addon.gtapi.unification.TKCYAMaterials;
-import tekcays_addon.gtapi.utils.FuelHeaterTiers;
+import tekcays_addon.api.utils.TriFunction;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.common.metatileentities.multi.*;
-
 import tekcays_addon.common.metatileentities.multiblockpart.*;
+import tekcays_addon.common.metatileentities.primitive.MetaTileEntityAxeSupport;
 import tekcays_addon.common.metatileentities.single.*;
-
-import tekcays_addon.common.metatileentities.single.MetaTileEntitySingleCrucible;
-import tekcays_addon.common.metatileentities.single.electric.MetaTileEntityElectricCooler;
-import tekcays_addon.common.metatileentities.single.electric.MetaTileEntityElectricHeater;
-import tekcays_addon.common.metatileentities.single.electric.MetaTileEntityElectricPressureCompressor;
-import tekcays_addon.common.metatileentities.single.electric.MetaTileEntityElectricVacuumPump;
+import tekcays_addon.common.metatileentities.single.electric.*;
 import tekcays_addon.common.metatileentities.single.heaters.MetaTileEntityFluidizedHeater;
 import tekcays_addon.common.metatileentities.single.heaters.MetaTileEntityGasHeater;
 import tekcays_addon.common.metatileentities.single.heaters.MetaTileEntityLiquidFuelHeater;
 import tekcays_addon.common.metatileentities.single.heaters.MetaTileEntitySolidFuelHeater;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamAutoclave;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamCooler;
-import tekcays_addon.gtapi.utils.TKCYALog;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
+import tekcays_addon.gtapi.render.TKCYATextures;
+import tekcays_addon.gtapi.unification.TKCYAMaterials;
+import tekcays_addon.gtapi.utils.FuelHeaterTiers;
 
 import java.util.function.BiFunction;
-import java.util.function.Function;
-import java.util.function.IntFunction;
 import java.util.stream.IntStream;
 
 import static gregtech.api.unification.material.Materials.*;
-import static gregtech.common.metatileentities.MetaTileEntities.*;
+import static gregtech.common.metatileentities.MetaTileEntities.registerMetaTileEntity;
+import static gregtech.common.metatileentities.MetaTileEntities.registerSimpleMetaTileEntity;
 import static tekcays_addon.api.consts.ContainerControllerWrappers.*;
-import static tekcays_addon.gtapi.consts.TKCYAValues.ATMOSPHERIC_PRESSURE;
-import static tekcays_addon.gtapi.render.TKCYATextures.STEAM_CASING;
 import static tekcays_addon.api.metatileentity.predicates.BrickHatchesPredicates.BRICKS;
+import static tekcays_addon.gtapi.consts.TKCYAValues.ATMOSPHERIC_PRESSURE;
+import static tekcays_addon.gtapi.consts.TKCYAValues.DRUM_MATERIALS;
+import static tekcays_addon.gtapi.render.TKCYATextures.STEAM_CASING;
 import static tekcays_addon.gtapi.utils.FuelHeaterTiers.BRICK;
 import static tekcays_addon.gtapi.utils.FuelHeaterTiers.FUEL_HEATERS;
-import static tekcays_addon.gtapi.consts.TKCYAValues.DRUM_MATERIALS;
 
 public class TKCYAMetaTileEntities {
 
@@ -105,9 +92,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityFilter FILTER;
     public static MetaTileEntityPressurizedCrackingUnit PRESSURIZED_CRACKING_UNIT;
     public static MetaTileEntitySteamAutoclave STEAM_AUTOCLAVE;
-
-    //FUEL HEATERS
-    public static String[] FUEL_HEATERS_TYPES = {"_solid_fuel_heater", "_liquid_fuel_heater", "_fluidized_fuel_heater", "_gas_fuel_heater"};
+    public static MetaTileEntitySolidFuelHeater BRICK_FUEL_HEATER;
     public static MetaTileEntitySolidFuelHeater[] SOLID_FUEL_HEATER = new MetaTileEntitySolidFuelHeater[FUEL_HEATERS.size()];
     public static MetaTileEntityLiquidFuelHeater[] LIQUID_FUEL_HEATER = new MetaTileEntityLiquidFuelHeater[FUEL_HEATERS.size()];
     public static MetaTileEntityFluidizedHeater[] FLUIDIZED_FUEL_HEATER = new MetaTileEntityFluidizedHeater[FUEL_HEATERS.size()];
@@ -243,33 +228,12 @@ public class TKCYAMetaTileEntities {
         SPIRAL_SEPARATOR = registerMetaTileEntity(11094, new MetaTileEntitySpiralSeparator(tkcyaId("spiral_separator")));
         PRIMITIVE_FURNACE = registerMetaTileEntity(11095, new MetaTileEntityPrimitiveFurnace(tkcyaId("primitive_furnace")));
 
+        BRICK_FUEL_HEATER = registerMetaTileEntity(11096, new MetaTileEntitySolidFuelHeater(tkcyaId( "brick_solid_fuel_heater"), BRICK));
 
-        //id 11177 to 11194
-        SOLID_FUEL_HEATER[0] = registerMetaTileEntity(11096, new MetaTileEntitySolidFuelHeater(tkcyaId( "brick_solid_fuel_heater"), BRICK));
-
-        int startId = 11097;
-
-        for (int i = 1; i < FUEL_HEATERS.size(); i++) {
-            int j = 0;
-            int finalI = i;
-            int finalStartId1 = startId;
-
-            FuelHeaterTiers fuelHeater = FUEL_HEATERS.get(i);
-
-            IntFunction<String> setName = (k) -> fuelHeater.getMaterial().getUnlocalizedName() + FUEL_HEATERS_TYPES[k];
-            IntFunction<Integer> setId = (id) -> finalStartId1 + finalI + FUEL_HEATERS.size() * id;
-
-            SOLID_FUEL_HEATER[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntitySolidFuelHeater(tkcyaId(setName.apply(j++)), fuelHeater));
-            LIQUID_FUEL_HEATER[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityLiquidFuelHeater(tkcyaId(setName.apply(j++)), fuelHeater));
-            FLUIDIZED_FUEL_HEATER[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityFluidizedHeater(tkcyaId(setName.apply(j++)), fuelHeater));
-            GAS_FUEL_HEATER[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityGasHeater(tkcyaId(setName.apply(j)), fuelHeater));
-
-
-
-        }
-
-
-
+        registerFuelTier("_solid_fuel_heater", SOLID_FUEL_HEATER, 11097, MetaTileEntitySolidFuelHeater::new);
+        registerFuelTier("_liquid_fuel_heater", LIQUID_FUEL_HEATER, 11102, MetaTileEntityLiquidFuelHeater::new);
+        registerFuelTier("_fluidized_fuel_heater", FLUIDIZED_FUEL_HEATER, 11107, MetaTileEntityFluidizedHeater::new);
+        registerFuelTier("_gas_fuel_heater", GAS_FUEL_HEATER, 11112, MetaTileEntityGasHeater::new);
 
 
         STEAM_AUTOCLAVE = registerMetaTileEntity(11240, new MetaTileEntitySteamAutoclave(tkcyaId("steam_autoclave"), true));
@@ -376,23 +340,29 @@ public class TKCYAMetaTileEntities {
     }
 
     private static void registerBrickMTE(String lang, MetaTileEntity[] mtes, int id, TriFunction<ResourceLocation, BlockBrick.BrickType, Boolean, MetaTileEntity> function, boolean isExport) {
-        IntStream.range(0, BRICKS.size())
-                .forEach(i -> mtes[i] = registerMetaTileEntity(
-                        id + i,
-                        function.apply(
-                                tkcyaId(BRICKS.get(i).getName() + lang),
-                                BRICKS.get(i), isExport)
-                    )
-                );
+
+        for (int i = 0; i < BRICKS.size(); i++) {
+            BlockBrick.BrickType brickType = BRICKS.get(i);
+            mtes[i] = registerMetaTileEntity(id + i, function.apply(tkcyaId(brickType.getName() + lang), brickType, isExport));
+        }
+
     }
 
     private static void registerOther(String lang, MetaTileEntity[] mtes, int id, BiFunction<ResourceLocation, Integer, MetaTileEntity> function) {
-        IntStream.range(0, MAX_TIER)
-                .forEach(i -> mtes[i] = registerMetaTileEntity(
-                                id + i,
-                                function.apply(tkcyaId(lang + GTValues.VN[i].toLowerCase()), i)
-                        )
-                );
+
+        for (int i = 0; i < MAX_TIER; i++) {
+            mtes[i] = registerMetaTileEntity(id + i, function.apply(tkcyaId(lang + GTValues.VN[i].toLowerCase()), i));
+        }
+
+    }
+
+    private static void registerFuelTier(String lang, MetaTileEntity[] mtes, int id, BiFunction<ResourceLocation, FuelHeaterTiers, MetaTileEntity> function) {
+
+        for (int i = 0; i < FUEL_HEATERS.size(); i++) {
+            FuelHeaterTiers fuelHeater = FUEL_HEATERS.get(i);
+            mtes[i] = registerMetaTileEntity(id + i, function.apply(tkcyaId(fuelHeater.getMaterialName() + lang), fuelHeater));
+        }
+
     }
 
 
