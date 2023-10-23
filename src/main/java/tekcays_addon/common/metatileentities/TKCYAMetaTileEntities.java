@@ -329,14 +329,12 @@ public class TKCYAMetaTileEntities {
     }
 
     private static void registerBrickMTE(String lang, MetaTileEntity[] mtes, int id, BiFunction<ResourceLocation, BlockBrick.BrickType, MetaTileEntity> function) {
-        IntStream.range(0, BRICKS.size())
-                .forEach(i -> mtes[i] = registerMetaTileEntity(
-                                id + i,
-                                function.apply(
-                                        tkcyaId(BRICKS.get(i).getName() + lang),
-                                        BRICKS.get(i))
-                        )
-                );
+
+        for (int i = 0; i < BRICKS.size(); i++) {
+            BlockBrick.BrickType brickType = BRICKS.get(i);
+            mtes[i] = registerMetaTileEntity(id + i, function.apply(tkcyaId(brickType.getName() + lang), brickType));
+        }
+
     }
 
     private static void registerBrickMTE(String lang, MetaTileEntity[] mtes, int id, TriFunction<ResourceLocation, BlockBrick.BrickType, Boolean, MetaTileEntity> function, boolean isExport) {
