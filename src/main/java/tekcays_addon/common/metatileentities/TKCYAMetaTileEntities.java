@@ -264,52 +264,15 @@ public class TKCYAMetaTileEntities {
             FLUIDIZED_FUEL_HEATER[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityFluidizedHeater(tkcyaId(setName.apply(j++)), fuelHeater));
             GAS_FUEL_HEATER[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityGasHeater(tkcyaId(setName.apply(j)), fuelHeater));
 
+
+
         }
+
+
 
 
 
         STEAM_AUTOCLAVE = registerMetaTileEntity(11240, new MetaTileEntitySteamAutoclave(tkcyaId("steam_autoclave"), true));
-        startId = 11241;
-        for (int i = 0; i < GTValues.LuV; i++) {
-            int j = 0;
-            int tier= i;
-            int finalStartId2 = startId;
-
-            IntFunction<String> setHatchName = (k) -> PRESSURE_HATCHES_TYPE[k] + GTValues.VN[tier].toLowerCase();
-            IntFunction<Integer> setId = (id) -> finalStartId2 + tier + GTValues.LuV * id;
-
-            VACUUM_HATCH[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityVacuumHatch(tkcyaId(setHatchName.apply(0)), i));
-            PRESSURE_HATCH[i] = registerMetaTileEntity(setId.apply(++j), new MetaTileEntityPressureHatch(tkcyaId(setHatchName.apply(1)), i));
-        }
-
-        startId = 11260;
-
-        for (int i = 0; i < MAX_TIER; i++) {
-            int j = 0;
-            int tier = i;
-            int finalStartId = startId;
-
-            IntFunction<String> setName = (x) -> HEAT_MTES[x] + GTValues.VN[tier].toLowerCase();
-            IntFunction<String> setCompressorName = (type) -> ELECTRIC_PRESSURE_COMPRESSORS_TYPE[type] + GTValues.VN[tier].toLowerCase();
-            IntFunction<Integer> setId = (id) -> finalStartId + tier + MAX_TIER * id;
-
-            ELECTRIC_HEATER[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityElectricHeater(tkcyaId(setName.apply(j++)), i));
-            ELECTRIC_COOLER[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityElectricCooler(tkcyaId(setName.apply(j++)), i));
-            HEAT_ACCEPTOR[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityHeatAcceptor(tkcyaId(setName.apply(j++)), i));
-            VACUUM_PUMP[i] = registerMetaTileEntity(setId.apply(j++), new MetaTileEntityElectricVacuumPump(tkcyaId(setCompressorName.apply(0)), i));
-            PRESSURE_COMPRESSOR[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityElectricPressureCompressor(tkcyaId(setCompressorName.apply(1)), i));
-        }
-
-        startId += MAX_TIER * 5 + 1;
-
-        MULTIBLOCK_PRESSURE_DETECTOR = registerMetaTileEntity(startId++, new MetaTileEntityController(tkcyaId("pressure_controller"), CONTROL_PRESSURE_DETECTOR));
-        MULTIBLOCK_VACUUM_DETECTOR = registerMetaTileEntity(startId++, new MetaTileEntityController(tkcyaId("vacuum_controller"), CONTROL_VACUUM_DETECTOR));
-        MULTIBLOCK_TEMPERATURE_DETECTOR = registerMetaTileEntity(startId++, new MetaTileEntityController(tkcyaId("temperature_controller"), CONTROL_TEMPERATURE_DETECTOR));
-        MULTIBLOCK_SPEED_DETECTOR = registerMetaTileEntity(startId++, new MetaTileEntityController(tkcyaId("speed_controller"), CONTROL_SPEED_DETECTOR));
-        MULTIBLOCK_TORQUE_DETECTOR = registerMetaTileEntity(startId++, new MetaTileEntityController(tkcyaId("torque_controller"), CONTROL_TORQUE_DETECTOR));
-        MULTIBLOCK_ROTATION_POWER_DETECTOR = registerMetaTileEntity(startId++, new MetaTileEntityController(tkcyaId("rotation_power_controller"), CONTROL_ROTATION_POWER_DETECTOR));
-
-        TKCYALog.logger.info("id : " + startId);
 
         if (TKCYAConfigHolder.miscOverhaul.enableModulableTanks) {
             MODULABLE_TANK[0] = registerMetaTileEntity(11330, new MetaTileEntityModulableMultiblockTank(tkcyaId("modulable_wood_tank"), TreatedWood, 1000 * 1000));
@@ -348,6 +311,23 @@ public class TKCYAMetaTileEntities {
         IntStream.range(0, DIESEL_GENERATOR.length )
                 .forEach(i -> DIESEL_GENERATOR[i] = registerMetaTileEntity(11395 + i, new MetaTileEntityDieselGenerator(tkcyaId("diesel_generator." + i), i)));
 
+        MULTIBLOCK_PRESSURE_DETECTOR = registerMetaTileEntity(11400, new MetaTileEntityController(tkcyaId("pressure_controller"), CONTROL_PRESSURE_DETECTOR));
+        MULTIBLOCK_VACUUM_DETECTOR = registerMetaTileEntity(11401, new MetaTileEntityController(tkcyaId("vacuum_controller"), CONTROL_VACUUM_DETECTOR));
+        MULTIBLOCK_TEMPERATURE_DETECTOR = registerMetaTileEntity(11402, new MetaTileEntityController(tkcyaId("temperature_controller"), CONTROL_TEMPERATURE_DETECTOR));
+        MULTIBLOCK_SPEED_DETECTOR = registerMetaTileEntity(11403, new MetaTileEntityController(tkcyaId("speed_controller"), CONTROL_SPEED_DETECTOR));
+        MULTIBLOCK_TORQUE_DETECTOR = registerMetaTileEntity(11404, new MetaTileEntityController(tkcyaId("torque_controller"), CONTROL_TORQUE_DETECTOR));
+        MULTIBLOCK_ROTATION_POWER_DETECTOR = registerMetaTileEntity(11405, new MetaTileEntityController(tkcyaId("rotation_power_controller"), CONTROL_ROTATION_POWER_DETECTOR));
+
+        if (TKCYAConfigHolder.storageOverhaul.enableMultiblockTanksOverhaul) {
+
+            STEEL_TANK_VALVE = registerMetaTileEntity(11406, new TKCYAMetaTileEntityTankValve(tkcyaId("multiblock.valve.steel"),
+                    Materials.Steel));
+            GALVANIZED_STEEL_TANK_VALVE = registerMetaTileEntity(11407, new TKCYAMetaTileEntityTankValve(tkcyaId("multiblock.valve.galvanized_steel"),
+                    TKCYAMaterials.GalvanizedSteel));
+            STAINLESS_STEEL_TANK_VALVE = registerMetaTileEntity(11408, new TKCYAMetaTileEntityTankValve(tkcyaId("multiblock.valve.stainless_steel"),
+                    Materials.StainlessSteel));
+        }
+
 
         MODULABLE_CRATE[0] = registerMetaTileEntity(12105, new MetaTileEntityModulableMultiblockCrate(tkcyaId("modulable_wood_crate"), TreatedWood, 5000));
         MODULABLE_CRATE[1] = registerMetaTileEntity(12106, new MetaTileEntityModulableMultiblockCrate(tkcyaId("modulable_steel_crate"), Steel, 10000));
@@ -369,16 +349,14 @@ public class TKCYAMetaTileEntities {
             }
         }
 
-        if (TKCYAConfigHolder.storageOverhaul.enableMultiblockTanksOverhaul) {
+        registerOther("electric_heater.", ELECTRIC_HEATER, 11260, MetaTileEntityElectricHeater::new);
+        registerOther("electric_cooler.", ELECTRIC_COOLER, 11270, MetaTileEntityElectricCooler::new);
+        registerOther("electric_vacuum_pump.", VACUUM_PUMP, 11280, MetaTileEntityElectricVacuumPump::new);
+        registerOther("electric_pressure_compressor.", PRESSURE_COMPRESSOR, 11290, MetaTileEntityElectricPressureCompressor::new);
+        registerOther("heat_acceptor.", HEAT_ACCEPTOR, 11300, MetaTileEntityHeatAcceptor::new);
 
-            STEEL_TANK_VALVE = registerMetaTileEntity(11400, new TKCYAMetaTileEntityTankValve(tkcyaId("multiblock.valve.steel"),
-                    Materials.Steel));
-            GALVANIZED_STEEL_TANK_VALVE = registerMetaTileEntity(11401, new TKCYAMetaTileEntityTankValve(tkcyaId("multiblock.valve.galvanized_steel"),
-                    TKCYAMaterials.GalvanizedSteel));
-            STAINLESS_STEEL_TANK_VALVE = registerMetaTileEntity(11402, new TKCYAMetaTileEntityTankValve(tkcyaId("multiblock.valve.stainless_steel"),
-                    Materials.StainlessSteel));
-        }
-
+        registerOther("vacuum_hatch.", VACUUM_HATCH, 11241, MetaTileEntityVacuumHatch::new);
+        registerOther("pressure_hatch.", PRESSURE_HATCH, 11251, MetaTileEntityPressureHatch::new);
     }
 
 
@@ -408,32 +386,15 @@ public class TKCYAMetaTileEntities {
                 );
     }
 
-    /*
-
-    private static void registerFuelHeaterMTE(String lang, FuelHeater[] mtes, int id, Function<ResourceLocation, FuelHeater> function) {
-        IntStream.range(1, FUEL_HEATERS.size())
-                .forEach(i -> mtes[i] = registerMetaTileEntity(id + i, function.apply(tkcyaId(FUEL_HEATERS.get(i).getFuelHeaterTierMaterielUnlocalizedName() + lang))));
+    private static void registerOther(String lang, MetaTileEntity[] mtes, int id, BiFunction<ResourceLocation, Integer, MetaTileEntity> function) {
+        IntStream.range(0, MAX_TIER)
+                .forEach(i -> mtes[i] = registerMetaTileEntity(
+                                id + i,
+                                function.apply(tkcyaId(lang + GTValues.VN[i].toLowerCase()), i)
+                        )
+                );
     }
 
-
-            for (int i = 1; i < FUEL_HEATERS.size(); i++) {
-        int j = 0;
-        int finalI = i;
-        int finalStartId1 = startId;
-
-        FuelHeaterTiers fuelHeater = FUEL_HEATERS.get(i);
-
-        IntFunction<String> setName = (k) -> fuelHeater.getMaterial().getUnlocalizedName() + FUEL_HEATERS_TYPES[k];
-        IntFunction<Integer> setId = (id) -> finalStartId1 + finalI + FUEL_HEATERS.size() * id;
-
-        SOLID_FUEL_HEATER[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntitySolidFuelHeater(tkcyaId(setName.apply(j++)), fuelHeater));
-        LIQUID_FUEL_HEATER[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityLiquidFuelHeater(tkcyaId(setName.apply(j++)), fuelHeater));
-        FLUIDIZED_FUEL_HEATER[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityFluidizedHeater(tkcyaId(setName.apply(j++)), fuelHeater));
-        GAS_FUEL_HEATER[i] = registerMetaTileEntity(setId.apply(j), new MetaTileEntityGasHeater(tkcyaId(setName.apply(j)), fuelHeater));
-
-    }
-
-     */
 
 
 
