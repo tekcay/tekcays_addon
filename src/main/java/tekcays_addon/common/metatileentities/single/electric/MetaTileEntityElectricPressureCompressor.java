@@ -64,9 +64,8 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
             
             if (getFluidTankContent() == null) return;
 
-            int toDrain = pressureContainer.changePressurizedFluidStack(getFluidTankContent(), transferRate);
-
-            if (toDrain > 0) {
+            if (pressureContainer.getPressurizedFluidStack().amount > 0) {
+                int toDrain = pressureContainer.changePressurizedFluidStack(getFluidTankContent(), transferRate);
                 fluidTank.drain(toDrain, true);
                 energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
             }
