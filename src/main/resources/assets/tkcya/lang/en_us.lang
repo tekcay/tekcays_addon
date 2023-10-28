@@ -223,18 +223,18 @@ tkcya.machine.vacuum_hatch.iv.name=Vacuum Hatch V
 tkcya.machine.vacuum_hatch.luv.name=Vacuum Hatch VI
 
 #Pressure Compressor
-tkcya.machine.electric_compressor.ulv.name=Electric Compressor
-tkcya.machine.electric_compressor.lv.name=Electric Compressor I
-tkcya.machine.electric_compressor.mv.name=Electric Compressor II
-tkcya.machine.electric_compressor.hv.name=Electric Compressor III
-tkcya.machine.electric_compressor.ev.name=Electric Compressor IV
+tkcya.machine.electric_pressure_compressor.ulv.name=Electric Compressor ULV
+tkcya.machine.electric_pressure_compressor.lv.name=Electric Compressor LV
+tkcya.machine.electric_pressure_compressor.mv.name=Electric Compressor MV
+tkcya.machine.electric_pressure_compressor.hv.name=Electric Compressor HV
+tkcya.machine.electric_pressure_compressor.ev.name=Electric Compressor EV
 
 
-tkcya.machine.electric_vacuum_pump.ulv.name=Vacuum Pump
-tkcya.machine.electric_vacuum_pump.lv.name=Vacuum Pump I
-tkcya.machine.electric_vacuum_pump.mv.name=Vacuum Pump II
-tkcya.machine.electric_vacuum_pump.hv.name=Vacuum Pump III
-tkcya.machine.electric_vacuum_pump.ev.name=Vacuum Pump IV
+tkcya.machine.electric_vacuum_pump.ulv.name=Vacuum Pump ULV
+tkcya.machine.electric_vacuum_pump.lv.name=Vacuum Pump LV
+tkcya.machine.electric_vacuum_pump.mv.name=Vacuum Pump MV
+tkcya.machine.electric_vacuum_pump.hv.name=Vacuum Pump HV
+tkcya.machine.electric_vacuum_pump.ev.name=Vacuum Pump EV
 
 tkcya.machine.crystallizer.name=Crystallizer
 tkcya.machine.advanced_electrolyzer.name=Advanced Electrolyzer
