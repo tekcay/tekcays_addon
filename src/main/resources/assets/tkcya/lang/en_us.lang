@@ -807,6 +807,7 @@ tkcya.multiblock.modulable_tank.content=%s
 tkcya.multiblock.modulable_tank.capacity=Capacity: %d kL
 tkcya.multiblock.modulable_tank.fill.percentage=%s
 tkcya.machine.modulable_tank.capacity=Capacity: %,d L %s
+tkcya.multiblock.modulable_tank.bucket_equivalent=Quantity: %d L
 
 ##Modulable Crates
 tkcya.multiblock.modulable_crate.capacity=Capacity: %d k
