@@ -134,6 +134,10 @@ public class MetaTileEntityPressurizedMultiblockTank extends MultiblockWithDispl
                + "% Filled";
     }
 
+    private int getFluidStackAmount() {
+        return isTankEmpty() ? 0 : this.pressureContainer.getPressurizedFluidStack().amount;
+    }
+
     private String getTankContent() {
         return isTankEmpty() ? "Empty" :
                 getPressureWithUnit(this.pressureContainer.getPressure())
@@ -164,6 +168,7 @@ public class MetaTileEntityPressurizedMultiblockTank extends MultiblockWithDispl
             textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.content", getTankContent()));
             textList.add(new TextComponentTranslation("tkcya.general.pressure.tooltip.max_pressure", getPressureWithUnit(maxPressure)));
             textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.fill.percentage", getFillPercentage()));
+            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.bucket_equivalent", getFluidStackAmount()));
         }
     }
 
