@@ -1,12 +1,12 @@
 package tekcays_addon.loaders.recipe;
 
-import gregtech.api.recipes.GTRecipeHandler;
-import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.properties.PropertyKey;
-import tekcays_addon.loaders.recipe.chains.*;
-import tekcays_addon.loaders.recipe.handlers.*;
 import tekcays_addon.loaders.ItemsRemovalHandler;
+import tekcays_addon.loaders.recipe.chains.ChemicalChains;
+import tekcays_addon.loaders.recipe.chains.Coils;
+import tekcays_addon.loaders.recipe.chains.MineralChains;
 import tekcays_addon.loaders.recipe.handlers.StorageOverhaul;
+import tekcays_addon.loaders.recipe.handlers.*;
 import tekcays_addon.loaders.recipe.removals.RecipesRemovalHandler;
 
 import static gregtech.api.unification.ore.OrePrefix.foil;
@@ -23,13 +23,12 @@ public class TKCYARecipeLoader {
 
         PressureHandler.init();
         ULVComponentsHandler.init();
+        RecipesRemovalHandler.init();
 
         if (miscOverhaul.enableFoilOverhaul) foil.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processFoil);
-        if (miscOverhaul.enableHarderRotors) HarderRotorsHandler.init();
         if (miscOverhaul.enableCoilOverhaul) Coils.init();
-        if (miscOverhaul.disableComponentsShapesRecipes) RecipesRemovalHandler.shapedComponentsRecipesRemoval();
         if (miscOverhaul.enableMagneticOverhaul) TKCYAPartsRecipeHandler.initPolarizing();
-        if (meltingOverhaul.enableMeltingOverhaul) TKCYAPartsRecipeHandler.removeExtractor();
+
         if (energyOverhaul.disableGasTurbinesOverhaul) BurningGasBoilerRecipeHandler.init();
         if (crackingOverhaul.enableCrackingOverhaul) {
             PressureCrackingHandler.init();

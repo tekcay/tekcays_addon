@@ -9,47 +9,25 @@ import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.items.MetaItems;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
+import tekcays_addon.loaders.recipe.handlers.HarderRotorsHandler;
+import tekcays_addon.loaders.recipe.handlers.TKCYAPartsRecipeHandler;
 
 import static gregtech.api.unification.material.Materials.*;
+import static tekcays_addon.common.TKCYAConfigHolder.harderStuff;
+import static tekcays_addon.common.TKCYAConfigHolder.meltingOverhaul;
 
 public class RecipesRemovalHandler {
-    
-    public static void shapedComponentsRecipesRemoval() {
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_MV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PISTON_MV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PUMP_MV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ROBOT_ARM_MV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.FLUID_REGULATOR_MV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.CONVEYOR_MODULE_MV.getStackForm());
 
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_HV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PISTON_HV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PUMP_HV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ROBOT_ARM_HV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.FLUID_REGULATOR_HV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.CONVEYOR_MODULE_HV.getStackForm());
-
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_EV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PISTON_EV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PUMP_EV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ROBOT_ARM_EV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.FLUID_REGULATOR_EV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.CONVEYOR_MODULE_EV.getStackForm());
-
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_IV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PISTON_IV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PUMP_IV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ROBOT_ARM_IV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.FLUID_REGULATOR_IV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.CONVEYOR_MODULE_IV.getStackForm());
-
+    public static void init() {
+        if(harderStuff.disableTinCircuitRecipes) TinCircuitRemoval.init();
+        if (harderStuff.disableComponentsShapesRecipes) ShapedComponentsRemoval.init();
+        if (harderStuff.enableHarderRotors) HarderRotorsHandler.init();
+        if (meltingOverhaul.enableMeltingOverhaul) TKCYAPartsRecipeHandler.removeExtractor();
     }
 
     public static void removeShapedTreatedWoodRecipe(){
         ModHandler.removeRecipeByOutput(OreDictUnifier.get(OrePrefix.plank, TreatedWood));
     }
-
-
 
     public static void removeMoldsAndUsage() {
 
