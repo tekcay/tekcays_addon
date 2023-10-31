@@ -30,6 +30,9 @@ public class TKCYAMaterials {
         // Second Degree 24700-24800
         id = TKCYAPolymers.init(id);
 
+        //24800-24900
+        TKCYARoastMaterials.init();
+
         // Flags
         TKCYAMaterialFlagAddition.init();
         TKCYAMaterialFlagAddition.polymersInit();
@@ -96,8 +99,6 @@ public class TKCYAMaterials {
     public static Material GermanicAcidSolution;
     public static Material GermaniumChloride;
     public static Material GermaniumOxide;
-    public static Material ZincOxide;
-
 
     //Misc
     public static Material PotassiumMetaBisulfite;
@@ -159,6 +160,19 @@ public class TKCYAMaterials {
 
     public static Material HighDensityPolyethylene;
     public static Material Polypropylene;
+
+    /**
+     * Roasted
+     */
+    public static Material RoastedTetrahedrite;
+    public static Material RoastedCobaltite;
+    public static Material RoastedGalena;
+    public static Material SilverOxide;
+    public static Material RoastedChalcopyrite;
+    public static Material RoastedKesterite;
+    public static Material RoastedStannite;
+    public static Material RoastedArsenopyrite;
+    public static Material RoastedBornite;
 
 
 }

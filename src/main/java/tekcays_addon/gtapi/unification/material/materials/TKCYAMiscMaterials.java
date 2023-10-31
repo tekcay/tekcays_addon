@@ -169,13 +169,6 @@ public class TKCYAMiscMaterials {
 
         //Zinc chain
 
-        ZincOxide = new Material.Builder(id++, gregtechId( "zinc_oxide"))
-                .dust()
-                .flags(DISABLE_DECOMPOSITION)
-                .color((Zinc.getMaterialRGB() + Oxygen.getMaterialRGB()) / 2)
-                .components(Zinc, 1, Oxygen, 1)
-                .build();
-
         IronSulfate = new Material.Builder(id++, gregtechId( "iron_sulfate"))
                 .dust()
                 .flags(DISABLE_DECOMPOSITION)

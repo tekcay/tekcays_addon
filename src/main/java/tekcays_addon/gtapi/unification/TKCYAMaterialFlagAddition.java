@@ -9,7 +9,6 @@ import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags.*;
 import static tekcays_addon.gtapi.consts.TKCYAValues.*;
-import static tekcays_addon.loaders.recipe.handlers.RoastingHandler.ROASTABLE_MATERIALS;
 
 public class TKCYAMaterialFlagAddition {
 
@@ -31,13 +30,6 @@ public class TKCYAMaterialFlagAddition {
 
         //For Bauxite chain
         Bauxite.addFlags(DISABLE_DECOMPOSITION);
-
-        //For Roasting
-        for (RoastableMaterial rm : ROASTABLE_MATERIALS) {
-            Material m = rm.getMaterial();
-            if (!m.hasFlag(DISABLE_DECOMPOSITION)) m.addFlags(DISABLE_DECOMPOSITION);
-            if (!m.hasFlag(NO_SMELTING)) m.addFlags(NO_SMELTING);
-        }
 
         // For electrode
         Carbon.addFlags(MaterialFlags.GENERATE_LONG_ROD, MaterialFlags.NO_SMELTING, MaterialFlags.NO_SMASHING);
