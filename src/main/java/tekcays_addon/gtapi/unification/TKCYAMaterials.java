@@ -1,6 +1,7 @@
 package tekcays_addon.gtapi.unification;
 
 import gregtech.api.unification.material.Material;
+import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.gtapi.unification.material.info.TKCYAChemicalFormula;
 import tekcays_addon.gtapi.unification.material.materials.*;
 
@@ -31,7 +32,7 @@ public class TKCYAMaterials {
         id = TKCYAPolymers.init(id);
 
         //24800-24900
-        TKCYARoastMaterials.init();
+        if (TKCYAConfigHolder.harderStuff.enableRoastingOverhaul) TKCYARoastMaterials.init();
 
         // Flags
         TKCYAMaterialFlagAddition.init();

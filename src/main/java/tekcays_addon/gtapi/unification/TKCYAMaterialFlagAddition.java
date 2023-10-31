@@ -3,6 +3,7 @@ package tekcays_addon.gtapi.unification;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.info.MaterialFlags;
+import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.gtapi.utils.roasting.RoastableMaterial;
 
 import static gregtech.api.unification.material.Materials.*;
@@ -23,6 +24,10 @@ public class TKCYAMaterialFlagAddition {
         BandedIron.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
         Magnetite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
         Cassiterite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
+
+        if (TKCYAConfigHolder.harderStuff.enableRoastingOverhaul) {
+
+        }
 
 
         //For Zinc chain
