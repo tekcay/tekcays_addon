@@ -55,8 +55,6 @@ public class TKCYAConfigHolder {
         @Config.Comment({"Replace normal steel with galvanized steel in LV components", "Default: true"})
         public boolean enableGalvanizedSteel = true;
 
-
-
         @Config.Comment({"Removes most electrolysis recipes and replaces the GTCEu Electrolyzer with a new one", "Default: true"})
         public boolean enableElectrolysisOverhaul = true;
 
@@ -80,6 +78,9 @@ public class TKCYAConfigHolder {
 
         @Config.Comment({"Remove circuit recipes using tin. Only soldering alloy is allowed", "Default: true"})
         public boolean disableTinCircuitRecipes = true;
+
+        @Config.Comment({"Remove all furnace recipes", "Default: true"})
+        public boolean disableVanillaFurnaceRecipes = true;
 
     }
 
