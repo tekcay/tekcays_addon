@@ -1,11 +1,18 @@
 package tekcays_addon.loaders.recipe.removals;
 
 import gregtech.api.GTValues;
+import gregtech.api.recipes.ModHandler;
+import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.recipes.category.GTRecipeCategory;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
+import mezz.jei.recipes.RecipeRegistry;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import tekcays_addon.common.TKCYAConfigHolder;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
+import static net.minecraft.init.Blocks.FURNACE;
 
 @JEIPlugin
 public class JEIRemovals implements IModPlugin { {
@@ -16,8 +23,6 @@ public class JEIRemovals implements IModPlugin { {
     {
         IJeiHelpers jeiHelpers = registry.getJeiHelpers();
         IIngredientBlacklist ingredientBlacklist = jeiHelpers.getIngredientBlacklist();
-
-
 
         if (TKCYAConfigHolder.miscOverhaul.enableMagneticOverhaul) {
             for (int i = GTValues.LV; i < GTValues.UV + 1; i++) {
@@ -87,6 +92,19 @@ public class JEIRemovals implements IModPlugin { {
 
         if (TKCYAConfigHolder.crackingOverhaul.enableCrackingOverhaul) {
             ingredientBlacklist.addIngredientToBlacklist(CRACKER.getStackForm());
+        }
+
+        if (TKCYAConfigHolder.harderStuff.disableVanillaFurnaceRecipes) {
+
+            for (int i = GTValues.LV; i < GTValues.UV; i++) {
+                ingredientBlacklist.addIngredientToBlacklist(ELECTRIC_FURNACE[i].getStackForm());
+            }
+
+            ingredientBlacklist.addIngredientToBlacklist(new ItemStack(Item.getItemFromBlock(FURNACE)));
+            ingredientBlacklist.addIngredientToBlacklist(STEAM_FURNACE_BRONZE.getStackForm());
+            ingredientBlacklist.addIngredientToBlacklist(STEAM_FURNACE_STEEL.getStackForm());
+            ingredientBlacklist.addIngredientToBlacklist(STEAM_OVEN.getStackForm());
+            ingredientBlacklist.addIngredientToBlacklist(MULTI_FURNACE.getStackForm());
         }
 
 

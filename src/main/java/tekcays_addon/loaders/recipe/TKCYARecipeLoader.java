@@ -23,7 +23,9 @@ public class TKCYARecipeLoader {
 
         PressureHandler.init();
         ULVComponentsHandler.init();
+
         RecipesRemovalHandler.init();
+
 
         if (miscOverhaul.enableFoilOverhaul) foil.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processFoil);
         if (miscOverhaul.enableCoilOverhaul) Coils.init();
@@ -126,6 +128,7 @@ public class TKCYARecipeLoader {
         }
 
         AxeSupportRecipes.init();
+
 
     }
 
