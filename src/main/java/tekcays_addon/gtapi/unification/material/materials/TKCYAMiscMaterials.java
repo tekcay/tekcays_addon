@@ -309,6 +309,7 @@ public class TKCYAMiscMaterials {
         AluminiumHydroxide.setFormula("Al(OH)3", true);
 
         Alumina = new Material.Builder(id++, gregtechId( "alumina"))
+                .dust()
                 .fluidTemp(2345)
                 .color(Aluminium.getMaterialRGB() * 2 + (Oxygen.getMaterialRGB())/ 5)
                 .build();
