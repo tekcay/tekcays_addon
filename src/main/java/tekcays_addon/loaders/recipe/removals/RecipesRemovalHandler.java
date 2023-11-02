@@ -23,7 +23,7 @@ public class RecipesRemovalHandler {
         if (harderStuff.disableComponentsShapesRecipes) ShapedComponentsRemoval.init();
         if (harderStuff.enableHarderRotors) HarderRotorsHandler.init();
         if (meltingOverhaul.enableMeltingOverhaul) TKCYAPartsRecipeHandler.removeExtractor();
-        if (harderStuff.disableVanillaFurnaceRecipes) FurnacesRemoval.init();
+        if (harderStuff.disableFurnacesRecipes) FurnacesRemoval.init();
     }
 
     public static void removeShapedTreatedWoodRecipe(){

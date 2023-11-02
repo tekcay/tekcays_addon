@@ -80,7 +80,7 @@ public class TKCYAConfigHolder {
         public boolean disableTinCircuitRecipes = true;
 
         @Config.Comment({"Remove all furnace recipes", "Default: true"})
-        public boolean disableVanillaFurnaceRecipes = true;
+        public boolean disableFurnacesRecipes = true;
 
         @Config.Comment({"bla", "Default: true"})
         public boolean enableRoastingOverhaul = true;

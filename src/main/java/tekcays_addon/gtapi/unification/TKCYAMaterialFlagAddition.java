@@ -4,12 +4,13 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.info.MaterialFlags;
 import tekcays_addon.common.TKCYAConfigHolder;
-import tekcays_addon.gtapi.utils.roasting.RoastableMaterial;
 
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
-import static tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags.*;
-import static tekcays_addon.gtapi.consts.TKCYAValues.*;
+import static tekcays_addon.gtapi.consts.TKCYAValues.DRUM_MATERIALS;
+import static tekcays_addon.gtapi.consts.TKCYAValues.POLYMERS;
+import static tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags.GENERATE_CURVED_PLATE;
+import static tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags.POLYMER;
 
 public class TKCYAMaterialFlagAddition {
 
@@ -26,7 +27,9 @@ public class TKCYAMaterialFlagAddition {
         Cassiterite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
 
         if (TKCYAConfigHolder.harderStuff.enableRoastingOverhaul) {
-
+            //To force cinnabar roasting
+            Redstone.addFlags(DISABLE_DECOMPOSITION);
+            Cinnabar.addFlags(DISABLE_DECOMPOSITION);
         }
 
 

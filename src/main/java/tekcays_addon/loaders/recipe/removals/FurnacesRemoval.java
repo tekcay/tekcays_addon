@@ -12,15 +12,15 @@ public class FurnacesRemoval {
 
     public static void init() {
         ModHandler.removeRecipeByOutput(new ItemStack(Item.getItemFromBlock(FURNACE)));
-
-        for (int i = GTValues.LV; i < GTValues.UV; i++) {
-            ModHandler.removeRecipeByOutput(MetaTileEntities.ELECTRIC_FURNACE[i].getStackForm());
-        }
-
+        ModHandler.removeRecipeByOutput(MetaTileEntities.ELECTRIC_BLAST_FURNACE.getStackForm());
         ModHandler.removeRecipeByOutput(MetaTileEntities.STEAM_FURNACE_BRONZE.getStackForm());
         ModHandler.removeRecipeByOutput(MetaTileEntities.STEAM_FURNACE_STEEL.getStackForm());
         ModHandler.removeRecipeByOutput(MetaTileEntities.STEAM_OVEN.getStackForm());
         ModHandler.removeRecipeByOutput(MetaTileEntities.MULTI_FURNACE.getStackForm());
+
+        for (int i = GTValues.LV; i < GTValues.UV; i++) {
+            ModHandler.removeRecipeByOutput(MetaTileEntities.ELECTRIC_FURNACE[i].getStackForm());
+        }
 
     }
 }

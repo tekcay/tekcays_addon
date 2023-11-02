@@ -1,12 +1,8 @@
 package tekcays_addon.loaders.recipe.removals;
 
 import gregtech.api.GTValues;
-import gregtech.api.recipes.ModHandler;
-import gregtech.api.recipes.RecipeMaps;
-import gregtech.api.recipes.category.GTRecipeCategory;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
-import mezz.jei.recipes.RecipeRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import tekcays_addon.common.TKCYAConfigHolder;
@@ -94,7 +90,7 @@ public class JEIRemovals implements IModPlugin { {
             ingredientBlacklist.addIngredientToBlacklist(CRACKER.getStackForm());
         }
 
-        if (TKCYAConfigHolder.harderStuff.disableVanillaFurnaceRecipes) {
+        if (TKCYAConfigHolder.harderStuff.disableFurnacesRecipes) {
 
             for (int i = GTValues.LV; i < GTValues.UV; i++) {
                 ingredientBlacklist.addIngredientToBlacklist(ELECTRIC_FURNACE[i].getStackForm());
@@ -106,6 +102,8 @@ public class JEIRemovals implements IModPlugin { {
             ingredientBlacklist.addIngredientToBlacklist(STEAM_OVEN.getStackForm());
             ingredientBlacklist.addIngredientToBlacklist(MULTI_FURNACE.getStackForm());
         }
+
+        if (TKCYAConfigHolder.harderStuff.enableRoastingOverhaul) ingredientBlacklist.addIngredientToBlacklist(ELECTRIC_BLAST_FURNACE.getStackForm());
 
 
         if (TKCYAConfigHolder.miscOverhaul.disableHighTierMachines) {
