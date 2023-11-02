@@ -126,7 +126,7 @@ public class TKCYARecipeMaps {
 
 
     @ZenProperty
-    public static final RecipeMap<NoEnergyTemperaturePressureIntervalRecipeBuilder> ROASTING = new RecipeMap<>(
+    public static final RecipeMap<NoEnergyTemperaturePressureIntervalRecipeBuilder> ROASTING = new TopStaggeredRecipeMap<>(
             "roasting", 2, 1, 1, 2, new NoEnergyTemperaturePressureIntervalRecipeBuilder(), false)
             .setSound(GTSoundEvents.FURNACE);
 
