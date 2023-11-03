@@ -430,21 +430,21 @@ public class TKCYAMiscMaterials {
                 .colorAverage()
                 .build();
 
-        TreatedScheelite = new Material.Builder(id++, gregtechId( "treated_scheelite"))
+        TreatedScheelite = new Material.Builder(id++, gregtechId( "treated.scheelite"))
                 .dust()
                 .components(TungsticAcid, 7, CalciumChloride, 3)
                 .flags(DISABLE_DECOMPOSITION, GENERATE_SPIRAL_SEPARATION)
                 .color((Scheelite.getMaterialRGB()))
                 .build();
 
-        TreatedTungstate = new Material.Builder(id++, gregtechId( "treated_tungstate"))
+        TreatedTungstate = new Material.Builder(id++, gregtechId( "treated.tungstate"))
                 .dust()
                 .components(TungsticAcid, 7, LithiumChloride, 4)
                 .flags(DISABLE_DECOMPOSITION, GENERATE_SPIRAL_SEPARATION)
                 .colorAverage()
                 .build();
 
-        AcidicScheeliteSolution = new Material.Builder(id++, gregtechId( "acidic_scheelite_solution"))
+        AcidicScheeliteSolution = new Material.Builder(id++, gregtechId( "acidic.solution.scheelite"))
                 .fluid(FluidTypes.ACID)
                 .flags(DISABLE_DECOMPOSITION, GENERATE_FILTRATION)
                 .components(TreatedScheelite, 1, HydrochloricAcid, 1)
@@ -452,7 +452,7 @@ public class TKCYAMiscMaterials {
                 .colorAverage()
                 .build();
 
-        AcidicTungstateSolution = new Material.Builder(id++, gregtechId( "acidic_tungstate_solution"))
+        AcidicTungstateSolution = new Material.Builder(id++, gregtechId( "acidic.solution.tungstate"))
                 .fluid(FluidTypes.ACID)
                 .flags(DISABLE_DECOMPOSITION, GENERATE_FILTRATION)
                 .components(TreatedTungstate, 1, HydrochloricAcid, 1)
