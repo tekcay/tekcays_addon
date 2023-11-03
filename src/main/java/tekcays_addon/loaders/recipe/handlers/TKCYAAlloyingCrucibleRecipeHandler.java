@@ -13,7 +13,7 @@ import java.util.Collection;
 
 import static gregtech.api.GTValues.L;
 import static gregtech.api.unification.material.Materials.Carbon;
-import static tekcays_addon.api.MaterialHelper.getAllMaterials;
+import static tekcays_addon.api.material.MaterialHelper.getAllMaterials;
 
 public class TKCYAAlloyingCrucibleRecipeHandler {
 

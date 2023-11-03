@@ -1,16 +1,18 @@
 package tekcays_addon.gtapi.unification;
 
 import gregtech.api.unification.material.Material;
+import gregtech.api.unification.material.info.MaterialFlag;
+import gregtech.api.unification.material.info.MaterialFlags;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.gtapi.unification.material.info.TKCYAChemicalFormula;
 import tekcays_addon.gtapi.unification.material.materials.*;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.List;
+
 public class TKCYAMaterials {
-
-
-    /*
-     * First Degree Materials 3000-3019
-     */
 
     public static void init() {
 
@@ -40,11 +42,7 @@ public class TKCYAMaterials {
 
         //Chemical Formula
         TKCYAChemicalFormula.modifyChemicalFormula();
-
     }
-
-
-
 
     /**
      * No Formula
@@ -140,6 +138,12 @@ public class TKCYAMaterials {
     public static Material SodiumCarbonate;
     public static Material SodiumSulfate;
     public static Material PotassiumSulfate;
+
+    //Tungsten chain
+    public static Material TreatedScheelite;
+    public static Material TreatedTungstate;
+    public static Material AcidicScheeliteSolution;
+    public static Material AcidicTungstateSolution;
 
     //Molybdenum chain
     public static Material MolybdenumTrioxide;

@@ -1,7 +1,6 @@
 package tekcays_addon.loaders.recipe;
 
 import gregtech.api.unification.material.properties.PropertyKey;
-import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.loaders.ItemsRemovalHandler;
 import tekcays_addon.loaders.recipe.chains.ChemicalChains;
 import tekcays_addon.loaders.recipe.chains.Coils;
@@ -18,6 +17,8 @@ public class TKCYARecipeLoader {
     public static void preload() {
     }
     public static void load() {
+
+        MaterialFlagsRecipes.init();
 
         TKCYAMetaTileEntityLoader.init();
         FuelRecipes.init();
@@ -97,6 +98,7 @@ public class TKCYARecipeLoader {
         MineralChains.init();
         PolymerHandler.init();
         if (harderStuff.enableRoastingOverhaul) RoastingHandler.init();
+
         HeatHandler.init();
         //MUST BE CALLED AFTER ANY HANDLER THAT GENERATES DUST_MIXTURE !
         SpiralSeparatorHandler.init();

@@ -66,7 +66,7 @@ public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<NoEnergyTemperaturePressureIntervalRecipeBuilder> BLASTING_RECIPES = new TopStaggeredRecipeMap<>(
-            "blasting", 3, 0, 0, 2, new NoEnergyTemperaturePressureIntervalRecipeBuilder(), false)
+            "blasting", 3, 1, 0, 2, new NoEnergyTemperaturePressureIntervalRecipeBuilder(), false)
             .setSound(GTSoundEvents.FURNACE);
 
     @ZenProperty

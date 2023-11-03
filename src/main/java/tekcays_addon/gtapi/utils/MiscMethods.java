@@ -20,7 +20,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static gregtech.api.unification.material.Materials.Air;
-import static tekcays_addon.api.MaterialHelper.getAllMaterials;
+import static tekcays_addon.api.material.MaterialHelper.getAllMaterials;
 import static tekcays_addon.gtapi.consts.TKCYAValues.*;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.MixtureToFilter;
 

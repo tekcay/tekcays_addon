@@ -150,6 +150,7 @@ public class TKCYAValues {
         add(PolyvinylButyral);
         add(PolyvinylChloride);
         add(Polyethylene);
+        add(PolychlorinatedBiphenyl);
     }};
 
     public static final List<Material> POLYMERS = new ArrayList<Material>(){{

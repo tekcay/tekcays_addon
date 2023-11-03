@@ -9,8 +9,7 @@ import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static tekcays_addon.gtapi.consts.TKCYAValues.DRUM_MATERIALS;
 import static tekcays_addon.gtapi.consts.TKCYAValues.POLYMERS;
-import static tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags.GENERATE_CURVED_PLATE;
-import static tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags.POLYMER;
+import static tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags.*;
 
 public class TKCYAMaterialFlagAddition {
 
@@ -19,25 +18,11 @@ public class TKCYAMaterialFlagAddition {
         // Foils
         Materials.Titanium.addFlags(GENERATE_FOIL);
 
-        //For Blasting
-        BrownLimonite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
-        YellowLimonite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
-        BandedIron.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
-        Magnetite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
-        Cassiterite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
-
         if (TKCYAConfigHolder.harderStuff.enableRoastingOverhaul) {
             //To force cinnabar roasting
             Redstone.addFlags(DISABLE_DECOMPOSITION);
             Cinnabar.addFlags(DISABLE_DECOMPOSITION);
         }
-
-
-        //For Zinc chain
-        Sphalerite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
-
-        //For Bauxite chain
-        Bauxite.addFlags(DISABLE_DECOMPOSITION);
 
         // For electrode
         Carbon.addFlags(MaterialFlags.GENERATE_LONG_ROD, MaterialFlags.NO_SMELTING, MaterialFlags.NO_SMASHING);
@@ -60,9 +45,17 @@ public class TKCYAMaterialFlagAddition {
 
         //For molds
         Carbon.addFlags(GENERATE_PLATE);
+
+        HydrochloricAcid.addFlags(BATH_FLUID);
+        HydrofluoricAcid.addFlags(BATH_FLUID);
+        SulfuricAcid.addFlags(BATH_FLUID);
     }
 
+
     public static void polymersInit() {
-        POLYMERS.forEach(material -> material.addFlags(POLYMER));
+        POLYMERS.forEach(material -> {
+            material.addFlags(POLYMER, GENERATE_LONG_ROD, GENERATE_PLATE, GENERATE_FOIL, NO_SMASHING);
+            material.setFormula(String.format("(%s)n", material.getChemicalFormula()));
+        });
     }
 }
