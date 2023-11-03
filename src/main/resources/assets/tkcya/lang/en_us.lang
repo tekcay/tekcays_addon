@@ -351,107 +351,124 @@ recipemap.primitive_furnace.name=Primitive heating
 recipemap.log_cutting.name=Wood work
 
 # Materials
-material.unpure_bronze=Unpure Bronze
-material.unpure_steel=Unpure Steel
-material.unpure_copper=Unpure Copper
-material.unpure_tin=Unpure Tin
-material.unpure_iron=Unpure Iron
+gregtech.material.unpure_bronze=Unpure Bronze
+gregtech.material.unpure_steel=Unpure Steel
+gregtech.material.unpure_copper=Unpure Copper
+gregtech.material.unpure_tin=Unpure Tin
+gregtech.material.unpure_iron=Unpure Iron
 
 ##Alloys/Intermediates
-material.pig_iron=Pig Iron
+gregtech.material.pig_iron=Pig Iron
 
 ##NoFormula
-material.ceramic=Ceramic
-material.mica_pulp=Mica Based
-material.fuel=Burnable Fuel
-material.hot_flue_gas=Hot Flue Gas
-material.flue_gas=Flue Gas
-material.melon_oil=Melon Oil
-material.pumpkin_oil=Pumpkin Oil
-material.mixture_to_filter=Mixture To Filter
-material.lightly_steam_cracked_methane=Lightly Steam Cracked Methane
-material.moderately_steam_cracked_methane=Moderately Steam Cracked Methane
-material.severely_steam_cracked_methane=Severly Steam Cracked Methane
-material.chalcogen_anode_mud=Chalcogen Anode Mud
+gregtech.material.ceramic=Ceramic
+gregtech.material.mica_pulp=Mica Based
+gregtech.material.fuel=Burnable Fuel
+gregtech.material.hot_flue_gas=Hot Flue Gas
+gregtech.material.flue_gas=Flue Gas
+gregtech.material.melon_oil=Melon Oil
+gregtech.material.pumpkin_oil=Pumpkin Oil
+gregtech.material.mixture_to_filter=Mixture To Filter
+gregtech.material.lightly_steam_cracked_methane=Lightly Steam Cracked Methane
+gregtech.material.moderately_steam_cracked_methane=Moderately Steam Cracked Methane
+gregtech.material.severely_steam_cracked_methane=Severly Steam Cracked Methane
+gregtech.material.chalcogen_anode_mud=Chalcogen Anode Mud
 
 ##Misc
-material.hot_air=Hot Air
-material.very_hot_air=Very Hot Air
-material.potassium_metabisulfite=Potassium MetaBisulfite
-material.potassium_hydroxide=Potassium Hydroxide
+gregtech.material.hot_air=Hot Air
+gregtech.material.very_hot_air=Very Hot Air
+gregtech.material.potassium_metabisulfite=Potassium MetaBisulfite
+gregtech.material.potassium_hydroxide=Potassium Hydroxide
+gregtech.material.silver_oxide=Silver Oxide
 
 fluid.fuel.tooltip=To be used in the fuel consuming machines
 
 ##GoldChain
-material.precious_metal=Precious Metal
-material.gold_alloy=Gold Alloy
-material.gold_leach=Gold Leach
-material.copper_leach=Copper Leach
+gregtech.material.precious_metal=Precious Metal
+gregtech.material.gold_alloy=Gold Alloy
+gregtech.material.gold_leach=Gold Leach
+gregtech.material.copper_leach=Copper Leach
 
 ## FluorideChain
-material.potassium_bifluoride=Potassium Bifluoride
-material.fluorite=Fluorite
-material.calcium_sulfonate=Calcium Sulfonate
-material.lithium_fluoride=Lithium Fluoride
-material.sodium_fluoride=Sodium Fluoride
-material.potassium_fluoride=Potassium Fluoride
-material.lithium_hydroxide=Lithium Hydroxide
-material.hydrogen_fluoride=Hydrogen Fluoride
-material.hydrogen_chloride=Hydrogen Chloride
-material.hydrogen_bromide=Hydrogen Bromide
-material.hydrogen_iodide=Hydrogen Iodide
+gregtech.material.potassium_bifluoride=Potassium Bifluoride
+gregtech.material.fluorite=Fluorite
+gregtech.material.calcium_sulfonate=Calcium Sulfonate
+gregtech.material.lithium_fluoride=Lithium Fluoride
+gregtech.material.sodium_fluoride=Sodium Fluoride
+gregtech.material.potassium_fluoride=Potassium Fluoride
+gregtech.material.lithium_hydroxide=Lithium Hydroxide
+gregtech.material.hydrogen_fluoride=Hydrogen Fluoride
+gregtech.material.hydrogen_chloride=Hydrogen Chloride
+gregtech.material.hydrogen_bromide=Hydrogen Bromide
+gregtech.material.hydrogen_iodide=Hydrogen Iodide
 
 ##ZincChain
-material.iron_sulfate=Iron Sulfate
-material.zinc_sulfate=Zinc Sulfate
-material.zinc_leaching_solution=Zinc Leaching Solution
-material.zinc_leaching_residue=Zinc Leaching Residue
-material.tannic_acid=Tannic Acid
-material.germanic_acid_solution=Germanic Acid Solution
-material.zinc_oxide=Zinc Oxide
+gregtech.material.iron_sulfate=Iron Sulfate
+gregtech.material.zinc_sulfate=Zinc Sulfate
+gregtech.material.zinc_leaching_solution=Zinc Leaching Solution
+gregtech.material.zinc_leaching_residue=Zinc Leaching Residue
+gregtech.material.tannic_acid=Tannic Acid
+gregtech.material.germanic_acid_solution=Germanic Acid Solution
+gregtech.material.zinc_oxide=Zinc Oxide
 
 ##BauxiteChain
-material.aluminium_fluoride=Aluminium Fluoride
-material.potassium_aluminate=Potassium Aluminate
-material.sodium_aluminate=Sodium Aluminate
-material.cryolite=Cryolite
-material.hexafluorosilic_acid=Hexafluorosilic Acid
+gregtech.material.aluminium_fluoride=Aluminium Fluoride
+gregtech.material.potassium_aluminate=Potassium Aluminate
+gregtech.material.sodium_aluminate=Sodium Aluminate
+gregtech.material.cryolite=Cryolite
+gregtech.material.hexafluorosilic_acid=Hexafluorosilic Acid
 
 ##ChromiteChain
-material.sodium_chromate=Sodium Chromate
-material.sodium_dichromate=Sodium Dichromate
-material.chromium_oxide=Chromium Oxide
-material.sodium_carbonate=Sodium Carbonate
-material.sodium_sulfate=Sodium Sulfate
-material.potassium_sulfate=Potassium Sulfate
+gregtech.material.sodium_chromate=Sodium Chromate
+gregtech.material.sodium_dichromate=Sodium Dichromate
+gregtech.material.chromium_oxide=Chromium Oxide
+gregtech.material.sodium_carbonate=Sodium Carbonate
+gregtech.material.sodium_sulfate=Sodium Sulfate
+gregtech.material.potassium_sulfate=Potassium Sulfate
 
 ##MolybdenumChain
-material.molybdenum_trioxide=Molybdenum Trioxide
-material.molybdenum_flue=Molybdenum Flue
+gregtech.material.molybdenum_trioxide=Molybdenum Trioxide
+gregtech.material.molybdenum_flue=Molybdenum Flue
 
 #MoreRoastable
-material.kesterite=Kesterite
-material.stannite=Stannite
-material.aresenopyrite=Arsenopyrite
+gregtech.material.kesterite=Kesterite
+gregtech.material.stannite=Stannite
+gregtech.material.aresenopyrite=Arsenopyrite
 
 ##RoastingOutput
-material.cuprite=Cuprite
+gregtech.material.cuprite=Cuprite
+gregtech.material.roasted.tetrahedrite=Roasted Tetrahedrite
+gregtech.material.roasted.stannite=Roasted Stannite
+gregtech.material.roasted.kesterite=Roasted Kesterite
+gregtech.material.roasted.arsenopyrite=Roasted Arsenopyrite
+gregtech.material.roasted.pyrite=Roasted Pyrite
+gregtech.material.roasted.cobaltite=Roasted Cobaltite
+gregtech.material.roasted.galena=Roasted Galena
+gregtech.material.roasted.chalcopyrite=Roasted Chalcopyrite
+gregtech.material.roasted.bornite=Roasted Bornite
 
+##Acidic solutions
+gregtech.material.acidic.solution.scheelite=Acidic Scheelite Solution
+gregtech.material.acidic.solution.tungstate=Acidic Tungstate Solution
+
+##Treated
+gregtech.material.treated.scheelite=Treated Scheelite
+gregtech.material.treated.tungstate=Treated Tungstate
 
 ##Alloys
-material.galvanized_steel=Galvanized Steel
-material.monel=Monel
-material.constantan=Constantan
-material.silicon_carbide=Silicon Carbide
+gregtech.material.galvanized_steel=Galvanized Steel
+gregtech.material.monel=Monel
+gregtech.material.constantan=Constantan
+gregtech.material.silicon_carbide=Silicon Carbide
 
 ##Polymers
-material.high_density_polyethylene=High Density Polyethylene (HDPE)
-material.polypropylene=Polypropylene
+gregtech.material.high_density_polyethylene=High Density Polyethylene (HDPE)
+gregtech.material.polypropylene=Polypropylene
 
-material.hydrogen_fluorine=Hydrogen Fluorine
-material.hydrogen_chlorine=Hydrogen Chlorine
-material.hydrogen_bromine=Hydrogen Bromine
-material.hydrogen_iodine=Hydrogen Iodine
+gregtech.material.hydrogen_fluorine=Hydrogen Fluorine
+gregtech.material.hydrogen_chlorine=Hydrogen Chlorine
+gregtech.material.hydrogen_bromine=Hydrogen Bromine
+gregtech.material.hydrogen_iodine=Hydrogen Iodine
 
 # fluids
 tkcya.fluid.molten=Molten %s
