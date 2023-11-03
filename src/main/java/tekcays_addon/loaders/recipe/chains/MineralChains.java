@@ -7,6 +7,7 @@ public class MineralChains {
         BauxiteChain.init();
         ZincChain.init();
         ChromiteChain.init();
+        TungstenChain.init();
     }
 
 }

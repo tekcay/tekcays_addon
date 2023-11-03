@@ -30,4 +30,14 @@ public class MaterialHelper {
                 .sum());
     }
 
+    public static int getInputAmountFromSubComposition(Material material) {
+
+        return (int) (material.getMaterialComponents()
+                .get(0).material
+                .getMaterialComponents()
+                .stream()
+                .mapToLong(materialStack -> materialStack.amount)
+                .sum());
+    }
+
 }
