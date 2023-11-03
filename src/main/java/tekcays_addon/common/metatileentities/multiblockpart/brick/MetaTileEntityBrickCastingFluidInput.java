@@ -1,4 +1,4 @@
-package tekcays_addon.common.metatileentities.multiblockpart;
+package tekcays_addon.common.metatileentities.multiblockpart.brick;
 
 import gregtech.api.capability.impl.NotifiableFluidTank;
 import gregtech.api.metatileentity.MetaTileEntity;
@@ -13,7 +13,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidTank;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
-import tekcays_addon.gtapi.capability.containers.IMoldCoverable;
 import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.gtapi.render.TKCYATextures;
 

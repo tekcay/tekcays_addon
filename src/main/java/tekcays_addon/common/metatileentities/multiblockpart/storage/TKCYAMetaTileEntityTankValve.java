@@ -1,4 +1,4 @@
-package tekcays_addon.common.metatileentities.multiblockpart;
+package tekcays_addon.common.metatileentities.multiblockpart.storage;
 
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;

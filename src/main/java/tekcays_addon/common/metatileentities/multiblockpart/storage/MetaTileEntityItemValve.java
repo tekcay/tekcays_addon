@@ -1,9 +1,8 @@
-package tekcays_addon.common.metatileentities.multiblockpart;
+package tekcays_addon.common.metatileentities.multiblockpart.storage;
 
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregtech.api.capability.impl.ItemHandlerList;
 import gregtech.api.capability.impl.ItemHandlerProxy;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.metatileentity.MetaTileEntity;
@@ -33,7 +32,6 @@ import tekcays_addon.gtapi.unification.TKCYAMaterials;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Collections;
 import java.util.List;
 
 public class MetaTileEntityItemValve extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IItemHandler> {

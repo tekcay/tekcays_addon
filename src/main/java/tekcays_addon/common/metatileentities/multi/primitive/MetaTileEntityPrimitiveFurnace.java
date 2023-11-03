@@ -1,4 +1,4 @@
-package tekcays_addon.common.metatileentities.multi;
+package tekcays_addon.common.metatileentities.multi.primitive;
 
 import codechicken.lib.raytracer.CuboidRayTraceResult;
 import codechicken.lib.render.CCRenderState;
@@ -54,7 +54,6 @@ import java.util.List;
 import java.util.Random;
 
 import static gregtech.api.util.RelativeDirection.*;
-import static tekcays_addon.api.item.ItemStackUtils.tryChangeItemStack;
 
 public class MetaTileEntityPrimitiveFurnace extends RecipeMapPrimitiveMultiblockController implements IHinderedMachine, IDataInfoProvider {
 

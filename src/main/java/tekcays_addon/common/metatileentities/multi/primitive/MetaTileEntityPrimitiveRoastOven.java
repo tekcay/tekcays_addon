@@ -1,4 +1,4 @@
-package tekcays_addon.common.metatileentities.multi;
+package tekcays_addon.common.metatileentities.multi.primitive;
 
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -8,7 +8,6 @@ import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
-import gregtech.common.metatileentities.MetaTileEntities;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -19,36 +18,36 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
+import tekcays_addon.common.blocks.TKCYAMetaBlocks;
+import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.gtapi.capability.containers.IPressureContainer;
 import tekcays_addon.gtapi.metatileentity.multiblock.PressureContainerNoEnergyMultiblockController;
 import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.render.TKCYATextures;
-import tekcays_addon.common.blocks.TKCYAMetaBlocks;
-import tekcays_addon.common.blocks.blocks.BlockBrick;
 
-import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.metatileentity.predicates.BrickHatchesPredicates.*;
 
-public class MetaTileEntityPrimitiveConverter extends PressureContainerNoEnergyMultiblockController {
+public class MetaTileEntityPrimitiveRoastOven extends PressureContainerNoEnergyMultiblockController {
 
     private final BlockBrick.BrickType brick;
     private final IBlockState iBlockState;
     private IPressureContainer pressureContainer;
 
-    public MetaTileEntityPrimitiveConverter(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.PRIMITIVE_CONVERTING_RECIPES);
-        this.brick = BlockBrick.BrickType.REINFORCED_BRICK;
+    public MetaTileEntityPrimitiveRoastOven(ResourceLocation metaTileEntityId, BlockBrick.BrickType brickType) {
+        super(metaTileEntityId, TKCYARecipeMaps.ROASTING);
+        this.brick = brickType;
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTileEntityPrimitiveConverter(metaTileEntityId);
+        return new MetaTileEntityPrimitiveRoastOven(metaTileEntityId, brick);
     }
 
     @Override
@@ -103,7 +102,7 @@ public class MetaTileEntityPrimitiveConverter extends PressureContainerNoEnergyM
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
-        return TKCYATextures.BRICKS[BlockBrick.REINFORCED_BRICK];
+        return TKCYATextures.BRICKS[brick.getTextureId()];
     }
 
     @Override
@@ -116,6 +115,7 @@ public class MetaTileEntityPrimitiveConverter extends PressureContainerNoEnergyM
         return true;
     }
 
+    @Nonnull
     @Override
     protected ICubeRenderer getFrontOverlay() {
         return Textures.COKE_OVEN_OVERLAY;
@@ -125,6 +125,7 @@ public class MetaTileEntityPrimitiveConverter extends PressureContainerNoEnergyM
         return iBlockState;
     }
 
+    @Nonnull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
@@ -134,11 +135,12 @@ public class MetaTileEntityPrimitiveConverter extends PressureContainerNoEnergyM
                 .where('S', selfPredicate())
                 .where('X', states(getCasingState()))
                 .where('Y', states(getCasingState())
-                        .or(getOutputBrickFluidHatch(brick).setMinGlobalLimited(1).setMaxGlobalLimited(1))
                         .or(getInputBrickFluidHatch(brick).setMinGlobalLimited(1).setMaxGlobalLimited(2))
+                        .or(getOutputBrickFluidHatch(brick).setMinGlobalLimited(1).setMaxGlobalLimited(1))
+                        .or(getInputBrickItemBus(brick).setMinGlobalLimited(1).setMaxGlobalLimited(1))
+                        .or(getOutputBrickItemBus(brick).setMinGlobalLimited(1).setMaxGlobalLimited(1))
                         .or(abilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER).setMaxGlobalLimited(1, 1)))
-                .where('M', metaTileEntities(MetaTileEntities.MUFFLER_HATCH)
-                        .or(getBrickMuffler(brick)))
+                .where('M', getBrickMuffler(brick))
                 .where('#', air())
                 .build();
     }

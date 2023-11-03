@@ -1,4 +1,4 @@
-package tekcays_addon.common.metatileentities.multiblockpart;
+package tekcays_addon.common.metatileentities.multiblockpart.capabilities;
 
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import tekcays_addon.common.metatileentities.multi.MetaTileEntityPressurizedMultiblockTank;
+import tekcays_addon.common.metatileentities.multi.storage.MetaTileEntityModulablePressurizedMultiblockTank;
 import tekcays_addon.gtapi.capability.containers.IDecompression;
 import tekcays_addon.gtapi.capability.containers.IPressureContainer;
 import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
@@ -51,8 +51,8 @@ public class MetaTileEntityDecompressionHatch extends MetaTileEntityMultiblockPa
     @Nullable
     private IPressureContainer getPressureContainer() {
         MultiblockControllerBase controller = super.getController();
-        if (controller instanceof MetaTileEntityPressurizedMultiblockTank) {
-            return ((MetaTileEntityPressurizedMultiblockTank) controller).getPressureContainer();
+        if (controller instanceof MetaTileEntityModulablePressurizedMultiblockTank) {
+            return ((MetaTileEntityModulablePressurizedMultiblockTank) controller).getPressureContainer();
         }
         return null;
     }

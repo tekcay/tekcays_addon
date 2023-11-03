@@ -1,4 +1,4 @@
-package tekcays_addon.common.metatileentities.multi;
+package tekcays_addon.common.metatileentities.multi.electric;
 
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;

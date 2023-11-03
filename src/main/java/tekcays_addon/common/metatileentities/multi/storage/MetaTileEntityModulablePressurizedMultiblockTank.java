@@ -1,4 +1,4 @@
-package tekcays_addon.common.metatileentities.multi;
+package tekcays_addon.common.metatileentities.multi.storage;
 
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
@@ -25,27 +25,25 @@ import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
 import tekcays_addon.api.units.IPressureFormatting;
 import tekcays_addon.gtapi.capability.containers.IPressureContainer;
-import tekcays_addon.gtapi.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static gregtech.api.unification.material.Materials.Hydrogen;
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.metatileentity.Predicates.isAir;
 import static tekcays_addon.api.metatileentity.TankMethods.*;
 import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.*;
 
-public class MetaTileEntityPressurizedMultiblockTank extends MultiblockWithDisplayBase implements IPressureFormatting {
+public class MetaTileEntityModulablePressurizedMultiblockTank extends MultiblockWithDisplayBase implements IPressureFormatting {
 
     private final Material material;
     private final int maxPressure;
     @Getter
     private IPressureContainer pressureContainer;
 
-    public MetaTileEntityPressurizedMultiblockTank(ResourceLocation metaTileEntityId, Material material, int maxPressure) {
+    public MetaTileEntityModulablePressurizedMultiblockTank(ResourceLocation metaTileEntityId, Material material, int maxPressure) {
         super(metaTileEntityId);
         this.material = material;
         this.maxPressure = maxPressure;
@@ -64,7 +62,7 @@ public class MetaTileEntityPressurizedMultiblockTank extends MultiblockWithDispl
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTileEntityPressurizedMultiblockTank(metaTileEntityId, material, maxPressure);
+        return new MetaTileEntityModulablePressurizedMultiblockTank(metaTileEntityId, material, maxPressure);
     }
 
     private void initializeAbilities() {

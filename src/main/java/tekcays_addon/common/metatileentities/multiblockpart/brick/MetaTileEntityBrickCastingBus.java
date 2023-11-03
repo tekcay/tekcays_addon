@@ -1,4 +1,4 @@
-package tekcays_addon.common.metatileentities.multiblockpart;
+package tekcays_addon.common.metatileentities.multiblockpart.brick;
 
 import gregtech.api.cover.CoverBehavior;
 import gregtech.api.cover.CoverDefinition;
@@ -10,11 +10,9 @@ import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.client.renderer.ICubeRenderer;
-import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityItemBus;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import lombok.AccessLevel;
 import lombok.Setter;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -24,7 +22,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import tekcays_addon.api.covers.molds.CoverMoldWrapper;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.common.covers.CoverMold;
-import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.capability.containers.IMoldCoverable;
 import tekcays_addon.gtapi.capability.impl.MoldCoverable;
 import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
