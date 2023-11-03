@@ -43,8 +43,8 @@ public class MaterialFlagsRecipes {
     private static void registerSpiralSeparationRecipes(Material material) {
 
         RecipeMaps.CHEMICAL_RECIPES.recipeBuilder()
-                .input(dust, material, getInputAmountFromComposition(material))
-                .outputs(getOutput(material))
+                .input(dust, material, getAmountComponentsSum(material))
+                .outputs(getStacksFromMaterialComposition(material))
                 .duration(100)
                 .EUt(20)
                 .buildAndRegister();

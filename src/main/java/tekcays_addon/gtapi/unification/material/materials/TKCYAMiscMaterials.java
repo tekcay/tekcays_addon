@@ -447,7 +447,7 @@ public class TKCYAMiscMaterials {
         AcidicScheeliteSolution = new Material.Builder(id++, gregtechId( "acidic_scheelite_solution"))
                 .fluid(FluidTypes.ACID)
                 .flags(DISABLE_DECOMPOSITION, GENERATE_FILTRATION)
-                .components(TreatedScheelite, 1, HydrochloricAcid, 2)
+                .components(TreatedScheelite, 1, HydrochloricAcid, 1)
                 .iconSet(BRIGHT)
                 .colorAverage()
                 .build();
@@ -455,8 +455,7 @@ public class TKCYAMiscMaterials {
         AcidicTungstateSolution = new Material.Builder(id++, gregtechId( "acidic_tungstate_solution"))
                 .fluid(FluidTypes.ACID)
                 .flags(DISABLE_DECOMPOSITION, GENERATE_FILTRATION)
-                .components(TreatedTungstate, 1, HydrochloricAcid, 2)
-                //.components(TreatedTungstate, 1, HydrochloricAcid, 2)
+                .components(TreatedTungstate, 1, HydrochloricAcid, 1)
                 .iconSet(BRIGHT)
                 .colorAverage()
                 .build();
