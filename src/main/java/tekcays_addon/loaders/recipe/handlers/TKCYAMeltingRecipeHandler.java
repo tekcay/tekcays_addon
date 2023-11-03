@@ -6,7 +6,7 @@ import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
 import static gregtech.api.GTValues.L;
 import static gregtech.api.unification.ore.OrePrefix.dust;
-import static tekcays_addon.api.MaterialHelper.getAllMaterials;
+import static tekcays_addon.api.material.MaterialHelper.getAllMaterials;
 import static tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags.POLYMER;
 
 public class TKCYAMeltingRecipeHandler {

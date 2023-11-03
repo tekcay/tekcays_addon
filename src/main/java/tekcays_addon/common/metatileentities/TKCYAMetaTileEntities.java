@@ -102,8 +102,6 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityRotationCompressor[] ROTATION_COMPRESSOR = new MetaTileEntityRotationCompressor[STEAM_CASING.length];
     public static MetaTileEntityDynamo[] DYNAMOS = new MetaTileEntityDynamo[MAX_TIER];
     public static MetaTileEntityDieselGenerator[] DIESEL_GENERATOR = new MetaTileEntityDieselGenerator[MAX_TIER];
-
-    public static MetaTileEntityRoastingOven ROASTING_OVEN;
     public static MetaTileEntitySpiralSeparator SPIRAL_SEPARATOR;
     public static MetaTileEntityPrimitiveFurnace PRIMITIVE_FURNACE;
     public static MetaTileEntityMultiAmperageTest MULTI_AMPERAGE_TEST;
@@ -122,6 +120,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityPrimitiveMufflerHatch[] PRIMITIVE_MUFFLER = new MetaTileEntityPrimitiveMufflerHatch[BRICKS.size()];
     public static MetaTileEntitySingleCrucible[] SINGLE_CRUCIBLE = new MetaTileEntitySingleCrucible[BRICKS.size()];
     public static MetaTileEntityCastingTable[] CASTING_TABLE = new MetaTileEntityCastingTable[BRICKS.size()];
+    public static MetaTileEntityPrimitiveRoastOven[] BRICK_ROASTING_OVEN = new MetaTileEntityPrimitiveRoastOven[BRICKS.size()];
 
     // Drums
     public static MetaTileEntityDrum[] DRUMS = new MetaTileEntityDrum[DRUM_MATERIALS.size()];
@@ -224,7 +223,6 @@ public class TKCYAMetaTileEntities {
             PRESSURIZED_CRACKING_UNIT = registerMetaTileEntity(11092, new MetaTileEntityPressurizedCrackingUnit(tkcyaId("pressurized_cracking_unit")));
         }
 
-        ROASTING_OVEN = registerMetaTileEntity(11093, new MetaTileEntityRoastingOven(tkcyaId("roasting_oven")));
         SPIRAL_SEPARATOR = registerMetaTileEntity(11094, new MetaTileEntitySpiralSeparator(tkcyaId("spiral_separator")));
         PRIMITIVE_FURNACE = registerMetaTileEntity(11095, new MetaTileEntityPrimitiveFurnace(tkcyaId("primitive_furnace")));
 
@@ -321,6 +319,10 @@ public class TKCYAMetaTileEntities {
 
         registerOther("vacuum_hatch.", VACUUM_HATCH, 11241, MetaTileEntityVacuumHatch::new);
         registerOther("pressure_hatch.", PRESSURE_HATCH, 11251, MetaTileEntityPressureHatch::new);
+
+        if (TKCYAConfigHolder.harderStuff.enableRoastingOverhaul) {
+            registerBrickMTE("_roasting_oven", BRICK_ROASTING_OVEN, 11310, MetaTileEntityPrimitiveRoastOven::new);
+        }
     }
 
 

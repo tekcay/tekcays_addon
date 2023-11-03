@@ -66,7 +66,7 @@ public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<NoEnergyTemperaturePressureIntervalRecipeBuilder> BLASTING_RECIPES = new TopStaggeredRecipeMap<>(
-            "blasting", 3, 0, 0, 2, new NoEnergyTemperaturePressureIntervalRecipeBuilder(), false)
+            "blasting", 3, 1, 0, 2, new NoEnergyTemperaturePressureIntervalRecipeBuilder(), false)
             .setSound(GTSoundEvents.FURNACE);
 
     @ZenProperty
@@ -126,8 +126,8 @@ public class TKCYARecipeMaps {
 
 
     @ZenProperty
-    public static final RecipeMap<TemperaturePressureIntervalRecipeBuilder> ROASTING = new RecipeMap<>(
-            "roasting", 2, 4, 1, 2, new TemperaturePressureIntervalRecipeBuilder(), false)
+    public static final RecipeMap<NoEnergyTemperaturePressureIntervalRecipeBuilder> ROASTING = new TopStaggeredRecipeMap<>(
+            "roasting", 2, 1, 1, 2, new NoEnergyTemperaturePressureIntervalRecipeBuilder(), false)
             .setSound(GTSoundEvents.FURNACE);
 
 

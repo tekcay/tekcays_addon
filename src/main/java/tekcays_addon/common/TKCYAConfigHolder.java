@@ -12,7 +12,7 @@ public class TKCYAConfigHolder {
     public static MiscOverhaul miscOverhaul = new MiscOverhaul();
 
     @Config.Comment("Miscellaneaous config options")
-    @Config.Name("Miscellaneous")
+    @Config.Name("Harder")
     public static HarderStuff harderStuff = new HarderStuff();
 
     @Config.Comment("Machines options")
@@ -80,7 +80,10 @@ public class TKCYAConfigHolder {
         public boolean disableTinCircuitRecipes = true;
 
         @Config.Comment({"Remove all furnace recipes", "Default: true"})
-        public boolean disableVanillaFurnaceRecipes = true;
+        public boolean disableFurnacesRecipes = true;
+
+        @Config.Comment({"bla", "Default: true"})
+        public boolean enableRoastingOverhaul = true;
 
     }
 
