@@ -1,21 +1,17 @@
 package tekcays_addon.gtapi.logic;
 
-import gregtech.api.GTValues;
-import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
-import gregtech.api.recipes.Recipe;
 import lombok.Getter;
 import net.minecraftforge.fluids.FluidStack;
+import tekcays_addon.api.metatileentity.LogicType;
 import tekcays_addon.api.recipe.PressureContainerCheckRecipeHelper;
 import tekcays_addon.gtapi.capability.containers.IContainerDetector;
 import tekcays_addon.gtapi.capability.containers.IHeatContainer;
 import tekcays_addon.gtapi.capability.containers.IPressureContainer;
 
-import javax.annotation.Nonnull;
-
 import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
 
-public class NoEnergyHeatPressureMultiRecipeLogic extends MultiblockRecipeLogic implements PressureContainerCheckRecipeHelper {
+public class NoEnergyHeatPressureMultiRecipeLogic extends ModulableLogic implements PressureContainerCheckRecipeHelper {
 
     @Getter
     protected IPressureContainer pressureContainer;
@@ -32,44 +28,8 @@ public class NoEnergyHeatPressureMultiRecipeLogic extends MultiblockRecipeLogic 
     protected RecipeMapMultiblockController recipeMapMultiblockController;
 
     public NoEnergyHeatPressureMultiRecipeLogic(RecipeMapMultiblockController tileEntity) {
-        super(tileEntity);
+        super(tileEntity, LogicType.NO_ENERGY, LogicType.NO_OVERCLOCK);
         this.recipeMapMultiblockController = tileEntity;
-    }
-
-    @Nonnull
-    @Override
-    protected int[] calculateOverclock(Recipe recipe) {
-        return new int[]{0, recipe.getDuration()};
-    }
-
-    @Override
-    protected long getEnergyInputPerSecond() {
-        return Integer.MAX_VALUE;
-    }
-
-    @Override
-    protected long getEnergyStored() {
-        return Integer.MAX_VALUE;
-    }
-
-    @Override
-    protected long getEnergyCapacity() {
-        return Integer.MAX_VALUE;
-    }
-
-    @Override
-    protected boolean drawEnergy(int recipeEUt, boolean simulate) {
-        return true; // spoof energy being drawn
-    }
-
-    @Override
-    protected long getMaxVoltage() {
-        return 32;
-    }
-
-    @Override
-    public long getMaximumOverclockVoltage() {
-        return GTValues.V[GTValues.LV];
     }
 
     @Override

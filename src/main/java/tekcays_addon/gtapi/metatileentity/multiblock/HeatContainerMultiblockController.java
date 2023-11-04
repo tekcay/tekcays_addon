@@ -4,10 +4,11 @@ import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.RecipeMap;
 import net.minecraft.util.ResourceLocation;
+import tekcays_addon.api.metatileentity.LogicType;
 import tekcays_addon.gtapi.capability.containers.IHeatContainer;
-import tekcays_addon.gtapi.capability.machines.IHeatMachine;
 import tekcays_addon.gtapi.capability.impl.HeatContainer;
-import tekcays_addon.gtapi.logic.HeatContainerMultiblockRecipeLogic;
+import tekcays_addon.gtapi.capability.machines.IHeatMachine;
+import tekcays_addon.gtapi.logic.ModulableLogic;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public abstract class HeatContainerMultiblockController extends RecipeMapMultibl
 
     public HeatContainerMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
         super(metaTileEntityId, recipeMap);
-        this.recipeMapWorkable = new HeatContainerMultiblockRecipeLogic(this);
+        this.recipeMapWorkable = new ModulableLogic(this, LogicType.NO_OVERCLOCK, LogicType.NO_ENERGY);
     }
 
     @Override

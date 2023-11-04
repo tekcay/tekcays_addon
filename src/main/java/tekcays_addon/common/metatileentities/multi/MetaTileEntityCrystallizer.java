@@ -20,7 +20,8 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
-import tekcays_addon.gtapi.logic.NoEnergyMultiblockLogic;
+import tekcays_addon.api.metatileentity.LogicType;
+import tekcays_addon.gtapi.logic.ModulableLogic;
 import tekcays_addon.gtapi.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
@@ -31,7 +32,7 @@ public class MetaTileEntityCrystallizer extends NoEnergyRecipeMapMultiBlockContr
 
     public MetaTileEntityCrystallizer(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.CRYSTALLIZATION);
-        this.recipeMapWorkable = new NoEnergyMultiblockLogic(this);
+        this.recipeMapWorkable = new ModulableLogic(this, LogicType.NO_OVERCLOCK, LogicType.NO_ENERGY);
     }
 
     @Override

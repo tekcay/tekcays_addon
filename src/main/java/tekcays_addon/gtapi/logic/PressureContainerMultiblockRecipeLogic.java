@@ -47,6 +47,7 @@ public class PressureContainerMultiblockRecipeLogic extends MultiblockRecipeLogi
         }
     }
 
+    @Override
     public void invalidate() {
         previousRecipe = null;
         progressTime = 0;

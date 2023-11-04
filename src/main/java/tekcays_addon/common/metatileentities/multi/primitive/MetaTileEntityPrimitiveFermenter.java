@@ -18,20 +18,20 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import tekcays_addon.gtapi.logic.NoEnergyMultiblockLogic;
+import tekcays_addon.api.metatileentity.LogicType;
+import tekcays_addon.gtapi.logic.ModulableLogic;
 import tekcays_addon.gtapi.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class MetaTileEntityPrimitiveFermenter extends NoEnergyRecipeMapMultiBlockController {
 
     public MetaTileEntityPrimitiveFermenter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.FERMENTATION_RECIPES);
-        this.recipeMapWorkable = new NoEnergyMultiblockLogic(this);
+        this.recipeMapWorkable = new ModulableLogic(this, LogicType.NO_OVERCLOCK, LogicType.NO_ENERGY);
         this.recipeMapWorkable.setParallelLimit(32);
     }
 

@@ -15,11 +15,12 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
-import tekcays_addon.gtapi.logic.NoEnergyMultiblockLogic;
-import tekcays_addon.gtapi.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
-import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
+import tekcays_addon.api.metatileentity.LogicType;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
+import tekcays_addon.gtapi.logic.ModulableLogic;
+import tekcays_addon.gtapi.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class MetaTileEntityTKCYACokeOven extends NoEnergyRecipeMapMultiBlockCont
         super(metaTileEntityId, TKCYARecipeMaps.COKING);
         this.brick = BlockBrick.BrickType.REINFORCED_BRICK;
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
-        this.recipeMapWorkable = new NoEnergyMultiblockLogic(this);
+        this.recipeMapWorkable = new ModulableLogic(this, LogicType.NO_ENERGY, LogicType.NO_OVERCLOCK);
         this.recipeMapWorkable.setParallelLimit(4);
     }
 

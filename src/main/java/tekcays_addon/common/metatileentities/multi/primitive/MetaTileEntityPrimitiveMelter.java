@@ -17,7 +17,8 @@ import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.ItemStackHandler;
-import tekcays_addon.gtapi.logic.NoEnergyMultiblockLogic;
+import tekcays_addon.api.metatileentity.LogicType;
+import tekcays_addon.gtapi.logic.ModulableLogic;
 import tekcays_addon.gtapi.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.render.TKCYATextures;
@@ -26,7 +27,7 @@ public class MetaTileEntityPrimitiveMelter extends NoEnergyRecipeMapMultiBlockCo
 
     public MetaTileEntityPrimitiveMelter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.MELTER_RECIPES);
-        this.recipeMapWorkable = new NoEnergyMultiblockLogic(this);
+        this.recipeMapWorkable = new ModulableLogic(this, LogicType.NO_ENERGY, LogicType.NO_OVERCLOCK);
     }
 
     @Override

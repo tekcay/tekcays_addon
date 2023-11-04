@@ -4,9 +4,10 @@ import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.RecipeMap;
 import net.minecraft.util.ResourceLocation;
+import tekcays_addon.api.metatileentity.LogicType;
 import tekcays_addon.gtapi.capability.containers.IRotationContainer;
 import tekcays_addon.gtapi.capability.machines.IRotationMachine;
-import tekcays_addon.gtapi.logic.HeatContainerNoEnergyMultiblockRecipeLogic;
+import tekcays_addon.gtapi.logic.ModulableLogic;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public abstract class RotationNoEnergyMultiblockController extends RecipeMapMult
 
     public RotationNoEnergyMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
         super(metaTileEntityId, recipeMap);
-        this.recipeMapWorkable = new HeatContainerNoEnergyMultiblockRecipeLogic(this);
+        this.recipeMapWorkable = new ModulableLogic(this, LogicType.NO_ENERGY, LogicType.NO_OVERCLOCK);
     }
 
     @Override
