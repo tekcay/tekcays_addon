@@ -25,19 +25,20 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import tekcays_addon.gtapi.metatileentity.multiblock.PressureContainerMultiblockController;
+import tekcays_addon.api.metatileentity.LogicType;
+import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class MetaTileEntityElectricConverter extends PressureContainerMultiblockController implements IHeatingCoil {
+public class MetaTileEntityElectricConverter extends ModulableRecipeMapController implements IHeatingCoil {
 
     private int blastFurnaceTemperature;
 
     public MetaTileEntityElectricConverter(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.CONVERTING_RECIPES);
+        super(metaTileEntityId, TKCYARecipeMaps.CONVERTING_RECIPES, LogicType.NO_OVERCLOCK, LogicType.PRESSURE);
         this.recipeMapWorkable = new HeatingCoilRecipeLogic(this);
     }
 

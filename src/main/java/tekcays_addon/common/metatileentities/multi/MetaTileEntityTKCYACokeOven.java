@@ -18,8 +18,7 @@ import net.minecraft.util.text.event.HoverEvent;
 import tekcays_addon.api.metatileentity.LogicType;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
-import tekcays_addon.gtapi.logic.ModulableLogic;
-import tekcays_addon.gtapi.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
+import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
 import java.util.List;
@@ -27,16 +26,15 @@ import java.util.List;
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.metatileentity.predicates.BrickHatchesPredicates.*;
 
-public class MetaTileEntityTKCYACokeOven extends NoEnergyRecipeMapMultiBlockController {
+public class MetaTileEntityTKCYACokeOven extends ModulableRecipeMapController {
 
     private final BlockBrick.BrickType brick;
     private final IBlockState iBlockState;
 
     public MetaTileEntityTKCYACokeOven(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.COKING);
+        super(metaTileEntityId, TKCYARecipeMaps.COKING, LogicType.NO_ENERGY, LogicType.NO_OVERCLOCK, LogicType.NO_MAINTENANCE);
         this.brick = BlockBrick.BrickType.REINFORCED_BRICK;
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
-        this.recipeMapWorkable = new ModulableLogic(this, LogicType.NO_ENERGY, LogicType.NO_OVERCLOCK);
         this.recipeMapWorkable.setParallelLimit(4);
     }
 
@@ -80,16 +78,6 @@ public class MetaTileEntityTKCYACokeOven extends NoEnergyRecipeMapMultiBlockCont
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
         return Textures.COKE_BRICKS;
-    }
-
-    @Override
-    public boolean hasMaintenanceMechanics() {
-        return false;
-    }
-
-    @Override
-    public boolean hasMufflerMechanics() {
-        return true;
     }
 
     @Override

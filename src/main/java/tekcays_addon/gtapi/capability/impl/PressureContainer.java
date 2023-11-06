@@ -90,6 +90,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
         return getNullableFluidStackLocalizedName(this.pressurizedFluidStack);
     }
 
+    @Nullable
     @Override
     public void setPressurizedFluidStack(FluidStack fluidStack) {
         this.pressurizedFluidStack = fluidStack;
@@ -169,4 +170,12 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
     }
 
 
+    /**
+     * Reset the pressure to default i.e. 1 bar and reset the {@code pressurizedFluidStack} to {@code null};
+     */
+    @Override
+    public void resetContainer() {
+        this.setPressure(ATMOSPHERIC_PRESSURE);
+        this.setPressurizedFluidStack(null);
+    }
 }

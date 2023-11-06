@@ -7,10 +7,12 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.recipes.Recipe;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
+import lombok.Getter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -18,6 +20,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
+import tekcays_addon.api.recipe.PressureContainerCheckRecipeHelper;
 import tekcays_addon.api.units.IPressureFormatting;
 import tekcays_addon.gtapi.metatileentity.multiblock.HeatedPressureContainerMultiblockController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
@@ -26,14 +30,20 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
 import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.HEAT_CONTAINER;
 
 
-public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContainerMultiblockController implements IPressureFormatting {
+public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContainerMultiblockController implements IPressureFormatting, PressureContainerCheckRecipeHelper {
 
     private int coilTier;
     private String displayedPressure;
     private int displayedTemp;
+
+    private int currentTemp;
+
+    private int currentPressure;
+    private int currentHeat;
 
     public MetaTileEntityPressurizedCrackingUnit(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.PRESSURE_CRACKING);
@@ -104,6 +114,42 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
         if (!getWorld().isRemote) updateLogic();
     }
 
+    protected void updateLogic() {
+
+        this.pressureContainer = getPressureContainer();
+        this.containerDetector = getContainerDetector();
+        this.heatContainer = getHeatContainer();
+
+        if (getOffsetTimer() % 20 == 0) {
+            if (containerDetector != null) containerDetector.setCurrentValue(currentPressure);
+        }
+
+        if (pressureContainer == null) return;
+        currentPressure = pressureContainer.getPressure();
+
+        if (heatContainer == null) return;
+        currentHeat = heatContainer.getHeat();
+        actualizeTemperature();
+        currentTemp = heatContainer.getTemperature();
+
+        if (recipeMapWorkable.isWorking()) {
+            pressureContainer.changePressurizedFluidStack(getPressurizedFluidStack(), - getPressurizedFluidStackRate());
+        }
+    }
+
+    private FluidStack getPressurizedFluidStack() {
+        return this.pressureContainer.getPressurizedFluidStack();
+    }
+
+    //TODO find a formula
+    private int getPressurizedFluidStackRate() {
+        return getPressurizedFluidStack().amount * currentPressure;
+    }
+
+    private void actualizeTemperature() {
+        heatContainer.setTemperature(ROOM_TEMPERATURE + currentHeat / (20));
+    }
+
     @Nonnull
     @Override
     protected ICubeRenderer getFrontOverlay() {
@@ -127,8 +173,23 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     }
 
     @Override
+    public int getCurrentPressure() {
+        return pressureContainer.getPressure();
+    }
+
+    @Override
     public int getCurrentTemperature() {
         return heatContainer.getTemperature();
+    }
+
+    @Override
+    public FluidStack getFluidStack() {
+        return pressureContainer.getPressurizedFluidStack();
+    }
+
+    @Override
+    public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
+        return checkRecipeHelper(recipe, consumeIfSuccess);
     }
 
 

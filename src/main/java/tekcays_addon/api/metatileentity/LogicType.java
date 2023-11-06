@@ -4,6 +4,9 @@ public enum LogicType {
 
     NO_ENERGY,
     NO_OVERCLOCK,
+    DETECTOR,
     PRESSURE,
-    HEAT
+    HEAT,
+    NO_MUFFLER,
+    NO_MAINTENANCE
 }

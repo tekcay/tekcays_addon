@@ -2,12 +2,13 @@ package tekcays_addon.gtapi.capability.containers;
 
 
 import net.minecraftforge.fluids.FluidStack;
+import tekcays_addon.gtapi.capability.machines.Container;
 
 import java.util.List;
 
 import static tekcays_addon.gtapi.consts.TKCYAValues.*;
 
-public interface IPressureContainer {
+public interface IPressureContainer extends Container {
 
     /**
      * Changes the amount of the {@link IPressureContainer} {@code pressurizedFluidStack} by adding a provided

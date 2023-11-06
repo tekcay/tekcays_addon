@@ -21,18 +21,16 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import tekcays_addon.api.metatileentity.LogicType;
-import tekcays_addon.gtapi.logic.ModulableLogic;
-import tekcays_addon.gtapi.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
+import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
 import java.util.List;
 
-public class MetaTileEntityCrystallizer extends NoEnergyRecipeMapMultiBlockController {
+public class MetaTileEntityCrystallizer extends ModulableRecipeMapController {
 
 
     public MetaTileEntityCrystallizer(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.CRYSTALLIZATION);
-        this.recipeMapWorkable = new ModulableLogic(this, LogicType.NO_OVERCLOCK, LogicType.NO_ENERGY);
+        super(metaTileEntityId, TKCYARecipeMaps.CRYSTALLIZATION, LogicType.NO_OVERCLOCK, LogicType.NO_ENERGY, LogicType.NO_MAINTENANCE, LogicType.NO_MUFFLER);
     }
 
     @Override
@@ -67,11 +65,6 @@ public class MetaTileEntityCrystallizer extends NoEnergyRecipeMapMultiBlockContr
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
         getFrontOverlay().renderOrientedState(renderState, translation, pipeline, getFrontFacing(), recipeMapWorkable.isActive(), recipeMapWorkable.isWorkingEnabled());
-    }
-
-    @Override
-    public boolean hasMaintenanceMechanics() {
-        return false;
     }
 
     @Override

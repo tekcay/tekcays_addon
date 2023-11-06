@@ -19,29 +19,30 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
+import tekcays_addon.api.metatileentity.LogicType;
+import tekcays_addon.common.blocks.TKCYAMetaBlocks;
+import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.gtapi.capability.containers.IPressureContainer;
-import tekcays_addon.gtapi.metatileentity.multiblock.PressureContainerNoEnergyMultiblockController;
+import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.render.TKCYATextures;
-import tekcays_addon.common.blocks.TKCYAMetaBlocks;
-import tekcays_addon.common.blocks.blocks.BlockBrick;
 
-import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.metatileentity.predicates.BrickHatchesPredicates.*;
 
-public class MetaTileEntityPrimitiveConverter extends PressureContainerNoEnergyMultiblockController {
+public class MetaTileEntityPrimitiveConverter extends ModulableRecipeMapController {
 
     private final BlockBrick.BrickType brick;
     private final IBlockState iBlockState;
     private IPressureContainer pressureContainer;
 
     public MetaTileEntityPrimitiveConverter(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.PRIMITIVE_CONVERTING_RECIPES);
+        super(metaTileEntityId, TKCYARecipeMaps.PRIMITIVE_CONVERTING_RECIPES, LogicType.NO_OVERCLOCK, LogicType.NO_ENERGY, LogicType.PRESSURE);
         this.brick = BlockBrick.BrickType.REINFORCED_BRICK;
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
     }

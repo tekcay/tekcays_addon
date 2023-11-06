@@ -15,19 +15,17 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
-import tekcays_addon.api.ContainerStructuring;
 import tekcays_addon.api.consts.DetectorModes;
 import tekcays_addon.api.detectors.CoverDetectorWrapper;
 import tekcays_addon.api.detectors.DetectorControllerHelper;
 import tekcays_addon.api.gui.CoverGuiHandler;
-import tekcays_addon.gtapi.utils.TKCYALog;
 
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static tekcays_addon.api.consts.DetectorModes.*;
-import static tekcays_addon.api.consts.NBTKeys.*;
+import static tekcays_addon.api.consts.DetectorModes.changeDetectModeAndSendMessage;
+import static tekcays_addon.api.consts.NBTKeys.DETECTOR_MODE_KEY;
+import static tekcays_addon.api.consts.NBTKeys.THRESHOLD_KEY;
 
 
 public class CoverDetector extends CoverBehavior implements ITickable, CoverWithUI, CoverGuiHandler, DetectorControllerHelper {

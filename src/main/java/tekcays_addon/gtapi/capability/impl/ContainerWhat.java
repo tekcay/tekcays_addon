@@ -6,7 +6,7 @@ import tekcays_addon.gtapi.capability.containers.IContainer;
 import tekcays_addon.api.consts.CapabilityId;
 
 @Getter
-public class Container<T, U extends T> implements IContainer<T, U> {
+public class ContainerWhat<T, U extends T> implements IContainer<T, U> {
 
     private Capability<T> containerCapability;
     private U container;

@@ -18,16 +18,14 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.metatileentity.LogicType;
-import tekcays_addon.gtapi.logic.ModulableLogic;
-import tekcays_addon.gtapi.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
+import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.render.TKCYATextures;
 
-public class MetaTileEntityPrimitiveMelter extends NoEnergyRecipeMapMultiBlockController {
+public class MetaTileEntityPrimitiveMelter extends ModulableRecipeMapController {
 
     public MetaTileEntityPrimitiveMelter(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.MELTER_RECIPES);
-        this.recipeMapWorkable = new ModulableLogic(this, LogicType.NO_ENERGY, LogicType.NO_OVERCLOCK);
+        super(metaTileEntityId, TKCYARecipeMaps.MELTER_RECIPES, LogicType.NO_ENERGY, LogicType.NO_OVERCLOCK, LogicType.NO_MAINTENANCE, LogicType.NO_MUFFLER);
     }
 
     @Override
@@ -75,13 +73,6 @@ public class MetaTileEntityPrimitiveMelter extends NoEnergyRecipeMapMultiBlockCo
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityPrimitiveMelter(metaTileEntityId);
-    }
-
-    public boolean hasMaintenanceMechanics() {
-        return false;
-    }
-    public boolean hasMufflerMechanics() {
-        return false;
     }
 }
 

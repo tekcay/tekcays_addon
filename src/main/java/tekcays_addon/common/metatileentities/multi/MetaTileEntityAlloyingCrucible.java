@@ -13,16 +13,14 @@ import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.api.metatileentity.LogicType;
-import tekcays_addon.gtapi.logic.ModulableLogic;
-import tekcays_addon.gtapi.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
+import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.render.TKCYATextures;
 
-public class MetaTileEntityAlloyingCrucible extends NoEnergyRecipeMapMultiBlockController {
+public class MetaTileEntityAlloyingCrucible extends ModulableRecipeMapController {
 
     public MetaTileEntityAlloyingCrucible(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.ALLOYING_CRUCIBLE_RECIPES);
-        this.recipeMapWorkable = new ModulableLogic(this, LogicType.NO_ENERGY, LogicType.NO_OVERCLOCK);
+        super(metaTileEntityId, TKCYARecipeMaps.ALLOYING_CRUCIBLE_RECIPES, LogicType.NO_ENERGY, LogicType.NO_OVERCLOCK, LogicType.NO_MAINTENANCE, LogicType.NO_MUFFLER);
     }
     
     @Override

@@ -19,19 +19,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import tekcays_addon.api.metatileentity.LogicType;
-import tekcays_addon.gtapi.logic.ModulableLogic;
-import tekcays_addon.gtapi.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
+import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class MetaTileEntityPrimitiveFermenter extends NoEnergyRecipeMapMultiBlockController {
+public class MetaTileEntityPrimitiveFermenter extends ModulableRecipeMapController {
 
     public MetaTileEntityPrimitiveFermenter(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.FERMENTATION_RECIPES);
-        this.recipeMapWorkable = new ModulableLogic(this, LogicType.NO_OVERCLOCK, LogicType.NO_ENERGY);
+        super(metaTileEntityId, TKCYARecipeMaps.FERMENTATION_RECIPES, LogicType.NO_OVERCLOCK, LogicType.NO_ENERGY, LogicType.NO_MUFFLER, LogicType.NO_MAINTENANCE);
         this.recipeMapWorkable.setParallelLimit(32);
     }
 
@@ -78,13 +76,6 @@ public class MetaTileEntityPrimitiveFermenter extends NoEnergyRecipeMapMultiBloc
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityPrimitiveFermenter(metaTileEntityId);
-    }
-
-    public boolean hasMaintenanceMechanics() {
-        return false;
-    }
-    public boolean hasMufflerMechanics() {
-        return false;
     }
 }
 

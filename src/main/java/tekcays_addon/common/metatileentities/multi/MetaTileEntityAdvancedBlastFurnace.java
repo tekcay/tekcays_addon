@@ -5,7 +5,6 @@ import gregtech.api.metatileentity.IDataInfoProvider;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
@@ -27,17 +26,17 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
-import tekcays_addon.gtapi.capability.containers.IHeatContainer;
-import tekcays_addon.gtapi.capability.machines.IHeatMachine;
-import tekcays_addon.gtapi.capability.list.HeatContainerList;
-import tekcays_addon.gtapi.metatileentity.multiblock.HeatContainerNoEnergyMultiblockController;
-import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
-import tekcays_addon.gtapi.recipes.recipeproperties.NoEnergyTemperatureProperty;
-import tekcays_addon.gtapi.render.TKCYATextures;
-import tekcays_addon.gtapi.consts.TKCYAValues;
+import tekcays_addon.api.metatileentity.LogicType;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
+import tekcays_addon.gtapi.capability.containers.IHeatContainer;
+import tekcays_addon.gtapi.capability.list.HeatContainerList;
+import tekcays_addon.gtapi.consts.TKCYAValues;
+import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
+import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
+import tekcays_addon.gtapi.recipes.recipeproperties.NoEnergyTemperatureProperty;
+import tekcays_addon.gtapi.render.TKCYATextures;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -46,7 +45,7 @@ import java.util.List;
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.ADVANCED_BLAST_FURNACE_RECIPES;
 
-public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMultiblockController implements IHeatMachine, IDataInfoProvider{
+public class MetaTileEntityAdvancedBlastFurnace extends ModulableRecipeMapController implements IDataInfoProvider{
 
     private final BlockBrick.BrickType brick;
     private final IBlockState iBlockState;
@@ -65,7 +64,7 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
     private boolean startedRecipe;
 
     public MetaTileEntityAdvancedBlastFurnace(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick) {
-        super(metaTileEntityId, ADVANCED_BLAST_FURNACE_RECIPES);
+        super(metaTileEntityId, ADVANCED_BLAST_FURNACE_RECIPES, LogicType.NO_OVERCLOCK, LogicType.NO_ENERGY, LogicType.HEAT);
         this.brick = brick;
         this.maxTemp = brick.getBrickTemperature();
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);

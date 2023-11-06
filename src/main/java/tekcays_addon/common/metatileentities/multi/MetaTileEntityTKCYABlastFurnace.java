@@ -2,7 +2,7 @@ package tekcays_addon.common.metatileentities.multi;
 
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import gregtech.api.metatileentity.multiblock.*;
+import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.recipes.Recipe;
@@ -18,28 +18,28 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
-import tekcays_addon.gtapi.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
+import tekcays_addon.api.metatileentity.LogicType;
+import tekcays_addon.common.blocks.TKCYAMetaBlocks;
+import tekcays_addon.common.blocks.blocks.BlockBrick;
+import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.recipes.recipeproperties.NoEnergyTemperatureProperty;
 import tekcays_addon.gtapi.render.TKCYATextures;
-import tekcays_addon.common.blocks.TKCYAMetaBlocks;
-import tekcays_addon.common.blocks.blocks.BlockBrick;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.metatileentity.predicates.BrickHatchesPredicates.*;
 
-public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlockController {
+public class MetaTileEntityTKCYABlastFurnace extends ModulableRecipeMapController {
 
     private final BlockBrick.BrickType brick;
     private final IBlockState iBlockState;
 
     public MetaTileEntityTKCYABlastFurnace(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick) {
-        super(metaTileEntityId, TKCYARecipeMaps.BLASTING_RECIPES);
+        super(metaTileEntityId, TKCYARecipeMaps.BLASTING_RECIPES, LogicType.NO_OVERCLOCK, LogicType.NO_ENERGY, LogicType.NO_MAINTENANCE);
         this.brick = brick;
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
     }
@@ -80,16 +80,6 @@ public class MetaTileEntityTKCYABlastFurnace extends NoEnergyRecipeMapMultiBlock
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
         return TKCYATextures.BRICKS[brick.getTextureId()];
-    }
-
-    @Override
-    public boolean hasMaintenanceMechanics() {
-        return false;
-    }
-
-    @Override
-    public boolean hasMufflerMechanics() {
-        return true;
     }
 
     @Override
