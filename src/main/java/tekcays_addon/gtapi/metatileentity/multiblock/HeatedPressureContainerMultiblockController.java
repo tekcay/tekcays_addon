@@ -50,19 +50,5 @@ public abstract class HeatedPressureContainerMultiblockController extends Recipe
         this.containerDetector = list2.isEmpty() ? null : list2.get(0);
     }
 
-    @Override
-    public void invalidateStructure() {
-        super.invalidateStructure();
-    }
-
-    @Override
-    public TraceabilityPredicate autoAbilities(boolean checkEnergyIn, boolean checkMaintenance, boolean checkItemIn, boolean checkItemOut, boolean checkFluidIn, boolean checkFluidOut, boolean checkMuffler) {
-        TraceabilityPredicate predicate = super.autoAbilities(checkEnergyIn, checkMaintenance, checkItemIn, checkItemOut, checkFluidIn, checkFluidOut, checkMuffler);
-        predicate = predicate
-                .or(abilities(PRESSURE_CONTAINER)).setExactLimit(1)
-                .or(abilities(CONTAINER_CONTROL)).setExactLimit(1);
-        return predicate;
-    }
-
 
 }

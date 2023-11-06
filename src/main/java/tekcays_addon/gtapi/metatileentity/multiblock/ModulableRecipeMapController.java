@@ -18,11 +18,10 @@ import tekcays_addon.gtapi.logic.ModulableLogic;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static tekcays_addon.gtapi.consts.TKCYAValues.*;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MAX_PRESSURE;
 
 public abstract class ModulableRecipeMapController extends RecipeMapMultiblockController implements IPressureMachine, IHeatMachine, IContainerDetectorMachine {
 
@@ -90,13 +89,10 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
     public TraceabilityPredicate autoAbilities(boolean checkEnergyIn, boolean checkMaintenance, boolean checkItemIn, boolean checkItemOut, boolean checkFluidIn, boolean checkFluidOut, boolean checkMuffler) {
         TraceabilityPredicate predicate = super.autoAbilities(this.checkEnergyIn, this.checkMaintenance, checkItemIn, checkItemOut, checkFluidIn, checkFluidOut, this.checkMuffler);
         if (logicTypes.contains(LogicType.PRESSURE)) {
-            predicate = predicate.or(abilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER));
-        }
-        if (logicTypes.contains(LogicType.HEAT)) {
-            predicate = predicate.or(abilities(TKCYAMultiblockAbility.HEAT_CONTAINER));
+            predicate = predicate.or(abilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER)).setExactLimit(1).setPreviewCount(1);
         }
         if (logicTypes.contains(LogicType.DETECTOR)) {
-            predicate = predicate.or(abilities(TKCYAMultiblockAbility.CONTAINER_CONTROL));
+            predicate = predicate.or(abilities(TKCYAMultiblockAbility.CONTAINER_CONTROL)).setPreviewCount(1);
         }
         return predicate;
     }

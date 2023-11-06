@@ -66,7 +66,6 @@ public class ModulableLogic extends MultiblockRecipeLogic {
 
     @Override
     public void invalidate() {
-        if (logicTypes.contains(LogicType.NO_ENERGY)) {
             previousRecipe = null;
             progressTime = 0;
             maxProgressTime = 0;
@@ -74,8 +73,5 @@ public class ModulableLogic extends MultiblockRecipeLogic {
             fluidOutputs = null;
             itemOutputs = null;
             setActive(false);
-            return;
-        }
-        super.invalidate();
     }
 }
