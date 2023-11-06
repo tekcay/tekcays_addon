@@ -12,7 +12,6 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
-import lombok.Getter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -21,9 +20,10 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
+import tekcays_addon.api.metatileentity.LogicType;
 import tekcays_addon.api.recipe.PressureContainerCheckRecipeHelper;
 import tekcays_addon.api.units.IPressureFormatting;
-import tekcays_addon.gtapi.metatileentity.multiblock.HeatedPressureContainerMultiblockController;
+import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
 import javax.annotation.Nonnull;
@@ -34,23 +34,18 @@ import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
 import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.HEAT_CONTAINER;
 
 
-public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContainerMultiblockController implements IPressureFormatting, PressureContainerCheckRecipeHelper {
+public class MetaTileEntityPressurizedCrackingUnit extends ModulableRecipeMapController implements IPressureFormatting, PressureContainerCheckRecipeHelper {
 
     private int coilTier;
     private String displayedPressure;
     private int displayedTemp;
 
-    private int currentTemp;
-
-    private int currentPressure;
-    private int currentHeat;
-
     public MetaTileEntityPressurizedCrackingUnit(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.PRESSURE_CRACKING);
-        this.volume = 1;
+        super(metaTileEntityId, TKCYARecipeMaps.PRESSURE_CRACKING, LogicType.HEAT, LogicType.PRESSURE);
+        //this.volume = 1;
         this.initializeAbilities();
         this.displayedPressure = getCurrentPressureWithUnit();
-        this.displayedTemp = currentTemp;
+        this.displayedTemp = getCurrentTemperature();
     }
 
     @Override
@@ -85,7 +80,7 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     }
 
     private String getCurrentPressureWithUnit() {
-        return convertPressureToBar(currentPressure, true);
+        return convertPressureToBar(getCurrentPressure(), true);
     }
 
     @Override
@@ -97,7 +92,7 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
         }
         if (isStructureFormed()) {
             textList.add(new TextComponentTranslation("gregtech.multiblock.cracking_unit.energy", 100 - 10 * coilTier));
-            textList.add(new TextComponentTranslation("tkcya.machine.text.pressurized.fluid", pressureContainer.getPressurizedFluidStackLocalizedName(), displayedPressure));
+            textList.add(new TextComponentTranslation("tkcya.machine.text.pressurized.fluid", getPressureContainer().getPressurizedFluidStackLocalizedName(), displayedPressure));
             textList.add(new TextComponentTranslation("tkcya.machine.text.temperature", displayedTemp));
         }
     }
@@ -106,48 +101,6 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("gregtech.machine.cracker.tooltip.1"));
-    }
-
-    @Override
-    protected void updateFormedValid() {
-        super.updateFormedValid();
-        if (!getWorld().isRemote) updateLogic();
-    }
-
-    protected void updateLogic() {
-
-        this.pressureContainer = getPressureContainer();
-        this.containerDetector = getContainerDetector();
-        this.heatContainer = getHeatContainer();
-
-        if (getOffsetTimer() % 20 == 0) {
-            if (containerDetector != null) containerDetector.setCurrentValue(currentPressure);
-        }
-
-        if (pressureContainer == null) return;
-        currentPressure = pressureContainer.getPressure();
-
-        if (heatContainer == null) return;
-        currentHeat = heatContainer.getHeat();
-        actualizeTemperature();
-        currentTemp = heatContainer.getTemperature();
-
-        if (recipeMapWorkable.isWorking()) {
-            pressureContainer.changePressurizedFluidStack(getPressurizedFluidStack(), - getPressurizedFluidStackRate());
-        }
-    }
-
-    private FluidStack getPressurizedFluidStack() {
-        return this.pressureContainer.getPressurizedFluidStack();
-    }
-
-    //TODO find a formula
-    private int getPressurizedFluidStackRate() {
-        return getPressurizedFluidStack().amount * currentPressure;
-    }
-
-    private void actualizeTemperature() {
-        heatContainer.setTemperature(ROOM_TEMPERATURE + currentHeat / (20));
     }
 
     @Nonnull
@@ -167,29 +120,30 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     }
 
     @Override
+    protected void actualizeTemperature() {
+        getHeatContainer().setTemperature(ROOM_TEMPERATURE + getCurrentHeat() / (20));
+    }
+
+    @Override
     public void invalidateStructure() {
         super.invalidateStructure();
         this.coilTier = -1;
     }
 
-    @Override
-    public int getCurrentPressure() {
-        return pressureContainer.getPressure();
-    }
-
-    @Override
-    public int getCurrentTemperature() {
-        return heatContainer.getTemperature();
-    }
-
-    @Override
-    public FluidStack getFluidStack() {
-        return pressureContainer.getPressurizedFluidStack();
-    }
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
         return checkRecipeHelper(recipe, consumeIfSuccess);
+    }
+
+    @Override
+    public int getCurrentTemperature() {
+        return super.getCurrentTemp();
+    }
+
+    @Override
+    public FluidStack getFluidStack() {
+        return getPressureContainer().getPressurizedFluidStack();
     }
 
 

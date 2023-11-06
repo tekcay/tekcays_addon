@@ -33,6 +33,7 @@ import java.util.List;
 
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.metatileentity.predicates.BrickHatchesPredicates.*;
+import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
 
 public class MetaTileEntityPrimitiveRoastOven extends ModulableRecipeMapController {
 
@@ -90,14 +91,8 @@ public class MetaTileEntityPrimitiveRoastOven extends ModulableRecipeMapControll
     }
 
     @Override
-    protected void updateFormedValid() {
-        if (!getWorld().isRemote) {
-            updateLogic();
-        }
-    }
-
-    private void updateLogic() {
-        IPressureContainer pressureContainer = getAbilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER).get(0);
+    protected void actualizeTemperature() {
+        getHeatContainer().setTemperature(ROOM_TEMPERATURE + getCurrentHeat() / (20));
     }
 
     @Override

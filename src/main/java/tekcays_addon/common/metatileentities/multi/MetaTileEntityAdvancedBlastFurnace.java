@@ -169,12 +169,13 @@ public class MetaTileEntityAdvancedBlastFurnace extends ModulableRecipeMapContro
         return this.brick;
     }
 
-    private void actualizeTemperature() {
+    @Override
+    protected void actualizeTemperature() {
         heatContainer.setTemperature(TKCYAValues.ROOM_TEMPERATURE + currentHeat / (heatMultiplier * height));
     }
 
     @Override
-    protected void updateFormedValid() {
+    public void updateFormedValid() {
         super.updateFormedValid();
         if (!getWorld().isRemote) {
             updateLogic();

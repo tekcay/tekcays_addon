@@ -4,7 +4,9 @@ import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.RecipeMap;
+import lombok.Getter;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.metatileentity.LogicType;
 import tekcays_addon.gtapi.capability.containers.IContainerDetector;
 import tekcays_addon.gtapi.capability.containers.IHeatContainer;
@@ -17,33 +19,28 @@ import tekcays_addon.gtapi.capability.machines.IPressureMachine;
 import tekcays_addon.gtapi.logic.ModulableLogic;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static tekcays_addon.gtapi.consts.TKCYAValues.MAX_PRESSURE;
+import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
 
 public abstract class ModulableRecipeMapController extends RecipeMapMultiblockController implements IPressureMachine, IHeatMachine, IContainerDetectorMachine {
 
     private IHeatContainer heatContainer;
     private IPressureContainer pressureContainer;
     private IContainerDetector containerDetector;
-    private List<LogicType> logicTypes;
     boolean checkEnergyIn, checkMaintenance, checkMuffler;
+    @Getter
+    private int currentTemp, currentHeat, currentPressure, volume;
+    private final List<LogicType> logicTypes;
 
     public ModulableRecipeMapController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap, LogicType logicType, LogicType... logicTypes) {
         super(metaTileEntityId, recipeMap);
         this.recipeMapWorkable = new ModulableLogic(this, logicTypes);
-        setLogicType(logicType, logicTypes);
+        this.logicTypes = LogicType.setLogicType(logicType, logicTypes);
         this.checkEnergyIn = !this.logicTypes.contains(LogicType.NO_ENERGY);
         this.checkMaintenance = !this.logicTypes.contains(LogicType.NO_MAINTENANCE);
         this.checkMuffler = !this.logicTypes.contains(LogicType.NO_MUFFLER);
-    }
-
-    private void setLogicType(LogicType logicType, LogicType... logicTypes) {
-        this.logicTypes = new ArrayList<>();
-        this.logicTypes.add(logicType);
-        Collections.addAll(this.logicTypes, logicTypes);
     }
 
     @Override
@@ -124,5 +121,39 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
         if (logicTypes.contains(LogicType.HEAT)) getHeatContainer().resetContainer();
         if (logicTypes.contains(LogicType.PRESSURE)) getPressureContainer().resetContainer();
     }
+
+    @Override
+    public void updateFormedValid() {
+
+        if (logicTypes.contains(LogicType.HEAT)) {
+            currentHeat = heatContainer.getHeat();
+            actualizeTemperature();
+            currentTemp = heatContainer.getTemperature();
+        }
+
+        if (logicTypes.contains(LogicType.PRESSURE)) {
+            currentPressure = pressureContainer.getPressure();
+            if (logicTypes.contains(LogicType.DETECTOR) && getOffsetTimer() % 20 == 0) {
+                containerDetector.setCurrentValue(currentPressure);
+            }
+            if (recipeMapWorkable.isWorking()) {
+                    pressureContainer.changePressurizedFluidStack(getPressurizedFluidStack(), -getPressurizedFluidStackRate());
+            }
+        }
+    }
+
+
+    private FluidStack getPressurizedFluidStack() {
+        return this.pressureContainer.getPressurizedFluidStack();
+    }
+
+    //TODO find a formula
+    private int getPressurizedFluidStackRate() {
+        return getPressurizedFluidStack().amount * currentPressure;
+    }
+
+    protected abstract void actualizeTemperature();
+
+
 
 }
