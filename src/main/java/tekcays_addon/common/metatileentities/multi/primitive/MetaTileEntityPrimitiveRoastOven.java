@@ -21,7 +21,6 @@ import net.minecraft.world.World;
 import tekcays_addon.api.metatileentity.LogicType;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
-import tekcays_addon.gtapi.capability.containers.IPressureContainer;
 import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
@@ -88,11 +87,6 @@ public class MetaTileEntityPrimitiveRoastOven extends ModulableRecipeMapControll
             if (pressure > 100000) textList.add(new TextComponentTranslation("tkcya.machine.text.pressure", String.format("%.3f", pressure/1000D) + " kPa"));
             if (pressure > 1000000) textList.add(new TextComponentTranslation("tkcya.machine.text.pressure", String.format("%.3f", pressure/1000000D) + " MPa"));
         }
-    }
-
-    @Override
-    protected void actualizeTemperature() {
-        getHeatContainer().setTemperature(ROOM_TEMPERATURE + getCurrentHeat() / (20));
     }
 
     @Override

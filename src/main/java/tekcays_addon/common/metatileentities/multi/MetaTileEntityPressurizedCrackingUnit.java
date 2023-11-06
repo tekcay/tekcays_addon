@@ -120,16 +120,10 @@ public class MetaTileEntityPressurizedCrackingUnit extends ModulableRecipeMapCon
     }
 
     @Override
-    protected void actualizeTemperature() {
-        getHeatContainer().setTemperature(ROOM_TEMPERATURE + getCurrentHeat() / (20));
-    }
-
-    @Override
     public void invalidateStructure() {
         super.invalidateStructure();
         this.coilTier = -1;
     }
-
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {

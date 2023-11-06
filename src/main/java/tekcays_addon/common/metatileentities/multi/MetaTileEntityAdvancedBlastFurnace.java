@@ -8,7 +8,6 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
-import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
@@ -27,6 +26,7 @@ import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
 import tekcays_addon.api.metatileentity.LogicType;
+import tekcays_addon.api.metatileentity.predicates.Predicates;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
@@ -62,6 +62,7 @@ public class MetaTileEntityAdvancedBlastFurnace extends ModulableRecipeMapContro
     private final int HEAT_DROP = 5000;
     private final int PARALLEL_MULTIPLIER = 2;
     private boolean startedRecipe;
+    private final String blastFurnaceHeight = "blastFurnaceHeight";
 
     public MetaTileEntityAdvancedBlastFurnace(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick) {
         super(metaTileEntityId, ADVANCED_BLAST_FURNACE_RECIPES, LogicType.NO_ENERGY, LogicType.HEAT);
@@ -147,16 +148,6 @@ public class MetaTileEntityAdvancedBlastFurnace extends ModulableRecipeMapContro
     }
 
     @Override
-    public boolean hasMaintenanceMechanics() {
-        return true;
-    }
-
-    @Override
-    public boolean hasMufflerMechanics() {
-        return true;
-    }
-
-    @Override
     protected ICubeRenderer getFrontOverlay() {
         return Textures.COKE_OVEN_OVERLAY;
     }
@@ -204,6 +195,7 @@ public class MetaTileEntityAdvancedBlastFurnace extends ModulableRecipeMapContro
         actualizeTemperature();
     }
 
+    @Nonnull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
@@ -223,8 +215,8 @@ public class MetaTileEntityAdvancedBlastFurnace extends ModulableRecipeMapContro
                 .where('O', states(getCasingState())
                         .or(abilities(TKCYAMultiblockAbility.BRICK_IMPORT_ITEMS).setPreviewCount(1))
                         .or(abilities(TKCYAMultiblockAbility.BRICK_IMPORT_FLUIDS).setPreviewCount(1)))
-                .where('P', heightIndicatorPredicate())
-                .where('M', states(getCasingState())) //TODO maintenance ?
+                .where('P', Predicates.heightIndicatorPredicate(air(), blastFurnaceHeight, 1))
+                .where('M', states(getCasingState()))
                 .where('U', abilities(TKCYAMultiblockAbility.BRICK_MUFFLER_HATCH))
                 .where('#', air())
                 .where('A', any())
@@ -249,23 +241,11 @@ public class MetaTileEntityAdvancedBlastFurnace extends ModulableRecipeMapContro
         this.height = buf.readInt();
     }
 
-
-    // This function is highly useful for detecting the length of this multiblock.
-    public static TraceabilityPredicate heightIndicatorPredicate() {
-        return new TraceabilityPredicate((blockWorldState) -> {
-            if (air().test(blockWorldState)) {
-                blockWorldState.getMatchContext().increment("blastFurnaceHeight", 1);
-                return true;
-            } else
-                return false;
-        });
-    }
-
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
         initializeAbilities();
-        this.height = context.getOrDefault("blastFurnaceHeight", 1);
+        this.height = context.getOrDefault(blastFurnaceHeight, 1);
         this.recipeMapWorkable.setParallelLimit(height < 2 ? 1 : height * PARALLEL_MULTIPLIER);
 
         Object type = context.get("CoilType");

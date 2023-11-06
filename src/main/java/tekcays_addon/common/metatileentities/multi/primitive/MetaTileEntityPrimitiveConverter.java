@@ -5,7 +5,6 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.MetaTileEntities;
@@ -22,7 +21,6 @@ import net.minecraft.world.World;
 import tekcays_addon.api.metatileentity.LogicType;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
-import tekcays_addon.gtapi.capability.containers.IPressureContainer;
 import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
@@ -34,15 +32,15 @@ import java.util.List;
 
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.metatileentity.predicates.BrickHatchesPredicates.*;
+import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
 
 public class MetaTileEntityPrimitiveConverter extends ModulableRecipeMapController {
 
     private final BlockBrick.BrickType brick;
     private final IBlockState iBlockState;
-    private IPressureContainer pressureContainer;
 
     public MetaTileEntityPrimitiveConverter(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.PRIMITIVE_CONVERTING_RECIPES, LogicType.NO_ENERGY, LogicType.PRESSURE);
+        super(metaTileEntityId, TKCYARecipeMaps.PRIMITIVE_CONVERTING_RECIPES, LogicType.NO_ENERGY, LogicType.PRESSURE, LogicType.NO_MAINTENANCE);
         this.brick = BlockBrick.BrickType.REINFORCED_BRICK;
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
     }
@@ -50,11 +48,6 @@ public class MetaTileEntityPrimitiveConverter extends ModulableRecipeMapControll
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityPrimitiveConverter(metaTileEntityId);
-    }
-
-    @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
     }
 
     @Override
@@ -92,31 +85,11 @@ public class MetaTileEntityPrimitiveConverter extends ModulableRecipeMapControll
     }
 
     @Override
-    protected void updateFormedValid() {
-        if (!getWorld().isRemote) {
-            updateLogic();
-        }
-    }
-
-    private void updateLogic() {
-        IPressureContainer pressureContainer = getAbilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER).get(0);
-    }
-
-    @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
         return TKCYATextures.BRICKS[BlockBrick.REINFORCED_BRICK];
     }
 
-    @Override
-    public boolean hasMaintenanceMechanics() {
-        return false;
-    }
-
-    @Override
-    public boolean hasMufflerMechanics() {
-        return true;
-    }
-
+    @Nonnull
     @Override
     protected ICubeRenderer getFrontOverlay() {
         return Textures.COKE_OVEN_OVERLAY;
@@ -126,6 +99,7 @@ public class MetaTileEntityPrimitiveConverter extends ModulableRecipeMapControll
         return iBlockState;
     }
 
+    @Nonnull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)

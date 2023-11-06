@@ -59,6 +59,7 @@ public class MetaTileEntityPrimitiveFermenter extends ModulableRecipeMapControll
         getFrontOverlay().renderSided(getFrontFacing(), renderState, translation, pipeline);
     }
 
+    @Nonnull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RelativeDirection.FRONT, RelativeDirection.UP, RelativeDirection.RIGHT)

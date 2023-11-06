@@ -21,6 +21,7 @@ import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 import static gregtech.api.util.RelativeDirection.*;
@@ -80,6 +81,7 @@ public class MetaTileEntityTKCYACokeOven extends ModulableRecipeMapController {
         return Textures.COKE_BRICKS;
     }
 
+    @Nonnull
     @Override
     protected ICubeRenderer getFrontOverlay() {
         return Textures.COKE_OVEN_OVERLAY;
@@ -89,6 +91,7 @@ public class MetaTileEntityTKCYACokeOven extends ModulableRecipeMapController {
         return iBlockState;
     }
 
+    @Nonnull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
@@ -110,6 +113,5 @@ public class MetaTileEntityTKCYACokeOven extends ModulableRecipeMapController {
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityTKCYACokeOven(metaTileEntityId);
     }
-
 }
 

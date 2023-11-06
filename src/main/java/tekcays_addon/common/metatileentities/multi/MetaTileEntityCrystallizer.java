@@ -24,7 +24,10 @@ import tekcays_addon.api.metatileentity.LogicType;
 import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
+import javax.annotation.Nonnull;
 import java.util.List;
+
+import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
 
 public class MetaTileEntityCrystallizer extends ModulableRecipeMapController {
 
@@ -42,6 +45,7 @@ public class MetaTileEntityCrystallizer extends ModulableRecipeMapController {
         return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.INVAR_HEATPROOF);
     }
 
+    @Nonnull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
@@ -86,9 +90,5 @@ public class MetaTileEntityCrystallizer extends ModulableRecipeMapController {
             }
         }
     }
-
-
-
-
 }
 

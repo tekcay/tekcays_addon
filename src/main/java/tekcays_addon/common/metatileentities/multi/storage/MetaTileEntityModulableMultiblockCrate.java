@@ -37,7 +37,7 @@ import java.util.List;
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.consts.NBTKeys.ITEM_COUNT;
 import static tekcays_addon.api.consts.NBTKeys.STORED_ITEM;
-import static tekcays_addon.api.metatileentity.Predicates.isAir;
+import static tekcays_addon.api.metatileentity.predicates.Predicates.isAir;
 import static tekcays_addon.api.metatileentity.TankMethods.getBaseTextureForTank;
 import static tekcays_addon.api.metatileentity.TankMethods.getBlockState;
 

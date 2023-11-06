@@ -82,6 +82,7 @@ public class MetaTileEntityTKCYABlastFurnace extends ModulableRecipeMapControlle
         return TKCYATextures.BRICKS[brick.getTextureId()];
     }
 
+    @Nonnull
     @Override
     protected ICubeRenderer getFrontOverlay() {
         return Textures.COKE_OVEN_OVERLAY;
@@ -95,6 +96,7 @@ public class MetaTileEntityTKCYABlastFurnace extends ModulableRecipeMapControlle
         return this.brick;
     }
 
+    @Nonnull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)

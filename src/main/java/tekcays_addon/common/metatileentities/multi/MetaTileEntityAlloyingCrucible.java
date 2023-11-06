@@ -17,6 +17,10 @@ import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapControlle
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.render.TKCYATextures;
 
+import javax.annotation.Nonnull;
+
+import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
+
 public class MetaTileEntityAlloyingCrucible extends ModulableRecipeMapController {
 
     public MetaTileEntityAlloyingCrucible(ResourceLocation metaTileEntityId) {
@@ -38,11 +42,13 @@ public class MetaTileEntityAlloyingCrucible extends ModulableRecipeMapController
         return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.PRIMITIVE_BRICKS);
     }
 
+    @Nonnull
     @Override
     protected ICubeRenderer getFrontOverlay() {
         return TKCYATextures.ALLOYING_CRUCIBLE_OVERLAY;
     }
 
+    @Nonnull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RelativeDirection.FRONT, RelativeDirection.UP, RelativeDirection.RIGHT)
@@ -55,6 +61,4 @@ public class MetaTileEntityAlloyingCrucible extends ModulableRecipeMapController
                 .where('Y', selfPredicate())
                 .build();
     }
-
-
 }

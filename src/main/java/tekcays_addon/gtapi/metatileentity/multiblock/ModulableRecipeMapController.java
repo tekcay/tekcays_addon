@@ -124,6 +124,7 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
 
     @Override
     public void updateFormedValid() {
+        super.updateFormedValid();
 
         if (logicTypes.contains(LogicType.HEAT)) {
             currentHeat = heatContainer.getHeat();
@@ -152,7 +153,9 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
         return getPressurizedFluidStack().amount * currentPressure;
     }
 
-    protected abstract void actualizeTemperature();
+    protected void actualizeTemperature() {
+        getHeatContainer().setTemperature(ROOM_TEMPERATURE + getCurrentHeat() / (20));
+    }
 
 
 

@@ -32,7 +32,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static gregtech.api.util.RelativeDirection.*;
-import static tekcays_addon.api.metatileentity.Predicates.isAir;
+import static tekcays_addon.api.metatileentity.predicates.Predicates.isAir;
 import static tekcays_addon.api.metatileentity.TankMethods.*;
 import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.*;
 
