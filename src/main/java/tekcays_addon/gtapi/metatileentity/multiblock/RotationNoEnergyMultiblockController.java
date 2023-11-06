@@ -19,7 +19,7 @@ public abstract class RotationNoEnergyMultiblockController extends RecipeMapMult
 
     public RotationNoEnergyMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
         super(metaTileEntityId, recipeMap);
-        this.recipeMapWorkable = new ModulableLogic(this, LogicType.NO_ENERGY, LogicType.NO_OVERCLOCK);
+        this.recipeMapWorkable = new ModulableLogic(this, LogicType.NO_ENERGY);
     }
 
     @Override

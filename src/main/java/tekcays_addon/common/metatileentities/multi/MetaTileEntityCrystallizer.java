@@ -30,7 +30,7 @@ public class MetaTileEntityCrystallizer extends ModulableRecipeMapController {
 
 
     public MetaTileEntityCrystallizer(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.CRYSTALLIZATION, LogicType.NO_OVERCLOCK, LogicType.NO_ENERGY, LogicType.NO_MAINTENANCE, LogicType.NO_MUFFLER);
+        super(metaTileEntityId, TKCYARecipeMaps.CRYSTALLIZATION, LogicType.NO_ENERGY, LogicType.NO_MAINTENANCE, LogicType.NO_MUFFLER);
     }
 
     @Override

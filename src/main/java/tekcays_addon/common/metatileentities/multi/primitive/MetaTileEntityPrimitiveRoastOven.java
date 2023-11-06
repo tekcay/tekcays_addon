@@ -40,7 +40,7 @@ public class MetaTileEntityPrimitiveRoastOven extends ModulableRecipeMapControll
     private final IBlockState iBlockState;
 
     public MetaTileEntityPrimitiveRoastOven(ResourceLocation metaTileEntityId, BlockBrick.BrickType brickType) {
-        super(metaTileEntityId, TKCYARecipeMaps.ROASTING, LogicType.NO_OVERCLOCK, LogicType.NO_ENERGY, LogicType.PRESSURE, LogicType.NO_MAINTENANCE);
+        super(metaTileEntityId, TKCYARecipeMaps.ROASTING, LogicType.NO_ENERGY, LogicType.PRESSURE, LogicType.NO_MAINTENANCE);
         this.brick = brickType;
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
     }

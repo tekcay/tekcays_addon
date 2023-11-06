@@ -25,7 +25,7 @@ import tekcays_addon.gtapi.render.TKCYATextures;
 public class MetaTileEntityPrimitiveMelter extends ModulableRecipeMapController {
 
     public MetaTileEntityPrimitiveMelter(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.MELTER_RECIPES, LogicType.NO_ENERGY, LogicType.NO_OVERCLOCK, LogicType.NO_MAINTENANCE, LogicType.NO_MUFFLER);
+        super(metaTileEntityId, TKCYARecipeMaps.MELTER_RECIPES, LogicType.NO_ENERGY, LogicType.NO_MAINTENANCE, LogicType.NO_MUFFLER);
     }
 
     @Override

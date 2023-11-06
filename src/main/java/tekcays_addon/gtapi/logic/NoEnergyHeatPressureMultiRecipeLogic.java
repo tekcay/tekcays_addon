@@ -28,7 +28,7 @@ public class NoEnergyHeatPressureMultiRecipeLogic extends ModulableLogic impleme
     protected RecipeMapMultiblockController recipeMapMultiblockController;
 
     public NoEnergyHeatPressureMultiRecipeLogic(RecipeMapMultiblockController tileEntity) {
-        super(tileEntity, LogicType.NO_ENERGY, LogicType.NO_OVERCLOCK);
+        super(tileEntity, LogicType.NO_ENERGY);
         this.recipeMapMultiblockController = tileEntity;
     }
 

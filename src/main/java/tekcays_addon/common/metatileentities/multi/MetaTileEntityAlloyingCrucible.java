@@ -20,7 +20,7 @@ import tekcays_addon.gtapi.render.TKCYATextures;
 public class MetaTileEntityAlloyingCrucible extends ModulableRecipeMapController {
 
     public MetaTileEntityAlloyingCrucible(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.ALLOYING_CRUCIBLE_RECIPES, LogicType.NO_ENERGY, LogicType.NO_OVERCLOCK, LogicType.NO_MAINTENANCE, LogicType.NO_MUFFLER);
+        super(metaTileEntityId, TKCYARecipeMaps.ALLOYING_CRUCIBLE_RECIPES, LogicType.NO_ENERGY, LogicType.NO_MAINTENANCE, LogicType.NO_MUFFLER);
     }
     
     @Override

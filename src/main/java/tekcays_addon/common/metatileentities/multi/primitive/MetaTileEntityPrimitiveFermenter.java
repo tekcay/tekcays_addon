@@ -29,7 +29,7 @@ import java.util.List;
 public class MetaTileEntityPrimitiveFermenter extends ModulableRecipeMapController {
 
     public MetaTileEntityPrimitiveFermenter(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.FERMENTATION_RECIPES, LogicType.NO_OVERCLOCK, LogicType.NO_ENERGY, LogicType.NO_MUFFLER, LogicType.NO_MAINTENANCE);
+        super(metaTileEntityId, TKCYARecipeMaps.FERMENTATION_RECIPES, LogicType.NO_ENERGY, LogicType.NO_MUFFLER, LogicType.NO_MAINTENANCE);
         this.recipeMapWorkable.setParallelLimit(32);
     }
 

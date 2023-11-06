@@ -64,7 +64,7 @@ public class MetaTileEntityAdvancedBlastFurnace extends ModulableRecipeMapContro
     private boolean startedRecipe;
 
     public MetaTileEntityAdvancedBlastFurnace(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick) {
-        super(metaTileEntityId, ADVANCED_BLAST_FURNACE_RECIPES, LogicType.NO_OVERCLOCK, LogicType.NO_ENERGY, LogicType.HEAT);
+        super(metaTileEntityId, ADVANCED_BLAST_FURNACE_RECIPES, LogicType.NO_ENERGY, LogicType.HEAT);
         this.brick = brick;
         this.maxTemp = brick.getBrickTemperature();
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);

@@ -32,7 +32,7 @@ public class MetaTileEntityTKCYACokeOven extends ModulableRecipeMapController {
     private final IBlockState iBlockState;
 
     public MetaTileEntityTKCYACokeOven(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.COKING, LogicType.NO_ENERGY, LogicType.NO_OVERCLOCK, LogicType.NO_MAINTENANCE);
+        super(metaTileEntityId, TKCYARecipeMaps.COKING, LogicType.NO_ENERGY, LogicType.NO_MAINTENANCE);
         this.brick = BlockBrick.BrickType.REINFORCED_BRICK;
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
         this.recipeMapWorkable.setParallelLimit(4);

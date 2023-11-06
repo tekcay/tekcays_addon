@@ -22,7 +22,7 @@ public class ModulableLogic extends MultiblockRecipeLogic {
     @Nonnull
     @Override
     protected int[] calculateOverclock(@Nonnull Recipe recipe) {
-        if (logicTypes.contains(LogicType.NO_OVERCLOCK)) {
+        if (logicTypes.contains(LogicType.NO_OVERCLOCK) || logicTypes.contains(LogicType.NO_ENERGY)) {
             return new int[]{0, recipe.getDuration()};
         }
         return super.calculateOverclock(recipe);

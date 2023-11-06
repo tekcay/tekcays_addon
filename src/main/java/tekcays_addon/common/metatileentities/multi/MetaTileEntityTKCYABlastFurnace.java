@@ -39,7 +39,7 @@ public class MetaTileEntityTKCYABlastFurnace extends ModulableRecipeMapControlle
     private final IBlockState iBlockState;
 
     public MetaTileEntityTKCYABlastFurnace(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick) {
-        super(metaTileEntityId, TKCYARecipeMaps.BLASTING_RECIPES, LogicType.NO_OVERCLOCK, LogicType.NO_ENERGY, LogicType.NO_MAINTENANCE);
+        super(metaTileEntityId, TKCYARecipeMaps.BLASTING_RECIPES, LogicType.NO_ENERGY, LogicType.NO_MAINTENANCE);
         this.brick = brick;
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
     }

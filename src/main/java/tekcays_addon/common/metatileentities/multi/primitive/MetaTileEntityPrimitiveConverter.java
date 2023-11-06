@@ -42,7 +42,7 @@ public class MetaTileEntityPrimitiveConverter extends ModulableRecipeMapControll
     private IPressureContainer pressureContainer;
 
     public MetaTileEntityPrimitiveConverter(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.PRIMITIVE_CONVERTING_RECIPES, LogicType.NO_OVERCLOCK, LogicType.NO_ENERGY, LogicType.PRESSURE);
+        super(metaTileEntityId, TKCYARecipeMaps.PRIMITIVE_CONVERTING_RECIPES, LogicType.NO_ENERGY, LogicType.PRESSURE);
         this.brick = BlockBrick.BrickType.REINFORCED_BRICK;
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
     }
