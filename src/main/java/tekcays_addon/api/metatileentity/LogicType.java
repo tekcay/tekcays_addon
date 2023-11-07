@@ -11,6 +11,7 @@ public enum LogicType {
     DETECTOR,
     PRESSURE,
     HEAT,
+    ROTATION,
     NO_MUFFLER,
     NO_MAINTENANCE;
 

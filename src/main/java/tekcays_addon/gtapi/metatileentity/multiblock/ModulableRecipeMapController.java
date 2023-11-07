@@ -1,7 +1,6 @@
 package tekcays_addon.gtapi.metatileentity.multiblock;
 
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
-import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.RecipeMap;
 import lombok.Getter;
@@ -12,11 +11,13 @@ import tekcays_addon.api.recipe.PressureContainerCheckRecipeHelper;
 import tekcays_addon.gtapi.capability.containers.IContainerDetector;
 import tekcays_addon.gtapi.capability.containers.IHeatContainer;
 import tekcays_addon.gtapi.capability.containers.IPressureContainer;
+import tekcays_addon.gtapi.capability.containers.IRotationContainer;
 import tekcays_addon.gtapi.capability.impl.PressureContainer;
 import tekcays_addon.gtapi.capability.list.HeatContainerList;
 import tekcays_addon.gtapi.capability.machines.IContainerDetectorMachine;
 import tekcays_addon.gtapi.capability.machines.IHeatMachine;
 import tekcays_addon.gtapi.capability.machines.IPressureMachine;
+import tekcays_addon.gtapi.capability.machines.IRotationMachine;
 import tekcays_addon.gtapi.logic.ModulableLogic;
 
 import javax.annotation.Nonnull;
@@ -26,11 +27,13 @@ import java.util.List;
 import static tekcays_addon.gtapi.consts.TKCYAValues.MAX_PRESSURE;
 import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
 import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.HEAT_CONTAINER;
+import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.ROTATION_CONTAINER;
 
-public abstract class ModulableRecipeMapController extends RecipeMapMultiblockController implements IPressureMachine, IHeatMachine, IContainerDetectorMachine, PressureContainerCheckRecipeHelper {
+public abstract class ModulableRecipeMapController extends RecipeMapMultiblockController implements IPressureMachine, IHeatMachine, IRotationMachine, IContainerDetectorMachine, PressureContainerCheckRecipeHelper {
 
     private IHeatContainer heatContainer;
     private IPressureContainer pressureContainer;
+    private IRotationContainer rotationContainer;
     private IContainerDetector containerDetector;
     boolean checkEnergyIn, checkMaintenance, checkMuffler;
     @Getter
@@ -62,6 +65,11 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
         if (logicTypes.contains(LogicType.HEAT)) {
             this.heatContainer = new HeatContainerList(getAbilities(HEAT_CONTAINER));
         }
+
+        if (logicTypes.contains(LogicType.ROTATION)) {
+            List<IRotationContainer> list = getAbilities(ROTATION_CONTAINER);
+            this.rotationContainer = list.isEmpty() ? null : list.get(0);
+        }
     }
 
     @Override
@@ -83,10 +91,14 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
     public TraceabilityPredicate autoAbilities(boolean checkEnergyIn, boolean checkMaintenance, boolean checkItemIn, boolean checkItemOut, boolean checkFluidIn, boolean checkFluidOut, boolean checkMuffler) {
         TraceabilityPredicate predicate = super.autoAbilities(this.checkEnergyIn, this.checkMaintenance, checkItemIn, checkItemOut, checkFluidIn, checkFluidOut, this.checkMuffler);
         if (logicTypes.contains(LogicType.PRESSURE)) {
-            predicate = predicate.or(abilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER)).setExactLimit(1).setPreviewCount(1);
+            predicate.or(abilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER)).setExactLimit(1).setPreviewCount(1);
         }
         if (logicTypes.contains(LogicType.DETECTOR)) {
-            predicate = predicate.or(abilities(TKCYAMultiblockAbility.CONTAINER_CONTROL)).setPreviewCount(1);
+            predicate.or(abilities(TKCYAMultiblockAbility.CONTAINER_CONTROL)).setPreviewCount(1);
+        }
+
+        if (logicTypes.contains(LogicType.ROTATION)) {
+            predicate.or(abilities(ROTATION_CONTAINER).setExactLimit(1).setPreviewCount(1));
         }
         return predicate;
     }
@@ -102,6 +114,13 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
     @Override
     public IHeatContainer getHeatContainer() {
         if (logicTypes.contains(LogicType.HEAT)) return this.heatContainer;
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public IRotationContainer getRotationContainer() {
+        if (logicTypes.contains(LogicType.ROTATION)) return this.rotationContainer;
         return null;
     }
 
