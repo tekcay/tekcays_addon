@@ -32,6 +32,7 @@ public class HeatSteamRecipeLogic extends RecipeLogicSteam {
         }
     }
 
+    @Nonnull
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = super.serializeNBT();

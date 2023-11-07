@@ -5,11 +5,9 @@ import gregtech.api.metatileentity.IDataInfoProvider;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
-import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
@@ -27,17 +25,18 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
-import tekcays_addon.gtapi.capability.containers.IHeatContainer;
-import tekcays_addon.gtapi.capability.machines.IHeatMachine;
-import tekcays_addon.gtapi.capability.list.HeatContainerList;
-import tekcays_addon.gtapi.metatileentity.multiblock.HeatContainerNoEnergyMultiblockController;
-import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
-import tekcays_addon.gtapi.recipes.recipeproperties.NoEnergyTemperatureProperty;
-import tekcays_addon.gtapi.render.TKCYATextures;
-import tekcays_addon.gtapi.consts.TKCYAValues;
+import tekcays_addon.api.metatileentity.LogicType;
+import tekcays_addon.api.metatileentity.predicates.Predicates;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
+import tekcays_addon.gtapi.capability.containers.IHeatContainer;
+import tekcays_addon.gtapi.capability.list.HeatContainerList;
+import tekcays_addon.gtapi.consts.TKCYAValues;
+import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
+import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
+import tekcays_addon.gtapi.recipes.recipeproperties.NoEnergyTemperatureProperty;
+import tekcays_addon.gtapi.render.TKCYATextures;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -46,7 +45,7 @@ import java.util.List;
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.ADVANCED_BLAST_FURNACE_RECIPES;
 
-public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMultiblockController implements IHeatMachine, IDataInfoProvider{
+public class MetaTileEntityAdvancedBlastFurnace extends ModulableRecipeMapController implements IDataInfoProvider{
 
     private final BlockBrick.BrickType brick;
     private final IBlockState iBlockState;
@@ -63,9 +62,10 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
     private final int HEAT_DROP = 5000;
     private final int PARALLEL_MULTIPLIER = 2;
     private boolean startedRecipe;
+    private final String blastFurnaceHeight = "blastFurnaceHeight";
 
     public MetaTileEntityAdvancedBlastFurnace(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick) {
-        super(metaTileEntityId, ADVANCED_BLAST_FURNACE_RECIPES);
+        super(metaTileEntityId, ADVANCED_BLAST_FURNACE_RECIPES, LogicType.NO_ENERGY, LogicType.HEAT);
         this.brick = brick;
         this.maxTemp = brick.getBrickTemperature();
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
@@ -148,16 +148,6 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
     }
 
     @Override
-    public boolean hasMaintenanceMechanics() {
-        return true;
-    }
-
-    @Override
-    public boolean hasMufflerMechanics() {
-        return true;
-    }
-
-    @Override
     protected ICubeRenderer getFrontOverlay() {
         return Textures.COKE_OVEN_OVERLAY;
     }
@@ -170,12 +160,13 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
         return this.brick;
     }
 
-    private void actualizeTemperature() {
+    @Override
+    protected void actualizeTemperature() {
         heatContainer.setTemperature(TKCYAValues.ROOM_TEMPERATURE + currentHeat / (heatMultiplier * height));
     }
 
     @Override
-    protected void updateFormedValid() {
+    public void updateFormedValid() {
         super.updateFormedValid();
         if (!getWorld().isRemote) {
             updateLogic();
@@ -204,6 +195,7 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
         actualizeTemperature();
     }
 
+    @Nonnull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
@@ -223,8 +215,8 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
                 .where('O', states(getCasingState())
                         .or(abilities(TKCYAMultiblockAbility.BRICK_IMPORT_ITEMS).setPreviewCount(1))
                         .or(abilities(TKCYAMultiblockAbility.BRICK_IMPORT_FLUIDS).setPreviewCount(1)))
-                .where('P', heightIndicatorPredicate())
-                .where('M', states(getCasingState())) //TODO maintenance ?
+                .where('P', Predicates.heightIndicatorPredicate(air(), blastFurnaceHeight, 1))
+                .where('M', states(getCasingState()))
                 .where('U', abilities(TKCYAMultiblockAbility.BRICK_MUFFLER_HATCH))
                 .where('#', air())
                 .where('A', any())
@@ -249,23 +241,11 @@ public class MetaTileEntityAdvancedBlastFurnace extends HeatContainerNoEnergyMul
         this.height = buf.readInt();
     }
 
-
-    // This function is highly useful for detecting the length of this multiblock.
-    public static TraceabilityPredicate heightIndicatorPredicate() {
-        return new TraceabilityPredicate((blockWorldState) -> {
-            if (air().test(blockWorldState)) {
-                blockWorldState.getMatchContext().increment("blastFurnaceHeight", 1);
-                return true;
-            } else
-                return false;
-        });
-    }
-
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
         initializeAbilities();
-        this.height = context.getOrDefault("blastFurnaceHeight", 1);
+        this.height = context.getOrDefault(blastFurnaceHeight, 1);
         this.recipeMapWorkable.setParallelLimit(height < 2 ? 1 : height * PARALLEL_MULTIPLIER);
 
         Object type = context.get("CoilType");

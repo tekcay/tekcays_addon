@@ -13,7 +13,20 @@ import tekcays_addon.api.utils.TriFunction;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.common.metatileentities.multi.*;
-import tekcays_addon.common.metatileentities.multiblockpart.*;
+import tekcays_addon.common.metatileentities.multi.electric.MetaTileEntityAdvancedElectrolyzer;
+import tekcays_addon.common.metatileentities.multi.electric.MetaTileEntityMultiAmperageTest;
+import tekcays_addon.common.metatileentities.multi.primitive.*;
+import tekcays_addon.common.metatileentities.multi.storage.MetaTileEntityModulableMultiblockCrate;
+import tekcays_addon.common.metatileentities.multi.storage.MetaTileEntityModulableMultiblockTank;
+import tekcays_addon.common.metatileentities.multi.storage.MetaTileEntityModulablePressurizedMultiblockTank;
+import tekcays_addon.common.metatileentities.multiblockpart.brick.*;
+import tekcays_addon.common.metatileentities.multiblockpart.capabilities.MetaTileEntityHeatAcceptor;
+import tekcays_addon.common.metatileentities.multiblockpart.capabilities.MetaTileEntityVacuumHatch;
+import tekcays_addon.common.metatileentities.multiblockpart.controllers.MetaTileEntityController;
+import tekcays_addon.common.metatileentities.multiblockpart.storage.MetaTileEntityCrateValve;
+import tekcays_addon.common.metatileentities.multiblockpart.capabilities.MetaTileEntityDecompressionHatch;
+import tekcays_addon.common.metatileentities.multiblockpart.capabilities.MetaTileEntityPressureHatch;
+import tekcays_addon.common.metatileentities.multiblockpart.storage.TKCYAMetaTileEntityTankValve;
 import tekcays_addon.common.metatileentities.primitive.MetaTileEntityAxeSupport;
 import tekcays_addon.common.metatileentities.single.*;
 import tekcays_addon.common.metatileentities.single.electric.*;
@@ -146,7 +159,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityCrateValve STAINLESS_STEEL_CRATE_VALVE;
 
     public static MetaTileEntityModulableMultiblockTank[] MODULABLE_TANK = new MetaTileEntityModulableMultiblockTank[4];
-    public static MetaTileEntityPressurizedMultiblockTank[] PRESSURIZED_TANK = new MetaTileEntityPressurizedMultiblockTank[3];
+    public static MetaTileEntityModulablePressurizedMultiblockTank[] PRESSURIZED_TANK = new MetaTileEntityModulablePressurizedMultiblockTank[3];
     public static MetaTileEntityModulableMultiblockCrate[] MODULABLE_CRATE = new MetaTileEntityModulableMultiblockCrate[4];
 
     //Primitive
@@ -242,9 +255,9 @@ public class TKCYAMetaTileEntities {
             MODULABLE_TANK[2] = registerMetaTileEntity(11332, new MetaTileEntityModulableMultiblockTank(tkcyaId("modulable_galvanized_steel_tank"), TKCYAMaterials.GalvanizedSteel, 1000 * 1000));
             MODULABLE_TANK[3] = registerMetaTileEntity(11333, new MetaTileEntityModulableMultiblockTank(tkcyaId("modulable_stainless_steel_tank"), StainlessSteel, 1000 * 1000));
 
-            PRESSURIZED_TANK[0] = registerMetaTileEntity(11334, new MetaTileEntityPressurizedMultiblockTank(tkcyaId("pressurized_steel_tank"), Steel, 10 * ATMOSPHERIC_PRESSURE));
-            PRESSURIZED_TANK[1] = registerMetaTileEntity(11335, new MetaTileEntityPressurizedMultiblockTank(tkcyaId("pressurized_galvanized_steel_tank"), TKCYAMaterials.GalvanizedSteel, 50 * ATMOSPHERIC_PRESSURE));
-            PRESSURIZED_TANK[2] = registerMetaTileEntity(11336, new MetaTileEntityPressurizedMultiblockTank(tkcyaId("pressurized_stainless_steel_tank"), StainlessSteel, 100 * ATMOSPHERIC_PRESSURE));
+            PRESSURIZED_TANK[0] = registerMetaTileEntity(11334, new MetaTileEntityModulablePressurizedMultiblockTank(tkcyaId("pressurized_steel_tank"), Steel, 10 * ATMOSPHERIC_PRESSURE));
+            PRESSURIZED_TANK[1] = registerMetaTileEntity(11335, new MetaTileEntityModulablePressurizedMultiblockTank(tkcyaId("pressurized_galvanized_steel_tank"), TKCYAMaterials.GalvanizedSteel, 50 * ATMOSPHERIC_PRESSURE));
+            PRESSURIZED_TANK[2] = registerMetaTileEntity(11336, new MetaTileEntityModulablePressurizedMultiblockTank(tkcyaId("pressurized_stainless_steel_tank"), StainlessSteel, 100 * ATMOSPHERIC_PRESSURE));
         }
 
         IntStream.range(0, MAX_TIER)

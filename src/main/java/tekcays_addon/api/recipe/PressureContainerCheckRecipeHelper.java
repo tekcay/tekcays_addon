@@ -13,6 +13,12 @@ public interface PressureContainerCheckRecipeHelper {
 
     int getCurrentPressure();
     int getCurrentTemperature();
+
+    /**
+     *
+     * @return the pressurized {@link FluidStack}
+     */
+    @Nonnull
     FluidStack getFluidStack();
 
     default boolean checkRecipeHelper(@Nonnull Recipe recipe, boolean consumeIfSuccess) {

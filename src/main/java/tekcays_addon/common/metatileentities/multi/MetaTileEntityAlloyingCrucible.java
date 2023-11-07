@@ -12,16 +12,19 @@ import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
-import tekcays_addon.gtapi.logic.NoEnergyMultiblockLogic;
-import tekcays_addon.gtapi.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
+import tekcays_addon.api.metatileentity.LogicType;
+import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.render.TKCYATextures;
 
-public class MetaTileEntityAlloyingCrucible extends NoEnergyRecipeMapMultiBlockController {
+import javax.annotation.Nonnull;
+
+import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
+
+public class MetaTileEntityAlloyingCrucible extends ModulableRecipeMapController {
 
     public MetaTileEntityAlloyingCrucible(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.ALLOYING_CRUCIBLE_RECIPES);
-        this.recipeMapWorkable = new NoEnergyMultiblockLogic(this);
+        super(metaTileEntityId, TKCYARecipeMaps.ALLOYING_CRUCIBLE_RECIPES, LogicType.NO_ENERGY, LogicType.NO_MAINTENANCE, LogicType.NO_MUFFLER);
     }
     
     @Override
@@ -39,11 +42,13 @@ public class MetaTileEntityAlloyingCrucible extends NoEnergyRecipeMapMultiBlockC
         return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.PRIMITIVE_BRICKS);
     }
 
+    @Nonnull
     @Override
     protected ICubeRenderer getFrontOverlay() {
         return TKCYATextures.ALLOYING_CRUCIBLE_OVERLAY;
     }
 
+    @Nonnull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RelativeDirection.FRONT, RelativeDirection.UP, RelativeDirection.RIGHT)
@@ -56,6 +61,4 @@ public class MetaTileEntityAlloyingCrucible extends NoEnergyRecipeMapMultiBlockC
                 .where('Y', selfPredicate())
                 .build();
     }
-
-
 }

@@ -1,6 +1,8 @@
 package tekcays_addon.gtapi.capability.list;
 
 import tekcays_addon.gtapi.capability.containers.IHeatContainer;
+import tekcays_addon.gtapi.capability.impl.HeatContainer;
+import tekcays_addon.gtapi.capability.machines.Container;
 
 import java.util.Comparator;
 import java.util.List;
@@ -71,5 +73,10 @@ public class HeatContainerList implements IHeatContainer {
     @Override
     public void setTemperature(int temperature) {
         heatContainerList.forEach(iHeatContainer -> iHeatContainer.setTemperature(temperature));
+    }
+
+    @Override
+    public void resetContainer() {
+        heatContainerList.forEach(Container::resetContainer);
     }
 }

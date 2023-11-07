@@ -20,18 +20,20 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
-import tekcays_addon.gtapi.logic.NoEnergyMultiblockLogic;
-import tekcays_addon.gtapi.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
+import tekcays_addon.api.metatileentity.LogicType;
+import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
-public class MetaTileEntityCrystallizer extends NoEnergyRecipeMapMultiBlockController {
+import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
+
+public class MetaTileEntityCrystallizer extends ModulableRecipeMapController {
 
 
     public MetaTileEntityCrystallizer(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.CRYSTALLIZATION);
-        this.recipeMapWorkable = new NoEnergyMultiblockLogic(this);
+        super(metaTileEntityId, TKCYARecipeMaps.CRYSTALLIZATION, LogicType.NO_ENERGY, LogicType.NO_MAINTENANCE, LogicType.NO_MUFFLER);
     }
 
     @Override
@@ -43,6 +45,7 @@ public class MetaTileEntityCrystallizer extends NoEnergyRecipeMapMultiBlockContr
         return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.INVAR_HEATPROOF);
     }
 
+    @Nonnull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
@@ -69,11 +72,6 @@ public class MetaTileEntityCrystallizer extends NoEnergyRecipeMapMultiBlockContr
     }
 
     @Override
-    public boolean hasMaintenanceMechanics() {
-        return false;
-    }
-
-    @Override
     protected void addDisplayText(List<ITextComponent> textList) {
         if (!this.isStructureFormed()) {
             ITextComponent tooltip = new TextComponentTranslation("gregtech.multiblock.invalid_structure.tooltip");
@@ -92,9 +90,5 @@ public class MetaTileEntityCrystallizer extends NoEnergyRecipeMapMultiBlockContr
             }
         }
     }
-
-
-
-
 }
 
