@@ -8,6 +8,7 @@ import lombok.Getter;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.metatileentity.LogicType;
+import tekcays_addon.api.recipe.PressureContainerCheckRecipeHelper;
 import tekcays_addon.gtapi.capability.containers.IContainerDetector;
 import tekcays_addon.gtapi.capability.containers.IHeatContainer;
 import tekcays_addon.gtapi.capability.containers.IPressureContainer;
@@ -18,6 +19,7 @@ import tekcays_addon.gtapi.capability.machines.IHeatMachine;
 import tekcays_addon.gtapi.capability.machines.IPressureMachine;
 import tekcays_addon.gtapi.logic.ModulableLogic;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -25,7 +27,7 @@ import static tekcays_addon.gtapi.consts.TKCYAValues.MAX_PRESSURE;
 import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
 import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.HEAT_CONTAINER;
 
-public abstract class ModulableRecipeMapController extends RecipeMapMultiblockController implements IPressureMachine, IHeatMachine, IContainerDetectorMachine {
+public abstract class ModulableRecipeMapController extends RecipeMapMultiblockController implements IPressureMachine, IHeatMachine, IContainerDetectorMachine, PressureContainerCheckRecipeHelper {
 
     private IHeatContainer heatContainer;
     private IPressureContainer pressureContainer;
@@ -111,31 +113,35 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
     }
 
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        if (logicTypes.contains(LogicType.HEAT)) getHeatContainer().resetContainer();
-        if (logicTypes.contains(LogicType.PRESSURE)) getPressureContainer().resetContainer();
-    }
-
-    @Override
     public void updateFormedValid() {
         super.updateFormedValid();
 
-        if (logicTypes.contains(LogicType.HEAT)) {
+        if (logicTypes.contains(LogicType.HEAT) && heatContainer != null) {
             currentHeat = heatContainer.getHeat();
             actualizeTemperature();
             currentTemp = heatContainer.getTemperature();
         }
 
-        if (logicTypes.contains(LogicType.PRESSURE)) {
+        if (logicTypes.contains(LogicType.PRESSURE) && pressureContainer != null) {
             currentPressure = pressureContainer.getPressure();
             if (logicTypes.contains(LogicType.DETECTOR) && getOffsetTimer() % 20 == 0) {
                 containerDetector.setCurrentValue(currentPressure);
             }
             if (recipeMapWorkable.isWorking()) {
-                    pressureContainer.changePressurizedFluidStack(getPressurizedFluidStack(), -getPressurizedFluidStackRate());
+                pressureContainer.changePressurizedFluidStack(getPressurizedFluidStack(), -getPressurizedFluidStackRate());
             }
         }
+    }
+
+    @Override
+    public int getCurrentTemperature() {
+        return getCurrentTemp();
+    }
+
+    @Nonnull
+    @Override
+    public FluidStack getFluidStack() {
+        return getPressureContainer().getPressurizedFluidStack();
     }
 
     private FluidStack getPressurizedFluidStack() {

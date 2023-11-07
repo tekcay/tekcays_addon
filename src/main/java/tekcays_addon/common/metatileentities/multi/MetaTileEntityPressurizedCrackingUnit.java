@@ -34,7 +34,7 @@ import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
 import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.HEAT_CONTAINER;
 
 
-public class MetaTileEntityPressurizedCrackingUnit extends ModulableRecipeMapController implements IPressureFormatting, PressureContainerCheckRecipeHelper {
+public class MetaTileEntityPressurizedCrackingUnit extends ModulableRecipeMapController implements IPressureFormatting {
 
     private int coilTier;
     private String displayedPressure;
@@ -42,8 +42,8 @@ public class MetaTileEntityPressurizedCrackingUnit extends ModulableRecipeMapCon
 
     public MetaTileEntityPressurizedCrackingUnit(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.PRESSURE_CRACKING, LogicType.HEAT, LogicType.PRESSURE);
-        //this.volume = 1;
         this.initializeAbilities();
+        getPressureContainer().setVolume(1);
         this.displayedPressure = getCurrentPressureWithUnit();
         this.displayedTemp = getCurrentTemperature();
     }
@@ -130,15 +130,7 @@ public class MetaTileEntityPressurizedCrackingUnit extends ModulableRecipeMapCon
         return checkRecipeHelper(recipe, consumeIfSuccess);
     }
 
-    @Override
-    public int getCurrentTemperature() {
-        return super.getCurrentTemp();
-    }
 
-    @Override
-    public FluidStack getFluidStack() {
-        return getPressureContainer().getPressurizedFluidStack();
-    }
 
 
 
