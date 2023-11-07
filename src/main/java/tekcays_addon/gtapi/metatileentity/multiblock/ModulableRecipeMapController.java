@@ -1,12 +1,17 @@
 package tekcays_addon.gtapi.metatileentity.multiblock;
 
+import gregtech.api.capability.IEnergyContainer;
+import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
+import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.pattern.TraceabilityPredicate;
+import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMap;
 import lombok.Getter;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.metatileentity.LogicType;
+import tekcays_addon.api.metatileentity.MultiAmperageControllerMethods;
 import tekcays_addon.api.recipe.PressureContainerCheckRecipeHelper;
 import tekcays_addon.gtapi.capability.containers.IContainerDetector;
 import tekcays_addon.gtapi.capability.containers.IHeatContainer;
@@ -22,8 +27,10 @@ import tekcays_addon.gtapi.logic.ModulableLogic;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
+import static tekcays_addon.api.metatileentity.MultiAmperageControllerMethods.areAllEnergyHatchesTheSameVoltage;
 import static tekcays_addon.gtapi.consts.TKCYAValues.MAX_PRESSURE;
 import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
 import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.HEAT_CONTAINER;
@@ -36,6 +43,8 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
     private IRotationContainer rotationContainer;
     private IContainerDetector containerDetector;
     boolean checkEnergyIn, checkMaintenance, checkMuffler;
+    protected List<IEnergyContainer> inputEnergyHatches;
+    protected boolean areAllEnergyHatchesTheSameVoltage = false;
     @Getter
     private int currentTemp, currentHeat, currentPressure, volume;
     private final List<LogicType> logicTypes;
@@ -47,6 +56,7 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
         this.checkEnergyIn = !this.logicTypes.contains(LogicType.NO_ENERGY);
         this.checkMaintenance = !this.logicTypes.contains(LogicType.NO_MAINTENANCE);
         this.checkMuffler = !this.logicTypes.contains(LogicType.NO_MUFFLER);
+        if (this.logicTypes.contains(LogicType.MULTI_AMPER)) this.inputEnergyHatches = new ArrayList<>();
     }
 
     @Override
@@ -91,14 +101,14 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
     public TraceabilityPredicate autoAbilities(boolean checkEnergyIn, boolean checkMaintenance, boolean checkItemIn, boolean checkItemOut, boolean checkFluidIn, boolean checkFluidOut, boolean checkMuffler) {
         TraceabilityPredicate predicate = super.autoAbilities(this.checkEnergyIn, this.checkMaintenance, checkItemIn, checkItemOut, checkFluidIn, checkFluidOut, this.checkMuffler);
         if (logicTypes.contains(LogicType.PRESSURE)) {
-            predicate.or(abilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER)).setExactLimit(1).setPreviewCount(1);
+            predicate = predicate.or(abilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER)).setExactLimit(1).setPreviewCount(1);
         }
         if (logicTypes.contains(LogicType.DETECTOR)) {
-            predicate.or(abilities(TKCYAMultiblockAbility.CONTAINER_CONTROL)).setPreviewCount(1);
+            predicate = predicate.or(abilities(TKCYAMultiblockAbility.CONTAINER_CONTROL)).setPreviewCount(1);
         }
 
         if (logicTypes.contains(LogicType.ROTATION)) {
-            predicate.or(abilities(ROTATION_CONTAINER).setExactLimit(1).setPreviewCount(1));
+            predicate = predicate.or(abilities(ROTATION_CONTAINER).setExactLimit(1).setPreviewCount(1));
         }
         return predicate;
     }
@@ -129,6 +139,23 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
     public IContainerDetector getContainerDetector() {
         if (logicTypes.contains(LogicType.DETECTOR)) return this.containerDetector;
         return null;
+    }
+
+    @Override
+    protected void formStructure(PatternMatchContext context) {
+        super.formStructure(context);
+        if (logicTypes.contains(LogicType.MULTI_AMPER)) {
+            inputEnergyHatches = this.getAbilities(MultiblockAbility.INPUT_ENERGY);
+        }
+    }
+
+    @Override
+    public boolean isStructureFormed() {
+        if (logicTypes.contains(LogicType.MULTI_AMPER) && !inputEnergyHatches.isEmpty()) {
+            areAllEnergyHatchesTheSameVoltage = areAllEnergyHatchesTheSameVoltage(inputEnergyHatches);
+            return super.isStructureFormed() && areAllEnergyHatchesTheSameVoltage;
+        }
+        return super.isStructureFormed();
     }
 
     @Override
@@ -174,6 +201,14 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
 
     protected void actualizeTemperature() {
         getHeatContainer().setTemperature(ROOM_TEMPERATURE + getCurrentHeat() / (20));
+    }
+
+    @Override
+    public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
+        if (logicTypes.contains(LogicType.MULTI_AMPER)) {
+            return MultiAmperageControllerMethods.multiAmperageRecipeChecker(recipe, inputEnergyHatches, areAllEnergyHatchesTheSameVoltage);
+        }
+        return super.checkRecipe(recipe, consumeIfSuccess);
     }
 
 

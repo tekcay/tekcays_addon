@@ -12,6 +12,7 @@ public enum LogicType {
     PRESSURE,
     HEAT,
     ROTATION,
+    MULTI_AMPER,
     NO_MUFFLER,
     NO_MAINTENANCE;
 
