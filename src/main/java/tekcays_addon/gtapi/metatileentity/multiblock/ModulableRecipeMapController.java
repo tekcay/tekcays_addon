@@ -11,8 +11,8 @@ import tekcays_addon.api.metatileentity.LogicType;
 import tekcays_addon.gtapi.capability.containers.IContainerDetector;
 import tekcays_addon.gtapi.capability.containers.IHeatContainer;
 import tekcays_addon.gtapi.capability.containers.IPressureContainer;
-import tekcays_addon.gtapi.capability.impl.HeatContainer;
 import tekcays_addon.gtapi.capability.impl.PressureContainer;
+import tekcays_addon.gtapi.capability.list.HeatContainerList;
 import tekcays_addon.gtapi.capability.machines.IContainerDetectorMachine;
 import tekcays_addon.gtapi.capability.machines.IHeatMachine;
 import tekcays_addon.gtapi.capability.machines.IPressureMachine;
@@ -23,6 +23,7 @@ import java.util.List;
 
 import static tekcays_addon.gtapi.consts.TKCYAValues.MAX_PRESSURE;
 import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
+import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.HEAT_CONTAINER;
 
 public abstract class ModulableRecipeMapController extends RecipeMapMultiblockController implements IPressureMachine, IHeatMachine, IContainerDetectorMachine {
 
@@ -57,13 +58,7 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
         }
 
         if (logicTypes.contains(LogicType.HEAT)) {
-
-            List<IHeatContainer> list = getAbilities(TKCYAMultiblockAbility.HEAT_CONTAINER);
-            if (list.isEmpty()) {
-                this.heatContainer = new HeatContainer(this, 0, 2000000);
-            } else {
-                this.heatContainer = list.get(0);
-            }
+            this.heatContainer = new HeatContainerList(getAbilities(HEAT_CONTAINER));
         }
     }
 
@@ -142,7 +137,6 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
             }
         }
     }
-
 
     private FluidStack getPressurizedFluidStack() {
         return this.pressureContainer.getPressurizedFluidStack();
