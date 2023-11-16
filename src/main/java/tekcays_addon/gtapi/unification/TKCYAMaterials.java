@@ -1,16 +1,9 @@
 package tekcays_addon.gtapi.unification;
 
 import gregtech.api.unification.material.Material;
-import gregtech.api.unification.material.info.MaterialFlag;
-import gregtech.api.unification.material.info.MaterialFlags;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.gtapi.unification.material.info.TKCYAChemicalFormula;
 import tekcays_addon.gtapi.unification.material.materials.*;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TKCYAMaterials {
 
@@ -158,6 +151,24 @@ public class TKCYAMaterials {
     public static Material Monel;
     public static Material Constantan;
     public static Material SiliconCarbide;
+    public static Material BT6;
+    public static Material HastelloyC276; //Hastelloy C-276
+    public static Material HastelloyN; //Hastelloy N
+    public static Material Inconel600;
+    public static Material Inconel690; //Inconel-690
+    public static Material EglinSteel;
+    public static Material AF1410; //AF-1410
+    public static Material Aermet100; //Aermet-100
+    public static Material HY180; //HY-180
+    public static Material HP9420; //HP9-4-20
+    public static Material StelliteStarJ;
+    public static Material Mangalloy;
+    public static Material Talonite; //talonite alloy
+    public static Material Nitinol;
+    public static Material Nitinol60; //Nitinol-60
+    public static Material TC4; //TiAl6V4, search for Ti-6Al-4V, Ti24Al3V
+    public static Material AluminiumAlloy5052; //Al9MgMn4
+    public static Material AluminiumAlloy6061; //Al914Mg10Si4FeCu //Common
 
     /**
      * Polymers
