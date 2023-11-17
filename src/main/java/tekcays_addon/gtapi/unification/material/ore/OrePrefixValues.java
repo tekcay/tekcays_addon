@@ -26,6 +26,8 @@ public class OrePrefixValues {
 
     public static void init() {
         ORE_PREFIX_TO_UNITS = new HashMap<OrePrefix, Double>(){{
+            put(pipeNonupleFluid, 27.000);
+            put(pipeQuadrupleFluid, 12.000);
             put(pipeHugeRestrictive, 12.500);
             put(pipeHugeFluid, 12.000);
             put(pipeHugeItem, 12.000);
@@ -38,7 +40,7 @@ public class OrePrefixValues {
             put(gear, 4.000);
             put(toolHeadBuzzSaw, 4.000);
             put(pipeNormalRestrictive, 3.500);
-            put(pipeNonupleFluid, 3.000);
+            put(pipeNormalFluid, 3.000);
             put(pipeNormalItem, 3.000);
             put(spring, 2.000);
             put(plateDouble, 2.000);
@@ -52,6 +54,8 @@ public class OrePrefixValues {
             put(stickLong, 1.000);
             put(ingot, 1.000);
             put(dust, 1.000);
+            put(dustImpure, 1.000);
+            put(dustPure, 1.000);
             put(wireGtQuadruple, 1.000);
             put(gearSmall, 1.000);
             put(pipeTinyFluid, 0.500);
@@ -67,6 +71,11 @@ public class OrePrefixValues {
             put(screw, 0.100);
             put(dustTiny, 0.025);
         }};
+    }
+
+    public static String getOrePrefixUnit(OrePrefix orePrefix) {
+        Double units = OrePrefixValues.ORE_PREFIX_TO_UNITS.get(orePrefix);
+        return String.format("%.3f", units);
     }
 
 

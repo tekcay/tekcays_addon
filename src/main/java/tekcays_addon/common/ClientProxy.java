@@ -8,6 +8,7 @@ import gregtech.api.util.IBlockOre;
 import gregtech.common.blocks.BlockCompressed;
 import gregtech.common.blocks.BlockFrame;
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
@@ -20,6 +21,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.gtapi.unification.material.ore.OrePrefixValues;
+import tekcays_addon.gtapi.utils.TKCYALog;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -41,6 +43,10 @@ public class ClientProxy extends CommonProxy {
         TKCYAMetaBlocks.registerItemModels();
     }
 
+    /**
+     * See {@link ClientProxy#addMaterialFormulaHandler(ItemTooltipEvent)}
+     * @param event
+     */
     @SubscribeEvent
     public static void addMaterialFormulaHandler(@Nonnull ItemTooltipEvent event) {
         ItemStack itemStack = event.getItemStack();
@@ -62,23 +68,9 @@ public class ClientProxy extends CommonProxy {
         // Test for Items
         UnificationEntry unificationEntry = OreDictUnifier.getUnificationEntry(itemStack);
         if (unificationEntry == null) return;
-        OrePrefix orePrefix = unificationEntry.orePrefix;
-        Double units = OrePrefixValues.ORE_PREFIX_TO_UNITS.get(orePrefix);
-        if (units == null) return;
-
-        if (itemStack.getItem() instanceof MetaOreDictItem) { // Test for OreDictItems
-        MetaOreDictItem oreDictItem = (MetaOreDictItem) itemStack.getItem();
-        Optional<String> oreDictName = OreDictUnifier.getOreDictionaryNames(itemStack).stream().findFirst();
-        if (oreDictName.isPresent() && oreDictItem.OREDICT_TO_FORMULA.containsKey(oreDictName.get()) && !oreDictItem.OREDICT_TO_FORMULA.get(oreDictName.get()).isEmpty()) {
-            //already done in GTCEu  //tooltips.add(TextFormatting.YELLOW + oreDictItem.OREDICT_TO_FORMULA.get(oreDictName.get()));
-            tooltips.add(TextFormatting.AQUA + String.format("%.3f units", units));
-
-        }
-    } else if (unificationEntry.material != null) {
-        if (unificationEntry.material.getChemicalFormula() != null && !unificationEntry.material.getChemicalFormula().isEmpty()) {
-            //already done in GTCEu //tooltips.add(TextFormatting.YELLOW + unificationEntry.material.getChemicalFormula());
-            tooltips.add(TextFormatting.AQUA + String.format("%.3f units", units));
-        }
+        String unit = OrePrefixValues.getOrePrefixUnit(unificationEntry.orePrefix);
+        if (unit == null) return;
+        tooltips.add(I18n.format("gregtech.fluid_pipe.unit", unit));
 
         if (tooltips != null) {
             for (String s : tooltips) {
@@ -86,7 +78,6 @@ public class ClientProxy extends CommonProxy {
                 event.getToolTip().add(s);
             }
         }
-    }
     }
 
 }
