@@ -2,6 +2,7 @@ package tekcays_addon.gtapi.unification.material.materials;
 
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.info.MaterialFlags;
+import tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags;
 
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
@@ -9,6 +10,7 @@ import static gregtech.api.unification.material.info.MaterialIconSet.DULL;
 import static gregtech.api.unification.material.info.MaterialIconSet.METALLIC;
 import static gregtech.api.util.GTUtility.gregtechId;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
+import static tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags.ALL_PARTS;
 
 public class TKCYAAlloys {
 
@@ -17,7 +19,7 @@ public class TKCYAAlloys {
         GalvanizedSteel = new Material.Builder(id++, gregtechId("galvanized_steel"))
                 .ingot(3)
                 .fluidPipeProperties(2000, 100, true, true, true, false)
-                .flags(EXT2_METAL, GENERATE_ROTOR, GENERATE_SMALL_GEAR, GENERATE_SPRING,
+                .flags(ALL_PARTS, GENERATE_ROTOR, GENERATE_SMALL_GEAR, GENERATE_SPRING,
                         GENERATE_SPRING_SMALL, GENERATE_FRAME, GENERATE_GEAR, GENERATE_DOUBLE_PLATE, GENERATE_DENSE,
                         NO_UNIFICATION, NO_SMELTING, DISABLE_DECOMPOSITION)
                 .components(Steel, 9, Zinc, 1)
@@ -35,7 +37,7 @@ public class TKCYAAlloys {
         Monel = new Material.Builder(id++, gregtechId("monel"))
                 .ingot(1).fluid()
                 .fluidTemp(1573)
-                .flags(EXT2_METAL, GENERATE_ROTOR, GENERATE_SMALL_GEAR, GENERATE_SPRING,
+                .flags(ALL_PARTS, GENERATE_ROTOR, GENERATE_SMALL_GEAR, GENERATE_SPRING,
                         GENERATE_SPRING_SMALL, GENERATE_FRAME, GENERATE_GEAR, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .components(Nickel, 7, Copper, 3)
                 .color(0xc1b8a8).iconSet(METALLIC)
@@ -44,7 +46,7 @@ public class TKCYAAlloys {
         Constantan = new Material.Builder(id++, gregtechId("constantan"))
                 .ingot(1).fluid()
                 .fluidTemp(1542)
-                .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
+                .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .cableProperties(128, 4, 4)
                 .components(Copper, 11, Nickel, 10)
                 .colorAverage()
@@ -54,7 +56,7 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .fluid()
                 .fluidTemp(3003)
-                .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
+                .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .color((Silicon.getMaterialRGB() + Carbon.getMaterialRGB()) / 2)
                 .iconSet(METALLIC)
@@ -65,7 +67,7 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .fluid()
                 .fluidTemp(3003)
-                .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
+                .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .components(Cobalt, 8, Chrome, 3, Steel, 3, Vanadium, 1, Tungsten, 4)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
@@ -76,7 +78,7 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .fluid()
                 .fluidTemp(3003)
-                .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
+                .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .components(Cobalt, 1, Chrome, 7, Copper,  1, Molybdenum, 8, Nickel, 32, Tungsten, 1)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
@@ -87,7 +89,7 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .fluid()
                 .fluidTemp(3003)
-                .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
+                .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .components(Chrome, 8, Molybdenum, 16, Nickel, 60, Titanium, 8, Yttrium, 8)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
@@ -98,7 +100,7 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .fluid()
                 .fluidTemp(3003)
-                .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
+                .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .components(Chrome, 1, Steel, 4, Nickel, 5)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
@@ -109,7 +111,7 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .fluid()
                 .fluidTemp(3003)
-                .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
+                .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .components(Chrome, 4, Steel, 1, Nickel, 8)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
@@ -120,7 +122,7 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .fluid()
                 .fluidTemp(3003)
-                .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
+                .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .components(Carbon, 13, Chrome, 30, Copper, 8, Iron, 1530, Manganese, 15, Molybdenum, 6, Nickel, 87, Vanadium, 1, Tungsten, 4)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
@@ -131,7 +133,7 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .fluid()
                 .fluidTemp(3003)
-                .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
+                .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .components(Carbon, 1, Cobalt, 24, Chrome, 4, Iron, 136, Molybdenum, 1, Nickel, 17)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
@@ -142,7 +144,7 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .fluid()
                 .fluidTemp(3003)
-                .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
+                .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .components(Carbon, 2, Cobalt, 18, Chrome, 5, Iron, 107, Molybdenum, 1, Nickel, 16)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
@@ -153,7 +155,7 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .fluid()
                 .fluidTemp(3003)
-                .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
+                .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .components(Carbon, 6, Cobalt, 78, Chrome, 21, Iron, 783, Manganese, 1, Molybdenum, 6, Nickel, 16, Silicon, 1)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
@@ -164,7 +166,7 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .fluid()
                 .fluidTemp(3003)
-                .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
+                .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .components(Carbon, 12, Cobalt, 60, Chrome, 10, Iron, 79, Manganese, 3, Molybdenum, 8, Nickel, 121, Vanadium, 1)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
@@ -175,7 +177,7 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .fluid()
                 .fluidTemp(3003)
-                .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
+                .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .components(Carbon, 6, Cobalt, 22, Chrome, 18, Iron, 1, Nickel, 1, Tungsten, 3)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
@@ -186,7 +188,7 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .fluid()
                 .fluidTemp(3003)
-                .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
+                .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .components(Carbon, 1, Iron, 18, Manganese, 3)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
@@ -197,7 +199,7 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .fluid()
                 .fluidTemp(3003)
-                .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
+                .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .components(Carbon, 4, Cobalt, 16, Chrome, 28, Tungsten, 1)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
@@ -208,7 +210,7 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .fluid()
                 .fluidTemp(3003)
-                .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
+                .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .components(Nickel, 1, Titanium, 1)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
@@ -219,7 +221,7 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .fluid()
                 .fluidTemp(3003)
-                .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
+                .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .components(Nickel, 5, Titanium, 4)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
@@ -230,7 +232,7 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .fluid()
                 .fluidTemp(3003)
-                .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
+                .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .components(Aluminium, 3, Titanium, 24, Vanadium, 1)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
@@ -241,7 +243,7 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .fluid()
                 .fluidTemp(3003)
-                .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
+                .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .components(Aluminium, 720, Chrome, 1, Magnesium, 21)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
@@ -252,7 +254,7 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .fluid()
                 .fluidTemp(3003)
-                .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
+                .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .components(Aluminium, 905, Copper, 1, Chrome, 1, Magnesium, 10, Silicon, 5)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
