@@ -5,62 +5,71 @@ import gregtech.api.unification.material.properties.ItemPipeProperties;
 import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.api.unification.ore.OrePrefix;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static gregtech.api.unification.material.properties.PropertyKey.FLUID_PIPE;
 import static gregtech.api.unification.material.properties.PropertyKey.ITEM_PIPE;
 import static gregtech.api.unification.ore.OrePrefix.*;
-import static gregtech.api.unification.ore.OrePrefix.wireFine;
 import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.curvedPlate;
 
 public class OrePrefixValues {
 
-    public static final Map<OrePrefix, Double> OREPREFIX_TO_UNIT = new HashMap<OrePrefix, Double>(){{
-        put(pipeHugeRestrictive, 12.5);
-        put(pipeHugeFluid, 12.0);
-        put(pipeHugeItem, 12.0);
-        put(block, 9.0);
-        put(plateDense, 9.0);
-        put(pipeLargeRestrictive, 6.5);
-        put(pipeLargeFluid, 6.0);
-        put(pipeLargeItem, 6.0);
-        put(rotor, 4.25);
-        put(gear, 4.0);
-        put(toolHeadBuzzSaw, 4.0);
-        put(pipeNormalRestrictive, 3.5);
-        put(pipeNonupleFluid, 3.0);
-        put(pipeNormalItem, 3.0);
-        put(spring, 2.0);
-        put(plateDouble, 2.0);
-        put(wireGtOctal, 2.0);
-        put(wireGtHex, 1.5);
-        put(pipeSmallRestrictive, 1.5);
-        put(pipeSmallFluid, 1.0);
-        put(pipeSmallItem, 1.0);
-        put(plate, 1.0);
-        put(curvedPlate, 1.0);
-        put(stickLong, 1.0);
-        put(ingot, 1.0);
-        put(dust, 1.0);
-        put(wireGtQuadruple, 1.0);
-        put(gearSmall, 1.0);
-        put(pipeTinyFluid, 0.5);
-        put(pipeTinyItem, 0.5);
-        put(stick, 0.5);
-        put(wireGtDouble, 0.5);
-        put(wireGtSingle, 0.25);
-        put(ring, 0.25);
-        put(springSmall, 0.25);
-        put(dustSmall, 0.25);
-        put(dustTiny, 0.125);
-        put(bolt, 0.125);
-        put(wireFine, 0.125);
-    }};
 
     public static final List<OrePrefix> FLUID_PIPES_ORES = new ArrayList<>();
     public static final List<OrePrefix> ITEM_PIPES_ORES = new ArrayList<>();
     public static final Map<PropertyKey<FluidPipeProperties>, List<OrePrefix>> FLUID_PIPE_PROPERTY_TO_ORE_PREFIX = new HashMap<>();
     public static final Map<PropertyKey<ItemPipeProperties>, List<OrePrefix>> ITEM_PIPE_PROPERTY_TO_ORE_PREFIX = new HashMap<>();
+    public static Map<OrePrefix,Double> ORE_PREFIX_TO_UNITS = new HashMap<>();
+
+    public static void init() {
+        ORE_PREFIX_TO_UNITS = new HashMap<OrePrefix, Double>(){{
+            put(pipeHugeRestrictive, 12.500);
+            put(pipeHugeFluid, 12.000);
+            put(pipeHugeItem, 12.000);
+            put(block, 9.000);
+            put(plateDense, 9.000);
+            put(pipeLargeRestrictive, 6.500);
+            put(pipeLargeFluid, 6.000);
+            put(pipeLargeItem, 6.000);
+            put(rotor, 4.250);
+            put(gear, 4.000);
+            put(toolHeadBuzzSaw, 4.000);
+            put(pipeNormalRestrictive, 3.500);
+            put(pipeNonupleFluid, 3.000);
+            put(pipeNormalItem, 3.000);
+            put(spring, 2.000);
+            put(plateDouble, 2.000);
+            put(wireGtOctal, 2.000);
+            put(wireGtHex, 1.500);
+            put(pipeSmallRestrictive, 1.500);
+            put(pipeSmallFluid, 1.000);
+            put(pipeSmallItem, 1.000);
+            put(plate, 1.000);
+            put(curvedPlate, 1.000);
+            put(stickLong, 1.000);
+            put(ingot, 1.000);
+            put(dust, 1.000);
+            put(wireGtQuadruple, 1.000);
+            put(gearSmall, 1.000);
+            put(pipeTinyFluid, 0.500);
+            put(pipeTinyItem, 0.500);
+            put(stick, 0.500);
+            put(wireGtDouble, 0.500);
+            put(wireGtSingle, 0.250);
+            put(ring, 0.250);
+            put(springSmall, 0.250);
+            put(dustSmall, 0.250);
+            put(bolt, 0.125);
+            put(wireFine, 0.125);
+            put(screw, 0.100);
+            put(dustTiny, 0.025);
+        }};
+    }
+
+
 
     static {
         FLUID_PIPES_ORES.add(pipeHugeFluid);
