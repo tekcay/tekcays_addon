@@ -167,8 +167,8 @@ public class TKCYAMaterials {
     public static Material Nitinol;
     public static Material Nitinol60; //Nitinol-60
     public static Material TC4; //TiAl6V4, search for Ti-6Al-4V, Ti24Al3V
-    public static Material AluminiumAlloy5052; //Al9MgMn4
-    public static Material AluminiumAlloy6061; //Al914Mg10Si4FeCu //Common
+    public static Material Aluminium5052; //Al9MgMn4
+    public static Material Aluminium6061; //Al914Mg10Si4FeCu //Common
 
     /**
      * Polymers
