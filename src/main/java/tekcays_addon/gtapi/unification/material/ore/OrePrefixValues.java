@@ -65,6 +65,7 @@ public class OrePrefixValues {
             put(wireGtDouble, 0.500);
             put(wireGtSingle, 0.250);
             put(ring, 0.250);
+            put(foil, 0.250);
             put(springSmall, 0.250);
             put(dustSmall, 0.250);
             put(bolt, 0.125);
