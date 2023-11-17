@@ -46,8 +46,8 @@ public class TKCYAAlloys {
                 .fluidTemp(1542)
                 .flags(EXT2_METAL, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .cableProperties(128, 4, 4)
-                .components(Copper, 1, Nickel, 1)
-                .color(0xdfa478).iconSet(METALLIC)
+                .components(Copper, 11, Nickel, 10)
+                .colorAverage()
                 .build();
 
         SiliconCarbide = new Material.Builder(id++, gregtechId("silicon_carbide"))
