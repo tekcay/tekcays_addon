@@ -1,22 +1,23 @@
-package tekcays_addon.common.pipelike.fluidpipe;
+package tekcays_addon.common.pipelike.cable;
 
-import gregtech.common.pipelike.fluidpipe.BlockFluidPipe;
-import gregtech.common.pipelike.fluidpipe.ItemBlockFluidPipe;
+import gregtech.api.unification.OreDictUnifier;
+import gregtech.api.unification.ore.OrePrefix;
+import gregtech.common.pipelike.cable.BlockCable;
+import gregtech.common.pipelike.cable.ItemBlockCable;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import tekcays_addon.api.pipelike.PipeLikeUtils;
+import tekcays_addon.gtapi.unification.material.ore.OrePrefixValues;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemBlockFluidPipeExtraInfo extends ItemBlockFluidPipe {
-
-
-    public ItemBlockFluidPipeExtraInfo(BlockFluidPipe block) {
+public class ItemBlockCableExtraInfo extends ItemBlockCable {
+    public ItemBlockCableExtraInfo(BlockCable block) {
         super(block);
     }
 
@@ -24,6 +25,10 @@ public class ItemBlockFluidPipeExtraInfo extends ItemBlockFluidPipe {
     @SideOnly(Side.CLIENT)
     public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, @Nonnull List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        PipeLikeUtils.addUnitInfoToPipeLike(tooltip, blockPipe);
+
+        OrePrefix orePrefix = OreDictUnifier.getPrefix(stack);
+        if (OrePrefixValues.WIRES.contains(orePrefix)) {
+            PipeLikeUtils.addUnitInfoToPipeLike(tooltip, orePrefix);
+        }
     }
 }

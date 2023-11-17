@@ -1,7 +1,7 @@
-package tekcays_addon.common.pipelike.fluidpipe;
+package tekcays_addon.common.pipelike.itempipe;
 
-import gregtech.common.pipelike.fluidpipe.BlockFluidPipe;
-import gregtech.common.pipelike.fluidpipe.ItemBlockFluidPipe;
+import gregtech.common.pipelike.itempipe.BlockItemPipe;
+import gregtech.common.pipelike.itempipe.ItemBlockItemPipe;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -13,10 +13,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemBlockFluidPipeExtraInfo extends ItemBlockFluidPipe {
-
-
-    public ItemBlockFluidPipeExtraInfo(BlockFluidPipe block) {
+public class ItemBlockPipeExtraInfo extends ItemBlockItemPipe {
+    public ItemBlockPipeExtraInfo(BlockItemPipe block) {
         super(block);
     }
 

@@ -8,7 +8,9 @@ import gregtech.common.pipelike.fluidpipe.BlockFluidPipe;
 import gregtech.common.pipelike.fluidpipe.ItemBlockFluidPipe;
 import gregtech.common.pipelike.itempipe.BlockItemPipe;
 import gregtech.common.pipelike.itempipe.ItemBlockItemPipe;
+import tekcays_addon.common.pipelike.cable.ItemBlockCableExtraInfo;
 import tekcays_addon.common.pipelike.fluidpipe.ItemBlockFluidPipeExtraInfo;
+import tekcays_addon.common.pipelike.itempipe.ItemBlockPipeExtraInfo;
 import tekcays_addon.gtapi.unification.material.ore.OreDictAdditions;
 import tekcays_addon.gtapi.utils.FuelWithProperties;
 import tekcays_addon.gtapi.utils.TKCYALog;
@@ -71,9 +73,9 @@ public class CommonProxy {
         registry.register(createItemBlock(TKCYAMetaBlocks.BLOCK_CUT_WOOD, VariantItemBlock::new));
 
         for (MaterialRegistry materialRegistry : GregTechAPI.materialManager.getRegistries()) {
-            for (BlockCable cable : CABLES.get(materialRegistry.getModid())) registry.register(createItemBlock(cable, ItemBlockCable::new));
+            for (BlockCable cable : CABLES.get(materialRegistry.getModid())) registry.register(createItemBlock(cable, ItemBlockCableExtraInfo::new));
             for (BlockFluidPipe pipe : FLUID_PIPES.get(materialRegistry.getModid())) registry.register(createItemBlock(pipe, ItemBlockFluidPipeExtraInfo::new));
-            for (BlockItemPipe pipe : ITEM_PIPES.get(materialRegistry.getModid())) registry.register(createItemBlock(pipe, ItemBlockItemPipe::new));
+            for (BlockItemPipe pipe : ITEM_PIPES.get(materialRegistry.getModid())) registry.register(createItemBlock(pipe, ItemBlockPipeExtraInfo::new));
         }
     }
 

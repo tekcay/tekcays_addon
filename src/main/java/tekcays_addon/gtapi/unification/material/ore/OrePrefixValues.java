@@ -20,6 +20,7 @@ public class OrePrefixValues {
 
     public static final List<OrePrefix> FLUID_PIPES_ORES = new ArrayList<>();
     public static final List<OrePrefix> ITEM_PIPES_ORES = new ArrayList<>();
+    public static final List<OrePrefix> WIRES = new ArrayList<>();
     public static final Map<PropertyKey<FluidPipeProperties>, List<OrePrefix>> FLUID_PIPE_PROPERTY_TO_ORE_PREFIX = new HashMap<>();
     public static final Map<PropertyKey<ItemPipeProperties>, List<OrePrefix>> ITEM_PIPE_PROPERTY_TO_ORE_PREFIX = new HashMap<>();
     public static Map<OrePrefix,Double> ORE_PREFIX_TO_UNITS = new HashMap<>();
@@ -39,13 +40,13 @@ public class OrePrefixValues {
             put(rotor, 4.250);
             put(gear, 4.000);
             put(toolHeadBuzzSaw, 4.000);
+            put(wireGtHex, 4.000);
             put(pipeNormalRestrictive, 3.500);
             put(pipeNormalFluid, 3.000);
             put(pipeNormalItem, 3.000);
             put(spring, 2.000);
             put(plateDouble, 2.000);
             put(wireGtOctal, 2.000);
-            put(wireGtHex, 1.500);
             put(pipeSmallRestrictive, 1.500);
             put(pipeSmallFluid, 1.000);
             put(pipeSmallItem, 1.000);
@@ -78,8 +79,6 @@ public class OrePrefixValues {
         return String.format("%.3f", units);
     }
 
-
-
     static {
         FLUID_PIPES_ORES.add(pipeHugeFluid);
         FLUID_PIPES_ORES.add(pipeLargeFluid);
@@ -98,6 +97,13 @@ public class OrePrefixValues {
         FLUID_PIPES_ORES.add(pipeHugeRestrictive);
         FLUID_PIPES_ORES.add(pipeLargeRestrictive);
         FLUID_PIPES_ORES.add(pipeSmallRestrictive);
+    }
+    static {
+        WIRES.add(wireGtSingle);
+        WIRES.add(wireGtDouble);
+        WIRES.add(wireGtQuadruple);
+        WIRES.add(wireGtOctal);
+        WIRES.add(wireGtHex);
     }
     static {
         FLUID_PIPE_PROPERTY_TO_ORE_PREFIX.put(FLUID_PIPE, FLUID_PIPES_ORES);
