@@ -10,6 +10,7 @@ import net.minecraftforge.fluids.FluidStack;
 import gregtech.api.unification.ore.OrePrefix;
 import net.minecraftforge.fml.common.Loader;
 import tekcays_addon.TekCaysAddon;
+import tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix;
 
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
@@ -38,6 +39,7 @@ public class TKCYAValues {
     //Simple Values
 
     public static final int STEAM_TO_WATER = 8;
+    public static final int STANDARD_UNIT = 1000;
 
     public static final Long[] EMPTY_LONG_TWO_ARRAY = new Long[]{0L, 0L};
     public static final Integer[] EMPTY_INT_TWO_ARRAY = new Integer[]{0, 0};
@@ -184,6 +186,8 @@ public class TKCYAValues {
 
     public static final Material[] FILTER_MATERIALS = new Material[]{
             Steel, StainlessSteel};
+
+
 
 }
 

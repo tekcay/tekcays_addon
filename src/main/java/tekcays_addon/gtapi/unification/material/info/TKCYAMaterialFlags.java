@@ -4,7 +4,11 @@ import gregtech.api.unification.material.info.MaterialFlag;
 import gregtech.api.unification.material.info.MaterialFlags;
 import gregtech.api.unification.material.properties.PropertyKey;
 
-import static gregtech.api.unification.material.info.MaterialFlags.GENERATE_PLATE;
+import java.util.ArrayList;
+import java.util.List;
+
+import static gregtech.api.unification.material.Materials.*;
+import static gregtech.api.unification.material.info.MaterialFlags.*;
 
 public class TKCYAMaterialFlags {
 
@@ -33,6 +37,24 @@ public class TKCYAMaterialFlags {
     public static final MaterialFlag BATH_FLUID = new MaterialFlag.Builder("bath_fluid")
             .requireProps(PropertyKey.FLUID)
             .build();
+    public static final List<MaterialFlag> ALL_PARTS = new ArrayList<>();
+
+    static {
+        ALL_PARTS.addAll(EXT2_METAL);
+        ALL_PARTS.add(GENERATE_ROTOR);
+        ALL_PARTS.add(GENERATE_DENSE);
+        ALL_PARTS.add(GENERATE_DOUBLE_PLATE);
+        ALL_PARTS.add(GENERATE_FRAME);
+        ALL_PARTS.add(GENERATE_SPRING);
+        ALL_PARTS.add(GENERATE_SPRING_SMALL);
+        ALL_PARTS.add(GENERATE_FOIL);
+        ALL_PARTS.add(GENERATE_FINE_WIRE);
+        ALL_PARTS.add(GENERATE_GEAR);
+        ALL_PARTS.add(GENERATE_SMALL_GEAR);
+        ALL_PARTS.add(GENERATE_CURVED_PLATE);
+    }
+
+
 
 }
 

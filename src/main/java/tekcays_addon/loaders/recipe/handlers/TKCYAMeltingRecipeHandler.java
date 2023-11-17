@@ -2,25 +2,21 @@ package tekcays_addon.loaders.recipe.handlers;
 
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.properties.PropertyKey;
+import tekcays_addon.gtapi.consts.TKCYAValues;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
-import static gregtech.api.GTValues.L;
 import static gregtech.api.unification.ore.OrePrefix.dust;
 import static tekcays_addon.api.material.MaterialHelper.getAllMaterials;
-import static tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags.POLYMER;
+import static tekcays_addon.gtapi.consts.TKCYAValues.STANDARD_UNIT;
 
 public class TKCYAMeltingRecipeHandler {
 
     public static void init() {
-
-        for (Material material : getAllMaterials() ) {
-            if (!material.hasProperty(PropertyKey.DUST)) continue;
-            if (!material.hasProperty(PropertyKey.FLUID)) continue;
-            if (material.getFluid().getTemperature() <= 300) continue;
-            if (material.hasFlag(POLYMER)) continue;
-            registerMeltingRecipes(material);
-
-        }
+        getAllMaterials().stream()
+                .filter(material -> material.hasProperty(PropertyKey.DUST))
+                .filter(Material::hasFluid)
+                .filter(material -> material.getFluid().getTemperature() > TKCYAValues.ROOM_TEMPERATURE)
+                .forEach(TKCYAMeltingRecipeHandler::registerMeltingRecipes);
     }
 
     public static void registerMeltingRecipes(Material material) {
@@ -28,7 +24,7 @@ public class TKCYAMeltingRecipeHandler {
     TKCYARecipeMaps.MELTER_RECIPES.recipeBuilder()
             .temperature(material.getFluid().getTemperature())
             .input(dust, material)
-            .fluidOutputs(material.getFluid(L))
+            .fluidOutputs(material.getFluid(STANDARD_UNIT))
             .duration((int) material.getMass())
             .buildAndRegister();
 
