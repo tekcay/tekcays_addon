@@ -3,6 +3,8 @@ package tekcays_addon.gtapi.capability;
 import gregtech.api.capability.SimpleCapabilityManager;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
 import tekcays_addon.gtapi.capability.containers.*;
 
 public class TKCYATileCapabilities {
@@ -33,6 +35,12 @@ public class TKCYATileCapabilities {
 
     @CapabilityInject(IHinderedContainer.class)
     public static Capability<IHinderedContainer> CAPABILITY_HINDERED_CONTAINER = null;
+
+    @CapabilityInject(IFluidHandler.class)
+    public static Capability<IFluidHandler> CAPABILITY_FLUID_LOGISTIC = null;
+
+    @CapabilityInject(IItemHandler.class)
+    public static Capability<IItemHandler> CAPABILITY_ITEM_LOGISTIC = null;
 
 
     public static void init() {
