@@ -36,11 +36,11 @@ public class TKCYATileCapabilities {
     @CapabilityInject(IHinderedContainer.class)
     public static Capability<IHinderedContainer> CAPABILITY_HINDERED_CONTAINER = null;
 
-    @CapabilityInject(IFluidHandler.class)
-    public static Capability<IFluidHandler> CAPABILITY_FLUID_LOGISTIC = null;
+    @CapabilityInject(Logistic.class)
+    public static Capability<Logistic> CAPABILITY_FLUID_LOGISTIC = null;
 
-    @CapabilityInject(IItemHandler.class)
-    public static Capability<IItemHandler> CAPABILITY_ITEM_LOGISTIC = null;
+    @CapabilityInject(Logistic.class)
+    public static Capability<Logistic> CAPABILITY_ITEM_LOGISTIC = null;
 
 
     public static void init() {
@@ -53,6 +53,7 @@ public class TKCYATileCapabilities {
         SimpleCapabilityManager.registerCapabilityWithNoDefault(IDecompression.class);
         SimpleCapabilityManager.registerCapabilityWithNoDefault(IMoldCoverable.class);
         SimpleCapabilityManager.registerCapabilityWithNoDefault(IHinderedContainer.class);
+        SimpleCapabilityManager.registerCapabilityWithNoDefault(Logistic.class);
     }
 
 }

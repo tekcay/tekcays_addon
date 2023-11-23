@@ -6,6 +6,7 @@ import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import gregtech.api.unification.ore.OrePrefix;
 import net.minecraftforge.fml.common.Loader;
@@ -24,6 +25,10 @@ import java.util.*;
 public class TKCYAValues {
 
     //Mods
+
+    public static ResourceLocation tkcyaId(String name) {
+        return new ResourceLocation(TekCaysAddon.MODID, name);
+    }
 
     //Recipe properties keys
     public static final String INTERVAL_PRESSURE_PROPERTY = "interval_pressure_property";

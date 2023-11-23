@@ -1,15 +1,19 @@
 package tekcays_addon.common.covers;
 
+import gregtech.api.GTValues;
 import net.minecraft.util.ResourceLocation;
 import tekcays_addon.TekCaysAddon;
 import tekcays_addon.api.detectors.CoverDetectorWrapper;
+import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.gtapi.utils.TKCYALog;
+
 
 import static gregtech.common.covers.CoverBehaviors.registerBehavior;
 import static tekcays_addon.api.consts.DetectorWrappers.*;
 import static tekcays_addon.api.covers.molds.CoverMoldWrapper.*;
 import static tekcays_addon.common.items.TKCYAMetaItems.*;
 import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.*;
+import static tekcays_addon.gtapi.consts.TKCYAValues.tkcyaId;
 import static tekcays_addon.gtapi.render.TKCYATextures.*;
 
 public class Covers {
@@ -111,6 +115,47 @@ public class Covers {
                 (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_BOLT_CARBON_WRAPPER));
         registerBehavior(new ResourceLocation(TekCaysAddon.MODID, COVER_MOLD_RING_CARBON_WRAPPER.getPathln()), COVER_MOLD_RING_CARBON,
                 (coverHolder, attachedSide) -> new CoverMold(coverHolder, attachedSide, COVER_MOLD_RING_CARBON_WRAPPER));
+
+        TKCYALog.logger.info("Registering GTCEu logistic covers...");
+
+
+        registerBehavior(tkcyaId("conveyor.lv"), TKCYAMetaItems.CONVEYOR_MODULE_LV, (tile, side) -> new CoverConveyorOverhauled(tile, side, GTValues.LV, 8));
+        registerBehavior(tkcyaId("conveyor.mv"), TKCYAMetaItems.CONVEYOR_MODULE_MV, (tile, side) -> new CoverConveyorOverhauled(tile, side, GTValues.MV, 32));
+        registerBehavior(tkcyaId("conveyor.hv"), TKCYAMetaItems.CONVEYOR_MODULE_HV, (tile, side) -> new CoverConveyorOverhauled(tile, side, GTValues.HV, 64));
+        registerBehavior(tkcyaId("conveyor.ev"), TKCYAMetaItems.CONVEYOR_MODULE_EV, (tile, side) -> new CoverConveyorOverhauled(tile, side, GTValues.EV, 3 * 64));
+        registerBehavior(tkcyaId("conveyor.iv"), TKCYAMetaItems.CONVEYOR_MODULE_IV, (tile, side) -> new CoverConveyorOverhauled(tile, side, GTValues.IV, 8 * 64));
+        registerBehavior(tkcyaId("conveyor.luv"), TKCYAMetaItems.CONVEYOR_MODULE_LuV, (tile, side) -> new CoverConveyorOverhauled(tile, side, GTValues.LuV, 16 * 64));
+        registerBehavior(tkcyaId("conveyor.zpm"), TKCYAMetaItems.CONVEYOR_MODULE_ZPM, (tile, side) -> new CoverConveyorOverhauled(tile, side, GTValues.ZPM, 16 * 64));
+        registerBehavior(tkcyaId("conveyor.uv"), TKCYAMetaItems.CONVEYOR_MODULE_UV, (tile, side) -> new CoverConveyorOverhauled(tile, side, GTValues.UV, 16 * 64));
+
+        registerBehavior(tkcyaId("robotic_arm.lv"), TKCYAMetaItems.ROBOT_ARM_LV, (tile, side) -> new CoverRoboticArmOverhauled(tile, side, GTValues.LV, 8));
+        registerBehavior(tkcyaId("robotic_arm.mv"), TKCYAMetaItems.ROBOT_ARM_MV, (tile, side) -> new CoverRoboticArmOverhauled(tile, side, GTValues.MV, 32));
+        registerBehavior(tkcyaId("robotic_arm.hv"), TKCYAMetaItems.ROBOT_ARM_HV, (tile, side) -> new CoverRoboticArmOverhauled(tile, side, GTValues.HV, 64));
+        registerBehavior(tkcyaId("robotic_arm.ev"), TKCYAMetaItems.ROBOT_ARM_EV, (tile, side) -> new CoverRoboticArmOverhauled(tile, side, GTValues.EV, 3 * 64));
+        registerBehavior(tkcyaId("robotic_arm.iv"), TKCYAMetaItems.ROBOT_ARM_IV, (tile, side) -> new CoverRoboticArmOverhauled(tile, side, GTValues.IV, 8 * 64));
+        registerBehavior(tkcyaId("robotic_arm.luv"), TKCYAMetaItems.ROBOT_ARM_LuV, (tile, side) -> new CoverRoboticArmOverhauled(tile, side, GTValues.LuV, 16 * 64));
+        registerBehavior(tkcyaId("robotic_arm.zpm"), TKCYAMetaItems.ROBOT_ARM_ZPM, (tile, side) -> new CoverRoboticArmOverhauled(tile, side, GTValues.ZPM, 16 * 64));
+        registerBehavior(tkcyaId("robotic_arm.uv"), TKCYAMetaItems.ROBOT_ARM_UV, (tile, side) -> new CoverRoboticArmOverhauled(tile, side, GTValues.UV, 16 * 64));
+
+        registerBehavior(tkcyaId("pump.lv"), TKCYAMetaItems.ELECTRIC_PUMP_LV, (tile, side) -> new CoverPumpOverhauled(tile, side, GTValues.LV, 1280));
+        registerBehavior(tkcyaId("pump.mv"), TKCYAMetaItems.ELECTRIC_PUMP_MV, (tile, side) -> new CoverPumpOverhauled(tile, side, GTValues.MV, 1280 * 4));
+        registerBehavior(tkcyaId("pump.hv"), TKCYAMetaItems.ELECTRIC_PUMP_HV, (tile, side) -> new CoverPumpOverhauled(tile, side, GTValues.HV, 1280 * 16));
+        registerBehavior(tkcyaId("pump.ev"), TKCYAMetaItems.ELECTRIC_PUMP_EV, (tile, side) -> new CoverPumpOverhauled(tile, side, GTValues.EV, 1280 * 64));
+        registerBehavior(tkcyaId("pump.iv"), TKCYAMetaItems.ELECTRIC_PUMP_IV, (tile, side) -> new CoverPumpOverhauled(tile, side, GTValues.IV, 1280 * 64 * 4));
+        registerBehavior(tkcyaId("pump.luv"), TKCYAMetaItems.ELECTRIC_PUMP_LuV, (tile, side) -> new CoverPumpOverhauled(tile, side, GTValues.LuV, 1280 * 64 * 16));
+        registerBehavior(tkcyaId("pump.zpm"), TKCYAMetaItems.ELECTRIC_PUMP_ZPM, (tile, side) -> new CoverPumpOverhauled(tile, side, GTValues.ZPM, 1280 * 64 * 64));
+        registerBehavior(tkcyaId("pump.uv"), TKCYAMetaItems.ELECTRIC_PUMP_UV, (tile, side) -> new CoverPumpOverhauled(tile, side, GTValues.UV, 1280 * 64 * 64 * 4));
+
+        registerBehavior(tkcyaId("fluid.regulator.lv"), TKCYAMetaItems.FLUID_REGULATOR_LV, (tile, side) -> new CoverFluidRegulatorOverhauled(tile, side, GTValues.LV, 1280));
+        registerBehavior(tkcyaId("fluid.regulator.mv"), TKCYAMetaItems.FLUID_REGULATOR_MV, (tile, side) -> new CoverFluidRegulatorOverhauled(tile, side, GTValues.MV, 1280 * 4));
+        registerBehavior(tkcyaId("fluid.regulator.hv"), TKCYAMetaItems.FLUID_REGULATOR_HV, (tile, side) -> new CoverFluidRegulatorOverhauled(tile, side, GTValues.HV, 1280 * 16));
+        registerBehavior(tkcyaId("fluid.regulator.ev"), TKCYAMetaItems.FLUID_REGULATOR_EV, (tile, side) -> new CoverFluidRegulatorOverhauled(tile, side, GTValues.EV, 1280 * 64));
+        registerBehavior(tkcyaId("fluid.regulator.iv"), TKCYAMetaItems.FLUID_REGULATOR_IV, (tile, side) -> new CoverFluidRegulatorOverhauled(tile, side, GTValues.IV, 1280 * 64 * 4));
+        registerBehavior(tkcyaId("fluid.regulator.luv"), TKCYAMetaItems.FLUID_REGULATOR_LUV, (tile, side) -> new CoverFluidRegulatorOverhauled(tile, side, GTValues.LuV, 1280 * 64 * 16));
+        registerBehavior(tkcyaId("fluid.regulator.zpm"), TKCYAMetaItems.FLUID_REGULATOR_ZPM, (tile, side) -> new CoverFluidRegulatorOverhauled(tile, side, GTValues.ZPM, 1280 * 64 * 64));
+        registerBehavior(tkcyaId("fluid.regulator.uv"), TKCYAMetaItems.FLUID_REGULATOR_UV, (tile, side) -> new CoverFluidRegulatorOverhauled(tile, side, GTValues.UV, 1280 * 64 * 64 * 4));
+
+
 
 
         /*

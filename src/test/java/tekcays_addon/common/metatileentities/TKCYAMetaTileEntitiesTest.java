@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 
 import static gregtech.common.metatileentities.MetaTileEntities.registerMetaTileEntity;
 import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.STEAM_TURBINE;
-import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.tkcyaId;
+import static tekcays_addon.gtapi.consts.TKCYAValues.tkcyaId;
 
 public class TKCYAMetaTileEntitiesTest {
 
