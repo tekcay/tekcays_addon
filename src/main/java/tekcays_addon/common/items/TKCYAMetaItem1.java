@@ -101,137 +101,137 @@ public class TKCYAMetaItem1 extends StandardMetaItem {
         ELECTRIC_PUMP_LV = addItem(142, "electric.pump.lv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.electric.pump.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.fluid_transfer_rate", 1280 / 20));
-        }));
+        })).setUnificationData(lvComponents, MarkerMaterials.Empty);
         ELECTRIC_PUMP_MV = addItem(143, "electric.pump.mv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.electric.pump.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.fluid_transfer_rate", 1280 * 4 / 20));
-        }));
+        })).setUnificationData(mvComponents, MarkerMaterials.Empty);
         ELECTRIC_PUMP_HV = addItem(144, "electric.pump.hv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.electric.pump.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.fluid_transfer_rate", 1280 * 16 / 20));
-        }));
+        })).setUnificationData(hvComponents, MarkerMaterials.Empty);
         ELECTRIC_PUMP_EV = addItem(145, "electric.pump.ev").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.electric.pump.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.fluid_transfer_rate", 1280 * 64 / 20));
-        }));
+        })).setUnificationData(evComponents, MarkerMaterials.Empty);
         ELECTRIC_PUMP_IV = addItem(146, "electric.pump.iv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.electric.pump.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.fluid_transfer_rate", 1280 * 64 * 4 / 20));
-        }));
+        })).setUnificationData(ivComponents, MarkerMaterials.Empty);
         ELECTRIC_PUMP_LuV = addItem(147, "electric.pump.luv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.electric.pump.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.fluid_transfer_rate", 1280 * 64 * 16 / 20));
-        }));
+        })).setUnificationData(luvComponents, MarkerMaterials.Empty);
         ELECTRIC_PUMP_ZPM = addItem(148, "electric.pump.zpm").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.electric.pump.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.fluid_transfer_rate", 1280 * 64 * 64 / 20));
-        }));
+        })).setUnificationData(zpmComponents, MarkerMaterials.Empty);
         ELECTRIC_PUMP_UV = addItem(149, "electric.pump.uv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.electric.pump.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.fluid_transfer_rate", 1280 * 64 * 64 * 4 / 20));
-        }));
+        })).setUnificationData(uvComponents, MarkerMaterials.Empty);
 
         // Conveyors: ID 156-170
         CONVEYOR_MODULE_LV = addItem(157, "conveyor.module.lv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.conveyor.module.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.item_transfer_rate", 8));
-        }));
+        })).setUnificationData(lvComponents, MarkerMaterials.Empty);
         CONVEYOR_MODULE_MV = addItem(158, "conveyor.module.mv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.conveyor.module.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.item_transfer_rate", 32));
-        }));
+        })).setUnificationData(mvComponents, MarkerMaterials.Empty);
         CONVEYOR_MODULE_HV = addItem(159, "conveyor.module.hv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.conveyor.module.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.item_transfer_rate", 64));
-        }));
+        })).setUnificationData(hvComponents, MarkerMaterials.Empty);
         CONVEYOR_MODULE_EV = addItem(160, "conveyor.module.ev").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.conveyor.module.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.item_transfer_rate_stacks", 3));
-        }));
+        })).setUnificationData(evComponents, MarkerMaterials.Empty);
         CONVEYOR_MODULE_IV = addItem(161, "conveyor.module.iv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.conveyor.module.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.item_transfer_rate_stacks", 8));
-        }));
+        })).setUnificationData(ivComponents, MarkerMaterials.Empty);
         CONVEYOR_MODULE_LuV = addItem(162, "conveyor.module.luv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.conveyor.module.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.item_transfer_rate_stacks", 16));
-        }));
+        })).setUnificationData(luvComponents, MarkerMaterials.Empty);
         CONVEYOR_MODULE_ZPM = addItem(163, "conveyor.module.zpm").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.conveyor.module.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.item_transfer_rate_stacks", 16));
-        }));
+        })).setUnificationData(zpmComponents, MarkerMaterials.Empty);
         CONVEYOR_MODULE_UV = addItem(164, "conveyor.module.uv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.conveyor.module.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.item_transfer_rate_stacks", 16));
-        }));
+        })).setUnificationData(uvComponents, MarkerMaterials.Empty);
 
         // Robot Arms: ID 186-200
         ROBOT_ARM_LV = addItem(187, "robot.arm.lv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.robot.arm.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.item_transfer_rate", 8));
-        }));
+        })).setUnificationData(lvComponents, MarkerMaterials.Empty);
         ROBOT_ARM_MV = addItem(188, "robot.arm.mv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.robot.arm.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.item_transfer_rate", 32));
-        }));
+        })).setUnificationData(mvComponents, MarkerMaterials.Empty);
         ROBOT_ARM_HV = addItem(189, "robot.arm.hv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.robot.arm.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.item_transfer_rate", 64));
-        }));
+        })).setUnificationData(hvComponents, MarkerMaterials.Empty);
         ROBOT_ARM_EV = addItem(190, "robot.arm.ev").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.robot.arm.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.item_transfer_rate_stacks", 3));
-        }));
+        })).setUnificationData(evComponents, MarkerMaterials.Empty);
         ROBOT_ARM_IV = addItem(191, "robot.arm.iv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.robot.arm.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.item_transfer_rate_stacks", 8));
-        }));
+        })).setUnificationData(ivComponents, MarkerMaterials.Empty);
         ROBOT_ARM_LuV = addItem(192, "robot.arm.luv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.robot.arm.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.item_transfer_rate_stacks", 16));
-        }));
+        })).setUnificationData(luvComponents, MarkerMaterials.Empty);
         ROBOT_ARM_ZPM = addItem(193, "robot.arm.zpm").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.robot.arm.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.item_transfer_rate_stacks", 16));
-        }));
+        })).setUnificationData(zpmComponents, MarkerMaterials.Empty);
         ROBOT_ARM_UV = addItem(194, "robot.arm.uv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.robot.arm.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.item_transfer_rate_stacks", 16));
-        }));
+        })).setUnificationData(uvComponents, MarkerMaterials.Empty);
 
         // Fluid Regulators: ID 246-260
         FLUID_REGULATOR_LV = addItem(247, "fluid.regulator.lv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.fluid.regulator.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.fluid_transfer_rate", 1280 / 20));
-        }));
+        })).setUnificationData(lvComponents, MarkerMaterials.Empty);
         FLUID_REGULATOR_MV = addItem(248, "fluid.regulator.mv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.fluid.regulator.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.fluid_transfer_rate", 1280 * 4 / 20));
-        }));
+        })).setUnificationData(mvComponents, MarkerMaterials.Empty);
         FLUID_REGULATOR_HV = addItem(249, "fluid.regulator.hv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.fluid.regulator.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.fluid_transfer_rate", 1280 * 16 / 20));
-        }));
+        })).setUnificationData(hvComponents, MarkerMaterials.Empty);
         FLUID_REGULATOR_EV = addItem(250, "fluid.regulator.ev").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.fluid.regulator.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.fluid_transfer_rate", 1280 * 64 / 20));
-        }));
+        })).setUnificationData(evComponents, MarkerMaterials.Empty);
         FLUID_REGULATOR_IV = addItem(251, "fluid.regulator.iv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.fluid.regulator.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.fluid_transfer_rate", 1280 * 64 * 4 / 20));
-        }));
+        })).setUnificationData(ivComponents, MarkerMaterials.Empty);
         FLUID_REGULATOR_LUV = addItem(252, "fluid.regulator.luv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.fluid.regulator.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.fluid_transfer_rate", 1280 * 64 * 16 / 20));
-        }));
+        })).setUnificationData(luvComponents, MarkerMaterials.Empty);
         FLUID_REGULATOR_ZPM = addItem(253, "fluid.regulator.zpm").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.fluid.regulator.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.fluid_transfer_rate", 1280 * 64 * 64 / 20));
-        }));
+        })).setUnificationData(zpmComponents, MarkerMaterials.Empty);
         FLUID_REGULATOR_UV = addItem(254, "fluid.regulator.uv").addComponents(new TooltipBehavior(lines -> {
             lines.add(I18n.format("metaitem.fluid.regulator.tooltip"));
             lines.add(I18n.format("gregtech.universal.tooltip.fluid_transfer_rate", 1280 * 64 * 64 * 4 / 20));
-        }));
+        })).setUnificationData(uvComponents, MarkerMaterials.Empty);
 
 
     }

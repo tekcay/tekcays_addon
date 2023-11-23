@@ -26,6 +26,16 @@ public class TKCYAOrePrefixAdditions {
         addOrePrefix(cutWood);
     }
 
+    public static void componentsInit(){
+        addOrePrefix(lvComponents);
+        addOrePrefix(mvComponents);
+        addOrePrefix(hvComponents);
+        addOrePrefix(evComponents);
+        addOrePrefix(ivComponents);
+        addOrePrefix(luvComponents);
+        addOrePrefix(zpmComponents);
+        addOrePrefix(uvComponents);
+    }
 
     public static void moldsTooltip(){ //TODO show temperature for each mold
 
