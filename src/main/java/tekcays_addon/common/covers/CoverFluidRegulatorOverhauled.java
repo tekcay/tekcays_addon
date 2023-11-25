@@ -7,6 +7,7 @@ import gregtech.api.cover.ICoverable;
 import gregtech.common.covers.CoverFluidRegulator;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import tekcays_addon.api.covers.CoverMethods;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.capability.containers.LogisticContainer;
 
@@ -17,8 +18,8 @@ public class CoverFluidRegulatorOverhauled extends CoverFluidRegulator implement
 
     public CoverFluidRegulatorOverhauled(ICoverable coverHolder, EnumFacing attachedSide, int tier, int mbPerTick) {
         super(coverHolder, attachedSide, tier, mbPerTick);
-        this.energyPerOperation = GTValues.V[tier - 1];
-        this.minEnergyNeeded = this.energyPerOperation * 4;
+        this.energyPerOperation = CoverMethods.getEnergyPerOperation(tier);
+        this.minEnergyNeeded = CoverMethods.minEnergyNeeded(tier);
     }
 
     @Override

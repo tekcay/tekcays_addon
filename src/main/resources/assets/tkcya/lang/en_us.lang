@@ -667,7 +667,10 @@ tkcya.machine.dynamo.tooltip.1=Transforms rotational power into electricity.
 
 #Logistic machines
 tkcya.machine.logistic_machine.tooltip.description.1=Handles logistic covers such as conveors, pumps etc.
-tkcya.machine.logistic_machine.tooltip.cover_consumption=Each cover operation consumes §f%,d EU/t.
+tkcya.machine.logistic_machine.tooltip.cover_consumption=Each cover operation consumes §f%d EU/t.
+
+tkcya.electric.pump.placement=§cCan only be placed on a Logistic Machine.
+tkcya.electric.pump.consumption=Each operation consumes §f%d EU/t per operation.
 
 tkcya.machine.electric_pressure_compressor.pressure.tooltip.description=Transfer a fluid to the OUTPUT face to increase §aPressure§7.
 tkcya.machine.electric_pressure_compressor.vacuum.tooltip.description=Transfer a fluid from the INPUT face to increase §aVacuum§7.

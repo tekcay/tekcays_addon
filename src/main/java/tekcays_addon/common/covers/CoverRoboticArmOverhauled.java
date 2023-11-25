@@ -7,6 +7,7 @@ import gregtech.api.cover.ICoverable;
 import gregtech.common.covers.CoverRoboticArm;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.IItemHandler;
+import tekcays_addon.api.covers.CoverMethods;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.capability.containers.LogisticContainer;
 
@@ -17,8 +18,8 @@ public class CoverRoboticArmOverhauled extends CoverRoboticArm implements ItemLo
 
     public CoverRoboticArmOverhauled(ICoverable coverable, EnumFacing attachedSide, int tier, int itemsPerSecond) {
         super(coverable, attachedSide, tier, itemsPerSecond);
-        this.energyPerOperation = GTValues.V[tier - 1];
-        this.minEnergyNeeded = this.energyPerOperation * 4;
+        this.energyPerOperation = CoverMethods.getEnergyPerOperation(tier);
+        this.minEnergyNeeded = CoverMethods.minEnergyNeeded(tier);
     }
 
     @Override
