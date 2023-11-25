@@ -8,7 +8,6 @@ import gregtech.api.unification.material.Materials;
 import gregtech.api.util.GTUtility;
 import gregtech.common.metatileentities.storage.MetaTileEntityDrum;
 import net.minecraft.util.ResourceLocation;
-import tekcays_addon.TekCaysAddon;
 import tekcays_addon.api.utils.TriFunction;
 import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
@@ -20,12 +19,12 @@ import tekcays_addon.common.metatileentities.multi.storage.MetaTileEntityModulab
 import tekcays_addon.common.metatileentities.multi.storage.MetaTileEntityModulableMultiblockTank;
 import tekcays_addon.common.metatileentities.multi.storage.MetaTileEntityModulablePressurizedMultiblockTank;
 import tekcays_addon.common.metatileentities.multiblockpart.brick.*;
+import tekcays_addon.common.metatileentities.multiblockpart.capabilities.MetaTileEntityDecompressionHatch;
 import tekcays_addon.common.metatileentities.multiblockpart.capabilities.MetaTileEntityHeatAcceptor;
+import tekcays_addon.common.metatileentities.multiblockpart.capabilities.MetaTileEntityPressureHatch;
 import tekcays_addon.common.metatileentities.multiblockpart.capabilities.MetaTileEntityVacuumHatch;
 import tekcays_addon.common.metatileentities.multiblockpart.controllers.MetaTileEntityController;
 import tekcays_addon.common.metatileentities.multiblockpart.storage.MetaTileEntityCrateValve;
-import tekcays_addon.common.metatileentities.multiblockpart.capabilities.MetaTileEntityDecompressionHatch;
-import tekcays_addon.common.metatileentities.multiblockpart.capabilities.MetaTileEntityPressureHatch;
 import tekcays_addon.common.metatileentities.multiblockpart.storage.TKCYAMetaTileEntityTankValve;
 import tekcays_addon.common.metatileentities.primitive.MetaTileEntityAxeSupport;
 import tekcays_addon.common.metatileentities.single.*;
@@ -164,6 +163,9 @@ public class TKCYAMetaTileEntities {
 
     //Primitive
     public static MetaTileEntityAxeSupport AXE_SUPPORT;
+
+    //LOGISTIC
+    public static MetaTileEntityLogisticMachine LOGISTIC_MACHINE;
 
 
     public static void init() {
@@ -336,6 +338,11 @@ public class TKCYAMetaTileEntities {
         if (TKCYAConfigHolder.harderStuff.enableRoastingOverhaul) {
             registerBrickMTE("_roasting_oven", BRICK_ROASTING_OVEN, 11310, MetaTileEntityPrimitiveRoastOven::new);
         }
+
+        LOGISTIC_MACHINE = registerMetaTileEntity(11320, new MetaTileEntityLogisticMachine(tkcyaId("logistic_machine.1"), 1));
+        LOGISTIC_MACHINE = registerMetaTileEntity(11321, new MetaTileEntityLogisticMachine(tkcyaId("logistic_machine.2"), 2));
+        LOGISTIC_MACHINE = registerMetaTileEntity(11322, new MetaTileEntityLogisticMachine(tkcyaId("logistic_machine.3"), 3));
+        LOGISTIC_MACHINE = registerMetaTileEntity(11323, new MetaTileEntityLogisticMachine(tkcyaId("logistic_machine.4"), 4));
     }
 
     private static void registerBrickMTE(String lang, MetaTileEntity[] mtes, int id, BiFunction<ResourceLocation, BlockBrick.BrickType, MetaTileEntity> function) {
