@@ -1,4 +1,4 @@
 package tekcays_addon.gtapi.capability.containers;
 
-public interface Logistic {
+public interface LogisticContainer {
 }

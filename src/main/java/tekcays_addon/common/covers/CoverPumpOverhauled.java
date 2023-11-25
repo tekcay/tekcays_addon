@@ -9,8 +9,9 @@ import gregtech.common.covers.CoverPump;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
+import tekcays_addon.gtapi.capability.containers.LogisticContainer;
 
-public class CoverPumpOverhauled extends CoverPump {
+public class CoverPumpOverhauled extends CoverPump implements FluidLogisticCover {
 
     private IEnergyContainer energyContainer;
     private final long energyPerOperation;
@@ -24,31 +25,43 @@ public class CoverPumpOverhauled extends CoverPump {
 
     @Override
     public boolean canAttach() {
-        return super.canAttach() && coverHolder.getCapability(TKCYATileCapabilities.CAPABILITY_FLUID_LOGISTIC, attachedSide) != null;
+        return super.canAttach() && getLogisticContainer() != null;
     }
 
+    @Override
     public IEnergyContainer getEnergyContainer() {
         return this.energyContainer = coverHolder.getCapability(GregtechCapabilities.CAPABILITY_ENERGY_CONTAINER, null);
     }
 
     @Override
+    public long getEnergyPerOperation() {
+        return this.energyPerOperation;
+    }
+
+    @Override
+    public long getMinEnergyNeeded() {
+        return this.minEnergyNeeded;
+    }
+
+    @Override
+    public LogisticContainer getLogisticContainer() {
+        return coverHolder.getCapability(TKCYATileCapabilities.CAPABILITY_FLUID_LOGISTIC, attachedSide);
+    }
+
+    @Override
     public void update() {
-        this.energyContainer = getEnergyContainer();
-        if (this.energyContainer != null && this.energyContainer.getEnergyStored() >= this.minEnergyNeeded) {
+        if (checkEnergy()) {
             super.update();
         }
     }
 
     @Override
     protected int doTransferFluidsInternal(IFluidHandler myFluidHandler, IFluidHandler fluidHandler, int transferLimit) {
-        int transferedFluidAmount = 0;
-        if (pumpMode == PumpMode.IMPORT) {
-            transferedFluidAmount = GTTransferUtils.transferFluids(fluidHandler, myFluidHandler, transferLimit, fluidFilter::testFluidStack);
-        } else if (pumpMode == PumpMode.EXPORT) {
-            transferedFluidAmount = GTTransferUtils.transferFluids(myFluidHandler, fluidHandler, transferLimit, fluidFilter::testFluidStack);
-        }
-        if (transferedFluidAmount > 0) this.energyContainer.removeEnergy(this.energyPerOperation);
-        return 0;
+        return overridenDoTransferFluidsInternal(myFluidHandler, fluidHandler, transferLimit);
     }
 
+    @Override
+    public int superDoTransferFluidsInternal(IFluidHandler myFluidHandler, IFluidHandler fluidHandler, int transferLimit) {
+        return super.doTransferFluidsInternal(myFluidHandler, fluidHandler, transferLimit);
+    }
 }

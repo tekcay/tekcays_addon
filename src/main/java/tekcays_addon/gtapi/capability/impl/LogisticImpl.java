@@ -4,12 +4,12 @@ import gregtech.api.metatileentity.MTETrait;
 import gregtech.api.metatileentity.MetaTileEntity;
 import net.minecraftforge.common.capabilities.Capability;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
-import tekcays_addon.gtapi.capability.containers.Logistic;
+import tekcays_addon.gtapi.capability.containers.LogisticContainer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class LogisticImpl extends MTETrait implements Logistic {
+public class LogisticImpl extends MTETrait implements LogisticContainer {
 
     /**
      * Create a new MTE trait.

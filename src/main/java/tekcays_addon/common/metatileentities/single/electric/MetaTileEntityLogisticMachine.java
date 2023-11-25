@@ -21,13 +21,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
-import tekcays_addon.gtapi.capability.containers.Logistic;
+import tekcays_addon.gtapi.capability.containers.LogisticContainer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class MetaTileEntityLogisticMachine extends TieredMetaTileEntity implements Logistic {
+public class MetaTileEntityLogisticMachine extends TieredMetaTileEntity implements LogisticContainer {
 
     protected IEnergyContainer energyContainer;
     private static final int TANK_SIZE = 16000;
