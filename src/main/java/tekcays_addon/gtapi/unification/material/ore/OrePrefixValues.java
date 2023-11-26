@@ -4,6 +4,8 @@ import gregtech.api.unification.material.properties.FluidPipeProperties;
 import gregtech.api.unification.material.properties.ItemPipeProperties;
 import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.api.unification.ore.OrePrefix;
+import gregtech.api.unification.stack.UnificationEntry;
+import net.minecraft.client.resources.I18n;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +26,13 @@ public class OrePrefixValues {
     public static final Map<PropertyKey<FluidPipeProperties>, List<OrePrefix>> FLUID_PIPE_PROPERTY_TO_ORE_PREFIX = new HashMap<>();
     public static final Map<PropertyKey<ItemPipeProperties>, List<OrePrefix>> ITEM_PIPE_PROPERTY_TO_ORE_PREFIX = new HashMap<>();
     public static Map<OrePrefix,Double> ORE_PREFIX_TO_UNITS = new HashMap<>();
+    public static void addUnitTooltip(UnificationEntry unificationEntry, List<String> tooltips) {
+        OrePrefix orePrefix = unificationEntry.orePrefix;
+        if (OrePrefixValues.ORE_PREFIX_TO_UNITS.keySet().contains(orePrefix)) {
+            String unit = OrePrefixValues.getOrePrefixUnit(orePrefix);
+            tooltips.add(I18n.format("gregtech.fluid_pipe.unit", unit));
+        }
+    }
 
     public static void init() {
         ORE_PREFIX_TO_UNITS = new HashMap<OrePrefix, Double>(){{

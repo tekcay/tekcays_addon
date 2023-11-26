@@ -67,10 +67,8 @@ public class ClientProxy extends CommonProxy {
 
         // Test for Items
         UnificationEntry unificationEntry = OreDictUnifier.getUnificationEntry(itemStack);
-        if (unificationEntry == null) return;
-        String unit = OrePrefixValues.getOrePrefixUnit(unificationEntry.orePrefix);
-        if (unit == null) return;
-        tooltips.add(I18n.format("gregtech.fluid_pipe.unit", unit));
+
+        if (unificationEntry != null) OrePrefixValues.addUnitTooltip(unificationEntry, tooltips);
 
         if (tooltips != null) {
             for (String s : tooltips) {
