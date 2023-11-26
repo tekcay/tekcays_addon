@@ -57,32 +57,26 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
 
     private List<String> getImportItemsName() {
         List<String> names = new ArrayList<>();
-        TKCYALog.logger.info("itemInventory : {}", itemInventory.getSlots());
         for (int i = 0; i < itemInventory.getSlots(); i++) {
             names.add(itemInventory.getStackInSlot(i).getDisplayName());
         }
-        TKCYALog.logger.info("importItemsName size : {}", names.size());
         return names;
     }
 
     private List<String> getImportFluidName() {
         List<String> names = new ArrayList<>();
-        TKCYALog.logger.info("{} tanks", importFluids.getFluidTanks().size());
         importFluids.getFluidTanks().forEach(iFluidTank -> {
             if (iFluidTank.equals(null) || iFluidTank.getFluid().equals(null))  names.add("rien");
             names.add(iFluidTank.getFluid().getLocalizedName());
         });
-        TKCYALog.logger.info("importFluidName size : {}", names.size());
         return names;
     }
 
     private void setCurrentRecipe() {
-        TKCYALog.logger.info("Input voltage : {},\ngetImportItems : {}, \ngetInputFluidInventory: {}", getEnergyContainer().getInputVoltage(), getImportItemsName(), getImportFluidName());
         currentRecipe = this.recipeMap.findRecipe(getEnergyContainer().getInputVoltage(), getImportItems(), getInputFluidInventory());
         if (currentRecipe != null) {
             recipeAmperage = currentRecipe.getProperty(MultiAmperageProperty.getInstance(), 0);
             recipeEUt = currentRecipe.getEUt();
-            TKCYALog.logger.info("current recipe is not null, recipe amperage is {}, recipe EUt is {}", recipeAmperage, recipeEUt);
         }
     }
 
@@ -120,15 +114,12 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
     public void update() {
         super.update();
         if (!this.isActive()) {
-            TKCYALog.logger.info("Is not active");
             setCurrentRecipe();
             if (currentRecipe == null) return;
 
         } else {
-            TKCYALog.logger.info("Is active");
             if (currentRecipe == null) return;
             currentAmperage = getEnergyContainer().getInputAmperage();
-            TKCYALog.logger.info("current amperage is {}", currentAmperage);
             if (currentAmperage < recipeAmperage) {
                 invalidate();
                 return;
@@ -145,7 +136,6 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
 
     public boolean drawEnergy(boolean simulate) {
         long resultEnergy = getEnergyContainer().getEnergyStored() - (recipeEUt * recipeAmperage);
-        TKCYALog.logger.info("result energy is {}", resultEnergy);
         if (resultEnergy >= 0L && resultEnergy <= getEnergyContainer().getEnergyCapacity()) {
             if (!simulate) getEnergyContainer().changeEnergy(-recipeEUt * recipeAmperage);
             return true;
