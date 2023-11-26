@@ -77,14 +77,64 @@ public final class TKCYAMetaItems {
     public static MetaItem<?>.MetaValueItem COVER_MOLD_RING_CARBON;
     public static MetaItem<?>.MetaValueItem COVER_MOLD_BLOCK_CARBON;
 
-
-
     //ULV Components
     public static MetaItem<?>.MetaValueItem ELECTRIC_MOTOR_ULV;
     public static MetaItem<?>.MetaValueItem ELECTRIC_PUMP_ULV;
     public static MetaItem<?>.MetaValueItem PISTON_ULV;
     public static MetaItem<?>.MetaValueItem CONVEYOR_ULV;
     public static MetaItem<?>.MetaValueItem ROBOT_ARM_ULV;
+
+    //
+    public static MetaItem<?>.MetaValueItem CONVEYOR_MODULE_LV;
+    public static MetaItem<?>.MetaValueItem CONVEYOR_MODULE_MV;
+    public static MetaItem<?>.MetaValueItem CONVEYOR_MODULE_HV;
+    public static MetaItem<?>.MetaValueItem CONVEYOR_MODULE_EV;
+    public static MetaItem<?>.MetaValueItem CONVEYOR_MODULE_IV;
+    public static MetaItem<?>.MetaValueItem CONVEYOR_MODULE_LuV;
+    public static MetaItem<?>.MetaValueItem CONVEYOR_MODULE_ZPM;
+    public static MetaItem<?>.MetaValueItem CONVEYOR_MODULE_UV;
+    public static MetaItem<?>.MetaValueItem CONVEYOR_MODULE_UHV;
+    public static MetaItem<?>.MetaValueItem CONVEYOR_MODULE_UEV;
+    public static MetaItem<?>.MetaValueItem CONVEYOR_MODULE_UIV;
+    public static MetaItem<?>.MetaValueItem CONVEYOR_MODULE_UXV;
+    public static MetaItem<?>.MetaValueItem CONVEYOR_MODULE_OpV;
+
+    public static MetaItem<?>.MetaValueItem ROBOT_ARM_LV;
+    public static MetaItem<?>.MetaValueItem ROBOT_ARM_MV;
+    public static MetaItem<?>.MetaValueItem ROBOT_ARM_HV;
+    public static MetaItem<?>.MetaValueItem ROBOT_ARM_EV;
+    public static MetaItem<?>.MetaValueItem ROBOT_ARM_IV;
+    public static MetaItem<?>.MetaValueItem ROBOT_ARM_LuV;
+    public static MetaItem<?>.MetaValueItem ROBOT_ARM_ZPM;
+    public static MetaItem<?>.MetaValueItem ROBOT_ARM_UV;
+    public static MetaItem<?>.MetaValueItem ROBOT_ARM_UHV;
+    public static MetaItem<?>.MetaValueItem ROBOT_ARM_UEV;
+    public static MetaItem<?>.MetaValueItem ROBOT_ARM_UIV;
+    public static MetaItem<?>.MetaValueItem ROBOT_ARM_UXV;
+    public static MetaItem<?>.MetaValueItem ROBOT_ARM_OpV;
+
+    public static MetaItem<?>.MetaValueItem ELECTRIC_PUMP_LV;
+    public static MetaItem<?>.MetaValueItem ELECTRIC_PUMP_MV;
+    public static MetaItem<?>.MetaValueItem ELECTRIC_PUMP_HV;
+    public static MetaItem<?>.MetaValueItem ELECTRIC_PUMP_EV;
+    public static MetaItem<?>.MetaValueItem ELECTRIC_PUMP_IV;
+    public static MetaItem<?>.MetaValueItem ELECTRIC_PUMP_LuV;
+    public static MetaItem<?>.MetaValueItem ELECTRIC_PUMP_ZPM;
+    public static MetaItem<?>.MetaValueItem ELECTRIC_PUMP_UV;
+    public static MetaItem<?>.MetaValueItem ELECTRIC_PUMP_UHV;
+    public static MetaItem<?>.MetaValueItem ELECTRIC_PUMP_UEV;
+    public static MetaItem<?>.MetaValueItem ELECTRIC_PUMP_UIV;
+    public static MetaItem<?>.MetaValueItem ELECTRIC_PUMP_UXV;
+    public static MetaItem<?>.MetaValueItem ELECTRIC_PUMP_OpV;
+
+    public static MetaItem<?>.MetaValueItem FLUID_REGULATOR_LV;
+    public static MetaItem<?>.MetaValueItem FLUID_REGULATOR_MV;
+    public static MetaItem<?>.MetaValueItem FLUID_REGULATOR_HV;
+    public static MetaItem<?>.MetaValueItem FLUID_REGULATOR_EV;
+    public static MetaItem<?>.MetaValueItem FLUID_REGULATOR_IV;
+    public static MetaItem<?>.MetaValueItem FLUID_REGULATOR_LUV;
+    public static MetaItem<?>.MetaValueItem FLUID_REGULATOR_ZPM;
+    public static MetaItem<?>.MetaValueItem FLUID_REGULATOR_UV;
 
 
     public static void init() {

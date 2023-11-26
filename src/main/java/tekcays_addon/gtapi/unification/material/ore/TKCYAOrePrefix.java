@@ -26,6 +26,16 @@ public class TKCYAOrePrefix {
     public static final OrePrefix moldRing = new OrePrefix("moldRing", -1, MarkerMaterials.Empty, TKCYAMaterialIconType.moldRing, SELF_REFERENCING, null);
     public static final OrePrefix moldBlock = new OrePrefix("moldBlock", -1, MarkerMaterials.Empty, TKCYAMaterialIconType.moldBlock, SELF_REFERENCING, null);
 
+    //Components
+    public static final OrePrefix lvComponents = new OrePrefix("lvComponents", -1, MarkerMaterials.Empty, TKCYAMaterialIconType.lvComponents, SELF_REFERENCING, null);
+    public static final OrePrefix mvComponents = new OrePrefix("mvComponents", -1, MarkerMaterials.Empty, TKCYAMaterialIconType.mvComponents, SELF_REFERENCING, null);
+    public static final OrePrefix hvComponents = new OrePrefix("hvComponents", -1, MarkerMaterials.Empty, TKCYAMaterialIconType.hvComponents, SELF_REFERENCING, null);
+    public static final OrePrefix evComponents = new OrePrefix("evComponents", -1, MarkerMaterials.Empty, TKCYAMaterialIconType.evComponents, SELF_REFERENCING, null);
+    public static final OrePrefix ivComponents = new OrePrefix("ivComponents", -1, MarkerMaterials.Empty, TKCYAMaterialIconType.ivComponents, SELF_REFERENCING, null);
+    public static final OrePrefix luvComponents = new OrePrefix("luvComponents", -1, MarkerMaterials.Empty, TKCYAMaterialIconType.luvComponents, SELF_REFERENCING, null);
+    public static final OrePrefix zpmComponents = new OrePrefix("zpmComponents", -1, MarkerMaterials.Empty, TKCYAMaterialIconType.zpmComponents, SELF_REFERENCING, null);
+    public static final OrePrefix uvComponents = new OrePrefix("uvComponents", -1, MarkerMaterials.Empty, TKCYAMaterialIconType.uvComponents, SELF_REFERENCING, null);
+
 
     // Others
 

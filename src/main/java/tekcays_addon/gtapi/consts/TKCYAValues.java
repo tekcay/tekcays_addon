@@ -1,16 +1,17 @@
 package tekcays_addon.gtapi.consts;
 
-import com.google.common.collect.Maps;
 import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.unification.material.Material;
-import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
+import gregtech.api.unification.ore.OrePrefix;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
-import gregtech.api.unification.ore.OrePrefix;
 import net.minecraftforge.fml.common.Loader;
 import tekcays_addon.TekCaysAddon;
-import tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix;
+
+import java.nio.file.Path;
+import java.util.*;
 
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
@@ -18,12 +19,13 @@ import static gregtech.common.items.MetaItems.*;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
 import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.*;
 
-import java.nio.file.Path;
-import java.util.*;
-
 public class TKCYAValues {
 
     //Mods
+
+    public static ResourceLocation tkcyaId(String name) {
+        return new ResourceLocation(TekCaysAddon.MODID, name);
+    }
 
     //Recipe properties keys
     public static final String INTERVAL_PRESSURE_PROPERTY = "interval_pressure_property";

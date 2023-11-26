@@ -19,6 +19,7 @@ TKCYA requires [**GregTech CE: Unofficial** **(GTCEu)**](https://github.com/Greg
     * quantum chests are replaced by multiblock crates
 
 ### Components
+* Their recipes need SolderingAlloy
 * Magnetic: magnetic materials are made with magnetite in a new 2-slots Polarizer
 * Foils: foils are made in the Cluster Mill
 * Rotors: rotors are made in the Assembler, like in [**GT6**](https://github.com/GregTech6)
@@ -45,6 +46,11 @@ TKCYA requires [**GregTech CE: Unofficial** **(GTCEu)**](https://github.com/Greg
   
     * `5 A` means it needs at least 3 * `2 A` input energy hatches.
     * `LV` means that the aforementioned energy hatch must be `LV` tier.
+  
+
+* Logistic: ElectricPumps, FluidRegulators, ConveyorModules and RobotArms can only be placed on a new block: `LogisticMachine`.
+It has an internal inventory including items, fluids and energy. Each operation executed by a cover drains energy: *e.g*
+for a LV ConveyorModule extracting 1 item once, it drains 8 EU.
 
 ### New multis
 * Advanced Blast Furnace: only accepts HU, converts it to temperature.
