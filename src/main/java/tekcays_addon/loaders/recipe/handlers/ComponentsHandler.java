@@ -49,6 +49,7 @@ import static tekcays_addon.common.items.TKCYAMetaItems.ROBOT_ARM_LuV;
 import static tekcays_addon.common.items.TKCYAMetaItems.ROBOT_ARM_MV;
 import static tekcays_addon.common.items.TKCYAMetaItems.ROBOT_ARM_UV;
 import static tekcays_addon.common.items.TKCYAMetaItems.ROBOT_ARM_ZPM;
+import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.NEW_ASSEMBLING;
 import static tekcays_addon.loaders.recipe.handlers.GalvanizedSteel.*;
 
 public class ComponentsHandler {
@@ -56,7 +57,7 @@ public class ComponentsHandler {
     public static void init() {
 
         remove();
-        if (TKCYAConfigHolder.miscOverhaul.enableGalvanizedSteel) RecipesRemovalHandler.recipeMapRecipesRemoval(ASSEMBLER_RECIPES, ELECTRIC_PISTON_LV.getStackForm());
+        if (TKCYAConfigHolder.miscOverhaul.enableGalvanizedSteel) RecipesRemovalHandler.recipeMapRecipesRemoval(NEW_ASSEMBLING, ELECTRIC_PISTON_LV.getStackForm());
 
         final Map<String, Material> rubberMaterials = new Object2ObjectOpenHashMap<>();
         rubberMaterials.put("rubber", Rubber);
@@ -85,7 +86,7 @@ public class ComponentsHandler {
 
     private static void pumps(Material material) {
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .input(cableGtSingle, Tin)
                 .input(pipeNormalFluid, Bronze)
                 .input(screw, Tin)
@@ -97,7 +98,7 @@ public class ComponentsHandler {
                 .duration(100).EUt(VA[LV])
                 .buildAndRegister();
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .input(cableGtSingle, Copper)
                 .input(pipeNormalFluid, Steel)
                 .input(screw, Bronze)
@@ -108,7 +109,7 @@ public class ComponentsHandler {
                 .outputs(ELECTRIC_PUMP_MV.getStackForm())
                 .duration(100).EUt(VA[MV]).buildAndRegister();
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .input(cableGtSingle, Gold)
                 .input(pipeNormalFluid, StainlessSteel)
                 .input(screw, Steel)
@@ -119,7 +120,7 @@ public class ComponentsHandler {
                 .outputs(ELECTRIC_PUMP_HV.getStackForm())
                 .duration(100).EUt(VA[HV]).buildAndRegister();
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .input(cableGtSingle, Aluminium)
                 .input(pipeNormalFluid, Titanium)
                 .input(screw, StainlessSteel)
@@ -131,7 +132,7 @@ public class ComponentsHandler {
                 .duration(100).EUt(VA[EV]).buildAndRegister();
 
         if (!material.equals(Rubber))
-            ASSEMBLER_RECIPES.recipeBuilder()
+            NEW_ASSEMBLING.recipeBuilder()
                     .input(cableGtSingle, Tungsten)
                     .input(pipeNormalFluid, TungstenSteel)
                     .input(screw, TungstenSteel)
@@ -197,7 +198,7 @@ public class ComponentsHandler {
 
     private static void conveyors(Material material) {
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .input(cableGtSingle, Tin)
                 .inputs(ELECTRIC_MOTOR_LV.getStackForm(2))
                 .input(plate, material, 6)
@@ -206,7 +207,7 @@ public class ComponentsHandler {
                 .outputs(CONVEYOR_MODULE_LV.getStackForm())
                 .duration(100).EUt(VA[LV]).buildAndRegister();
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .input(cableGtSingle, Copper)
                 .inputs(ELECTRIC_MOTOR_MV.getStackForm(2))
                 .input(plate, material, 6)
@@ -215,7 +216,7 @@ public class ComponentsHandler {
                 .outputs(CONVEYOR_MODULE_MV.getStackForm())
                 .duration(100).EUt(VA[LV]).buildAndRegister();
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .input(cableGtSingle, Gold)
                 .inputs(ELECTRIC_MOTOR_HV.getStackForm(2))
                 .input(plate, material, 6)
@@ -224,7 +225,7 @@ public class ComponentsHandler {
                 .outputs(CONVEYOR_MODULE_HV.getStackForm())
                 .duration(100).EUt(VA[LV]).buildAndRegister();
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .input(cableGtSingle, Aluminium)
                 .inputs(ELECTRIC_MOTOR_EV.getStackForm(2))
                 .input(plate, material, 6)
@@ -234,7 +235,7 @@ public class ComponentsHandler {
                 .duration(100).EUt(VA[LV]).buildAndRegister();
 
         if (!material.equals(Rubber))
-            ASSEMBLER_RECIPES.recipeBuilder()
+            NEW_ASSEMBLING.recipeBuilder()
                     .input(cableGtSingle, Tungsten)
                     .inputs(ELECTRIC_MOTOR_IV.getStackForm(2))
                     .input(plate, material, 6)
@@ -303,7 +304,7 @@ public class ComponentsHandler {
             lvMotorGalavanizedRecipe();
         } else {
 
-            ASSEMBLER_RECIPES.recipeBuilder()
+            NEW_ASSEMBLING.recipeBuilder()
                     .input(cableGtSingle, Tin, 2)
                     .input(stick, Steel, 2)
                     .input(stick, SteelMagnetic)
@@ -313,7 +314,7 @@ public class ComponentsHandler {
                     .duration(100).EUt(VA[LV]).buildAndRegister();
         }
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .input(cableGtSingle, Copper, 2)
                 .input(stick, Aluminium, 2)
                 .input(stick, SteelMagnetic)
@@ -322,7 +323,7 @@ public class ComponentsHandler {
                 .outputs(ELECTRIC_MOTOR_MV.getStackForm())
                 .duration(100).EUt(VA[MV]).buildAndRegister();
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .input(cableGtDouble, Silver, 2)
                 .input(stick, StainlessSteel, 2)
                 .input(stick, SteelMagnetic)
@@ -331,7 +332,7 @@ public class ComponentsHandler {
                 .outputs(ELECTRIC_MOTOR_HV.getStackForm())
                 .duration(100).EUt(VA[HV]).buildAndRegister();
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .input(cableGtDouble, Aluminium, 2)
                 .input(stick, Titanium, 2)
                 .input(stick, NeodymiumMagnetic)
@@ -340,7 +341,7 @@ public class ComponentsHandler {
                 .outputs(ELECTRIC_MOTOR_EV.getStackForm())
                 .duration(100).EUt(VA[EV]).buildAndRegister();
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .input(cableGtDouble, Tungsten, 2)
                 .input(stick, TungstenSteel, 2)
                 .input(stick, NeodymiumMagnetic)
@@ -400,7 +401,7 @@ public class ComponentsHandler {
 
     private static void fluidRegulators() {
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .inputs(ELECTRIC_PUMP_LV.getStackForm())
                 .input(circuit, MarkerMaterials.Tier.LV, 2)
                 .fluidInputs(SolderingAlloy.getFluid(L / 2))
@@ -408,10 +409,9 @@ public class ComponentsHandler {
                 .outputs(FLUID_REGULATOR_LV.getStackForm())
                 .EUt(VA[LV])
                 .duration(400)
-                .withRecycling()
                 .buildAndRegister();
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .inputs(ELECTRIC_PUMP_MV.getStackForm())
                 .input(circuit, MarkerMaterials.Tier.MV, 2)
                 .fluidInputs(SolderingAlloy.getFluid(L))
@@ -419,10 +419,9 @@ public class ComponentsHandler {
                 .outputs(FLUID_REGULATOR_MV.getStackForm())
                 .EUt(VA[MV])
                 .duration(350)
-                .withRecycling()
                 .buildAndRegister();
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .inputs(ELECTRIC_PUMP_HV.getStackForm())
                 .input(circuit, MarkerMaterials.Tier.HV, 2)
                 .fluidInputs(SolderingAlloy.getFluid(L / 2))
@@ -430,10 +429,9 @@ public class ComponentsHandler {
                 .outputs(FLUID_REGULATOR_HV.getStackForm())
                 .EUt(VA[HV])
                 .duration(300)
-                .withRecycling()
                 .buildAndRegister();
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .inputs(ELECTRIC_PUMP_EV.getStackForm())
                 .input(circuit, MarkerMaterials.Tier.EV, 2)
                 .fluidInputs(SolderingAlloy.getFluid(L / 4))
@@ -441,10 +439,9 @@ public class ComponentsHandler {
                 .outputs(FLUID_REGULATOR_EV.getStackForm())
                 .EUt(VA[EV])
                 .duration(250)
-                .withRecycling()
                 .buildAndRegister();
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .inputs(ELECTRIC_PUMP_IV.getStackForm())
                 .input(circuit, MarkerMaterials.Tier.IV, 2)
                 .fluidInputs(SolderingAlloy.getFluid(L / 5))
@@ -452,10 +449,9 @@ public class ComponentsHandler {
                 .outputs(FLUID_REGULATOR_IV.getStackForm())
                 .EUt(VA[IV])
                 .duration(200)
-                .withRecycling()
                 .buildAndRegister();
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .inputs(ELECTRIC_PUMP_LuV.getStackForm())
                 .input(circuit, MarkerMaterials.Tier.LuV, 2)
                 .fluidInputs(SolderingAlloy.getFluid(L / 6))
@@ -465,7 +461,7 @@ public class ComponentsHandler {
                 .duration(150)
                 .buildAndRegister();
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .inputs(ELECTRIC_PUMP_ZPM.getStackForm())
                 .input(circuit, MarkerMaterials.Tier.ZPM, 2)
                 .fluidInputs(SolderingAlloy.getFluid(L / 7))
@@ -475,7 +471,7 @@ public class ComponentsHandler {
                 .duration(100)
                 .buildAndRegister();
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .inputs(ELECTRIC_PUMP_UV.getStackForm())
                 .input(circuit, MarkerMaterials.Tier.UV, 2)
                 .fluidInputs(SolderingAlloy.getFluid(L / 8))
@@ -492,7 +488,7 @@ public class ComponentsHandler {
             lvRobotArmGalvanizedRecipe();
         } else {
 
-            ASSEMBLER_RECIPES.recipeBuilder()
+            NEW_ASSEMBLING.recipeBuilder()
                     .input(cableGtSingle, Tin, 3)
                     .input(stick, Steel, 2)
                     .inputs(ELECTRIC_MOTOR_LV.getStackForm(2))
@@ -503,7 +499,7 @@ public class ComponentsHandler {
                     .duration(100).EUt(VA[LV]).buildAndRegister();
         }
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .input(cableGtSingle, Copper, 3)
                 .input(stick, Aluminium, 2)
                 .inputs(ELECTRIC_MOTOR_MV.getStackForm(2))
@@ -513,7 +509,7 @@ public class ComponentsHandler {
                 .outputs(ROBOT_ARM_MV.getStackForm())
                 .duration(100).EUt(VA[LV]).buildAndRegister();
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .input(cableGtSingle, Gold, 3)
                 .input(stick, StainlessSteel, 2)
                 .inputs(ELECTRIC_MOTOR_HV.getStackForm(2))
@@ -523,7 +519,7 @@ public class ComponentsHandler {
                 .outputs(ROBOT_ARM_HV.getStackForm())
                 .duration(100).EUt(VA[LV]).buildAndRegister();
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .input(cableGtSingle, Aluminium, 3)
                 .input(stick, Titanium, 2)
                 .inputs(ELECTRIC_MOTOR_EV.getStackForm(2))
@@ -533,7 +529,7 @@ public class ComponentsHandler {
                 .outputs(ROBOT_ARM_EV.getStackForm())
                 .duration(100).EUt(VA[LV]).buildAndRegister();
 
-        ASSEMBLER_RECIPES.recipeBuilder()
+        NEW_ASSEMBLING.recipeBuilder()
                 .input(cableGtSingle, Tungsten, 3)
                 .input(stick, TungstenSteel, 2)
                 .inputs(ELECTRIC_MOTOR_IV.getStackForm(2))
