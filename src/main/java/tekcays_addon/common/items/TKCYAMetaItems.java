@@ -99,20 +99,6 @@ public final class TKCYAMetaItems {
     public static MetaItem<?>.MetaValueItem CONVEYOR_MODULE_UXV;
     public static MetaItem<?>.MetaValueItem CONVEYOR_MODULE_OpV;
 
-    public static MetaItem<?>.MetaValueItem ELECTRIC_PISTON_LV;
-    public static MetaItem<?>.MetaValueItem ELECTRIC_PISTON_MV;
-    public static MetaItem<?>.MetaValueItem ELECTRIC_PISTON_HV;
-    public static MetaItem<?>.MetaValueItem ELECTRIC_PISTON_EV;
-    public static MetaItem<?>.MetaValueItem ELECTRIC_PISTON_IV;
-    public static MetaItem<?>.MetaValueItem ELECTRIC_PISTON_LUV;
-    public static MetaItem<?>.MetaValueItem ELECTRIC_PISTON_ZPM;
-    public static MetaItem<?>.MetaValueItem ELECTRIC_PISTON_UV;
-    public static MetaItem<?>.MetaValueItem ELECTRIC_PISTON_UHV;
-    public static MetaItem<?>.MetaValueItem ELECTRIC_PISTON_UEV;
-    public static MetaItem<?>.MetaValueItem ELECTRIC_PISTON_UIV;
-    public static MetaItem<?>.MetaValueItem ELECTRIC_PISTON_UXV;
-    public static MetaItem<?>.MetaValueItem ELECTRIC_PISTON_OpV;
-
     public static MetaItem<?>.MetaValueItem ROBOT_ARM_LV;
     public static MetaItem<?>.MetaValueItem ROBOT_ARM_MV;
     public static MetaItem<?>.MetaValueItem ROBOT_ARM_HV;

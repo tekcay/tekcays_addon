@@ -1,9 +1,7 @@
 package tekcays_addon.loaders.recipe.removals;
 
 import gregtech.api.items.metaitem.MetaItem;
-import gregtech.api.recipes.GTRecipeHandler;
-import gregtech.api.recipes.ModHandler;
-import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.recipes.*;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.items.MetaItems;
@@ -12,15 +10,28 @@ import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.loaders.recipe.handlers.HarderRotorsHandler;
 import tekcays_addon.loaders.recipe.handlers.TKCYAPartsRecipeHandler;
 
+import java.util.List;
+
 import static gregtech.api.unification.material.Materials.*;
 import static tekcays_addon.common.TKCYAConfigHolder.harderStuff;
 import static tekcays_addon.common.TKCYAConfigHolder.meltingOverhaul;
 
 public class RecipesRemovalHandler {
 
+    public static void recipeMapRecipesRemoval(RecipeMap<?> recipeMap, List<ItemStack> itemStacks) {
+        for (Recipe recipe : recipeMap.getRecipeList()) {
+            for (ItemStack items : itemStacks) {
+                if (recipe.getAllItemOutputs()
+                        .stream()
+                        .anyMatch(output -> output.isItemEqual(items))) {
+                    recipeMap.removeRecipe(recipe);
+                }
+            }
+        }
+    }
+
     public static void init() {
         if(harderStuff.disableTinCircuitRecipes) TinCircuitRemoval.init();
-        if (harderStuff.disableComponentsShapesRecipes) ShapedComponentsRemoval.init();
         if (harderStuff.enableHarderRotors) HarderRotorsHandler.init();
         if (meltingOverhaul.enableMeltingOverhaul) TKCYAPartsRecipeHandler.removeExtractor();
         if (harderStuff.disableFurnacesRecipes) FurnacesRemoval.init();
@@ -28,6 +39,7 @@ public class RecipesRemovalHandler {
 
     public static void removeShapedTreatedWoodRecipe(){
         ModHandler.removeRecipeByOutput(OreDictUnifier.get(OrePrefix.plank, TreatedWood));
+
     }
 
     public static void removeMoldsAndUsage() {

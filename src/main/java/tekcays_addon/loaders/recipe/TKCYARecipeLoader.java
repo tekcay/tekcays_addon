@@ -28,6 +28,8 @@ public class TKCYARecipeLoader {
 
         RecipesRemovalHandler.init();
 
+        ComponentsHandler.init();
+
 
         if (miscOverhaul.enableFoilOverhaul) foil.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processFoil);
         if (miscOverhaul.enableCoilOverhaul) Coils.init();
