@@ -11,6 +11,7 @@ import tekcays_addon.loaders.recipe.handlers.HarderRotorsHandler;
 import tekcays_addon.loaders.recipe.handlers.TKCYAPartsRecipeHandler;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 
 import static gregtech.api.unification.material.Materials.*;
 import static tekcays_addon.common.TKCYAConfigHolder.harderStuff;
@@ -20,13 +21,18 @@ public class RecipesRemovalHandler {
 
     public static void recipeMapRecipesRemoval(RecipeMap<?> recipeMap, List<ItemStack> itemStacks) {
         for (Recipe recipe : recipeMap.getRecipeList()) {
-            for (ItemStack items : itemStacks) {
-                if (recipe.getAllItemOutputs()
-                        .stream()
-                        .anyMatch(output -> output.isItemEqual(items))) {
-                    recipeMap.removeRecipe(recipe);
-                }
-            }
+            itemStacks.forEach(itemStack -> removeRecipe(recipe, itemStack, recipeMap));
+        }
+    }
+    public static void recipeMapRecipesRemoval(RecipeMap<?> recipeMap, ItemStack itemStack) {
+        recipeMap.getRecipeList().forEach(recipe -> removeRecipe(recipe, itemStack, recipeMap));
+    }
+
+    private static void removeRecipe(Recipe recipe, ItemStack itemStack, RecipeMap<?> recipeMap) {
+        if (recipe.getAllItemOutputs()
+                .stream()
+                .anyMatch(output -> output.isItemEqual(itemStack))) {
+            recipeMap.removeRecipe(recipe);
         }
     }
 

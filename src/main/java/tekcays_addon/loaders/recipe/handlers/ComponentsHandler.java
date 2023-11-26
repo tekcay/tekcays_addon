@@ -3,13 +3,12 @@ package tekcays_addon.loaders.recipe.handlers;
 import gregtech.api.recipes.ModHandler;
 import gregtech.api.unification.material.MarkerMaterials;
 import gregtech.api.unification.material.Material;
-import gregtech.common.items.MetaItems;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import net.minecraft.item.ItemStack;
+import mezz.jei.api.ingredients.IIngredientBlacklist;
+import tekcays_addon.api.consts.ComponentsLists;
+import tekcays_addon.common.TKCYAConfigHolder;
 import tekcays_addon.loaders.recipe.removals.RecipesRemovalHandler;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import static gregtech.api.GTValues.*;
@@ -17,6 +16,7 @@ import static gregtech.api.recipes.RecipeMaps.*;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static gregtech.common.items.MetaItems.*;
+import static tekcays_addon.api.consts.ComponentsLists.*;
 import static tekcays_addon.common.items.TKCYAMetaItems.CONVEYOR_MODULE_EV;
 import static tekcays_addon.common.items.TKCYAMetaItems.CONVEYOR_MODULE_HV;
 import static tekcays_addon.common.items.TKCYAMetaItems.CONVEYOR_MODULE_IV;
@@ -49,34 +49,14 @@ import static tekcays_addon.common.items.TKCYAMetaItems.ROBOT_ARM_LuV;
 import static tekcays_addon.common.items.TKCYAMetaItems.ROBOT_ARM_MV;
 import static tekcays_addon.common.items.TKCYAMetaItems.ROBOT_ARM_UV;
 import static tekcays_addon.common.items.TKCYAMetaItems.ROBOT_ARM_ZPM;
+import static tekcays_addon.loaders.recipe.handlers.GalvanizedSteel.*;
 
 public class ComponentsHandler {
 
-    private static final List<ItemStack> superLuv = new ArrayList<>();
-    private static final List<ItemStack> UV_Logistics = new ArrayList<>();
-
-    static {
-        superLuv.add(MetaItems.ELECTRIC_PUMP_LuV.getStackForm());
-        superLuv.add(MetaItems.ELECTRIC_PUMP_ZPM.getStackForm());
-
-        superLuv.add(MetaItems.FLUID_REGULATOR_LUV.getStackForm());
-        superLuv.add(MetaItems.FLUID_REGULATOR_ZPM.getStackForm());
-
-        superLuv.add(MetaItems.CONVEYOR_MODULE_LuV.getStackForm());
-        superLuv.add(MetaItems.CONVEYOR_MODULE_ZPM.getStackForm());
-
-        superLuv.add(MetaItems.ROBOT_ARM_LuV.getStackForm());
-        superLuv.add(MetaItems.ROBOT_ARM_ZPM.getStackForm());
-    }
-
-    static {
-        UV_Logistics.add(MetaItems.ELECTRIC_PUMP_UV.getStackForm());
-        UV_Logistics.add(MetaItems.FLUID_REGULATOR_UV.getStackForm());
-        UV_Logistics.add(MetaItems.CONVEYOR_MODULE_UV.getStackForm());
-        UV_Logistics.add(MetaItems.ROBOT_ARM_UV.getStackForm());
-    }
-
     public static void init() {
+
+        remove();
+        if (TKCYAConfigHolder.miscOverhaul.enableGalvanizedSteel) RecipesRemovalHandler.recipeMapRecipesRemoval(ASSEMBLER_RECIPES, ELECTRIC_PISTON_LV.getStackForm());
 
         final Map<String, Material> rubberMaterials = new Object2ObjectOpenHashMap<>();
         rubberMaterials.put("rubber", Rubber);
@@ -96,10 +76,15 @@ public class ComponentsHandler {
         motors();
         fluidRegulators();
         roboticArms();
-        remove();
+        if (TKCYAConfigHolder.miscOverhaul.enableGalvanizedSteel) lvPistonGalavanizedRecipe();
+    }
+
+    public static void hideLvToIvLogisticComponents(IIngredientBlacklist ingredientBlacklist) {
+        ComponentsLists.LV_TO_IV_LOGISTIC_COMPONENTS.forEach(ingredientBlacklist::addIngredientToBlacklist);
     }
 
     private static void pumps(Material material) {
+
         ASSEMBLER_RECIPES.recipeBuilder()
                 .input(cableGtSingle, Tin)
                 .input(pipeNormalFluid, Bronze)
@@ -121,7 +106,7 @@ public class ComponentsHandler {
                 .inputs(ELECTRIC_MOTOR_MV.getStackForm())
                 .fluidInputs(SolderingAlloy.getFluid(L))
                 .outputs(ELECTRIC_PUMP_MV.getStackForm())
-                .duration(100).EUt(VA[LV]).buildAndRegister();
+                .duration(100).EUt(VA[MV]).buildAndRegister();
 
         ASSEMBLER_RECIPES.recipeBuilder()
                 .input(cableGtSingle, Gold)
@@ -132,7 +117,7 @@ public class ComponentsHandler {
                 .inputs(ELECTRIC_MOTOR_HV.getStackForm())
                 .fluidInputs(SolderingAlloy.getFluid(L * 2))
                 .outputs(ELECTRIC_PUMP_HV.getStackForm())
-                .duration(100).EUt(VA[LV]).buildAndRegister();
+                .duration(100).EUt(VA[HV]).buildAndRegister();
 
         ASSEMBLER_RECIPES.recipeBuilder()
                 .input(cableGtSingle, Aluminium)
@@ -143,7 +128,7 @@ public class ComponentsHandler {
                 .inputs(ELECTRIC_MOTOR_EV.getStackForm())
                 .fluidInputs(SolderingAlloy.getFluid(L * 3))
                 .outputs(ELECTRIC_PUMP_EV.getStackForm())
-                .duration(100).EUt(VA[LV]).buildAndRegister();
+                .duration(100).EUt(VA[EV]).buildAndRegister();
 
         if (!material.equals(Rubber))
             ASSEMBLER_RECIPES.recipeBuilder()
@@ -155,7 +140,7 @@ public class ComponentsHandler {
                     .inputs(ELECTRIC_MOTOR_IV.getStackForm())
                     .fluidInputs(SolderingAlloy.getFluid(L * 4))
                     .outputs(ELECTRIC_PUMP_IV.getStackForm())
-                    .duration(100).EUt(VA[LV]).buildAndRegister();
+                    .duration(100).EUt(VA[IV]).buildAndRegister();
     }
         
     private static void pumps() {
@@ -314,23 +299,19 @@ public class ComponentsHandler {
 
     private static void motors() {
 
-        ASSEMBLER_RECIPES.recipeBuilder()
-                .input(cableGtSingle, Tin, 2)
-                .input(stick, Iron, 2)
-                .input(stick, IronMagnetic)
-                .input(wireGtSingle, Copper, 4)
-                .fluidInputs(SolderingAlloy.getFluid(L / 2))
-                .outputs(ELECTRIC_MOTOR_LV.getStackForm())
-                .duration(100).EUt(VA[LV]).buildAndRegister();
+        if (TKCYAConfigHolder.miscOverhaul.enableGalvanizedSteel) {
+            lvMotorGalavanizedRecipe();
+        } else {
 
-        ASSEMBLER_RECIPES.recipeBuilder()
-                .input(cableGtSingle, Tin, 2)
-                .input(stick, Steel, 2)
-                .input(stick, SteelMagnetic)
-                .input(wireGtSingle, Copper, 4)
-                .fluidInputs(SolderingAlloy.getFluid(L))
-                .outputs(ELECTRIC_MOTOR_LV.getStackForm())
-                .duration(100).EUt(VA[LV]).buildAndRegister();
+            ASSEMBLER_RECIPES.recipeBuilder()
+                    .input(cableGtSingle, Tin, 2)
+                    .input(stick, Steel, 2)
+                    .input(stick, SteelMagnetic)
+                    .input(wireGtSingle, Copper, 4)
+                    .fluidInputs(SolderingAlloy.getFluid(L))
+                    .outputs(ELECTRIC_MOTOR_LV.getStackForm())
+                    .duration(100).EUt(VA[LV]).buildAndRegister();
+        }
 
         ASSEMBLER_RECIPES.recipeBuilder()
                 .input(cableGtSingle, Copper, 2)
@@ -339,7 +320,7 @@ public class ComponentsHandler {
                 .input(wireGtDouble, Cupronickel, 4)
                 .fluidInputs(SolderingAlloy.getFluid(L * 2))
                 .outputs(ELECTRIC_MOTOR_MV.getStackForm())
-                .duration(100).EUt(VA[LV]).buildAndRegister();
+                .duration(100).EUt(VA[MV]).buildAndRegister();
 
         ASSEMBLER_RECIPES.recipeBuilder()
                 .input(cableGtDouble, Silver, 2)
@@ -348,7 +329,7 @@ public class ComponentsHandler {
                 .input(wireGtDouble, Electrum, 4)
                 .fluidInputs(SolderingAlloy.getFluid(L * 3))
                 .outputs(ELECTRIC_MOTOR_HV.getStackForm())
-                .duration(100).EUt(VA[LV]).buildAndRegister();
+                .duration(100).EUt(VA[HV]).buildAndRegister();
 
         ASSEMBLER_RECIPES.recipeBuilder()
                 .input(cableGtDouble, Aluminium, 2)
@@ -357,7 +338,7 @@ public class ComponentsHandler {
                 .input(wireGtDouble, Kanthal, 4)
                 .fluidInputs(SolderingAlloy.getFluid(L * 4))
                 .outputs(ELECTRIC_MOTOR_EV.getStackForm())
-                .duration(100).EUt(VA[LV]).buildAndRegister();
+                .duration(100).EUt(VA[EV]).buildAndRegister();
 
         ASSEMBLER_RECIPES.recipeBuilder()
                 .input(cableGtDouble, Tungsten, 2)
@@ -366,7 +347,7 @@ public class ComponentsHandler {
                 .input(wireGtDouble, Graphene, 4)
                 .fluidInputs(SolderingAlloy.getFluid(L * 5))
                 .outputs(ELECTRIC_MOTOR_IV.getStackForm())
-                .duration(100).EUt(VA[LV]).buildAndRegister();
+                .duration(100).EUt(VA[IV]).buildAndRegister();
 
         ASSEMBLY_LINE_RECIPES.recipeBuilder()
                 .input(stickLong, SamariumMagnetic)
@@ -507,15 +488,20 @@ public class ComponentsHandler {
 
     private static void roboticArms() {
 
-        ASSEMBLER_RECIPES.recipeBuilder()
-                .input(cableGtSingle, Tin, 3)
-                .input(stick, Steel, 2)
-                .inputs(ELECTRIC_MOTOR_LV.getStackForm(2))
-                .inputs(ELECTRIC_PISTON_LV.getStackForm())
-                .input(circuit, MarkerMaterials.Tier.LV)
-                .fluidInputs(SolderingAlloy.getFluid(L / 2))
-                .outputs(ROBOT_ARM_LV.getStackForm())
-                .duration(100).EUt(VA[LV]).buildAndRegister();
+        if (TKCYAConfigHolder.miscOverhaul.enableGalvanizedSteel) {
+            lvRobotArmGalvanizedRecipe();
+        } else {
+
+            ASSEMBLER_RECIPES.recipeBuilder()
+                    .input(cableGtSingle, Tin, 3)
+                    .input(stick, Steel, 2)
+                    .inputs(ELECTRIC_MOTOR_LV.getStackForm(2))
+                    .inputs(ELECTRIC_PISTON_LV.getStackForm())
+                    .input(circuit, MarkerMaterials.Tier.LV)
+                    .fluidInputs(SolderingAlloy.getFluid(L / 2))
+                    .outputs(ROBOT_ARM_LV.getStackForm())
+                    .duration(100).EUt(VA[LV]).buildAndRegister();
+        }
 
         ASSEMBLER_RECIPES.recipeBuilder()
                 .input(cableGtSingle, Copper, 3)
@@ -614,94 +600,10 @@ public class ComponentsHandler {
     }
 
     private static void remove() {
-        removeAssemblingRecipes();
-        removeShaped();
-        removeAssemblingLine();
-    }
-
-    private static void removeAssemblingRecipes() {
-
-        List<ItemStack> subLuv = new ArrayList<>();
-        subLuv.add(MetaItems.ELECTRIC_PUMP_LV.getStackForm());
-        subLuv.add(MetaItems.ELECTRIC_PUMP_MV.getStackForm());
-        subLuv.add(MetaItems.ELECTRIC_PUMP_HV.getStackForm());
-        subLuv.add(MetaItems.ELECTRIC_PUMP_EV.getStackForm());
-        subLuv.add(MetaItems.ELECTRIC_PUMP_IV.getStackForm());
-
-        subLuv.add(ELECTRIC_MOTOR_LV.getStackForm());
-        subLuv.add(ELECTRIC_MOTOR_MV.getStackForm());
-        subLuv.add(ELECTRIC_MOTOR_HV.getStackForm());
-        subLuv.add(ELECTRIC_MOTOR_EV.getStackForm());
-        subLuv.add(ELECTRIC_MOTOR_IV.getStackForm());
-
-        subLuv.add(MetaItems.CONVEYOR_MODULE_LV.getStackForm());
-        subLuv.add(MetaItems.CONVEYOR_MODULE_MV.getStackForm());
-        subLuv.add(MetaItems.CONVEYOR_MODULE_HV.getStackForm());
-        subLuv.add(MetaItems.CONVEYOR_MODULE_EV.getStackForm());
-        subLuv.add(MetaItems.CONVEYOR_MODULE_LV.getStackForm());
-
-        subLuv.add(MetaItems.ROBOT_ARM_LV.getStackForm());
-        subLuv.add(MetaItems.ROBOT_ARM_MV.getStackForm());
-        subLuv.add(MetaItems.ROBOT_ARM_HV.getStackForm());
-        subLuv.add(MetaItems.ROBOT_ARM_EV.getStackForm());
-        subLuv.add(MetaItems.ROBOT_ARM_IV.getStackForm());
-
-        subLuv.add(MetaItems.FLUID_REGULATOR_LV.getStackForm());
-        subLuv.add(MetaItems.FLUID_REGULATOR_MV.getStackForm());
-        subLuv.add(MetaItems.FLUID_REGULATOR_HV.getStackForm());
-        subLuv.add(MetaItems.FLUID_REGULATOR_EV.getStackForm());
-        subLuv.add(MetaItems.FLUID_REGULATOR_IV.getStackForm());
-
-        RecipesRemovalHandler.recipeMapRecipesRemoval(ASSEMBLER_RECIPES, subLuv);
-    }
-
-    private static void removeAssemblingLine() {
-
-        List<ItemStack> assemblingLines = new ArrayList<>();
-        assemblingLines.addAll(superLuv);
-        assemblingLines.addAll(UV_Logistics);
-
-        RecipesRemovalHandler.recipeMapRecipesRemoval(ASSEMBLY_LINE_RECIPES, assemblingLines);
-        RecipesRemovalHandler.recipeMapRecipesRemoval(RESEARCH_STATION_RECIPES, UV_Logistics);
-    }
-
-    private static void removeShaped() {
-
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_LV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PISTON_LV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PUMP_LV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ROBOT_ARM_LV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.FLUID_REGULATOR_LV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.CONVEYOR_MODULE_LV.getStackForm());
-
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_MV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PISTON_MV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PUMP_MV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ROBOT_ARM_MV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.FLUID_REGULATOR_MV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.CONVEYOR_MODULE_MV.getStackForm());
-
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_HV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PISTON_HV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PUMP_HV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ROBOT_ARM_HV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.FLUID_REGULATOR_HV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.CONVEYOR_MODULE_HV.getStackForm());
-
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_EV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PISTON_EV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PUMP_EV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ROBOT_ARM_EV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.FLUID_REGULATOR_EV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.CONVEYOR_MODULE_EV.getStackForm());
-
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_IV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PISTON_IV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PUMP_IV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ROBOT_ARM_IV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.FLUID_REGULATOR_IV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.CONVEYOR_MODULE_IV.getStackForm());
-
-
+        LV_TO_IV_COMPONENTS_TO_REMOVE_RECIPES.forEach(ModHandler::removeRecipeByOutput);
+        RecipesRemovalHandler.recipeMapRecipesRemoval(ASSEMBLER_RECIPES, LV_TO_IV_MOTORS);
+        RecipesRemovalHandler.recipeMapRecipesRemoval(ASSEMBLER_RECIPES, LV_TO_IV_LOGISTIC_COMPONENTS);
+        RecipesRemovalHandler.recipeMapRecipesRemoval(ASSEMBLY_LINE_RECIPES, LUV_TO_UV_LOGISTIC_COMPONENTS);
+        RecipesRemovalHandler.recipeMapRecipesRemoval(RESEARCH_STATION_RECIPES, UV_LOGISTIC_COMPONENTS);
     }
 }

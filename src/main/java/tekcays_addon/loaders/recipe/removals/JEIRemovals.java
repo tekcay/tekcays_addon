@@ -8,7 +8,9 @@ import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import tekcays_addon.api.consts.ComponentsLists;
 import tekcays_addon.common.TKCYAConfigHolder;
+import tekcays_addon.loaders.recipe.handlers.ComponentsHandler;
 
 import static gregtech.common.metatileentities.MetaTileEntities.*;
 import static net.minecraft.init.Blocks.FURNACE;
@@ -108,17 +110,8 @@ public class JEIRemovals implements IModPlugin { {
 
         if (TKCYAConfigHolder.harderStuff.enableRoastingOverhaul) ingredientBlacklist.addIngredientToBlacklist(ELECTRIC_BLAST_FURNACE.getStackForm());
 
-        /*
-        List<ItemStack> pumps = new ArrayList<>();
-        pumps.add(MetaItems.ELECTRIC_PUMP_LV.getStackForm());
-        pumps.add(MetaItems.ELECTRIC_PUMP_MV.getStackForm());
-        pumps.add(MetaItems.ELECTRIC_PUMP_HV.getStackForm());
-        pumps.add(MetaItems.ELECTRIC_PUMP_EV.getStackForm());
-        pumps.add(MetaItems.ELECTRIC_PUMP_IV.getStackForm());
 
-        pumps.forEach(ingredientBlacklist::addIngredientToBlacklist);
-
-         */
+        //ComponentsHandler.hideLvToIvLogisticComponents(ingredientBlacklist);
 
 
         if (TKCYAConfigHolder.miscOverhaul.disableHighTierMachines) {
