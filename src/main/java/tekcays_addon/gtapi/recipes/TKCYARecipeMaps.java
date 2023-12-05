@@ -162,8 +162,8 @@ public class TKCYARecipeMaps {
     public static final RecipeMap<SimpleRecipeBuilder> NEW_ASSEMBLING = new RecipeMap<>(
             "new_assembling", 9, 1, 1, 0, new SimpleRecipeBuilder(), false);
     @ZenProperty
-    public static final RecipeMap<SimpleRecipeBuilder> NEW_CRUSHING = new RecipeMap<>(
-            "new_crushing", 1, 9, 0, 0, new SimpleRecipeBuilder(), false);
+    public static final RecipeMap<SimpleRecipeBuilder> CRUSHING = new RecipeMap<>(
+            "crushing", 1, 9, 0, 0, new SimpleRecipeBuilder(), false);
 
 
 

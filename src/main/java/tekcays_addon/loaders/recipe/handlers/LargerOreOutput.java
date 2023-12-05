@@ -19,7 +19,7 @@ public class LargerOreOutput {
     }
 
     private static void crushOres(OrePrefix ore, Material material) {
-        TKCYARecipeMaps.NEW_CRUSHING.recipeBuilder()
+        TKCYARecipeMaps.CRUSHING.recipeBuilder()
                 .duration(20 * 20)
                 .EUt(30)
                 .input(ore, material)
