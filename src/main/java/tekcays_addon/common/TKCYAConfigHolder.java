@@ -85,8 +85,8 @@ public class TKCYAConfigHolder {
         @Config.Comment({"bla", "Default: true"})
         public boolean enableRoastingOverhaul = true;
 
-        @Config.Comment({"bla", "Default: 10"})
-        public int maxOutputPerOre = 10;
+        @Config.Comment({"bla", "Default: 10. DO NOT TOUCH FOR NOW!"})
+        public final int maxOutputPerOre = 10;
 
     }
 

@@ -354,6 +354,7 @@ recipemap.steam_autoclave.name=Autoclave
 recipemap.diesel_generator.name=Diesel generator
 recipemap.primitive_furnace.name=Primitive heating
 recipemap.log_cutting.name=Wood work
+recipemap.new_crushing.name=Ore Crushing
 
 tkcya.oreprefix.unit=§2%s §funits
 tkcya.oreprefix.ore.unit=§2%s §f- §2%s §funits
