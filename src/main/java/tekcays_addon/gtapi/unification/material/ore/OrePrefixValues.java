@@ -6,6 +6,7 @@ import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.UnificationEntry;
 import net.minecraft.client.resources.I18n;
+import tekcays_addon.common.TKCYAConfigHolder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,14 +29,19 @@ public class OrePrefixValues {
     public static Map<OrePrefix,Double> ORE_PREFIX_TO_UNITS = new HashMap<>();
     public static void addUnitTooltip(UnificationEntry unificationEntry, List<String> tooltips) {
         OrePrefix orePrefix = unificationEntry.orePrefix;
-        if (OrePrefixValues.ORE_PREFIX_TO_UNITS.keySet().contains(orePrefix)) {
+        if (OrePrefixValues.ORE_PREFIX_TO_UNITS.containsKey(orePrefix)) {
             String unit = OrePrefixValues.getOrePrefixUnit(orePrefix);
-            tooltips.add(I18n.format("gregtech.fluid_pipe.unit", unit));
+            if (orePrefix == ore) {
+                tooltips.add(I18n.format("tkcya.oreprefix.ore.unit",1.000, unit));
+            } else {
+                tooltips.add(I18n.format("tkcya.oreprefix.unit", unit));
+            }
         }
     }
 
     public static void init() {
         ORE_PREFIX_TO_UNITS = new HashMap<OrePrefix, Double>(){{
+            put(ore, (double) TKCYAConfigHolder.harderStuff.maxOutputPerOre);
             put(pipeNonupleFluid, 27.000);
             put(pipeQuadrupleFluid, 12.000);
             put(pipeHugeRestrictive, 12.500);
@@ -63,6 +69,7 @@ public class OrePrefixValues {
             put(curvedPlate, 1.000);
             put(stickLong, 1.000);
             put(ingot, 1.000);
+            put(ingotHot, 1.000);
             put(dust, 1.000);
             put(dustImpure, 1.000);
             put(dustPure, 1.000);
