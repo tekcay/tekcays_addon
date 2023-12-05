@@ -355,8 +355,8 @@ recipemap.diesel_generator.name=Diesel generator
 recipemap.primitive_furnace.name=Primitive heating
 recipemap.log_cutting.name=Wood work
 
-tkcya.oreprefix.unit=§2%s units
-tkcya.oreprefix.ore.unit=§2%s to %s units
+tkcya.oreprefix.unit=§2%s §funits
+tkcya.oreprefix.ore.unit=§2%s §f- §2%s §funits
 
 # Materials
 gregtech.material.unpure_bronze=Unpure Bronze

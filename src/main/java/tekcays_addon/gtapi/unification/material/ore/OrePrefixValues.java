@@ -32,7 +32,7 @@ public class OrePrefixValues {
         if (OrePrefixValues.ORE_PREFIX_TO_UNITS.containsKey(orePrefix)) {
             String unit = OrePrefixValues.getOrePrefixUnit(orePrefix);
             if (orePrefix == ore) {
-                tooltips.add(I18n.format("tkcya.oreprefix.ore.unit",1.000, unit));
+                tooltips.add(I18n.format("tkcya.oreprefix.ore.unit","1.000", unit));
             } else {
                 tooltips.add(I18n.format("tkcya.oreprefix.unit", unit));
             }
