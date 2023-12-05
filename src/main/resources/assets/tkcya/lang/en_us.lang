@@ -266,6 +266,8 @@ tkcya.machine.logistic_machine.2.name=Logistic Machine MV
 tkcya.machine.logistic_machine.3.name=Logistic Machine HV
 tkcya.machine.logistic_machine.4.name=Logistic Machine EV
 
+tkcya.machine.crusher.name=Crusher
+
 
 # multiblock descriptions
 tkcya.multiblock.primitive_melter.description=A multiblock for melting ores and pure materials using combustible
@@ -354,8 +356,10 @@ recipemap.steam_autoclave.name=Autoclave
 recipemap.diesel_generator.name=Diesel generator
 recipemap.primitive_furnace.name=Primitive heating
 recipemap.log_cutting.name=Wood work
+recipemap.crushing.name=Ore Crushing
 
-gregtech.fluid_pipe.unit=§2%s units
+tkcya.oreprefix.unit=§2%s §funits
+tkcya.oreprefix.ore.unit=§2%s §f- §2%s §funits
 
 # Materials
 gregtech.material.unpure_bronze=Unpure Bronze

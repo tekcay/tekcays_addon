@@ -35,6 +35,7 @@ import tekcays_addon.common.metatileentities.single.heaters.MetaTileEntityLiquid
 import tekcays_addon.common.metatileentities.single.heaters.MetaTileEntitySolidFuelHeater;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamAutoclave;
 import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamCooler;
+import tekcays_addon.common.metatileentities.steam.MetaTileEntitySteamCrusher;
 import tekcays_addon.gtapi.consts.TKCYAValues;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.render.TKCYATextures;
@@ -104,6 +105,7 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityFilter FILTER;
     public static MetaTileEntityPressurizedCrackingUnit PRESSURIZED_CRACKING_UNIT;
     public static MetaTileEntitySteamAutoclave STEAM_AUTOCLAVE;
+    public static MetaTileEntitySteamCrusher STEAM_CRUSHER;
     public static MetaTileEntitySolidFuelHeater BRICK_FUEL_HEATER;
     public static MetaTileEntitySolidFuelHeater[] SOLID_FUEL_HEATER = new MetaTileEntitySolidFuelHeater[FUEL_HEATERS.size()];
     public static MetaTileEntityLiquidFuelHeater[] LIQUID_FUEL_HEATER = new MetaTileEntityLiquidFuelHeater[FUEL_HEATERS.size()];
@@ -343,6 +345,8 @@ public class TKCYAMetaTileEntities {
         LOGISTIC_MACHINE = registerMetaTileEntity(11321, new MetaTileEntityLogisticMachine(tkcyaId("logistic_machine.2"), 2));
         LOGISTIC_MACHINE = registerMetaTileEntity(11322, new MetaTileEntityLogisticMachine(tkcyaId("logistic_machine.3"), 3));
         LOGISTIC_MACHINE = registerMetaTileEntity(11323, new MetaTileEntityLogisticMachine(tkcyaId("logistic_machine.4"), 4));
+
+        STEAM_CRUSHER = registerMetaTileEntity(11440, new MetaTileEntitySteamCrusher(tkcyaId("crusher")));
     }
 
     private static void registerBrickMTE(String lang, MetaTileEntity[] mtes, int id, BiFunction<ResourceLocation, BlockBrick.BrickType, MetaTileEntity> function) {
