@@ -35,7 +35,7 @@ public class SingleBlockPrimitiveRecipeLogic extends AbstractRecipeLogic impleme
     }
 
     @Override
-    protected long getMaxVoltage() {
+    public long getMaxVoltage() {
         return GTValues.LV;
     }
 

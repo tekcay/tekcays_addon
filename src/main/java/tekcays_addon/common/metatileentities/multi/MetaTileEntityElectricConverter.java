@@ -10,6 +10,7 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.recipes.Recipe;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
@@ -21,23 +22,23 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import tekcays_addon.gtapi.metatileentity.multiblock.PressureContainerMultiblockController;
+import tekcays_addon.api.metatileentity.LogicType;
+import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Objects;
 
-public class MetaTileEntityElectricConverter extends PressureContainerMultiblockController implements IHeatingCoil {
+public class MetaTileEntityElectricConverter extends ModulableRecipeMapController implements IHeatingCoil {
 
     private int blastFurnaceTemperature;
 
     public MetaTileEntityElectricConverter(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.CONVERTING_RECIPES);
+        super(metaTileEntityId, TKCYARecipeMaps.CONVERTING_RECIPES, LogicType.NO_OVERCLOCK, LogicType.PRESSURE);
         this.recipeMapWorkable = new HeatingCoilRecipeLogic(this);
     }
 
@@ -49,9 +50,8 @@ public class MetaTileEntityElectricConverter extends PressureContainerMultiblock
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
         if (isStructureFormed()) {
-            textList.add(new TextComponentTranslation("gregtech.multiblock.blast_furnace.max_temperature",
-                    new TextComponentTranslation(GTUtility.formatNumbers(blastFurnaceTemperature) + "K").setStyle(new Style().setColor(TextFormatting.RED))));
-            double pressure = this.getPressureContainer().getPressure();
+            textList.add(new TextComponentTranslation("gregtech.multiblock.blast_furnace.max_temperature", blastFurnaceTemperature + "K"));
+            double pressure = Objects.requireNonNull(this.getPressureContainer()).getPressure();
             if (pressure > 100000) textList.add(new TextComponentTranslation("tkcya.machine.text.pressure", String.format("%.3f", pressure/1000D) + " kPa"));
             if (pressure > 1000000) textList.add(new TextComponentTranslation("tkcya.machine.text.pressure", String.format("%.3f", pressure/1000000D) + " MPa"));
         }
@@ -86,6 +86,7 @@ public class MetaTileEntityElectricConverter extends PressureContainerMultiblock
 
      */
 
+    @Nonnull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
@@ -109,7 +110,7 @@ public class MetaTileEntityElectricConverter extends PressureContainerMultiblock
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("gregtech.machine.electric_blast_furnace.tooltip.1"));
         tooltip.add(I18n.format("gregtech.machine.electric_blast_furnace.tooltip.2"));
@@ -119,6 +120,11 @@ public class MetaTileEntityElectricConverter extends PressureContainerMultiblock
     @Override
     public int getCurrentTemperature() {
         return this.blastFurnaceTemperature;
+    }
+
+    @Override
+    public boolean checkRecipeHelper(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
+        return super.checkRecipeHelper(recipe, consumeIfSuccess);
     }
 
     @Nonnull
@@ -132,12 +138,5 @@ public class MetaTileEntityElectricConverter extends PressureContainerMultiblock
         return true;
     }
 
-    @Nonnull
-    @Override
-    public List<ITextComponent> getDataInfo() {
-        List<ITextComponent> list = super.getDataInfo();
-        list.add(new TextComponentTranslation("gregtech.multiblock.blast_furnace.max_temperature",
-                new TextComponentTranslation(GTUtility.formatNumbers(blastFurnaceTemperature) + "K").setStyle(new Style().setColor(TextFormatting.RED))));
-        return list;
-    }
+
 }

@@ -11,6 +11,10 @@ public class TKCYAConfigHolder {
     @Config.Name("Miscellaneous")
     public static MiscOverhaul miscOverhaul = new MiscOverhaul();
 
+    @Config.Comment("Miscellaneaous config options")
+    @Config.Name("Harder")
+    public static HarderStuff harderStuff = new HarderStuff();
+
     @Config.Comment("Machines options")
     @Config.Name("MachinesOptions")
     public static MachinesOptions machinesOptions = new MachinesOptions();
@@ -51,20 +55,38 @@ public class TKCYAConfigHolder {
         @Config.Comment({"Replace normal steel with galvanized steel in LV components", "Default: true"})
         public boolean enableGalvanizedSteel = true;
 
-        @Config.Comment({"Components can only be made in the assembler", "Default: true"})
-        public boolean disableComponentsShapesRecipes = true;
-
         @Config.Comment({"Removes most electrolysis recipes and replaces the GTCEu Electrolyzer with a new one", "Default: true"})
         public boolean enableElectrolysisOverhaul = true;
 
         @Config.Comment({"Replaces the GTCEu CokeOven with a new one", "Default: true"})
         public boolean enableCokeOvenOverhaul = true;
 
-        @Config.Comment({"Rotors can not be made in extruder anymore, they also require curved plates adds a recipe in the assembler", "Default: true"})
-        public boolean enableHarderRotors = true;
+
 
         @Config.Comment({"Multiblock tanks capacity depends of their height", "Default: true"})
         public boolean enableModulableTanks = true;
+
+    }
+
+    public static class HarderStuff {
+
+        @Config.Comment({"Components can only be made in the assembler", "Default: true"})
+        public boolean disableComponentsShapesRecipes = true;
+
+        @Config.Comment({"Rotors can not be made in extruder anymore, they also require curved plates adds a recipe in the assembler", "Default: true"})
+        public boolean enableHarderRotors = true;
+
+        @Config.Comment({"Remove circuit recipes using tin. Only soldering alloy is allowed", "Default: true"})
+        public boolean disableTinCircuitRecipes = true;
+
+        @Config.Comment({"Remove all furnace recipes", "Default: true"})
+        public boolean disableFurnacesRecipes = true;
+
+        @Config.Comment({"bla", "Default: true"})
+        public boolean enableRoastingOverhaul = true;
+
+        @Config.Comment({"bla", "Default: 10. DO NOT TOUCH FOR NOW!"})
+        public final int maxOutputPerOre = 10;
 
     }
 

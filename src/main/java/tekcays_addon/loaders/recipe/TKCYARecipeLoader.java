@@ -1,12 +1,12 @@
 package tekcays_addon.loaders.recipe;
 
-import gregtech.api.recipes.GTRecipeHandler;
-import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.properties.PropertyKey;
-import tekcays_addon.loaders.recipe.chains.*;
-import tekcays_addon.loaders.recipe.handlers.*;
 import tekcays_addon.loaders.ItemsRemovalHandler;
+import tekcays_addon.loaders.recipe.chains.ChemicalChains;
+import tekcays_addon.loaders.recipe.chains.Coils;
+import tekcays_addon.loaders.recipe.chains.MineralChains;
 import tekcays_addon.loaders.recipe.handlers.StorageOverhaul;
+import tekcays_addon.loaders.recipe.handlers.*;
 import tekcays_addon.loaders.recipe.removals.RecipesRemovalHandler;
 
 import static gregtech.api.unification.ore.OrePrefix.foil;
@@ -18,18 +18,25 @@ public class TKCYARecipeLoader {
     }
     public static void load() {
 
+        MaterialFlagsRecipes.init();
+
         TKCYAMetaTileEntityLoader.init();
         FuelRecipes.init();
 
         PressureHandler.init();
         ULVComponentsHandler.init();
 
+        RecipesRemovalHandler.init();
+
+        ComponentsHandler.init();
+
+        LargerOreOutput.init();
+
+
         if (miscOverhaul.enableFoilOverhaul) foil.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processFoil);
-        if (miscOverhaul.enableHarderRotors) HarderRotorsHandler.init();
         if (miscOverhaul.enableCoilOverhaul) Coils.init();
-        if (miscOverhaul.disableComponentsShapesRecipes) RecipesRemovalHandler.shapedComponentsRecipesRemoval();
         if (miscOverhaul.enableMagneticOverhaul) TKCYAPartsRecipeHandler.initPolarizing();
-        if (meltingOverhaul.enableMeltingOverhaul) TKCYAPartsRecipeHandler.removeExtractor();
+
         if (energyOverhaul.disableGasTurbinesOverhaul) BurningGasBoilerRecipeHandler.init();
         if (crackingOverhaul.enableCrackingOverhaul) {
             PressureCrackingHandler.init();
@@ -89,12 +96,13 @@ public class TKCYARecipeLoader {
         }
 
         PrimitiveFurnaceHandler.init();
-
+        MultiAmperageTestHandler.init();
         CasingsLoader.init();
         ChemicalChains.init();
         MineralChains.init();
         PolymerHandler.init();
-        RoastingHandler.init();
+        if (harderStuff.enableRoastingOverhaul) RoastingHandler.init();
+
         HeatHandler.init();
         //MUST BE CALLED AFTER ANY HANDLER THAT GENERATES DUST_MIXTURE !
         SpiralSeparatorHandler.init();
@@ -127,6 +135,7 @@ public class TKCYARecipeLoader {
         }
 
         AxeSupportRecipes.init();
+
 
     }
 

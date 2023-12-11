@@ -7,6 +7,7 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.recipes.Recipe;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing;
@@ -18,29 +19,33 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
+import tekcays_addon.api.metatileentity.LogicType;
+import tekcays_addon.api.recipe.PressureContainerCheckRecipeHelper;
 import tekcays_addon.api.units.IPressureFormatting;
-import tekcays_addon.gtapi.metatileentity.multiblock.HeatedPressureContainerMultiblockController;
+import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
 import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.HEAT_CONTAINER;
 
 
-public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContainerMultiblockController implements IPressureFormatting {
+public class MetaTileEntityPressurizedCrackingUnit extends ModulableRecipeMapController implements IPressureFormatting {
 
     private int coilTier;
     private String displayedPressure;
     private int displayedTemp;
 
     public MetaTileEntityPressurizedCrackingUnit(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.PRESSURE_CRACKING);
-        this.volume = 1;
+        super(metaTileEntityId, TKCYARecipeMaps.PRESSURE_CRACKING, LogicType.HEAT, LogicType.PRESSURE);
         this.initializeAbilities();
+        getPressureContainer().setVolumeContainer(1);
         this.displayedPressure = getCurrentPressureWithUnit();
-        this.displayedTemp = currentTemp;
+        this.displayedTemp = getCurrentTemperature();
     }
 
     @Override
@@ -75,7 +80,7 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     }
 
     private String getCurrentPressureWithUnit() {
-        return convertPressureToBar(currentPressure, true);
+        return convertPressureToBar(getCurrentPressure(), true);
     }
 
     @Override
@@ -87,7 +92,7 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
         }
         if (isStructureFormed()) {
             textList.add(new TextComponentTranslation("gregtech.multiblock.cracking_unit.energy", 100 - 10 * coilTier));
-            textList.add(new TextComponentTranslation("tkcya.machine.text.pressurized.fluid", pressureContainer.getPressurizedFluidStackLocalizedName(), displayedPressure));
+            textList.add(new TextComponentTranslation("tkcya.machine.text.pressurized.fluid", getPressureContainer().getPressurizedFluidStackLocalizedName(), displayedPressure));
             textList.add(new TextComponentTranslation("tkcya.machine.text.temperature", displayedTemp));
         }
     }
@@ -96,12 +101,6 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("gregtech.machine.cracker.tooltip.1"));
-    }
-
-    @Override
-    protected void updateFormedValid() {
-        super.updateFormedValid();
-        if (!getWorld().isRemote) updateLogic();
     }
 
     @Nonnull
@@ -127,9 +126,11 @@ public class MetaTileEntityPressurizedCrackingUnit extends HeatedPressureContain
     }
 
     @Override
-    public int getCurrentTemperature() {
-        return heatContainer.getTemperature();
+    public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
+        return checkRecipeHelper(recipe, consumeIfSuccess);
     }
+
+
 
 
 

@@ -90,6 +90,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
         return getNullableFluidStackLocalizedName(this.pressurizedFluidStack);
     }
 
+    @Nullable
     @Override
     public void setPressurizedFluidStack(FluidStack fluidStack) {
         this.pressurizedFluidStack = fluidStack;
@@ -97,14 +98,14 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
     }
 
     @Override
-    public void setVolume(int volume) {
+    public void setVolumeContainer(int volume) {
         this.volume = volume;
         this.metaTileEntity.markDirty();
     }
 
     @Override
     public void setPressure() {
-        this.pressure = calculatePressure(getPressurizedFluidStackAmount(), ROOM_TEMPERATURE, getVolume());
+        this.pressure = calculatePressure(getPressurizedFluidStackAmount(), ROOM_TEMPERATURE, getContainerVolume());
         this.metaTileEntity.markDirty();
     }
 
@@ -122,6 +123,11 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
     @Override
     public boolean canHandleVacuum() {
         return false;
+    }
+
+    @Override
+    public int getContainerVolume() {
+        return 0;
     }
 
     @Nonnull
@@ -158,7 +164,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
 
     @Override
     public void writeInitialData(@Nonnull PacketBuffer buffer) {
-        super.writeInitialData(buffer);
+        super.writeInitialSyncData(buffer);
         buffer.writeInt(this.pressure);
     }
 
@@ -169,4 +175,12 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
     }
 
 
+    /**
+     * Reset the pressure to default i.e. 1 bar and reset the {@code pressurizedFluidStack} to {@code null};
+     */
+    @Override
+    public void resetContainer() {
+        this.setPressure(ATMOSPHERIC_PRESSURE);
+        this.setPressurizedFluidStack(null);
+    }
 }

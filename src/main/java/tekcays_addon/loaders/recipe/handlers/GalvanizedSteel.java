@@ -19,14 +19,18 @@ import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
+import tekcays_addon.gtapi.consts.TKCYAValues;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.unification.TKCYAMaterials;
-import tekcays_addon.gtapi.consts.TKCYAValues;
+import tekcays_addon.loaders.recipe.removals.RecipesRemovalHandler;
 
-import static gregtech.api.GTValues.LV;
+import static gregtech.api.GTValues.*;
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
-import static gregtech.api.unification.ore.OrePrefix.plate;
+import static gregtech.api.unification.ore.OrePrefix.*;
+import static gregtech.common.items.MetaItems.ELECTRIC_MOTOR_LV;
+import static gregtech.common.items.MetaItems.ELECTRIC_PISTON_LV;
+import static tekcays_addon.common.items.TKCYAMetaItems.ROBOT_ARM_LV;
 import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.ELECTROLYSIS;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.GalvanizedSteel;
 import static tekcays_addon.loaders.DamageableItemsLoader.electrodeZinc;
@@ -74,6 +78,45 @@ public class GalvanizedSteel {
                 "PPP", "PwP", "PPP", 'P', new UnificationEntry(plate, TKCYAMaterials.GalvanizedSteel));
     }
 
+    public static void lvMotorGalavanizedRecipe() {
+        ASSEMBLER_RECIPES.recipeBuilder()
+                .input(OrePrefix.stick, GalvanizedSteel, 2)
+                .input(OrePrefix.stick, Materials.SteelMagnetic)
+                .input(OrePrefix.cableGtSingle, Materials.Tin, 2)
+                .input(OrePrefix.wireGtSingle, Materials.Copper, 4)
+                .fluidInputs(SolderingAlloy.getFluid(L / 2))
+                .output(MetaItems.ELECTRIC_MOTOR_LV)
+                .duration(100)
+                .EUt(30)
+                .buildAndRegister();
+    }
+
+    public static void lvPistonGalavanizedRecipe() {
+        ASSEMBLER_RECIPES.recipeBuilder()
+                .input(OrePrefix.plate, GalvanizedSteel, 3)
+                .input(OrePrefix.stick, GalvanizedSteel, 2)
+                .input(OrePrefix.cableGtSingle, Materials.Tin, 2)
+                .input(OrePrefix.gearSmall, GalvanizedSteel)
+                .input(MetaItems.ELECTRIC_MOTOR_LV)
+                .fluidInputs(SolderingAlloy.getFluid(L / 2))
+                .output(MetaItems.ELECTRIC_PISTON_LV)
+                .duration(100)
+                .EUt(30)
+                .buildAndRegister();
+    }
+
+    public static void lvRobotArmGalvanizedRecipe() {
+        ASSEMBLER_RECIPES.recipeBuilder()
+                .input(cableGtSingle, Tin, 3)
+                .input(stick, GalvanizedSteel, 2)
+                .inputs(ELECTRIC_MOTOR_LV.getStackForm(2))
+                .inputs(ELECTRIC_PISTON_LV.getStackForm())
+                .input(circuit, MarkerMaterials.Tier.LV)
+                .fluidInputs(SolderingAlloy.getFluid(L / 2))
+                .outputs(ROBOT_ARM_LV.getStackForm())
+                .duration(100).EUt(VA[LV]).buildAndRegister();
+    }
+
     public static void componentsAssemblerRecipes() {
 
         //LV Machine Casing
@@ -92,40 +135,6 @@ public class GalvanizedSteel {
                 .outputs(MetaBlocks.MACHINE_CASING.getItemVariant(BlockMachineCasing.MachineCasingType.ULV))
                 .duration(25)
                 .EUt(16)
-                .buildAndRegister();
-
-        // LV Motor
-        ASSEMBLER_RECIPES.recipeBuilder()
-                .input(OrePrefix.stick, GalvanizedSteel, 2)
-                .input(OrePrefix.stick, Materials.SteelMagnetic)
-                .input(OrePrefix.cableGtSingle, Materials.Tin, 2)
-                .input(OrePrefix.wireGtSingle, Materials.Copper, 4)
-                .output(MetaItems.ELECTRIC_MOTOR_LV)
-                .duration(100)
-                .EUt(30)
-                .buildAndRegister();
-
-        //LV Piston
-        ASSEMBLER_RECIPES.recipeBuilder()
-                .input(OrePrefix.plate, GalvanizedSteel, 3)
-                .input(OrePrefix.stick, GalvanizedSteel, 2)
-                .input(OrePrefix.cableGtSingle, Materials.Tin, 2)
-                .input(OrePrefix.gearSmall, GalvanizedSteel)
-                .input(MetaItems.ELECTRIC_MOTOR_LV)
-                .output(MetaItems.ELECTRIC_PISTON_LV)
-                .duration(100)
-                .EUt(30)
-                .buildAndRegister();
-
-        //LV Robot Arm
-        ASSEMBLER_RECIPES.recipeBuilder()
-                .input(OrePrefix.stick, GalvanizedSteel, 2)
-                .input(OrePrefix.cableGtSingle, Materials.Tin, 3)
-                .input(OrePrefix.circuit, MarkerMaterials.Tier.LV)
-                .input(MetaItems.ELECTRIC_PISTON_LV)
-                .output(MetaItems.ROBOT_ARM_LV)
-                .duration(100)
-                .EUt(30)
                 .buildAndRegister();
 
         /*
@@ -153,7 +162,7 @@ public class GalvanizedSteel {
                         IntCircuitIngredient.getIntegratedCircuit(8)},
                 new FluidStack[] {});
 
-
+        /*
         //LV Motor
         GTRecipeHandler.removeRecipesByInputs(RecipeMaps.ASSEMBLER_RECIPES,
                 new ItemStack[] {
@@ -192,6 +201,8 @@ public class GalvanizedSteel {
                         OreDictUnifier.get(OrePrefix.cableGtSingle, Materials.Tin, 3)},
                 new FluidStack[] {});
 
+         */
+
 
 
         //Shaped recipes
@@ -207,10 +218,13 @@ public class GalvanizedSteel {
 
 
         //LV Motor
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_LV.getStackForm());
+        //ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_LV.getStackForm());
         //LV Piston
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PISTON_LV.getStackForm());
+
+        //ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PISTON_LV.getStackForm());
         //LV Robot Arm
-        ModHandler.removeRecipeByOutput(MetaItems.ROBOT_ARM_LV.getStackForm());
+        //ModHandler.removeRecipeByOutput(MetaItems.ROBOT_ARM_LV.getStackForm());
+
+        //lvPistonGalavanizedRecipe();
     }
 }

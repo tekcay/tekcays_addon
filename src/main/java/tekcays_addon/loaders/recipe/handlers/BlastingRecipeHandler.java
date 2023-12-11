@@ -30,18 +30,18 @@ public class BlastingRecipeHandler {
 
         ////From Limonite
 
-        RecipeMaps.FURNACE_RECIPES.recipeBuilder()
+        BLASTING_RECIPES.recipeBuilder()
+                .minTemperature(600)
                 .input(dust, Materials.YellowLimonite, 8)
                 .output(dust, Materials.BandedIron, 5)
-                .duration(100)
-                .EUt(8)
+                .duration(MINUTE)
                 .buildAndRegister();
 
-        RecipeMaps.FURNACE_RECIPES.recipeBuilder()
+        BLASTING_RECIPES.recipeBuilder()
+                .minTemperature(600)
                 .input(dust, Materials.BrownLimonite, 8)
                 .output(dust, Materials.BandedIron, 5)
-                .duration(100)
-                .EUt(8)
+                .duration(MINUTE)
                 .buildAndRegister();
 
         ////From BandedIron
@@ -99,6 +99,24 @@ public class BlastingRecipeHandler {
                 .input(dust, Materials.Cassiterite, 3)
                 .input(dust, Materials.Coke, 2)
                 .fluidOutputs(Materials.Tin.getFluid(GTValues.L))
+                .duration(30 * SECOND)
+                .buildAndRegister();        //Tin
+
+        ////From Garnierite
+        //NiO + CO -> Ni + CO2
+        BLASTING_RECIPES.recipeBuilder()
+                .minTemperature(1500)
+                .input(dust, Garnierite, 2)
+                .input(dust, Materials.Coke, 1)
+                .fluidOutputs(Nickel.getFluid(GTValues.L))
+                .duration(2 * MINUTE)
+                .buildAndRegister();
+
+        ADVANCED_BLAST_FURNACE_RECIPES.recipeBuilder()
+                .minTemperature(1500)
+                .input(dust, Garnierite, 2)
+                .input(dust, Materials.Coke, 1)
+                .fluidOutputs(Nickel.getFluid(GTValues.L))
                 .duration(30 * SECOND)
                 .buildAndRegister();
 

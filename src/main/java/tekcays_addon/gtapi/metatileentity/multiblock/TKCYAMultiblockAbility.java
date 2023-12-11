@@ -3,6 +3,7 @@ package tekcays_addon.gtapi.metatileentity.multiblock;
 import gregtech.api.capability.IMufflerHatch;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import tekcays_addon.gtapi.capability.containers.*;
 
@@ -21,5 +22,6 @@ public class TKCYAMultiblockAbility {
     public static final MultiblockAbility<IFluidTank> BRICK_EXPORT_FLUIDS = new MultiblockAbility<>("brick_export_fluids");
     public static final MultiblockAbility<IFluidTank> BRICK_IMPORT_FLUIDS = new MultiblockAbility<>("brick_import_fluids");
     public static final MultiblockAbility<IMufflerHatch> BRICK_MUFFLER_HATCH = new MultiblockAbility<>("brick_muffler_hatch");
+    public static final MultiblockAbility<IItemHandler> CRATE_VALVE = new MultiblockAbility<>("crate_valve");
 
 }

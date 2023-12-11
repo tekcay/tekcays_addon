@@ -15,27 +15,27 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
-import tekcays_addon.gtapi.logic.NoEnergyMultiblockLogic;
-import tekcays_addon.gtapi.metatileentity.multiblock.NoEnergyRecipeMapMultiBlockController;
-import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
+import tekcays_addon.api.metatileentity.LogicType;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
+import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.metatileentity.predicates.BrickHatchesPredicates.*;
 
-public class MetaTileEntityTKCYACokeOven extends NoEnergyRecipeMapMultiBlockController {
+public class MetaTileEntityTKCYACokeOven extends ModulableRecipeMapController {
 
     private final BlockBrick.BrickType brick;
     private final IBlockState iBlockState;
 
     public MetaTileEntityTKCYACokeOven(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.COKING);
+        super(metaTileEntityId, TKCYARecipeMaps.COKING, LogicType.NO_ENERGY, LogicType.NO_MAINTENANCE);
         this.brick = BlockBrick.BrickType.REINFORCED_BRICK;
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
-        this.recipeMapWorkable = new NoEnergyMultiblockLogic(this);
         this.recipeMapWorkable.setParallelLimit(4);
     }
 
@@ -81,16 +81,7 @@ public class MetaTileEntityTKCYACokeOven extends NoEnergyRecipeMapMultiBlockCont
         return Textures.COKE_BRICKS;
     }
 
-    @Override
-    public boolean hasMaintenanceMechanics() {
-        return false;
-    }
-
-    @Override
-    public boolean hasMufflerMechanics() {
-        return true;
-    }
-
+    @Nonnull
     @Override
     protected ICubeRenderer getFrontOverlay() {
         return Textures.COKE_OVEN_OVERLAY;
@@ -100,6 +91,7 @@ public class MetaTileEntityTKCYACokeOven extends NoEnergyRecipeMapMultiBlockCont
         return iBlockState;
     }
 
+    @Nonnull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
@@ -121,6 +113,5 @@ public class MetaTileEntityTKCYACokeOven extends NoEnergyRecipeMapMultiBlockCont
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityTKCYACokeOven(metaTileEntityId);
     }
-
 }
 

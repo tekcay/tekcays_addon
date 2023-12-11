@@ -5,7 +5,6 @@ import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.UnificationEntry;
-import gregtech.api.util.GTUtility;
 import gregtech.common.items.ToolItems;
 import gregtech.loaders.WoodTypeEntry;
 import net.minecraft.init.Items;
@@ -46,7 +45,7 @@ public class AxeSupportRecipes {
                     .notConsumable(TKCYAMetaTileEntities.AXE_SUPPORT.getStackForm())
                     .input(ToolItems.SAW.get())
                     .inputs(entry.getWoodTypeEntry().planks.copy())
-                    .outputs(GTUtility.copyAmount(2, entry.getWoodTypeEntry().slab.copy()))
+                    .outputs(new ItemStack(entry.getWoodTypeEntry().slab.copy().getItem(), 2))
                     .outputs(OreDictUnifier.get(OrePrefix.dust, Materials.Wood))
                     .buildAndRegister();
 

@@ -104,4 +104,9 @@ public class HeatContainer extends MTETrait implements IHeatContainer {
         this.temperature = buffer.readInt();
     }
 
+    @Override
+    public void resetContainer() {
+        setHeat(0);
+        setTemperature(TKCYAValues.ROOM_TEMPERATURE);
+    }
 }
