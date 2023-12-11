@@ -9,6 +9,7 @@ import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.info.MaterialFlags;
 import gregtech.api.unification.stack.UnificationEntry;
 import gregtech.common.items.MetaItems;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
 import static gregtech.api.recipes.RecipeMaps.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
@@ -56,9 +57,8 @@ public class HarderRotorsHandler {
         ModHandler.addShapedRecipe(material.getUnlocalizedName() + "_curved_plate", OreDictUnifier.get(curvedPlate, material),
                 " h ", " P ", "   ", 'P', new UnificationEntry(plate, material));
 
-        BENDER_RECIPES.recipeBuilder()
+        TKCYARecipeMaps.ROLLING_RECIPES.recipeBuilder()
                 .input(plate, material)
-                .circuitMeta(10)
                 .output(curvedPlate, material)
                 .duration((int) material.getMass())
                 .EUt(24)
