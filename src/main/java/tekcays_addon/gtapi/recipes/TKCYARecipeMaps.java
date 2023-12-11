@@ -32,7 +32,6 @@ public class TKCYARecipeMaps {
     @ZenProperty
     public static final RecipeMap<SimpleRecipeBuilder> ROLLING_RECIPES = new RecipeMap<>(
             "rolling", 1, 1, 0, 0, new SimpleRecipeBuilder(), false)
-            .setProgressBar(GuiTextures.PROGRESS_BAR_MAGNET, ProgressWidget.MoveType.HORIZONTAL)
             .setSound(GTSoundEvents.MOTOR);
 
     @ZenProperty
