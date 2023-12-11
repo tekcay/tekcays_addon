@@ -37,6 +37,7 @@ public class TKCYAMaterialFlags {
     public static final MaterialFlag BATH_FLUID = new MaterialFlag.Builder("bath_fluid")
             .requireProps(PropertyKey.FLUID)
             .build();
+
     public static final List<MaterialFlag> ALL_PARTS = new ArrayList<>();
 
     static {
@@ -52,8 +53,8 @@ public class TKCYAMaterialFlags {
         ALL_PARTS.add(GENERATE_GEAR);
         ALL_PARTS.add(GENERATE_SMALL_GEAR);
         ALL_PARTS.add(GENERATE_CURVED_PLATE);
+        ALL_PARTS.add(GENERATE_ROUND);
     }
-
 
 
 }

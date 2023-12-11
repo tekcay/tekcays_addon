@@ -102,6 +102,7 @@ public class TKCYARecipeLoader {
         MineralChains.init();
         PolymerHandler.init();
         if (harderStuff.enableRoastingOverhaul) RoastingHandler.init();
+        if (harderStuff.enableHarderRotors) HarderRotorsHandler.init();
 
         HeatHandler.init();
         //MUST BE CALLED AFTER ANY HANDLER THAT GENERATES DUST_MIXTURE !
