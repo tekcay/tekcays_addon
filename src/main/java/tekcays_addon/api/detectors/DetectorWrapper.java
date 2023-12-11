@@ -7,9 +7,9 @@ import net.minecraftforge.common.capabilities.Capability;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DetectorWrapper {
+public class DetectorWrapper<T> {
 
-    protected Capability<?> capability;
+    protected Capability<T> capability;
     protected String uiTitle;
     protected String unit;
     protected String currentMeasureText;

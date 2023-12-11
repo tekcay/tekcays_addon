@@ -1,12 +1,13 @@
 package tekcays_addon.common.covers;
 
-import gregtech.api.GTValues;
 import gregtech.api.capability.GregtechCapabilities;
 import gregtech.api.capability.IEnergyContainer;
-import gregtech.api.cover.ICoverable;
+import gregtech.api.cover.CoverDefinition;
+import gregtech.api.cover.CoverableView;
 import gregtech.common.covers.CoverPump;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import org.jetbrains.annotations.NotNull;
 import tekcays_addon.api.covers.CoverMethods;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.capability.containers.LogisticContainer;
@@ -16,20 +17,20 @@ public class CoverPumpOverhauled extends CoverPump implements FluidLogisticCover
     private final long energyPerOperation;
     private final long minEnergyNeeded;
 
-    public CoverPumpOverhauled(ICoverable coverHolder, EnumFacing attachedSide, int tier, int mbPerTick) {
-        super(coverHolder, attachedSide, tier, mbPerTick);
+    public CoverPumpOverhauled(@NotNull CoverDefinition definition, @NotNull CoverableView coverableView, @NotNull EnumFacing attachedSide, int tier, int mbPerTick) {
+        super(definition, coverableView, attachedSide, tier, mbPerTick);
         this.energyPerOperation = CoverMethods.getEnergyPerOperation(tier);
         this.minEnergyNeeded = CoverMethods.minEnergyNeeded(tier);
     }
 
     @Override
-    public boolean canAttach() {
-        return super.canAttach() && getLogisticContainer() != null;
+    public boolean canAttach(@NotNull CoverableView coverable, @NotNull EnumFacing side) {
+        return super.canAttach(coverable, side) && getLogisticContainer() != null;
     }
 
     @Override
     public IEnergyContainer getEnergyContainer() {
-        return coverHolder.getCapability(GregtechCapabilities.CAPABILITY_ENERGY_CONTAINER, null);
+        return getCoverableView().getCapability(GregtechCapabilities.CAPABILITY_ENERGY_CONTAINER, null);
     }
 
     @Override
@@ -44,12 +45,12 @@ public class CoverPumpOverhauled extends CoverPump implements FluidLogisticCover
 
     @Override
     public LogisticContainer getLogisticContainer() {
-        return coverHolder.getCapability(TKCYATileCapabilities.CAPABILITY_FLUID_LOGISTIC, attachedSide);
+        return getCoverableView().getCapability(TKCYATileCapabilities.CAPABILITY_ITEM_LOGISTIC, getAttachedSide());
     }
 
     @Override
     public void update() {
-        if (checkEnergy()) {
+        if (isThereEnoughEnergy()) {
             super.update();
         }
     }

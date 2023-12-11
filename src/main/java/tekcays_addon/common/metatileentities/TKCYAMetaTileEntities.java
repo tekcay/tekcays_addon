@@ -129,7 +129,6 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityBrickFluidHatch[] BRICK_EXPORT_FLUID_HATCH = new MetaTileEntityBrickFluidHatch[BRICKS.size()];
     public static MetaTileEntityBrickItemBus[] BRICK_EXPORT_ITEM_BUS = new MetaTileEntityBrickItemBus[BRICKS.size()];
     public static MetaTileEntityBrickItemBus[] BRICK_IMPORT_ITEM_BUS = new MetaTileEntityBrickItemBus[BRICKS.size()];
-    public static MetaTileEntityBrickCastingBus[] BRICK_CASTING_BUS = new MetaTileEntityBrickCastingBus[BRICKS.size()];
     public static MetaTileEntityBrickCastingFluidInput[] BRICK_CASTING_FLUID_INPUT = new MetaTileEntityBrickCastingFluidInput[BRICKS.size()];
     public static MetaTileEntityPrimitiveMufflerHatch[] PRIMITIVE_MUFFLER = new MetaTileEntityPrimitiveMufflerHatch[BRICKS.size()];
     public static MetaTileEntitySingleCrucible[] SINGLE_CRUCIBLE = new MetaTileEntitySingleCrucible[BRICKS.size()];
@@ -181,7 +180,6 @@ public class TKCYAMetaTileEntities {
             registerBrickMTE("_advanced_blast_furnace", ADVANCED_BLAST_FURNACE, 11007, MetaTileEntityAdvancedBlastFurnace::new);
             registerBrickMTE("_muffler", PRIMITIVE_MUFFLER, 11011, MetaTileEntityPrimitiveMufflerHatch::new);
             registerBrickMTE("_single_crucible", SINGLE_CRUCIBLE, 11015, MetaTileEntitySingleCrucible::new);
-            registerBrickMTE("_casting_bus", BRICK_CASTING_BUS, 11019, MetaTileEntityBrickCastingBus::new);
             registerBrickMTE("_casting_table", CASTING_TABLE, 11023, MetaTileEntityCastingTable::new);
             registerBrickMTE("_casting_fluid_input", BRICK_CASTING_FLUID_INPUT, 11027, MetaTileEntityBrickCastingFluidInput::new, false);
             registerBrickMTE("_import_fluid_hatch", BRICK_IMPORT_FLUID_HATCH, 11031, MetaTileEntityBrickFluidHatch::new, false);

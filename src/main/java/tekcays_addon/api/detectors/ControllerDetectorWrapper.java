@@ -8,14 +8,14 @@ import tekcays_addon.gtapi.capability.containers.IContainerDetector;
 
 
 @Getter
-public class ControllerDetectorWrapper extends DetectorWrapper {
+public class ControllerDetectorWrapper<T> extends DetectorWrapper<T> {
 
-    private final Capability<?> capability;
+    private final Capability<T> capability;
     private final Capability<IContainerDetector> controllerCapability;
     private final SimpleOverlayRenderer textures;
 
 
-    public ControllerDetectorWrapper(DetectorWrapper wrapper, SimpleOverlayRenderer textures) {
+    public ControllerDetectorWrapper(DetectorWrapper<T> wrapper, SimpleOverlayRenderer textures) {
         this.unit = wrapper.getUnit();
         this.currentMeasureText = wrapper.getCurrentMeasureText();
         this.uiTitle = wrapper.uiTitle;
