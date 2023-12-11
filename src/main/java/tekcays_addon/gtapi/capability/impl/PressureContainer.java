@@ -125,6 +125,11 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
         return false;
     }
 
+    @Override
+    public int getContainerVolume() {
+        return 0;
+    }
+
     @Nonnull
     @Override
     public String getName() {
@@ -159,7 +164,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
 
     @Override
     public void writeInitialData(@Nonnull PacketBuffer buffer) {
-        super.writeInitialData(buffer);
+        super.writeInitialSyncData(buffer);
         buffer.writeInt(this.pressure);
     }
 

@@ -38,7 +38,7 @@ public class DieselLogic extends AbstractRecipeLogic {
     }
 
     @Override
-    protected long getMaxVoltage() {
+    public long getMaxVoltage() {
         return GTValues.LV;
     }
 
