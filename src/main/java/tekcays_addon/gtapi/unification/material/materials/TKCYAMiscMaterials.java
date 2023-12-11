@@ -87,6 +87,7 @@ public class TKCYAMiscMaterials {
 
         //FluorineChain
         PotassiumBifluoride = new Material.Builder(id++, gregtechId( "potassium_bifluoride"))
+                .dust()
                 .liquid(new FluidBuilder().attribute(FluidAttributes.ACID)
                         .temperature(512))
                 .flags(DISABLE_DECOMPOSITION)
