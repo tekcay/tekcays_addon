@@ -30,6 +30,12 @@ public class TKCYARecipeMaps {
             .setSound(GTSoundEvents.ARC);
 
     @ZenProperty
+    public static final RecipeMap<SimpleRecipeBuilder> ROLLING_RECIPES = new RecipeMap<>(
+            "rolling", 1, 1, 0, 0, new SimpleRecipeBuilder(), false)
+            .setProgressBar(GuiTextures.PROGRESS_BAR_MAGNET, ProgressWidget.MoveType.HORIZONTAL)
+            .setSound(GTSoundEvents.MOTOR);
+
+    @ZenProperty
     public static final RecipeMap<NoEnergyTemperatureRecipeBuilder> MELTER_RECIPES = new RecipeMap<>(
             "primitive_melter", 1, 0, 0, 1, new NoEnergyTemperatureRecipeBuilder(), false)
             .setSound(GTSoundEvents.FURNACE);
