@@ -31,7 +31,7 @@ public class TKCYARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<SimpleRecipeBuilder> ROLLING_RECIPES = new RecipeMap<>(
-            "rolling", 1, 1, 0, 0, new SimpleRecipeBuilder(), false)
+            "rolling", 2, 1, 0, 0, new SimpleRecipeBuilder(), false)
             .setSound(GTSoundEvents.MOTOR);
 
     @ZenProperty
