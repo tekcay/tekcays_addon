@@ -61,7 +61,7 @@ public class MetaTileEntityGasHeater extends FuelHeater implements IDataInfoProv
 
     @Override
     protected IItemHandlerModifiable createImportItemHandler() {
-        return new NotifiableItemStackHandler(this, 1, this, false);
+        return new NotifiableItemStackHandler(1, this, false);
     }
     @Override
     public FluidTankList createExportFluidHandler() {

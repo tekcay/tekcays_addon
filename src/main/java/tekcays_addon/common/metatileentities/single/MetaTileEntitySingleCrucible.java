@@ -4,8 +4,7 @@ import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.ColourMultiplier;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregtech.api.capability.impl.FluidTankList;
-import gregtech.api.capability.impl.NotifiableItemStackHandler;
+import gregtech.api.capability.impl.*;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.LabelWidget;
@@ -25,6 +24,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
@@ -39,14 +39,14 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.Pair;
-import tekcays_addon.common.blocks.blocks.BlockBrick;
-import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.capability.containers.IHeatContainer;
-import tekcays_addon.gtapi.capability.impl.HeatContainer;
+import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.logic.SingleBlockPrimitiveRecipeLogic;
+import tekcays_addon.gtapi.capability.impl.HeatContainer;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.recipes.recipeproperties.NoEnergyTemperatureProperty;
 import tekcays_addon.gtapi.render.TKCYATextures;
+import tekcays_addon.common.blocks.blocks.BlockBrick;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -101,7 +101,7 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
 
     @Override
     protected IItemHandlerModifiable createImportItemHandler() {
-        return new NotifiableItemStackHandler(this, 1, this, false);
+        return new NotifiableItemStackHandler(1, this, false);
     }
 
     @Override
@@ -184,6 +184,12 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
         list.add(new TextComponentTranslation("behavior.tricorder.max_heat", heatContainer.getMaxHeat()));
         list.add(new TextComponentTranslation("behavior.tricorder.currentTemp", currentTemp));
         return list;
+    }
+
+    @Override
+    public int getActualComparatorValue() {
+        float f = maxTemp == 0L ? 0.0f : currentTemp / (maxTemp * 1.0f);
+        return MathHelper.floor(f * 14.0f) + (currentTemp > 0 ? 1 : 0);
     }
     
     private void actualizeTemperature() {

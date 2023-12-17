@@ -98,14 +98,14 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
     }
 
     @Override
-    public void setVolumeContainer(int volume) {
+    public void setVolume(int volume) {
         this.volume = volume;
         this.metaTileEntity.markDirty();
     }
 
     @Override
     public void setPressure() {
-        this.pressure = calculatePressure(getPressurizedFluidStackAmount(), ROOM_TEMPERATURE, getContainerVolume());
+        this.pressure = calculatePressure(getPressurizedFluidStackAmount(), ROOM_TEMPERATURE, getVolume());
         this.metaTileEntity.markDirty();
     }
 
@@ -123,11 +123,6 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
     @Override
     public boolean canHandleVacuum() {
         return false;
-    }
-
-    @Override
-    public int getContainerVolume() {
-        return 0;
     }
 
     @Nonnull
@@ -164,7 +159,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
 
     @Override
     public void writeInitialData(@Nonnull PacketBuffer buffer) {
-        super.writeInitialSyncData(buffer);
+        super.writeInitialData(buffer);
         buffer.writeInt(this.pressure);
     }
 

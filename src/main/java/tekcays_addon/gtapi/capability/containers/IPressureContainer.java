@@ -53,12 +53,12 @@ public interface IPressureContainer extends Container {
     /**
      * @return the {@code volume} of the {@code IPressureContainer} in m3
      */
-    int getContainerVolume();
+    int getVolume();
 
     /**
      * Sets the {@code volume} of the {@code IPressureContainer} in m3
      */
-    void setVolumeContainer(int volume);
+    void setVolume(int volume);
 
     FluidStack getPressurizedFluidStack();
 

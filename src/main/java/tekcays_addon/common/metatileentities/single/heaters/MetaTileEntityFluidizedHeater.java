@@ -65,7 +65,7 @@ public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataIn
 
     @Override
     protected IItemHandlerModifiable createImportItemHandler() {
-        return new NotifiableItemStackHandler(this, 1, this, false);
+        return new NotifiableItemStackHandler(1, this, false);
     }
     @Override
     protected IItemHandlerModifiable createExportItemHandler() {

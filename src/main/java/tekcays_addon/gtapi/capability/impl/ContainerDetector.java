@@ -7,14 +7,14 @@ import lombok.Setter;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
-import tekcays_addon.api.consts.DetectorModes;
 import tekcays_addon.gtapi.capability.containers.IContainerDetector;
+import tekcays_addon.api.consts.DetectorModes;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import static tekcays_addon.api.consts.NBTKeys.*;
 import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_CONTAINER_DETECTOR;
+import static tekcays_addon.api.consts.NBTKeys.*;
 
 @Getter
 @Setter

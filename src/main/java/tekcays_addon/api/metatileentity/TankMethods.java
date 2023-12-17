@@ -2,8 +2,8 @@ package tekcays_addon.api.metatileentity;
 
 import gregtech.api.capability.impl.FilteredFluidHandler;
 import gregtech.api.capability.impl.FilteredItemHandler;
-import gregtech.api.fluids.FluidState;
-import gregtech.api.fluids.GTFluidMaterial;
+import gregtech.api.fluids.MaterialFluid;
+import gregtech.api.fluids.fluidType.FluidType;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.ICubeRenderer;
@@ -19,13 +19,12 @@ import tekcays_addon.gtapi.render.TKCYATextures;
 
 import javax.annotation.Nullable;
 
-import static gregtech.api.fluids.FluidState.LIQUID;
-import static gregtech.api.fluids.attribute.FluidAttributes.ACID;
-import static gregtech.api.unification.FluidUnifier.getMaterialFromFluid;
+import static gregtech.api.fluids.MetaFluids.getMaterialFromFluid;
+import static gregtech.api.fluids.fluidType.FluidTypes.*;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.common.blocks.MetaBlocks.STEAM_CASING;
 import static gregtech.common.metatileentities.MetaTileEntities.WOODEN_TANK_VALVE;
-import static tekcays_addon.common.blocks.TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING;
+import static tekcays_addon.common.blocks.TKCYAMetaBlocks.*;
 import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.*;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.GalvanizedSteel;
 
@@ -67,7 +66,6 @@ public class TankMethods {
         return null;
     }
 
-    /*
     @Nullable
     public static int[] getMinMaxPressure(Material material) {
         if (material.equals(Steel)) return new int[]{0, 20};
@@ -76,41 +74,35 @@ public class TankMethods {
         return null;
     }
 
-
     public static boolean canContainThisFluid(FluidStack fluid, Material material) {
 
         if (!canHandleFluidTemperature(fluid.getFluid(), material)) return false;
 
-        FluidState fluidState = getFluidState(fluid.getFluid());
+        FluidType fluidType = getFluidType(fluid.getFluid());
 
-        if (fluidState.equals(LIQUID)) return true;
+        if (fluidType.equals(LIQUID)) return true;
 
-        return fluidState.equals(ACID) && material != TreatedWood;
+        return fluidType.equals(ACID) && material != TreatedWood;
     }
 
-    private static FluidState getFluidState(Fluid fluid) {
-        if (!(fluid instanceof GTFluidMaterial)) return LIQUID;
-        return (((GTFluidMaterial) fluid).getFluidType());
+    private static FluidType getFluidType(Fluid fluid) {
+        if (!(fluid instanceof MaterialFluid)) return LIQUID;
+        return (((MaterialFluid) fluid).getFluidType());
     }
 
     private static boolean canHandleFluidTemperature(Fluid fluid, Material material) {
         return getMaterialFromFluid(fluid).getFluid().getTemperature() < material.getFluid().getTemperature();
     }
 
-    /*
     public static FluidTank createFilteredFluidHandler(int capacity, Material material) {
 
         return new FilteredFluidHandler(capacity).setFilter(
                 fluidStack -> canContainThisFluid(fluidStack, material));
     }
-
-    /*
     public static ItemStackHandler createFilteredItemHandler(int capacity) {
 
         return new FilteredItemHandler(capacity);
     }
-
-     */
 
     public static void createPressurizedFilteredFluidHandler(int capacity, Material material) {
 

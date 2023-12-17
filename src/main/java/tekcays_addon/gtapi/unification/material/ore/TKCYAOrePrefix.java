@@ -1,7 +1,7 @@
 package tekcays_addon.gtapi.unification.material.ore;
 
 import gregtech.api.unification.material.MarkerMaterials;
-import gregtech.api.unification.material.properties.PropertyKey;
+import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import tekcays_addon.gtapi.unification.material.info.TKCYAMaterialIconType;
 
@@ -40,10 +40,8 @@ public class TKCYAOrePrefix {
     // Others
 
     public static final OrePrefix bottleGlass = new OrePrefix("bottleGlass", -1, MarkerMaterials.Empty, null, SELF_REFERENCING, null);
-    public static final OrePrefix curvedPlate = new OrePrefix("curvedPlate", M, null, TKCYAMaterialIconType.curvedPlate, ENABLE_UNIFICATION,
-            mat -> mat.hasFlag(GENERATE_ROTOR) || mat.hasFlag(GENERATE_CURVED_PLATE) || mat.hasProperty(PropertyKey.FLUID_PIPE) || mat.hasProperty(PropertyKey.ITEM_PIPE));
+    public static final OrePrefix curvedPlate = new OrePrefix("curvedPlate", M, null, TKCYAMaterialIconType.curvedPlate, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_ROTOR) || mat.hasFlag(GENERATE_CURVED_PLATE));
     public static final OrePrefix cutWood = new OrePrefix("cutWood", 1, Wood,  null, SELF_REFERENCING, null);
-    public static final OrePrefix blade = new OrePrefix("blade", M, null, TKCYAMaterialIconType.blade, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_ROTOR) || mat.hasFlag(GENERATE_CURVED_PLATE));
 
 }
 

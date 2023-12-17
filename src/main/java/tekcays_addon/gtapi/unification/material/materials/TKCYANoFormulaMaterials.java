@@ -1,6 +1,6 @@
 package tekcays_addon.gtapi.unification.material.materials;
 
-import gregtech.api.fluids.FluidBuilder;
+import gregtech.api.fluids.fluidType.FluidTypes;
 import gregtech.api.unification.material.Material;
 
 import static gregtech.api.unification.material.Materials.Methane;
@@ -18,7 +18,8 @@ public class TKCYANoFormulaMaterials {
                 .dust(1).ingot()
                 .ingot()
                 .flags(GENERATE_PLATE)
-                .liquid(new FluidBuilder().temperature(2500))
+                .fluid()
+                .fluidTemp(2500)
                 .color(0xf6ad30).iconSet(DULL)
                 .build();
 
@@ -29,16 +30,31 @@ public class TKCYANoFormulaMaterials {
 
         Fuel = new Material.Builder(id++, gregtechId( "fuel"))
                 .fluid()
+                .fluidTemp(298)
                 .color(0xf6ad30)
+                .build();
+
+        HotFlueGas = new Material.Builder(id++, gregtechId( "hot_flue_gas"))
+                .fluid(FluidTypes.GAS)
+                .fluidTemp(1800)
+                .color(0x69605f)
+                .build();
+
+        FlueGas = new Material.Builder(id++, gregtechId( "flue_gas"))
+                .fluid(FluidTypes.GAS)
+                .fluidTemp(298)
+                .color(0x7a7372)
                 .build();
 
         MelonOil = new Material.Builder(id++, gregtechId( "melon_oil"))
                 .fluid()
+                .fluidTemp(298)
                 .color(0xc68479)
                 .build();
 
         PumpkinOil = new Material.Builder(id++, gregtechId( "pumpkin_oil"))
                 .fluid()
+                .fluidTemp(298)
                 .color(0xc6c079)
                 .build();
 
@@ -48,17 +64,20 @@ public class TKCYANoFormulaMaterials {
                 .build();
 
         LightlySteamCrackedMethane = new Material.Builder(id++, gregtechId( "lightly_steam_cracked_methane"))
-                .liquid(new FluidBuilder().temperature(500))
+                .fluid()
+                .fluidTemp(500)
                 .color((2 * Methane.getMaterialRGB() + Steam.getMaterialRGB()) / 3)
                 .build();
 
         ModeratelySteamCrackedMethane = new Material.Builder(id++, gregtechId( "moderately_steam_cracked_methane"))
-                .liquid(new FluidBuilder().temperature(600))
+                .fluid()
+                .fluidTemp(600)
                 .color((Methane.getMaterialRGB() + Steam.getMaterialRGB()) / 2)
                 .build();
 
         SeverelySteamCrackedMethane = new Material.Builder(id++, gregtechId( "severely_steam_cracked_methane"))
-                .liquid(new FluidBuilder().temperature(700))
+                .fluid()
+                .fluidTemp(700)
                 .color((Methane.getMaterialRGB() + Steam.getMaterialRGB() * 2) / 3)
                 .build();
 

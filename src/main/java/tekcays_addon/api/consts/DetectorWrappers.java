@@ -1,9 +1,6 @@
 package tekcays_addon.api.consts;
 
 import tekcays_addon.api.detectors.DetectorWrapper;
-import tekcays_addon.gtapi.capability.containers.IContainer;
-import tekcays_addon.gtapi.capability.containers.IContainerDetector;
-import tekcays_addon.gtapi.capability.containers.IPressureContainer;
 
 import static tekcays_addon.api.consts.MeasureText.*;
 import static tekcays_addon.api.consts.UnitSymbol.*;
@@ -15,7 +12,7 @@ public class DetectorWrappers {
             .unit(BAR)
             .uiTitle("Pressure controller")
             .capability(CAPABILITY_PRESSURE_CONTAINER)
-            .currentMeasureText(PRESSURE_MEASURE_TEXT)
+            .currentMeasureText(TEMPERATURE_MEASURE_TEXT)
             .build();
 
     public static final DetectorWrapper TEMPERATURE_DETECTOR_WRAPPER = DetectorWrapper.builder()
