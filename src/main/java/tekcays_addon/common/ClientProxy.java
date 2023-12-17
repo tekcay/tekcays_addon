@@ -35,7 +35,6 @@ public class ClientProxy extends CommonProxy {
     public void preLoad() {
         super.preLoad();
         TKCYATextures.preInit();
-        OrePrefixValues.init();
     }
 
     @SubscribeEvent

@@ -61,6 +61,7 @@ public class TKCYAMetaTileEntities {
     public static int MAX_TIER = GTValues.IV;
     public static SimpleMachineMetaTileEntity[] CLUSTER_MILL = new SimpleMachineMetaTileEntity[MAX_TIER];
     public static SimpleMachineMetaTileEntity[] ADVANCED_POLARIZER = new SimpleMachineMetaTileEntity[MAX_TIER];
+    public static SimpleMachineMetaTileEntity[] ROLLING_MACHINE = new SimpleMachineMetaTileEntity[MAX_TIER];
     public static SimpleMachineMetaTileEntity[] ELECTRIC_CASTING_TABLE = new SimpleMachineMetaTileEntity[MAX_TIER];
 
 
@@ -196,6 +197,8 @@ public class TKCYAMetaTileEntities {
             registerSimpleMetaTileEntity(ADVANCED_POLARIZER, 11057, "advanced_polarizer", TKCYARecipeMaps.ADVANCED_POLARIZER_RECIPES,
                     TKCYATextures.ADVANCED_POLARIZER_OVERLAY, true, TKCYAValues::tkcyaId, GTUtility.hvCappedTankSizeFunction);
         }
+
+        registerSimpleMetaTileEntity(ROLLING_MACHINE, 11500, "rolling_machine", TKCYARecipeMaps.ROLLING_RECIPES, TKCYATextures.ROLLING_MACHINE_OVERLAY, true, TKCYAValues::tkcyaId, null);
 
         if (TKCYAConfigHolder.meltingOverhaul.enableMeltingOverhaul) {
             PRIMITIVE_MELTER = registerMetaTileEntity(11062, new MetaTileEntityPrimitiveMelter(tkcyaId("primitive_melter")));

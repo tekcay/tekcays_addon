@@ -12,7 +12,7 @@ import java.util.List;
 public class PipeLikeUtils {
 
     public static void addUnitInfoToPipeLike(@Nonnull List<String> tooltip, OrePrefix orePrefix) {
-        tooltip.add(I18n.format("tkcya.oreprefix.unit", OrePrefixValues.getOrePrefixUnit(orePrefix)));
+        tooltip.add(I18n.format("tkcya.oreprefix.unit", OrePrefixValues.getOrePrefixUnitAsText(orePrefix)));
     }
 
     public static void addUnitInfoToPipeLike(@Nonnull List<String> tooltip, BlockMaterialPipe<?, ?, ?> blockMaterialPipe) {
