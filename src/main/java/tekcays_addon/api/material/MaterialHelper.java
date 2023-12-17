@@ -1,8 +1,8 @@
 package tekcays_addon.api.material;
 
+import gregtech.api.GregTechAPI;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
-import gregtech.core.unification.material.internal.MaterialRegistryManager;
 import net.minecraft.item.ItemStack;
 
 import java.util.Collection;
@@ -15,7 +15,7 @@ import static gregtech.api.unification.ore.OrePrefix.dust;
 public class MaterialHelper {
 
     public static Collection<Material> getAllMaterials() {
-        return MaterialRegistryManager.getInstance().getRegisteredMaterials();
+        return GregTechAPI.materialManager.getRegisteredMaterials();
     }
 
     public static List<ItemStack> getStacksFromMaterialComposition(Material material) {

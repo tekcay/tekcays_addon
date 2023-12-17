@@ -49,6 +49,22 @@ public class TKCYAMaterialFlagAddition {
         HydrochloricAcid.addFlags(BATH_FLUID);
         HydrofluoricAcid.addFlags(BATH_FLUID);
         SulfuricAcid.addFlags(BATH_FLUID);
+
+        //For rotors
+        Chrome.addFlags(GENERATE_ROUND);
+        Polyethylene.addFlags(GENERATE_ROUND);
+        Iron.addFlags(GENERATE_ROUND);
+        Tin.addFlags(GENERATE_ROUND);
+        Titanium.addFlags(GENERATE_ROUND);
+        Darmstadtium.addFlags(GENERATE_ROUND);
+        Bronze.addFlags(GENERATE_ROUND);
+        Lead.addFlags(GENERATE_ROUND);
+        Steel.addFlags(GENERATE_ROUND);
+        Invar.addFlags(GENERATE_ROUND);
+        StainlessSteel.addFlags(GENERATE_ROUND);
+        TungstenSteel.addFlags(GENERATE_ROUND);
+        NaquadahAlloy.addFlags(GENERATE_ROUND);
+        RhodiumPlatedPalladium.addFlags(GENERATE_ROUND);
     }
 
 
