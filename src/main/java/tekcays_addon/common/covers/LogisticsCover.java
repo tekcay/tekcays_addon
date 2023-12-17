@@ -9,7 +9,7 @@ public interface LogisticsCover {
     long getEnergyPerOperation();
     long getMinEnergyNeeded();
     LogisticContainer getLogisticContainer();
-    default boolean isThereEnoughEnergy() {
+    default boolean checkEnergy() {
         return getEnergyContainer() != null && getEnergyContainer().getEnergyStored() >= getMinEnergyNeeded();
     }
 

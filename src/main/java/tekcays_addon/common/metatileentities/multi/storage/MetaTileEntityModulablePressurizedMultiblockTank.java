@@ -107,7 +107,7 @@ public class MetaTileEntityModulablePressurizedMultiblockTank extends Multiblock
         super.formStructure(context);
         initializeAbilities();
         if (this.pressureContainer != null) {
-            this.pressureContainer.setVolumeContainer(context.getOrDefault("height", 1) + 1);
+            this.pressureContainer.setVolume(context.getOrDefault("height", 1) + 1);
         }
     }
 

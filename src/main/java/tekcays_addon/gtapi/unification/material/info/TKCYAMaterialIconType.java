@@ -34,6 +34,5 @@ public class TKCYAMaterialIconType {
 
     // Others
     public static final MaterialIconType curvedPlate = new MaterialIconType("curvedPlate");
-    public static final MaterialIconType blade = new MaterialIconType("blade");
 
 }

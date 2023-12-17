@@ -1,6 +1,8 @@
 package tekcays_addon.loaders.recipe;
 
 import gregtech.api.recipes.ModHandler;
+import gregtech.api.unification.OreDictUnifier;
+import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.stack.UnificationEntry;
 import gregtech.common.blocks.BlockMachineCasing;
@@ -8,9 +10,10 @@ import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.metatileentities.MetaTileEntities;
 import tekcays_addon.common.items.TKCYAMetaItems;
 
-import static gregtech.api.unification.ore.OrePrefix.cableGtSingle;
-import static gregtech.api.unification.ore.OrePrefix.plate;
+import static gregtech.api.unification.ore.OrePrefix.*;
 import static net.minecraft.init.Blocks.IRON_BARS;
+import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.*;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MOLD_MATERIALS;
 
 public class ShapedCraftingRecipes{
 

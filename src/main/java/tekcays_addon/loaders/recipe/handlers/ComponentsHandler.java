@@ -157,7 +157,7 @@ public class ComponentsHandler {
                 .fluidInputs(SolderingAlloy.getFluid(L))
                 .fluidInputs(Lubricant.getFluid(250))
                 .output(ELECTRIC_PUMP_LuV)
-                .scannerResearch(ELECTRIC_PUMP_IV.getStackForm())
+                .research(ELECTRIC_PUMP_IV.getStackForm())
                 .duration(600).EUt(6000).buildAndRegister();
 
         ASSEMBLY_LINE_RECIPES.recipeBuilder()
@@ -171,7 +171,7 @@ public class ComponentsHandler {
                 .fluidInputs(SolderingAlloy.getFluid(L * 2))
                 .fluidInputs(Lubricant.getFluid(500))
                 .output(ELECTRIC_PUMP_ZPM)
-                .scannerResearch(b -> b
+                .research(b -> b
                         .researchStack(ELECTRIC_PUMP_LuV.getStackForm())
                         .duration(1200)
                         .EUt(VA[IV]))
@@ -189,7 +189,7 @@ public class ComponentsHandler {
                 .fluidInputs(Lubricant.getFluid(1000))
                 .fluidInputs(Naquadria.getFluid(L * 4))
                 .output(ELECTRIC_PUMP_UV)
-                .stationResearch(b -> b
+                .research(b -> b
                         .researchStack(ELECTRIC_PUMP_ZPM.getStackForm())
                         .CWUt(32)
                         .EUt(VA[ZPM]))
@@ -258,7 +258,7 @@ public class ComponentsHandler {
                 .fluidInputs(Lubricant.getFluid(250))
                 .fluidInputs(StyreneButadieneRubber.getFluid(L * 8))
                 .output(CONVEYOR_MODULE_LuV)
-                .scannerResearch(CONVEYOR_MODULE_IV.getStackForm())
+                .research(CONVEYOR_MODULE_IV.getStackForm())
                 .duration(600).EUt(6000).buildAndRegister();
 
         ASSEMBLY_LINE_RECIPES.recipeBuilder()
@@ -272,7 +272,7 @@ public class ComponentsHandler {
                 .fluidInputs(Lubricant.getFluid(500))
                 .fluidInputs(StyreneButadieneRubber.getFluid(L * 16))
                 .output(CONVEYOR_MODULE_ZPM)
-                .scannerResearch(b -> b
+                .research(b -> b
                         .researchStack(CONVEYOR_MODULE_LuV.getStackForm())
                         .duration(1200)
                         .EUt(VA[IV]))
@@ -290,7 +290,7 @@ public class ComponentsHandler {
                 .fluidInputs(StyreneButadieneRubber.getFluid(L * 24))
                 .fluidInputs(Naquadria.getFluid(L * 4))
                 .output(CONVEYOR_MODULE_UV)
-                .stationResearch(b -> b
+                .research(b -> b
                         .researchStack(CONVEYOR_MODULE_ZPM.getStackForm())
                         .CWUt(32)
                         .EUt(VA[ZPM]))
@@ -360,7 +360,7 @@ public class ComponentsHandler {
                 .fluidInputs(SolderingAlloy.getFluid(L * 6))
                 .fluidInputs(Lubricant.getFluid(250))
                 .output(ELECTRIC_MOTOR_LuV)
-                .scannerResearch(ELECTRIC_MOTOR_IV.getStackForm())
+                .research(ELECTRIC_MOTOR_IV.getStackForm())
                 .duration(600).EUt(6000).buildAndRegister();
 
         ASSEMBLY_LINE_RECIPES.recipeBuilder()
@@ -374,7 +374,7 @@ public class ComponentsHandler {
                 .fluidInputs(SolderingAlloy.getFluid(L * 7))
                 .fluidInputs(Lubricant.getFluid(500))
                 .output(ELECTRIC_MOTOR_ZPM)
-                .scannerResearch(b -> b
+                .research(b -> b
                         .researchStack(ELECTRIC_MOTOR_LuV.getStackForm())
                         .duration(1200)
                         .EUt(VA[IV]))
@@ -392,7 +392,7 @@ public class ComponentsHandler {
                 .fluidInputs(Lubricant.getFluid(1000))
                 .fluidInputs(Naquadria.getFluid(L * 4))
                 .output(ELECTRIC_MOTOR_UV)
-                .stationResearch(b -> b
+                .research(b -> b
                         .researchStack(ELECTRIC_MOTOR_ZPM.getStackForm())
                         .CWUt(32)
                         .EUt(VA[ZPM]))
@@ -552,7 +552,7 @@ public class ComponentsHandler {
                 .fluidInputs(SolderingAlloy.getFluid(L * 4))
                 .fluidInputs(Lubricant.getFluid(250))
                 .output(ROBOT_ARM_LuV)
-                .scannerResearch(ROBOT_ARM_IV.getStackForm())
+                .research(ROBOT_ARM_IV.getStackForm())
                 .duration(600).EUt(6000).buildAndRegister();
 
         ASSEMBLY_LINE_RECIPES.recipeBuilder()
@@ -568,7 +568,7 @@ public class ComponentsHandler {
                 .fluidInputs(SolderingAlloy.getFluid(L * 8))
                 .fluidInputs(Lubricant.getFluid(500))
                 .output(ROBOT_ARM_ZPM)
-                .scannerResearch(b -> b
+                .research(b -> b
                         .researchStack(ROBOT_ARM_LuV.getStackForm())
                         .duration(1200)
                         .EUt(VA[IV]))
@@ -588,7 +588,7 @@ public class ComponentsHandler {
                 .fluidInputs(Lubricant.getFluid(1000))
                 .fluidInputs(Naquadria.getFluid(L * 4))
                 .output(ROBOT_ARM_UV)
-                .stationResearch(b -> b
+                .research(b -> b
                         .researchStack(ROBOT_ARM_ZPM.getStackForm())
                         .CWUt(32)
                         .EUt(VA[ZPM]))

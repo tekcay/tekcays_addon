@@ -47,7 +47,7 @@ public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart im
         this.maxPressure = ATMOSPHERIC_PRESSURE * 10 * tierMultiplier;
         this.leakingRate = - 10 * tierMultiplier;
         this.pressureContainer = new PressureContainer(this, minPressure, maxPressure);
-        this.pressureContainer.setVolumeContainer(1);
+        this.pressureContainer.setVolume(1);
         //this.volume = 1;
         //this.pressureContainer.initializeAirFluidStack();
     }

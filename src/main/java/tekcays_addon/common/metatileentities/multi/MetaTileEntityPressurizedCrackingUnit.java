@@ -43,7 +43,7 @@ public class MetaTileEntityPressurizedCrackingUnit extends ModulableRecipeMapCon
     public MetaTileEntityPressurizedCrackingUnit(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.PRESSURE_CRACKING, LogicType.HEAT, LogicType.PRESSURE);
         this.initializeAbilities();
-        getPressureContainer().setVolumeContainer(1);
+        getPressureContainer().setVolume(1);
         this.displayedPressure = getCurrentPressureWithUnit();
         this.displayedTemp = getCurrentTemperature();
     }

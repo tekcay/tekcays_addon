@@ -21,9 +21,6 @@ import static gregtech.api.unification.material.Materials.TreatedWood;
 
 @AllArgsConstructor
 @Getter
-/**
- * From {@link WoodRecipeLoader}, used in {@link WoodTypeEntry}
- */
 public class WoodTypeEntryWrapper {
     
     private WoodTypeEntry woodTypeEntry;
@@ -31,12 +28,11 @@ public class WoodTypeEntryWrapper {
 
     private static final String mcModId = "minecraft";
 
-
     private static final WoodTypeEntry OAK_WOOD_ENTRY = new WoodTypeEntry.Builder(mcModId, "oak")
             .planks(new ItemStack(Blocks.PLANKS), "oak_planks")
             .log(new ItemStack(Blocks.LOG)).removeCharcoalRecipe()
             .door(new ItemStack(Items.OAK_DOOR), "wooden_door")
-            .slab(new ItemStack(Blocks.WOODEN_SLAB), "oak_wooden_slab")
+            .slab(new ItemStack(Blocks.WOODEN_SLAB))
             .fence(new ItemStack(Blocks.OAK_FENCE), "fence")
             .fenceGate(new ItemStack(Blocks.OAK_FENCE_GATE), "fence_gate")
             .stairs(new ItemStack(Blocks.OAK_STAIRS))
@@ -48,7 +44,7 @@ public class WoodTypeEntryWrapper {
             .planks(new ItemStack(Blocks.PLANKS, 1, 2), "birch_planks")
             .log(new ItemStack(Blocks.LOG, 1, 2)).removeCharcoalRecipe()
             .door(new ItemStack(Items.BIRCH_DOOR), "birch_door")
-            .slab(new ItemStack(Blocks.WOODEN_SLAB), "brich_wooden_slab")
+            .slab(new ItemStack(Blocks.WOODEN_SLAB, 1, 2))
             .fence(new ItemStack(Blocks.BIRCH_FENCE), "birch_fence")
             .fenceGate(new ItemStack(Blocks.BIRCH_FENCE_GATE), "birch_fence_gate")
             .stairs(new ItemStack(Blocks.BIRCH_STAIRS))
@@ -60,7 +56,7 @@ public class WoodTypeEntryWrapper {
             .planks(new ItemStack(Blocks.PLANKS, 1, 1), "spruce_planks")
             .log(new ItemStack(Blocks.LOG, 1, 1)).removeCharcoalRecipe()
             .door(new ItemStack(Items.SPRUCE_DOOR), "spruce_door")
-            .slab(new ItemStack(Blocks.WOODEN_SLAB), "spruce_slab")
+            .slab(new ItemStack(Blocks.WOODEN_SLAB, 1, 1))
             .fence(new ItemStack(Blocks.SPRUCE_FENCE), "spruce_fence")
             .fenceGate(new ItemStack(Blocks.SPRUCE_FENCE_GATE), "spruce_fence_gate")
             .stairs(new ItemStack(Blocks.SPRUCE_STAIRS))
@@ -72,7 +68,7 @@ public class WoodTypeEntryWrapper {
             .planks(new ItemStack(Blocks.PLANKS, 1, 3), "jungle_planks")
             .log(new ItemStack(Blocks.LOG, 1, 3)).removeCharcoalRecipe()
             .door(new ItemStack(Items.JUNGLE_DOOR), "jungle_door")
-            .slab(new ItemStack(Blocks.WOODEN_SLAB),"jungle_slab")
+            .slab(new ItemStack(Blocks.WOODEN_SLAB, 1, 3))
             .fence(new ItemStack(Blocks.JUNGLE_FENCE), "jungle_fence")
             .fenceGate(new ItemStack(Blocks.JUNGLE_FENCE_GATE), "jungle_fence_gate")
             .stairs(new ItemStack(Blocks.JUNGLE_STAIRS))
@@ -84,7 +80,7 @@ public class WoodTypeEntryWrapper {
             .planks(new ItemStack(Blocks.PLANKS, 1, 4), "acacia_planks")
             .log(new ItemStack(Blocks.LOG2)).removeCharcoalRecipe()
             .door(new ItemStack(Items.ACACIA_DOOR), "acacia_door")
-            .slab(new ItemStack(Blocks.WOODEN_SLAB),"acacia_slab")
+            .slab(new ItemStack(Blocks.WOODEN_SLAB, 1, 4))
             .fence(new ItemStack(Blocks.ACACIA_FENCE), "acacia_fence")
             .fenceGate(new ItemStack(Blocks.ACACIA_FENCE_GATE), "acacia_fence_gate")
             .stairs(new ItemStack(Blocks.ACACIA_STAIRS))
@@ -96,7 +92,7 @@ public class WoodTypeEntryWrapper {
             .planks(new ItemStack(Blocks.PLANKS, 1, 5), "dark_oak_planks")
             .log(new ItemStack(Blocks.LOG2, 1, 1)).removeCharcoalRecipe()
             .door(new ItemStack(Items.DARK_OAK_DOOR), "dark_oak_door")
-            .slab(new ItemStack(Blocks.WOODEN_SLAB), "dark_oak_slab")
+            .slab(new ItemStack(Blocks.WOODEN_SLAB, 1, 5))
             .fence(new ItemStack(Blocks.DARK_OAK_FENCE), "dark_oak_fence")
             .fenceGate(new ItemStack(Blocks.DARK_OAK_FENCE_GATE), "dark_oak_fence_gate")
             .stairs(new ItemStack(Blocks.DARK_OAK_STAIRS))
@@ -108,7 +104,7 @@ public class WoodTypeEntryWrapper {
             .planks(MetaBlocks.PLANKS.getItemVariant(BlockGregPlanks.BlockType.RUBBER_PLANK), null)
             .log(new ItemStack(MetaBlocks.RUBBER_LOG)).addCharcoalRecipe()
             .door(MetaItems.RUBBER_WOOD_DOOR.getStackForm(), null)
-            .slab(new ItemStack(MetaBlocks.WOOD_SLAB), null)
+            .slab(new ItemStack(MetaBlocks.WOOD_SLAB)).addSlabRecipe()
             .fence(new ItemStack(MetaBlocks.RUBBER_WOOD_FENCE), null)
             .fenceGate(new ItemStack(MetaBlocks.RUBBER_WOOD_FENCE_GATE), null)
             .stairs(new ItemStack(MetaBlocks.RUBBER_WOOD_STAIRS)).addStairsRecipe()
@@ -120,7 +116,7 @@ public class WoodTypeEntryWrapper {
     public static final WoodTypeEntry TREATED_WOOD_ENTRY = new WoodTypeEntry.Builder(GTValues.MODID, "treated")
             .planks(MetaBlocks.PLANKS.getItemVariant(BlockGregPlanks.BlockType.TREATED_PLANK), null)
             .door(MetaItems.TREATED_WOOD_DOOR.getStackForm(), null)
-            .slab(new ItemStack(MetaBlocks.WOOD_SLAB), null)
+            .slab(new ItemStack(MetaBlocks.WOOD_SLAB, 1, 1)).addSlabRecipe()
             .fence(new ItemStack(MetaBlocks.TREATED_WOOD_FENCE), null)
             .fenceGate(new ItemStack(MetaBlocks.TREATED_WOOD_FENCE_GATE), null)
             .stairs(new ItemStack(MetaBlocks.TREATED_WOOD_STAIRS)).addStairsRecipe()

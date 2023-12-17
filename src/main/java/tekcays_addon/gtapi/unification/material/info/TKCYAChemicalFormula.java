@@ -7,6 +7,7 @@ public class TKCYAChemicalFormula {
     public static void modifyChemicalFormula() {
         Materials.Steel.setFormula("Fe50C", true);
         Materials.Oxygen.setFormula("O2", true);
+        Materials.LiquidOxygen.setFormula("O2", true);
         Materials.Hydrogen.setFormula("H2", true);
         Materials.Nitrogen.setFormula("N2", true);
         Materials.Sulfur.setFormula("S8", true);
