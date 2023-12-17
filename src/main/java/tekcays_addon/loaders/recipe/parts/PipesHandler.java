@@ -1,112 +1,25 @@
-package tekcays_addon.loaders.recipe.handlers;
+package tekcays_addon.loaders.recipe.parts;
 
-import gregtech.api.GregTechAPI;
-import gregtech.api.items.metaitem.MetaItem;
-import gregtech.api.recipes.ModHandler;
-import gregtech.api.recipes.ingredients.GTRecipeInput;
-import gregtech.api.recipes.ingredients.GTRecipeItemInput;
-import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.api.unification.ore.OrePrefix;
-import gregtech.api.unification.stack.UnificationEntry;
-import gregtech.common.items.MetaItems;
-import tekcays_addon.api.recipe.RecipeHelperMisc;
 import tekcays_addon.api.utils.BooleanHelpers;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.unification.material.ore.OrePrefixValues;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static gregtech.api.recipes.RecipeMaps.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
-import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.blade;
 import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.curvedPlate;
 
-public class HarderRotorsHandler {
+public class PipesHandler {
 
-    public static void init() {
-
-        addRecipes();
-
-        for (Material material : GregTechAPI.materialManager.getRegisteredMaterials()) {
-
-            boolean curvedPlateCheck = curvedPlate.doGenerateItem(material);
-            boolean bladeCheck = blade.doGenerateItem(material);
-            boolean rotorCheck = rotor.doGenerateItem(material);
-            boolean pipeCheck = material.hasProperty(PropertyKey.FLUID_PIPE) || material.hasProperty(PropertyKey.ITEM_PIPE);
-
-            if (curvedPlateCheck) processCurvedPlate(material);
-            if (bladeCheck) processBlade(material);
-            if (rotorCheck && curvedPlateCheck && bladeCheck) processRotor(material);
-            if (curvedPlateCheck && pipeCheck) processPipes(material);
-        }
+    public static void init(Material material) {
+        processPipes(material);
     }
 
-    private static GTRecipeItemInput convertMetaItem(MetaItem<?>.MetaValueItem metaItem) {
-        return new GTRecipeItemInput(metaItem.getStackForm());
-    }
-
-    private static void addRecipes () {
-        List<MetaItem<?>.MetaValueItem> molds = new ArrayList<>();
-        molds.add(MetaItems.SHAPE_EXTRUDER_PIPE_HUGE);
-        molds.add(MetaItems.SHAPE_EXTRUDER_PIPE_LARGE);
-        molds.add(MetaItems.SHAPE_EXTRUDER_PIPE_NORMAL);
-        molds.add(MetaItems.SHAPE_EXTRUDER_PIPE_SMALL);
-        molds.add(MetaItems.SHAPE_EXTRUDER_PIPE_TINY);
-
-        List<GTRecipeInput> gtRecipeItemInputList = new ArrayList<>();
-        molds.forEach(metaValueItem -> gtRecipeItemInputList.add(convertMetaItem(metaValueItem)));
-        RecipeHelperMisc.transferRecipes(EXTRUDER_RECIPES, TKCYARecipeMaps.INT, gtRecipeItemInputList);
-    }
-
-    private static void processRotor(Material material) {
-
-        ASSEMBLER_RECIPES.recipeBuilder()
-                .input(blade, material, 4)
-                .input(round, material)
-                .input(screw, material, 4)
-                .output(rotor, material)
-                .duration((int) material.getMass())
-                .EUt(24)
-                .buildAndRegister();
-
-        TKCYARecipeMaps.NEW_ASSEMBLING.recipeBuilder()
-                .input(blade, material, 4)
-                .input(round, material)
-                .output(rotor, material)
-                .fluidInputs(Materials.SolderingAlloy.getFluid(72))
-                .duration((int) material.getMass())
-                .EUt(24)
-                .buildAndRegister();
-    }
-
-    private static void processCurvedPlate(Material material) {
-
-        ModHandler.addShapedRecipe(material.getUnlocalizedName() + "_curved_plate", OreDictUnifier.get(curvedPlate, material),
-                " h ", " P ", "   ", 'P', new UnificationEntry(plate, material));
-
-        TKCYARecipeMaps.ROLLING_RECIPES.recipeBuilder()
-                .input(plate, material)
-                .output(curvedPlate, material)
-                .duration((int) material.getMass())
-                .EUt(24)
-                .buildAndRegister();
-    }
-
-    private static void processBlade(Material material) {
-
-        CUTTER_RECIPES.recipeBuilder()
-                .input(curvedPlate, material)
-                .output(blade, material)
-                .duration((int) material.getMass())
-                .EUt(24)
-                .buildAndRegister();
-    }
 
     private static void processPipes(Material material) {
 

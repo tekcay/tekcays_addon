@@ -16,7 +16,7 @@ import static net.minecraft.init.Items.BRICK;
 public class TKCYAMetaTileEntityLoader {
 
     public static void init() {
-        if (TKCYAConfigHolder.miscOverhaul.enableFoilOverhaul) {
+        if (TKCYAConfigHolder.harderStuff.enableHarderFoil) {
             MetaTileEntityLoader.registerMachineRecipe(CLUSTER_MILL,
                     "MMM", "CHC", "MMM",
                     'M', MOTOR, 'C', CIRCUIT, 'H', HULL);
