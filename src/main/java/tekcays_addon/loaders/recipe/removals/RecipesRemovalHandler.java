@@ -36,7 +36,6 @@ public class RecipesRemovalHandler {
 
     public static void init() {
         if(harderStuff.disableTinCircuitRecipes) TinCircuitRemoval.init();
-        if (meltingOverhaul.enableMeltingOverhaul) TKCYAPartsRecipeHandler.removeExtractor();
         if (harderStuff.disableFurnacesRecipes) FurnacesRemoval.init();
     }
 

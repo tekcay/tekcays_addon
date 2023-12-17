@@ -7,6 +7,8 @@ import tekcays_addon.loaders.recipe.chains.Coils;
 import tekcays_addon.loaders.recipe.chains.MineralChains;
 import tekcays_addon.loaders.recipe.handlers.StorageOverhaul;
 import tekcays_addon.loaders.recipe.handlers.*;
+import tekcays_addon.loaders.recipe.parts.PartsInit;
+import tekcays_addon.loaders.recipe.parts.RotorHandler;
 import tekcays_addon.loaders.recipe.removals.RecipesRemovalHandler;
 
 import static gregtech.api.unification.ore.OrePrefix.foil;
@@ -28,24 +30,16 @@ public class TKCYARecipeLoader {
 
         RecipesRemovalHandler.init();
 
-        ComponentsHandler.init();
+         if (harderStuff.disableComponentsShapesRecipes) ComponentsHandler.init();
 
         LargerOreOutput.init();
 
-
-        if (miscOverhaul.enableFoilOverhaul) foil.addProcessingHandler(PropertyKey.INGOT, TKCYAPartsRecipeHandler::processFoil);
         if (miscOverhaul.enableCoilOverhaul) Coils.init();
-        if (miscOverhaul.enableMagneticOverhaul) TKCYAPartsRecipeHandler.initPolarizing();
 
         if (energyOverhaul.disableGasTurbinesOverhaul) BurningGasBoilerRecipeHandler.init();
         if (crackingOverhaul.enableCrackingOverhaul) {
             PressureCrackingHandler.init();
             DistillationHandler.init();
-        }
-
-        if (meltingOverhaul.enableAlloyingOverhaul) {
-            TKCYAPartsRecipeHandler.removeAlloySmelter();
-            //GTRecipeHandler.removeAllRecipes(RecipeMaps.PRIMITIVE_BLAST_FURNACE_RECIPES);
         }
 
         if (meltingOverhaul.enableCastingOverhaul) {
@@ -74,7 +68,6 @@ public class TKCYARecipeLoader {
         }
 
         if (miscOverhaul.enableElectrolysisOverhaul) {
-            TKCYAPartsRecipeHandler.initElectrode();
             ElectrolysisHandler.init();
             //GTRecipeHandler.removeAllRecipes(RecipeMaps.ELECTROLYZER_RECIPES);
         }
@@ -102,7 +95,8 @@ public class TKCYARecipeLoader {
         MineralChains.init();
         PolymerHandler.init();
         if (harderStuff.enableRoastingOverhaul) RoastingHandler.init();
-        if (harderStuff.enableHarderRotors) HarderRotorsHandler.init();
+
+        PartsInit.init();
 
         HeatHandler.init();
         //MUST BE CALLED AFTER ANY HANDLER THAT GENERATES DUST_MIXTURE !

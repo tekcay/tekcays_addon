@@ -40,8 +40,7 @@ public class TKCYAConfigHolder {
         @Config.Comment({"Enables TKCYA custom oregen. You MUST delete the json files in your config/gregtech/worldgen/vein folder."})
         public boolean enableTKCYACustomOreGen = true;
 
-        @Config.Comment({"Foils are made in the Cluster Mill.", "Default: true"})
-        public boolean enableFoilOverhaul = true;
+
 
         @Config.Comment({"Coils now requires Mica foils", "Default: true"})
         public boolean enableCoilOverhaul = true;
@@ -76,6 +75,9 @@ public class TKCYAConfigHolder {
         @Config.Comment({"Rotors can not be made in extruder anymore, they also require curved plates adds a recipe in the assembler", "Default: true"})
         public boolean enableHarderRotors = true;
 
+        @Config.Comment({"Rotors can not be made in extruder anymore, they also require curved plates adds a recipe in the assembler", "Default: true"})
+        public boolean enableHarderPipes = true;
+
         @Config.Comment({"Remove circuit recipes using tin. Only soldering alloy is allowed", "Default: true"})
         public boolean disableTinCircuitRecipes = true;
 
@@ -87,6 +89,9 @@ public class TKCYAConfigHolder {
 
         @Config.Comment({"bla", "Default: 10. DO NOT TOUCH FOR NOW!"})
         public final int maxOutputPerOre = 10;
+
+        @Config.Comment({"Foils are made in the Cluster Mill.", "Default: true"})
+        public boolean enableHarderFoil = true;
 
     }
 

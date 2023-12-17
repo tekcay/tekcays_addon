@@ -187,7 +187,7 @@ public class TKCYAMetaTileEntities {
             registerBrickMTE("_export_item_bus", BRICK_EXPORT_ITEM_BUS, 11043, MetaTileEntityBrickItemBus::new, true);
         }
 
-        if (TKCYAConfigHolder.miscOverhaul.enableFoilOverhaul) {
+        if (TKCYAConfigHolder.harderStuff.enableHarderFoil) {
             registerSimpleMetaTileEntity(CLUSTER_MILL, 11052, "cluster_mill", TKCYARecipeMaps.CLUSTER_MILL_RECIPES,
                     TKCYATextures.CLUSTER_MILL_OVERLAY, true, TKCYAValues::tkcyaId, GTUtility.hvCappedTankSizeFunction);
         }
