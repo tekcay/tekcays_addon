@@ -61,6 +61,7 @@ public class TKCYAMetaTileEntities {
     public static int MAX_TIER = GTValues.IV;
     public static SimpleMachineMetaTileEntity[] CLUSTER_MILL = new SimpleMachineMetaTileEntity[MAX_TIER];
     public static SimpleMachineMetaTileEntity[] ADVANCED_POLARIZER = new SimpleMachineMetaTileEntity[MAX_TIER];
+    public static SimpleMachineMetaTileEntity[] ROLLING_MACHINE = new SimpleMachineMetaTileEntity[MAX_TIER];
     public static SimpleMachineMetaTileEntity[] ELECTRIC_CASTING_TABLE = new SimpleMachineMetaTileEntity[MAX_TIER];
 
 
@@ -129,11 +130,9 @@ public class TKCYAMetaTileEntities {
     public static MetaTileEntityBrickFluidHatch[] BRICK_EXPORT_FLUID_HATCH = new MetaTileEntityBrickFluidHatch[BRICKS.size()];
     public static MetaTileEntityBrickItemBus[] BRICK_EXPORT_ITEM_BUS = new MetaTileEntityBrickItemBus[BRICKS.size()];
     public static MetaTileEntityBrickItemBus[] BRICK_IMPORT_ITEM_BUS = new MetaTileEntityBrickItemBus[BRICKS.size()];
-    public static MetaTileEntityBrickCastingBus[] BRICK_CASTING_BUS = new MetaTileEntityBrickCastingBus[BRICKS.size()];
     public static MetaTileEntityBrickCastingFluidInput[] BRICK_CASTING_FLUID_INPUT = new MetaTileEntityBrickCastingFluidInput[BRICKS.size()];
     public static MetaTileEntityPrimitiveMufflerHatch[] PRIMITIVE_MUFFLER = new MetaTileEntityPrimitiveMufflerHatch[BRICKS.size()];
     public static MetaTileEntitySingleCrucible[] SINGLE_CRUCIBLE = new MetaTileEntitySingleCrucible[BRICKS.size()];
-    public static MetaTileEntityCastingTable[] CASTING_TABLE = new MetaTileEntityCastingTable[BRICKS.size()];
     public static MetaTileEntityPrimitiveRoastOven[] BRICK_ROASTING_OVEN = new MetaTileEntityPrimitiveRoastOven[BRICKS.size()];
 
     // Drums
@@ -181,8 +180,6 @@ public class TKCYAMetaTileEntities {
             registerBrickMTE("_advanced_blast_furnace", ADVANCED_BLAST_FURNACE, 11007, MetaTileEntityAdvancedBlastFurnace::new);
             registerBrickMTE("_muffler", PRIMITIVE_MUFFLER, 11011, MetaTileEntityPrimitiveMufflerHatch::new);
             registerBrickMTE("_single_crucible", SINGLE_CRUCIBLE, 11015, MetaTileEntitySingleCrucible::new);
-            registerBrickMTE("_casting_bus", BRICK_CASTING_BUS, 11019, MetaTileEntityBrickCastingBus::new);
-            registerBrickMTE("_casting_table", CASTING_TABLE, 11023, MetaTileEntityCastingTable::new);
             registerBrickMTE("_casting_fluid_input", BRICK_CASTING_FLUID_INPUT, 11027, MetaTileEntityBrickCastingFluidInput::new, false);
             registerBrickMTE("_import_fluid_hatch", BRICK_IMPORT_FLUID_HATCH, 11031, MetaTileEntityBrickFluidHatch::new, false);
             registerBrickMTE("_export_fluid_hatch", BRICK_EXPORT_FLUID_HATCH, 11035, MetaTileEntityBrickFluidHatch::new, true);
@@ -200,6 +197,8 @@ public class TKCYAMetaTileEntities {
             registerSimpleMetaTileEntity(ADVANCED_POLARIZER, 11057, "advanced_polarizer", TKCYARecipeMaps.ADVANCED_POLARIZER_RECIPES,
                     TKCYATextures.ADVANCED_POLARIZER_OVERLAY, true, TKCYAValues::tkcyaId, GTUtility.hvCappedTankSizeFunction);
         }
+
+        registerSimpleMetaTileEntity(ROLLING_MACHINE, 11500, "rolling_machine", TKCYARecipeMaps.ROLLING_RECIPES, TKCYATextures.ROLLING_MACHINE_OVERLAY, true, TKCYAValues::tkcyaId, null);
 
         if (TKCYAConfigHolder.meltingOverhaul.enableMeltingOverhaul) {
             PRIMITIVE_MELTER = registerMetaTileEntity(11062, new MetaTileEntityPrimitiveMelter(tkcyaId("primitive_melter")));

@@ -67,6 +67,12 @@ tkcya.machine.advanced_polarizer.hv.name=Polarizer HV
 tkcya.machine.advanced_polarizer.ev.name=Polarizer EV
 tkcya.machine.advanced_polarizer.iv.name=Polarizer IV
 
+tkcya.machine.rolling_machine.lv.name=Rolling Machine LV
+tkcya.machine.rolling_machine.mv.name=Rolling Machine MV
+tkcya.machine.rolling_machine.hv.name=Rolling Machine HV
+tkcya.machine.rolling_machine.ev.name=Rolling Machine EV
+tkcya.machine.rolling_machine.iv.name=Rolling Machine IV
+
 tkcya.machine.electric_casting_table.lv.name=Electric Casting Table LV
 tkcya.machine.electric_casting_table.mv.name=Electric Casting Table MV
 tkcya.machine.electric_casting_table.hv.name=Electric Casting Table HV
@@ -334,6 +340,7 @@ tile.block_dirt.dirt.name=Neutralized Dirt
 # RecipeMaps
 recipemap.cluster_mill.name=Cluster Mill
 recipemap.advanced_polarizer.name=Polarizing
+recipemap.rolling.name=Rolling
 recipemap.primitive_melter.name=Melting
 recipemap.electric_melter.name=Melting
 recipemap.fermentation.name=Fermentation
@@ -600,6 +607,7 @@ item.material.oreprefix.moldBlock=%s Mold Block
 
 ##Other
 item.material.oreprefix.curvedPlate=%s Curved Plate
+item.material.oreprefix.blade=%s Blade
 
 #Tooltips
 

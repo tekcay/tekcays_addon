@@ -24,6 +24,7 @@ public class TKCYAOrePrefixAdditions {
         addOrePrefix(bottleGlass);
         addOrePrefix(curvedPlate);
         addOrePrefix(cutWood);
+        addOrePrefix(blade);
     }
 
     public static void componentsInit(){

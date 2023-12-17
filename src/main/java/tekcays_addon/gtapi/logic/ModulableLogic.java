@@ -53,7 +53,7 @@ public class ModulableLogic extends MultiblockRecipeLogic {
     }
 
     @Override
-    protected long getMaxVoltage() {
+    public long getMaxVoltage() {
         if (logicTypes.contains(LogicType.NO_ENERGY)) return 32;
         return super.getMaxVoltage();
     }

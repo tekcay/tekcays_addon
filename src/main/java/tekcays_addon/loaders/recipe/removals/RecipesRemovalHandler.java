@@ -7,11 +7,9 @@ import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.items.MetaItems;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import tekcays_addon.loaders.recipe.handlers.HarderRotorsHandler;
 import tekcays_addon.loaders.recipe.handlers.TKCYAPartsRecipeHandler;
 
 import java.util.List;
-import java.util.function.BiConsumer;
 
 import static gregtech.api.unification.material.Materials.*;
 import static tekcays_addon.common.TKCYAConfigHolder.harderStuff;
@@ -38,7 +36,6 @@ public class RecipesRemovalHandler {
 
     public static void init() {
         if(harderStuff.disableTinCircuitRecipes) TinCircuitRemoval.init();
-        if (harderStuff.enableHarderRotors) HarderRotorsHandler.init();
         if (meltingOverhaul.enableMeltingOverhaul) TKCYAPartsRecipeHandler.removeExtractor();
         if (harderStuff.disableFurnacesRecipes) FurnacesRemoval.init();
     }
