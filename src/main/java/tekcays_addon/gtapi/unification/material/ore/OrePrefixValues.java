@@ -143,7 +143,7 @@ public class OrePrefixValues {
 
     static {
         NORMAL_TO_RESTRICTIVE_PIPES.put(pipeHugeItem, pipeHugeRestrictive);
-        NORMAL_TO_RESTRICTIVE_PIPES.put(pipeLargeItem, pipeLargeFluid);
+        NORMAL_TO_RESTRICTIVE_PIPES.put(pipeLargeItem, pipeLargeRestrictive);
         NORMAL_TO_RESTRICTIVE_PIPES.put(pipeNormalItem, pipeNormalRestrictive);
         NORMAL_TO_RESTRICTIVE_PIPES.put(pipeSmallItem, pipeSmallRestrictive);
     }

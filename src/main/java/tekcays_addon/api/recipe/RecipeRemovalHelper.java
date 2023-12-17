@@ -11,8 +11,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 
-import java.util.Arrays;
-
 import static tekcays_addon.gtapi.consts.TKCYAValues.GT_ID;
 import static tekcays_addon.gtapi.consts.TKCYAValues.MC_ID;
 
@@ -66,6 +64,14 @@ public class RecipeRemovalHelper {
                         recipeMap.removeRecipe(recipe);
                     }
                 }
+            }
+        }
+    }
+
+    public static void removeRecipeByOutput(RecipeMap<?> recipeMap, OrePrefix orePrefix, Material material) {
+        for (Recipe recipe : recipeMap.getRecipeList()) {
+            if (recipe.getOutputs().contains(OreDictUnifier.get(orePrefix, material))) {
+                recipeMap.removeRecipe(recipe);
             }
         }
     }
