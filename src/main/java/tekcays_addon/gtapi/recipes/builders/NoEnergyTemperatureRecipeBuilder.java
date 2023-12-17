@@ -5,6 +5,7 @@ import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.recipeproperties.PrimitiveProperty;
 import gregtech.api.util.GTUtility;
+import gregtech.api.util.TextFormattingUtil;
 import gregtech.api.util.ValidationResult;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import tekcays_addon.gtapi.recipes.recipeproperties.NoEnergyTemperatureProperty;
@@ -56,7 +57,7 @@ public class NoEnergyTemperatureRecipeBuilder extends RecipeBuilder<NoEnergyTemp
     public String toString() {
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
-                .append(NoEnergyTemperatureProperty.getInstance().getKey(), GTUtility.formatNumbers(getTemperature()))
+                .append(NoEnergyTemperatureProperty.getInstance().getKey(), TextFormattingUtil.formatNumbers(getTemperature()))
                 .toString();
     }
 

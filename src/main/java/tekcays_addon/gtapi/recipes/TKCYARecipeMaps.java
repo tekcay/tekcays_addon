@@ -30,6 +30,11 @@ public class TKCYARecipeMaps {
             .setSound(GTSoundEvents.ARC);
 
     @ZenProperty
+    public static final RecipeMap<SimpleRecipeBuilder> ROLLING_RECIPES = new RecipeMap<>(
+            "rolling", 2, 1, 0, 0, new SimpleRecipeBuilder(), false)
+            .setSound(GTSoundEvents.MOTOR);
+
+    @ZenProperty
     public static final RecipeMap<NoEnergyTemperatureRecipeBuilder> MELTER_RECIPES = new RecipeMap<>(
             "primitive_melter", 1, 0, 0, 1, new NoEnergyTemperatureRecipeBuilder(), false)
             .setSound(GTSoundEvents.FURNACE);
@@ -164,6 +169,9 @@ public class TKCYARecipeMaps {
     @ZenProperty
     public static final RecipeMap<SimpleRecipeBuilder> CRUSHING = new RecipeMap<>(
             "crushing", 1, 9, 0, 0, new SimpleRecipeBuilder(), false);
+    @ZenProperty
+    public static final RecipeMap<SimpleRecipeBuilder> INT = new RecipeMap<>(
+            "int", 2, 2, 0, 0, new SimpleRecipeBuilder(), false);
 
 
 

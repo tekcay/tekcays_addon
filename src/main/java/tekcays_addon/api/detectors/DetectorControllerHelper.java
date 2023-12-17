@@ -1,6 +1,5 @@
 package tekcays_addon.api.detectors;
 
-import gregtech.api.cover.CoverBehavior;
 import net.minecraft.util.EnumFacing;
 import tekcays_addon.api.consts.DetectorModes;
 
@@ -16,7 +15,7 @@ public interface DetectorControllerHelper {
      * @param detectorMode the current {@link DetectorModes}.
      * @param currentValue the measured value.
      * @param threshold the value to trigger.
-     * @param turnRedstoneSignal a function to set the cover to the provided value. Typically, call {@link CoverBehavior#setRedstoneSignalOutput(int)}.
+     * @param turnRedstoneSignal a function to set the cover to the provided value.
      */
     default void updateRedstoneBehavior(DetectorModes detectorMode, int currentValue, int threshold, Consumer<Integer> turnRedstoneSignal) {
 

@@ -47,8 +47,8 @@ public class MetaTileEntityController extends MetaTileEntityMultiblockPart imple
     @Getter
     @Setter
     private int threshold;
-    private IContainerDetector containerControl;
-    private int currentValue;
+    private final IContainerDetector containerControl;
+    private final int currentValue = 0;
     private final ControllerDetectorWrapper wrapper;
 
     public MetaTileEntityController(@Nonnull ResourceLocation metaTileEntityId, ControllerDetectorWrapper wrapper) {

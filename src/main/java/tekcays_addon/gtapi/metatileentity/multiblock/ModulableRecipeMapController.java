@@ -1,5 +1,8 @@
 package tekcays_addon.gtapi.metatileentity.multiblock;
 
+import codechicken.lib.raytracer.IndexedCuboid6;
+import codechicken.lib.render.CCRenderState;
+import codechicken.lib.vec.Matrix4;
 import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
@@ -8,8 +11,13 @@ import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMap;
 import lombok.Getter;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
+import org.jetbrains.annotations.NotNull;
 import tekcays_addon.api.metatileentity.LogicType;
 import tekcays_addon.api.metatileentity.MultiAmperageControllerMethods;
 import tekcays_addon.api.recipe.PressureContainerCheckRecipeHelper;
@@ -46,7 +54,7 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
     protected List<IEnergyContainer> inputEnergyHatches;
     protected boolean areAllEnergyHatchesTheSameVoltage = false;
     @Getter
-    private int currentTemp, currentHeat, currentPressure, volume;
+    private int currentTemp, currentHeat, currentPressure, volumeContainer;
     private final List<LogicType> logicTypes;
 
     public ModulableRecipeMapController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap, LogicType logicType, LogicType... logicTypes) {
@@ -209,6 +217,58 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
             return MultiAmperageControllerMethods.multiAmperageRecipeChecker(recipe, inputEnergyHatches, areAllEnergyHatchesTheSameVoltage);
         }
         return super.checkRecipe(recipe, consumeIfSuccess);
+    }
+
+    //implementations
+
+    @Override
+    public void dropAllCovers() {
+        super.dropAllCovers();
+    }
+
+    @Override
+    public void dropCover(@NotNull EnumFacing side) {
+        super.dropCover(side);
+    }
+
+    @Override
+    public void updateCovers() {
+        super.updateCovers();
+    }
+
+    @Override
+    public void renderCovers(@NotNull CCRenderState renderState, @NotNull Matrix4 translation, @NotNull BlockRenderLayer layer) {
+        super.renderCovers(renderState, translation, layer);
+    }
+
+    @Override
+    public void addCoverCollisionBoundingBox(@NotNull List<? super IndexedCuboid6> collisionList) {
+        super.addCoverCollisionBoundingBox(collisionList);
+    }
+
+    @Override
+    public boolean hasCapability(@NotNull Capability<?> capability, @org.jetbrains.annotations.Nullable EnumFacing facing) {
+        return super.hasCapability(capability, facing);
+    }
+
+    @Override
+    public boolean hasCover(@NotNull EnumFacing side) {
+        return super.hasCover(side);
+    }
+
+    @Override
+    public int getItemOutputLimit() {
+        return super.getItemOutputLimit();
+    }
+
+    @Override
+    public int getFluidOutputLimit() {
+        return super.getFluidOutputLimit();
+    }
+
+    @Override
+    public SoundEvent getBreakdownSound() {
+        return super.getBreakdownSound();
     }
 
 
