@@ -12,22 +12,22 @@ public class RotorHandler {
 
     public static void init(Material material) {
 
-            ASSEMBLER_RECIPES.recipeBuilder()
-                    .input(blade, material, 4)
-                    .input(round, material)
-                    .input(screw, material, 4)
-                    .output(rotor, material)
-                    .duration((int) material.getMass())
-                    .EUt(24)
-                    .buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder()
+                .input(blade, material, 4)
+                .input(round, material)
+                .input(screw, material, 4)
+                .output(rotor, material)
+                .duration((int) material.getMass())
+                .EUt(24)
+                .buildAndRegister();
 
-            TKCYARecipeMaps.NEW_ASSEMBLING.recipeBuilder()
-                    .input(blade, material, 4)
-                    .input(round, material)
-                    .output(rotor, material)
-                    .fluidInputs(Materials.SolderingAlloy.getFluid(72))
-                    .duration((int) material.getMass())
-                    .EUt(24)
-                    .buildAndRegister();
+        TKCYARecipeMaps.NEW_ASSEMBLING.recipeBuilder()
+                .input(blade, material, 4)
+                .input(round, material)
+                .output(rotor, material)
+                .fluidInputs(Materials.SolderingAlloy.getFluid(72))
+                .duration((int) material.getMass())
+                .EUt(24)
+                .buildAndRegister();
     }
 }

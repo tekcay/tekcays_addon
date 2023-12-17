@@ -22,6 +22,8 @@ public class TKCYARecipeLoader {
 
         MaterialFlagsRecipes.init();
 
+        PartsInit.init();
+
         TKCYAMetaTileEntityLoader.init();
         FuelRecipes.init();
 
@@ -95,8 +97,6 @@ public class TKCYARecipeLoader {
         MineralChains.init();
         PolymerHandler.init();
         if (harderStuff.enableRoastingOverhaul) RoastingHandler.init();
-
-        PartsInit.init();
 
         HeatHandler.init();
         //MUST BE CALLED AFTER ANY HANDLER THAT GENERATES DUST_MIXTURE !

@@ -49,6 +49,7 @@ public class TKCYAAlloys {
                 .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
                 .cableProperties(128, 4, 4)
                 .components(Copper, 11, Nickel, 10)
+                .iconSet(METALLIC)
                 .colorAverage()
                 .build();
 
