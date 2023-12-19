@@ -70,3 +70,4 @@ intervals of pressure and temperature.
 * [**GregTech Food Option**](https://github.com/bruberu/GregTechFoodOption) for its temperature logic in the [**Electric Baking Oven**](https://github.com/bruberu/GregTechFoodOption/blob/master/src/main/java/gregtechfoodoption/machines/multiblock/MetaTileEntityElectricBakingOven.java).
 * [**Tech22**](https://github.com/TechLord22) for his help, including for the [**WorldGenRegistry**](https://github.com/tekcay/tekcays_addon/blob/master/src/main/java/tekcays_addon/api/worldgen/TKCYAWorldGenRegistry.java) class.
 * [**GT6**](https://github.com/GregTech6) and Greg for his great mods and ideas.
+* [**Blocky**](https://github.com/Blocky106) for detectors textures
