@@ -68,12 +68,14 @@ public class TKCYATextures {
     //Covers
     
     ////Detectors
-    public static SimpleOverlayRenderer DETECTOR_TEMPERATURE;
-    public static SimpleOverlayRenderer DETECTOR_PRESSURE;
-    public static SimpleOverlayRenderer DETECTOR_VACUUM;
-    public static SimpleOverlayRenderer DETECTOR_SPEED;
-    public static SimpleOverlayRenderer DETECTOR_TORQUE;
-    public static SimpleOverlayRenderer DETECTOR_ROTATION_POWER;
+    //Covers
+    ////Detectors
+    public static final SimpleOverlayRenderer DETECTOR_TEMPERATURE = new SimpleOverlayRenderer("cover/detector/overlay_temperature_detector");
+    public static final SimpleOverlayRenderer DETECTOR_PRESSURE = new SimpleOverlayRenderer("cover/detector/overlay_pressure_detector");
+    public static final SimpleOverlayRenderer DETECTOR_VACUUM = new SimpleOverlayRenderer("cover/detector/overlay_vacuum_detector");
+    public static final SimpleOverlayRenderer DETECTOR_SPEED = new SimpleOverlayRenderer("cover/detector/overlay_speed_detector");
+    public static final SimpleOverlayRenderer DETECTOR_TORQUE = new SimpleOverlayRenderer("cover/detector/overlay_torque_detector");
+    public static final SimpleOverlayRenderer DETECTOR_ROTATION_POWER = new SimpleOverlayRenderer("cover/detector/overlay_rotation_power_detector");
     
     ////Molds
     public static SimpleOverlayRenderer COVER_MOLD_INGOT_CERAMIC_TEXTURE;
@@ -163,14 +165,7 @@ public class TKCYATextures {
         ROTATION_STATIC = new SimpleOverlayRenderer("rotation/rotation_static");
 
 
-        //Covers
-        ////Detectors
-        DETECTOR_TEMPERATURE = new SimpleOverlayRenderer("cover/detector/overlay_temperature_detector");
-        DETECTOR_PRESSURE = new SimpleOverlayRenderer("cover/detector/overlay_pressure_detector");
-        DETECTOR_VACUUM = new SimpleOverlayRenderer("cover/detector/overlay_vacuum_detector");
-        DETECTOR_SPEED = new SimpleOverlayRenderer("cover/detector/overlay_speed_detector");
-        DETECTOR_TORQUE = new SimpleOverlayRenderer("cover/detector/overlay_torque_detector");
-        DETECTOR_ROTATION_POWER = new SimpleOverlayRenderer("cover/detector/overlay_rotation_power_detector");
+
 
         ////Molds
         COVER_MOLD_INGOT_CERAMIC_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_ingot_ceramic");
