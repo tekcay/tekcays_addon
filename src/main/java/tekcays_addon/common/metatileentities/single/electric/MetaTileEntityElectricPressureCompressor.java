@@ -50,6 +50,7 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
         super.update();
         //Redstone stops fluid transfer
         if (this.isBlockRedstonePowered()) return;
+        if (getFluidTankContent() == null) return;
         if (energyContainer.getEnergyStored() < ENERGY_BASE_CONSUMPTION) return;
 
         if (!getWorld().isRemote) {
@@ -61,12 +62,9 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
                 transferRate = 0;
                 return;
             }
-            
-            if (getFluidTankContent() == null) return;
 
-            int toDrain = pressureContainer.changePressurizedFluidStack(getFluidTankContent(), transferRate);
-
-            if (toDrain > 0) {
+            if (pressureContainer.getPressurizedFluidStack() == null || pressureContainer.getPressurizedFluidStack().amount > 0) {
+                int toDrain = pressureContainer.changePressurizedFluidStack(getFluidTankContent(), transferRate);
                 fluidTank.drain(toDrain, true);
                 energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
             }

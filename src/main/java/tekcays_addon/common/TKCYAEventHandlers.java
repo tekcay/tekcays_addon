@@ -4,6 +4,7 @@ import gregtech.api.unification.material.event.MaterialEvent;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.gtapi.unification.TKCYAMaterials;
 import tekcays_addon.gtapi.unification.material.ore.OreDictAdditions;
+import tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix;
 import tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefixAdditions;
 import tekcays_addon.gtapi.unification.material.properties.TKCYAPropertyAddition;
 import tekcays_addon.TekCaysAddon;
@@ -27,6 +28,8 @@ public class TKCYAEventHandlers {
             TKCYAOrePrefixAdditions.moldsInit();
             TKCYAOrePrefixAdditions.moldsTooltip();
         }
+
+        TKCYAOrePrefixAdditions.componentsInit();
 
 
     }

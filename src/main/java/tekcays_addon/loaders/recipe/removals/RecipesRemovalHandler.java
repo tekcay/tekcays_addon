@@ -1,55 +1,48 @@
 package tekcays_addon.loaders.recipe.removals;
 
 import gregtech.api.items.metaitem.MetaItem;
-import gregtech.api.recipes.GTRecipeHandler;
-import gregtech.api.recipes.ModHandler;
-import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.recipes.*;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.items.MetaItems;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
+import tekcays_addon.loaders.recipe.handlers.TKCYAPartsRecipeHandler;
+
+import java.util.List;
 
 import static gregtech.api.unification.material.Materials.*;
+import static tekcays_addon.common.TKCYAConfigHolder.harderStuff;
+import static tekcays_addon.common.TKCYAConfigHolder.meltingOverhaul;
 
 public class RecipesRemovalHandler {
-    
-    public static void shapedComponentsRecipesRemoval() {
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_MV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PISTON_MV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PUMP_MV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ROBOT_ARM_MV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.FLUID_REGULATOR_MV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.CONVEYOR_MODULE_MV.getStackForm());
 
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_HV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PISTON_HV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PUMP_HV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ROBOT_ARM_HV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.FLUID_REGULATOR_HV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.CONVEYOR_MODULE_HV.getStackForm());
+    public static void recipeMapRecipesRemoval(RecipeMap<?> recipeMap, List<ItemStack> itemStacks) {
+        for (Recipe recipe : recipeMap.getRecipeList()) {
+            itemStacks.forEach(itemStack -> removeRecipe(recipe, itemStack, recipeMap));
+        }
+    }
+    public static void recipeMapRecipesRemoval(RecipeMap<?> recipeMap, ItemStack itemStack) {
+        recipeMap.getRecipeList().forEach(recipe -> removeRecipe(recipe, itemStack, recipeMap));
+    }
 
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_EV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PISTON_EV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PUMP_EV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ROBOT_ARM_EV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.FLUID_REGULATOR_EV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.CONVEYOR_MODULE_EV.getStackForm());
+    private static void removeRecipe(Recipe recipe, ItemStack itemStack, RecipeMap<?> recipeMap) {
+        if (recipe.getAllItemOutputs()
+                .stream()
+                .anyMatch(output -> output.isItemEqual(itemStack))) {
+            recipeMap.removeRecipe(recipe);
+        }
+    }
 
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_MOTOR_IV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PISTON_IV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ELECTRIC_PUMP_IV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.ROBOT_ARM_IV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.FLUID_REGULATOR_IV.getStackForm());
-        ModHandler.removeRecipeByOutput(MetaItems.CONVEYOR_MODULE_IV.getStackForm());
-
+    public static void init() {
+        if(harderStuff.disableTinCircuitRecipes) TinCircuitRemoval.init();
+        if (harderStuff.disableFurnacesRecipes) FurnacesRemoval.init();
     }
 
     public static void removeShapedTreatedWoodRecipe(){
         ModHandler.removeRecipeByOutput(OreDictUnifier.get(OrePrefix.plank, TreatedWood));
+
     }
-
-
 
     public static void removeMoldsAndUsage() {
 

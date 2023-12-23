@@ -2,9 +2,9 @@ package tekcays_addon.api.metatileentity.predicates;
 
 import gregtech.api.pattern.TraceabilityPredicate;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
-import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickFluidHatch;
-import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityBrickItemBus;
-import tekcays_addon.common.metatileentities.multiblockpart.MetaTileEntityPrimitiveMufflerHatch;
+import tekcays_addon.common.metatileentities.multiblockpart.brick.MetaTileEntityBrickFluidHatch;
+import tekcays_addon.common.metatileentities.multiblockpart.brick.MetaTileEntityBrickItemBus;
+import tekcays_addon.common.metatileentities.multiblockpart.brick.MetaTileEntityPrimitiveMufflerHatch;
 
 import java.util.ArrayList;
 import java.util.List;

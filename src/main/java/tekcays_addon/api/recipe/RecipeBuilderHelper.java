@@ -68,6 +68,14 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
                     store((FluidOutputTimeProperty) recipeProperty, recipePropertyStorage, null);
                     break;
 
+                case AMPERAGE:
+                    store((MultiAmperageProperty) recipeProperty, recipePropertyStorage, 0);
+                    break;
+
+                case VOLTAGE:
+                    store((VoltageProperty) recipeProperty, recipePropertyStorage, 0);
+                    break;
+
                 default:
                     break;
             }
@@ -78,7 +86,7 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
         recipePropertyStorage.store(recipeProperty, defaultValue);
     }
 
-    default <U> T validate(RecipeProperty<?> recipeProperty, U value, Function<U, String> validate) {
+    default <U> T validate(RecipeProperty<?> recipeProperty, U value, @Nonnull Function<U, String> validate) {
         T recipeBuilder = getRecipeBuilder();
         String errorMessage = validate.apply(value);
 
@@ -136,6 +144,28 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
         return validate(FluidOutputTimeProperty.getInstance(), fluidOutputTime, RecipeValidationFunctions.VALIDATE_FLUID_OUTPUT_TIME);
     }
 
+    /**
+     * @param amperage corresponds at least to the sum of the amperage of all the input energy hatches.
+     * <br>
+     * e.g. an {@code amperage} of 3 needs two energy hatches of 2 A, regardless of the voltage.
+     * <br>
+     */
+    @Nonnull
+    default T amperage(int amperage) {
+        return validate(MultiAmperageProperty.getInstance(), amperage, RecipeValidationFunctions.VALIDATE_INT_POSITIVE);
+    }
+
+    /**
+     * @param voltage corresponds to the voltage tier of the necessary energy hatch(es).
+     * <br>
+     * 0 corresponds to ULV, 1 corresponds to LV etc.
+     * <br>
+     */
+    @Nonnull
+    default T voltageTier(int voltage) {
+        return validate(VoltageProperty.getInstance(), voltage, RecipeValidationFunctions.VALIDATE_VOLTAGE);
+    }
+
     default void applyPropertyHelper(@Nonnull String key, Object value) {
 
         switch (key) {
@@ -171,11 +201,20 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
                 this.toolOreDict(((ToolOreDict) value));
                 return;
 
+            case AMPERAGE:
+                this.amperage(((Number) value).intValue());
+                return;
+
+            case VOLTAGE:
+                this.voltageTier(((Number) value).intValue());
+                return;
+
             case FLUID_OUTPUT_TIME:
                 this.fluidOutputTime(((FluidOutputTime[]) value));
                 return;
 
             default:
+                break;
         }
     }
 

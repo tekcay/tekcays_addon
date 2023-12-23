@@ -1,202 +1,110 @@
 package tekcays_addon.loaders.recipe.handlers;
 
+import gregtech.api.GTValues;
+import gregtech.api.recipes.Recipe;
+import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Material;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
-import tekcays_addon.gtapi.utils.roasting.RoastableMaterial;
-import tekcays_addon.common.items.TKCYAMetaItems;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.dust;
-import static tekcays_addon.gtapi.utils.roasting.RoastableMaterial.*;
-import static tekcays_addon.gtapi.utils.roasting.RoastingRecipeHandlerMethods.*;
+import static tekcays_addon.gtapi.consts.TKCYAValues.ATMOSPHERIC_PRESSURE;
+import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
 
 public class RoastingHandler {
 
-    public static final List<RoastableMaterial> ROASTABLE_MATERIALS = new ArrayList<RoastableMaterial>(){{
-       add(TETRAHEDRITE);
-       add(KESTERITE);
-       add(STANNITE);
-       add(COBALTITE);
-       add(CHALCOPYRITE);
-       add(ARSENOPYRITE);
-       add(PENTLANDITE);
-       add(STIBNITE);
-       add(PYRITE);
-       add(REALGAR);
-       add(BORNITE);
-    }};
-
     public static void init() {
+        registerCinnabar();
+        registerRecipeChalcopyrite();
 
-        // 2 Cu2S + 2 O2 -> 2 Cu2O + 2 SO2
-        specialOutputRecipes(CHALCOCITE, 2, 2, 2);
+        registerRecipe(Chalcocite, 1, CupricOxide, 2, 2000, 3, 800);
+        registerRecipe(Pyrite, 2, BandedIron, 1, 2000, 3, 720);
+        registerRecipe(Realgar, 1, Arsenopyrite, 2, 2000, 3, 520);
+        registerRecipe(Tetrahedrite, 1, RoastedTetrahedrite, 1, 2000, 4, 500);
+        registerRecipe(Stibnite, 1, AntimonyTrioxide, 1, 1500, 4, 500);
+        registerRecipe(Cobaltite, 1, RoastedCobaltite, 1, 1000, 4, 500);
+        registerRecipe(Sphalerite, 1, Zincite, 1, 1000, 4, 500);
+        registerRecipe(Pentlandite, 1, Garnierite, 1, 2000, 4, 500);
+        registerRecipe(Galena, 1, RoastedGalena, 1, 1000, 4, 500);
+        registerRecipe(Kesterite, 1, RoastedKesterite, 1, 4000, 4, 800);
+        registerRecipe(Stannite, 1, RoastedStannite, 1, 4000, 4, 800);
+        registerRecipe(Arsenopyrite, 1, RoastedArsenopyrite, 1, 4000, 4, 800);
+        registerRecipe(Bornite, 1, RoastedBornite, 1, 4000, 4, 800);
+        registerRecipe(Molybdenite, 1, MolybdenumTrioxide, 1, 2000, 4, 800);
 
-        // 2 MoS2 + 7 O2 -> 2 MoO3 + 4 SO2
-        specialOutputRecipes(MOLYBDENITE, 2, 2, 7);
+    }
+    
+    private static void registerRecipe(Material material1, int amount1, Material material2, int amount2, int sulfurDioxideAmount, int pressureInBar, int temperature) {
+        TKCYARecipeMaps.ROASTING.recipeBuilder()
+                .input(dust, material1, amount1)
+                .output(dust, material2, amount2)
+                .fluidInputs(Air.getFluid(1))
+                .fluidOutputs(SulfurDioxide.getFluid(sulfurDioxideAmount))
+                .minPressure(ATMOSPHERIC_PRESSURE * pressureInBar)
+                .minTemperature(temperature)
+                .duration(100)
+                .EUt(50)
+                .buildAndRegister();
 
-
-        for (RoastableMaterial rm : ROASTABLE_MATERIALS) {
-            Material material = rm.getMaterial();
-            ItemStack outputStack = new ItemStack(getDustMixtureStackWithNBT(material).getItem(), 9);
-            int fluidAmount = 1000 * getAmountSulfur(material);
-            FluidStack sulfurDioxideStack = SulfurDioxide.getFluid(fluidAmount);
-            FluidStack oxygenStack = Oxygen.getFluid(fluidAmount * 2);
-            FluidStack airStack = Air.getFluid(fluidAmount * 10);
-
-
-            TKCYARecipeMaps.ROASTING.recipeBuilder()
-                    .input(dust, material, getComponentsNumber(material))
-                    .outputs(outputStack)
-                    .fluidInputs(oxygenStack)
-                    .minPressure(rm.getRoastingPressure())
-                    .minTemperature(rm.getRoastingTemperature())
-                    .duration(100)
-                    .EUt(50)
-                    .buildAndRegister();
-
-            TKCYARecipeMaps.ROASTING.recipeBuilder()
-                    .input(dust, material, getComponentsNumber(material))
-                    .outputs(outputStack)
-                    .fluidInputs(airStack)
-                    .minPressure(rm.getRoastingPressure())
-                    .minTemperature(rm.getRoastingTemperature())
-                    .duration(100)
-                    .EUt(50)
-                    .buildAndRegister();
-
-            //With the Air collector
-            TKCYARecipeMaps.ROASTING.recipeBuilder()
-                    .input(dust, material, getComponentsNumber(material))
-                    .notConsumable(TKCYAMetaItems.GAS_COLLECTOR.getStackForm())
-                    .outputs(outputStack)
-                    .fluidInputs(oxygenStack)
-                    .fluidOutputs(sulfurDioxideStack)
-                    .minPressure(rm.getRoastingPressure())
-                    .minTemperature(rm.getRoastingTemperature())
-                    .duration(100)
-                    .EUt(50)
-                    .buildAndRegister();
-
-            TKCYARecipeMaps.ROASTING.recipeBuilder()
-                    .input(dust, material, getComponentsNumber(material))
-                    .notConsumable(TKCYAMetaItems.GAS_COLLECTOR.getStackForm())
-                    .outputs(outputStack)
-                    .fluidInputs(airStack)
-                    .fluidOutputs(sulfurDioxideStack)
-                    .minPressure(rm.getRoastingPressure())
-                    .minTemperature(rm.getRoastingTemperature())
-                    .duration(100)
-                    .EUt(50)
-                    .buildAndRegister();
-        }
+        TKCYARecipeMaps.ROASTING.recipeBuilder()
+                .input(dust, material1, amount1)
+                .output(dust, material2, amount2)
+                .fluidInputs(Oxygen.getFluid(1))
+                .fluidOutputs(SulfurDioxide.getFluid(sulfurDioxideAmount))
+                .minPressure((int) (ATMOSPHERIC_PRESSURE * pressureInBar * 0.75))
+                .minTemperature(temperature)
+                .duration(100)
+                .EUt(50)
+                .buildAndRegister();
     }
 
-    public static void specialOutputRecipes(RoastableMaterial roastableMaterial, int countInput, int countOutput, int oxygen) {
+    private static void registerCinnabar() {
+        TKCYARecipeMaps.ROASTING.recipeBuilder()
+                .input(dust, Cinnabar)
+                .fluidInputs(Air.getFluid(1))
+                .fluidOutputs(SulfurDioxide.getFluid(2000))
+                .fluidOutputs(Mercury.getFluid(GTValues.L))
+                .minPressure(ATMOSPHERIC_PRESSURE * 3)
+                .minTemperature(600)
+                .duration(100)
+                .EUt(50)
+                .buildAndRegister();
 
-        Material input = roastableMaterial.getMaterial();
-        Material output = roastableMaterial.getOutput();
-        int fluidAmount = 1000 * getAmountSulfur(input);
-        int pressure = roastableMaterial.getRoastingPressure();
-        int temp = roastableMaterial.getRoastingTemperature();
+        TKCYARecipeMaps.ROASTING.recipeBuilder()
+                .input(dust, Cinnabar)
+                .fluidInputs(Oxygen.getFluid(1))
+                .fluidOutputs(SulfurDioxide.getFluid(2000))
+                .fluidOutputs(Mercury.getFluid(GTValues.L))
+                .minPressure((int) (ATMOSPHERIC_PRESSURE * 3 * 0.75))
+                .minTemperature(600)
+                .duration(100)
+                .EUt(50)
+                .buildAndRegister();
+    }
 
-        if (roastableMaterial.getFluidOutput() == null) {
+    private static void registerRecipeChalcopyrite() {
+        TKCYARecipeMaps.ROASTING.recipeBuilder()
+                .input(dust, Chalcopyrite)
+                .input(dust, SiliconDioxide)
+                .output(dust, RoastedChalcopyrite)
+                .fluidInputs(Air.getFluid(1))
+                .fluidOutputs(SulfurDioxide.getFluid(2000))
+                .minPressure(ATMOSPHERIC_PRESSURE * 4)
+                .minTemperature(600)
+                .duration(100)
+                .EUt(50)
+                .buildAndRegister();
 
-            TKCYARecipeMaps.ROASTING.recipeBuilder()
-                    .input(dust, input, countInput * getComponentsNumber(input))
-                    .output(dust, output, countOutput * getComponentsNumber(output))
-                    .fluidInputs(Air.getFluid(10000 * oxygen))
-                    .minPressure(pressure)
-                    .minTemperature(temp)
-                    .duration(100)
-                    .EUt(50)
-                    .buildAndRegister();
-
-            TKCYARecipeMaps.ROASTING.recipeBuilder()
-                    .input(dust, input, countInput * getComponentsNumber(input))
-                    .output(dust, output, countOutput * getComponentsNumber(output))
-                    .fluidInputs(Oxygen.getFluid(4000 * oxygen))
-                    .minPressure(pressure)
-                    .minTemperature(temp)
-                    .duration(100)
-                    .EUt(50)
-                    .buildAndRegister();
-
-            //With the Air collector
-            TKCYARecipeMaps.ROASTING.recipeBuilder()
-                    .input(dust, input, countInput * getComponentsNumber(input))
-                    .output(dust, output, countOutput * getComponentsNumber(output))
-                    .fluidInputs(Air.getFluid(10000 * oxygen))
-                    .fluidOutputs(SulfurDioxide.getFluid(fluidAmount))
-                    .minPressure(pressure)
-                    .minTemperature(temp)
-                    .duration(100)
-                    .EUt(50)
-                    .buildAndRegister();
-
-            TKCYARecipeMaps.ROASTING.recipeBuilder()
-                    .input(dust, input, countInput * getComponentsNumber(input))
-                    .output(dust, output, countOutput * getComponentsNumber(output))
-                    .fluidInputs(Oxygen.getFluid(4000 * oxygen))
-                    .fluidOutputs(SulfurDioxide.getFluid(fluidAmount))
-                    .minPressure(pressure)
-                    .minTemperature(temp)
-                    .duration(100)
-                    .EUt(50)
-                    .buildAndRegister();
-
-        } else {
-
-            TKCYARecipeMaps.ROASTING.recipeBuilder()
-                    .input(dust, input, countInput * getComponentsNumber(input))
-                    .output(dust, output, countOutput * getComponentsNumber(output))
-                    .fluidInputs(Air.getFluid(10000 * oxygen))
-                    .fluidOutputs(roastableMaterial.getFluidOutput().getFluid(1000))
-                    .minPressure(pressure)
-                    .minTemperature(temp)
-                    .duration(100)
-                    .EUt(50)
-                    .buildAndRegister();
-
-            TKCYARecipeMaps.ROASTING.recipeBuilder()
-                    .input(dust, input, countInput * getComponentsNumber(input))
-                    .output(dust, output, countOutput * getComponentsNumber(output))
-                    .fluidInputs(Oxygen.getFluid(4000 * oxygen))
-                    .fluidOutputs(roastableMaterial.getFluidOutput().getFluid(1000))
-                    .minPressure(pressure)
-                    .minTemperature(temp)
-                    .duration(100)
-                    .EUt(50)
-                    .buildAndRegister();
-
-            //With the Air collector
-            TKCYARecipeMaps.ROASTING.recipeBuilder()
-                    .input(dust, input, countInput * getComponentsNumber(input))
-                    .output(dust, output, countOutput * getComponentsNumber(output))
-                    .fluidInputs(Air.getFluid(10000 * oxygen))
-                    .fluidOutputs(SulfurDioxide.getFluid(fluidAmount))
-                    .fluidOutputs(roastableMaterial.getFluidOutput().getFluid(1000))
-                    .minPressure(pressure)
-                    .minTemperature(temp)
-                    .duration(100)
-                    .EUt(50)
-                    .buildAndRegister();
-
-            TKCYARecipeMaps.ROASTING.recipeBuilder()
-                    .input(dust, input, countInput * getComponentsNumber(input))
-                    .output(dust, output, countOutput * getComponentsNumber(output))
-                    .fluidInputs(Oxygen.getFluid(4000 * oxygen))
-                    .fluidOutputs(SulfurDioxide.getFluid(fluidAmount))
-                    .fluidOutputs(roastableMaterial.getFluidOutput().getFluid(1000))
-                    .minPressure(pressure)
-                    .minTemperature(temp)
-                    .duration(100)
-                    .EUt(50)
-                    .buildAndRegister();
-        }
+        TKCYARecipeMaps.ROASTING.recipeBuilder()
+                .input(dust, Chalcopyrite)
+                .input(dust, SiliconDioxide)
+                .output(dust, RoastedChalcopyrite)
+                .fluidInputs(Air.getFluid(1))
+                .fluidOutputs(SulfurDioxide.getFluid(2000))
+                .minPressure((int) (ATMOSPHERIC_PRESSURE * 4 * 0.75))
+                .minTemperature(600)
+                .duration(100)
+                .EUt(50)
+                .buildAndRegister();
     }
 }

@@ -24,8 +24,19 @@ public class TKCYAOrePrefixAdditions {
         addOrePrefix(bottleGlass);
         addOrePrefix(curvedPlate);
         addOrePrefix(cutWood);
+        addOrePrefix(blade);
     }
 
+    public static void componentsInit(){
+        addOrePrefix(lvComponents);
+        addOrePrefix(mvComponents);
+        addOrePrefix(hvComponents);
+        addOrePrefix(evComponents);
+        addOrePrefix(ivComponents);
+        addOrePrefix(luvComponents);
+        addOrePrefix(zpmComponents);
+        addOrePrefix(uvComponents);
+    }
 
     public static void moldsTooltip(){ //TODO show temperature for each mold
 

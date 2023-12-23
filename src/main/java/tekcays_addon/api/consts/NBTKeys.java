@@ -27,5 +27,7 @@ public class NBTKeys {
     public static final String WASTE_AMOUNT_KEY = "wasteAmount";
     public static final String FUEL_AMOUNT_KEY = "fuelAmount";
     public static final String HIT_NUMBER = "hitNumber";
+    public static final String ITEM_COUNT = "itemCount";
+    public static final String STORED_ITEM = "storedItem";
 
 }

@@ -1,7 +1,7 @@
 package tekcays_addon.gtapi.unification.material.ore;
 
 import gregtech.api.unification.material.MarkerMaterials;
-import gregtech.api.unification.material.Materials;
+import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.api.unification.ore.OrePrefix;
 import tekcays_addon.gtapi.unification.material.info.TKCYAMaterialIconType;
 
@@ -26,12 +26,24 @@ public class TKCYAOrePrefix {
     public static final OrePrefix moldRing = new OrePrefix("moldRing", -1, MarkerMaterials.Empty, TKCYAMaterialIconType.moldRing, SELF_REFERENCING, null);
     public static final OrePrefix moldBlock = new OrePrefix("moldBlock", -1, MarkerMaterials.Empty, TKCYAMaterialIconType.moldBlock, SELF_REFERENCING, null);
 
+    //Components
+    public static final OrePrefix lvComponents = new OrePrefix("lvComponents", -1, MarkerMaterials.Empty, TKCYAMaterialIconType.lvComponents, SELF_REFERENCING, null);
+    public static final OrePrefix mvComponents = new OrePrefix("mvComponents", -1, MarkerMaterials.Empty, TKCYAMaterialIconType.mvComponents, SELF_REFERENCING, null);
+    public static final OrePrefix hvComponents = new OrePrefix("hvComponents", -1, MarkerMaterials.Empty, TKCYAMaterialIconType.hvComponents, SELF_REFERENCING, null);
+    public static final OrePrefix evComponents = new OrePrefix("evComponents", -1, MarkerMaterials.Empty, TKCYAMaterialIconType.evComponents, SELF_REFERENCING, null);
+    public static final OrePrefix ivComponents = new OrePrefix("ivComponents", -1, MarkerMaterials.Empty, TKCYAMaterialIconType.ivComponents, SELF_REFERENCING, null);
+    public static final OrePrefix luvComponents = new OrePrefix("luvComponents", -1, MarkerMaterials.Empty, TKCYAMaterialIconType.luvComponents, SELF_REFERENCING, null);
+    public static final OrePrefix zpmComponents = new OrePrefix("zpmComponents", -1, MarkerMaterials.Empty, TKCYAMaterialIconType.zpmComponents, SELF_REFERENCING, null);
+    public static final OrePrefix uvComponents = new OrePrefix("uvComponents", -1, MarkerMaterials.Empty, TKCYAMaterialIconType.uvComponents, SELF_REFERENCING, null);
+
 
     // Others
 
     public static final OrePrefix bottleGlass = new OrePrefix("bottleGlass", -1, MarkerMaterials.Empty, null, SELF_REFERENCING, null);
-    public static final OrePrefix curvedPlate = new OrePrefix("curvedPlate", M, null, TKCYAMaterialIconType.curvedPlate, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_ROTOR) || mat.hasFlag(GENERATE_CURVED_PLATE));
+    public static final OrePrefix curvedPlate = new OrePrefix("curvedPlate", M, null, TKCYAMaterialIconType.curvedPlate, ENABLE_UNIFICATION,
+            mat -> mat.hasFlag(GENERATE_ROTOR) || mat.hasFlag(GENERATE_CURVED_PLATE) || mat.hasProperty(PropertyKey.FLUID_PIPE) || mat.hasProperty(PropertyKey.ITEM_PIPE));
     public static final OrePrefix cutWood = new OrePrefix("cutWood", 1, Wood,  null, SELF_REFERENCING, null);
+    public static final OrePrefix blade = new OrePrefix("blade", M, null, TKCYAMaterialIconType.blade, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_ROTOR) || mat.hasFlag(GENERATE_CURVED_PLATE));
 
 }
 

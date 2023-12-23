@@ -3,13 +3,13 @@ package tekcays_addon.gtapi.unification;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.info.MaterialFlags;
-import tekcays_addon.gtapi.utils.roasting.RoastableMaterial;
+import tekcays_addon.common.TKCYAConfigHolder;
 
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
+import static tekcays_addon.gtapi.consts.TKCYAValues.DRUM_MATERIALS;
+import static tekcays_addon.gtapi.consts.TKCYAValues.POLYMERS;
 import static tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags.*;
-import static tekcays_addon.gtapi.consts.TKCYAValues.*;
-import static tekcays_addon.loaders.recipe.handlers.RoastingHandler.ROASTABLE_MATERIALS;
 
 public class TKCYAMaterialFlagAddition {
 
@@ -18,25 +18,10 @@ public class TKCYAMaterialFlagAddition {
         // Foils
         Materials.Titanium.addFlags(GENERATE_FOIL);
 
-        //For Blasting
-        BrownLimonite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
-        YellowLimonite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
-        BandedIron.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
-        Magnetite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
-        Cassiterite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
-
-
-        //For Zinc chain
-        Sphalerite.addFlags(DISABLE_DECOMPOSITION, NO_SMELTING);
-
-        //For Bauxite chain
-        Bauxite.addFlags(DISABLE_DECOMPOSITION);
-
-        //For Roasting
-        for (RoastableMaterial rm : ROASTABLE_MATERIALS) {
-            Material m = rm.getMaterial();
-            if (!m.hasFlag(DISABLE_DECOMPOSITION)) m.addFlags(DISABLE_DECOMPOSITION);
-            if (!m.hasFlag(NO_SMELTING)) m.addFlags(NO_SMELTING);
+        if (TKCYAConfigHolder.harderStuff.enableRoastingOverhaul) {
+            //To force cinnabar roasting
+            Redstone.addFlags(DISABLE_DECOMPOSITION);
+            Cinnabar.addFlags(DISABLE_DECOMPOSITION);
         }
 
         // For electrode
@@ -60,9 +45,33 @@ public class TKCYAMaterialFlagAddition {
 
         //For molds
         Carbon.addFlags(GENERATE_PLATE);
+
+        HydrochloricAcid.addFlags(BATH_FLUID);
+        HydrofluoricAcid.addFlags(BATH_FLUID);
+        SulfuricAcid.addFlags(BATH_FLUID);
+
+        //For rotors
+        Chrome.addFlags(GENERATE_ROUND);
+        Polyethylene.addFlags(GENERATE_ROUND);
+        Iron.addFlags(GENERATE_ROUND);
+        Tin.addFlags(GENERATE_ROUND);
+        Titanium.addFlags(GENERATE_ROUND);
+        Darmstadtium.addFlags(GENERATE_ROUND);
+        Bronze.addFlags(GENERATE_ROUND);
+        Lead.addFlags(GENERATE_ROUND);
+        Steel.addFlags(GENERATE_ROUND);
+        Invar.addFlags(GENERATE_ROUND);
+        StainlessSteel.addFlags(GENERATE_ROUND);
+        TungstenSteel.addFlags(GENERATE_ROUND);
+        NaquadahAlloy.addFlags(GENERATE_ROUND);
+        RhodiumPlatedPalladium.addFlags(GENERATE_ROUND);
     }
 
+
     public static void polymersInit() {
-        POLYMERS.forEach(material -> material.addFlags(POLYMER));
+        POLYMERS.forEach(material -> {
+            material.addFlags(POLYMER, GENERATE_LONG_ROD, GENERATE_PLATE, GENERATE_FOIL, NO_SMASHING);
+            material.setFormula(String.format("(%s)n", material.getChemicalFormula()));
+        });
     }
 }
