@@ -14,6 +14,7 @@ import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.covers.Covers;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
+import tekcays_addon.gtapi.TKCYAInternalTags;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.utils.TKCYALog;
 import tekcays_addon.gtapi.worldgen.TKCYAWorldGenRegistry;
@@ -25,7 +26,7 @@ import static gregtech.api.GregTechAPI.COVER_REGISTRY;
 @Mod(   modid        = TekCaysAddon.MODID,
         name         = TekCaysAddon.NAME,
         version      = TekCaysAddon.VERSION,
-        dependencies = GTInternalTags.DEP_VERSION_STRING)
+        dependencies = TKCYAInternalTags.DEP_VERSION_STRING)
 public class TekCaysAddon {
 
     public static final String MODID = "tkcya";
