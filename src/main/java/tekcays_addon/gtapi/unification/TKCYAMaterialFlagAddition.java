@@ -1,25 +1,24 @@
 package tekcays_addon.gtapi.unification;
 
-import gregtech.api.unification.material.Material;
-import gregtech.api.unification.material.Materials;
-import gregtech.api.unification.material.info.MaterialFlags;
-import tekcays_addon.common.TKCYAConfigHolder;
-
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static tekcays_addon.gtapi.consts.TKCYAValues.DRUM_MATERIALS;
 import static tekcays_addon.gtapi.consts.TKCYAValues.POLYMERS;
 import static tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags.*;
 
+import gregtech.api.unification.material.Material;
+import gregtech.api.unification.material.Materials;
+import gregtech.api.unification.material.info.MaterialFlags;
+import tekcays_addon.common.TKCYAConfigHolder;
+
 public class TKCYAMaterialFlagAddition {
 
     public static void init() {
-
         // Foils
         Materials.Titanium.addFlags(GENERATE_FOIL);
 
         if (TKCYAConfigHolder.harderStuff.enableRoastingOverhaul) {
-            //To force cinnabar roasting
+            // To force cinnabar roasting
             Redstone.addFlags(DISABLE_DECOMPOSITION);
             Cinnabar.addFlags(DISABLE_DECOMPOSITION);
         }
@@ -27,11 +26,10 @@ public class TKCYAMaterialFlagAddition {
         // For electrode
         Carbon.addFlags(MaterialFlags.GENERATE_LONG_ROD, MaterialFlags.NO_SMELTING, MaterialFlags.NO_SMASHING);
 
+        // Molds Check with MOLD_MATERIALS
+        // MOLD_MATERIALS.forEach(material -> material.addFlags(GENERATE_MOLDS));
 
-        //Molds Check with MOLD_MATERIALS
-        //MOLD_MATERIALS.forEach(material -> material.addFlags(GENERATE_MOLDS));
-
-        //Generate curved plate
+        // Generate curved plate
         for (Material m : DRUM_MATERIALS) {
             if (m.hasFlag(GENERATE_ROTOR)) continue;
             if (m.hasFlags(GENERATE_BOLT_SCREW, GENERATE_PLATE)) m.addFlags(GENERATE_CURVED_PLATE);
@@ -39,18 +37,18 @@ public class TKCYAMaterialFlagAddition {
 
         Invar.addFlags(GENERATE_ROTOR);
 
-        //Springs
+        // Springs
         StainlessSteel.addFlags(GENERATE_SPRING);
         Titanium.addFlags(GENERATE_SPRING);
 
-        //For molds
+        // For molds
         Carbon.addFlags(GENERATE_PLATE);
 
         HydrochloricAcid.addFlags(BATH_FLUID);
         HydrofluoricAcid.addFlags(BATH_FLUID);
         SulfuricAcid.addFlags(BATH_FLUID);
 
-        //For rotors
+        // For rotors
         Chrome.addFlags(GENERATE_ROUND);
         Polyethylene.addFlags(GENERATE_ROUND);
         Iron.addFlags(GENERATE_ROUND);
@@ -66,7 +64,6 @@ public class TKCYAMaterialFlagAddition {
         NaquadahAlloy.addFlags(GENERATE_ROUND);
         RhodiumPlatedPalladium.addFlags(GENERATE_ROUND);
     }
-
 
     public static void polymersInit() {
         POLYMERS.forEach(material -> {

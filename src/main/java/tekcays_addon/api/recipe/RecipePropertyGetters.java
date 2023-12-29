@@ -1,10 +1,11 @@
 package tekcays_addon.api.recipe;
 
-import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
-import net.minecraftforge.fluids.FluidStack;
-import tekcays_addon.gtapi.recipes.recipeproperties.*;
-
 import static tekcays_addon.gtapi.consts.TKCYAValues.*;
+
+import net.minecraftforge.fluids.FluidStack;
+
+import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
+import tekcays_addon.gtapi.recipes.recipeproperties.*;
 
 public class RecipePropertyGetters {
 
@@ -16,21 +17,23 @@ public class RecipePropertyGetters {
 
     public Integer[] getIntervalPressure() {
         return this.recipePropertyStorage == null ? EMPTY_INT_TWO_ARRAY :
-                this.recipePropertyStorage.getRecipePropertyValue(IntervalPressureProperty.getInstance(), EMPTY_INT_TWO_ARRAY);
+                this.recipePropertyStorage.getRecipePropertyValue(IntervalPressureProperty.getInstance(),
+                        EMPTY_INT_TWO_ARRAY);
     }
 
     public Integer[] getIntervalTemperature() {
         return this.recipePropertyStorage == null ? EMPTY_INT_TWO_ARRAY :
-                this.recipePropertyStorage.getRecipePropertyValue(IntervalTemperatureProperty.getInstance(), EMPTY_INT_TWO_ARRAY);
+                this.recipePropertyStorage.getRecipePropertyValue(IntervalTemperatureProperty.getInstance(),
+                        EMPTY_INT_TWO_ARRAY);
     }
 
     public int getMinTemperature() {
-        return this.recipePropertyStorage== null ? 0 :
+        return this.recipePropertyStorage == null ? 0 :
                 this.recipePropertyStorage.getRecipePropertyValue(MinTemperatureProperty.getInstance(), 0);
     }
 
     public int getMaxTemperature() {
-        return this.recipePropertyStorage== null ? 0 :
+        return this.recipePropertyStorage == null ? 0 :
                 this.recipePropertyStorage.getRecipePropertyValue(MaxTemperatureProperty.getInstance(), 0);
     }
 

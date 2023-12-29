@@ -1,21 +1,21 @@
 package tekcays_addon.gtapi.capability.impl;
 
+import net.minecraftforge.common.capabilities.Capability;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import gregtech.api.metatileentity.MTETrait;
 import gregtech.api.metatileentity.MetaTileEntity;
 import lombok.Getter;
 import lombok.Setter;
-import net.minecraftforge.common.capabilities.Capability;
 import tekcays_addon.api.covers.molds.CoverMoldWrapper;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.capability.containers.IMoldCoverable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 @Setter
 @Getter
 public class MoldCoverable extends MTETrait implements IMoldCoverable {
-
 
     private CoverMoldWrapper coverMoldWrapper;
     private boolean canMoldCoverBePlaced;
@@ -25,11 +25,11 @@ public class MoldCoverable extends MTETrait implements IMoldCoverable {
      *
      * @param metaTileEntity the MTE to reference, and add the trait to
      */
-    public MoldCoverable(@Nonnull MetaTileEntity metaTileEntity) {
+    public MoldCoverable(@NotNull MetaTileEntity metaTileEntity) {
         super(metaTileEntity);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public String getName() {
         return "MoldCoverable";

@@ -1,5 +1,8 @@
 package tekcays_addon.gtapi.recipes.builders;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.jetbrains.annotations.NotNull;
+
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMap;
@@ -8,19 +11,14 @@ import gregtech.api.recipes.recipeproperties.TemperatureProperty;
 import gregtech.api.util.EnumValidationResult;
 import gregtech.api.util.GTLog;
 import gregtech.api.util.ValidationResult;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import tekcays_addon.gtapi.recipes.recipeproperties.HeatProperty;
 import tekcays_addon.gtapi.recipes.recipeproperties.PressureProperty;
-
-import javax.annotation.Nonnull;
 
 @SuppressWarnings("unused")
 public class HeatAndPressureRecipeBuilder extends RecipeBuilder<HeatAndPressureRecipeBuilder> {
 
     @SuppressWarnings("unused")
-    public HeatAndPressureRecipeBuilder() {
-
-    }
+    public HeatAndPressureRecipeBuilder() {}
 
     @SuppressWarnings("unused")
     public HeatAndPressureRecipeBuilder(Recipe recipe, RecipeMap<HeatAndPressureRecipeBuilder> recipeMap) {
@@ -37,7 +35,7 @@ public class HeatAndPressureRecipeBuilder extends RecipeBuilder<HeatAndPressureR
     }
 
     @Override
-    public boolean applyProperty(@Nonnull String key, Object value) {
+    public boolean applyProperty(@NotNull String key, Object value) {
         if (key.equals(TemperatureProperty.KEY)) {
             this.temperature(((Number) value).intValue());
             return true;
@@ -49,7 +47,7 @@ public class HeatAndPressureRecipeBuilder extends RecipeBuilder<HeatAndPressureR
         return super.applyProperty(key, value);
     }
 
-    @Nonnull
+    @NotNull
     public HeatAndPressureRecipeBuilder temperature(int temperature) {
         if (temperature <= 0) {
             GTLog.logger.error("Temperature cannot be less than or equal to 0", new IllegalArgumentException());
@@ -59,7 +57,7 @@ public class HeatAndPressureRecipeBuilder extends RecipeBuilder<HeatAndPressureR
         return this;
     }
 
-    @Nonnull
+    @NotNull
     public HeatAndPressureRecipeBuilder pressure(int pressure) {
         if (pressure <= 0) {
             GTLog.logger.error("Pressure cannot be less than or equal to 0", new IllegalArgumentException());

@@ -8,5 +8,4 @@ public class MeasureText {
     public static final String TORQUE_MEASURE_TEXT = "Current torque: %d %s";
     public static final String ROTATION_POWER_MEASURE_TEXT = "Current rotation power: %d %s";
     public static final String VACUUM_MEASURE_TEXT = "Current vacuum: %d %s";
-
 }

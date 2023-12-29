@@ -1,5 +1,8 @@
 package tekcays_addon.gtapi.recipes.builders;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.jetbrains.annotations.NotNull;
+
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMap;
@@ -7,18 +10,15 @@ import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
 import gregtech.api.util.EnumValidationResult;
 import gregtech.api.util.GTLog;
 import gregtech.api.util.ValidationResult;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import tekcays_addon.gtapi.recipes.recipeproperties.MinPressureProperty;
 import tekcays_addon.api.recipe.RecipeBuilderHelper;
-
-import javax.annotation.Nonnull;
+import tekcays_addon.gtapi.recipes.recipeproperties.MinPressureProperty;
 
 @SuppressWarnings("unused")
-public class NoEnergyPressureRecipeBuilder extends RecipeBuilder<NoEnergyPressureRecipeBuilder> implements RecipeBuilderHelper<NoEnergyPressureRecipeBuilder> {
+public class NoEnergyPressureRecipeBuilder extends RecipeBuilder<NoEnergyPressureRecipeBuilder>
+                                           implements RecipeBuilderHelper<NoEnergyPressureRecipeBuilder> {
 
     @SuppressWarnings("unused")
-    public NoEnergyPressureRecipeBuilder() {
-    }
+    public NoEnergyPressureRecipeBuilder() {}
 
     @SuppressWarnings("unused")
     public NoEnergyPressureRecipeBuilder(Recipe recipe, RecipeMap<NoEnergyPressureRecipeBuilder> recipeMap) {
@@ -35,12 +35,12 @@ public class NoEnergyPressureRecipeBuilder extends RecipeBuilder<NoEnergyPressur
     }
 
     @Override
-    public boolean applyProperty(@Nonnull String key, Object value) {
+    public boolean applyProperty(@NotNull String key, Object value) {
         applyPropertyHelper(key, value);
         return super.applyProperty(key, value);
     }
 
-    @Nonnull
+    @NotNull
     public NoEnergyPressureRecipeBuilder pressure(int pressure) {
         if (pressure <= 0) {
             GTLog.logger.error("Pressure cannot be less than or equal to 0", new IllegalArgumentException());
@@ -59,13 +59,12 @@ public class NoEnergyPressureRecipeBuilder extends RecipeBuilder<NoEnergyPressur
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                //.appendSuper(super.toString())
+                // .appendSuper(super.toString())
                 .append(MinPressureProperty.getInstance().getKey())
                 .toString();
     }
 
-
-    //Implementations
+    // Implementations
     @Override
     public IRecipePropertyStorage getRecipePropertyStorage() {
         return this.recipePropertyStorage;

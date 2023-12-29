@@ -1,12 +1,11 @@
 package tekcays_addon.gtapi.capability.list;
 
-import tekcays_addon.gtapi.capability.containers.IHeatContainer;
-import tekcays_addon.gtapi.capability.impl.HeatContainer;
-import tekcays_addon.gtapi.capability.machines.Container;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import tekcays_addon.gtapi.capability.containers.IHeatContainer;
+import tekcays_addon.gtapi.capability.machines.Container;
 
 public class HeatContainerList implements IHeatContainer {
 
@@ -30,7 +29,8 @@ public class HeatContainerList implements IHeatContainer {
 
     /**
      *
-     * @return the lowest {@code maxTemperature} of all the {@code IHeatContainer}s contained in the {@code HeatContainerList}.
+     * @return the lowest {@code maxTemperature} of all the {@code IHeatContainer}s contained in the
+     *         {@code HeatContainerList}.
      */
     @Override
     public int getMaxTemperature() {
@@ -59,7 +59,7 @@ public class HeatContainerList implements IHeatContainer {
                 .sum();
     }
 
-    //Only needs to check one as they all should have the same temperature
+    // Only needs to check one as they all should have the same temperature
     @Override
     public int getTemperature() {
         return heatContainerList.get(0).getTemperature();

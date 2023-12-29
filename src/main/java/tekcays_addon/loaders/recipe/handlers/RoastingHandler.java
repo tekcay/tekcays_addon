@@ -1,15 +1,13 @@
 package tekcays_addon.loaders.recipe.handlers;
 
-import gregtech.api.GTValues;
-import gregtech.api.recipes.Recipe;
-import gregtech.api.recipes.RecipeMaps;
-import gregtech.api.unification.material.Material;
-import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
-
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.dust;
 import static tekcays_addon.gtapi.consts.TKCYAValues.ATMOSPHERIC_PRESSURE;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
+
+import gregtech.api.GTValues;
+import gregtech.api.unification.material.Material;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
 public class RoastingHandler {
 
@@ -31,10 +29,10 @@ public class RoastingHandler {
         registerRecipe(Arsenopyrite, 1, RoastedArsenopyrite, 1, 4000, 4, 800);
         registerRecipe(Bornite, 1, RoastedBornite, 1, 4000, 4, 800);
         registerRecipe(Molybdenite, 1, MolybdenumTrioxide, 1, 2000, 4, 800);
-
     }
-    
-    private static void registerRecipe(Material material1, int amount1, Material material2, int amount2, int sulfurDioxideAmount, int pressureInBar, int temperature) {
+
+    private static void registerRecipe(Material material1, int amount1, Material material2, int amount2,
+                                       int sulfurDioxideAmount, int pressureInBar, int temperature) {
         TKCYARecipeMaps.ROASTING.recipeBuilder()
                 .input(dust, material1, amount1)
                 .output(dust, material2, amount2)

@@ -7,5 +7,4 @@ public class ChemicalChains {
         FluorineChain.init();
         PolymersChain.init();
     }
-
 }

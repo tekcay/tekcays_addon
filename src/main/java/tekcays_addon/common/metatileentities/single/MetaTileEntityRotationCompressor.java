@@ -1,21 +1,13 @@
 package tekcays_addon.common.metatileentities.single;
 
-import codechicken.lib.render.CCRenderState;
-import codechicken.lib.render.pipeline.ColourMultiplier;
-import codechicken.lib.render.pipeline.IVertexOperation;
-import codechicken.lib.vec.Matrix4;
-import gregtech.api.capability.IActiveOutputSide;
-import gregtech.api.capability.impl.FluidTankList;
-import gregtech.api.capability.impl.NotifiableFluidTank;
-import gregtech.api.gui.ModularUI;
-import gregtech.api.metatileentity.IDataInfoProvider;
-import gregtech.api.metatileentity.MetaTileEntity;
-import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import gregtech.api.util.GTUtility;
-import gregtech.client.renderer.texture.Textures;
-import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
-import gregtech.core.sound.GTSoundEvents;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
+import static tekcays_addon.api.consts.NBTKeys.IS_RUNNING;
+import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER;
+import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
+import static tekcays_addon.gtapi.render.TKCYATextures.*;
+
+import java.util.List;
+
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -32,29 +24,41 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import codechicken.lib.render.CCRenderState;
+import codechicken.lib.render.pipeline.ColourMultiplier;
+import codechicken.lib.render.pipeline.IVertexOperation;
+import codechicken.lib.vec.Matrix4;
+import gregtech.api.capability.IActiveOutputSide;
+import gregtech.api.capability.impl.FluidTankList;
+import gregtech.api.capability.impl.NotifiableFluidTank;
+import gregtech.api.gui.ModularUI;
+import gregtech.api.metatileentity.IDataInfoProvider;
+import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.util.GTUtility;
+import gregtech.client.renderer.texture.Textures;
+import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
+import gregtech.core.sound.GTSoundEvents;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import tekcays_addon.api.capability.AdjacentCapabilityHelper;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.capability.containers.IPressureContainer;
 import tekcays_addon.gtapi.capability.containers.IRotationContainer;
 import tekcays_addon.gtapi.capability.impl.RotationContainer;
-import tekcays_addon.api.capability.AdjacentCapabilityHelper;
 import tekcays_addon.gtapi.utils.FluidStackHelper;
 import tekcays_addon.gtapi.utils.PressureContainerHandler;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
+public class MetaTileEntityRotationCompressor extends MetaTileEntity
+                                              implements IDataInfoProvider, IActiveOutputSide, FluidStackHelper,
+                                              PressureContainerHandler, AdjacentCapabilityHelper<IPressureContainer> {
 
-import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
-import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER;
-import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
-import static tekcays_addon.api.consts.NBTKeys.IS_RUNNING;
-import static tekcays_addon.gtapi.render.TKCYATextures.*;
-
-public class MetaTileEntityRotationCompressor extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide, FluidStackHelper, PressureContainerHandler, AdjacentCapabilityHelper<IPressureContainer> {
-
-    private IFluidTank  importSteamTank;
-    private IFluidTank  importLubTank;
+    private IFluidTank importSteamTank;
+    private IFluidTank importLubTank;
     private IRotationContainer rotationContainer;
     private IPressureContainer pressureContainer;
     private int baseTransferRate;
@@ -63,11 +67,11 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
     private boolean isRunning;
     private int inputTankCapacity;
 
-
     public MetaTileEntityRotationCompressor(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId);
         this.tier = tier + 1;
-        this.rotationContainer = new RotationContainer(this, 20 * this.tier, 100 * this.tier, (int) (2000 * Math.pow(this.tier * this.tier, 2)));
+        this.rotationContainer = new RotationContainer(this, 20 * this.tier, 100 * this.tier,
+                (int) (2000 * Math.pow(this.tier * this.tier, 2)));
         this.inputTankCapacity = 4000 * this.tier;
 
         super.initializeInventory();
@@ -97,9 +101,11 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
 
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
-        IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline, new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
+        IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline,
+                new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
         getBaseRenderer().render(renderState, translation, colouredPipeline);
-        ColourMultiplier multiplier = new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
+        ColourMultiplier multiplier = new ColourMultiplier(
+                GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
         colouredPipeline = ArrayUtils.add(pipeline, multiplier);
         Textures.PIPE_IN_OVERLAY.renderSided(getImportFluidSide(), renderState, translation, pipeline);
         ROTATION_STATIC.renderSided(getRotationSide(), renderState, translation, pipeline);
@@ -131,7 +137,7 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
     @Override
     public void update() {
         super.update();
-        //Redstone stops fluid transfer
+        // Redstone stops fluid transfer
         if (this.isBlockRedstonePowered()) return;
         if (rotationContainer.getSpeed() == 0) return;
 
@@ -171,7 +177,7 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
 
     @Override
     @Nullable
-    public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
+    public <T> T getCapability(@NotNull Capability<T> capability, EnumFacing side) {
         if (capability == CAPABILITY_ROTATIONAL_CONTAINER && side == getRotationSide()) {
             return CAPABILITY_ROTATIONAL_CONTAINER.cast(rotationContainer);
         }
@@ -186,15 +192,17 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.1"));
         tooltip.add(I18n.format("tkcya.machine.steam_turbine.tooltip.steam_tank", inputTankCapacity));
         rotationContainer.addTooltip(tooltip);
-        //super.addInformation(stack, player, tooltip, advanced);
+        // super.addInformation(stack, player, tooltip, advanced);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
-        list.add(new TextComponentTranslation("behavior.tricorder.steam.amount", getNullableFluidStackAmount(getImportSteamFluidStack())));
-        list.add(new TextComponentTranslation("behavior.tricorder.lub.amount", getNullableFluidStackAmount(getImportLubFluidStack())));
+        list.add(new TextComponentTranslation("behavior.tricorder.steam.amount",
+                getNullableFluidStackAmount(getImportSteamFluidStack())));
+        list.add(new TextComponentTranslation("behavior.tricorder.lub.amount",
+                getNullableFluidStackAmount(getImportLubFluidStack())));
         list.add(new TextComponentTranslation("behavior.tricorder.speed", rotationContainer.getSpeed()));
         return list;
     }
@@ -238,7 +246,7 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity implements 
         return GTSoundEvents.TURBINE;
     }
 
-    //Implementations
+    // Implementations
 
     @Override
     public IPressureContainer getPressureContainer() {

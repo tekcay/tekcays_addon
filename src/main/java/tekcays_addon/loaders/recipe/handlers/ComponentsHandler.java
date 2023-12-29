@@ -1,16 +1,5 @@
 package tekcays_addon.loaders.recipe.handlers;
 
-import gregtech.api.recipes.ModHandler;
-import gregtech.api.unification.material.MarkerMaterials;
-import gregtech.api.unification.material.Material;
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import mezz.jei.api.ingredients.IIngredientBlacklist;
-import tekcays_addon.api.consts.ComponentsLists;
-import tekcays_addon.common.TKCYAConfigHolder;
-import tekcays_addon.loaders.recipe.removals.RecipesRemovalHandler;
-
-import java.util.Map;
-
 import static gregtech.api.GTValues.*;
 import static gregtech.api.recipes.RecipeMaps.*;
 import static gregtech.api.unification.material.Materials.*;
@@ -52,12 +41,23 @@ import static tekcays_addon.common.items.TKCYAMetaItems.ROBOT_ARM_ZPM;
 import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.NEW_ASSEMBLING;
 import static tekcays_addon.loaders.recipe.handlers.GalvanizedSteel.*;
 
+import java.util.Map;
+
+import gregtech.api.recipes.ModHandler;
+import gregtech.api.unification.material.MarkerMaterials;
+import gregtech.api.unification.material.Material;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import mezz.jei.api.ingredients.IIngredientBlacklist;
+import tekcays_addon.api.consts.ComponentsLists;
+import tekcays_addon.common.TKCYAConfigHolder;
+import tekcays_addon.loaders.recipe.removals.RecipesRemovalHandler;
+
 public class ComponentsHandler {
 
     public static void init() {
-
         remove();
-        if (TKCYAConfigHolder.miscOverhaul.enableGalvanizedSteel) RecipesRemovalHandler.recipeMapRecipesRemoval(NEW_ASSEMBLING, ELECTRIC_PISTON_LV.getStackForm());
+        if (TKCYAConfigHolder.miscOverhaul.enableGalvanizedSteel)
+            RecipesRemovalHandler.recipeMapRecipesRemoval(NEW_ASSEMBLING, ELECTRIC_PISTON_LV.getStackForm());
 
         final Map<String, Material> rubberMaterials = new Object2ObjectOpenHashMap<>();
         rubberMaterials.put("rubber", Rubber);
@@ -66,7 +66,7 @@ public class ComponentsHandler {
 
         for (Map.Entry<String, Material> materialEntry : rubberMaterials.entrySet()) {
             Material material = materialEntry.getValue();
-            //String name = material.getKey();
+            // String name = material.getKey();
 
             conveyors(material);
             pumps(material);
@@ -85,7 +85,6 @@ public class ComponentsHandler {
     }
 
     private static void pumps(Material material) {
-
         NEW_ASSEMBLING.recipeBuilder()
                 .input(cableGtSingle, Tin)
                 .input(pipeNormalFluid, Bronze)
@@ -143,9 +142,8 @@ public class ComponentsHandler {
                     .outputs(ELECTRIC_PUMP_IV.getStackForm())
                     .duration(100).EUt(VA[IV]).buildAndRegister();
     }
-        
-    private static void pumps() {
 
+    private static void pumps() {
         ASSEMBLY_LINE_RECIPES.recipeBuilder()
                 .input(ELECTRIC_MOTOR_LuV)
                 .input(pipeSmallFluid, NiobiumTitanium)
@@ -197,7 +195,6 @@ public class ComponentsHandler {
     }
 
     private static void conveyors(Material material) {
-
         NEW_ASSEMBLING.recipeBuilder()
                 .input(cableGtSingle, Tin)
                 .inputs(ELECTRIC_MOTOR_LV.getStackForm(2))
@@ -246,7 +243,6 @@ public class ComponentsHandler {
     }
 
     private static void conveyors() {
-
         ASSEMBLY_LINE_RECIPES.recipeBuilder()
                 .input(ELECTRIC_MOTOR_LuV, 2)
                 .input(plate, HSSS, 2)
@@ -295,11 +291,9 @@ public class ComponentsHandler {
                         .CWUt(32)
                         .EUt(VA[ZPM]))
                 .duration(600).EUt(100000).buildAndRegister();
-
     }
 
     private static void motors() {
-
         if (TKCYAConfigHolder.miscOverhaul.enableGalvanizedSteel) {
             lvMotorGalavanizedRecipe();
         } else {
@@ -400,7 +394,6 @@ public class ComponentsHandler {
     }
 
     private static void fluidRegulators() {
-
         NEW_ASSEMBLING.recipeBuilder()
                 .inputs(ELECTRIC_PUMP_LV.getStackForm())
                 .input(circuit, MarkerMaterials.Tier.LV, 2)
@@ -483,7 +476,6 @@ public class ComponentsHandler {
     }
 
     private static void roboticArms() {
-
         if (TKCYAConfigHolder.miscOverhaul.enableGalvanizedSteel) {
             lvRobotArmGalvanizedRecipe();
         } else {

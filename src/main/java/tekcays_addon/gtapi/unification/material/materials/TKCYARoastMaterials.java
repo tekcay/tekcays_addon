@@ -1,13 +1,13 @@
 package tekcays_addon.gtapi.unification.material.materials;
 
-import gregtech.api.unification.material.Material;
-import gregtech.api.unification.material.Materials;
-
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.Materials.Zincite;
 import static gregtech.api.unification.material.info.MaterialFlags.DISABLE_DECOMPOSITION;
 import static gregtech.api.util.GTUtility.gregtechId;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
+
+import gregtech.api.unification.material.Material;
+import gregtech.api.unification.material.Materials;
 
 public class TKCYARoastMaterials {
 
@@ -16,7 +16,8 @@ public class TKCYARoastMaterials {
                 .dust()
                 .flags(DISABLE_DECOMPOSITION)
                 .components(Materials.CupricOxide, 6, Materials.AntimonyTrioxide, 1, BandedIron, 1)
-                .color((CupricOxide.getMaterialRGB() * 6 + AntimonyTrioxide.getMaterialRGB() + BandedIron.getMaterialRGB()) / 8)
+                .color((CupricOxide.getMaterialRGB() * 6 + AntimonyTrioxide.getMaterialRGB() +
+                        BandedIron.getMaterialRGB()) / 8)
                 .build();
 
         RoastedCobaltite = new Material.Builder(24802, gregtechId("roasted.cobaltite"))
@@ -58,13 +59,14 @@ public class TKCYARoastMaterials {
                 .dust()
                 .flags(DISABLE_DECOMPOSITION)
                 .components(CupricOxide, 4, BandedIron, 1, Cassiterite, 2)
-                .color((CupricOxide.getMaterialRGB() * 4 + BandedIron.getMaterialRGB() + Cassiterite.getMaterialRGB() * 2) / 7)
+                .color((CupricOxide.getMaterialRGB() * 4 + BandedIron.getMaterialRGB() +
+                        Cassiterite.getMaterialRGB() * 2) / 7)
                 .build();
 
         RoastedArsenopyrite = new Material.Builder(24808, gregtechId("roasted.arsenopyrite"))
                 .dust().flags(DISABLE_DECOMPOSITION)
                 .components(BandedIron, 1, ArsenicTrioxide, 1)
-                .color((BandedIron.getMaterialRGB() + ArsenicTrioxide.getMaterialRGB() ) / 2)
+                .color((BandedIron.getMaterialRGB() + ArsenicTrioxide.getMaterialRGB()) / 2)
                 .build();
 
         RoastedBornite = new Material.Builder(24809, gregtechId("roasted.bornite"))

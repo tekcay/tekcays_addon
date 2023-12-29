@@ -1,24 +1,10 @@
 package tekcays_addon.common.metatileentities.primitive;
 
-import codechicken.lib.raytracer.CuboidRayTraceResult;
-import codechicken.lib.render.CCRenderState;
-import codechicken.lib.render.pipeline.ColourMultiplier;
-import codechicken.lib.render.pipeline.IVertexOperation;
-import codechicken.lib.vec.Matrix4;
-import gregtech.api.gui.ModularUI;
-import gregtech.api.items.toolitem.ToolClasses;
-import gregtech.api.items.toolitem.ToolHelper;
-import gregtech.api.metatileentity.MetaTileEntity;
-import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import gregtech.api.recipes.RecipeMap;
-import gregtech.api.recipes.RecipeMaps;
-import gregtech.api.unification.OreDictUnifier;
-import gregtech.api.unification.material.Materials;
-import gregtech.api.unification.ore.OrePrefix;
-import gregtech.api.util.GTUtility;
-import gregtech.client.renderer.texture.Textures;
-import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
-import gregtech.common.items.MetaItems;
+import static tekcays_addon.api.consts.NBTKeys.HIT_NUMBER;
+
+import java.util.List;
+import java.util.Set;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,21 +18,31 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.b3d.B3DModel;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.Nullable;
+
+import codechicken.lib.raytracer.CuboidRayTraceResult;
+import codechicken.lib.render.CCRenderState;
+import codechicken.lib.render.pipeline.ColourMultiplier;
+import codechicken.lib.render.pipeline.IVertexOperation;
+import codechicken.lib.vec.Matrix4;
+import gregtech.api.gui.ModularUI;
+import gregtech.api.items.toolitem.ToolClasses;
+import gregtech.api.items.toolitem.ToolHelper;
+import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.unification.OreDictUnifier;
+import gregtech.api.unification.material.Materials;
+import gregtech.api.unification.ore.OrePrefix;
+import gregtech.api.util.GTUtility;
+import gregtech.client.renderer.texture.Textures;
+import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockCutWood;
-import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.render.TKCYATextures;
-
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Set;
-
-import static tekcays_addon.api.consts.NBTKeys.HIT_NUMBER;
-
 
 public class MetaTileEntityAxeSupport extends MetaTileEntity {
 
@@ -63,7 +59,8 @@ public class MetaTileEntityAxeSupport extends MetaTileEntity {
     }
 
     @Override
-    public boolean onRightClick(EntityPlayer playerIn, EnumHand hand, EnumFacing facing, CuboidRayTraceResult hitResult) {
+    public boolean onRightClick(EntityPlayer playerIn, EnumHand hand, EnumFacing facing,
+                                CuboidRayTraceResult hitResult) {
         if (facing.equals(EnumFacing.UP))
             return super.onRightClick(playerIn, hand, facing, hitResult);
 
@@ -126,7 +123,6 @@ public class MetaTileEntityAxeSupport extends MetaTileEntity {
     }
 
     private void onSawClick(EntityPlayer player) {
-
         IBlockState plank = BlockCutWood.getPlankFromCutWood(upperBlock);
         if (plank != null && blockName.equals(BlockCutWood.TRANSLATION_KEY)) {
             incrementAndTryDestroy(upperBlockPos, plank, player);
@@ -167,9 +163,11 @@ public class MetaTileEntityAxeSupport extends MetaTileEntity {
 
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
-        IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline, new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
+        IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline,
+                new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
         getBaseRenderer().render(renderState, translation, colouredPipeline);
-        ColourMultiplier multiplier = new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
+        ColourMultiplier multiplier = new ColourMultiplier(
+                GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
         colouredPipeline = ArrayUtils.add(pipeline, multiplier);
         Textures.CRAFTING_TABLE.renderOriented(renderState, translation, pipeline, EnumFacing.SOUTH);
         Textures.CRAFTING_TABLE.renderOriented(renderState, translation, pipeline, EnumFacing.NORTH);
@@ -223,5 +221,4 @@ public class MetaTileEntityAxeSupport extends MetaTileEntity {
         super.receiveInitialSyncData(buf);
         this.hitNumber = buf.readInt();
     }
-
 }

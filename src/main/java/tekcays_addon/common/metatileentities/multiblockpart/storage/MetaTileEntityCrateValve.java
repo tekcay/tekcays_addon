@@ -1,5 +1,20 @@
 package tekcays_addon.common.metatileentities.multiblockpart.storage;
 
+import java.util.List;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
@@ -15,24 +30,12 @@ import gregtech.api.util.GTTransferUtils;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.gtapi.unification.TKCYAMaterials;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-
-public class MetaTileEntityCrateValve extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IItemHandler> {
+public class MetaTileEntityCrateValve extends MetaTileEntityMultiblockPart
+                                      implements IMultiblockAbilityPart<IItemHandler> {
 
     private final Material material;
 
@@ -73,53 +76,57 @@ public class MetaTileEntityCrateValve extends MetaTileEntityMultiblockPart imple
         super.update();
 
         /*
-
-        if (getOffsetTimer() % 20 == 0) {
-
-            TKCYALog.logger.info("VALVE : itemInventory.getStackInSlot(0).getDisplayName()" + itemInventory.getStackInSlot(0).getDisplayName());
-            TKCYALog.logger.info("VALVE : importItems.getStackInSlot(0).getDisplayName()" + importItems.getStackInSlot(0).getDisplayName());
-        }
-
+         * 
+         * if (getOffsetTimer() % 20 == 0) {
+         * 
+         * TKCYALog.logger.info("VALVE : itemInventory.getStackInSlot(0).getDisplayName()" +
+         * itemInventory.getStackInSlot(0).getDisplayName());
+         * TKCYALog.logger.info("VALVE : importItems.getStackInSlot(0).getDisplayName()" +
+         * importItems.getStackInSlot(0).getDisplayName());
+         * }
+         * 
          */
 
-        if (!getWorld().isRemote && getOffsetTimer() % 5 == 0L && isAttachedToMultiBlock() && getFrontFacing() == EnumFacing.DOWN) {
+        if (!getWorld().isRemote && getOffsetTimer() % 5 == 0L && isAttachedToMultiBlock() &&
+                getFrontFacing() == EnumFacing.DOWN) {
             TileEntity tileEntity = getWorld().getTileEntity(getPos().offset(getFrontFacing()));
-            IItemHandler iItemHandler = tileEntity == null ? null : tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, getFrontFacing().getOpposite());
+            IItemHandler iItemHandler = tileEntity == null ? null : tileEntity
+                    .getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, getFrontFacing().getOpposite());
             if (iItemHandler != null) {
                 GTTransferUtils.moveInventoryItems(itemInventory, iItemHandler);
             }
         }
     }
 
-
     /*
-    @Override
-    protected void initializeInventory() {
-        super.initializeInventory();
-        initializeDummyInventory();
-    }
-
-
-     //When this block is not connected to any multiblock it uses dummy inventory to prevent problems with capability checks
-
-    private void initializeDummyInventory() {
-        //this.itemInventory = new ItemHandlerProxy(new ItemStackHandler(), new ItemStackHandler());
-        this.itemInventory = new ItemHandlerProxy(i);
-    }
-
-    @Override
-    public void removeFromMultiBlock(MultiblockControllerBase controllerBase) {
-        super.removeFromMultiBlock(controllerBase);
-        initializeDummyInventory();
-    }
-
+     * @Override
+     * protected void initializeInventory() {
+     * super.initializeInventory();
+     * initializeDummyInventory();
+     * }
+     * 
+     * 
+     * //When this block is not connected to any multiblock it uses dummy inventory to prevent problems with capability
+     * checks
+     * 
+     * private void initializeDummyInventory() {
+     * //this.itemInventory = new ItemHandlerProxy(new ItemStackHandler(), new ItemStackHandler());
+     * this.itemInventory = new ItemHandlerProxy(i);
+     * }
+     * 
+     * @Override
+     * public void removeFromMultiBlock(MultiblockControllerBase controllerBase) {
+     * super.removeFromMultiBlock(controllerBase);
+     * initializeDummyInventory();
+     * }
+     * 
      */
-
 
     @Override
     public void addToMultiBlock(MultiblockControllerBase controllerBase) {
         super.addToMultiBlock(controllerBase);
-        this.itemInventory = controllerBase.getItemInventory(); //directly use controllers fluid inventory as there is no reason to proxy it
+        this.itemInventory = controllerBase.getItemInventory(); // directly use controllers fluid inventory as there is
+                                                                // no reason to proxy it
     }
 
     @Override
@@ -143,7 +150,8 @@ public class MetaTileEntityCrateValve extends MetaTileEntityMultiblockPart imple
     }
 
     @Override
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
+    public void addInformation(@NotNull ItemStack stack, @Nullable World player, @NotNull List<String> tooltip,
+                               boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("gregtech.tank_valve.tooltip"));
     }

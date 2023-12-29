@@ -7,7 +7,6 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.ore.OrePrefix;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
-
 public class LargerOreOutput {
 
     /**

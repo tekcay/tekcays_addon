@@ -1,5 +1,24 @@
 package tekcays_addon.gtapi.metatileentity;
 
+import java.util.List;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.ColourMultiplier;
 import codechicken.lib.render.pipeline.IVertexOperation;
@@ -15,31 +34,14 @@ import gregtech.api.gui.widgets.LabelWidget;
 import gregtech.api.gui.widgets.TankWidget;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.IFluidTank;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import org.apache.commons.lang3.ArrayUtils;
 import tekcays_addon.api.metatileentity.WrenchAbleTieredMetaTileEntity;
 import tekcays_addon.gtapi.render.TKCYATextures;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
 
 public abstract class ElectricPressureCompressor extends WrenchAbleTieredMetaTileEntity implements IActiveOutputSide {
 
     protected int transferRate = 0;
     protected final int BASE_TRANSFER_RATE;
-    private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()] * 15/16);
+    private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()] * 15 / 16);
     private final boolean canHandleVacuum;
     private int fluidCapacity;
     private int tierMultiplier = (getTier() * getTier() + 1);
@@ -85,11 +87,13 @@ public abstract class ElectricPressureCompressor extends WrenchAbleTieredMetaTil
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        ColourMultiplier multiplier = new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
+        ColourMultiplier multiplier = new ColourMultiplier(
+                GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
         IVertexOperation[] coloredPipeline = ArrayUtils.add(pipeline, multiplier);
 
         if (canHandleVacuum) Textures.PIPE_IN_OVERLAY.renderSided(getOutputSide(), renderState, translation, pipeline);
-        else TKCYATextures.ROTATION_WATER_OUTPUT_OVERLAY.renderSided(getOutputSide(), renderState, translation, pipeline);
+        else TKCYATextures.ROTATION_WATER_OUTPUT_OVERLAY.renderSided(getOutputSide(), renderState, translation,
+                pipeline);
         Textures.ADV_PUMP_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
     }
 
@@ -110,25 +114,28 @@ public abstract class ElectricPressureCompressor extends WrenchAbleTieredMetaTil
 
         else if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
             if (side == getOutputSide()) {
-            return GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this);
+                return GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this);
             }
-        return null;
-    }
+            return null;
+        }
         return super.getCapability(capability, side);
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World player, @NotNull List<String> tooltip,
+                               boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        if (canHandleVacuum) tooltip.add(I18n.format("tkcya.machine.electric_pressure_compressor.vacuum.tooltip.description"));
+        if (canHandleVacuum)
+            tooltip.add(I18n.format("tkcya.machine.electric_pressure_compressor.vacuum.tooltip.description"));
         else tooltip.add(I18n.format("tkcya.machine.electric_pressure_compressor.pressure.tooltip.description"));
         tooltip.add(I18n.format("tkcya.general.transfer_rate", BASE_TRANSFER_RATE));
         tooltip.add(I18n.format("tkcya.general.fluid_capacity", fluidCapacity));
-        tooltip.add(I18n.format("gregtech.universal.tooltip.max_voltage_in", energyContainer.getInputVoltage(), GTValues.VNF[getTier()]));
+        tooltip.add(I18n.format("gregtech.universal.tooltip.max_voltage_in", energyContainer.getInputVoltage(),
+                GTValues.VNF[getTier()]));
         tooltip.add(I18n.format("tkcya.machine.tooltip.consumption", ENERGY_BASE_CONSUMPTION));
-        tooltip.add(I18n.format("gregtech.universal.tooltip.energy_storage_capacity", energyContainer.getEnergyCapacity()));
+        tooltip.add(
+                I18n.format("gregtech.universal.tooltip.energy_storage_capacity", energyContainer.getEnergyCapacity()));
         tooltip.add(I18n.format("tkcya.machine.redstone.inverse.tooltip"));
-
     }
 
     @Override
@@ -150,6 +157,4 @@ public abstract class ElectricPressureCompressor extends WrenchAbleTieredMetaTil
     public boolean isAllowInputFromOutputSideFluids() {
         return false;
     }
-
-
 }

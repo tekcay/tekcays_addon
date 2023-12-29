@@ -1,10 +1,5 @@
 package tekcays_addon.common.blocks;
 
-import tekcays_addon.common.blocks.blocks.BlockBrick;
-import tekcays_addon.common.blocks.blocks.BlockCutWood;
-import tekcays_addon.common.blocks.blocks.BlockDirt;
-import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
-import gregtech.common.blocks.MetaBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
@@ -14,11 +9,15 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import gregtech.common.blocks.MetaBlocks;
+import tekcays_addon.common.blocks.blocks.BlockBrick;
+import tekcays_addon.common.blocks.blocks.BlockCutWood;
+import tekcays_addon.common.blocks.blocks.BlockDirt;
+import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
+
 public class TKCYAMetaBlocks {
 
-    private TKCYAMetaBlocks() {
-
-    }
+    private TKCYAMetaBlocks() {}
 
     public static BlockLargeMultiblockCasing LARGE_MULTIBLOCK_CASING;
     public static BlockBrick BLOCK_BRICK;
@@ -50,7 +49,7 @@ public class TKCYAMetaBlocks {
     @SideOnly(Side.CLIENT)
     private static void registerItemModel(Block block) {
         for (IBlockState state : block.getBlockState().getValidStates()) {
-            //noinspection ConstantConditions
+            // noinspection ConstantConditions
             ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block),
                     block.getMetaFromState(state),
                     new ModelResourceLocation(block.getRegistryName(),

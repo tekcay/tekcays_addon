@@ -1,12 +1,13 @@
 package tekcays_addon.loaders.recipe.removals;
 
-import gregtech.api.GTValues;
-import gregtech.api.recipes.ModHandler;
-import gregtech.common.metatileentities.MetaTileEntities;
+import static net.minecraft.init.Blocks.FURNACE;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import static net.minecraft.init.Blocks.FURNACE;
+import gregtech.api.GTValues;
+import gregtech.api.recipes.ModHandler;
+import gregtech.common.metatileentities.MetaTileEntities;
 
 public class FurnacesRemoval {
 
@@ -21,6 +22,5 @@ public class FurnacesRemoval {
         for (int i = GTValues.LV; i < GTValues.UV; i++) {
             ModHandler.removeRecipeByOutput(MetaTileEntities.ELECTRIC_FURNACE[i].getStackForm());
         }
-
     }
 }

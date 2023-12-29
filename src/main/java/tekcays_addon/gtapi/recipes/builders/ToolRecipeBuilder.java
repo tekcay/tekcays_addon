@@ -1,5 +1,7 @@
 package tekcays_addon.gtapi.recipes.builders;
 
+import org.jetbrains.annotations.NotNull;
+
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMap;
@@ -10,11 +12,9 @@ import gregtech.api.util.EnumValidationResult;
 import gregtech.api.util.ValidationResult;
 import tekcays_addon.api.recipe.RecipeBuilderHelper;
 
-import javax.annotation.Nonnull;
-
 @SuppressWarnings("unused")
-public class ToolRecipeBuilder extends RecipeBuilder<ToolRecipeBuilder> implements RecipeBuilderHelper<ToolRecipeBuilder> {
-
+public class ToolRecipeBuilder extends RecipeBuilder<ToolRecipeBuilder>
+                               implements RecipeBuilderHelper<ToolRecipeBuilder> {
 
     @SuppressWarnings("unused")
     public ToolRecipeBuilder() {
@@ -26,7 +26,6 @@ public class ToolRecipeBuilder extends RecipeBuilder<ToolRecipeBuilder> implemen
         super(recipe, recipeMap);
     }
 
-
     public ToolRecipeBuilder(ToolRecipeBuilder builder) {
         super(builder);
     }
@@ -37,7 +36,7 @@ public class ToolRecipeBuilder extends RecipeBuilder<ToolRecipeBuilder> implemen
     }
 
     @Override
-    public boolean applyProperty(@Nonnull String key, Object value) {
+    public boolean applyProperty(@NotNull String key, Object value) {
         applyPropertyHelper(key, value);
         return super.applyProperty(key, value);
     }
@@ -49,7 +48,6 @@ public class ToolRecipeBuilder extends RecipeBuilder<ToolRecipeBuilder> implemen
         applyProperty(PrimitiveProperty.getInstance(), true);
         return super.build();
     }
-
 
     @Override
     public IRecipePropertyStorage getRecipePropertyStorage() {

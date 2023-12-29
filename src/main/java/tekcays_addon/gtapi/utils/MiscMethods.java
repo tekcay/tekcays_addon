@@ -1,5 +1,21 @@
 package tekcays_addon.gtapi.utils;
 
+import static gregtech.api.unification.material.Materials.Air;
+import static tekcays_addon.api.material.MaterialHelper.getAllMaterials;
+import static tekcays_addon.gtapi.consts.TKCYAValues.*;
+import static tekcays_addon.gtapi.unification.TKCYAMaterials.MixtureToFilter;
+
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.items.IItemHandlerModifiable;
+
+import org.jetbrains.annotations.Nullable;
+
 import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.unification.OreDictUnifier;
@@ -7,22 +23,8 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.MaterialStack;
 import gregtech.api.util.GTTransferUtils;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.items.IItemHandlerModifiable;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.gtapi.unification.TKCYAMaterials;
-
-import javax.annotation.Nullable;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import static gregtech.api.unification.material.Materials.Air;
-import static tekcays_addon.api.material.MaterialHelper.getAllMaterials;
-import static tekcays_addon.gtapi.consts.TKCYAValues.*;
-import static tekcays_addon.gtapi.unification.TKCYAMaterials.MixtureToFilter;
 
 public class MiscMethods {
 
@@ -36,9 +38,11 @@ public class MiscMethods {
     /**
      * Checks if a {@code FluidStack} is made of a certain {@code Fluid}.
      * This can avoid certain {@code NullPointer} exceptions.
-     * <br /><br />
+     * <br />
+     * <br />
+     * 
      * @param fluidStack the {@code FluidStack} that is checked.
-     * @param fluid the {@code Fluid} to compare to.
+     * @param fluid      the {@code Fluid} to compare to.
      * @return true if condition is met.
      */
     public static boolean isSameFluid(FluidStack fluidStack, Fluid fluid) {
@@ -47,8 +51,6 @@ public class MiscMethods {
 
         return false;
     }
-
-
 
     public static Map<Integer, Integer> getPumpPressureMap() {
         Map<Integer, Integer> map = new HashMap<>();
@@ -60,7 +62,7 @@ public class MiscMethods {
         }
         return map;
     }
-    
+
     /**
      *
      * @param m1
@@ -73,21 +75,21 @@ public class MiscMethods {
         }
         return 0;
     }
+
     public static Material getMaterialFromUnlocalizedName(String unlocalizedName) {
-        for (Material m : getAllMaterials() ) {
+        for (Material m : getAllMaterials()) {
             if (m.getUnlocalizedName().equals(unlocalizedName)) return m;
         }
         return null;
     }
 
-
     public static List<MaterialStack> getMaterialStacksFromString(String formula) {
-
         List<String> compounds = Arrays.asList(formula.split(","));
         List<MaterialStack> list = new ArrayList<>();
 
         for (int i = 0; i < compounds.size(); i += 2) {
-            list.add(new MaterialStack(getMaterialFromUnlocalizedName(compounds.get(i)), Integer.parseInt(compounds.get(i + 1))));
+            list.add(new MaterialStack(getMaterialFromUnlocalizedName(compounds.get(i)),
+                    Integer.parseInt(compounds.get(i + 1))));
         }
         return list;
     }
@@ -97,9 +99,9 @@ public class MiscMethods {
         final StringBuilder composition = new StringBuilder();
 
         list.forEach(ms -> composition.append(ms.material.getUnlocalizedName())
-                                      .append(",")
-                                      .append(ms.amount)
-                                      .append(","));
+                .append(",")
+                .append(ms.amount)
+                .append(","));
 
         nbt.setString("Composition", composition.toString());
         return nbt;
@@ -138,10 +140,9 @@ public class MiscMethods {
         return stackSize.get();
     }
 
-
     /**
      *
-     * @param list the {@code List<MaterialStack}s
+     * @param list   the {@code List<MaterialStack}s
      * @param prefix the {@code OrePrefix} to apply to get the output.
      * @return a {@code List<ItemStack}
      */
@@ -168,7 +169,8 @@ public class MiscMethods {
     }
 
     public static FluidStack getMixtureToFilterStack(MaterialStack output, MaterialStack fluidOutputs) {
-        FluidStack fs = new FluidStack(MixtureToFilter.getFluid(), 1000, writeNBTtoMixtureToFilter(output, fluidOutputs));
+        FluidStack fs = new FluidStack(MixtureToFilter.getFluid(), 1000,
+                writeNBTtoMixtureToFilter(output, fluidOutputs));
         MIXTURE_TO_FILTER.add(fs);
         return fs;
     }
@@ -182,12 +184,13 @@ public class MiscMethods {
 
     /**
      *
-     * @param list the {@code List<MaterialStack}s
-     * @param prefix the {@code OrePrefix} to apply to get the output.
+     * @param list                the {@code List<MaterialStack}s
+     * @param prefix              the {@code OrePrefix} to apply to get the output.
      * @param applyMaterialAmount
      * @return a {@code List<ItemStack}
      */
-    public static List<ItemStack> getItemStacksFromMaterialStacks(List<MaterialStack> list, OrePrefix prefix, boolean applyMaterialAmount) {
+    public static List<ItemStack> getItemStacksFromMaterialStacks(List<MaterialStack> list, OrePrefix prefix,
+                                                                  boolean applyMaterialAmount) {
         List<ItemStack> output = new ArrayList<>();
         if (applyMaterialAmount) {
             long materialAmount = OrePrefix.dust.getMaterialAmount(Air) / prefix.getMaterialAmount(Air);
@@ -198,7 +201,6 @@ public class MiscMethods {
         return output;
     }
 
-
     /**
      *
      * @param stack
@@ -206,7 +208,7 @@ public class MiscMethods {
      * @return -1 if not found.
      */
     public static int hasAcceptedItemStackInSlot(ItemStack stack, IItemHandlerModifiable inputInventory) {
-        for (int i = 0;  i < inputInventory.getSlots(); i++) {
+        for (int i = 0; i < inputInventory.getSlots(); i++) {
             ItemStack input = inputInventory.getStackInSlot(i);
             if (input.isItemEqual(stack) && input.hasTagCompound()) {
                 return i;
@@ -217,6 +219,7 @@ public class MiscMethods {
 
     /**
      * Multiplies energyConsumption by 20 as the number of ticks to actualize the multi only once per second.
+     * 
      * @param energyConsumption
      * @param energyContainer
      * @return
@@ -225,14 +228,14 @@ public class MiscMethods {
         return energyContainer.getEnergyStored() >= (long) energyConsumption * 20;
     }
 
-
     /**
      *
-     * @param list the {@code List<ItemStack>}
+     * @param list    the {@code List<ItemStack>}
      * @param divider
      * @return the desired {@code List<ItemStack>}.
-     * <pre>
-     * If the division is not possible, returns the former {@code List<ItemStack>}.
+     * 
+     *         <pre>
+     *         If the division is not possible, returns the former {@code List<ItemStack>}.
      */
     public static List<ItemStack> divideOutputStack(List<ItemStack> list, int divider) {
         List<ItemStack> dividedOutputStack = new ArrayList<>();
@@ -245,13 +248,13 @@ public class MiscMethods {
         return dividedOutputStack;
     }
 
-    public static List<ItemStack> setOutputStackPerSec(IItemHandlerModifiable inputInventory, int inputSlot, OrePrefix prefix) {
+    public static List<ItemStack> setOutputStackPerSec(IItemHandlerModifiable inputInventory, int inputSlot,
+                                                       OrePrefix prefix) {
         ItemStack input = inputInventory.getStackInSlot(inputSlot);
         NBTTagCompound nbt = input.getTagCompound();
         List<MaterialStack> list = getMaterialStacksFromString(nbt.getString("Composition"));
         return getItemStacksFromMaterialStacks(list, prefix);
     }
-
 
     public static List<ItemStack> setOutputStackPerSec(String composition, OrePrefix prefix) {
         List<MaterialStack> list = getMaterialStacksFromString(composition);
@@ -274,10 +277,9 @@ public class MiscMethods {
         return nbt.getString("Composition");
     }
 
-
-
     /**
      * Check if a multiblock can process by checking if there is enough energy and room in the output.
+     * 
      * @param energyContainer
      * @param requiredVoltage
      * @param energyCost
@@ -285,11 +287,12 @@ public class MiscMethods {
      * @param outputInventory
      * @return true.
      */
-    public static boolean canDoWork(IEnergyContainer energyContainer, long requiredVoltage, int energyCost, List<ItemStack> outputStackPerSec, IItemHandlerModifiable outputInventory) {
+    public static boolean canDoWork(IEnergyContainer energyContainer, long requiredVoltage, int energyCost,
+                                    List<ItemStack> outputStackPerSec, IItemHandlerModifiable outputInventory) {
         if (energyContainer.getInputVoltage() < requiredVoltage) return false;
         if (!hasEnoughEnergy(energyCost, energyContainer)) return false;
         return GTTransferUtils.addItemsToItemHandler(outputInventory, true, outputStackPerSec);
-        //return canOutputItem(outputStackPerSec, outputInventory);
+        // return canOutputItem(outputStackPerSec, outputInventory);
     }
 
     public static ItemStack getDustMixtureStackWithNBT(List<MaterialStack> materials) {
@@ -299,5 +302,4 @@ public class MiscMethods {
         DUST_MIXTURE_WITH_NBT.add(outputStack);
         return outputStack;
     }
-
 }

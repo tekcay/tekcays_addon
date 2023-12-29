@@ -1,18 +1,19 @@
 package tekcays_addon.gtapi.capability.impl;
 
-import gregtech.api.metatileentity.MTETrait;
-import gregtech.api.metatileentity.MetaTileEntity;
-import lombok.Getter;
+import static tekcays_addon.api.consts.NBTKeys.*;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import gregtech.api.metatileentity.MTETrait;
+import gregtech.api.metatileentity.MetaTileEntity;
+import lombok.Getter;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.capability.containers.ISteamConsumer;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import static tekcays_addon.api.consts.NBTKeys.*;
 
 @Getter
 public class SteamConsumer extends MTETrait implements ISteamConsumer {
@@ -22,15 +23,16 @@ public class SteamConsumer extends MTETrait implements ISteamConsumer {
 
     /**
      * Create a new MTE trait.
+     * 
      * @param metaTileEntity the MTE to reference, and add the trait to
      */
-    public SteamConsumer(@Nonnull MetaTileEntity metaTileEntity) {
+    public SteamConsumer(@NotNull MetaTileEntity metaTileEntity) {
         super(metaTileEntity);
         this.steamConsumption = 0;
         this.waterOutputRate = 0;
     }
 
-    public SteamConsumer(@Nonnull MetaTileEntity metaTileEntity, int steamConsumption, int waterOutputRate) {
+    public SteamConsumer(@NotNull MetaTileEntity metaTileEntity, int steamConsumption, int waterOutputRate) {
         super(metaTileEntity);
         this.steamConsumption = steamConsumption;
         this.waterOutputRate = waterOutputRate;
@@ -58,7 +60,7 @@ public class SteamConsumer extends MTETrait implements ISteamConsumer {
         this.waterOutputRate = Math.max(this.waterOutputRate + amount, 0);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public String getName() {
         return "Steam Consumer";
@@ -72,7 +74,7 @@ public class SteamConsumer extends MTETrait implements ISteamConsumer {
         return null;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = super.serializeNBT();
@@ -82,23 +84,22 @@ public class SteamConsumer extends MTETrait implements ISteamConsumer {
     }
 
     @Override
-    public void deserializeNBT(@Nonnull NBTTagCompound compound) {
+    public void deserializeNBT(@NotNull NBTTagCompound compound) {
         this.steamConsumption = compound.getInteger(STEAM_CONSUMPTION_KEY);
         this.waterOutputRate = compound.getInteger(WATER_OUTPUT_RATE_KEY);
     }
 
     @Override
-    public void writeInitialData(@Nonnull PacketBuffer buffer) {
+    public void writeInitialData(@NotNull PacketBuffer buffer) {
         super.writeInitialData(buffer);
         buffer.writeInt(this.steamConsumption);
         buffer.writeInt(this.waterOutputRate);
     }
 
     @Override
-    public void receiveInitialData(@Nonnull PacketBuffer buffer) {
+    public void receiveInitialData(@NotNull PacketBuffer buffer) {
         super.receiveInitialData(buffer);
         this.steamConsumption = buffer.readInt();
         this.waterOutputRate = buffer.readInt();
     }
-
 }

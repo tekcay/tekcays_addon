@@ -1,21 +1,22 @@
 package tekcays_addon.gtapi.utils;
 
+import static tekcays_addon.gtapi.consts.TKCYAValues.NO_FLUID;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
-import javax.annotation.Nullable;
-
-import static tekcays_addon.gtapi.consts.TKCYAValues.NO_FLUID;
+import org.jetbrains.annotations.Nullable;
 
 public interface FluidStackHelper {
 
     /**
      * Adds the amount of a {@code FluidStack f2} to a {@code FluidStack f1} and returns the modified {@code f1}.
+     * 
      * @param f1 the {@code FluidStack} to increase the amount.
      * @param f2 the {@code FluidStack} which amount will be added to {@code f1}.
      * @return the corresponding {@code FluidStack} with increased amount. If the two {@code FluidStack}s are not
-     * made of the same {@code Fluid}, it will return {@code f1}.
+     *         made of the same {@code Fluid}, it will return {@code f1}.
      */
     default FluidStack addFluidStacks(FluidStack f1, FluidStack f2) {
         if (!f1.equals(f2)) return f1;
@@ -24,7 +25,8 @@ public interface FluidStackHelper {
 
     /**
      * Adds the amount of a {@code FluidStack f2} to a {@code FluidStack f1} and returns the modified {@code f1}.
-     * @param f1 the {@code FluidStack} to increase the amount.
+     * 
+     * @param f1    the {@code FluidStack} to increase the amount.
      * @param toAdd the {@code amount} which will be added to {@code f1}.
      * @return the corresponding {@code FluidStack} with increased amount.
      */
@@ -34,10 +36,11 @@ public interface FluidStackHelper {
 
     /**
      * Subtracts the amount of a {@code FluidStack f2} to a {@code FluidStack f1} and returns the modified {@code f1}.
+     * 
      * @param f1 the {@code FluidStack} to decrease the amount.
      * @param f2 the {@code FluidStack} which amount will be substracted to {@code f1}.
      * @return the corresponding {@code FluidStack} with decreased amount. If the two {@code FluidStack}s are not
-     * made of the same {@code Fluid}, it will return {@code f1}.
+     *         made of the same {@code Fluid}, it will return {@code f1}.
      */
     default FluidStack subtractFluidStacks(FluidStack f1, FluidStack f2) {
         if (!f1.containsFluid(f2)) return f1;
@@ -46,10 +49,11 @@ public interface FluidStackHelper {
 
     /**
      * Subtracts the amount of a {@code FluidStack f2} to a {@code FluidStack f1} and returns the modified {@code f1}.
-     * @param f1 the {@code FluidStack} to decrease the amount.
+     * 
+     * @param f1       the {@code FluidStack} to decrease the amount.
      * @param toRemove the {@code amount} which will be substracted to {@code f1}.
      * @return the corresponding {@code FluidStack} with decreased amount. If the substraction gives 0 or less, it
-     * will return {@code f1}.
+     *         will return {@code f1}.
      */
     default FluidStack subtractFluidStacks(FluidStack f1, int toRemove) {
         if (f1.amount - toRemove <= 0) return f1;
@@ -58,7 +62,8 @@ public interface FluidStackHelper {
 
     /**
      * Changes the amount of a {@link FluidStack} by adding a provided {@code amount}.
-     * @param f1 the {@link } FluidStack} to modify the amount.
+     * 
+     * @param f1     the {@link } FluidStack} to modify the amount.
      * @param amount the {@code amount} which will be added to {@code f1}.
      * @return how much the amount of the {@link FluidStack} has changed.
      */
@@ -91,7 +96,6 @@ public interface FluidStackHelper {
         }
 
         return new FluidStack(f1.getFluid(), 0);
-
     }
 
     default NBTTagCompound getFluidStackNBT(FluidStack fluidStack) {

@@ -23,5 +23,4 @@ public class CoverMethods {
     public static long minEnergyNeeded(int tier) {
         return GTValues.V[tier];
     }
-
 }

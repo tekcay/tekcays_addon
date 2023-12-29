@@ -1,9 +1,5 @@
 package tekcays_addon.loaders.recipe.handlers;
 
-import gregtech.api.metatileentity.multiblock.CleanroomType;
-import gregtech.api.recipes.ingredients.IntCircuitIngredient;
-import tekcays_addon.gtapi.consts.TKCYAValues;
-
 import static gregtech.api.GTValues.LV;
 import static gregtech.api.GTValues.VA;
 import static gregtech.api.recipes.RecipeMaps.CHEMICAL_RECIPES;
@@ -12,12 +8,15 @@ import static gregtech.api.unification.material.Materials.*;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.HighDensityPolyethylene;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.Polypropylene;
 
-public class PolymerHandler {
-    
-    public static void init() {
+import gregtech.api.metatileentity.multiblock.CleanroomType;
+import gregtech.api.recipes.ingredients.IntCircuitIngredient;
+import tekcays_addon.gtapi.consts.TKCYAValues;
 
-        //Polypropylene
-        
+public class PolymerHandler {
+
+    public static void init() {
+        // Polypropylene
+
         CHEMICAL_RECIPES.recipeBuilder()
                 .notConsumable(new IntCircuitIngredient(1))
                 .fluidInputs(Air.getFluid(1000))
@@ -48,7 +47,7 @@ public class PolymerHandler {
                 .fluidOutputs(Polypropylene.getFluid(4320))
                 .duration(800).EUt(VA[LV]).buildAndRegister();
 
-        //Cleanroom
+        // Cleanroom
 
         CHEMICAL_RECIPES.recipeBuilder()
                 .notConsumable(new IntCircuitIngredient(1))
@@ -76,7 +75,7 @@ public class PolymerHandler {
                 .cleanroom(CleanroomType.CLEANROOM)
                 .duration(800).EUt(VA[LV]).buildAndRegister();
 
-        //HDPE
+        // HDPE
 
         CHEMICAL_RECIPES.recipeBuilder()
                 .notConsumable(new IntCircuitIngredient(11))
@@ -108,7 +107,7 @@ public class PolymerHandler {
                 .fluidOutputs(HighDensityPolyethylene.getFluid(4320))
                 .duration(800).EUt(VA[LV]).buildAndRegister();
 
-        //Cleanroom
+        // Cleanroom
 
         CHEMICAL_RECIPES.recipeBuilder()
                 .notConsumable(new IntCircuitIngredient(11))
@@ -135,8 +134,5 @@ public class PolymerHandler {
                 .fluidOutputs(HighDensityPolyethylene.getFluid((int) (4320 * TKCYAValues.CLEANROOM_MULTIPLIER)))
                 .cleanroom(CleanroomType.CLEANROOM)
                 .duration(800).EUt(VA[LV]).buildAndRegister();
-        
-        
     }
-    
 }

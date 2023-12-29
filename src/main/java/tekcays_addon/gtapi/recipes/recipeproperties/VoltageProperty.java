@@ -1,12 +1,13 @@
 package tekcays_addon.gtapi.recipes.recipeproperties;
 
-import gregtech.api.GTValues;
-import gregtech.api.recipes.recipeproperties.RecipeProperty;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
-import tekcays_addon.api.recipeproperties.RecipePropertiesHelper;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
+
+import gregtech.api.GTValues;
+import gregtech.api.recipes.recipeproperties.RecipeProperty;
+import tekcays_addon.api.recipeproperties.RecipePropertiesHelper;
 
 public class VoltageProperty extends RecipeProperty<Integer> implements RecipePropertiesHelper {
 
@@ -31,9 +32,8 @@ public class VoltageProperty extends RecipeProperty<Integer> implements RecipePr
     }
 
     @Override
-    public void drawInfo(@Nonnull Minecraft minecraft, int x, int y, int color, Object value) {
-        minecraft.fontRenderer.drawString(I18n.format("tkcya.recipe.voltage", GTValues.VN[castValue(value)]), x, y, color);
+    public void drawInfo(@NotNull Minecraft minecraft, int x, int y, int color, Object value) {
+        minecraft.fontRenderer.drawString(I18n.format("tkcya.recipe.voltage", GTValues.VN[castValue(value)]), x, y,
+                color);
     }
-
-
 }

@@ -1,5 +1,20 @@
 package tekcays_addon.common.metatileentities.multi;
 
+import static gregtech.api.util.RelativeDirection.*;
+import static tekcays_addon.api.metatileentity.predicates.BrickHatchesPredicates.*;
+
+import java.util.List;
+
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.event.HoverEvent;
+
+import org.jetbrains.annotations.NotNull;
+
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -8,24 +23,11 @@ import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.MetaTileEntities;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.event.HoverEvent;
 import tekcays_addon.api.metatileentity.LogicType;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
-
-import javax.annotation.Nonnull;
-import java.util.List;
-
-import static gregtech.api.util.RelativeDirection.*;
-import static tekcays_addon.api.metatileentity.predicates.BrickHatchesPredicates.*;
 
 public class MetaTileEntityTKCYACokeOven extends ModulableRecipeMapController {
 
@@ -40,15 +42,16 @@ public class MetaTileEntityTKCYACokeOven extends ModulableRecipeMapController {
     }
 
     /*
-    @Override
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
-        super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.1"));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.2"));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.3", "2"));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.4", brick.getBrickTemperature()));
-    }
-
+     * @Override
+     * public void addInformation(@NotNull ItemStack stack, @Nullable World player, @NotNull List<String> tooltip,
+     * boolean advanced) {
+     * super.addInformation(stack, player, tooltip, advanced);
+     * tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.1"));
+     * tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.2"));
+     * tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.3", "2"));
+     * tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.4", brick.getBrickTemperature()));
+     * }
+     * 
      */
 
     @Override
@@ -57,17 +60,18 @@ public class MetaTileEntityTKCYACokeOven extends ModulableRecipeMapController {
             ITextComponent tooltip = new TextComponentTranslation("gregtech.multiblock.invalid_structure.tooltip");
             tooltip.setStyle((new Style()).setColor(TextFormatting.GRAY));
             textList.add((new TextComponentTranslation("gregtech.multiblock.invalid_structure"))
-                    .setStyle((new Style()).setColor(TextFormatting.RED).setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
+                    .setStyle((new Style()).setColor(TextFormatting.RED)
+                            .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
         } else {
             if (this.recipeMapWorkable.getParallelLimit() != 1) {
-                textList.add(new TextComponentTranslation("gregtech.multiblock.parallel", this.recipeMapWorkable.getParallelLimit()));
+                textList.add(new TextComponentTranslation("gregtech.multiblock.parallel",
+                        this.recipeMapWorkable.getParallelLimit()));
             }
             if (!this.recipeMapWorkable.isWorkingEnabled()) {
                 textList.add(new TextComponentTranslation("gregtech.multiblock.work_paused"));
             } else if (this.recipeMapWorkable.isActive()) {
                 textList.add(new TextComponentTranslation("gregtech.multiblock.running"));
                 int currentProgress = (int) (this.recipeMapWorkable.getProgressPercent() * 100.0D);
-
 
                 textList.add(new TextComponentTranslation("gregtech.multiblock.progress", currentProgress));
             } else {
@@ -81,7 +85,7 @@ public class MetaTileEntityTKCYACokeOven extends ModulableRecipeMapController {
         return Textures.COKE_BRICKS;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     protected ICubeRenderer getFrontOverlay() {
         return Textures.COKE_OVEN_OVERLAY;
@@ -91,7 +95,7 @@ public class MetaTileEntityTKCYACokeOven extends ModulableRecipeMapController {
         return iBlockState;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
@@ -114,4 +118,3 @@ public class MetaTileEntityTKCYACokeOven extends ModulableRecipeMapController {
         return new MetaTileEntityTKCYACokeOven(metaTileEntityId);
     }
 }
-

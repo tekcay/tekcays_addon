@@ -1,6 +1,5 @@
 package tekcays_addon.api.utils;
 
-
 @FunctionalInterface
 public interface TriFunction<A, B, C, D> {
 

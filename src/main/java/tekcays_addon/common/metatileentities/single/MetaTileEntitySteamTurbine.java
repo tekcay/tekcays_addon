@@ -1,5 +1,34 @@
 package tekcays_addon.common.metatileentities.single;
 
+import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
+import static gregtech.api.unification.material.Materials.*;
+import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
+import static tekcays_addon.gtapi.consts.TKCYAValues.STEAM_TO_WATER;
+import static tekcays_addon.gtapi.render.TKCYATextures.*;
+
+import java.util.List;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.ColourMultiplier;
 import codechicken.lib.render.pipeline.IVertexOperation;
@@ -18,40 +47,14 @@ import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import gregtech.core.sound.GTSoundEvents;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import lombok.Setter;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidTank;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.ArrayUtils;
 import tekcays_addon.gtapi.capability.containers.IRotationContainer;
 import tekcays_addon.gtapi.capability.containers.ISteamConsumer;
 import tekcays_addon.gtapi.capability.impl.RotationContainer;
 import tekcays_addon.gtapi.capability.impl.SteamConsumer;
 import tekcays_addon.gtapi.utils.FluidStackHelper;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-
-import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
-import static gregtech.api.unification.material.Materials.*;
-import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
-import static tekcays_addon.gtapi.render.TKCYATextures.*;
-import static tekcays_addon.gtapi.consts.TKCYAValues.STEAM_TO_WATER;
-
-public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide, FluidStackHelper {
+public class MetaTileEntitySteamTurbine extends MetaTileEntity
+                                        implements IDataInfoProvider, IActiveOutputSide, FluidStackHelper {
 
     private IFluidTank importFluidTank, exportFluidTank;
     private IRotationContainer rotationContainer;
@@ -100,12 +103,15 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
 
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
-        IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline, new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
+        IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline,
+                new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
         getBaseRenderer().render(renderState, translation, colouredPipeline);
-        ColourMultiplier multiplier = new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
+        ColourMultiplier multiplier = new ColourMultiplier(
+                GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
         colouredPipeline = ArrayUtils.add(pipeline, multiplier);
         Textures.PIPE_IN_OVERLAY.renderSided(getInputSide(), renderState, translation, pipeline);
-        ROTATION_TURBINE_OVERLAY.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isRunning, true);
+        ROTATION_TURBINE_OVERLAY.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isRunning,
+                true);
         ROTATION_WATER_OUTPUT_OVERLAY.renderSided(getFluidOutputSide(), renderState, translation, pipeline);
     }
 
@@ -169,8 +175,8 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
         increment();
         setRunningState(true);
 
-        if (getExportFluidStack() != null && getExportFluidStack().amount >= waterTankCapacity
-            || rotationContainer.getSpeed() > rotationContainer.getMaxSpeed()) {
+        if (getExportFluidStack() != null && getExportFluidStack().amount >= waterTankCapacity ||
+                rotationContainer.getSpeed() > rotationContainer.getMaxSpeed()) {
             this.doExplosion(1);
         }
     }
@@ -184,11 +190,12 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
     }
 
     private void transferRotation() {
-        //Get the TileEntity that is placed right on top of the Heat.
+        // Get the TileEntity that is placed right on top of the Heat.
         TileEntity te = getWorld().getTileEntity(getPos().offset(getRotationSide()));
         if (te != null) {
-            //Get the Capability of this Tile Entity on the opposite face.
-            IRotationContainer container = te.getCapability(CAPABILITY_ROTATIONAL_CONTAINER, getRotationSide().getOpposite());
+            // Get the Capability of this Tile Entity on the opposite face.
+            IRotationContainer container = te.getCapability(CAPABILITY_ROTATIONAL_CONTAINER,
+                    getRotationSide().getOpposite());
             if (container != null) {
                 container.setRotationParams(rotationContainer);
             }
@@ -202,9 +209,10 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
 
     @Override
     @Nullable
-    public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
+    public <T> T getCapability(@NotNull Capability<T> capability, EnumFacing side) {
         if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
-            return side == getFluidOutputSide() ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
+            return side == getFluidOutputSide() ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) :
+                    null;
         }
         if (capability.equals(CAPABILITY_ROTATIONAL_CONTAINER) && side == getRotationSide()) {
             return CAPABILITY_ROTATIONAL_CONTAINER.cast(rotationContainer);
@@ -242,14 +250,17 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity implements IDataI
         return false;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
-        list.add(new TextComponentTranslation("behavior.tricorder.steam.amount", getNullableFluidStackAmount(getImportFluidStack())));
+        list.add(new TextComponentTranslation("behavior.tricorder.steam.amount",
+                getNullableFluidStackAmount(getImportFluidStack())));
         list.add(new TextComponentTranslation("behavior.tricorder.speed", rotationContainer.getSpeed()));
-        list.add(new TextComponentTranslation("behavior.tricorder.turbine.steam_consumption", steamConsumer.getSteamConsumption()));
-        list.add(new TextComponentTranslation("behavior.tricorder.turbine.output_rate", steamConsumer.getWaterOutputRate()));
+        list.add(new TextComponentTranslation("behavior.tricorder.turbine.steam_consumption",
+                steamConsumer.getSteamConsumption()));
+        list.add(new TextComponentTranslation("behavior.tricorder.turbine.output_rate",
+                steamConsumer.getWaterOutputRate()));
         return list;
     }
 

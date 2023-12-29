@@ -1,14 +1,14 @@
 package tekcays_addon.api.metatileentity;
 
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+
 import gregtech.api.GTValues;
 import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.recipes.Recipe;
-import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.recipes.recipeproperties.MultiAmperageProperty;
 import tekcays_addon.gtapi.recipes.recipeproperties.VoltageProperty;
-
-import javax.annotation.Nonnull;
-import java.util.List;
 
 public class MultiAmperageControllerMethods {
 
@@ -26,8 +26,10 @@ public class MultiAmperageControllerMethods {
                 .sum();
     }
 
-    public static boolean isVoltageTierValidForRecipe(Recipe recipe, boolean areAllEnergyHatchesTheSameVoltage, List<IEnergyContainer> energyContainers) {
-        return areAllEnergyHatchesTheSameVoltage && energyContainers.get(0).getInputVoltage() == getRecipeVoltage(recipe);
+    public static boolean isVoltageTierValidForRecipe(Recipe recipe, boolean areAllEnergyHatchesTheSameVoltage,
+                                                      List<IEnergyContainer> energyContainers) {
+        return areAllEnergyHatchesTheSameVoltage &&
+                energyContainers.get(0).getInputVoltage() == getRecipeVoltage(recipe);
     }
 
     public static int getRecipeAmperage(Recipe recipe) {
@@ -38,12 +40,15 @@ public class MultiAmperageControllerMethods {
         return GTValues.V[recipe.getProperty(VoltageProperty.getInstance(), 0)];
     }
 
-    public static boolean multiAmperageRecipeChecker(@Nonnull Recipe recipe, List<IEnergyContainer> energyContainers) {
+    public static boolean multiAmperageRecipeChecker(@NotNull Recipe recipe, List<IEnergyContainer> energyContainers) {
         return getMaxInputAmperage(energyContainers) >= getRecipeAmperage(recipe) &&
-                isVoltageTierValidForRecipe(recipe, areAllEnergyHatchesTheSameVoltage(energyContainers), energyContainers);
+                isVoltageTierValidForRecipe(recipe, areAllEnergyHatchesTheSameVoltage(energyContainers),
+                        energyContainers);
     }
 
-    public static boolean multiAmperageRecipeChecker(@Nonnull Recipe recipe, List<IEnergyContainer> energyContainers, boolean areAllEnergyHatchesTheSameVoltage) {
-        return getMaxInputAmperage(energyContainers) >= getRecipeAmperage(recipe) && isVoltageTierValidForRecipe(recipe, areAllEnergyHatchesTheSameVoltage, energyContainers);
+    public static boolean multiAmperageRecipeChecker(@NotNull Recipe recipe, List<IEnergyContainer> energyContainers,
+                                                     boolean areAllEnergyHatchesTheSameVoltage) {
+        return getMaxInputAmperage(energyContainers) >= getRecipeAmperage(recipe) &&
+                isVoltageTierValidForRecipe(recipe, areAllEnergyHatchesTheSameVoltage, energyContainers);
     }
 }

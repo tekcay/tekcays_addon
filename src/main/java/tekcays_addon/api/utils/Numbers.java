@@ -1,7 +1,5 @@
 package tekcays_addon.api.utils;
 
-import tekcays_addon.gtapi.utils.TKCYALog;
-
 public class Numbers {
 
     public static int getValueInBetween(int min, int max, int number) {
@@ -42,6 +40,7 @@ public class Numbers {
 
     /**
      * Returns a {@code float} between 0.0f and 1.0f.
+     * 
      * @param number
      * @return a float
      */

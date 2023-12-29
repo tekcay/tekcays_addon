@@ -1,25 +1,29 @@
 package tekcays_addon.api.recipe;
 
+import static tekcays_addon.gtapi.consts.TKCYAValues.*;
+
+import java.util.Map;
+import java.util.function.Function;
+
+import net.minecraftforge.fluids.FluidStack;
+
+import org.jetbrains.annotations.NotNull;
+
 import gregtech.api.items.toolitem.ToolOreDict;
 import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
 import gregtech.api.recipes.recipeproperties.RecipeProperty;
 import gregtech.api.recipes.recipeproperties.RecipePropertyStorage;
 import gregtech.api.util.EnumValidationResult;
-import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.gtapi.recipes.recipeproperties.*;
 import tekcays_addon.gtapi.utils.TKCYALog;
-
-import javax.annotation.Nonnull;
-import java.util.Map;
-import java.util.function.Function;
-
-import static tekcays_addon.gtapi.consts.TKCYAValues.*;
 
 public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
 
     IRecipePropertyStorage getRecipePropertyStorage();
+
     T getRecipeBuilder();
+
     void setRecipeStatus(EnumValidationResult enumValidationResult);
 
     default void buildHelper() {
@@ -77,87 +81,96 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
         }
     }
 
-    default <U extends RecipeProperty<?>> void store(U recipeProperty, IRecipePropertyStorage recipePropertyStorage, Object defaultValue) {
+    default <U extends RecipeProperty<?>> void store(U recipeProperty, IRecipePropertyStorage recipePropertyStorage,
+                                                     Object defaultValue) {
         recipePropertyStorage.store(recipeProperty, defaultValue);
     }
 
-    default <U> T validate(RecipeProperty<?> recipeProperty, U value, @Nonnull Function<U, String> validate) {
+    default <U> T validate(RecipeProperty<?> recipeProperty, U value, @NotNull Function<U, String> validate) {
         T recipeBuilder = getRecipeBuilder();
         String errorMessage = validate.apply(value);
 
         if (errorMessage != null) {
-            TKCYALog.logger.error(recipeProperty.getKey() + " cannot be less than or equal to 0", new IllegalArgumentException());
+            TKCYALog.logger.error(recipeProperty.getKey() + " cannot be less than or equal to 0",
+                    new IllegalArgumentException());
             setRecipeStatus(EnumValidationResult.INVALID);
         }
         getRecipeBuilder().applyProperty(recipeProperty, value);
         return recipeBuilder;
     }
 
-    //RecipeProperties
+    // RecipeProperties
 
-    @Nonnull
+    @NotNull
     default T intervalPressure(Integer[] pressures) {
-        return validate(IntervalPressureProperty.getInstance(), pressures, RecipeValidationFunctions.VALIDATE_INT_ARRAY);
+        return validate(IntervalPressureProperty.getInstance(), pressures,
+                RecipeValidationFunctions.VALIDATE_INT_ARRAY);
     }
 
-    @Nonnull
+    @NotNull
     default T intervalTemperature(Integer[] temperatures) {
-        return validate(IntervalTemperatureProperty.getInstance(), temperatures, RecipeValidationFunctions.VALIDATE_INT_ARRAY);
-    }
-    @Nonnull
-    default T minTemperature (int temperature) {
-        return validate(MinTemperatureProperty.getInstance(), temperature, RecipeValidationFunctions.VALIDATE_INT_POSITIVE);
+        return validate(IntervalTemperatureProperty.getInstance(), temperatures,
+                RecipeValidationFunctions.VALIDATE_INT_ARRAY);
     }
 
-    @Nonnull
-    default T maxTemperature (int temperature) {
-        return validate(MaxTemperatureProperty.getInstance(), temperature, RecipeValidationFunctions.VALIDATE_INT_POSITIVE);
+    @NotNull
+    default T minTemperature(int temperature) {
+        return validate(MinTemperatureProperty.getInstance(), temperature,
+                RecipeValidationFunctions.VALIDATE_INT_POSITIVE);
     }
 
-    @Nonnull
+    @NotNull
+    default T maxTemperature(int temperature) {
+        return validate(MaxTemperatureProperty.getInstance(), temperature,
+                RecipeValidationFunctions.VALIDATE_INT_POSITIVE);
+    }
+
+    @NotNull
     default T minPressure(int minPressure) {
-        return validate(MinPressureProperty.getInstance(), minPressure, RecipeValidationFunctions.VALIDATE_INT_POSITIVE);
+        return validate(MinPressureProperty.getInstance(), minPressure,
+                RecipeValidationFunctions.VALIDATE_INT_POSITIVE);
     }
 
-    @Nonnull
+    @NotNull
     default T maxPressure(int maxPressure) {
-        return validate(MaxPressureProperty.getInstance(), maxPressure, RecipeValidationFunctions.VALIDATE_INT_POSITIVE);
+        return validate(MaxPressureProperty.getInstance(), maxPressure,
+                RecipeValidationFunctions.VALIDATE_INT_POSITIVE);
     }
 
-    @Nonnull
+    @NotNull
     default T pressurizedFluidStack(FluidStack fluidStack) {
-        return validate(PressurizedFluidStackProperty.getInstance(), fluidStack, RecipeValidationFunctions.VALIDATE_FLUIDSTACK);
+        return validate(PressurizedFluidStackProperty.getInstance(), fluidStack,
+                RecipeValidationFunctions.VALIDATE_FLUIDSTACK);
     }
 
-    @Nonnull
+    @NotNull
     default T toolOreDict(ToolOreDict toolOreDict) {
         return validate(ToolProperty.getInstance(), toolOreDict, RecipeValidationFunctions.VALIDATE_TOOL_ORE);
     }
 
     /**
      * @param amperage corresponds at least to the sum of the amperage of all the input energy hatches.
-     * <br>
-     * e.g. an {@code amperage} of 3 needs two energy hatches of 2 A, regardless of the voltage.
-     * <br>
+     *                 <br>
+     *                 e.g. an {@code amperage} of 3 needs two energy hatches of 2 A, regardless of the voltage.
+     *                 <br>
      */
-    @Nonnull
+    @NotNull
     default T amperage(int amperage) {
         return validate(MultiAmperageProperty.getInstance(), amperage, RecipeValidationFunctions.VALIDATE_INT_POSITIVE);
     }
 
     /**
      * @param voltage corresponds to the voltage tier of the necessary energy hatch(es).
-     * <br>
-     * 0 corresponds to ULV, 1 corresponds to LV etc.
-     * <br>
+     *                <br>
+     *                0 corresponds to ULV, 1 corresponds to LV etc.
+     *                <br>
      */
-    @Nonnull
+    @NotNull
     default T voltageTier(int voltage) {
         return validate(VoltageProperty.getInstance(), voltage, RecipeValidationFunctions.VALIDATE_VOLTAGE);
     }
 
-    default void applyPropertyHelper(@Nonnull String key, Object value) {
-
+    default void applyPropertyHelper(@NotNull String key, Object value) {
         switch (key) {
             case INTERVAL_PRESSURE_PROPERTY:
                 this.intervalPressure(((Integer[]) value).clone());
@@ -203,6 +216,4 @@ public interface RecipeBuilderHelper<T extends RecipeBuilder<T>> {
                 break;
         }
     }
-
-
 }

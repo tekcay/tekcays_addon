@@ -1,9 +1,5 @@
 package tekcays_addon.gtapi.unification.material.materials;
 
-import gregtech.api.fluids.FluidBuilder;
-import gregtech.api.unification.material.Material;
-import gregtech.api.unification.material.info.MaterialFlags;
-
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static gregtech.api.unification.material.info.MaterialIconSet.DULL;
@@ -12,10 +8,13 @@ import static gregtech.api.util.GTUtility.gregtechId;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
 import static tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags.ALL_PARTS;
 
+import gregtech.api.fluids.FluidBuilder;
+import gregtech.api.unification.material.Material;
+import gregtech.api.unification.material.info.MaterialFlags;
+
 public class TKCYAAlloys {
 
     public static int init(int id) {
-
         GalvanizedSteel = new Material.Builder(id++, gregtechId("galvanized_steel"))
                 .ingot(3)
                 .fluidPipeProperties(2000, 100, true, true, true, false)
@@ -77,7 +76,7 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .liquid(new FluidBuilder().temperature(1473))
                 .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
-                .components(Cobalt, 1, Chrome, 7, Copper,  1, Molybdenum, 8, Nickel, 32, Tungsten, 1)
+                .components(Cobalt, 1, Chrome, 7, Copper, 1, Molybdenum, 8, Nickel, 32, Tungsten, 1)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
                 .iconSet(METALLIC)
@@ -117,7 +116,8 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .liquid(new FluidBuilder().temperature(1473))
                 .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
-                .components(Carbon, 13, Chrome, 30, Copper, 8, Iron, 1530, Manganese, 15, Molybdenum, 6, Nickel, 87, Vanadium, 1, Tungsten, 4)
+                .components(Carbon, 13, Chrome, 30, Copper, 8, Iron, 1530, Manganese, 15, Molybdenum, 6, Nickel, 87,
+                        Vanadium, 1, Tungsten, 4)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
                 .iconSet(METALLIC)
@@ -147,7 +147,8 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .liquid(new FluidBuilder().temperature(1473))
                 .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
-                .components(Carbon, 6, Cobalt, 78, Chrome, 21, Iron, 783, Manganese, 1, Molybdenum, 6, Nickel, 16, Silicon, 1)
+                .components(Carbon, 6, Cobalt, 78, Chrome, 21, Iron, 783, Manganese, 1, Molybdenum, 6, Nickel, 16,
+                        Silicon, 1)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
                 .iconSet(METALLIC)
@@ -157,7 +158,8 @@ public class TKCYAAlloys {
                 .ingot(2)
                 .liquid(new FluidBuilder().temperature(1473))
                 .flags(ALL_PARTS, DISABLE_DECOMPOSITION, NO_SMELTING)
-                .components(Carbon, 12, Cobalt, 60, Chrome, 10, Iron, 79, Manganese, 3, Molybdenum, 8, Nickel, 121, Vanadium, 1)
+                .components(Carbon, 12, Cobalt, 60, Chrome, 10, Iron, 79, Manganese, 3, Molybdenum, 8, Nickel, 121,
+                        Vanadium, 1)
                 .flags(MaterialFlags.DISABLE_DECOMPOSITION)
                 .colorAverage()
                 .iconSet(METALLIC)
@@ -245,5 +247,4 @@ public class TKCYAAlloys {
 
         return id;
     }
-
 }

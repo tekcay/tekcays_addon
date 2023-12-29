@@ -1,14 +1,15 @@
 package tekcays_addon.gtapi.capability.containers;
 
-import gregtech.api.unification.material.Material;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fluids.FluidStack;
-import tekcays_addon.gtapi.utils.FluidStackHelper;
-import tekcays_addon.api.units.IPressureFormatting;
-
 import static gregtech.api.unification.material.Materials.Air;
 import static tekcays_addon.gtapi.consts.TKCYAValues.*;
 import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
+
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.FluidStack;
+
+import gregtech.api.unification.material.Material;
+import tekcays_addon.api.units.IPressureFormatting;
+import tekcays_addon.gtapi.utils.FluidStackHelper;
 
 public interface IVacuumContainer extends IPressureFormatting, FluidStackHelper {
 
@@ -56,12 +57,14 @@ public interface IVacuumContainer extends IPressureFormatting, FluidStackHelper 
 
     /**
      * Sets the {@code FluidStack} of Air pressurized in the {@code IPressureContainer}
+     * 
      * @param fluidStack
      */
     void setAirFluidStack(FluidStack fluidStack);
 
     /**
      * Gets the amount of the {@code FluidStack} in the {@code IPressureContainer}
+     * 
      * @return the amount of Air {@code FluidStack}, 0 if the Air {@code FluidStack} is null.
      */
     default int getAirAmount() {
@@ -71,7 +74,7 @@ public interface IVacuumContainer extends IPressureFormatting, FluidStackHelper 
     /**
      *
      * @param amount
-     * @param doAdd true: adds the amount, false: substracts the amount
+     * @param doAdd  true: adds the amount, false: substracts the amount
      */
     default void changeAirFluidStack(int amount, boolean doAdd) {
         if (doAdd) setAirFluidStack(addFluidStacks(getAirFluidStack(), amount));
@@ -93,21 +96,24 @@ public interface IVacuumContainer extends IPressureFormatting, FluidStackHelper 
     }
 
     /**
-     * Calculates the amount of substance which transcribes as an amount of a {@code FluidStack} following the ideal gas law.
-     * @param pressure in {@code Pa}.
+     * Calculates the amount of substance which transcribes as an amount of a {@code FluidStack} following the ideal gas
+     * law.
+     * 
+     * @param pressure    in {@code Pa}.
      * @param temperature in {@code K}.
-     * @param volume in {@code m3}.
+     * @param volume      in {@code m3}.
      * @return the corresponding {@code fluidAmount}.
      */
     default int calculateFluidAmount(int pressure, int temperature, int volume) {
-        return (int) ((1.0 * pressure * volume) / (1.0 * PERFECT_GAS_CONSTANT * temperature) ); // n = PV / RT
+        return (int) ((1.0 * pressure * volume) / (1.0 * PERFECT_GAS_CONSTANT * temperature)); // n = PV / RT
     }
 
     /**
      * Calculates the pressure following the ideal gas law.
+     * 
      * @param fluidAmount the amount of substance, transcribed as the amount of a {@code FluidStack}.
      * @param temperature in {@code K}.
-     * @param volume in {@code m3}.
+     * @param volume      in {@code m3}.
      * @return the corresponding pressure in {@code Pa}
      */
     default int calculatePressure(int fluidAmount, int temperature, int volume) {
@@ -116,6 +122,7 @@ public interface IVacuumContainer extends IPressureFormatting, FluidStackHelper 
 
     /**
      * Gets the {@code FluidStack} with the amount at standard conditions (1013 hPa).
+     * 
      * @return the {@code FluidStack} with changed amount.
      */
     default FluidStack getFluidStackStandard(FluidStack fs, int temperature) {
@@ -124,7 +131,8 @@ public interface IVacuumContainer extends IPressureFormatting, FluidStackHelper 
 
     /**
      * Gets the {@code FluidStack} with the amount at standard conditions (1013 hPa).
-     * @param material the {@code Material} of the fluid.
+     * 
+     * @param material    the {@code Material} of the fluid.
      * @param temperature in {@code K}.
      * @return
      */
@@ -134,6 +142,7 @@ public interface IVacuumContainer extends IPressureFormatting, FluidStackHelper 
 
     /**
      * Gets the {@code FluidStack} with the amount at standard conditions (298 K, 1013 hPa).
+     * 
      * @param material the {@code Material} of the fluid.
      * @return
      */
@@ -143,11 +152,10 @@ public interface IVacuumContainer extends IPressureFormatting, FluidStackHelper 
 
     /**
      * Gets a {@code FluidStack} of Air at standard conditions (298 K, 1013 hPa).
+     * 
      * @return {@code FluidStack} of Air.
      */
     default FluidStack getAirFluidStackStandard() {
         return getFluidStackStandard(Air.getFluid(MINIMUM_FLUID_STACK_AMOUNT), ROOM_TEMPERATURE);
     }
-
-
 }

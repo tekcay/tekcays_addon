@@ -1,5 +1,21 @@
 package tekcays_addon.common.covers;
 
+import static tekcays_addon.api.consts.DetectorModes.changeDetectModeAndSendMessage;
+import static tekcays_addon.api.consts.NBTKeys.DETECTOR_MODE_KEY;
+import static tekcays_addon.api.consts.NBTKeys.THRESHOLD_KEY;
+
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.*;
+import net.minecraft.util.math.MathHelper;
+
+import org.jetbrains.annotations.NotNull;
+
 import codechicken.lib.raytracer.CuboidRayTraceResult;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
@@ -11,28 +27,13 @@ import gregtech.api.cover.CoverWithUI;
 import gregtech.api.cover.CoverableView;
 import gregtech.api.gui.ModularUI;
 import lombok.Getter;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.*;
-import net.minecraft.util.math.MathHelper;
-import org.jetbrains.annotations.NotNull;
 import tekcays_addon.api.consts.DetectorModes;
 import tekcays_addon.api.detectors.CoverDetectorWrapper;
 import tekcays_addon.api.detectors.DetectorControllerHelper;
 import tekcays_addon.api.gui.CoverGuiHandler;
 
-import javax.annotation.Nonnull;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-
-import static tekcays_addon.api.consts.DetectorModes.changeDetectModeAndSendMessage;
-import static tekcays_addon.api.consts.NBTKeys.DETECTOR_MODE_KEY;
-import static tekcays_addon.api.consts.NBTKeys.THRESHOLD_KEY;
-
-
-public class CoverDetector extends CoverBase implements ITickable, CoverWithUI, CoverGuiHandler, DetectorControllerHelper {
+public class CoverDetector extends CoverBase
+                           implements ITickable, CoverWithUI, CoverGuiHandler, DetectorControllerHelper {
 
     private int threshold;
     private CoverDetectorWrapper wrapper;
@@ -41,36 +42,39 @@ public class CoverDetector extends CoverBase implements ITickable, CoverWithUI, 
     @Getter
     private int redstoneSignalOutput = 0;
 
-    public CoverDetector(@NotNull CoverDefinition definition, @NotNull CoverableView coverableView, @NotNull EnumFacing attachedSide) {
+    public CoverDetector(@NotNull CoverDefinition definition, @NotNull CoverableView coverableView,
+                         @NotNull EnumFacing attachedSide) {
         super(definition, coverableView, attachedSide);
     }
 
-    public CoverDetector(@NotNull CoverDefinition definition, @NotNull CoverableView coverableView, @NotNull EnumFacing attachedSide, CoverDetectorWrapper wrapper) {
+    public CoverDetector(@NotNull CoverDefinition definition, @NotNull CoverableView coverableView,
+                         @NotNull EnumFacing attachedSide, CoverDetectorWrapper wrapper) {
         super(definition, coverableView, attachedSide);
         this.wrapper = wrapper;
     }
 
     /*
-    public CoverDetector(ICoverable coverHolder, EnumFacing attachedSide, CoverDetectorWrapper wrapper) {
-        super(coverHolder, attachedSide);
-        this.wrapper = wrapper;
-        this.detectorMode = DetectorModes.HIGHER;
-    }
+     * public CoverDetector(ICoverable coverHolder, EnumFacing attachedSide, CoverDetectorWrapper wrapper) {
+     * super(coverHolder, attachedSide);
+     * this.wrapper = wrapper;
+     * this.detectorMode = DetectorModes.HIGHER;
+     * }
      */
 
-        @Override
+    @Override
     public boolean canAttach(@NotNull CoverableView coverable, @NotNull EnumFacing side) {
-            return coverable.getCapability(wrapper.getCapability(), side) != null;
+        return coverable.getCapability(wrapper.getCapability(), side) != null;
     }
 
     @Override
-    public void renderCover(@Nonnull CCRenderState renderState, @Nonnull Matrix4 translation, IVertexOperation[] pipeline, @Nonnull Cuboid6 plateBox, @Nonnull BlockRenderLayer layer) {
+    public void renderCover(@NotNull CCRenderState renderState, @NotNull Matrix4 translation,
+                            IVertexOperation[] pipeline, @NotNull Cuboid6 plateBox, @NotNull BlockRenderLayer layer) {
         this.wrapper.getTextures().renderSided(getAttachedSide(), plateBox, renderState, pipeline, translation);
     }
 
     @Override
-    public EnumActionResult onScrewdriverClick(@Nonnull EntityPlayer playerIn, @Nonnull EnumHand hand, @Nonnull CuboidRayTraceResult hitResult) {
-
+    public EnumActionResult onScrewdriverClick(@NotNull EntityPlayer playerIn, @NotNull EnumHand hand,
+                                               @NotNull CuboidRayTraceResult hitResult) {
         if (!getCoverableView().getWorld().isRemote) {
             if (playerIn.isSneaking()) {
                 setDetectorMode(detectorMode, playerIn);
@@ -175,14 +179,14 @@ public class CoverDetector extends CoverBase implements ITickable, CoverWithUI, 
     }
 
     @Override
-    public void writeToNBT(@Nonnull NBTTagCompound tagCompound) {
+    public void writeToNBT(@NotNull NBTTagCompound tagCompound) {
         super.writeToNBT(tagCompound);
         tagCompound.setString(DETECTOR_MODE_KEY, this.detectorMode.name());
         tagCompound.setInteger(THRESHOLD_KEY, this.threshold);
     }
 
     @Override
-    public void readFromNBT(@Nonnull NBTTagCompound tagCompound) {
+    public void readFromNBT(@NotNull NBTTagCompound tagCompound) {
         super.readFromNBT(tagCompound);
         this.detectorMode = DetectorModes.valueOf(tagCompound.getString(DETECTOR_MODE_KEY));
         this.threshold = tagCompound.getInteger(THRESHOLD_KEY);

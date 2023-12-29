@@ -1,5 +1,11 @@
 package tekcays_addon.common.metatileentities.multi;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+
+import org.jetbrains.annotations.NotNull;
+
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
@@ -14,17 +20,11 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import tekcays_addon.common.items.behaviors.FilterBehavior;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.render.TKCYATextures;
-import tekcays_addon.common.items.behaviors.FilterBehavior;
-
-import javax.annotation.Nonnull;
 
 public class MetaTileEntityFilter extends RecipeMapPrimitiveMultiblockController {
-
 
     public MetaTileEntityFilter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.FILTRATION);
@@ -50,7 +50,7 @@ public class MetaTileEntityFilter extends RecipeMapPrimitiveMultiblockController
         ItemStack filterStack = importItems.getStackInSlot(0);
         if (filterStack.getDisplayName().equals("Air")) {
             this.recipeMapWorkable.setWorkingEnabled(false);
-            //this.recipeMapWorkable.invalidateOutputs();
+            // this.recipeMapWorkable.invalidateOutputs();
             return;
         } else this.recipeMapWorkable.setWorkingEnabled(true);
 
@@ -67,11 +67,11 @@ public class MetaTileEntityFilter extends RecipeMapPrimitiveMultiblockController
         return TKCYATextures.STEEL_GT;
     }
 
-
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        getFrontOverlay().renderOrientedState(renderState, translation, pipeline, getFrontFacing(), recipeMapWorkable.isActive(), recipeMapWorkable.isWorkingEnabled());
+        getFrontOverlay().renderOrientedState(renderState, translation, pipeline, getFrontFacing(),
+                recipeMapWorkable.isActive(), recipeMapWorkable.isWorkingEnabled());
     }
 
     @Override
@@ -89,7 +89,8 @@ public class MetaTileEntityFilter extends RecipeMapPrimitiveMultiblockController
                         .setContainerClicking(true, true))
 
                 .widget(new RecipeProgressWidget(recipeMapWorkable::getProgressPercent, 65, 35, 18, 18,
-                        GuiTextures.PROGRESS_BAR_SIFT, ProgressWidget.MoveType.VERTICAL_DOWNWARDS, TKCYARecipeMaps.FILTRATION))
+                        GuiTextures.PROGRESS_BAR_SIFT, ProgressWidget.MoveType.VERTICAL_DOWNWARDS,
+                        TKCYARecipeMaps.FILTRATION))
 
                 .widget(new SlotWidget(exportItems, 0, 50, 60, true, false)
                         .setBackgroundTexture(GuiTextures.SLOT))
@@ -102,7 +103,7 @@ public class MetaTileEntityFilter extends RecipeMapPrimitiveMultiblockController
                 .bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 0);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     protected ICubeRenderer getFrontOverlay() {
         return Textures.SIFTER_OVERLAY;
@@ -112,6 +113,4 @@ public class MetaTileEntityFilter extends RecipeMapPrimitiveMultiblockController
     public boolean hasMaintenanceMechanics() {
         return false;
     }
-
-
 }

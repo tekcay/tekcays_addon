@@ -1,20 +1,19 @@
 package tekcays_addon.loaders.recipe.handlers;
 
-import gregtech.api.metatileentity.multiblock.CleanroomType;
-import gregtech.api.recipes.ingredients.IntCircuitIngredient;
-import tekcays_addon.gtapi.consts.TKCYAValues;
-
 import static gregtech.api.GTValues.LV;
 import static gregtech.api.GTValues.VA;
 import static gregtech.api.recipes.RecipeMaps.CHEMICAL_RECIPES;
 import static gregtech.api.recipes.RecipeMaps.LARGE_CHEMICAL_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 
+import gregtech.api.metatileentity.multiblock.CleanroomType;
+import gregtech.api.recipes.ingredients.IntCircuitIngredient;
+import tekcays_addon.gtapi.consts.TKCYAValues;
+
 public class GTCEuRequireCleanRoomHandler {
 
     public static void init() {
-
-        //Polyethylene
+        // Polyethylene
 
         CHEMICAL_RECIPES.recipeBuilder()
                 .notConsumable(new IntCircuitIngredient(1))
@@ -40,8 +39,8 @@ public class GTCEuRequireCleanRoomHandler {
                 .fluidOutputs(Polyethylene.getFluid((int) (4320 * TKCYAValues.CLEANROOM_MULTIPLIER)))
                 .cleanroom(CleanroomType.CLEANROOM)
                 .duration(800).EUt(VA[LV]).buildAndRegister();
-        
-        //Polyvinylchloride
+
+        // Polyvinylchloride
 
         CHEMICAL_RECIPES.recipeBuilder()
                 .notConsumable(new IntCircuitIngredient(1))
@@ -68,8 +67,8 @@ public class GTCEuRequireCleanRoomHandler {
                 .fluidOutputs(PolyvinylChloride.getFluid((int) (4320 * TKCYAValues.CLEANROOM_MULTIPLIER)))
                 .cleanroom(CleanroomType.CLEANROOM)
                 .duration(800).EUt(VA[LV]).buildAndRegister();
-        
-        //PTFE
+
+        // PTFE
 
         CHEMICAL_RECIPES.recipeBuilder()
                 .notConsumable(new IntCircuitIngredient(1))
@@ -96,7 +95,5 @@ public class GTCEuRequireCleanRoomHandler {
                 .fluidOutputs(Polytetrafluoroethylene.getFluid((int) (4320 * TKCYAValues.CLEANROOM_MULTIPLIER)))
                 .cleanroom(CleanroomType.CLEANROOM)
                 .duration(800).EUt(VA[LV]).buildAndRegister();
-
     }
-
 }

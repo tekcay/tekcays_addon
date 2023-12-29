@@ -13,5 +13,4 @@ public class BooleanHelpers {
     public static <T> boolean anyMatch(T objectToCompareWith, List<T> objects) {
         return objects.stream().anyMatch(object -> object.equals(objectToCompareWith));
     }
-
 }

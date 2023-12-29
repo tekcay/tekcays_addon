@@ -1,13 +1,15 @@
 package tekcays_addon.common.covers;
 
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.items.IItemHandler;
+
+import org.jetbrains.annotations.NotNull;
+
 import gregtech.api.capability.GregtechCapabilities;
 import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.cover.CoverDefinition;
 import gregtech.api.cover.CoverableView;
 import gregtech.common.covers.CoverConveyor;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.items.IItemHandler;
-import org.jetbrains.annotations.NotNull;
 import tekcays_addon.api.covers.CoverMethods;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.capability.containers.LogisticContainer;
@@ -17,7 +19,8 @@ public class CoverConveyorOverhauled extends CoverConveyor implements LogisticsC
     private final long energyPerOperation;
     private final long minEnergyNeeded;
 
-    public CoverConveyorOverhauled(@NotNull CoverDefinition definition, @NotNull CoverableView coverableView, @NotNull EnumFacing attachedSide, int tier, int itemsPerSecond) {
+    public CoverConveyorOverhauled(@NotNull CoverDefinition definition, @NotNull CoverableView coverableView,
+                                   @NotNull EnumFacing attachedSide, int tier, int itemsPerSecond) {
         super(definition, coverableView, attachedSide, tier, itemsPerSecond);
         this.energyPerOperation = CoverMethods.getEnergyPerOperation(tier);
         this.minEnergyNeeded = CoverMethods.minEnergyNeeded(tier);

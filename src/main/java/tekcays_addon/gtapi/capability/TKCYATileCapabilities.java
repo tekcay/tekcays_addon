@@ -1,8 +1,9 @@
 package tekcays_addon.gtapi.capability;
 
-import gregtech.api.capability.SimpleCapabilityManager;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
+
+import gregtech.api.capability.SimpleCapabilityManager;
 import tekcays_addon.gtapi.capability.containers.*;
 
 public class TKCYATileCapabilities {
@@ -40,7 +41,6 @@ public class TKCYATileCapabilities {
     @CapabilityInject(LogisticContainer.class)
     public static Capability<LogisticContainer> CAPABILITY_ITEM_LOGISTIC = null;
 
-
     public static void init() {
         SimpleCapabilityManager.registerCapabilityWithNoDefault(IHeatContainer.class);
         SimpleCapabilityManager.registerCapabilityWithNoDefault(IVacuumContainer.class);
@@ -53,5 +53,4 @@ public class TKCYATileCapabilities {
         SimpleCapabilityManager.registerCapabilityWithNoDefault(IHinderedContainer.class);
         SimpleCapabilityManager.registerCapabilityWithNoDefault(LogisticContainer.class);
     }
-
 }

@@ -1,5 +1,26 @@
 package tekcays_addon.common.metatileentities.multi.storage;
 
+import static gregtech.api.util.RelativeDirection.*;
+import static tekcays_addon.api.metatileentity.TankMethods.*;
+import static tekcays_addon.api.metatileentity.predicates.Predicates.isAir;
+import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.*;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.event.HoverEvent;
+import net.minecraft.world.World;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
@@ -14,36 +35,19 @@ import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import lombok.Getter;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.event.HoverEvent;
-import net.minecraft.world.World;
 import tekcays_addon.api.units.IPressureFormatting;
 import tekcays_addon.gtapi.capability.containers.IPressureContainer;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.math.BigDecimal;
-import java.util.List;
-
-import static gregtech.api.util.RelativeDirection.*;
-import static tekcays_addon.api.metatileentity.predicates.Predicates.isAir;
-import static tekcays_addon.api.metatileentity.TankMethods.*;
-import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.*;
-
-public class MetaTileEntityModulablePressurizedMultiblockTank extends MultiblockWithDisplayBase implements IPressureFormatting {
+public class MetaTileEntityModulablePressurizedMultiblockTank extends MultiblockWithDisplayBase
+                                                              implements IPressureFormatting {
 
     private final Material material;
     private final int maxPressure;
     @Getter
     private IPressureContainer pressureContainer;
 
-    public MetaTileEntityModulablePressurizedMultiblockTank(ResourceLocation metaTileEntityId, Material material, int maxPressure) {
+    public MetaTileEntityModulablePressurizedMultiblockTank(ResourceLocation metaTileEntityId, Material material,
+                                                            int maxPressure) {
         super(metaTileEntityId);
         this.material = material;
         this.maxPressure = maxPressure;
@@ -75,7 +79,7 @@ public class MetaTileEntityModulablePressurizedMultiblockTank extends Multiblock
         if (getOffsetTimer() % 20 == 0) {
             pressureContainer = getPressureContainer();
             if (pressureContainer != null) {
-                //pressureContainer.changePressurizedFluidStack(Hydrogen.getFluid(1), 10);
+                // pressureContainer.changePressurizedFluidStack(Hydrogen.getFluid(1), 10);
 
                 if (pressureContainer.getPressure() > maxPressure) {
                     this.explodeMultiblock(5);
@@ -84,13 +88,13 @@ public class MetaTileEntityModulablePressurizedMultiblockTank extends Multiblock
         }
     }
 
-    @Nonnull
+    @NotNull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
                 .aisle("XXX", "XXX", "XXX")
                 .aisle("XSX", "X X", "XXX")
-                .aisle("XXX", "XIX", "XXX").setRepeatable(1,11)
+                .aisle("XXX", "XIX", "XXX").setRepeatable(1, 11)
                 .aisle("XXX", "XXX", "XXX")
                 .where('S', selfPredicate())
                 .where('I', isAir("height"))
@@ -126,10 +130,9 @@ public class MetaTileEntityModulablePressurizedMultiblockTank extends Multiblock
     }
 
     private String getFillPercentage() {
-       return isTankEmpty() ? "0% Filled"
-                : BigDecimal.valueOf(100 * this.pressureContainer.getPressure())
-               .divide(BigDecimal.valueOf(this.pressureContainer.getMaxPressure()), 1, BigDecimal.ROUND_UP).toString()
-               + "% Filled";
+        return isTankEmpty() ? "0% Filled" : BigDecimal.valueOf(100 * this.pressureContainer.getPressure())
+                .divide(BigDecimal.valueOf(this.pressureContainer.getMaxPressure()), 1, BigDecimal.ROUND_UP)
+                .toString() + "% Filled";
     }
 
     private int getFluidStackAmount() {
@@ -138,9 +141,8 @@ public class MetaTileEntityModulablePressurizedMultiblockTank extends Multiblock
 
     private String getTankContent() {
         return isTankEmpty() ? "Empty" :
-                getPressureWithUnit(this.pressureContainer.getPressure())
-                        + " of "
-                + this.pressureContainer.getPressurizedFluidStackLocalizedName();
+                getPressureWithUnit(this.pressureContainer.getPressure()) + " of " +
+                        this.pressureContainer.getPressurizedFluidStackLocalizedName();
     }
 
     @Override
@@ -149,7 +151,7 @@ public class MetaTileEntityModulablePressurizedMultiblockTank extends Multiblock
         getFrontOverlay().renderSided(getFrontFacing(), renderState, translation, pipeline);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     protected ICubeRenderer getFrontOverlay() {
         return Textures.MULTIBLOCK_TANK_OVERLAY;
@@ -157,21 +159,25 @@ public class MetaTileEntityModulablePressurizedMultiblockTank extends Multiblock
 
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
-
         if (!this.isStructureFormed()) {
             ITextComponent tooltip = new TextComponentTranslation("gregtech.multiblock.invalid_structure.tooltip");
             tooltip.setStyle((new Style()).setColor(TextFormatting.GRAY));
-            textList.add((new TextComponentTranslation("gregtech.multiblock.invalid_structure")).setStyle((new Style()).setColor(TextFormatting.RED).setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
+            textList.add((new TextComponentTranslation("gregtech.multiblock.invalid_structure")).setStyle((new Style())
+                    .setColor(TextFormatting.RED).setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
         } else {
             textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.content", getTankContent()));
-            textList.add(new TextComponentTranslation("tkcya.general.pressure.tooltip.max_pressure", getPressureWithUnit(maxPressure)));
-            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.fill.percentage", getFillPercentage()));
-            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.bucket_equivalent", getFluidStackAmount()));
+            textList.add(new TextComponentTranslation("tkcya.general.pressure.tooltip.max_pressure",
+                    getPressureWithUnit(maxPressure)));
+            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.fill.percentage",
+                    getFillPercentage()));
+            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.bucket_equivalent",
+                    getFluidStackAmount()));
         }
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World player, @NotNull List<String> tooltip,
+                               boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tkcya.multiblock.modulable_tank.tooltip"));
         tooltip.add(I18n.format("tkcya.general.pressure.tooltip.max_pressure", getPressureWithUnit(maxPressure)));

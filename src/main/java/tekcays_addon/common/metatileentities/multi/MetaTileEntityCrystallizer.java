@@ -1,5 +1,17 @@
 package tekcays_addon.common.metatileentities.multi;
 
+import java.util.List;
+
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.event.HoverEvent;
+
+import org.jetbrains.annotations.NotNull;
+
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
@@ -13,27 +25,15 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.event.HoverEvent;
 import tekcays_addon.api.metatileentity.LogicType;
 import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
-import javax.annotation.Nonnull;
-import java.util.List;
-
-import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
-
 public class MetaTileEntityCrystallizer extends ModulableRecipeMapController {
 
-
     public MetaTileEntityCrystallizer(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.CRYSTALLIZATION, LogicType.NO_ENERGY, LogicType.NO_MAINTENANCE, LogicType.NO_MUFFLER);
+        super(metaTileEntityId, TKCYARecipeMaps.CRYSTALLIZATION, LogicType.NO_ENERGY, LogicType.NO_MAINTENANCE,
+                LogicType.NO_MUFFLER);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class MetaTileEntityCrystallizer extends ModulableRecipeMapController {
         return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.INVAR_HEATPROOF);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
@@ -64,11 +64,11 @@ public class MetaTileEntityCrystallizer extends ModulableRecipeMapController {
         return Textures.HEAT_PROOF_CASING;
     }
 
-
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        getFrontOverlay().renderOrientedState(renderState, translation, pipeline, getFrontFacing(), recipeMapWorkable.isActive(), recipeMapWorkable.isWorkingEnabled());
+        getFrontOverlay().renderOrientedState(renderState, translation, pipeline, getFrontFacing(),
+                recipeMapWorkable.isActive(), recipeMapWorkable.isWorkingEnabled());
     }
 
     @Override
@@ -76,7 +76,8 @@ public class MetaTileEntityCrystallizer extends ModulableRecipeMapController {
         if (!this.isStructureFormed()) {
             ITextComponent tooltip = new TextComponentTranslation("gregtech.multiblock.invalid_structure.tooltip");
             tooltip.setStyle((new Style()).setColor(TextFormatting.GRAY));
-            textList.add((new TextComponentTranslation("gregtech.multiblock.invalid_structure")).setStyle((new Style()).setColor(TextFormatting.RED).setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
+            textList.add((new TextComponentTranslation("gregtech.multiblock.invalid_structure")).setStyle((new Style())
+                    .setColor(TextFormatting.RED).setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
         } else {
             if (!this.recipeMapWorkable.isWorkingEnabled()) {
                 textList.add(new TextComponentTranslation("gregtech.multiblock.work_paused"));
@@ -91,4 +92,3 @@ public class MetaTileEntityCrystallizer extends ModulableRecipeMapController {
         }
     }
 }
-

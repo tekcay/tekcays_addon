@@ -1,9 +1,8 @@
 package tekcays_addon.common.blocks.blocks;
 
-import gregtech.api.block.VariantBlock;
-import gregtech.api.block.VariantItemBlock;
-import gregtech.common.blocks.MetaBlocks;
-import lombok.Getter;
+import java.util.Arrays;
+import java.util.List;
+
 import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.SoundType;
@@ -16,15 +15,17 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import gregtech.api.block.VariantBlock;
+import gregtech.api.block.VariantItemBlock;
+import gregtech.common.blocks.MetaBlocks;
+import lombok.Getter;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.List;
-
 public class BlockCutWood extends VariantBlock<BlockCutWood.CutWoodType> {
-
 
     public static final String TRANSLATION_KEY = "block_cut_wood";
     public static final String LOG = "log";
@@ -43,7 +44,6 @@ public class BlockCutWood extends VariantBlock<BlockCutWood.CutWoodType> {
 
     @Nullable
     public static CutWoodType getCutWoodTypeFromLog(IBlockState block) {
-
         if (block.equals(Blocks.LOG2.getDefaultState())) {
             return CutWoodType.ACACIA;
 
@@ -68,7 +68,6 @@ public class BlockCutWood extends VariantBlock<BlockCutWood.CutWoodType> {
 
         return null;
     }
-
 
     @Nullable
     public static IBlockState getPlankFromCutWood(IBlockState block) {
@@ -115,47 +114,53 @@ public class BlockCutWood extends VariantBlock<BlockCutWood.CutWoodType> {
     public static @Nullable IBlockState getUpperBlockBlockState(String[] infos) {
         CutWoodType cutWoodType = getCustomType(infos[1]);
         switch (infos[0]) {
-            case LOG : {
+            case LOG: {
                 return getLog(cutWoodType.getVariant());
             }
-            case TRANSLATION_KEY : {
+            case TRANSLATION_KEY: {
                 return getCutLog(cutWoodType.getVariant());
             }
-            case PLANK : {
+            case PLANK: {
                 return getPlank(cutWoodType.getVariant());
             }
-            default : return null;
+            default:
+                return null;
         }
     }
 
     /*
-    public static @Nullable String getBlockType(IBlockState blockState) {
-        String[] infos = blockState.toString().split(":")[1].split("\\[");
-        CutWoodType cutWoodType = getCustomType(infos[1]);
-        switch (infos[0]) {
-            case LOG : return getLog(cutWoodType.getVariant());
-            case TRANSLATION_KEY : return getCutLog(cutWoodType.getVariant());
-            case PLANK : return getPlank(cutWoodType.getVariant());
-            default : return null;
-        }
-    }
-
+     * public static @Nullable String getBlockType(IBlockState blockState) {
+     * String[] infos = blockState.toString().split(":")[1].split("\\[");
+     * CutWoodType cutWoodType = getCustomType(infos[1]);
+     * switch (infos[0]) {
+     * case LOG : return getLog(cutWoodType.getVariant());
+     * case TRANSLATION_KEY : return getCutLog(cutWoodType.getVariant());
+     * case PLANK : return getPlank(cutWoodType.getVariant());
+     * default : return null;
+     * }
+     * }
+     * 
      */
 
     public static @Nullable IBlockState getUpperBlockBlockState(IBlockState blockState) {
         String[] infos = blockState.toString().split(":")[1].split("\\[");
         CutWoodType cutWoodType = getCustomType(infos[1]);
         switch (infos[0]) {
-            case LOG : return getLog(cutWoodType.getVariant());
-            case TRANSLATION_KEY : return getCutLog(cutWoodType.getVariant());
-            case PLANK : return getPlank(cutWoodType.getVariant());
-            default : return null;
+            case LOG:
+                return getLog(cutWoodType.getVariant());
+            case TRANSLATION_KEY:
+                return getCutLog(cutWoodType.getVariant());
+            case PLANK:
+                return getPlank(cutWoodType.getVariant());
+            default:
+                return null;
         }
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(@Nonnull ItemStack itemStack, @Nullable World worldIn, List<String> lines, @Nonnull ITooltipFlag tooltipFlag) {
+    public void addInformation(@NotNull ItemStack itemStack, @Nullable World worldIn, List<String> lines,
+                               @NotNull ITooltipFlag tooltipFlag) {
         super.addInformation(itemStack, worldIn, lines, tooltipFlag);
 
         // noinspection rawtypes, unchecked

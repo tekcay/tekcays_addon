@@ -1,5 +1,20 @@
 package tekcays_addon.common.metatileentities.multi;
 
+import static gregtech.api.util.RelativeDirection.*;
+
+import java.util.List;
+
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -13,25 +28,12 @@ import gregtech.api.unification.material.Materials;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.MetaBlocks;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.World;
 import tekcays_addon.api.metatileentity.LogicType;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.gtapi.logic.ModulableLogic;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.render.TKCYATextures;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-
-import static gregtech.api.util.RelativeDirection.*;
 
 public class MetaTileEntitySpiralSeparator extends RecipeMapMultiblockController {
 
@@ -96,7 +98,8 @@ public class MetaTileEntitySpiralSeparator extends RecipeMapMultiblockController
     }
 
     protected IBlockState getCasingState() {
-        return TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL);
+        return TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING
+                .getState(BlockLargeMultiblockCasing.CasingType.GALVANIZED_STEEL_WALL);
     }
 
     protected IBlockState getFrameState() {
@@ -116,7 +119,8 @@ public class MetaTileEntitySpiralSeparator extends RecipeMapMultiblockController
     }
 
     @Override
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
+    public void addInformation(@NotNull ItemStack stack, @Nullable World player, @NotNull List<String> tooltip,
+                               boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tkcya.machine.no_overclock.tooltip"));
         tooltip.add(I18n.format("tkcya.machine.spiral_separator.tooltip.1"));
@@ -125,14 +129,13 @@ public class MetaTileEntitySpiralSeparator extends RecipeMapMultiblockController
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
         super.addDisplayText(textList);
-        if (this.isStructureFormed()) textList.add(new TextComponentTranslation("tkcya.machine.height.tooltip", height));
+        if (this.isStructureFormed())
+            textList.add(new TextComponentTranslation("tkcya.machine.height.tooltip", height));
     }
 
-    @Nonnull
+    @NotNull
     @Override
     protected ICubeRenderer getFrontOverlay() {
         return Textures.CRACKING_UNIT_OVERLAY;
     }
-
-
 }

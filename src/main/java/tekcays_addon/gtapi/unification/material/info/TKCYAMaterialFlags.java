@@ -1,17 +1,15 @@
 package tekcays_addon.gtapi.unification.material.info;
 
-import gregtech.api.unification.material.info.MaterialFlag;
-import gregtech.api.unification.material.info.MaterialFlags;
-import gregtech.api.unification.material.properties.PropertyKey;
+import static gregtech.api.unification.material.Materials.*;
+import static gregtech.api.unification.material.info.MaterialFlags.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static gregtech.api.unification.material.Materials.*;
-import static gregtech.api.unification.material.info.MaterialFlags.*;
+import gregtech.api.unification.material.info.MaterialFlag;
+import gregtech.api.unification.material.properties.PropertyKey;
 
 public class TKCYAMaterialFlags {
-
 
     public static final MaterialFlag GENERATE_CURVED_PLATE = new MaterialFlag.Builder("curvedPlate")
             .requireFlags(GENERATE_PLATE)
@@ -55,8 +53,4 @@ public class TKCYAMaterialFlags {
         ALL_PARTS.add(GENERATE_CURVED_PLATE);
         ALL_PARTS.add(GENERATE_ROUND);
     }
-
-
 }
-
-

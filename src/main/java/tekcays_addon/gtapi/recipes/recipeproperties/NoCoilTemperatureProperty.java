@@ -1,11 +1,12 @@
 package tekcays_addon.gtapi.recipes.recipeproperties;
 
-import gregtech.api.recipes.recipeproperties.RecipeProperty;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
-import tekcays_addon.api.recipeproperties.RecipePropertiesHelper;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
+
+import gregtech.api.recipes.recipeproperties.RecipeProperty;
+import tekcays_addon.api.recipeproperties.RecipePropertiesHelper;
 
 public class NoCoilTemperatureProperty extends RecipeProperty<Integer> implements RecipePropertiesHelper {
 
@@ -30,7 +31,7 @@ public class NoCoilTemperatureProperty extends RecipeProperty<Integer> implement
     }
 
     @Override
-    public void drawInfo(@Nonnull Minecraft minecraft, int x, int y, int color, Object value) {
+    public void drawInfo(@NotNull Minecraft minecraft, int x, int y, int color, Object value) {
         minecraft.fontRenderer.drawString(I18n.format("tkcya.recipe.temperature", castValue(value)), x, y, color);
     }
 }

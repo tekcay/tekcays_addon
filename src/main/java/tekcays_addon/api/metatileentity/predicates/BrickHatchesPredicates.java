@@ -1,26 +1,28 @@
 package tekcays_addon.api.metatileentity.predicates;
 
+import static gregtech.api.metatileentity.multiblock.MultiblockControllerBase.metaTileEntities;
+import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import gregtech.api.pattern.TraceabilityPredicate;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.common.metatileentities.multiblockpart.brick.MetaTileEntityBrickFluidHatch;
 import tekcays_addon.common.metatileentities.multiblockpart.brick.MetaTileEntityBrickItemBus;
 import tekcays_addon.common.metatileentities.multiblockpart.brick.MetaTileEntityPrimitiveMufflerHatch;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static gregtech.api.metatileentity.multiblock.MultiblockControllerBase.metaTileEntities;
-import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.*;
-
 public class BrickHatchesPredicates {
 
-    public static final List<BlockBrick.BrickType> BRICKS = new ArrayList<BlockBrick.BrickType>() {{
-       add(BlockBrick.BrickType.BRICK);
-       add(BlockBrick.BrickType.REINFORCED_BRICK);
-       add(BlockBrick.BrickType.FIRECLAY_BRICK);
-       add(BlockBrick.BrickType.STRONG_BRICK);
-    }};
+    public static final List<BlockBrick.BrickType> BRICKS = new ArrayList<BlockBrick.BrickType>() {
 
+        {
+            add(BlockBrick.BrickType.BRICK);
+            add(BlockBrick.BrickType.REINFORCED_BRICK);
+            add(BlockBrick.BrickType.FIRECLAY_BRICK);
+            add(BlockBrick.BrickType.STRONG_BRICK);
+        }
+    };
 
     public static TraceabilityPredicate getInputBrickFluidHatch(BlockBrick.BrickType brick) {
         for (MetaTileEntityBrickFluidHatch mte : BRICK_IMPORT_FLUID_HATCH) {
@@ -60,5 +62,4 @@ public class BrickHatchesPredicates {
     public static TraceabilityPredicate getHeatAcceptor() {
         return metaTileEntities(HEAT_ACCEPTOR[0]);
     }
-
 }

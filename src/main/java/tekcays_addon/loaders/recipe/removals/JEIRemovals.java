@@ -1,27 +1,26 @@
 package tekcays_addon.loaders.recipe.removals;
 
+import static gregtech.common.metatileentities.MetaTileEntities.*;
+import static net.minecraft.init.Blocks.FURNACE;
+
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+
 import gregtech.api.GTValues;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import tekcays_addon.api.consts.ComponentsLists;
 import tekcays_addon.common.TKCYAConfigHolder;
-import tekcays_addon.loaders.recipe.handlers.ComponentsHandler;
-
-import static gregtech.common.metatileentities.MetaTileEntities.*;
-import static net.minecraft.init.Blocks.FURNACE;
 
 @JEIPlugin
-public class JEIRemovals implements IModPlugin { {
-}
+public class JEIRemovals implements IModPlugin {
+
+    {}
 
     @Override
-    public void register(IModRegistry registry)
-    {
+    public void register(IModRegistry registry) {
         IJeiHelpers jeiHelpers = registry.getJeiHelpers();
         IIngredientBlacklist ingredientBlacklist = jeiHelpers.getIngredientBlacklist();
 
@@ -108,28 +107,22 @@ public class JEIRemovals implements IModPlugin { {
             ingredientBlacklist.addIngredientToBlacklist(MULTI_FURNACE.getStackForm());
         }
 
-        if (TKCYAConfigHolder.harderStuff.enableRoastingOverhaul) ingredientBlacklist.addIngredientToBlacklist(ELECTRIC_BLAST_FURNACE.getStackForm());
+        if (TKCYAConfigHolder.harderStuff.enableRoastingOverhaul)
+            ingredientBlacklist.addIngredientToBlacklist(ELECTRIC_BLAST_FURNACE.getStackForm());
 
-
-        //ComponentsHandler.hideLvToIvLogisticComponents(ingredientBlacklist);
-
+        // ComponentsHandler.hideLvToIvLogisticComponents(ingredientBlacklist);
 
         if (TKCYAConfigHolder.miscOverhaul.disableHighTierMachines) {
 
             /*
-
-            for ()
-
-            for (int i = GTValues.LuV; i < GTValues.UV + 1; i++) {
-                ingredientBlacklist.addIngredientToBlacklist(GAS_TURBINE[i].getStackForm());
-            }
-
+             * 
+             * for ()
+             * 
+             * for (int i = GTValues.LuV; i < GTValues.UV + 1; i++) {
+             * ingredientBlacklist.addIngredientToBlacklist(GAS_TURBINE[i].getStackForm());
+             * }
+             * 
              */
         }
-
-
-
-
     }
-
 }

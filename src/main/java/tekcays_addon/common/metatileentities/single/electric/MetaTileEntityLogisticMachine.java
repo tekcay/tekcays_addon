@@ -1,5 +1,20 @@
 package tekcays_addon.common.metatileentities.single.electric;
 
+import java.util.List;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.items.ItemStackHandler;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import gregtech.api.GTValues;
 import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.capability.impl.FilteredFluidHandler;
@@ -11,21 +26,8 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.TieredMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.common.metatileentities.storage.MetaTileEntityBuffer;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.capability.containers.LogisticContainer;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
 
 public class MetaTileEntityLogisticMachine extends TieredMetaTileEntity implements LogisticContainer {
 
@@ -52,7 +54,7 @@ public class MetaTileEntityLogisticMachine extends TieredMetaTileEntity implemen
             fluidHandlers[i] = new FilteredFluidHandler(TANK_SIZE);
         }
         fluidInventory = fluidTankList = new FluidTankList(false, fluidHandlers);
-        itemInventory = itemStackHandler = new ItemStackHandler((int)Math.pow(tier, 2));
+        itemInventory = itemStackHandler = new ItemStackHandler((int) Math.pow(tier, 2));
     }
 
     @Override
@@ -67,7 +69,7 @@ public class MetaTileEntityLogisticMachine extends TieredMetaTileEntity implemen
     protected ModularUI createUI(EntityPlayer entityPlayer) {
         int invTier = tier;
         ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND,
-                176, Math.max(166, 18 + 18 * invTier + 94));//176, 166
+                176, Math.max(166, 18 + 18 * invTier + 94));// 176, 166
         for (int i = 0; i < this.fluidTankList.getTanks(); i++) {
             builder.widget(new TankWidget(this.fluidTankList.getTankAt(i), 176 - 8 - 18, 18 + 18 * i, 18, 18)
                     .setAlwaysShowFull(true)
@@ -98,12 +100,15 @@ public class MetaTileEntityLogisticMachine extends TieredMetaTileEntity implemen
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World player, @NotNull List<String> tooltip,
+                               boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tkcya.machine.logistic_machine.tooltip.description.1"));
         tooltip.add(I18n.format("tkcya.machine.logistic_machine.tooltip.cover_consumption", GTValues.V[this.tier - 1]));
-        tooltip.add(I18n.format("gregtech.universal.tooltip.voltage_in", super.energyContainer.getInputVoltage(), GTValues.VNF[getTier()]));
-        tooltip.add(I18n.format("gregtech.universal.tooltip.energy_storage_capacity",super.energyContainer.getEnergyCapacity()));
+        tooltip.add(I18n.format("gregtech.universal.tooltip.voltage_in", super.energyContainer.getInputVoltage(),
+                GTValues.VNF[getTier()]));
+        tooltip.add(I18n.format("gregtech.universal.tooltip.energy_storage_capacity",
+                super.energyContainer.getEnergyCapacity()));
     }
 
     @Override

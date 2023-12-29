@@ -1,27 +1,30 @@
 package tekcays_addon.common.metatileentities.multiblockpart.brick;
 
-import gregtech.api.metatileentity.MetaTileEntity;
-import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.client.renderer.ICubeRenderer;
-import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityItemBus;
+import java.util.List;
+
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandlerModifiable;
+
+import org.jetbrains.annotations.Nullable;
+
+import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import gregtech.client.renderer.ICubeRenderer;
+import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityItemBus;
+import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.gtapi.render.TKCYATextures;
-import tekcays_addon.common.blocks.blocks.BlockBrick;
-
-import javax.annotation.Nullable;
-import java.util.List;
 
 public class MetaTileEntityBrickItemBus extends MetaTileEntityItemBus {
 
     private final BlockBrick.BrickType brick;
 
-    public MetaTileEntityBrickItemBus(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick, boolean isExportHatch) {
+    public MetaTileEntityBrickItemBus(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick,
+                                      boolean isExportHatch) {
         super(metaTileEntityId, 0, isExportHatch);
         this.brick = brick;
         initializeInventory();

@@ -1,14 +1,13 @@
 package tekcays_addon.common.items;
 
-import gregtech.api.items.metaitem.MetaItem;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import gregtech.api.items.metaitem.MetaItem;
 
 public final class TKCYAMetaItems {
 
-    private TKCYAMetaItems(){
+    private TKCYAMetaItems() {
         super();
     }
 
@@ -17,15 +16,15 @@ public final class TKCYAMetaItems {
     public static MetaItem<?>.MetaValueItem MICA_INSULATOR_FOIL;
     public static MetaItem<?>.MetaValueItem GAS_COLLECTOR;
 
-    //Damageable items
+    // Damageable items
     public static MetaItem<?>.MetaValueItem ELECTRODE;
     public static MetaItem<?>.MetaValueItem FILTER;
 
-    //Mixtures
+    // Mixtures
     public static MetaItem<?>.MetaValueItem DUST_MIXTURE;
 
-    //Covers
-    ////Detectors
+    // Covers
+    //// Detectors
     public static MetaItem<?>.MetaValueItem COVER_TEMPERATURE_DETECTOR;
     public static MetaItem<?>.MetaValueItem COVER_SPEED_DETECTOR;
     public static MetaItem<?>.MetaValueItem COVER_TORQUE_DETECTOR;
@@ -33,7 +32,7 @@ public final class TKCYAMetaItems {
     public static MetaItem<?>.MetaValueItem COVER_PRESSURE_DETECTOR;
     public static MetaItem<?>.MetaValueItem COVER_VACUUM_DETECTOR;
 
-    ////Molds
+    //// Molds
     public static List<MetaItem<?>.MetaValueItem> MOLDS = new ArrayList<>();
 
     public static MetaItem<?>.MetaValueItem EMPTY_MOLD_CERAMIC;
@@ -77,7 +76,7 @@ public final class TKCYAMetaItems {
     public static MetaItem<?>.MetaValueItem COVER_MOLD_RING_CARBON;
     public static MetaItem<?>.MetaValueItem COVER_MOLD_BLOCK_CARBON;
 
-    //ULV Components
+    // ULV Components
     public static MetaItem<?>.MetaValueItem ELECTRIC_MOTOR_ULV;
     public static MetaItem<?>.MetaValueItem ELECTRIC_PUMP_ULV;
     public static MetaItem<?>.MetaValueItem PISTON_ULV;
@@ -136,12 +135,8 @@ public final class TKCYAMetaItems {
     public static MetaItem<?>.MetaValueItem FLUID_REGULATOR_ZPM;
     public static MetaItem<?>.MetaValueItem FLUID_REGULATOR_UV;
 
-
     public static void init() {
         TKCYAMetaItem1 metaItem1 = new TKCYAMetaItem1((short) 0);
         metaItem1.setRegistryName("tkcya");
-
     }
-
-
 }

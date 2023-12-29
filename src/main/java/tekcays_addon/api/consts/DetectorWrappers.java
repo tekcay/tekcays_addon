@@ -1,13 +1,10 @@
 package tekcays_addon.api.consts;
 
-import tekcays_addon.api.detectors.DetectorWrapper;
-import tekcays_addon.gtapi.capability.containers.IContainer;
-import tekcays_addon.gtapi.capability.containers.IContainerDetector;
-import tekcays_addon.gtapi.capability.containers.IPressureContainer;
-
 import static tekcays_addon.api.consts.MeasureText.*;
 import static tekcays_addon.api.consts.UnitSymbol.*;
 import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.*;
+
+import tekcays_addon.api.detectors.DetectorWrapper;
 
 public class DetectorWrappers {
 

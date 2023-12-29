@@ -1,20 +1,13 @@
 package tekcays_addon.common.metatileentities.single;
 
-import codechicken.lib.render.CCRenderState;
-import codechicken.lib.render.pipeline.ColourMultiplier;
-import codechicken.lib.render.pipeline.IVertexOperation;
-import codechicken.lib.vec.Matrix4;
-import gregtech.api.GTValues;
-import gregtech.api.capability.IEnergyContainer;
-import gregtech.api.gui.ModularUI;
-import gregtech.api.metatileentity.IDataInfoProvider;
-import gregtech.api.metatileentity.MetaTileEntity;
-import gregtech.api.metatileentity.TieredMetaTileEntity;
-import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import gregtech.api.util.GTUtility;
-import gregtech.client.renderer.texture.Textures;
-import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import static gregtech.api.capability.GregtechCapabilities.CAPABILITY_ENERGY_CONTAINER;
+import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
+import static tekcays_addon.api.consts.NBTKeys.IS_RUNNING;
+import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
+import static tekcays_addon.gtapi.render.TKCYATextures.*;
+
+import java.util.List;
+
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -28,22 +21,31 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import codechicken.lib.render.CCRenderState;
+import codechicken.lib.render.pipeline.ColourMultiplier;
+import codechicken.lib.render.pipeline.IVertexOperation;
+import codechicken.lib.vec.Matrix4;
+import gregtech.api.GTValues;
+import gregtech.api.capability.IEnergyContainer;
+import gregtech.api.gui.ModularUI;
+import gregtech.api.metatileentity.IDataInfoProvider;
+import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.util.GTUtility;
+import gregtech.client.renderer.texture.Textures;
+import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import tekcays_addon.api.capability.AdjacentCapabilityHelper;
 import tekcays_addon.gtapi.capability.containers.IRotationContainer;
 import tekcays_addon.gtapi.capability.impl.RotationContainer;
-import tekcays_addon.api.capability.AdjacentCapabilityHelper;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-
-import static gregtech.api.capability.GregtechCapabilities.CAPABILITY_ENERGY_CONTAINER;
-import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
-import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
-import static tekcays_addon.api.consts.NBTKeys.IS_RUNNING;
-import static tekcays_addon.gtapi.render.TKCYATextures.*;
-
-public class MetaTileEntityDynamo extends MetaTileEntity implements IDataInfoProvider, AdjacentCapabilityHelper<IEnergyContainer> {
+public class MetaTileEntityDynamo extends MetaTileEntity
+                                  implements IDataInfoProvider, AdjacentCapabilityHelper<IEnergyContainer> {
 
     private IRotationContainer rotationContainer;
     private IEnergyContainer energyContainer;
@@ -53,12 +55,12 @@ public class MetaTileEntityDynamo extends MetaTileEntity implements IDataInfoPro
     private boolean isRunning;
     private final long maxEnergyOutput;
 
-
     public MetaTileEntityDynamo(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId);
         this.tier = tier + 1;
-        this.maxEnergyOutput = GTValues.V[tier] * 15/16;
-        this.rotationContainer = new RotationContainer(this, 20 * this.tier, 100 * this.tier, 2000 * this.tier * this.tier);
+        this.maxEnergyOutput = GTValues.V[tier] * 15 / 16;
+        this.rotationContainer = new RotationContainer(this, 20 * this.tier, 100 * this.tier,
+                2000 * this.tier * this.tier);
         super.initializeInventory();
     }
 
@@ -80,9 +82,11 @@ public class MetaTileEntityDynamo extends MetaTileEntity implements IDataInfoPro
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline, new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
+        IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline,
+                new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
         getBaseRenderer().render(renderState, translation, colouredPipeline);
-        DYNAMO_OVERLAY.renderOrientedState(renderState, translation, colouredPipeline, getFrontFacing(), isRunning,true);
+        DYNAMO_OVERLAY.renderOrientedState(renderState, translation, colouredPipeline, getFrontFacing(), isRunning,
+                true);
     }
 
     private EnumFacing getRotationSide() {
@@ -92,7 +96,7 @@ public class MetaTileEntityDynamo extends MetaTileEntity implements IDataInfoPro
     @Override
     public void update() {
         super.update();
-        //Redstone stops fluid transfer
+        // Redstone stops fluid transfer
         if (this.isBlockRedstonePowered()) return;
         if (rotationContainer.getSpeed() == 0) return;
 
@@ -123,7 +127,7 @@ public class MetaTileEntityDynamo extends MetaTileEntity implements IDataInfoPro
 
     @Override
     @Nullable
-    public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
+    public <T> T getCapability(@NotNull Capability<T> capability, EnumFacing side) {
         if (capability == CAPABILITY_ROTATIONAL_CONTAINER && side == getRotationSide()) {
             return CAPABILITY_ROTATIONAL_CONTAINER.cast(rotationContainer);
         }
@@ -138,7 +142,7 @@ public class MetaTileEntityDynamo extends MetaTileEntity implements IDataInfoPro
         super.addInformation(stack, player, tooltip, advanced);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
@@ -180,7 +184,7 @@ public class MetaTileEntityDynamo extends MetaTileEntity implements IDataInfoPro
         }
     }
 
-    //Implementations
+    // Implementations
 
     @Override
     public EnumFacing getOutputSide() {

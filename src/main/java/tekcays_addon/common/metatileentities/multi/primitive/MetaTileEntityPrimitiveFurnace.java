@@ -1,5 +1,27 @@
 package tekcays_addon.common.metatileentities.multi.primitive;
 
+import static gregtech.api.util.RelativeDirection.*;
+
+import java.util.List;
+import java.util.Random;
+
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.event.HoverEvent;
+
+import org.jetbrains.annotations.NotNull;
+
 import codechicken.lib.raytracer.CuboidRayTraceResult;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
@@ -26,20 +48,6 @@ import gregtech.api.unification.ore.OrePrefix;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.event.HoverEvent;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockDirt;
 import tekcays_addon.gtapi.capability.containers.IHinderedContainer;
@@ -49,13 +57,8 @@ import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.gtapi.utils.TKCYALog;
 
-import javax.annotation.Nonnull;
-import java.util.List;
-import java.util.Random;
-
-import static gregtech.api.util.RelativeDirection.*;
-
-public class MetaTileEntityPrimitiveFurnace extends RecipeMapPrimitiveMultiblockController implements IHinderedMachine, IDataInfoProvider {
+public class MetaTileEntityPrimitiveFurnace extends RecipeMapPrimitiveMultiblockController
+                                            implements IHinderedMachine, IDataInfoProvider {
 
     private final IBlockState dirt = TKCYAMetaBlocks.BLOCK_DIRT.getState(BlockDirt.DirtType.DIRT);
     private final int IGNITION_CHANCE_WOOD_STICK = 30;
@@ -74,23 +77,24 @@ public class MetaTileEntityPrimitiveFurnace extends RecipeMapPrimitiveMultiblock
     }
 
     /*
-    @Override
-    public TraceabilityPredicate autoAbilities() {
-        return autoAbilities(false, false, true, true, false, false, false);
-    }
-
+     * @Override
+     * public TraceabilityPredicate autoAbilities() {
+     * return autoAbilities(false, false, true, true, false, false, false);
+     * }
+     * 
      */
 
     /*
-    @Override
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
-        super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.1"));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.2"));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.3", "2"));
-        tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.4", brick.getBrickTemperature()));
-    }
-
+     * @Override
+     * public void addInformation(@NotNull ItemStack stack, @Nullable World player, @NotNull List<String> tooltip,
+     * boolean advanced) {
+     * super.addInformation(stack, player, tooltip, advanced);
+     * tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.1"));
+     * tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.2"));
+     * tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.3", "2"));
+     * tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.4", brick.getBrickTemperature()));
+     * }
+     * 
      */
 
     @Override
@@ -99,17 +103,18 @@ public class MetaTileEntityPrimitiveFurnace extends RecipeMapPrimitiveMultiblock
             ITextComponent tooltip = new TextComponentTranslation("gregtech.multiblock.invalid_structure.tooltip");
             tooltip.setStyle((new Style()).setColor(TextFormatting.GRAY));
             textList.add((new TextComponentTranslation("gregtech.multiblock.invalid_structure"))
-                    .setStyle((new Style()).setColor(TextFormatting.RED).setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
+                    .setStyle((new Style()).setColor(TextFormatting.RED)
+                            .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
         } else {
             if (this.primitiveFurnaceLogic.getParallelLimit() != 1) {
-                textList.add(new TextComponentTranslation("gregtech.multiblock.parallel", this.primitiveFurnaceLogic.getParallelLimit()));
+                textList.add(new TextComponentTranslation("gregtech.multiblock.parallel",
+                        this.primitiveFurnaceLogic.getParallelLimit()));
             }
             if (!this.primitiveFurnaceLogic.isWorkingEnabled()) {
                 textList.add(new TextComponentTranslation("gregtech.multiblock.work_paused"));
             } else if (this.primitiveFurnaceLogic.isActive()) {
                 textList.add(new TextComponentTranslation("gregtech.multiblock.running"));
                 int currentProgress = (int) (this.primitiveFurnaceLogic.getProgressPercent() * 100.0D);
-
 
                 textList.add(new TextComponentTranslation("gregtech.multiblock.progress", currentProgress));
             } else {
@@ -124,7 +129,6 @@ public class MetaTileEntityPrimitiveFurnace extends RecipeMapPrimitiveMultiblock
                 .shouldColor(false)
                 .widget(new LabelWidget(5, 5, getMetaFullName()))
 
-
                 .widget(new SlotWidget(importItems, 0, 42, 32, true, true)
                         .setBackgroundTexture(GuiTextures.PRIMITIVE_SLOT, GuiTextures.PRIMITIVE_FURNACE_OVERLAY))
 
@@ -132,7 +136,8 @@ public class MetaTileEntityPrimitiveFurnace extends RecipeMapPrimitiveMultiblock
                         .setBackgroundTexture(GuiTextures.PRIMITIVE_SLOT, GuiTextures.PRIMITIVE_FURNACE_OVERLAY))
 
                 .widget(new RecipeProgressWidget(primitiveFurnaceLogic::getProgressPercent, 76, 32, 20, 15,
-                        GuiTextures.PRIMITIVE_BLAST_FURNACE_PROGRESS_BAR, ProgressWidget.MoveType.HORIZONTAL, TKCYARecipeMaps.PRIMITIVE_FURNACE))
+                        GuiTextures.PRIMITIVE_BLAST_FURNACE_PROGRESS_BAR, ProgressWidget.MoveType.HORIZONTAL,
+                        TKCYARecipeMaps.PRIMITIVE_FURNACE))
 
                 .widget(new SlotWidget(exportItems, 0, 113, 32, true, false)
                         .setBackgroundTexture(GuiTextures.PRIMITIVE_SLOT))
@@ -154,24 +159,19 @@ public class MetaTileEntityPrimitiveFurnace extends RecipeMapPrimitiveMultiblock
         }
 
         @Override
-        public boolean checkRecipe(@Nonnull Recipe recipe) {
+        public boolean checkRecipe(@NotNull Recipe recipe) {
             return isActive();
         }
     }
 
-
     @Override
     public void update() {
-
         super.update();
     }
 
-    private void setEfficiency() {
-    }
+    private void setEfficiency() {}
 
-    private void modifyDurationRecipe() {
-
-    }
+    private void modifyDurationRecipe() {}
 
     private int findItemStackSlot(ItemStack stackToCheck) {
         int slots = importItems.getSlots();
@@ -190,10 +190,9 @@ public class MetaTileEntityPrimitiveFurnace extends RecipeMapPrimitiveMultiblock
         }
     }
 
-
     @Override
-    public boolean onRightClick(EntityPlayer playerIn, EnumHand hand, EnumFacing facing, CuboidRayTraceResult hitResult) {
-
+    public boolean onRightClick(EntityPlayer playerIn, EnumHand hand, EnumFacing facing,
+                                CuboidRayTraceResult hitResult) {
         ItemStack itemInHand = playerIn.getHeldItemMainhand();
 
         if (itemInHand.getItem().equals(Items.STICK)) {
@@ -224,7 +223,8 @@ public class MetaTileEntityPrimitiveFurnace extends RecipeMapPrimitiveMultiblock
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        getFrontOverlay().renderOrientedState(renderState, translation, pipeline, getFrontFacing(), ignition, primitiveFurnaceLogic.isWorkingEnabled());
+        getFrontOverlay().renderOrientedState(renderState, translation, pipeline, getFrontFacing(), ignition,
+                primitiveFurnaceLogic.isWorkingEnabled());
     }
 
     @Override
@@ -260,7 +260,7 @@ public class MetaTileEntityPrimitiveFurnace extends RecipeMapPrimitiveMultiblock
         return new MetaTileEntityPrimitiveFurnace(metaTileEntityId);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
@@ -292,4 +292,3 @@ public class MetaTileEntityPrimitiveFurnace extends RecipeMapPrimitiveMultiblock
         this.ignition = buf.readBoolean();
     }
 }
-

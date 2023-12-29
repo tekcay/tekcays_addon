@@ -1,10 +1,10 @@
 package tekcays_addon.loaders.recipe.parts;
 
-import gregtech.api.unification.material.Material;
-import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
-
 import static gregtech.api.unification.ore.OrePrefix.foil;
 import static gregtech.api.unification.ore.OrePrefix.plate;
+
+import gregtech.api.unification.material.Material;
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
 public class FoilHandler {
 

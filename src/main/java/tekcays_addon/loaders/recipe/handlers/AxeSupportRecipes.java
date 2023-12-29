@@ -1,5 +1,11 @@
 package tekcays_addon.loaders.recipe.handlers;
 
+import static gregtech.api.unification.material.Materials.TreatedWood;
+import static gregtech.api.unification.material.Materials.Wood;
+
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+
 import gregtech.api.recipes.ModHandler;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Materials;
@@ -7,22 +13,17 @@ import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.UnificationEntry;
 import gregtech.common.items.ToolItems;
 import gregtech.loaders.WoodTypeEntry;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import tekcays_addon.api.recipe.RecipeRemovalHelper;
 import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 import tekcays_addon.gtapi.consts.TKCYAValues;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.unification.material.info.WoodTypeEntryWrapper;
 
-import static gregtech.api.unification.material.Materials.TreatedWood;
-import static gregtech.api.unification.material.Materials.Wood;
-
 public class AxeSupportRecipes {
 
     public static void init() {
-
-        ModHandler.addShapedRecipe(TKCYAValues.TKCYA_ID, TKCYAMetaTileEntities.AXE_SUPPORT.getStackForm(), " U ", "   ", "   ", 'U', new UnificationEntry(OrePrefix.log, Wood));
+        ModHandler.addShapedRecipe(TKCYAValues.TKCYA_ID, TKCYAMetaTileEntities.AXE_SUPPORT.getStackForm(), " U ", "   ",
+                "   ", 'U', new UnificationEntry(OrePrefix.log, Wood));
 
         for (WoodTypeEntryWrapper entry : WoodTypeEntryWrapper.WOOD_TYPE_ENTRIES_RAW) {
 
@@ -78,16 +79,13 @@ public class AxeSupportRecipes {
 
         ModHandler.removeRecipeByOutput(new ItemStack(Items.STICK, 4));
         ModHandler.removeRecipeByOutput(OreDictUnifier.get(OrePrefix.stick, TreatedWood, 4));
-
     }
 
     private static void recipeRemoval(WoodTypeEntry entry) {
-
         RecipeRemovalHelper.removeMcRecipe(RecipeRemovalHelper.MC_PLANK, entry.woodName);
         RecipeRemovalHelper.removeMcRecipe(RecipeRemovalHelper.MC_SLAB, entry.woodName);
 
         RecipeRemovalHelper.removeGtRecipeTool(RecipeRemovalHelper.SLAB_SAW, entry.woodName);
         RecipeRemovalHelper.removeGtRecipeTool(RecipeRemovalHelper.PLANK_SAW, entry.woodName);
     }
-
 }

@@ -1,17 +1,10 @@
 package tekcays_addon.common.metatileentities.multi;
 
-import gregtech.api.block.IHeatingCoilBlockStats;
-import gregtech.api.metatileentity.IDataInfoProvider;
-import gregtech.api.metatileentity.MetaTileEntity;
-import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
-import gregtech.api.recipes.Recipe;
-import gregtech.client.renderer.ICubeRenderer;
-import gregtech.client.renderer.texture.Textures;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import static gregtech.api.util.RelativeDirection.*;
+import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.ADVANCED_BLAST_FURNACE_RECIPES;
+
+import java.util.List;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -24,7 +17,23 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.input.Keyboard;
+
+import gregtech.api.block.IHeatingCoilBlockStats;
+import gregtech.api.metatileentity.IDataInfoProvider;
+import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.metatileentity.multiblock.IMultiblockPart;
+import gregtech.api.pattern.BlockPattern;
+import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.recipes.Recipe;
+import gregtech.client.renderer.ICubeRenderer;
+import gregtech.client.renderer.texture.Textures;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import tekcays_addon.api.metatileentity.LogicType;
 import tekcays_addon.api.metatileentity.predicates.Predicates;
 import tekcays_addon.common.TKCYAConfigHolder;
@@ -38,14 +47,7 @@ import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.gtapi.recipes.recipeproperties.NoEnergyTemperatureProperty;
 import tekcays_addon.gtapi.render.TKCYATextures;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-
-import static gregtech.api.util.RelativeDirection.*;
-import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.ADVANCED_BLAST_FURNACE_RECIPES;
-
-public class MetaTileEntityAdvancedBlastFurnace extends ModulableRecipeMapController implements IDataInfoProvider{
+public class MetaTileEntityAdvancedBlastFurnace extends ModulableRecipeMapController implements IDataInfoProvider {
 
     private final BlockBrick.BrickType brick;
     private final IBlockState iBlockState;
@@ -58,7 +60,7 @@ public class MetaTileEntityAdvancedBlastFurnace extends ModulableRecipeMapContro
     private int heatMultiplier;
     private final int HEAT_BASE = 24;
 
-    //TODO possibly to make it depend of heatMultiplier
+    // TODO possibly to make it depend of heatMultiplier
     private final int HEAT_DROP = 5000;
     private final int PARALLEL_MULTIPLIER = 2;
     private boolean startedRecipe;
@@ -71,7 +73,7 @@ public class MetaTileEntityAdvancedBlastFurnace extends ModulableRecipeMapContro
         this.iBlockState = TKCYAMetaBlocks.BLOCK_BRICK.getState(brick);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
@@ -84,13 +86,14 @@ public class MetaTileEntityAdvancedBlastFurnace extends ModulableRecipeMapContro
     }
 
     @Override
-    public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
+    public boolean checkRecipe(@NotNull Recipe recipe, boolean consumeIfSuccess) {
         int recipeTemp = recipe.getProperty(NoEnergyTemperatureProperty.getInstance(), 0);
         return currentTemp >= recipeTemp;
     }
 
     @Override
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
+    public void addInformation(@NotNull ItemStack stack, @Nullable World player, @NotNull List<String> tooltip,
+                               boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tekcays_addon.machine.tkcya_blast_furnace.tooltip.1"));
         tooltip.add(I18n.format("tkcya.machine.parallel_ability.tooltip"));
@@ -111,29 +114,30 @@ public class MetaTileEntityAdvancedBlastFurnace extends ModulableRecipeMapContro
             ITextComponent tooltip = new TextComponentTranslation("gregtech.multiblock.invalid_structure.tooltip");
             tooltip.setStyle((new Style()).setColor(TextFormatting.GRAY));
             textList.add((new TextComponentTranslation("gregtech.multiblock.invalid_structure"))
-                    .setStyle((new Style()).setColor(TextFormatting.RED).setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
+                    .setStyle((new Style()).setColor(TextFormatting.RED)
+                            .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
         } else {
-            //Display temperature
+            // Display temperature
             textList.add(new TextComponentTranslation("tkcya.temperature.display", currentTemp));
 
-            //Display maxTemperature
+            // Display maxTemperature
             textList.add(new TextComponentTranslation("tkcya.max_temperature.display", maxTemp));
 
             /*
-            //Display heat multiplier
-            textList.add(new TextComponentTranslation("tkcya.heat_multiplier.display", this.heatMultiplier));
-
+             * //Display heat multiplier
+             * textList.add(new TextComponentTranslation("tkcya.heat_multiplier.display", this.heatMultiplier));
+             * 
              */
 
             if (this.recipeMapWorkable.getParallelLimit() != 1) {
-                textList.add(new TextComponentTranslation("gregtech.multiblock.parallel", this.recipeMapWorkable.getParallelLimit()));
+                textList.add(new TextComponentTranslation("gregtech.multiblock.parallel",
+                        this.recipeMapWorkable.getParallelLimit()));
             }
             if (!this.recipeMapWorkable.isWorkingEnabled()) {
                 textList.add(new TextComponentTranslation("gregtech.multiblock.work_paused"));
             } else if (this.recipeMapWorkable.isActive()) {
                 textList.add(new TextComponentTranslation("gregtech.multiblock.running"));
                 int currentProgress = (int) (this.recipeMapWorkable.getProgressPercent() * 100.0D);
-
 
                 textList.add(new TextComponentTranslation("gregtech.multiblock.progress", currentProgress));
             } else {
@@ -195,13 +199,13 @@ public class MetaTileEntityAdvancedBlastFurnace extends ModulableRecipeMapContro
         actualizeTemperature();
     }
 
-    @Nonnull
+    @NotNull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
                 .aisle("AHHHA", "HHHHH", "HHHHH", "HHHHH", "AHHHA")
                 .aisle("ACCCA", "CCCCC", "CCCCC", "CCCCC", "ACCCA")
-                //.aisle("AYYYA", "YYYYY", "XYYYX", "YYYYY", "AYYYA")
+                // .aisle("AYYYA", "YYYYY", "XYYYX", "YYYYY", "AYYYA")
                 .aisle("AYSYA", "Y###Y", "Y###Y", "Y###Y", "AYMYA")
                 .aisle("ACCCA", "C###C", "C#P#C", "C###C", "ACCCA").setRepeatable(1, 11)
                 .aisle("AYYYA", "YOOOY", "YOUOY", "YOOOY", "AYYYA")
@@ -249,7 +253,8 @@ public class MetaTileEntityAdvancedBlastFurnace extends ModulableRecipeMapContro
         this.recipeMapWorkable.setParallelLimit(height < 2 ? 1 : height * PARALLEL_MULTIPLIER);
 
         Object type = context.get("CoilType");
-        if (type instanceof IHeatingCoilBlockStats) this.blastFurnaceTemperature = ((IHeatingCoilBlockStats) type).getCoilTemperature();
+        if (type instanceof IHeatingCoilBlockStats)
+            this.blastFurnaceTemperature = ((IHeatingCoilBlockStats) type).getCoilTemperature();
 
         this.maxTemp = Math.min(brick.getBrickTemperature(), this.blastFurnaceTemperature);
         this.heatMultiplier = HEAT_BASE * this.brick.getDensity() * this.blastFurnaceTemperature / 1000;
@@ -259,6 +264,4 @@ public class MetaTileEntityAdvancedBlastFurnace extends ModulableRecipeMapContro
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityAdvancedBlastFurnace(metaTileEntityId, brick);
     }
-
 }
-

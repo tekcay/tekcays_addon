@@ -1,15 +1,17 @@
 package tekcays_addon.gtapi.utils;
 
-import gregtech.api.recipes.RecipeMaps;
-import gregtech.api.unification.material.Material;
-import lombok.Getter;
-import net.minecraftforge.fluids.FluidStack;
-import java.util.ArrayList;
-import java.util.List;
-
 import static gregtech.api.unification.material.Materials.Calcite;
 import static gregtech.api.unification.material.Materials.Creosote;
 import static tekcays_addon.gtapi.consts.TKCYAValues.SECOND;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraftforge.fluids.FluidStack;
+
+import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.unification.material.Material;
+import lombok.Getter;
 
 @Getter
 public class FuelWithProperties {
@@ -29,8 +31,10 @@ public class FuelWithProperties {
         this.burnTime = burnTime;
     }
 
-    public static final FuelWithProperties CREOSOTE = new FuelWithProperties(new FluidStack(Creosote.getFluid(), 100), Creosote, 300);
-    public static final FuelWithProperties CALCITE = new FuelWithProperties(new FluidStack(Calcite.getFluid(), 8), Calcite, 100 * SECOND);
+    public static final FuelWithProperties CREOSOTE = new FuelWithProperties(new FluidStack(Creosote.getFluid(), 100),
+            Creosote, 300);
+    public static final FuelWithProperties CALCITE = new FuelWithProperties(new FluidStack(Calcite.getFluid(), 8),
+            Calcite, 100 * SECOND);
 
     public static final List<FuelWithProperties> GAS_FUELS_BURNING = new ArrayList<>();
     public static final List<FuelWithProperties> COMBUSTION_FUELS_BURNING = new ArrayList<>();
@@ -58,7 +62,8 @@ public class FuelWithProperties {
     /**
      * Retrieve the {@code FuelWithProperties} in LIQUID_FUELS_BURNING (see {@link FuelWithProperties})
      * with a {@code FluidStack}.
-     * @param list the list to seek in, i.e. LIQUID_FUELS_BURNING, GAS_FUELS_BURNING or COMBUSTION_FUELS_BURNING
+     * 
+     * @param list       the list to seek in, i.e. LIQUID_FUELS_BURNING, GAS_FUELS_BURNING or COMBUSTION_FUELS_BURNING
      * @param fluidStack
      * @return {@code null} if not found
      */
@@ -68,7 +73,4 @@ public class FuelWithProperties {
                 .findAny()
                 .orElse(null);
     }
-
-
-
 }
