@@ -18,5 +18,4 @@ public class UnitsConversions {
     public static int convertSteamToWater(int steamAmount) {
         return steamAmount / STEAM_TO_WATER;
     }
-
 }

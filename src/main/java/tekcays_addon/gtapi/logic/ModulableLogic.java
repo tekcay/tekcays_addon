@@ -1,14 +1,15 @@
 package tekcays_addon.gtapi.logic;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+
 import gregtech.api.GTValues;
 import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.recipes.Recipe;
 import tekcays_addon.api.metatileentity.LogicType;
-
-import javax.annotation.Nonnull;
-import java.util.Arrays;
-import java.util.List;
 
 public class ModulableLogic extends MultiblockRecipeLogic {
 
@@ -19,11 +20,11 @@ public class ModulableLogic extends MultiblockRecipeLogic {
         this.logicTypes = Arrays.asList(logicTypes);
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    protected int[] calculateOverclock(@Nonnull Recipe recipe) {
+    protected int[] calculateOverclock(@NotNull Recipe recipe) {
         if (logicTypes.contains(LogicType.NO_OVERCLOCK) || logicTypes.contains(LogicType.NO_ENERGY)) {
-            return new int[]{0, recipe.getDuration()};
+            return new int[] { 0, recipe.getDuration() };
         }
         return super.calculateOverclock(recipe);
     }
@@ -66,12 +67,12 @@ public class ModulableLogic extends MultiblockRecipeLogic {
 
     @Override
     public void invalidate() {
-            previousRecipe = null;
-            progressTime = 0;
-            maxProgressTime = 0;
-            recipeEUt = 0;
-            fluidOutputs = null;
-            itemOutputs = null;
-            setActive(false);
+        previousRecipe = null;
+        progressTime = 0;
+        maxProgressTime = 0;
+        recipeEUt = 0;
+        fluidOutputs = null;
+        itemOutputs = null;
+        setActive(false);
     }
 }

@@ -1,25 +1,21 @@
 package tekcays_addon.loaders.recipe;
 
-import gregtech.api.unification.material.properties.PropertyKey;
+import static tekcays_addon.common.TKCYAConfigHolder.*;
+
 import tekcays_addon.loaders.ItemsRemovalHandler;
 import tekcays_addon.loaders.recipe.chains.ChemicalChains;
 import tekcays_addon.loaders.recipe.chains.Coils;
 import tekcays_addon.loaders.recipe.chains.MineralChains;
-import tekcays_addon.loaders.recipe.handlers.StorageOverhaul;
 import tekcays_addon.loaders.recipe.handlers.*;
+import tekcays_addon.loaders.recipe.handlers.StorageOverhaul;
 import tekcays_addon.loaders.recipe.parts.PartsInit;
-import tekcays_addon.loaders.recipe.parts.RotorHandler;
 import tekcays_addon.loaders.recipe.removals.RecipesRemovalHandler;
-
-import static gregtech.api.unification.ore.OrePrefix.foil;
-import static tekcays_addon.common.TKCYAConfigHolder.*;
 
 public class TKCYARecipeLoader {
 
-    public static void preload() {
-    }
-    public static void load() {
+    public static void preload() {}
 
+    public static void load() {
         MaterialFlagsRecipes.init();
 
         PartsInit.init();
@@ -32,7 +28,7 @@ public class TKCYARecipeLoader {
 
         RecipesRemovalHandler.init();
 
-         if (harderStuff.disableComponentsShapesRecipes) ComponentsHandler.init();
+        if (harderStuff.disableComponentsShapesRecipes) ComponentsHandler.init();
 
         LargerOreOutput.init();
 
@@ -49,7 +45,7 @@ public class TKCYARecipeLoader {
             GasCollectorRecipeHandler.init();
             GlassHandler.init();
             ShapedCraftingRecipes.gasCollector();
-            //TKCYAPartsRecipeHandler.processMolds();
+            // TKCYAPartsRecipeHandler.processMolds();
             ItemsRemovalHandler.molds();
             RecipesRemovalHandler.removeMoldsAndUsage();
         }
@@ -71,7 +67,7 @@ public class TKCYARecipeLoader {
 
         if (miscOverhaul.enableElectrolysisOverhaul) {
             ElectrolysisHandler.init();
-            //GTRecipeHandler.removeAllRecipes(RecipeMaps.ELECTROLYZER_RECIPES);
+            // GTRecipeHandler.removeAllRecipes(RecipeMaps.ELECTROLYZER_RECIPES);
         }
 
         if (storageOverhaul.enableDrumsOverhaul) {
@@ -99,16 +95,14 @@ public class TKCYARecipeLoader {
         if (harderStuff.enableRoastingOverhaul) RoastingHandler.init();
 
         HeatHandler.init();
-        //MUST BE CALLED AFTER ANY HANDLER THAT GENERATES DUST_MIXTURE !
+        // MUST BE CALLED AFTER ANY HANDLER THAT GENERATES DUST_MIXTURE !
         SpiralSeparatorHandler.init();
         GTCEuRequireCleanRoomHandler.init();
-        //Must be called in the end
+        // Must be called in the end
         FiltrationRecipeHandler.init();
     }
 
-
     public static void loadLatest() {
-
         if (miscOverhaul.enableGalvanizedSteel) {
             GalvanizedSteel.galvanizingSteelBath();
             GalvanizedSteel.galvanizingSteelElectrolysis();
@@ -130,8 +124,5 @@ public class TKCYARecipeLoader {
         }
 
         AxeSupportRecipes.init();
-
-
     }
-
 }

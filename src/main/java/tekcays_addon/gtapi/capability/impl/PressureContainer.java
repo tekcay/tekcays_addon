@@ -1,29 +1,29 @@
 package tekcays_addon.gtapi.capability.impl;
 
-import gregtech.api.metatileentity.MTETrait;
-import gregtech.api.metatileentity.MetaTileEntity;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import static tekcays_addon.api.consts.DataIds.PRESSURIZED_FLUID_STACK;
+import static tekcays_addon.api.consts.NBTKeys.PRESSURE_KEY;
+import static tekcays_addon.gtapi.consts.TKCYAValues.*;
+
+import java.util.List;
+
 import net.minecraft.client.resources.I18n;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import gregtech.api.metatileentity.MTETrait;
+import gregtech.api.metatileentity.MetaTileEntity;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 import tekcays_addon.api.units.IPressureFormatting;
-import tekcays_addon.gtapi.capability.containers.IPressureContainer;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
+import tekcays_addon.gtapi.capability.containers.IPressureContainer;
 import tekcays_addon.gtapi.utils.FluidStackHelper;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-
-import java.util.List;
-
-import static tekcays_addon.api.consts.DataIds.PRESSURIZED_FLUID_STACK;
-import static tekcays_addon.api.consts.NBTKeys.PRESSURE_KEY;
-import static tekcays_addon.gtapi.consts.TKCYAValues.*;
 
 @Getter
 @Setter
@@ -62,7 +62,6 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
 
     @Override
     public int changePressurizedFluidStack(FluidStack fluidStack, int amount) {
-
         int changed = 0;
 
         FluidStack smallestFluidStackToTransfer = getSmallestFluidStackByAmount(fluidStack, amount);
@@ -73,7 +72,8 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
         }
 
         if (fluidStack.isFluidEqual(this.pressurizedFluidStack)) {
-            setPressurizedFluidStack(getChangedFluidStack(getPressurizedFluidStack(), smallestFluidStackToTransfer.amount));
+            setPressurizedFluidStack(
+                    getChangedFluidStack(getPressurizedFluidStack(), smallestFluidStackToTransfer.amount));
             changed = smallestFluidStackToTransfer.amount;
         }
 
@@ -116,7 +116,8 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
 
     @Override
     public void addTooltip(List<String> tooltip, int leakingRate) {
-        tooltip.add(I18n.format("tkcya.general.pressure.tooltip.pressure", convertPressureToBar(getMaxPressure(), true)));
+        tooltip.add(
+                I18n.format("tkcya.general.pressure.tooltip.pressure", convertPressureToBar(getMaxPressure(), true)));
         tooltip.add(I18n.format("tkcya.general.pressure.tooltip.pressure.leak", Math.abs(leakingRate)));
     }
 
@@ -130,7 +131,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
         return 0;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public String getName() {
         return "PressureContainer";
@@ -145,8 +146,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
         return null;
     }
 
-
-    @Nonnull
+    @NotNull
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = super.serializeNBT();
@@ -156,24 +156,23 @@ public class PressureContainer extends MTETrait implements IPressureContainer, I
     }
 
     @Override
-    public void deserializeNBT(@Nonnull NBTTagCompound compound) {
+    public void deserializeNBT(@NotNull NBTTagCompound compound) {
         this.pressure = compound.getInteger(PRESSURE_KEY);
-        this.pressurizedFluidStack = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag(PRESSURIZED_FLUID_STACK.name()));
-
+        this.pressurizedFluidStack = FluidStack
+                .loadFluidStackFromNBT(compound.getCompoundTag(PRESSURIZED_FLUID_STACK.name()));
     }
 
     @Override
-    public void writeInitialData(@Nonnull PacketBuffer buffer) {
+    public void writeInitialData(@NotNull PacketBuffer buffer) {
         super.writeInitialSyncData(buffer);
         buffer.writeInt(this.pressure);
     }
 
     @Override
-    public void receiveInitialData(@Nonnull PacketBuffer buffer) {
+    public void receiveInitialData(@NotNull PacketBuffer buffer) {
         super.receiveInitialData(buffer);
         this.pressure = buffer.readInt();
     }
-
 
     /**
      * Reset the pressure to default i.e. 1 bar and reset the {@code pressurizedFluidStack} to {@code null};

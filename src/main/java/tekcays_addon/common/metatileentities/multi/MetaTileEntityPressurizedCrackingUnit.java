@@ -1,5 +1,20 @@
 package tekcays_addon.common.metatileentities.multi;
 
+import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.HEAT_CONTAINER;
+
+import java.util.List;
+
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import gregtech.api.block.IHeatingCoilBlockStats;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -12,27 +27,10 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
 import tekcays_addon.api.metatileentity.LogicType;
-import tekcays_addon.api.recipe.PressureContainerCheckRecipeHelper;
 import tekcays_addon.api.units.IPressureFormatting;
 import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-
-import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
-import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.HEAT_CONTAINER;
-
 
 public class MetaTileEntityPressurizedCrackingUnit extends ModulableRecipeMapController implements IPressureFormatting {
 
@@ -53,7 +51,7 @@ public class MetaTileEntityPressurizedCrackingUnit extends ModulableRecipeMapCon
         return new MetaTileEntityPressurizedCrackingUnit(metaTileEntityId);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
@@ -92,18 +90,20 @@ public class MetaTileEntityPressurizedCrackingUnit extends ModulableRecipeMapCon
         }
         if (isStructureFormed()) {
             textList.add(new TextComponentTranslation("gregtech.multiblock.cracking_unit.energy", 100 - 10 * coilTier));
-            textList.add(new TextComponentTranslation("tkcya.machine.text.pressurized.fluid", getPressureContainer().getPressurizedFluidStackLocalizedName(), displayedPressure));
+            textList.add(new TextComponentTranslation("tkcya.machine.text.pressurized.fluid",
+                    getPressureContainer().getPressurizedFluidStackLocalizedName(), displayedPressure));
             textList.add(new TextComponentTranslation("tkcya.machine.text.temperature", displayedTemp));
         }
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World player, @NotNull List<String> tooltip,
+                               boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("gregtech.machine.cracker.tooltip.1"));
     }
 
-    @Nonnull
+    @NotNull
     @Override
     protected ICubeRenderer getFrontOverlay() {
         return Textures.CRACKING_UNIT_OVERLAY;
@@ -126,36 +126,32 @@ public class MetaTileEntityPressurizedCrackingUnit extends ModulableRecipeMapCon
     }
 
     @Override
-    public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
+    public boolean checkRecipe(@NotNull Recipe recipe, boolean consumeIfSuccess) {
         return checkRecipeHelper(recipe, consumeIfSuccess);
     }
 
-
-
-
-
     /*
-    @SuppressWarnings("InnerClassMayBeStatic")
-    private class CrackingUnitWorkableHandler extends MultiblockRecipeLogic {
-
-        public CrackingUnitWorkableHandler(RecipeMapMultiblockController tileEntity) {
-            super(tileEntity);
-        }
-
-
-        @Override
-        protected void performNonOverclockBonuses(int[] resultOverclock) {
-
-            int coilTier = ((MetaTileEntityPressurizedCrackingUnit) metaTileEntity).getCoilTier();
-            if (coilTier <= 0)
-                return;
-
-            resultOverclock[0] *= 1.0f - coilTier * 0.1; // each coil above cupronickel (coilTier = 0) uses 10% less energy
-            resultOverclock[0] = Math.max(1, resultOverclock[0]);
-        }
-
-
-    }
-
-         */
+     * @SuppressWarnings("InnerClassMayBeStatic")
+     * private class CrackingUnitWorkableHandler extends MultiblockRecipeLogic {
+     * 
+     * public CrackingUnitWorkableHandler(RecipeMapMultiblockController tileEntity) {
+     * super(tileEntity);
+     * }
+     * 
+     * 
+     * @Override
+     * protected void performNonOverclockBonuses(int[] resultOverclock) {
+     * 
+     * int coilTier = ((MetaTileEntityPressurizedCrackingUnit) metaTileEntity).getCoilTier();
+     * if (coilTier <= 0)
+     * return;
+     * 
+     * resultOverclock[0] *= 1.0f - coilTier * 0.1; // each coil above cupronickel (coilTier = 0) uses 10% less energy
+     * resultOverclock[0] = Math.max(1, resultOverclock[0]);
+     * }
+     * 
+     * 
+     * }
+     * 
+     */
 }

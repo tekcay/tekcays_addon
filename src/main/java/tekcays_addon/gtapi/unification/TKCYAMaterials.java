@@ -8,7 +8,6 @@ import tekcays_addon.gtapi.unification.material.materials.*;
 public class TKCYAMaterials {
 
     public static void init() {
-
         int id = 24000;
 
         // NoFormula 24000-24100
@@ -26,14 +25,14 @@ public class TKCYAMaterials {
         // Second Degree 24700-24800
         id = TKCYAPolymers.init(id);
 
-        //24800-24900
+        // 24800-24900
         if (TKCYAConfigHolder.harderStuff.enableRoastingOverhaul) TKCYARoastMaterials.init();
 
         // Flags
         TKCYAMaterialFlagAddition.init();
         TKCYAMaterialFlagAddition.polymersInit();
 
-        //Chemical Formula
+        // Chemical Formula
         TKCYAChemicalFormula.modifyChemicalFormula();
     }
 
@@ -59,7 +58,7 @@ public class TKCYAMaterials {
     public static Material HotAir;
     public static Material VeryHotAir;
 
-    //GoldChain
+    // GoldChain
     public static Material PreciousMetal;
     public static Material GoldAlloy;
     public static Material GoldLeach;
@@ -67,7 +66,7 @@ public class TKCYAMaterials {
     public static Material PotassiumBisulfate;
     public static Material ChloroauricAcid;
 
-    //FluorideChain
+    // FluorideChain
     public static Material PotassiumBifluoride;
     public static Material Fluorite;
     public static Material CalciumSulfonate;
@@ -80,7 +79,7 @@ public class TKCYAMaterials {
     public static Material HydrogenBromide;
     public static Material HydrogenIodide;
 
-    //ZincChain
+    // ZincChain
     public static Material ZincSulfate;
     public static Material ZincLeachingSolution;
     public static Material ZincLeachingResidue;
@@ -90,11 +89,11 @@ public class TKCYAMaterials {
     public static Material GermaniumChloride;
     public static Material GermaniumOxide;
 
-    //Misc
+    // Misc
     public static Material PotassiumMetaBisulfite;
     public static Material PotassiumHydroxide;
-    
-    //Vitriols
+
+    // Vitriols
     public static Material BlueVitriol;
     public static Material GrayVitriol;
     public static Material PinkVitriol;
@@ -104,16 +103,15 @@ public class TKCYAMaterials {
     public static Material CyanVitriol;
     public static Material RedVitriol;
 
-
-    //More roastable
+    // More roastable
     public static Material Kesterite;
     public static Material Stannite;
     public static Material Arsenopyrite;
 
-    //Roasting outputs
+    // Roasting outputs
     public static Material Cuprite;
 
-    //BauxiteChain
+    // BauxiteChain
     public static Material PotassiumAluminate;
     public static Material SodiumAluminate;
     public static Material AluminiumFluoride;
@@ -122,7 +120,7 @@ public class TKCYAMaterials {
     public static Material AluminiumHydroxide;
     public static Material Alumina;
 
-    //ChromiteChain
+    // ChromiteChain
     public static Material SodiumChromate;
     public static Material SodiumDichromate;
     public static Material ChromiumOxide;
@@ -130,16 +128,16 @@ public class TKCYAMaterials {
     public static Material SodiumSulfate;
     public static Material PotassiumSulfate;
 
-    //Tungsten chain
+    // Tungsten chain
     public static Material TreatedScheelite;
     public static Material TreatedTungstate;
     public static Material AcidicScheeliteSolution;
     public static Material AcidicTungstateSolution;
 
-    //Molybdenum chain
+    // Molybdenum chain
     public static Material MolybdenumTrioxide;
     public static Material MolybdenumFlue;
-    
+
     /**
      * Alloys
      */
@@ -150,23 +148,23 @@ public class TKCYAMaterials {
     public static Material Constantan;
     public static Material SiliconCarbide;
     public static Material BT6;
-    public static Material HastelloyC276; //Hastelloy C-276
-    public static Material HastelloyN; //Hastelloy N
+    public static Material HastelloyC276; // Hastelloy C-276
+    public static Material HastelloyN; // Hastelloy N
     public static Material Inconel600;
-    public static Material Inconel690; //Inconel-690
+    public static Material Inconel690; // Inconel-690
     public static Material EglinSteel;
-    public static Material AF1410; //AF-1410
-    public static Material Aermet100; //Aermet-100
-    public static Material HY180; //HY-180
-    public static Material HP9420; //HP9-4-20
+    public static Material AF1410; // AF-1410
+    public static Material Aermet100; // Aermet-100
+    public static Material HY180; // HY-180
+    public static Material HP9420; // HP9-4-20
     public static Material StelliteStarJ;
     public static Material Mangalloy;
-    public static Material Talonite; //talonite alloy
+    public static Material Talonite; // talonite alloy
     public static Material Nitinol;
-    public static Material Nitinol60; //Nitinol-60
-    public static Material TC4; //TiAl6V4, search for Ti-6Al-4V, Ti24Al3V
-    public static Material Aluminium5052; //Al9MgMn4
-    public static Material Aluminium6061; //Al914Mg10Si4FeCu //Common
+    public static Material Nitinol60; // Nitinol-60
+    public static Material TC4; // TiAl6V4, search for Ti-6Al-4V, Ti24Al3V
+    public static Material Aluminium5052; // Al9MgMn4
+    public static Material Aluminium6061; // Al914Mg10Si4FeCu //Common
 
     /**
      * Polymers
@@ -187,6 +185,4 @@ public class TKCYAMaterials {
     public static Material RoastedStannite;
     public static Material RoastedArsenopyrite;
     public static Material RoastedBornite;
-
-
 }

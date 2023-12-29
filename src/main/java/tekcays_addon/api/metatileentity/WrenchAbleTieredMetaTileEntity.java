@@ -1,7 +1,9 @@
 package tekcays_addon.api.metatileentity;
 
-import codechicken.lib.raytracer.CuboidRayTraceResult;
-import gregtech.api.metatileentity.TieredMetaTileEntity;
+import static gregtech.api.capability.GregtechDataCodes.UPDATE_OUTPUT_FACING;
+import static net.minecraft.util.EnumFacing.UP;
+import static tekcays_addon.api.consts.NBTKeys.OUTPUT_SIDE;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
@@ -9,9 +11,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 
-import static gregtech.api.capability.GregtechDataCodes.UPDATE_OUTPUT_FACING;
-import static net.minecraft.util.EnumFacing.UP;
-import static tekcays_addon.api.consts.NBTKeys.OUTPUT_SIDE;
+import codechicken.lib.raytracer.CuboidRayTraceResult;
+import gregtech.api.metatileentity.TieredMetaTileEntity;
 
 public abstract class WrenchAbleTieredMetaTileEntity extends TieredMetaTileEntity {
 
@@ -40,7 +41,7 @@ public abstract class WrenchAbleTieredMetaTileEntity extends TieredMetaTileEntit
     public void setFrontFacing(EnumFacing frontFacing) {
         super.setFrontFacing(frontFacing);
         if (this.outputSide == null) {
-            //set initial output facing as opposite to front
+            // set initial output facing as opposite to front
             setOutputSide(frontFacing.getOpposite());
         }
     }
@@ -51,7 +52,8 @@ public abstract class WrenchAbleTieredMetaTileEntity extends TieredMetaTileEntit
     }
 
     @Override
-    public boolean onWrenchClick(EntityPlayer playerIn, EnumHand hand, EnumFacing wrenchSide, CuboidRayTraceResult hitResult) {
+    public boolean onWrenchClick(EntityPlayer playerIn, EnumHand hand, EnumFacing wrenchSide,
+                                 CuboidRayTraceResult hitResult) {
         if (wrenchSide == null) return false;
         if (playerIn.isSneaking()) {
             if (wrenchSide == getFrontFacing() || !isValidFrontFacing(wrenchSide) || !hasFrontFacing()) return false;

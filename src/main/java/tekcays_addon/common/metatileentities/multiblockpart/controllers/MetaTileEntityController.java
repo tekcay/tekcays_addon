@@ -1,21 +1,12 @@
 package tekcays_addon.common.metatileentities.multiblockpart.controllers;
 
-import codechicken.lib.raytracer.CuboidRayTraceResult;
-import codechicken.lib.render.CCRenderState;
-import codechicken.lib.render.pipeline.IVertexOperation;
-import codechicken.lib.vec.Matrix4;
-import gregtech.api.gui.ModularUI;
-import gregtech.api.metatileentity.IDataInfoProvider;
-import gregtech.api.metatileentity.MetaTileEntity;
-import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
-import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.metatileentity.multiblock.MultiblockControllerBase;
-import gregtech.client.renderer.texture.Textures;
-import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import lombok.Getter;
-import lombok.Setter;
+import static tekcays_addon.api.consts.DetectorModes.changeDetectModeAndSendMessage;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MAX_PRESSURE;
+
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -27,6 +18,24 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import codechicken.lib.raytracer.CuboidRayTraceResult;
+import codechicken.lib.render.CCRenderState;
+import codechicken.lib.render.pipeline.IVertexOperation;
+import codechicken.lib.vec.Matrix4;
+import gregtech.api.gui.ModularUI;
+import gregtech.api.metatileentity.IDataInfoProvider;
+import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
+import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import lombok.Getter;
+import lombok.Setter;
 import tekcays_addon.api.consts.DetectorModes;
 import tekcays_addon.api.detectors.ControllerDetectorWrapper;
 import tekcays_addon.api.detectors.DetectorControllerHelper;
@@ -35,16 +44,9 @@ import tekcays_addon.gtapi.capability.containers.IContainerDetector;
 import tekcays_addon.gtapi.capability.impl.ContainerDetector;
 import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-
-import static tekcays_addon.api.consts.DetectorModes.changeDetectModeAndSendMessage;
-import static tekcays_addon.gtapi.consts.TKCYAValues.MAX_PRESSURE;
-
-public class MetaTileEntityController extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IContainerDetector>, CoverGuiHandler, IDataInfoProvider, DetectorControllerHelper {
+public class MetaTileEntityController extends MetaTileEntityMultiblockPart
+                                      implements IMultiblockAbilityPart<IContainerDetector>, CoverGuiHandler,
+                                      IDataInfoProvider, DetectorControllerHelper {
 
     @Getter
     @Setter
@@ -53,7 +55,7 @@ public class MetaTileEntityController extends MetaTileEntityMultiblockPart imple
     private final int currentValue = 0;
     private final ControllerDetectorWrapper wrapper;
 
-    public MetaTileEntityController(@Nonnull ResourceLocation metaTileEntityId, ControllerDetectorWrapper wrapper) {
+    public MetaTileEntityController(@NotNull ResourceLocation metaTileEntityId, ControllerDetectorWrapper wrapper) {
         super(metaTileEntityId, 1);
         this.wrapper = wrapper;
         this.containerControl = new ContainerDetector(this);
@@ -79,16 +81,19 @@ public class MetaTileEntityController extends MetaTileEntityMultiblockPart imple
     }
 
     @Override
-    public boolean onScrewdriverClick(EntityPlayer playerIn, EnumHand hand, EnumFacing facing, CuboidRayTraceResult hitResult) {
+    public boolean onScrewdriverClick(EntityPlayer playerIn, EnumHand hand, EnumFacing facing,
+                                      CuboidRayTraceResult hitResult) {
         if (!getWorld().isRemote) {
-            containerControl.setDetectorMode(changeDetectModeAndSendMessage(containerControl.getDetectorMode(), playerIn));
+            containerControl
+                    .setDetectorMode(changeDetectModeAndSendMessage(containerControl.getDetectorMode(), playerIn));
             return true;
         }
         return false;
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World player, @NotNull List<String> tooltip,
+                               boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tkcya.machine.multiblock_detector.tooltip.1"));
     }
@@ -105,7 +110,7 @@ public class MetaTileEntityController extends MetaTileEntityMultiblockPart imple
 
     @Override
     @Nullable
-    public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
+    public <T> T getCapability(@NotNull Capability<T> capability, EnumFacing side) {
         if (capability.equals(wrapper.getControllerCapability())) {
             return wrapper.getControllerCapability().cast(containerControl);
         }
@@ -167,7 +172,7 @@ public class MetaTileEntityController extends MetaTileEntityMultiblockPart imple
         return this.containerControl.getDetectorMode();
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();

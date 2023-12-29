@@ -1,21 +1,22 @@
 package tekcays_addon.gtapi.capability.impl;
 
+import static tekcays_addon.api.consts.NBTKeys.*;
+import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
+
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.common.capabilities.Capability;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import gregtech.api.metatileentity.MTETrait;
 import gregtech.api.metatileentity.MetaTileEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.common.capabilities.Capability;
 import tekcays_addon.gtapi.capability.containers.IRotationContainer;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import static tekcays_addon.api.consts.NBTKeys.*;
-import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
 
 @Getter
 @Setter
@@ -26,7 +27,7 @@ public class RotationContainer extends MTETrait implements IRotationContainer {
     private int speed, torque, power;
     private int maxSpeed, maxTorque, maxPower;
 
-    public RotationContainer(@Nonnull MetaTileEntity metaTileEntity, int maxSpeed, int maxTorque, int maxPower) {
+    public RotationContainer(@NotNull MetaTileEntity metaTileEntity, int maxSpeed, int maxTorque, int maxPower) {
         super(metaTileEntity);
         this.maxPower = maxPower;
         this.maxSpeed = maxSpeed;
@@ -69,7 +70,7 @@ public class RotationContainer extends MTETrait implements IRotationContainer {
         this.power = Math.max(this.power + amount, 0);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public String getName() {
         return "RotationContainer";
@@ -84,7 +85,7 @@ public class RotationContainer extends MTETrait implements IRotationContainer {
         return null;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = super.serializeNBT();
@@ -95,15 +96,14 @@ public class RotationContainer extends MTETrait implements IRotationContainer {
     }
 
     @Override
-    public void deserializeNBT(@Nonnull NBTTagCompound compound) {
+    public void deserializeNBT(@NotNull NBTTagCompound compound) {
         this.speed = compound.getInteger(SPEED_KEY);
         this.torque = compound.getInteger(TORQUE_KEY);
         this.power = compound.getInteger(POWER_KEY);
-
     }
 
     @Override
-    public void writeInitialData(@Nonnull PacketBuffer buffer) {
+    public void writeInitialData(@NotNull PacketBuffer buffer) {
         super.writeInitialData(buffer);
         buffer.writeInt(this.speed);
         buffer.writeInt(this.torque);
@@ -111,7 +111,7 @@ public class RotationContainer extends MTETrait implements IRotationContainer {
     }
 
     @Override
-    public void receiveInitialData(@Nonnull PacketBuffer buffer) {
+    public void receiveInitialData(@NotNull PacketBuffer buffer) {
         super.receiveInitialData(buffer);
         this.speed = buffer.readInt();
         this.torque = buffer.readInt();
@@ -140,7 +140,6 @@ public class RotationContainer extends MTETrait implements IRotationContainer {
         torque = this.torque;
         power = this.power;
         this.metaTileEntity.markDirty();
-
     }
 
     @Override
@@ -148,5 +147,4 @@ public class RotationContainer extends MTETrait implements IRotationContainer {
         rotationContainer.setRotationParams(rotationContainer);
         this.metaTileEntity.markDirty();
     }
-
 }

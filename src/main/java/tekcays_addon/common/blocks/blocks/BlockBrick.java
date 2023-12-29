@@ -1,7 +1,7 @@
 package tekcays_addon.common.blocks.blocks;
 
-import gregtech.api.block.VariantBlock;
-import gregtech.api.block.VariantItemBlock;
+import java.util.List;
+
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -12,9 +12,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import gregtech.api.block.VariantBlock;
+import gregtech.api.block.VariantItemBlock;
 
 public class BlockBrick extends VariantBlock<BlockBrick.BrickType> {
 
@@ -30,7 +32,8 @@ public class BlockBrick extends VariantBlock<BlockBrick.BrickType> {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(@Nonnull ItemStack itemStack, @Nullable World worldIn, List<String> lines, @Nonnull ITooltipFlag tooltipFlag) {
+    public void addInformation(@NotNull ItemStack itemStack, @Nullable World worldIn, List<String> lines,
+                               @NotNull ITooltipFlag tooltipFlag) {
         super.addInformation(itemStack, worldIn, lines, tooltipFlag);
 
         // noinspection rawtypes, unchecked
@@ -54,7 +57,6 @@ public class BlockBrick extends VariantBlock<BlockBrick.BrickType> {
         FIRECLAY_BRICK("fireclay_brick", 3600, 5, BlockBrick.FIRECLAY_BRICK),
         STRONG_BRICK("strong_brick", 5000, 8, BlockBrick.STRONG_BRICK);
 
-
         private final String name;
         private final int brickTemperature;
         private final int textureId;
@@ -67,7 +69,7 @@ public class BlockBrick extends VariantBlock<BlockBrick.BrickType> {
             this.textureId = textureId;
         }
 
-        @Nonnull
+        @NotNull
         @Override
         public String getName() {
             return this.name;

@@ -1,19 +1,18 @@
 package tekcays_addon.loaders.recipe.chains;
 
-import gregtech.api.recipes.RecipeMaps;
-import gregtech.api.unification.material.Material;
-import tekcays_addon.api.material.MaterialHelper;
-import tekcays_addon.api.recipe.RecipeRemovalHelper;
-
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.dust;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.AcidicScheeliteSolution;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.AcidicTungstateSolution;
 
+import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.unification.material.Material;
+import tekcays_addon.api.material.MaterialHelper;
+import tekcays_addon.api.recipe.RecipeRemovalHelper;
+
 public class TungstenChain {
 
     public static void init() {
-
         RecipeRemovalHelper.removeRecipeByInput(RecipeMaps.CHEMICAL_BATH_RECIPES, dust, Scheelite);
         RecipeRemovalHelper.removeRecipeByInput(RecipeMaps.CHEMICAL_BATH_RECIPES, dust, Tungstate);
 

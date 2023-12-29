@@ -1,17 +1,16 @@
 package tekcays_addon.gtapi.logic;
 
+import static gregtech.api.recipes.logic.OverclockingLogic.standardOverclockingLogic;
+
+import org.jetbrains.annotations.NotNull;
+
 import gregtech.api.GTValues;
 import gregtech.api.capability.impl.AbstractRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
 
-import javax.annotation.Nonnull;
-
-import static gregtech.api.recipes.logic.OverclockingLogic.standardOverclockingLogic;
-
 public class DieselLogic extends AbstractRecipeLogic {
-
 
     public DieselLogic(MetaTileEntity tileEntity, RecipeMap<?> recipeMap) {
         super(tileEntity, recipeMap);
@@ -43,7 +42,8 @@ public class DieselLogic extends AbstractRecipeLogic {
     }
 
     @Override
-    protected int[] runOverclockingLogic(@Nonnull IRecipePropertyStorage propertyStorage, int recipeEUt, long maxVoltage, int recipeDuration, int amountOC) {
+    protected int[] runOverclockingLogic(@NotNull IRecipePropertyStorage propertyStorage, int recipeEUt,
+                                         long maxVoltage, int recipeDuration, int amountOC) {
         return standardOverclockingLogic(
                 1,
                 getMaxVoltage(),

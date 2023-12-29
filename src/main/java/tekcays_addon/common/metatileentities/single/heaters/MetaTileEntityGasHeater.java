@@ -1,5 +1,22 @@
 package tekcays_addon.common.metatileentities.single.heaters;
 
+import static gregtech.api.gui.GuiTextures.*;
+import static gregtech.api.unification.material.Materials.*;
+import static tekcays_addon.gtapi.utils.FuelWithProperties.*;
+
+import java.util.List;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.items.IItemHandlerModifiable;
+
+import org.jetbrains.annotations.Nullable;
+
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
@@ -14,27 +31,12 @@ import gregtech.api.gui.widgets.TankWidget;
 import gregtech.api.metatileentity.IDataInfoProvider;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidTank;
-import net.minecraftforge.items.IItemHandlerModifiable;
+import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.gtapi.capability.impl.HeatContainer;
 import tekcays_addon.gtapi.metatileentity.FuelHeater;
 import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.gtapi.utils.FuelHeaterTiers;
 import tekcays_addon.gtapi.utils.FuelWithProperties;
-import tekcays_addon.common.items.TKCYAMetaItems;
-
-import javax.annotation.Nullable;
-import java.util.List;
-
-import static gregtech.api.gui.GuiTextures.*;
-import static gregtech.api.unification.material.Materials.*;
-import static tekcays_addon.gtapi.utils.FuelWithProperties.*;
 
 public class MetaTileEntityGasHeater extends FuelHeater implements IDataInfoProvider, IActiveOutputSide {
 
@@ -63,6 +65,7 @@ public class MetaTileEntityGasHeater extends FuelHeater implements IDataInfoProv
     protected IItemHandlerModifiable createImportItemHandler() {
         return new NotifiableItemStackHandler(this, 1, this, false);
     }
+
     @Override
     public FluidTankList createExportFluidHandler() {
         this.exportFluidTank = new NotifiableFluidTank(1000, this, true);
@@ -100,7 +103,8 @@ public class MetaTileEntityGasHeater extends FuelHeater implements IDataInfoProv
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        TKCYATextures.GAS_FUEL_HEATER.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isBurning(), true);
+        TKCYATextures.GAS_FUEL_HEATER.renderOrientedState(renderState, translation, pipeline, getFrontFacing(),
+                isBurning(), true);
     }
 
     private boolean isThereGasCollector() {
@@ -132,5 +136,4 @@ public class MetaTileEntityGasHeater extends FuelHeater implements IDataInfoProv
         tooltip.add(I18n.format("tkcya.machine.gas_fuel_heater.tooltip.2"));
         super.addInformation(stack, player, tooltip, advanced);
     }
-
 }

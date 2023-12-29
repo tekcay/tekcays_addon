@@ -1,20 +1,17 @@
 package tekcays_addon.loaders.recipe.handlers;
 
-import gregtech.api.recipes.GTRecipeHandler;
-import gregtech.api.recipes.RecipeMaps;
-import tekcays_addon.gtapi.utils.TKCYALog;
-
 import static gregtech.api.GTValues.LV;
 import static gregtech.api.GTValues.V;
 import static gregtech.api.unification.material.Materials.*;
 
+import gregtech.api.recipes.RecipeMaps;
+
 public class BurningGasBoilerRecipeHandler {
 
     public static void init() {
+        // GTRecipeHandler.removeAllRecipes(RecipeMaps.GAS_TURBINE_FUELS);
 
-        //GTRecipeHandler.removeAllRecipes(RecipeMaps.GAS_TURBINE_FUELS);
-
-        //gas turbine fuels
+        // gas turbine fuels
         RecipeMaps.GAS_TURBINE_FUELS.recipeBuilder()
                 .fluidInputs(NaturalGas.getFluid(8))
                 .duration(5)
@@ -119,12 +116,8 @@ public class BurningGasBoilerRecipeHandler {
 
         RecipeMaps.GAS_TURBINE_FUELS.recipeBuilder() // TODO Too OP pls nerf
                 .fluidInputs(Nitrobenzene.getFluid(1))
-                .duration(30) //Was 40
+                .duration(30) // Was 40
                 .EUt((int) V[LV])
                 .buildAndRegister();
-
-
     }
-
-
 }

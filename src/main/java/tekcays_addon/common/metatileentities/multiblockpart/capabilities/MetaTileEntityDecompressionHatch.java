@@ -1,5 +1,23 @@
 package tekcays_addon.common.metatileentities.multiblockpart.capabilities;
 
+import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_DECOMPRESSION_CONTAINER;
+
+import java.util.List;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
@@ -11,34 +29,19 @@ import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.MultiblockControllerBase;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import tekcays_addon.common.metatileentities.multi.storage.MetaTileEntityModulablePressurizedMultiblockTank;
 import tekcays_addon.gtapi.capability.containers.IDecompression;
 import tekcays_addon.gtapi.capability.containers.IPressureContainer;
 import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-
-import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_DECOMPRESSION_CONTAINER;
-
-public class MetaTileEntityDecompressionHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IDecompression> {
+public class MetaTileEntityDecompressionHatch extends MetaTileEntityMultiblockPart
+                                              implements IMultiblockAbilityPart<IDecompression> {
 
     private final int transferRate;
     private IDecompression decompression;
     private final int tierMultiplier = getTier() * getTier() + 1;
 
-    public MetaTileEntityDecompressionHatch(@Nonnull ResourceLocation metaTileEntityId, int tier) {
+    public MetaTileEntityDecompressionHatch(@NotNull ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
         this.transferRate = 10 * tierMultiplier;
     }
@@ -68,14 +71,17 @@ public class MetaTileEntityDecompressionHatch extends MetaTileEntityMultiblockPa
                     return;
                 }
 
-                if (!tileEntity.hasCapability(CAPABILITY_DECOMPRESSION_CONTAINER, getFrontFacing().getOpposite())) return;
+                if (!tileEntity.hasCapability(CAPABILITY_DECOMPRESSION_CONTAINER, getFrontFacing().getOpposite()))
+                    return;
 
                 IPressureContainer pressureContainer = getPressureContainer();
                 if (pressureContainer == null || pressureContainer.getPressurizedFluidStackAmount() == 0) return;
 
-                FluidStack fluidStack = new FluidStack(pressureContainer.getPressurizedFluidStack().getFluid(), transferRate);
+                FluidStack fluidStack = new FluidStack(pressureContainer.getPressurizedFluidStack().getFluid(),
+                        transferRate);
 
-                IDecompression decompression = tileEntity.getCapability(CAPABILITY_DECOMPRESSION_CONTAINER, getFrontFacing().getOpposite());
+                IDecompression decompression = tileEntity.getCapability(CAPABILITY_DECOMPRESSION_CONTAINER,
+                        getFrontFacing().getOpposite());
                 if (decompression == null || !decompression.isAbleToDecompress()) return;
 
                 IFluidHandler fluidHandler = decompression.getFluidHandler();
@@ -92,7 +98,6 @@ public class MetaTileEntityDecompressionHatch extends MetaTileEntityMultiblockPa
         }
     }
 
-
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
@@ -100,12 +105,13 @@ public class MetaTileEntityDecompressionHatch extends MetaTileEntityMultiblockPa
     }
 
     @Override
-    protected ModularUI createUI(@Nonnull EntityPlayer entityPlayer) {
+    protected ModularUI createUI(@NotNull EntityPlayer entityPlayer) {
         return null;
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World player, @NotNull List<String> tooltip,
+                               boolean advanced) {
         tooltip.add(I18n.format("tkcya.machine.decompression_hatch.tooltip.1"));
         tooltip.add(I18n.format("tkcya.general.transfer_rate", transferRate));
         super.addInformation(stack, player, tooltip, advanced);
@@ -117,13 +123,13 @@ public class MetaTileEntityDecompressionHatch extends MetaTileEntityMultiblockPa
     }
 
     @Override
-    public void registerAbilities(@Nonnull List<IDecompression> list) {
+    public void registerAbilities(@NotNull List<IDecompression> list) {
         list.add(this.decompression);
     }
 
     @Override
     @Nullable
-    public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
+    public <T> T getCapability(@NotNull Capability<T> capability, EnumFacing side) {
         if (capability.equals(CAPABILITY_DECOMPRESSION_CONTAINER) && side.equals(getFrontFacing())) {
             return CAPABILITY_DECOMPRESSION_CONTAINER.cast(decompression);
         }

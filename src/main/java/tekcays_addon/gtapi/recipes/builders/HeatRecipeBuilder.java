@@ -1,5 +1,8 @@
 package tekcays_addon.gtapi.recipes.builders;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.jetbrains.annotations.NotNull;
+
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMap;
@@ -7,18 +10,13 @@ import gregtech.api.recipes.recipeproperties.RecipePropertyStorage;
 import gregtech.api.util.EnumValidationResult;
 import gregtech.api.util.GTLog;
 import gregtech.api.util.ValidationResult;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import tekcays_addon.gtapi.recipes.recipeproperties.HeatProperty;
-
-import javax.annotation.Nonnull;
 
 @SuppressWarnings("unused")
 public class HeatRecipeBuilder extends RecipeBuilder<HeatRecipeBuilder> {
 
     @SuppressWarnings("unused")
-    public HeatRecipeBuilder() {
-
-    }
+    public HeatRecipeBuilder() {}
 
     @SuppressWarnings("unused")
     public HeatRecipeBuilder(Recipe recipe, RecipeMap<HeatRecipeBuilder> recipeMap) {
@@ -35,7 +33,7 @@ public class HeatRecipeBuilder extends RecipeBuilder<HeatRecipeBuilder> {
     }
 
     @Override
-    public boolean applyProperty(@Nonnull String key, Object value) {
+    public boolean applyProperty(@NotNull String key, Object value) {
         if (key.equals(HeatProperty.KEY)) {
             this.HUt(((Number) value).intValue());
             return true;
@@ -43,7 +41,7 @@ public class HeatRecipeBuilder extends RecipeBuilder<HeatRecipeBuilder> {
         return super.applyProperty(key, value);
     }
 
-    @Nonnull
+    @NotNull
     public HeatRecipeBuilder HUt(int HUt) {
         if (HUt <= 0) {
             GTLog.logger.error("Heat cannot be less than or equal to 0", new IllegalArgumentException());
@@ -65,7 +63,6 @@ public class HeatRecipeBuilder extends RecipeBuilder<HeatRecipeBuilder> {
         }
         return super.build();
     }
-
 
     public int getHeat() {
         return this.recipePropertyStorage == null ? 0 :

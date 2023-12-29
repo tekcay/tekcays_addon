@@ -1,19 +1,11 @@
 package tekcays_addon.gtapi.metatileentity;
 
-import codechicken.lib.raytracer.CuboidRayTraceResult;
-import codechicken.lib.render.CCRenderState;
-import codechicken.lib.render.pipeline.ColourMultiplier;
-import codechicken.lib.render.pipeline.IVertexOperation;
-import codechicken.lib.vec.Matrix4;
-import gregtech.api.capability.GregtechTileCapabilities;
-import gregtech.api.capability.IActiveOutputSide;
-import gregtech.api.metatileentity.IDataInfoProvider;
-import gregtech.api.metatileentity.MetaTileEntity;
-import gregtech.api.metatileentity.MetaTileEntityUIFactory;
-import gregtech.api.util.GTUtility;
-import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
-import gregtech.core.sound.GTSoundEvents;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
+import static net.minecraft.util.EnumFacing.*;
+
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,23 +23,33 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import codechicken.lib.raytracer.CuboidRayTraceResult;
+import codechicken.lib.render.CCRenderState;
+import codechicken.lib.render.pipeline.ColourMultiplier;
+import codechicken.lib.render.pipeline.IVertexOperation;
+import codechicken.lib.vec.Matrix4;
+import gregtech.api.capability.GregtechTileCapabilities;
+import gregtech.api.capability.IActiveOutputSide;
+import gregtech.api.metatileentity.IDataInfoProvider;
+import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.metatileentity.MetaTileEntityUIFactory;
+import gregtech.api.util.GTUtility;
+import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
+import gregtech.core.sound.GTSoundEvents;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import tekcays_addon.api.metatileentity.IFreeFace;
-import tekcays_addon.gtapi.capability.containers.IHeatContainer;
+import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
+import tekcays_addon.gtapi.capability.containers.IHeatContainer;
 import tekcays_addon.gtapi.capability.impl.HeatContainer;
 import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.gtapi.utils.FuelHeaterTiers;
-import tekcays_addon.common.blocks.blocks.BlockBrick;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Random;
-
-import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
-import static net.minecraft.util.EnumFacing.*;
 
 public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide, IFreeFace {
 
@@ -74,12 +76,15 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
 
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
-        IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline, new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
+        IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline,
+                new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
         getBaseRenderer().render(renderState, translation, colouredPipeline);
-        ColourMultiplier multiplier = new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
+        ColourMultiplier multiplier = new ColourMultiplier(
+                GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
         colouredPipeline = ArrayUtils.add(pipeline, multiplier);
         TKCYATextures.HEAT_ACCEPTOR_VERTICALS_OVERLAY.renderSided(UP, renderState, translation, pipeline);
-        TKCYATextures.BRICKS[BlockBrick.BrickType.BRICK.getTextureId()].renderSided(DOWN, renderState, translation, pipeline);
+        TKCYATextures.BRICKS[BlockBrick.BrickType.BRICK.getTextureId()].renderSided(DOWN, renderState, translation,
+                pipeline);
         TKCYATextures.HALF_BRICK.renderSided(getFrontFacing().getOpposite(), renderState, translation, pipeline);
         TKCYATextures.HALF_BRICK.renderSided(getFrontFacing().rotateY(), renderState, translation, pipeline);
         TKCYATextures.HALF_BRICK.renderSided(getFrontFacing().rotateYCCW(), renderState, translation, pipeline);
@@ -99,7 +104,7 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
     protected abstract void tryConsumeNewFuel();
 
     protected void setBurnTimeLeft(int amount) {
-        this.burnTimeLeft =  amount;
+        this.burnTimeLeft = amount;
     }
 
     private void setIgnition() {
@@ -136,33 +141,32 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
         }
     }
 
-
-
     /*
-    //For TOP, needs to implement IFuelable
-    @Override
-    public Collection<IFuelInfo> getFuels() {
-        TKCYALog.logger.info("TOP got here");
-        ItemStack fuelInSlot = importItems.extractItem(0, Integer.MAX_VALUE, true);
-        TKCYALog.logger.info("TOP : stackSize : " + fuelInSlot.getCount());
-        if (fuelInSlot == ItemStack.EMPTY)
-            return Collections.emptySet();
-        final int fuelRemaining = fuelInSlot.getCount();
-        TKCYALog.logger.info("TOP : fuelInSlot = " + fuelInSlot);
-        final int fuelCapacity = importItems.getSlotLimit(0);
-        TKCYALog.logger.info("TOP : fuelRemaining = " + fuelRemaining);
-        final long burnTime = (long) fuelRemaining * getBurnTime(fuelInSlot, fuelHeater);
-        TKCYALog.logger.info("TOP : fuelCapacity = " + fuelCapacity);
-        return Collections.singleton(new ItemFuelInfo(fuelInSlot, fuelRemaining, fuelCapacity, 1, burnTime));
-    }
-
+     * //For TOP, needs to implement IFuelable
+     * 
+     * @Override
+     * public Collection<IFuelInfo> getFuels() {
+     * TKCYALog.logger.info("TOP got here");
+     * ItemStack fuelInSlot = importItems.extractItem(0, Integer.MAX_VALUE, true);
+     * TKCYALog.logger.info("TOP : stackSize : " + fuelInSlot.getCount());
+     * if (fuelInSlot == ItemStack.EMPTY)
+     * return Collections.emptySet();
+     * final int fuelRemaining = fuelInSlot.getCount();
+     * TKCYALog.logger.info("TOP : fuelInSlot = " + fuelInSlot);
+     * final int fuelCapacity = importItems.getSlotLimit(0);
+     * TKCYALog.logger.info("TOP : fuelRemaining = " + fuelRemaining);
+     * final long burnTime = (long) fuelRemaining * getBurnTime(fuelInSlot, fuelHeater);
+     * TKCYALog.logger.info("TOP : fuelCapacity = " + fuelCapacity);
+     * return Collections.singleton(new ItemFuelInfo(fuelInSlot, fuelRemaining, fuelCapacity, 1, burnTime));
+     * }
+     * 
      */
 
     public void transferHeat(int heatIncreaseRate) {
-        //Get the TileEntity that is placed right on top of the Heat.
+        // Get the TileEntity that is placed right on top of the Heat.
         TileEntity te = getWorld().getTileEntity(getPos().offset(UP));
         if (te != null) {
-            //Get the Capability of this Tile Entity on the DOWN FACE.
+            // Get the Capability of this Tile Entity on the DOWN FACE.
             IHeatContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER, DOWN);
             if (container != null) {
                 container.changeHeat(heatIncreaseRate);
@@ -177,7 +181,8 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
      * @return true if something happened, so animation will be played
      */
     @Override
-    public boolean onRightClick(EntityPlayer playerIn, EnumHand hand, EnumFacing facing, CuboidRayTraceResult hitResult) {
+    public boolean onRightClick(EntityPlayer playerIn, EnumHand hand, EnumFacing facing,
+                                CuboidRayTraceResult hitResult) {
         if (!playerIn.isSneaking() && openGUIOnRightClick()) {
             if (getWorld() != null && !getWorld().isRemote) {
                 MetaTileEntityUIFactory.INSTANCE.openUI(getHolder(), (EntityPlayerMP) playerIn);
@@ -202,14 +207,16 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tkcya.heater.tooltip.1"));
         tooltip.add(I18n.format("tkcya.heater.tooltip.2", heatIncreaseRate));
-        tooltip.add(I18n.format("tkcya.machine.energy_conversion_efficiency",  TextFormatting.WHITE + String.format("%.02f", efficiency * 100.00F) + "%"));
+        tooltip.add(I18n.format("tkcya.machine.energy_conversion_efficiency",
+                TextFormatting.WHITE + String.format("%.02f", efficiency * 100.00F) + "%"));
         tooltip.add(I18n.format("tkcya.machine.free_front_face.tooltip"));
-        tooltip.add(I18n.format("tkcya.machine.fuel_heater.ignition.tooltip", TextFormatting.WHITE + String.format("%d%%", IGNITION_CHANCE_WOOD_STICK)));
+        tooltip.add(I18n.format("tkcya.machine.fuel_heater.ignition.tooltip",
+                TextFormatting.WHITE + String.format("%d%%", IGNITION_CHANCE_WOOD_STICK)));
     }
 
     @Override
     @Nullable
-    public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
+    public <T> T getCapability(@NotNull Capability<T> capability, EnumFacing side) {
         if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
             return side == DOWN ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
         }
@@ -236,7 +243,7 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
         return isBurning;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
@@ -313,6 +320,4 @@ public abstract class FuelHeater extends MetaTileEntity implements IDataInfoProv
     public boolean isAllowInputFromOutputSideFluids() {
         return false;
     }
-
-
 }

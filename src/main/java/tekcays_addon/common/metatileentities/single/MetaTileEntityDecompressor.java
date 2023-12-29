@@ -1,5 +1,24 @@
 package tekcays_addon.common.metatileentities.single;
 
+import java.util.List;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.ColourMultiplier;
 import codechicken.lib.render.pipeline.IVertexOperation;
@@ -19,26 +38,8 @@ import gregtech.api.util.GTTransferUtils;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.core.sound.GTSoundEvents;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fluids.IFluidTank;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import org.apache.commons.lang3.ArrayUtils;
 import tekcays_addon.gtapi.capability.containers.IDecompression;
 import tekcays_addon.gtapi.capability.impl.DecompressionContainer;
-import tekcays_addon.gtapi.utils.TKCYALog;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
 
 public class MetaTileEntityDecompressor extends TieredMetaTileEntity implements IActiveOutputSide {
 
@@ -78,23 +79,23 @@ public class MetaTileEntityDecompressor extends TieredMetaTileEntity implements 
         }
         if (energyContainer.getEnergyStored() > ENERGY_BASE_CONSUMPTION) {
             decompression.setCompressAbility(true);
-        }
-        else {
+        } else {
             decompression.setCompressAbility(false);
             return;
         }
-            if (decompression.isActive()) {
-                energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
-                BlockPos pos = this.getPos().offset(getFrontFacing());
-                TileEntity tileEntity = getWorld().getTileEntity(pos);
-                if (tileEntity == null) return;
+        if (decompression.isActive()) {
+            energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
+            BlockPos pos = this.getPos().offset(getFrontFacing());
+            TileEntity tileEntity = getWorld().getTileEntity(pos);
+            if (tileEntity == null) return;
 
-                IFluidHandler fluidHandler = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, getFrontFacing().getOpposite());
-                if (fluidHandler == null) return;
+            IFluidHandler fluidHandler = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY,
+                    getFrontFacing().getOpposite());
+            if (fluidHandler == null) return;
 
-                GTTransferUtils.transferFluids(importFluids, fluidHandler);
-                pushFluidsIntoNearbyHandlers(getFrontFacing());
-            }
+            GTTransferUtils.transferFluids(importFluids, fluidHandler);
+            pushFluidsIntoNearbyHandlers(getFrontFacing());
+        }
     }
 
     @Override
@@ -102,7 +103,7 @@ public class MetaTileEntityDecompressor extends TieredMetaTileEntity implements 
         return createUITemplate(player).build(getHolder(), player);
     }
 
-    protected ModularUI.Builder createUITemplate(@Nonnull EntityPlayer entityPlayer) {
+    protected ModularUI.Builder createUITemplate(@NotNull EntityPlayer entityPlayer) {
         return ModularUI.defaultBuilder()
                 .widget(new LabelWidget(6, 6, getMetaFullName()))
                 .widget(new TankWidget(importFluidTank, 52, 18, 72, 61)
@@ -114,7 +115,8 @@ public class MetaTileEntityDecompressor extends TieredMetaTileEntity implements 
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline, new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
+        IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline,
+                new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
         getBaseRenderer().render(renderState, translation, colouredPipeline);
         Textures.PIPE_OUT_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
     }
@@ -125,9 +127,11 @@ public class MetaTileEntityDecompressor extends TieredMetaTileEntity implements 
         tooltip.add(I18n.format("tkcya.machine.decompressor.tooltip.2"));
         tooltip.add(I18n.format("tkcya.machine.decompressor.tooltip.3"));
         tooltip.add(I18n.format("tkcya.general.fluid_capacity", tankCapacity));
-        tooltip.add(I18n.format("gregtech.universal.tooltip.max_voltage_in", energyContainer.getInputVoltage(), GTValues.VNF[getTier()]));
+        tooltip.add(I18n.format("gregtech.universal.tooltip.max_voltage_in", energyContainer.getInputVoltage(),
+                GTValues.VNF[getTier()]));
         tooltip.add(I18n.format("tkcya.machine.tooltip.consumption", ENERGY_BASE_CONSUMPTION));
-        tooltip.add(I18n.format("gregtech.universal.tooltip.energy_storage_capacity", energyContainer.getEnergyCapacity()));
+        tooltip.add(
+                I18n.format("gregtech.universal.tooltip.energy_storage_capacity", energyContainer.getEnergyCapacity()));
         tooltip.add(I18n.format("tkcya.machine.redstone.inverse.tooltip"));
         super.addInformation(stack, player, tooltip, advanced);
     }

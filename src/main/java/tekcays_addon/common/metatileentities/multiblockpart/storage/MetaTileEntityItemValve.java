@@ -1,5 +1,21 @@
 package tekcays_addon.common.metatileentities.multiblockpart.storage;
 
+import java.util.List;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
@@ -16,25 +32,12 @@ import gregtech.api.util.GTTransferUtils;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.gtapi.unification.TKCYAMaterials;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-
-public class MetaTileEntityItemValve extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IItemHandler> {
+public class MetaTileEntityItemValve extends MetaTileEntityMultiblockPart
+                                     implements IMultiblockAbilityPart<IItemHandler> {
 
     private final Material material;
 
@@ -73,9 +76,11 @@ public class MetaTileEntityItemValve extends MetaTileEntityMultiblockPart implem
     @Override
     public void update() {
         super.update();
-        if (!getWorld().isRemote && getOffsetTimer() % 5 == 0L && isAttachedToMultiBlock() && getFrontFacing() == EnumFacing.DOWN) {
+        if (!getWorld().isRemote && getOffsetTimer() % 5 == 0L && isAttachedToMultiBlock() &&
+                getFrontFacing() == EnumFacing.DOWN) {
             TileEntity tileEntity = getWorld().getTileEntity(getPos().offset(getFrontFacing()));
-            IItemHandler iItemHandler = tileEntity == null ? null : tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, getFrontFacing().getOpposite());
+            IItemHandler iItemHandler = tileEntity == null ? null : tileEntity
+                    .getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, getFrontFacing().getOpposite());
             if (iItemHandler != null) {
                 GTTransferUtils.moveInventoryItems(iItemHandler, itemInventory);
             }
@@ -89,10 +94,11 @@ public class MetaTileEntityItemValve extends MetaTileEntityMultiblockPart implem
     }
 
     /**
-     * When this block is not connected to any multiblock it uses dummy inventory to prevent problems with capability checks
+     * When this block is not connected to any multiblock it uses dummy inventory to prevent problems with capability
+     * checks
      */
     private void initializeDummyInventory() {
-        //this.itemInventory = new ItemHandlerProxy(new ItemHandlerList(Collections.singleton()));
+        // this.itemInventory = new ItemHandlerProxy(new ItemHandlerList(Collections.singleton()));
         this.itemInventory = new ItemHandlerProxy(new ItemStackHandler(0), new ItemStackHandler(0));
     }
 
@@ -100,7 +106,7 @@ public class MetaTileEntityItemValve extends MetaTileEntityMultiblockPart implem
     public void addToMultiBlock(MultiblockControllerBase controllerBase) {
         super.addToMultiBlock(controllerBase);
         this.itemInventory = controllerBase.getItemInventory();
-        //this.itemInventory = new ItemHandlerProxy(controllerBase.getImportItems(), controllerBase.getExportItems());
+        // this.itemInventory = new ItemHandlerProxy(controllerBase.getImportItems(), controllerBase.getExportItems());
     }
 
     @Override
@@ -130,7 +136,7 @@ public class MetaTileEntityItemValve extends MetaTileEntityMultiblockPart implem
     }
 
     @Override
-    public void registerAbilities(@Nonnull List<IItemHandler> abilityList) {
+    public void registerAbilities(@NotNull List<IItemHandler> abilityList) {
         abilityList.add(this.getImportItems());
     }
 
@@ -140,7 +146,8 @@ public class MetaTileEntityItemValve extends MetaTileEntityMultiblockPart implem
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World player, @NotNull List<String> tooltip,
+                               boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("gregtech.crate_valve.tooltip"));
     }

@@ -1,11 +1,11 @@
 package tekcays_addon.api.nbt;
 
+import java.util.List;
+import java.util.function.Consumer;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import tekcays_addon.api.utils.ListBuilder;
-
-import java.util.List;
-import java.util.function.Consumer;
 
 @Getter
 @AllArgsConstructor

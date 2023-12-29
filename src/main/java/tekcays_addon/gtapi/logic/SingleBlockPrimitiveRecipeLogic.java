@@ -7,8 +7,8 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.logic.IParallelableRecipeLogic;
 
-
-public class SingleBlockPrimitiveRecipeLogic extends AbstractRecipeLogic implements IWorkable, IParallelableRecipeLogic {
+public class SingleBlockPrimitiveRecipeLogic extends AbstractRecipeLogic
+                                             implements IWorkable, IParallelableRecipeLogic {
 
     public SingleBlockPrimitiveRecipeLogic(MetaTileEntity tileEntity, RecipeMap<?> recipeMap) {
         super(tileEntity, recipeMap);
@@ -45,17 +45,18 @@ public class SingleBlockPrimitiveRecipeLogic extends AbstractRecipeLogic impleme
     }
 
     /*
-    @Override
-    protected int[] runOverclockingLogic(RecipePropertyStorage propertyStorage, int recipeEUt, long maxVoltage, int recipeDuration, int maxOverclocks) {
-        return standardOverclockingLogic(1,
-                getMaxVoltage(),
-                recipeDuration,
-                getOverclockingDurationDivisor(),
-                getOverclockingVoltageMultiplier(),
-                maxOverclocks
-        );
-    }
-
+     * @Override
+     * protected int[] runOverclockingLogic(RecipePropertyStorage propertyStorage, int recipeEUt, long maxVoltage, int
+     * recipeDuration, int maxOverclocks) {
+     * return standardOverclockingLogic(1,
+     * getMaxVoltage(),
+     * recipeDuration,
+     * getOverclockingDurationDivisor(),
+     * getOverclockingVoltageMultiplier(),
+     * maxOverclocks
+     * );
+     * }
+     * 
      */
 
     @Override

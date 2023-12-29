@@ -1,5 +1,28 @@
 package tekcays_addon.common.metatileentities.single.electric;
 
+import static net.minecraft.util.EnumFacing.DOWN;
+import static net.minecraft.util.EnumFacing.UP;
+import static tekcays_addon.gtapi.consts.TKCYAValues.EU_TO_HU;
+
+import java.util.List;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import codechicken.lib.raytracer.CuboidRayTraceResult;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.ColourMultiplier;
@@ -15,31 +38,10 @@ import gregtech.api.metatileentity.TieredMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.util.GTUtility;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
-import org.apache.commons.lang3.ArrayUtils;
-import tekcays_addon.gtapi.capability.containers.IHeatContainer;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
+import tekcays_addon.gtapi.capability.containers.IHeatContainer;
 import tekcays_addon.gtapi.capability.impl.HeatContainer;
 import tekcays_addon.gtapi.render.TKCYATextures;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-
-import static net.minecraft.util.EnumFacing.DOWN;
-import static net.minecraft.util.EnumFacing.UP;
-import static tekcays_addon.gtapi.consts.TKCYAValues.EU_TO_HU;
 
 public class MetaTileEntityElectricCooler extends TieredMetaTileEntity implements IDataInfoProvider, IActiveOutputSide {
 
@@ -70,13 +72,14 @@ public class MetaTileEntityElectricCooler extends TieredMetaTileEntity implement
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        ColourMultiplier multiplier = new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
+        ColourMultiplier multiplier = new ColourMultiplier(
+                GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()));
         IVertexOperation[] coloredPipeline = ArrayUtils.add(pipeline, multiplier);
 
-        TKCYATextures.COOLER_HOT_SIDE_OVERLAY.renderSided(getFrontFacing().getOpposite(), renderState, translation, pipeline);
+        TKCYATextures.COOLER_HOT_SIDE_OVERLAY.renderSided(getFrontFacing().getOpposite(), renderState, translation,
+                pipeline);
         TKCYATextures.COOLER_COOL_SIDE_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
     }
-
 
     @Override
     public void update() {
@@ -84,17 +87,18 @@ public class MetaTileEntityElectricCooler extends TieredMetaTileEntity implement
         int currentHeat = heatContainer.getHeat();
         if (!getWorld().isRemote) {
 
-            //Redstone stops heating
+            // Redstone stops heating
             if (this.isBlockRedstonePowered()) return;
             if (energyContainer.getEnergyStored() < ENERGY_BASE_CONSUMPTION) return;
-            if (currentHeat + HEAT_BASE_INCREASE < heatContainer.getMaxHeat()) heatContainer.setHeat(currentHeat + HEAT_BASE_INCREASE);
+            if (currentHeat + HEAT_BASE_INCREASE < heatContainer.getMaxHeat())
+                heatContainer.setHeat(currentHeat + HEAT_BASE_INCREASE);
 
             energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
 
-            //Cold side
+            // Cold side
             tryTransferHeat(getFrontFacing());
 
-            //Hotside
+            // Hotside
             tryTransferHeat(getFrontFacing().getOpposite());
         }
     }
@@ -103,15 +107,15 @@ public class MetaTileEntityElectricCooler extends TieredMetaTileEntity implement
         TileEntity te = getWorld().getTileEntity(getPos().offset(side));
         if (te != null) {
 
-            //Get the Capability of this Tile Entity on the DOWN FACE.
+            // Get the Capability of this Tile Entity on the DOWN FACE.
             IHeatContainer container = te.getCapability(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER, DOWN);
             if (container != null) {
 
-                //in case of cold side, it decreases the HU of the container
+                // in case of cold side, it decreases the HU of the container
                 if (side.equals(getFrontFacing())) {
                     container.changeHeat(-HEAT_BASE_INCREASE);
 
-                //in case of hot side, it increases the HU of the container
+                    // in case of hot side, it increases the HU of the container
                 } else {
                     container.changeHeat(HEAT_BASE_INCREASE);
                     this.heatContainer.changeHeat(-HEAT_BASE_INCREASE);
@@ -124,9 +128,12 @@ public class MetaTileEntityElectricCooler extends TieredMetaTileEntity implement
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tkcya.electric_cooler.tooltip.1"));
-        tooltip.add(I18n.format("gregtech.universal.tooltip.max_voltage_in", energyContainer.getInputVoltage(), GTValues.VNF[getTier()]));
-        tooltip.add(I18n.format("tkcya.machine.energy_conversion_efficiency",  TextFormatting.WHITE + String.format("%.02f", EU_TO_HU * 50) + "%"));
-        tooltip.add(I18n.format("gregtech.universal.tooltip.energy_storage_capacity", energyContainer.getEnergyCapacity()));
+        tooltip.add(I18n.format("gregtech.universal.tooltip.max_voltage_in", energyContainer.getInputVoltage(),
+                GTValues.VNF[getTier()]));
+        tooltip.add(I18n.format("tkcya.machine.energy_conversion_efficiency",
+                TextFormatting.WHITE + String.format("%.02f", EU_TO_HU * 50) + "%"));
+        tooltip.add(
+                I18n.format("gregtech.universal.tooltip.energy_storage_capacity", energyContainer.getEnergyCapacity()));
         tooltip.add(I18n.format("tkcya.electric_cooler.tooltip.2", HEAT_BASE_INCREASE));
         tooltip.add(I18n.format("tkcya.electric_cooler.tooltip.3", HEAT_BASE_INCREASE));
         tooltip.add(I18n.format("tkcya.machine.redstone.inverse.tooltip"));
@@ -135,7 +142,7 @@ public class MetaTileEntityElectricCooler extends TieredMetaTileEntity implement
 
     @Override
     @Nullable
-    public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
+    public <T> T getCapability(@NotNull Capability<T> capability, EnumFacing side) {
         if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
             return side == getFrontFacing() ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
         }
@@ -145,14 +152,15 @@ public class MetaTileEntityElectricCooler extends TieredMetaTileEntity implement
         return super.getCapability(capability, side);
     }
 
-    //To prevent the heater to heat on the bottom face
+    // To prevent the heater to heat on the bottom face
     @Override
     public boolean isValidFrontFacing(EnumFacing facing) {
         return facing != EnumFacing.DOWN && facing != UP;
     }
 
     @Override
-    public boolean onWrenchClick(EntityPlayer playerIn, EnumHand hand, EnumFacing wrenchSide, CuboidRayTraceResult hitResult) {
+    public boolean onWrenchClick(EntityPlayer playerIn, EnumHand hand, EnumFacing wrenchSide,
+                                 CuboidRayTraceResult hitResult) {
         if (!playerIn.isSneaking()) {
             if (wrenchSide == getFrontFacing() || !isValidFrontFacing(wrenchSide) || !hasFrontFacing()) {
                 return false;
@@ -165,7 +173,7 @@ public class MetaTileEntityElectricCooler extends TieredMetaTileEntity implement
         return false;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
@@ -194,5 +202,4 @@ public class MetaTileEntityElectricCooler extends TieredMetaTileEntity implement
     public boolean isAllowInputFromOutputSideFluids() {
         return false;
     }
-
 }

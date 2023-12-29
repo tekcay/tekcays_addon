@@ -1,11 +1,10 @@
 package tekcays_addon.common;
 
-import gregtech.api.GregTechAPI;
-import gregtech.api.block.VariantItemBlock;
-import gregtech.api.unification.material.registry.MaterialRegistry;
-import gregtech.common.pipelike.cable.BlockCable;
-import gregtech.common.pipelike.fluidpipe.BlockFluidPipe;
-import gregtech.common.pipelike.itempipe.BlockItemPipe;
+import static gregtech.common.blocks.MetaBlocks.*;
+
+import java.util.Objects;
+import java.util.function.Function;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -18,6 +17,13 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
+
+import gregtech.api.GregTechAPI;
+import gregtech.api.block.VariantItemBlock;
+import gregtech.api.unification.material.registry.MaterialRegistry;
+import gregtech.common.pipelike.cable.BlockCable;
+import gregtech.common.pipelike.fluidpipe.BlockFluidPipe;
+import gregtech.common.pipelike.itempipe.BlockItemPipe;
 import tekcays_addon.TekCaysAddon;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.pipelike.cable.ItemBlockCableExtraInfo;
@@ -29,17 +35,10 @@ import tekcays_addon.gtapi.utils.TKCYALog;
 import tekcays_addon.loaders.DamageableItemsLoader;
 import tekcays_addon.loaders.recipe.TKCYARecipeLoader;
 
-import java.util.Objects;
-import java.util.function.Function;
-
-import static gregtech.common.blocks.MetaBlocks.*;
-
 @Mod.EventBusSubscriber(modid = TekCaysAddon.MODID)
 public class CommonProxy {
 
-    public void preLoad() {
-
-    }
+    public void preLoad() {}
 
     @SubscribeEvent
     public static void syncConfigValues(ConfigChangedEvent.OnConfigChangedEvent event) {
@@ -59,7 +58,6 @@ public class CommonProxy {
         registry.register(TKCYAMetaBlocks.BLOCK_CUT_WOOD);
     }
 
-
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
         TKCYALog.logger.info("Registering Items...");
@@ -71,9 +69,12 @@ public class CommonProxy {
         registry.register(createItemBlock(TKCYAMetaBlocks.BLOCK_CUT_WOOD, VariantItemBlock::new));
 
         for (MaterialRegistry materialRegistry : GregTechAPI.materialManager.getRegistries()) {
-            for (BlockCable cable : CABLES.get(materialRegistry.getModid())) registry.register(createItemBlock(cable, ItemBlockCableExtraInfo::new));
-            for (BlockFluidPipe pipe : FLUID_PIPES.get(materialRegistry.getModid())) registry.register(createItemBlock(pipe, ItemBlockFluidPipeExtraInfo::new));
-            for (BlockItemPipe pipe : ITEM_PIPES.get(materialRegistry.getModid())) registry.register(createItemBlock(pipe, ItemBlockPipeExtraInfo::new));
+            for (BlockCable cable : CABLES.get(materialRegistry.getModid()))
+                registry.register(createItemBlock(cable, ItemBlockCableExtraInfo::new));
+            for (BlockFluidPipe pipe : FLUID_PIPES.get(materialRegistry.getModid()))
+                registry.register(createItemBlock(pipe, ItemBlockFluidPipeExtraInfo::new));
+            for (BlockItemPipe pipe : ITEM_PIPES.get(materialRegistry.getModid()))
+                registry.register(createItemBlock(pipe, ItemBlockPipeExtraInfo::new));
         }
     }
 
@@ -100,8 +101,8 @@ public class CommonProxy {
         FuelWithProperties.addGasTurbineRecipeToList();
     }
 
-    //this is called last, so all mods finished registering their stuff, as example, CraftTweaker
-    //if it registered some kind of ore dictionary entry, late processing will hook it and generate recipes
+    // this is called last, so all mods finished registering their stuff, as example, CraftTweaker
+    // if it registered some kind of ore dictionary entry, late processing will hook it and generate recipes
     //
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void registerRecipesLowest(RegistryEvent.Register<IRecipe> event) {

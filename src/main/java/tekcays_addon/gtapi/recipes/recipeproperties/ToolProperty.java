@@ -1,12 +1,13 @@
 package tekcays_addon.gtapi.recipes.recipeproperties;
 
+import net.minecraft.client.Minecraft;
+
+import org.jetbrains.annotations.NotNull;
+
 import gregtech.api.items.toolitem.ToolOreDict;
 import gregtech.api.recipes.recipeproperties.RecipeProperty;
-import net.minecraft.client.Minecraft;
 import tekcays_addon.api.recipeproperties.RecipePropertiesHelper;
 import tekcays_addon.gtapi.consts.TKCYAValues;
-
-import javax.annotation.Nonnull;
 
 public class ToolProperty extends RecipeProperty<ToolOreDict> implements RecipePropertiesHelper {
 
@@ -31,6 +32,5 @@ public class ToolProperty extends RecipeProperty<ToolOreDict> implements RecipeP
     }
 
     @Override
-    public void drawInfo(@Nonnull Minecraft minecraft, int x, int y, int color, Object value) {
-    }
+    public void drawInfo(@NotNull Minecraft minecraft, int x, int y, int color, Object value) {}
 }

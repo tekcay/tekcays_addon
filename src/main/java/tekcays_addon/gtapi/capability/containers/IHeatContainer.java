@@ -32,6 +32,7 @@ public interface IHeatContainer extends Container {
      * Change the amount of heat in the container by {@code ADDING} a given amount.
      * If the resulted heat is lower than zero, heat will be set to 0.
      * If the resulted heat is higher than {@code maxHeat}, heat will be set to {@code maxHeat}.
+     * 
      * @param amount the amount to change by
      */
     default void changeHeat(int amount) {

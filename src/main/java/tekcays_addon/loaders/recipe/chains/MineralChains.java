@@ -9,5 +9,4 @@ public class MineralChains {
         ChromiteChain.init();
         TungstenChain.init();
     }
-
 }

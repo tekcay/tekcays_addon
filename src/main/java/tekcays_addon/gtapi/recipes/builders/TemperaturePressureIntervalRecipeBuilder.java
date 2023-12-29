@@ -1,26 +1,25 @@
 package tekcays_addon.gtapi.recipes.builders;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.jetbrains.annotations.NotNull;
+
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
 import gregtech.api.util.EnumValidationResult;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import tekcays_addon.gtapi.recipes.recipeproperties.*;
 import tekcays_addon.api.recipe.RecipeBuilderHelper;
-
-import javax.annotation.Nonnull;
-
+import tekcays_addon.gtapi.recipes.recipeproperties.*;
 
 public class TemperaturePressureIntervalRecipeBuilder extends RecipeBuilder<TemperaturePressureIntervalRecipeBuilder>
-        implements RecipeBuilderHelper<TemperaturePressureIntervalRecipeBuilder> {
+                                                      implements
+                                                      RecipeBuilderHelper<TemperaturePressureIntervalRecipeBuilder> {
 
-    public TemperaturePressureIntervalRecipeBuilder() {
+    public TemperaturePressureIntervalRecipeBuilder() {}
 
-    }
-
-    @SuppressWarnings(value ="unused")
-    public TemperaturePressureIntervalRecipeBuilder(Recipe recipe, RecipeMap<TemperaturePressureIntervalRecipeBuilder> recipeMap) {
+    @SuppressWarnings(value = "unused")
+    public TemperaturePressureIntervalRecipeBuilder(Recipe recipe,
+                                                    RecipeMap<TemperaturePressureIntervalRecipeBuilder> recipeMap) {
         super(recipe, recipeMap);
     }
 
@@ -34,7 +33,7 @@ public class TemperaturePressureIntervalRecipeBuilder extends RecipeBuilder<Temp
     }
 
     @Override
-    public boolean applyProperty(@Nonnull String key, Object value) {
+    public boolean applyProperty(@NotNull String key, Object value) {
         applyPropertyHelper(key, value);
         return super.applyProperty(key, value);
     }
@@ -63,5 +62,4 @@ public class TemperaturePressureIntervalRecipeBuilder extends RecipeBuilder<Temp
     public void setRecipeStatus(EnumValidationResult enumValidationResult) {
         recipeStatus = enumValidationResult;
     }
-
 }

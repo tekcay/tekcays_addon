@@ -1,34 +1,32 @@
 package tekcays_addon.loaders.recipe.handlers;
 
+import static gregtech.api.unification.material.Materials.*;
+import static gregtech.api.unification.ore.OrePrefix.*;
+import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
+import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.curvedPlate;
+import static tekcays_addon.gtapi.utils.FuelHeaterTiers.FUEL_HEATERS;
+
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+
 import gregtech.api.recipes.ModHandler;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.stack.UnificationEntry;
 import gregtech.common.metatileentities.MetaTileEntities;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
-
-
-import static gregtech.api.unification.material.Materials.*;
-import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
-import static gregtech.api.unification.ore.OrePrefix.*;
-import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.curvedPlate;
-import static tekcays_addon.gtapi.utils.FuelHeaterTiers.FUEL_HEATERS;
-
 
 public class HeatHandler {
 
     public static void init() {
-
-        //Heat Acceptor
+        // Heat Acceptor
         ModHandler.addShapedRecipe(true, "heat_acceptor", TKCYAMetaTileEntities.HEAT_ACCEPTOR[0].getStackForm(),
                 "NCN", "hLw", "NCN",
                 'L', new UnificationEntry(stickLong, Copper),
                 'C', new UnificationEntry(plateDouble, Copper),
                 'N', new UnificationEntry(plate, Invar));
 
-        //Electric Heater
+        // Electric Heater
         ModHandler.addShapedRecipe(true, "electric_heater_lv", TKCYAMetaTileEntities.ELECTRIC_HEATER[0].getStackForm(),
                 "SWS", "WHW", "SWd",
                 'S', new UnificationEntry(screw, GalvanizedSteel),
@@ -59,35 +57,40 @@ public class HeatHandler {
                 'W', new UnificationEntry(wireGtHex, SiliconCarbide),
                 'H', MetaTileEntities.HULL[5].getStackForm());
 
-        //Solid fuel burner
-        ModHandler.addShapedRecipe(true, "brick_solid_fuel_heater", TKCYAMetaTileEntities.SOLID_FUEL_HEATER[0].getStackForm(),
+        // Solid fuel burner
+        ModHandler.addShapedRecipe(true, "brick_solid_fuel_heater",
+                TKCYAMetaTileEntities.SOLID_FUEL_HEATER[0].getStackForm(),
                 "BBB", "BBB", "BSB",
                 'S', new UnificationEntry(stick, Wood),
                 'B', new ItemStack(Items.BRICK));
 
         for (int i = 1; i < FUEL_HEATERS.size(); i++) {
             Material m = FUEL_HEATERS.get(i).getMaterial();
-            ModHandler.addShapedRecipe(true, m.getUnlocalizedName() + "_solid_fuel_heater", TKCYAMetaTileEntities.SOLID_FUEL_HEATER[i].getStackForm(),
+            ModHandler.addShapedRecipe(true, m.getUnlocalizedName() + "_solid_fuel_heater",
+                    TKCYAMetaTileEntities.SOLID_FUEL_HEATER[i].getStackForm(),
                     "PDP", "PwP", "BBB",
                     'D', new UnificationEntry(plateDouble, Copper),
                     'P', new UnificationEntry(plate, m),
                     'B', new ItemStack(Blocks.BRICK_BLOCK));
 
-            ModHandler.addShapedRecipe(true, m.getUnlocalizedName() + "_liquid_fuel_heater", TKCYAMetaTileEntities.LIQUID_FUEL_HEATER[i].getStackForm(),
+            ModHandler.addShapedRecipe(true, m.getUnlocalizedName() + "_liquid_fuel_heater",
+                    TKCYAMetaTileEntities.LIQUID_FUEL_HEATER[i].getStackForm(),
                     "PDP", "SwS", "BBB",
                     'D', new UnificationEntry(plateDouble, Copper),
                     'P', new UnificationEntry(plate, m),
                     'S', new UnificationEntry(pipeSmallFluid, m),
                     'B', new ItemStack(Blocks.BRICK_BLOCK));
 
-            ModHandler.addShapedRecipe(true, m.getUnlocalizedName() + "_gas_fuel_heater", TKCYAMetaTileEntities.GAS_FUEL_HEATER[i].getStackForm(),
+            ModHandler.addShapedRecipe(true, m.getUnlocalizedName() + "_gas_fuel_heater",
+                    TKCYAMetaTileEntities.GAS_FUEL_HEATER[i].getStackForm(),
                     "PDP", "BwB", "BSB",
                     'D', new UnificationEntry(plateDouble, Copper),
                     'P', new UnificationEntry(plate, m),
                     'S', new UnificationEntry(pipeSmallFluid, m),
                     'B', new ItemStack(Blocks.BRICK_BLOCK));
 
-            ModHandler.addShapedRecipe(true, m.getUnlocalizedName() + "_fluidized_fuel_heater", TKCYAMetaTileEntities.FLUIDIZED_FUEL_HEATER[i].getStackForm(),
+            ModHandler.addShapedRecipe(true, m.getUnlocalizedName() + "_fluidized_fuel_heater",
+                    TKCYAMetaTileEntities.FLUIDIZED_FUEL_HEATER[i].getStackForm(),
                     "PDP", "CwC", "BRB",
                     'D', new UnificationEntry(plateDouble, Copper),
                     'P', new UnificationEntry(plate, m),
@@ -95,9 +98,5 @@ public class HeatHandler {
                     'R', new UnificationEntry(rotor, m),
                     'B', new ItemStack(Blocks.BRICK_BLOCK));
         }
-
-
-
     }
-
 }

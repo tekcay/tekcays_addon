@@ -1,9 +1,8 @@
 package tekcays_addon.api.detectors;
 
-import lombok.*;
 import net.minecraftforge.common.capabilities.Capability;
-import tekcays_addon.gtapi.capability.containers.IContainer;
-import tekcays_addon.gtapi.capability.containers.IContainerDetector;
+
+import lombok.*;
 
 @Getter
 @NoArgsConstructor

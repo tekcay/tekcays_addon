@@ -1,23 +1,25 @@
 package tekcays_addon.common.metatileentities.multiblockpart.brick;
 
-import gregtech.api.capability.impl.NotifiableFluidTank;
-import gregtech.api.metatileentity.MetaTileEntity;
-import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.client.renderer.ICubeRenderer;
-import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityFluidHatch;
+import java.util.List;
+
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidTank;
+
+import org.jetbrains.annotations.Nullable;
+
+import gregtech.api.capability.impl.NotifiableFluidTank;
+import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import gregtech.client.renderer.ICubeRenderer;
+import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityFluidHatch;
+import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 import tekcays_addon.gtapi.render.TKCYATextures;
-import tekcays_addon.common.blocks.blocks.BlockBrick;
-
-import javax.annotation.Nullable;
-import java.util.List;
 
 public class MetaTileEntityBrickFluidHatch extends MetaTileEntityFluidHatch {
 
@@ -26,7 +28,8 @@ public class MetaTileEntityBrickFluidHatch extends MetaTileEntityFluidHatch {
     private final FluidTank fluidTank;
     private final BlockBrick.BrickType brick;
 
-    public MetaTileEntityBrickFluidHatch(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick, boolean isExportHatch) {
+    public MetaTileEntityBrickFluidHatch(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick,
+                                         boolean isExportHatch) {
         super(metaTileEntityId, 0, isExportHatch);
         this.fluidTank = new NotifiableFluidTank(INITIAL_INVENTORY_SIZE, this, isExportHatch);
         this.brick = brick;
@@ -52,8 +55,7 @@ public class MetaTileEntityBrickFluidHatch extends MetaTileEntityFluidHatch {
         return TKCYATextures.BRICKS[brick.getTextureId()];
     }
 
-
-    //To keep
+    // To keep
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         if (this.isExportHatch)

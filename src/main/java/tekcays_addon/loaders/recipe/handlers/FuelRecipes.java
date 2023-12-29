@@ -1,13 +1,12 @@
 package tekcays_addon.loaders.recipe.handlers;
 
-import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import static gregtech.api.unification.material.Materials.*;
 
-public class FuelRecipes {
-    
-    public static void init() {
+import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
-        
+public class FuelRecipes {
+
+    public static void init() {
         TKCYARecipeMaps.DIESEL_GENERATOR.recipeBuilder()
                 .fluidInputs(Naphtha.getFluid(1))
                 .fluidOutputs(CarbonDioxide.getFluid(1))
@@ -87,19 +86,18 @@ public class FuelRecipes {
                 .buildAndRegister();
 
         /*
-        TKCYARecipeMaps.DIESEL_GENERATOR.recipeBuilder()
-                .fluidInputs(OilLight.getFluid(32))
-                .fluidOutputs(CarbonDioxide.getFluid(1))
-                .duration(5)
-                .buildAndRegister();
-
-        TKCYARecipeMaps.DIESEL_GENERATOR.recipeBuilder()
-                .fluidInputs(RawOil.getFluid(64))
-                .fluidOutputs(CarbonDioxide.getFluid(1))
-                .duration(15)
-                .buildAndRegister();
-
+         * TKCYARecipeMaps.DIESEL_GENERATOR.recipeBuilder()
+         * .fluidInputs(OilLight.getFluid(32))
+         * .fluidOutputs(CarbonDioxide.getFluid(1))
+         * .duration(5)
+         * .buildAndRegister();
+         * 
+         * TKCYARecipeMaps.DIESEL_GENERATOR.recipeBuilder()
+         * .fluidInputs(RawOil.getFluid(64))
+         * .fluidOutputs(CarbonDioxide.getFluid(1))
+         * .duration(15)
+         * .buildAndRegister();
+         * 
          */
-
     }
 }

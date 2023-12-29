@@ -23,5 +23,3 @@ public enum LogicType {
         return list;
     }
 }
-
-

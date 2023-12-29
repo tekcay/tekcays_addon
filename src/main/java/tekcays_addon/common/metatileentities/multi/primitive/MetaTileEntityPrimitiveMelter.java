@@ -1,5 +1,9 @@
 package tekcays_addon.common.metatileentities.multi.primitive;
 
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.items.ItemStackHandler;
+
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
@@ -14,9 +18,6 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.api.metatileentity.LogicType;
 import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
@@ -25,7 +26,8 @@ import tekcays_addon.gtapi.render.TKCYATextures;
 public class MetaTileEntityPrimitiveMelter extends ModulableRecipeMapController {
 
     public MetaTileEntityPrimitiveMelter(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, TKCYARecipeMaps.MELTER_RECIPES, LogicType.NO_ENERGY, LogicType.NO_MAINTENANCE, LogicType.NO_MUFFLER);
+        super(metaTileEntityId, TKCYARecipeMaps.MELTER_RECIPES, LogicType.NO_ENERGY, LogicType.NO_MAINTENANCE,
+                LogicType.NO_MUFFLER);
     }
 
     @Override
@@ -38,11 +40,11 @@ public class MetaTileEntityPrimitiveMelter extends ModulableRecipeMapController 
         return TKCYATextures.PRIMITIVE_MELTER_OVERLAY;
     }
 
-
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        this.getFrontOverlay().renderOrientedState(renderState, translation, pipeline, this.getFrontFacing(), this.recipeMapWorkable.isActive(), this.recipeMapWorkable.isWorkingEnabled());
+        this.getFrontOverlay().renderOrientedState(renderState, translation, pipeline, this.getFrontFacing(),
+                this.recipeMapWorkable.isActive(), this.recipeMapWorkable.isWorkingEnabled());
     }
 
     @Override
@@ -67,7 +69,6 @@ public class MetaTileEntityPrimitiveMelter extends ModulableRecipeMapController 
                         .or(autoAbilities()))
                 .where('#', air())
                 .build();
-
     }
 
     @Override
@@ -75,4 +76,3 @@ public class MetaTileEntityPrimitiveMelter extends ModulableRecipeMapController 
         return new MetaTileEntityPrimitiveMelter(metaTileEntityId);
     }
 }
-

@@ -1,20 +1,21 @@
 package tekcays_addon.common.pipelike.fluidpipe;
 
-import gregtech.common.pipelike.fluidpipe.BlockFluidPipe;
-import gregtech.common.pipelike.fluidpipe.ItemBlockFluidPipe;
+import java.util.List;
+
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import gregtech.common.pipelike.fluidpipe.BlockFluidPipe;
+import gregtech.common.pipelike.fluidpipe.ItemBlockFluidPipe;
 import tekcays_addon.api.pipelike.PipeLikeUtils;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-
 public class ItemBlockFluidPipeExtraInfo extends ItemBlockFluidPipe {
-
 
     public ItemBlockFluidPipeExtraInfo(BlockFluidPipe block) {
         super(block);
@@ -22,7 +23,8 @@ public class ItemBlockFluidPipeExtraInfo extends ItemBlockFluidPipe {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, @Nonnull List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
+    public void addInformation(@NotNull ItemStack stack, @Nullable World worldIn, @NotNull List<String> tooltip,
+                               @NotNull ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         PipeLikeUtils.addUnitInfoToPipeLike(tooltip, blockPipe);
     }

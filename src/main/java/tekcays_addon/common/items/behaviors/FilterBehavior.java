@@ -1,18 +1,19 @@
 package tekcays_addon.common.items.behaviors;
 
+import net.minecraft.item.ItemStack;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.items.metaitem.stats.IItemDurabilityManager;
 import gregtech.api.items.metaitem.stats.IItemMaxStackSizeProvider;
 import gregtech.api.unification.material.Material;
 import gregtech.common.items.behaviors.AbstractMaterialPartBehavior;
-import net.minecraft.item.ItemStack;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class FilterBehavior extends AbstractMaterialPartBehavior implements IItemMaxStackSizeProvider {
 
-    //TODO rework filter stats once material stats are also reworked
+    // TODO rework filter stats once material stats are also reworked
     @Override
     public int getPartMaxDurability(ItemStack itemStack) {
         Material material = getPartMaterial(itemStack);
@@ -39,7 +40,7 @@ public class FilterBehavior extends AbstractMaterialPartBehavior implements IIte
     }
 
     @Nullable
-    public static FilterBehavior getInstanceFor(@Nonnull ItemStack itemStack) {
+    public static FilterBehavior getInstanceFor(@NotNull ItemStack itemStack) {
         if (!(itemStack.getItem() instanceof MetaItem))
             return null;
 

@@ -1,16 +1,17 @@
 package tekcays_addon.api.material;
 
-import gregtech.api.GregTechAPI;
-import gregtech.api.unification.OreDictUnifier;
-import gregtech.api.unification.material.Material;
-import net.minecraft.item.ItemStack;
+import static gregtech.api.unification.ore.OrePrefix.dust;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static gregtech.api.unification.ore.OrePrefix.dust;
+import net.minecraft.item.ItemStack;
+
+import gregtech.api.GregTechAPI;
+import gregtech.api.unification.OreDictUnifier;
+import gregtech.api.unification.material.Material;
 
 public class MaterialHelper {
 
@@ -38,8 +39,4 @@ public class MaterialHelper {
             .stream()
             .mapToLong(materialStack -> materialStack.amount)
             .sum();
-
-
-
-
 }

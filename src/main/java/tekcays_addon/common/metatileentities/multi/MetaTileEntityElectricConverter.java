@@ -1,5 +1,19 @@
 package tekcays_addon.common.metatileentities.multi;
 
+import java.util.List;
+import java.util.Objects;
+
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import gregtech.api.GTValues;
 import gregtech.api.block.IHeatingCoilBlockStats;
 import gregtech.api.capability.IHeatingCoil;
@@ -17,21 +31,9 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing.MetalCasingType;
 import gregtech.common.blocks.BlockWireCoil.CoilType;
 import gregtech.common.blocks.MetaBlocks;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.World;
 import tekcays_addon.api.metatileentity.LogicType;
 import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Objects;
 
 public class MetaTileEntityElectricConverter extends ModulableRecipeMapController implements IHeatingCoil {
 
@@ -50,10 +52,13 @@ public class MetaTileEntityElectricConverter extends ModulableRecipeMapControlle
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
         if (isStructureFormed()) {
-            textList.add(new TextComponentTranslation("gregtech.multiblock.blast_furnace.max_temperature", blastFurnaceTemperature + "K"));
+            textList.add(new TextComponentTranslation("gregtech.multiblock.blast_furnace.max_temperature",
+                    blastFurnaceTemperature + "K"));
             double pressure = Objects.requireNonNull(this.getPressureContainer()).getPressure();
-            if (pressure > 100000) textList.add(new TextComponentTranslation("tkcya.machine.text.pressure", String.format("%.3f", pressure/1000D) + " kPa"));
-            if (pressure > 1000000) textList.add(new TextComponentTranslation("tkcya.machine.text.pressure", String.format("%.3f", pressure/1000000D) + " MPa"));
+            if (pressure > 100000) textList.add(new TextComponentTranslation("tkcya.machine.text.pressure",
+                    String.format("%.3f", pressure / 1000D) + " kPa"));
+            if (pressure > 1000000) textList.add(new TextComponentTranslation("tkcya.machine.text.pressure",
+                    String.format("%.3f", pressure / 1000000D) + " MPa"));
         }
         super.addDisplayText(textList);
     }
@@ -68,7 +73,8 @@ public class MetaTileEntityElectricConverter extends ModulableRecipeMapControlle
             this.blastFurnaceTemperature = CoilType.CUPRONICKEL.getCoilTemperature();
         }
 
-        this.blastFurnaceTemperature += 100 * Math.max(0, GTUtility.getTierByVoltage(getEnergyContainer().getInputVoltage()) - GTValues.MV);
+        this.blastFurnaceTemperature += 100 *
+                Math.max(0, GTUtility.getTierByVoltage(getEnergyContainer().getInputVoltage()) - GTValues.MV);
     }
 
     @Override
@@ -77,16 +83,18 @@ public class MetaTileEntityElectricConverter extends ModulableRecipeMapControlle
         this.blastFurnaceTemperature = 0;
     }
 
-    /*//TODO
-    @Override
-    public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        return this.blastFurnaceTemperature >= recipe.getProperty(TemperatureProperty.getInstance(), 0) &&
-                this.getPressureContainer().getPressure() >= recipe.getProperty(PressureProperty.getInstance(), 0D);
-    }
-
+    /*
+     * //TODO
+     * 
+     * @Override
+     * public boolean checkRecipe(@NotNull Recipe recipe, boolean consumeIfSuccess) {
+     * return this.blastFurnaceTemperature >= recipe.getProperty(TemperatureProperty.getInstance(), 0) &&
+     * this.getPressureContainer().getPressure() >= recipe.getProperty(PressureProperty.getInstance(), 0D);
+     * }
+     * 
      */
 
-    @Nonnull
+    @NotNull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
@@ -110,7 +118,8 @@ public class MetaTileEntityElectricConverter extends ModulableRecipeMapControlle
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World player, @NotNull List<String> tooltip,
+                               boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("gregtech.machine.electric_blast_furnace.tooltip.1"));
         tooltip.add(I18n.format("gregtech.machine.electric_blast_furnace.tooltip.2"));
@@ -123,11 +132,11 @@ public class MetaTileEntityElectricConverter extends ModulableRecipeMapControlle
     }
 
     @Override
-    public boolean checkRecipeHelper(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
+    public boolean checkRecipeHelper(@NotNull Recipe recipe, boolean consumeIfSuccess) {
         return super.checkRecipeHelper(recipe, consumeIfSuccess);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     protected ICubeRenderer getFrontOverlay() {
         return Textures.BLAST_FURNACE_OVERLAY;
@@ -137,6 +146,4 @@ public class MetaTileEntityElectricConverter extends ModulableRecipeMapControlle
     public boolean canBeDistinct() {
         return true;
     }
-
-
 }

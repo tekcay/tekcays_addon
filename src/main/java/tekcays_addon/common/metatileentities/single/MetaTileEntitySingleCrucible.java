@@ -1,5 +1,33 @@
 package tekcays_addon.common.metatileentities.single;
 
+import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
+
+import java.util.List;
+
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.ColourMultiplier;
 import codechicken.lib.render.pipeline.IVertexOperation;
@@ -19,26 +47,6 @@ import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.tuple.Pair;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.capability.containers.IHeatContainer;
@@ -48,18 +56,12 @@ import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.recipes.recipeproperties.NoEnergyTemperatureProperty;
 import tekcays_addon.gtapi.render.TKCYATextures;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-
-import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
-
 public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDataInfoProvider {
 
     protected IHeatContainer heatContainer;
     protected final CrucibleRecipeLogic workable;
     private final BlockBrick.BrickType brick;
-    //private final int maxParallel = 8; //TODO
+    // private final int maxParallel = 8; //TODO
     private final int maxTemp;
     private boolean onChange;
     private int recipeTemp;
@@ -71,12 +73,12 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
     private final int HEAT_MULTIPLIER = 24;
     private final int HEAT_DROP = 10000;
     private final int HEAT_COOL = -100;
+
     /**
      * requiredHeat = numberItem * recipeTemp * heatMultiplier;
      */
-    //private int requiredHeat;
-    //private int numberItem;
-
+    // private int requiredHeat;
+    // private int numberItem;
 
     public MetaTileEntitySingleCrucible(ResourceLocation metaTileEntityId, BlockBrick.BrickType brick) {
         super(metaTileEntityId);
@@ -119,7 +121,7 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
                 .shouldColor(false)
                 .widget(new LabelWidget(5, 5, getMetaFullName()))
                 .slot(this.importItems, 0, 30, 50, GuiTextures.SLOT)
-                //.slot(this.importItems, 1, 50, 50, GuiTextures.SLOT)
+                // .slot(this.importItems, 1, 50, 50, GuiTextures.SLOT)
                 .widget(new TankWidget(exportFluids.getTankAt(0), 90, 50, 18, 18)
                         .setBackgroundTexture(GuiTextures.FLUID_SLOT)
                         .setAlwaysShowFull(true)
@@ -129,8 +131,9 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
 
     @Override
     @Nullable
-    public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
-        //GetCapabilityHelper.getCapability(EnumFacing.DOWN, side, TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER, heatContainer)
+    public <T> T getCapability(@NotNull Capability<T> capability, EnumFacing side) {
+        // GetCapabilityHelper.getCapability(EnumFacing.DOWN, side, TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER,
+        // heatContainer)
         if (capability.equals(TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER)) {
             return TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER.cast(heatContainer);
         } else if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
@@ -148,7 +151,8 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World player, @NotNull List<String> tooltip,
+                               boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tkcya.machine.single_crucible.tooltip.1"));
         tooltip.add(I18n.format("tkcya.machine.single_crucible.tooltip.2"));
@@ -170,12 +174,13 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
 
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
-        IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline, new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
+        IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline,
+                new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
         getBaseRenderer().render(renderState, translation, colouredPipeline);
         Textures.PIPE_OUT_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
@@ -185,7 +190,7 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
         list.add(new TextComponentTranslation("behavior.tricorder.currentTemp", currentTemp));
         return list;
     }
-    
+
     private void actualizeTemperature() {
         heatContainer.setTemperature(ROOM_TEMPERATURE + currentHeat / HEAT_MULTIPLIER);
     }
@@ -198,7 +203,7 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
         currentHeat = heatContainer.getHeat();
         pushFluidsIntoNearbyHandlers(getFrontFacing());
 
-        //Loses heat over time if no more heat is provided
+        // Loses heat over time if no more heat is provided
         if (getOffsetTimer() % 20 == 0) {
             if (previousHeat == currentHeat && currentTemp > ROOM_TEMPERATURE) {
                 heatContainer.changeHeat(HEAT_COOL);
@@ -214,36 +219,35 @@ public class MetaTileEntitySingleCrucible extends MetaTileEntity implements IDat
             if (currentTemp > ROOM_TEMPERATURE) {
                 if (getOffsetTimer() % 20 == 0) currentTemp -= 1;
             } else heatContainer.setTemperature(ROOM_TEMPERATURE);
-           return;
+            return;
         }
 
-       if (onChange) {
-           heatContainer.changeHeat(-HEAT_DROP);
-           actualizeTemperature();
-           onChange = false;
-           return;
-       }
+        if (onChange) {
+            heatContainer.changeHeat(-HEAT_DROP);
+            actualizeTemperature();
+            onChange = false;
+            return;
+        }
 
-       if (this.workable.isWorking() && this.workable.getProgress() == 1) onChange = true;
+        if (this.workable.isWorking() && this.workable.getProgress() == 1) onChange = true;
         actualizeTemperature();
     }
 
-
     private class CrucibleRecipeLogic extends SingleBlockPrimitiveRecipeLogic {
+
         private CrucibleRecipeLogic(MetaTileEntity tileEntity, RecipeMap<?> recipeMap) {
             super(tileEntity, recipeMap);
-            //setParallelLimit(maxParallel); //TODO
+            // setParallelLimit(maxParallel); //TODO
         }
 
         @Override
-        public boolean checkRecipe(@Nonnull Recipe recipe) {
+        public boolean checkRecipe(@NotNull Recipe recipe) {
             if (!recipe.hasProperty(NoEnergyTemperatureProperty.getInstance())) return false;
             recipeTemp = recipe.getProperty(NoEnergyTemperatureProperty.getInstance(), 0);
-            //numberItem = recipe.getInputs().size();
-            //requiredHeat = numberItem * recipeTemp * HEAT_MULTIPLIER;
+            // numberItem = recipe.getInputs().size();
+            // requiredHeat = numberItem * recipeTemp * HEAT_MULTIPLIER;
             return recipeTemp <= currentTemp;
-            //return recipeTemp < maxTemp && recipeTemp <= currentTemp;
+            // return recipeTemp < maxTemp && recipeTemp <= currentTemp;
         }
     }
-
 }

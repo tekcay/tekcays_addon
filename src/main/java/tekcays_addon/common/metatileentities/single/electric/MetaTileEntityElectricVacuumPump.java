@@ -1,25 +1,27 @@
 package tekcays_addon.common.metatileentities.single.electric;
 
-import gregtech.api.GTValues;
-import gregtech.api.capability.GregtechTileCapabilities;
-import gregtech.api.metatileentity.MetaTileEntity;
-import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.IFluidTank;
-import tekcays_addon.gtapi.capability.containers.IVacuumContainer;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import gregtech.api.GTValues;
+import gregtech.api.capability.GregtechTileCapabilities;
+import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
+import tekcays_addon.gtapi.capability.containers.IVacuumContainer;
 import tekcays_addon.gtapi.metatileentity.ElectricPressureCompressor;
 import tekcays_addon.gtapi.utils.IPressureVacuum;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor implements IPressureVacuum<IVacuumContainer> {
+public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor
+                                              implements IPressureVacuum<IVacuumContainer> {
 
     private int transferRate = 0;
-    private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()] * 15/16);
+    private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()] * 15 / 16);
     private IVacuumContainer vacuumContainer;
     private int fluidCapacity;
     private int tierMultiplier = (getTier() * getTier() + 1);
@@ -42,7 +44,6 @@ public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor
         return this.transferRate;
     }
 
-
     @Override
     public void update() {
         super.update();
@@ -55,20 +56,20 @@ public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor
                 transferRate = 0;
             }
 
-            //Redstone stops heating
+            // Redstone stops heating
             if (this.isBlockRedstonePowered()) return;
             if (energyContainer.getEnergyStored() < ENERGY_BASE_CONSUMPTION) return;
 
-
-            //TODO first make Air FluidStack amount to 1 and the added FluidStack at standard, then make it pressurized
+            // TODO first make Air FluidStack amount to 1 and the added FluidStack at standard, then make it pressurized
             applyVacuum(transferRate);
 
             energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
         }
     }
+
     @Override
     @Nullable
-    public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
+    public <T> T getCapability(@NotNull Capability<T> capability, EnumFacing side) {
         if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
             return side == getFrontFacing() ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
         }
@@ -97,5 +98,4 @@ public class MetaTileEntityElectricVacuumPump extends ElectricPressureCompressor
     public int getBaseTransferRate() {
         return BASE_TRANSFER_RATE;
     }
-
 }

@@ -1,5 +1,20 @@
 package tekcays_addon.common.metatileentities.single.heaters;
 
+import static tekcays_addon.gtapi.utils.FuelWithProperties.CREOSOTE;
+import static tekcays_addon.gtapi.utils.HeatersMethods.getBurnTime;
+import static tekcays_addon.gtapi.utils.HeatersMethods.isThereEnoughLiquidFuel;
+
+import java.util.List;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraftforge.fluids.IFluidTank;
+
+import org.jetbrains.annotations.Nullable;
+
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
@@ -13,23 +28,10 @@ import gregtech.api.gui.widgets.TankWidget;
 import gregtech.api.metatileentity.IDataInfoProvider;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraftforge.fluids.IFluidTank;
 import tekcays_addon.gtapi.capability.impl.HeatContainer;
 import tekcays_addon.gtapi.metatileentity.FuelHeater;
 import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.gtapi.utils.FuelHeaterTiers;
-
-import javax.annotation.Nullable;
-import java.util.List;
-
-import static tekcays_addon.gtapi.utils.FuelWithProperties.CREOSOTE;
-import static tekcays_addon.gtapi.utils.HeatersMethods.getBurnTime;
-import static tekcays_addon.gtapi.utils.HeatersMethods.isThereEnoughLiquidFuel;
 
 public class MetaTileEntityLiquidFuelHeater extends FuelHeater implements IDataInfoProvider, IActiveOutputSide {
 
@@ -46,7 +48,6 @@ public class MetaTileEntityLiquidFuelHeater extends FuelHeater implements IDataI
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
         return new MetaTileEntityLiquidFuelHeater(metaTileEntityId, fuelHeater);
     }
-
 
     @Override
     protected void initializeInventory() {
@@ -79,7 +80,8 @@ public class MetaTileEntityLiquidFuelHeater extends FuelHeater implements IDataI
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        TKCYATextures.LIQUID_FUEL_HEATER.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isBurning(), true);
+        TKCYATextures.LIQUID_FUEL_HEATER.renderOrientedState(renderState, translation, pipeline, getFrontFacing(),
+                isBurning(), true);
     }
 
     @Override
@@ -96,6 +98,4 @@ public class MetaTileEntityLiquidFuelHeater extends FuelHeater implements IDataI
         tooltip.add(I18n.format("tkcya.machine.liquid_fuel_heater.tooltip"));
         super.addInformation(stack, player, tooltip, advanced);
     }
-
-
 }

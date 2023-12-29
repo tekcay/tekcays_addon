@@ -1,10 +1,11 @@
 package tekcays_addon.api.consts;
 
-import gregtech.common.items.MetaItems;
-import net.minecraft.item.ItemStack;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import net.minecraft.item.ItemStack;
+
+import gregtech.common.items.MetaItems;
 
 public class ComponentsLists {
 
@@ -123,20 +124,20 @@ public class ComponentsLists {
         LV_TO_IV_LOGISTIC_COMPONENTS.addAll(LV_TO_IV_CONVEYOR_MODULES);
         LV_TO_IV_LOGISTIC_COMPONENTS.addAll(LV_TO_IV_ROBOT_ARMS);
     }
-    
+
     static {
         UV_LOGISTIC_COMPONENTS.add(MetaItems.CONVEYOR_MODULE_UV.getStackForm());
         UV_LOGISTIC_COMPONENTS.add(MetaItems.ROBOT_ARM_UV.getStackForm());
         UV_LOGISTIC_COMPONENTS.add(MetaItems.ELECTRIC_PUMP_UV.getStackForm());
         UV_LOGISTIC_COMPONENTS.add(MetaItems.FLUID_REGULATOR_UV.getStackForm());
     }
-    
+
     static {
         LUV_TO_UV_LOGISTIC_COMPONENTS.add(MetaItems.CONVEYOR_MODULE_LuV.getStackForm());
         LUV_TO_UV_LOGISTIC_COMPONENTS.add(MetaItems.ROBOT_ARM_LuV.getStackForm());
         LUV_TO_UV_LOGISTIC_COMPONENTS.add(MetaItems.ELECTRIC_PUMP_LuV.getStackForm());
         LUV_TO_UV_LOGISTIC_COMPONENTS.add(MetaItems.FLUID_REGULATOR_LUV.getStackForm());
-        
+
         LUV_TO_UV_LOGISTIC_COMPONENTS.add(MetaItems.CONVEYOR_MODULE_ZPM.getStackForm());
         LUV_TO_UV_LOGISTIC_COMPONENTS.add(MetaItems.ROBOT_ARM_ZPM.getStackForm());
         LUV_TO_UV_LOGISTIC_COMPONENTS.add(MetaItems.ELECTRIC_PUMP_ZPM.getStackForm());

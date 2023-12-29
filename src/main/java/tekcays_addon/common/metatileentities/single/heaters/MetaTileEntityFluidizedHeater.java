@@ -1,5 +1,24 @@
 package tekcays_addon.common.metatileentities.single.heaters;
 
+import static gregtech.api.unification.material.Materials.Coke;
+import static tekcays_addon.gtapi.utils.FuelWithProperties.CALCITE;
+import static tekcays_addon.gtapi.utils.HeatersMethods.getBurnTime;
+import static tekcays_addon.gtapi.utils.HeatersMethods.isThereEnoughLiquidFuel;
+
+import java.util.List;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemStackHandler;
+
+import org.jetbrains.annotations.Nullable;
+
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
@@ -17,27 +36,10 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.ore.OrePrefix;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraftforge.fluids.IFluidTank;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.gtapi.capability.impl.HeatContainer;
 import tekcays_addon.gtapi.metatileentity.FuelHeater;
 import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.gtapi.utils.FuelHeaterTiers;
-
-import javax.annotation.Nullable;
-import java.util.List;
-
-import static gregtech.api.unification.material.Materials.Coke;
-import static tekcays_addon.gtapi.utils.FuelWithProperties.CALCITE;
-import static tekcays_addon.gtapi.utils.HeatersMethods.getBurnTime;
-import static tekcays_addon.gtapi.utils.HeatersMethods.isThereEnoughLiquidFuel;
 
 public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataInfoProvider, IActiveOutputSide {
 
@@ -67,6 +69,7 @@ public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataIn
     protected IItemHandlerModifiable createImportItemHandler() {
         return new NotifiableItemStackHandler(this, 1, this, false);
     }
+
     @Override
     protected IItemHandlerModifiable createExportItemHandler() {
         return new ItemStackHandler(1);
@@ -101,7 +104,8 @@ public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataIn
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        TKCYATextures.FLUIDIZED_FUEL_HEATER.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isBurning(), true);
+        TKCYATextures.FLUIDIZED_FUEL_HEATER.renderOrientedState(renderState, translation, pipeline, getFrontFacing(),
+                isBurning(), true);
     }
 
     private boolean isThereCoke() {
@@ -123,5 +127,4 @@ public class MetaTileEntityFluidizedHeater extends FuelHeater implements IDataIn
         tooltip.add(I18n.format("tkcya.machine.fluidized_fuel_heater.tooltip"));
         super.addInformation(stack, player, tooltip, advanced);
     }
-
 }

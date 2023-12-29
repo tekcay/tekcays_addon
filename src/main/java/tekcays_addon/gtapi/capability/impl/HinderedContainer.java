@@ -1,28 +1,25 @@
 package tekcays_addon.gtapi.capability.impl;
 
+import static tekcays_addon.api.consts.NBTKeys.*;
+import static tekcays_addon.api.utils.Numbers.changeByKeepingPositive;
+
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.common.capabilities.Capability;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import gregtech.api.metatileentity.MTETrait;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.ore.OrePrefix;
-import gregtech.api.util.GTUtility;
 import lombok.Getter;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.common.capabilities.Capability;
-import org.apache.commons.lang3.Range;
-import tekcays_addon.api.item.ItemStackUtils;
 import tekcays_addon.api.utils.Numbers;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.capability.containers.IHinderedContainer;
-import tekcays_addon.gtapi.utils.TKCYALog;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import static tekcays_addon.api.consts.NBTKeys.*;
-import static tekcays_addon.api.utils.Numbers.changeByKeepingPositive;
 
 @Getter
 public class HinderedContainer extends MTETrait implements IHinderedContainer {
@@ -33,9 +30,10 @@ public class HinderedContainer extends MTETrait implements IHinderedContainer {
 
     /**
      * Create a new MTE trait.
+     * 
      * @param metaTileEntity the MTE to reference, and add the trait to
      */
-    public HinderedContainer(@Nonnull MetaTileEntity metaTileEntity) {
+    public HinderedContainer(@NotNull MetaTileEntity metaTileEntity) {
         super(metaTileEntity);
         this.efficiency = 1.0f;
         this.wasteAmount = 0;
@@ -43,7 +41,7 @@ public class HinderedContainer extends MTETrait implements IHinderedContainer {
     }
 
     @Override
-    public void initWasteStack(@Nonnull OrePrefix orePrefix, @Nonnull Material wasteMaterial, int amount) {
+    public void initWasteStack(@NotNull OrePrefix orePrefix, @NotNull Material wasteMaterial, int amount) {
         this.wasteStack = OreDictUnifier.get(orePrefix, wasteMaterial, amount);
         this.metaTileEntity.markDirty();
     }
@@ -55,7 +53,7 @@ public class HinderedContainer extends MTETrait implements IHinderedContainer {
     }
 
     @Override
-    public void initFuelStack(@Nonnull OrePrefix orePrefix, @Nonnull Material wasteMaterial, int amount) {
+    public void initFuelStack(@NotNull OrePrefix orePrefix, @NotNull Material wasteMaterial, int amount) {
         this.wasteStack = OreDictUnifier.get(orePrefix, wasteMaterial, amount);
         this.metaTileEntity.markDirty();
     }
@@ -108,7 +106,7 @@ public class HinderedContainer extends MTETrait implements IHinderedContainer {
         this.metaTileEntity.markDirty();
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public String getName() {
         return "hindered_container";
@@ -122,7 +120,7 @@ public class HinderedContainer extends MTETrait implements IHinderedContainer {
         return null;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = super.serializeNBT();
@@ -133,14 +131,14 @@ public class HinderedContainer extends MTETrait implements IHinderedContainer {
     }
 
     @Override
-    public void deserializeNBT(@Nonnull NBTTagCompound compound) {
+    public void deserializeNBT(@NotNull NBTTagCompound compound) {
         this.efficiency = compound.getFloat(EFFICIENCY_KEY);
         this.wasteAmount = compound.getInteger(WASTE_AMOUNT_KEY);
         this.fuelAmount = compound.getInteger(FUEL_AMOUNT_KEY);
     }
 
     @Override
-    public void writeInitialData(@Nonnull PacketBuffer buffer) {
+    public void writeInitialData(@NotNull PacketBuffer buffer) {
         super.writeInitialData(buffer);
         buffer.writeFloat(this.efficiency);
         buffer.writeInt(this.wasteAmount);
@@ -148,13 +146,10 @@ public class HinderedContainer extends MTETrait implements IHinderedContainer {
     }
 
     @Override
-    public void receiveInitialData(@Nonnull PacketBuffer buffer) {
+    public void receiveInitialData(@NotNull PacketBuffer buffer) {
         super.receiveInitialData(buffer);
         this.efficiency = buffer.readFloat();
         this.wasteAmount = buffer.readInt();
         this.fuelAmount = buffer.readInt();
-
     }
-
-
 }

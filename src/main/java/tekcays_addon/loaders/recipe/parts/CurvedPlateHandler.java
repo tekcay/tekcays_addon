@@ -1,13 +1,13 @@
 package tekcays_addon.loaders.recipe.parts;
 
+import static gregtech.api.unification.ore.OrePrefix.plate;
+import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.curvedPlate;
+
 import gregtech.api.recipes.ModHandler;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.stack.UnificationEntry;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
-
-import static gregtech.api.unification.ore.OrePrefix.plate;
-import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.curvedPlate;
 
 public class CurvedPlateHandler {
 
@@ -17,7 +17,8 @@ public class CurvedPlateHandler {
     }
 
     private static void shapedRecipe(Material material) {
-        ModHandler.addShapedRecipe(material.getUnlocalizedName() + "_curved_plate", OreDictUnifier.get(curvedPlate, material),
+        ModHandler.addShapedRecipe(material.getUnlocalizedName() + "_curved_plate",
+                OreDictUnifier.get(curvedPlate, material),
                 " h ", " P ", "   ", 'P', new UnificationEntry(plate, material));
     }
 

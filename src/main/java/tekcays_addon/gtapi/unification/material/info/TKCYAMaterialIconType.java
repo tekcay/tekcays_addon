@@ -21,7 +21,7 @@ public class TKCYAMaterialIconType {
     public static final MaterialIconType moldBottle = new MaterialIconType("moldBottle");
     public static final MaterialIconType moldBlock = new MaterialIconType("moldBlock");
 
-    //Components
+    // Components
     public static MaterialIconType lvComponents = new MaterialIconType("lvComponents");
     public static MaterialIconType mvComponents = new MaterialIconType("mvComponents");
     public static MaterialIconType hvComponents = new MaterialIconType("hvComponents");
@@ -31,9 +31,7 @@ public class TKCYAMaterialIconType {
     public static MaterialIconType zpmComponents = new MaterialIconType("zpmComponents");
     public static MaterialIconType uvComponents = new MaterialIconType("uvComponents");
 
-
     // Others
     public static final MaterialIconType curvedPlate = new MaterialIconType("curvedPlate");
     public static final MaterialIconType blade = new MaterialIconType("blade");
-
 }

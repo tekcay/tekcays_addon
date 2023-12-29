@@ -6,12 +6,14 @@ import tekcays_addon.gtapi.capability.containers.LogisticContainer;
 public interface LogisticsCover {
 
     IEnergyContainer getEnergyContainer();
+
     long getEnergyPerOperation();
+
     long getMinEnergyNeeded();
+
     LogisticContainer getLogisticContainer();
+
     default boolean isThereEnoughEnergy() {
         return getEnergyContainer() != null && getEnergyContainer().getEnergyStored() >= getMinEnergyNeeded();
     }
-
-
 }

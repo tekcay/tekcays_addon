@@ -1,5 +1,8 @@
 package tekcays_addon.loaders.recipe.handlers;
 
+import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.*;
+import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.curvedPlate;
+
 import gregtech.api.recipes.ModHandler;
 import gregtech.api.unification.material.MarkerMaterials;
 import gregtech.api.unification.material.Materials;
@@ -7,11 +10,8 @@ import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.UnificationEntry;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
-import tekcays_addon.gtapi.unification.TKCYAMaterials;
 import tekcays_addon.common.items.TKCYAMetaItems;
-
-import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.curvedPlate;
-import static tekcays_addon.common.metatileentities.TKCYAMetaTileEntities.*;
+import tekcays_addon.gtapi.unification.TKCYAMaterials;
 
 public class PressureHandler {
 

@@ -1,25 +1,26 @@
 package tekcays_addon.gtapi.capability.impl;
 
-import gregtech.api.metatileentity.MTETrait;
-import gregtech.api.metatileentity.MetaTileEntity;
-import gregtech.api.unification.material.Materials;
-import lombok.Getter;
-import lombok.Setter;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.FluidStack;
-import tekcays_addon.gtapi.capability.containers.IVacuumContainer;
-import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import static lombok.AccessLevel.NONE;
 import static tekcays_addon.api.consts.DataIds.AIR_FLUID_STACK;
 import static tekcays_addon.api.consts.NBTKeys.PRESSURE_KEY;
 import static tekcays_addon.api.consts.NBTKeys.VOLUME_KEY;
 import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
+
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.FluidStack;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import gregtech.api.metatileentity.MTETrait;
+import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.unification.material.Materials;
+import lombok.Getter;
+import lombok.Setter;
+import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
+import tekcays_addon.gtapi.capability.containers.IVacuumContainer;
 
 @Getter
 @Setter
@@ -80,7 +81,7 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
         return false;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public String getName() {
         return "VacuumContainer";
@@ -95,19 +96,19 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
         return null;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = new NBTTagCompound();
         compound.setInteger(PRESSURE_KEY, this.pressure);
         compound.setInteger(VOLUME_KEY, this.volume);
-        //compound.setTag(AIR_FLUID_STACK.getName(), this.setAirFluidStackNBT());
+        // compound.setTag(AIR_FLUID_STACK.getName(), this.setAirFluidStackNBT());
         compound.setInteger("airAmount", this.getAirAmount());
         return compound;
     }
 
     @Override
-    public void deserializeNBT(@Nonnull NBTTagCompound compound) {
+    public void deserializeNBT(@NotNull NBTTagCompound compound) {
         super.deserializeNBT(compound);
         this.pressure = compound.getInteger(PRESSURE_KEY);
         this.volume = compound.getInteger(VOLUME_KEY);
@@ -116,44 +117,43 @@ public class VacuumContainer extends MTETrait implements IVacuumContainer {
     }
 
     @Override
-    public void writeInitialData(@Nonnull PacketBuffer buffer) {
+    public void writeInitialData(@NotNull PacketBuffer buffer) {
         super.writeInitialData(buffer);
         buffer.writeInt(this.pressure);
         buffer.writeInt(this.volume);
-        //buffer.writeCompoundTag(this.setAirFluidStackNBT());
+        // buffer.writeCompoundTag(this.setAirFluidStackNBT());
         buffer.writeInt(this.getAirAmount());
     }
 
     @Override
-    public void receiveInitialData(@Nonnull PacketBuffer buffer) {
+    public void receiveInitialData(@NotNull PacketBuffer buffer) {
         super.receiveInitialData(buffer);
         this.pressure = buffer.readInt();
         this.volume = buffer.readInt();
         this.airFluidStack = Materials.Air.getFluid(buffer.readInt());
         /*
-        try {
-            this.airFluidStack = FluidStack.loadFluidStackFromNBT(buffer.readCompoundTag());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+         * try {
+         * this.airFluidStack = FluidStack.loadFluidStackFromNBT(buffer.readCompoundTag());
+         * } catch (IOException e) {
+         * throw new RuntimeException(e);
+         * }
+         * 
          */
     }
 
-
     /*
-    @Override
-    public void receiveCustomData(int dataId, PacketBuffer buf) {
-        super.receiveCustomData(dataId, buf);
-        if (dataId == AIR_FLUID_STACK.getId()) {
-            try {
-                this.airFluidStack = FluidStack.loadFluidStackFromNBT(buf.readCompoundTag());
-                TKCYALog.logger.info("InVacuumContainer, is airFluidStack null ? " + this.airFluidStack == null);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
+     * @Override
+     * public void receiveCustomData(int dataId, PacketBuffer buf) {
+     * super.receiveCustomData(dataId, buf);
+     * if (dataId == AIR_FLUID_STACK.getId()) {
+     * try {
+     * this.airFluidStack = FluidStack.loadFluidStackFromNBT(buf.readCompoundTag());
+     * TKCYALog.logger.info("InVacuumContainer, is airFluidStack null ? " + this.airFluidStack == null);
+     * } catch (IOException e) {
+     * throw new RuntimeException(e);
+     * }
+     * }
+     * }
+     * 
      */
 }

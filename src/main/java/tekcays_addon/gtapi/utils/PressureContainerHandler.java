@@ -1,14 +1,18 @@
 package tekcays_addon.gtapi.utils;
 
-import gregtech.api.capability.impl.FluidTankList;
 import net.minecraftforge.fluids.FluidStack;
+
+import gregtech.api.capability.impl.FluidTankList;
 import tekcays_addon.gtapi.capability.containers.IPressureContainer;
 
 public interface PressureContainerHandler {
 
     IPressureContainer getPressureContainer();
+
     int getBaseTransferRate();
+
     int getPressure();
+
     FluidTankList importFluidTanks();
 
     default int drainImportTank(FluidStack fluidStack, int amount, boolean doDrain) {
@@ -20,7 +24,4 @@ public interface PressureContainerHandler {
         double pressurePercentage = (double) getPressure() / getPressureContainer().getMaxPressure();
         return (int) (getBaseTransferRate() * pressurePercentage);
     }
-
-
 }
-

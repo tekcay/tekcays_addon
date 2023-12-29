@@ -1,20 +1,17 @@
 package tekcays_addon.loaders.recipe.handlers;
 
-import gregtech.api.recipes.ModHandler;
-import gregtech.api.unification.ore.StoneType;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import tekcays_addon.common.blocks.TKCYAMetaBlocks;
-import tekcays_addon.common.blocks.blocks.BlockDirt;
-import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
-
-import java.util.Arrays;
-import java.util.List;
-
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
 import static gregtech.api.unification.ore.StoneTypes.*;
 import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.PRIMITIVE_FURNACE;
+
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+
+import gregtech.api.recipes.ModHandler;
+import tekcays_addon.common.blocks.TKCYAMetaBlocks;
+import tekcays_addon.common.blocks.blocks.BlockDirt;
+import tekcays_addon.common.metatileentities.TKCYAMetaTileEntities;
 
 public class PrimitiveFurnaceHandler {
 
@@ -42,7 +39,8 @@ public class PrimitiveFurnaceHandler {
                 .duration(160)
                 .buildAndRegister();
 
-        ModHandler.addShapelessRecipe("neutralized_dirt", TKCYAMetaBlocks.BLOCK_DIRT.getItemVariant(BlockDirt.DirtType.DIRT),
+        ModHandler.addShapelessRecipe("neutralized_dirt",
+                TKCYAMetaBlocks.BLOCK_DIRT.getItemVariant(BlockDirt.DirtType.DIRT),
                 "dirt");
 
         ModHandler.addShapelessRecipe("primitive_furnace", TKCYAMetaTileEntities.PRIMITIVE_FURNACE.getStackForm(),
@@ -58,5 +56,4 @@ public class PrimitiveFurnaceHandler {
                 .findFirst()
                 .ifPresent(ASSEMBLER_RECIPES::removeRecipe);
     }
-
 }

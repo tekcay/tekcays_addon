@@ -1,5 +1,20 @@
 package tekcays_addon.common.metatileentities.multi.electric;
 
+import static tekcays_addon.gtapi.logic.DamageItemsLogic.*;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -10,11 +25,6 @@ import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.ingredients.GTRecipeInput;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
 import tekcays_addon.common.items.TKCYAMetaItems;
@@ -22,15 +32,6 @@ import tekcays_addon.common.items.behaviors.ElectrodeBehavior;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.recipes.recipeproperties.MultiAmperageProperty;
 import tekcays_addon.gtapi.render.TKCYATextures;
-import tekcays_addon.gtapi.utils.TKCYALog;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-
-import static tekcays_addon.gtapi.logic.DamageItemsLogic.*;
 
 public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockController {
 
@@ -43,8 +44,7 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
     private long currentAmperage;
     private Recipe currentRecipe;
 
-
-    //TODO Proper blocks and textures
+    // TODO Proper blocks and textures
 
     public MetaTileEntityAdvancedElectrolyzer(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, TKCYARecipeMaps.ELECTROLYSIS);
@@ -66,23 +66,24 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
     private List<String> getImportFluidName() {
         List<String> names = new ArrayList<>();
         importFluids.getFluidTanks().forEach(iFluidTank -> {
-            if (iFluidTank.equals(null) || iFluidTank.getFluid().equals(null))  names.add("rien");
+            if (iFluidTank.equals(null) || iFluidTank.getFluid().equals(null)) names.add("rien");
             names.add(iFluidTank.getFluid().getLocalizedName());
         });
         return names;
     }
 
     private void setCurrentRecipe() {
-        currentRecipe = this.recipeMap.findRecipe(getEnergyContainer().getInputVoltage(), getImportItems(), getInputFluidInventory());
+        currentRecipe = this.recipeMap.findRecipe(getEnergyContainer().getInputVoltage(), getImportItems(),
+                getInputFluidInventory());
         if (currentRecipe != null) {
             recipeAmperage = currentRecipe.getProperty(MultiAmperageProperty.getInstance(), 0);
             recipeEUt = currentRecipe.getEUt();
         }
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    protected BlockPattern createStructurePattern() { //TODO MutiblockStructure
+    protected BlockPattern createStructurePattern() { // TODO MutiblockStructure
         return FactoryBlockPattern.start()
                 .aisle("XXX", "XXX", "XXX")
                 .aisle("XXX", "X#X", "XXX")
@@ -94,7 +95,6 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
     }
 
     private void getElectrodeFromInventory() {
-
         electrodeInInventory.clear();
 
         for (int i = 0; i < inputInventory.getSlots(); i++) {
@@ -142,7 +142,6 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
         } else return false;
     }
 
-
     @Override
     public void updateFormedValid() {
         super.updateFormedValid();
@@ -153,7 +152,8 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
         getCurrentRecipeNonConsummables(currentRecipeNonConsummIngredient, inputs);
         getCurrentInventory(nonConsummInInventory, inputInventory);
 
-        if (!doesInventoryContainDamageableItems(nonConsummInInventory, currentRecipeNonConsummIngredient)) this.doExplosion(1);
+        if (!doesInventoryContainDamageableItems(nonConsummInInventory, currentRecipeNonConsummIngredient))
+            this.doExplosion(1);
 
         if (getOffsetTimer() % 20 == 0) {
             applyDamage(inputInventory, 20);
@@ -169,27 +169,29 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
         return TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.MONEL_CASING);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     protected ICubeRenderer getFrontOverlay() {
         return Textures.VACUUM_FREEZER_OVERLAY;
     }
 
     ////////////////
-    //CheckRecipe
+    // CheckRecipe
     /////////////////
 
     /*
-    @Override
-    public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
-        if (inputs != recipe.getInputs()) return false;
-        return recipe.getProperty(MultiAmperageProperty.getInstance(), TKCYAValues.EMPTY_INT_TWO_ARRAY) >= getEnergyContainer().getInputAmperage();
-    }
-
+     * @Override
+     * public boolean checkRecipe(@NotNull Recipe recipe, boolean consumeIfSuccess) {
+     * if (inputs != recipe.getInputs()) return false;
+     * return recipe.getProperty(MultiAmperageProperty.getInstance(), TKCYAValues.EMPTY_INT_TWO_ARRAY) >=
+     * getEnergyContainer().getInputAmperage();
+     * }
+     * 
      */
 
     @Override
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
+    public void addInformation(@NotNull ItemStack stack, @Nullable World player, @NotNull List<String> tooltip,
+                               boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tkcya.machine.no_overclock.tooltip"));
         tooltip.add(I18n.format("tekcays_addon.machine.advanced_electrolyzer.tooltip.1"));
@@ -197,7 +199,4 @@ public class MetaTileEntityAdvancedElectrolyzer extends RecipeMapMultiblockContr
         tooltip.add(I18n.format("tekcays_addon.machine.advanced_electrolyzer.tooltip.3"));
         tooltip.add(I18n.format("tekcays_addon.machine.advanced_electrolyzer.tooltip.4"));
     }
-
-
-
 }

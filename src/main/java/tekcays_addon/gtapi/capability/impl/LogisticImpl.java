@@ -1,13 +1,14 @@
 package tekcays_addon.gtapi.capability.impl;
 
+import net.minecraftforge.common.capabilities.Capability;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import gregtech.api.metatileentity.MTETrait;
 import gregtech.api.metatileentity.MetaTileEntity;
-import net.minecraftforge.common.capabilities.Capability;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.capability.containers.LogisticContainer;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class LogisticImpl extends MTETrait implements LogisticContainer {
 
@@ -16,11 +17,11 @@ public class LogisticImpl extends MTETrait implements LogisticContainer {
      *
      * @param metaTileEntity the MTE to reference, and add the trait to
      */
-    public LogisticImpl(@Nonnull MetaTileEntity metaTileEntity) {
+    public LogisticImpl(@NotNull MetaTileEntity metaTileEntity) {
         super(metaTileEntity);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public String getName() {
         return "LOGISTIC";

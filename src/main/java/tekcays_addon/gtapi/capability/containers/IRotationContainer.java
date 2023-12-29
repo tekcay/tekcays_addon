@@ -1,31 +1,43 @@
 package tekcays_addon.gtapi.capability.containers;
 
-import net.minecraft.client.resources.I18n;
-
 import java.util.List;
+
+import net.minecraft.client.resources.I18n;
 
 public interface IRotationContainer {
 
     void setSpeed(int speed);
+
     void setTorque(int torque);
+
     void setPower(int power);
+
     void setRotationParams(int speed, int torque, int power);
+
     void setRotationParams(IRotationContainer rotationContainer);
 
     int getTorque();
+
     int getSpeed();
+
     int getPower();
+
     void getRotationParams(int speed, int torque, int power);
+
     void getRotationParams(IRotationContainer rotationContainer);
 
     int getMaxTorque();
+
     int getMaxSpeed();
+
     default int getMaxPower() {
         return getMaxSpeed() * getMaxTorque();
     }
 
     void changeSpeed(int amount);
+
     void changeTorque(int amount);
+
     void changePower(int amount);
 
     /**

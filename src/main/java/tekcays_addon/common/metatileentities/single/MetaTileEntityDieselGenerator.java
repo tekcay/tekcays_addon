@@ -1,5 +1,38 @@
 package tekcays_addon.common.metatileentities.single;
 
+import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
+import static gregtech.api.unification.material.Materials.CarbonDioxide;
+import static java.util.Collections.*;
+import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
+import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.DIESEL_GENERATOR;
+import static tekcays_addon.gtapi.render.TKCYATextures.*;
+
+import java.util.List;
+import java.util.Objects;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.ColourMultiplier;
 import codechicken.lib.render.pipeline.IVertexOperation;
@@ -19,25 +52,6 @@ import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import gregtech.core.sound.GTSoundEvents;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import lombok.Setter;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidTank;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.ArrayUtils;
 import tekcays_addon.api.capability.AdjacentCapabilityHelper;
 import tekcays_addon.api.metatileentity.IFreeFace;
 import tekcays_addon.gtapi.capability.containers.IRotationContainer;
@@ -45,19 +59,8 @@ import tekcays_addon.gtapi.capability.impl.RotationContainer;
 import tekcays_addon.gtapi.logic.DieselLogic;
 import tekcays_addon.gtapi.utils.FluidStackHelper;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Objects;
-
-import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
-import static gregtech.api.unification.material.Materials.CarbonDioxide;
-import static java.util.Collections.*;
-import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
-import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.DIESEL_GENERATOR;
-import static tekcays_addon.gtapi.render.TKCYATextures.*;
-
-public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide, IFreeFace, AdjacentCapabilityHelper<IFluidHandler>, FluidStackHelper {
+public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide,
+                                           IFreeFace, AdjacentCapabilityHelper<IFluidHandler>, FluidStackHelper {
 
     private IFluidTank importFuelTank;
     private IRotationContainer rotationContainer;
@@ -86,7 +89,7 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
         return new MetaTileEntityDieselGenerator(metaTileEntityId, tier - 1);
     }
-    
+
     @Override
     public FluidTankList createImportFluidHandler() {
         this.importFuelTank = new NotifiableFluidTank(fuelTankCapacity, this, false);
@@ -106,12 +109,14 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline, new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
+        IVertexOperation[] colouredPipeline = ArrayUtils.add(pipeline,
+                new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering())));
         getBaseRenderer().render(renderState, translation, colouredPipeline);
 
-        //TODO maybe add all those textures in the rtation turbine overlay diredctoy ?
+        // TODO maybe add all those textures in the rtation turbine overlay diredctoy ?
         Textures.PIPE_IN_OVERLAY.renderSided(getInputSide(), renderState, translation, pipeline);
-        ROTATION_TURBINE_OVERLAY.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isRunning, true);
+        ROTATION_TURBINE_OVERLAY.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isRunning,
+                true);
         ROTATION_WATER_OUTPUT_OVERLAY.renderSided(getOutputSide(), renderState, translation, pipeline);
     }
 
@@ -153,34 +158,33 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
 
     @Override
     public void update() {
-
         if (getOffsetTimer() % recipeDuration == 0) {
-        FluidStack fluidStack = getImportFluidStack();
+            FluidStack fluidStack = getImportFluidStack();
 
-        if (fluidStack == null) {
-            decrement();
-            return;
-        }
+            if (fluidStack == null) {
+                decrement();
+                return;
+            }
 
-        Recipe recipe = getRecipe();
-        if (recipe == null) {
-            recipeDuration = 10;
-            decrement();
-            return;
-        } else recipeDuration = recipe.getDuration();
+            Recipe recipe = getRecipe();
+            if (recipe == null) {
+                recipeDuration = 10;
+                decrement();
+                return;
+            } else recipeDuration = recipe.getDuration();
 
-        fuelConsumption = (rotationContainer.getSpeed() / 10) + BASE_FUEL_CONSUMPTION;
-        carbonDioxideOutputRate = fuelConsumption;
+            fuelConsumption = (rotationContainer.getSpeed() / 10) + BASE_FUEL_CONSUMPTION;
+            carbonDioxideOutputRate = fuelConsumption;
 
-        if (fluidStack.amount < fuelConsumption) {
-            decrement();
-            return;
-        }
+            if (fluidStack.amount < fuelConsumption) {
+                decrement();
+                return;
+            }
 
-        if (rotationContainer.getMaxSpeed() > 0) {
-            decrement();
-            if (getOffsetTimer() % 20 == 0) setRunningState(false);
-        }
+            if (rotationContainer.getMaxSpeed() > 0) {
+                decrement();
+                if (getOffsetTimer() % 20 == 0) setRunningState(false);
+            }
 
             importFuelTank.drain(fuelConsumption, true);
             transferRotation();
@@ -214,11 +218,12 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
     }
 
     private void transferRotation() {
-        //Get the TileEntity that is placed right on top of the Heat.
+        // Get the TileEntity that is placed right on top of the Heat.
         TileEntity te = getWorld().getTileEntity(getPos().offset(getRotationSide()));
         if (te != null) {
-            //Get the Capability of this Tile Entity on the opposite face.
-            IRotationContainer container = te.getCapability(CAPABILITY_ROTATIONAL_CONTAINER, getRotationSide().getOpposite());
+            // Get the Capability of this Tile Entity on the opposite face.
+            IRotationContainer container = te.getCapability(CAPABILITY_ROTATIONAL_CONTAINER,
+                    getRotationSide().getOpposite());
             if (container != null) {
                 container.setRotationParams(rotationContainer);
             }
@@ -232,7 +237,7 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
 
     @Override
     @Nullable
-    public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
+    public <T> T getCapability(@NotNull Capability<T> capability, EnumFacing side) {
         if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
             return side == getOutputSide() ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
         }
@@ -269,11 +274,12 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
         return false;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();
-        list.add(new TextComponentTranslation("behavior.tricorder.steam.amount", getNullableFluidStackAmount(getImportFluidStack())));
+        list.add(new TextComponentTranslation("behavior.tricorder.steam.amount",
+                getNullableFluidStackAmount(getImportFluidStack())));
         list.add(new TextComponentTranslation("behavior.tricorder.speed", rotationContainer.getSpeed()));
         return list;
     }

@@ -1,23 +1,26 @@
 package tekcays_addon.common.metatileentities.single.electric;
 
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.FluidStack;
+
 import gregtech.api.GTValues;
 import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.capability.impl.NotifiableFluidTank;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.FluidStack;
-import tekcays_addon.gtapi.capability.containers.IPressureContainer;
-import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
-import tekcays_addon.gtapi.metatileentity.ElectricPressureCompressor;
 import tekcays_addon.api.capability.AdjacentCapabilityHelper;
+import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
+import tekcays_addon.gtapi.capability.containers.IPressureContainer;
+import tekcays_addon.gtapi.metatileentity.ElectricPressureCompressor;
 import tekcays_addon.gtapi.utils.PressureContainerHandler;
 
-public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCompressor implements PressureContainerHandler, AdjacentCapabilityHelper<IPressureContainer> {
+public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCompressor
+                                                      implements PressureContainerHandler,
+                                                      AdjacentCapabilityHelper<IPressureContainer> {
 
-    private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()] * 15/16);
+    private final int ENERGY_BASE_CONSUMPTION = (int) (GTValues.V[getTier()] * 15 / 16);
     private IPressureContainer pressureContainer;
     private int fluidCapacity;
     private int tierMultiplier = (getTier() * getTier() + 1);
@@ -48,7 +51,7 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
     @Override
     public void update() {
         super.update();
-        //Redstone stops fluid transfer
+        // Redstone stops fluid transfer
         if (this.isBlockRedstonePowered()) return;
         if (getFluidTankContent() == null) return;
         if (energyContainer.getEnergyStored() < ENERGY_BASE_CONSUMPTION) return;
@@ -63,19 +66,20 @@ public class MetaTileEntityElectricPressureCompressor extends ElectricPressureCo
                 return;
             }
 
-            if (pressureContainer.getPressurizedFluidStack() == null || pressureContainer.getPressurizedFluidStack().amount > 0) {
+            if (pressureContainer.getPressurizedFluidStack() == null ||
+                    pressureContainer.getPressurizedFluidStack().amount > 0) {
                 int toDrain = pressureContainer.changePressurizedFluidStack(getFluidTankContent(), transferRate);
                 fluidTank.drain(toDrain, true);
                 energyContainer.removeEnergy(ENERGY_BASE_CONSUMPTION);
             }
         }
     }
-    
+
     private FluidStack getFluidTankContent() {
         return fluidTank.getFluid();
     }
 
-    //Implementations
+    // Implementations
 
     @Override
     public IPressureContainer getPressureContainer() {

@@ -1,19 +1,18 @@
 package tekcays_addon.loaders.recipe.handlers;
 
+import static gregtech.api.unification.ore.OrePrefix.dust;
+import static tekcays_addon.api.material.MaterialHelper.*;
+import static tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags.BATH_FLUID;
+
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.stack.MaterialStack;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags;
 
-import static gregtech.api.unification.ore.OrePrefix.dust;
-import static tekcays_addon.api.material.MaterialHelper.*;
-import static tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags.BATH_FLUID;
-
 public class MaterialFlagsRecipes {
 
     public static void init() {
-
         for (Material material : getAllMaterials()) {
             if (material.hasFlag(TKCYAMaterialFlags.GENERATE_FILTRATION)) {
                 registerFiltrationRecipes(material);
@@ -26,7 +25,6 @@ public class MaterialFlagsRecipes {
     }
 
     private static void registerFiltrationRecipes(Material material) {
-
         MaterialStack[] outputMaterialStacks = separateMaterialsForFiltration(material);
 
         MaterialStack bathFluid = outputMaterialStacks[0];
@@ -41,7 +39,6 @@ public class MaterialFlagsRecipes {
     }
 
     private static void registerSpiralSeparationRecipes(Material material) {
-
         RecipeMaps.CHEMICAL_RECIPES.recipeBuilder()
                 .input(dust, material, getAmountComponentsSum(material))
                 .outputs(getStacksFromMaterialComposition(material))
@@ -52,13 +49,18 @@ public class MaterialFlagsRecipes {
 
     /**
      * Helps the generation of the filtration recipes.
-     * <br><br>
-     * {@code array[0]} -> the materialStack having the {@link TKCYAMaterialFlags#BATH_FLUID} and will be used as the {@code fluidOutputs}.
-     * <br><br>
+     * <br>
+     * <br>
+     * {@code array[0]} -> the materialStack having the {@link TKCYAMaterialFlags#BATH_FLUID} and will be used as the
+     * {@code fluidOutputs}.
+     * <br>
+     * <br>
      * {@code array[1]} -> the materialStack that will be used as the {@code outputs}.
      * <br>
+     * 
      * @param material the material to decompose
-     * @return a sorted array of {@link MaterialStack} containing the components {@link Material} of the provided {@code material}.
+     * @return a sorted array of {@link MaterialStack} containing the components {@link Material} of the provided
+     *         {@code material}.
      */
     private static MaterialStack[] separateMaterialsForFiltration(Material material) {
         MaterialStack[] materialStacks = new MaterialStack[2];
@@ -76,8 +78,4 @@ public class MaterialFlagsRecipes {
 
         return materialStacks;
     }
-
-
-
-
 }

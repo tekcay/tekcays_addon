@@ -1,5 +1,11 @@
 package tekcays_addon.loaders.recipe.parts;
 
+import static gregtech.api.unification.ore.OrePrefix.*;
+import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.curvedPlate;
+
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.properties.PropertyKey;
@@ -8,21 +14,13 @@ import tekcays_addon.api.utils.BooleanHelpers;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.unification.material.ore.OrePrefixValues;
 
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import static gregtech.api.unification.ore.OrePrefix.*;
-import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.curvedPlate;
-
 public class PipesHandler {
 
     public static void init(Material material) {
         processPipes(material);
     }
 
-
     private static void processPipes(Material material) {
-
         if (BooleanHelpers.anyMatch(material, Materials.Wood, Materials.TreatedWood)) return;
 
         if (material.hasProperty(PropertyKey.ITEM_PIPE)) {
@@ -34,9 +32,7 @@ public class PipesHandler {
         }
     }
 
-
     private static void processItemPipes(Material material) {
-
         int circuitMeta = 0;
 
         for (Map.Entry<OrePrefix, OrePrefix> entry : OrePrefixValues.NORMAL_TO_RESTRICTIVE_PIPES.entrySet()) {
@@ -64,11 +60,11 @@ public class PipesHandler {
     }
 
     private static void processSingleFluidPipes(Material material, AtomicInteger circuitMeta) {
-        OrePrefixValues.FLUID_PIPES_SINGLE.forEach(pipe -> generateFluidPipeRecipes(pipe, material, circuitMeta.getAndIncrement()));
+        OrePrefixValues.FLUID_PIPES_SINGLE
+                .forEach(pipe -> generateFluidPipeRecipes(pipe, material, circuitMeta.getAndIncrement()));
     }
 
     private static void generateFluidPipeRecipes(OrePrefix pipeOrePrefix, Material material, int circuitMeta) {
-
         if (pipeOrePrefix.equals(pipeTinyFluid)) {
 
             TKCYARecipeMaps.ROLLING_RECIPES.recipeBuilder()
@@ -97,7 +93,6 @@ public class PipesHandler {
     }
 
     private static void multi(Material material, OrePrefix output, int multiplier) {
-
         TKCYARecipeMaps.NEW_ASSEMBLING.recipeBuilder()
                 .input(pipeSmallFluid, material, multiplier)
                 .circuitMeta(multiplier)

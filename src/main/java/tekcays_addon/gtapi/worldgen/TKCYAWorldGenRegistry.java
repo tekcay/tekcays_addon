@@ -1,16 +1,7 @@
 package tekcays_addon.gtapi.worldgen;
 
-import gregtech.api.GTValues;
-import gregtech.api.worldgen.config.BedrockFluidDepositDefinition;
-import gregtech.api.worldgen.config.OreDepositDefinition;
-import gregtech.api.worldgen.config.WorldGenRegistry;
-import net.minecraftforge.fml.common.Loader;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import tekcays_addon.TekCaysAddon;
-import tekcays_addon.gtapi.utils.TKCYALog;
+import static tekcays_addon.gtapi.consts.TKCYAValues.DIMENSIONS;
 
-import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -19,10 +10,22 @@ import java.nio.file.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static tekcays_addon.gtapi.consts.TKCYAValues.DIMENSIONS;
+import net.minecraftforge.fml.common.Loader;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.jetbrains.annotations.NotNull;
+
+import gregtech.api.GTValues;
+import gregtech.api.worldgen.config.BedrockFluidDepositDefinition;
+import gregtech.api.worldgen.config.OreDepositDefinition;
+import gregtech.api.worldgen.config.WorldGenRegistry;
+import tekcays_addon.TekCaysAddon;
+import tekcays_addon.gtapi.utils.TKCYALog;
 
 /////////////////////////////////////////////////////////
-// Thanks to Tech22 https://github.com/GregTechCEu/gregicality-multiblocks/blob/worldgen-example/src/main/java/gregicality/machines/api/worldgen/GCYMWorldGenRegistry.java
+// Thanks to Tech22
+///////////////////////////////////////////////////////// https://github.com/GregTechCEu/gregicality-multiblocks/blob/worldgen-example/src/main/java/gregicality/machines/api/worldgen/GCYMWorldGenRegistry.java
 //////////////////////////////////////////////////////////
 
 public class TKCYAWorldGenRegistry {
@@ -55,12 +58,14 @@ public class TKCYAWorldGenRegistry {
     private static final Path bedrockFluidVeinRootPath = tkcyaWorldgenRootPath.resolve("fluid");
 
     /**
-     * The Path for representing the vein folder in the vein folder in the assets folder in the Gregtech resources folder in the jar
+     * The Path for representing the vein folder in the vein folder in the assets folder in the Gregtech resources
+     * folder in the jar
      */
     private static Path oreVeinJarRootPath;
 
     /**
-     * The Path for representing the fluid folder in the vein folder in the assets folder in the Gregtech resources folder in the jar
+     * The Path for representing the fluid folder in the vein folder in the assets folder in the Gregtech resources
+     * folder in the jar
      */
     private static Path bedrockFluidJarRootPath;
 
@@ -68,9 +73,7 @@ public class TKCYAWorldGenRegistry {
     private static final Map<Path, List<String>> fluidVeinsToAdd = new HashMap<>();
     private static final Path DUMMY_FILE_PATH = TKCYA_CONFIG_PATH.resolve("worldgen").resolve("deleteToReset");
 
-    private TKCYAWorldGenRegistry() {
-
-    }
+    private TKCYAWorldGenRegistry() {}
 
     public boolean doesDummyFileExist() {
         return Files.exists(DUMMY_FILE_PATH);
@@ -82,7 +85,6 @@ public class TKCYAWorldGenRegistry {
     }
 
     public void addRemoveVeins() throws IOException {
-
         TKCYALog.logger.info("Vein Size Before Addition: " + WorldGenRegistry.getOreDeposits().size());
         TKCYALog.logger.info("Fluid Vein Size Before Addition: " + WorldGenRegistry.getBedrockVeinDeposits().size());
 
@@ -98,14 +100,14 @@ public class TKCYAWorldGenRegistry {
 
         TKCYALog.logger.info("Vein Size After Addition: " + WorldGenRegistry.getOreDeposits().size());
         TKCYALog.logger.info("Fluid Vein Size After Addition: " + WorldGenRegistry.getBedrockVeinDeposits().size());
-
     }
 
     public void addVeins() {
         oreVeinsToAdd.values().stream()
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList())
-                .forEach(vein -> WorldGenRegistry.INSTANCE.addVeinDefinitions(new OreDepositDefinition(vein.toString())));
+                .forEach(vein -> WorldGenRegistry.INSTANCE
+                        .addVeinDefinitions(new OreDepositDefinition(vein.toString())));
     }
 
     public void addFluidVeins() {
@@ -139,18 +141,19 @@ public class TKCYAWorldGenRegistry {
                 oreVeinJarRootPath = Paths.get(TKCYAWorldGenRegistry.class.getResource(VEIN_PATH).toURI());
                 bedrockFluidJarRootPath = Paths.get(TKCYAWorldGenRegistry.class.getResource(FLUID_PATH).toURI());
             } else {
-                throw new IllegalStateException("Unable to locate absolute path to TKCYA worldgen root directory: " + sampleUri);
+                throw new IllegalStateException(
+                        "Unable to locate absolute path to TKCYA worldgen root directory: " + sampleUri);
             }
 
             extractVeinDefinitionsFromJar(oreVeinJarRootPath, oreVeinRootPath, "vein");
             extractVeinDefinitionsFromJar(bedrockFluidJarRootPath, bedrockFluidVeinRootPath, "fluid");
 
         } catch (URISyntaxException | IOException impossible) {
-            //this is impossible, since getResource always returns valid URI
+            // this is impossible, since getResource always returns valid URI
             throw new RuntimeException(impossible);
         } finally {
             if (zipFileSystem != null) {
-                //close zip file system to avoid issues
+                // close zip file system to avoid issues
                 IOUtils.closeQuietly(zipFileSystem);
             }
         }
@@ -189,12 +192,13 @@ public class TKCYAWorldGenRegistry {
         });
     }
 
-    @Nonnull
-    private static Path getActualVeinName(@Nonnull Path path) {
+    @NotNull
+    private static Path getActualVeinName(@NotNull Path path) {
+        // String separator = FileSystems.getDefault().getSeparator(); !!!! Works on Linux, on Windows it returns <\>
+        // !!!!
 
-        //String separator = FileSystems.getDefault().getSeparator(); !!!! Works on Linux, on Windows it returns <\> !!!!
-
-        String separator = System.getProperty("os.name").contains("Windows") ? "/" : FileSystems.getDefault().getSeparator();
+        String separator = System.getProperty("os.name").contains("Windows") ? "/" :
+                FileSystems.getDefault().getSeparator();
         String[] split = path.toString().split("/");
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -202,6 +206,5 @@ public class TKCYAWorldGenRegistry {
         Arrays.asList(split).forEach(part -> stringBuilder.append(part).append(separator));
 
         return Paths.get(stringBuilder.toString());
-
     }
 }

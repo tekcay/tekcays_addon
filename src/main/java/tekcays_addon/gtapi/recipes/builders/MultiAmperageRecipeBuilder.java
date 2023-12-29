@@ -1,26 +1,23 @@
 package tekcays_addon.gtapi.recipes.builders;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.jetbrains.annotations.NotNull;
+
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
 import gregtech.api.util.EnumValidationResult;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import tekcays_addon.api.recipe.RecipeBuilderHelper;
 import tekcays_addon.gtapi.recipes.recipeproperties.MultiAmperageProperty;
 import tekcays_addon.gtapi.recipes.recipeproperties.VoltageProperty;
 
-import javax.annotation.Nonnull;
-
-
 public class MultiAmperageRecipeBuilder extends RecipeBuilder<MultiAmperageRecipeBuilder>
-        implements RecipeBuilderHelper<MultiAmperageRecipeBuilder> {
+                                        implements RecipeBuilderHelper<MultiAmperageRecipeBuilder> {
 
-    public MultiAmperageRecipeBuilder() {
+    public MultiAmperageRecipeBuilder() {}
 
-    }
-
-    @SuppressWarnings(value ="unused")
+    @SuppressWarnings(value = "unused")
     public MultiAmperageRecipeBuilder(Recipe recipe, RecipeMap<MultiAmperageRecipeBuilder> recipeMap) {
         super(recipe, recipeMap);
     }
@@ -35,7 +32,7 @@ public class MultiAmperageRecipeBuilder extends RecipeBuilder<MultiAmperageRecip
     }
 
     @Override
-    public boolean applyProperty(@Nonnull String key, Object value) {
+    public boolean applyProperty(@NotNull String key, Object value) {
         applyPropertyHelper(key, value);
         return super.applyProperty(key, value);
     }
@@ -62,5 +59,4 @@ public class MultiAmperageRecipeBuilder extends RecipeBuilder<MultiAmperageRecip
     public void setRecipeStatus(EnumValidationResult enumValidationResult) {
         recipeStatus = enumValidationResult;
     }
-
 }

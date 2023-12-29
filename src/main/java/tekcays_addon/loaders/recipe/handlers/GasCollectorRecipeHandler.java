@@ -3,14 +3,10 @@ package tekcays_addon.loaders.recipe.handlers;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
-import gregtech.common.items.MetaItems;
-import tekcays_addon.common.items.TKCYAMetaItems;
-
 
 public class GasCollectorRecipeHandler {
 
     public static void init() {
-
         RecipeMaps.GAS_COLLECTOR_RECIPES.recipeBuilder()
                 .notConsumable(OrePrefix.rotor, Materials.Bronze)
                 .fluidOutputs(Materials.Air.getFluid(10))
@@ -18,7 +14,5 @@ public class GasCollectorRecipeHandler {
                 .duration(20)
                 .dimension(0)
                 .buildAndRegister();
-
     }
-
 }

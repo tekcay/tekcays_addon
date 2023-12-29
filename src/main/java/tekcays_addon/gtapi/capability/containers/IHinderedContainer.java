@@ -1,10 +1,11 @@
 package tekcays_addon.gtapi.capability.containers;
 
-import gregtech.api.unification.material.Material;
-import gregtech.api.unification.ore.OrePrefix;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
+
+import gregtech.api.unification.material.Material;
+import gregtech.api.unification.ore.OrePrefix;
 
 public interface IHinderedContainer {
 
@@ -14,6 +15,7 @@ public interface IHinderedContainer {
 
     /**
      * Returns the {@link ItemStack} of the total amount of waste.
+     * 
      * @return return the total waste
      */
     ItemStack getWasteStack();
@@ -21,13 +23,14 @@ public interface IHinderedContainer {
     ItemStack getFuelStack();
 
     int getFuelAmount();
+
     int getWasteAmount();
 
-    void initWasteStack(@Nonnull OrePrefix orePrefix, @Nonnull Material wasteMaterial, int amount);
+    void initWasteStack(@NotNull OrePrefix orePrefix, @NotNull Material wasteMaterial, int amount);
 
     void initWasteStack(ItemStack itemStack);
 
-    void initFuelStack(@Nonnull OrePrefix orePrefix, @Nonnull Material wasteMaterial, int amount);
+    void initFuelStack(@NotNull OrePrefix orePrefix, @NotNull Material wasteMaterial, int amount);
 
     void initFuelStack(ItemStack itemStack);
 
@@ -42,6 +45,4 @@ public interface IHinderedContainer {
     void changeEfficiency(float amount);
 
     void resetEfficiency();
-
-
 }

@@ -5,7 +5,7 @@ import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.*;
 
 public class TKCYAOrePrefixAdditions {
 
-    public static void moldsInit(){
+    public static void moldsInit() {
         addOrePrefix(moldEmpty);
         addOrePrefix(moldIngot);
         addOrePrefix(moldPlate);
@@ -17,17 +17,17 @@ public class TKCYAOrePrefixAdditions {
         addOrePrefix(moldRing);
         addOrePrefix(moldBlock);
 
-        //mold.setMarkerPrefix(true);
+        // mold.setMarkerPrefix(true);
     }
 
-    public static void miscInit(){
+    public static void miscInit() {
         addOrePrefix(bottleGlass);
         addOrePrefix(curvedPlate);
         addOrePrefix(cutWood);
         addOrePrefix(blade);
     }
 
-    public static void componentsInit(){
+    public static void componentsInit() {
         addOrePrefix(lvComponents);
         addOrePrefix(mvComponents);
         addOrePrefix(hvComponents);
@@ -38,19 +38,19 @@ public class TKCYAOrePrefixAdditions {
         addOrePrefix(uvComponents);
     }
 
-    public static void moldsTooltip(){ //TODO show temperature for each mold
+    public static void moldsTooltip() {
+        // TODO show temperature for each mold
 
-    /*
-        for (Material m : MOLD_MATERIALS) {
-            for (OrePrefix prefix : MOLD_PRODUCTION.values()) {
-
-                OreDictUnifier.get(prefix, m).getTooltip.add(m.getFluid().getTemperature() + " K");
-
-                        lines.add(I18n.format("metaitem.mold.tooltip", m.getFluid().getTemperature()));
-            }
-
-        }
-    */
+        /*
+         * for (Material m : MOLD_MATERIALS) {
+         * for (OrePrefix prefix : MOLD_PRODUCTION.values()) {
+         * 
+         * OreDictUnifier.get(prefix, m).getTooltip.add(m.getFluid().getTemperature() + " K");
+         * 
+         * lines.add(I18n.format("metaitem.mold.tooltip", m.getFluid().getTemperature()));
+         * }
+         * 
+         * }
+         */
     }
-
 }

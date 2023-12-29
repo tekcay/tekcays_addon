@@ -1,5 +1,23 @@
 package tekcays_addon.common.metatileentities.single.heaters;
 
+import static tekcays_addon.gtapi.utils.HeatersMethods.getBurnTime;
+
+import java.util.List;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemStackHandler;
+
+import org.jetbrains.annotations.Nullable;
+
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
@@ -13,27 +31,11 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.recipes.ModHandler;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.ItemStackHandler;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.gtapi.capability.impl.HeatContainer;
 import tekcays_addon.gtapi.metatileentity.FuelHeater;
 import tekcays_addon.gtapi.render.TKCYATextures;
 import tekcays_addon.gtapi.utils.FuelHeaterTiers;
-
-import javax.annotation.Nullable;
-import java.util.List;
-
-import static tekcays_addon.gtapi.utils.HeatersMethods.getBurnTime;
 
 public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataInfoProvider, IActiveOutputSide {
 
@@ -70,7 +72,6 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
         return new ItemStackHandler(1);
     }
 
-
     @Override
     protected ModularUI createUI(EntityPlayer player) {
         return createUITemplate(player).build(getHolder(), player);
@@ -90,11 +91,11 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
                 .bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 0);
     }
 
-
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        TKCYATextures.SOLID_FUEL_HEATER.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), isBurning(), true);
+        TKCYATextures.SOLID_FUEL_HEATER.renderOrientedState(renderState, translation, pipeline, getFrontFacing(),
+                isBurning(), true);
     }
 
     @Override
@@ -102,15 +103,15 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
         ItemStack fuelInSlot = importItems.extractItem(0, 1, true);
         if (fuelInSlot.isEmpty()) return;
         // Prevent consuming buckets with burn time
-        if(FluidUtil.getFluidHandler(fuelInSlot) != null) {
+        if (FluidUtil.getFluidHandler(fuelInSlot) != null) {
             return;
         }
-        //Calculate the burn time for this item taking into account the FuelHeater properties
+        // Calculate the burn time for this item taking into account the FuelHeater properties
         int burnTime = getBurnTime(fuelInSlot, fuelHeater);
         if (burnTime <= 0) return;
         importItems.extractItem(0, 1, false);
         ItemStack remainderAsh = ModHandler.getBurningFuelRemainder(fuelInSlot);
-        if (!remainderAsh.isEmpty()) { //we don't care if we can't insert ash - it's chanced anyway
+        if (!remainderAsh.isEmpty()) { // we don't care if we can't insert ash - it's chanced anyway
             exportItems.insertItem(0, remainderAsh, false);
         }
         setBurnTimeLeft(burnTime);
@@ -119,8 +120,9 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
     @Override
     @SideOnly(Side.CLIENT)
     protected SimpleOverlayRenderer getBaseRenderer() {
-        return fuelHeater.equals(FuelHeaterTiers.BRICK) ? TKCYATextures.BRICKS[BlockBrick.BRICK] : TKCYATextures.STEAM_CASING[fuelHeater.getTextureId()];
-}
+        return fuelHeater.equals(FuelHeaterTiers.BRICK) ? TKCYATextures.BRICKS[BlockBrick.BRICK] :
+                TKCYATextures.STEAM_CASING[fuelHeater.getTextureId()];
+    }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
@@ -145,5 +147,4 @@ public class MetaTileEntitySolidFuelHeater extends FuelHeater implements IDataIn
     public boolean isAutoOutputItems() {
         return true;
     }
-
 }

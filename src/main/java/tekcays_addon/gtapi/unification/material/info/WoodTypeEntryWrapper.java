@@ -1,5 +1,14 @@
 package tekcays_addon.gtapi.unification.material.info;
 
+import static gregtech.api.unification.material.Materials.TreatedWood;
+
+import java.util.Arrays;
+import java.util.List;
+
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+
 import gregtech.api.GTValues;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.blocks.wood.BlockGregPlanks;
@@ -7,17 +16,8 @@ import gregtech.common.items.MetaItems;
 import gregtech.loaders.WoodTypeEntry;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.blocks.blocks.BlockCutWood;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static gregtech.api.unification.material.Materials.TreatedWood;
 
 @AllArgsConstructor
 @Getter
@@ -25,12 +25,11 @@ import static gregtech.api.unification.material.Materials.TreatedWood;
  * From {@link WoodRecipeLoader}, used in {@link WoodTypeEntry}
  */
 public class WoodTypeEntryWrapper {
-    
+
     private WoodTypeEntry woodTypeEntry;
     private ItemStack cutWood;
 
     private static final String mcModId = "minecraft";
-
 
     private static final WoodTypeEntry OAK_WOOD_ENTRY = new WoodTypeEntry.Builder(mcModId, "oak")
             .planks(new ItemStack(Blocks.PLANKS), "oak_planks")
@@ -72,7 +71,7 @@ public class WoodTypeEntryWrapper {
             .planks(new ItemStack(Blocks.PLANKS, 1, 3), "jungle_planks")
             .log(new ItemStack(Blocks.LOG, 1, 3)).removeCharcoalRecipe()
             .door(new ItemStack(Items.JUNGLE_DOOR), "jungle_door")
-            .slab(new ItemStack(Blocks.WOODEN_SLAB),"jungle_slab")
+            .slab(new ItemStack(Blocks.WOODEN_SLAB), "jungle_slab")
             .fence(new ItemStack(Blocks.JUNGLE_FENCE), "jungle_fence")
             .fenceGate(new ItemStack(Blocks.JUNGLE_FENCE_GATE), "jungle_fence_gate")
             .stairs(new ItemStack(Blocks.JUNGLE_STAIRS))
@@ -84,7 +83,7 @@ public class WoodTypeEntryWrapper {
             .planks(new ItemStack(Blocks.PLANKS, 1, 4), "acacia_planks")
             .log(new ItemStack(Blocks.LOG2)).removeCharcoalRecipe()
             .door(new ItemStack(Items.ACACIA_DOOR), "acacia_door")
-            .slab(new ItemStack(Blocks.WOODEN_SLAB),"acacia_slab")
+            .slab(new ItemStack(Blocks.WOODEN_SLAB), "acacia_slab")
             .fence(new ItemStack(Blocks.ACACIA_FENCE), "acacia_fence")
             .fenceGate(new ItemStack(Blocks.ACACIA_FENCE_GATE), "acacia_fence_gate")
             .stairs(new ItemStack(Blocks.ACACIA_STAIRS))
@@ -129,17 +128,25 @@ public class WoodTypeEntryWrapper {
             .registerAllOres()
             .registerAllUnificationInfo()
             .build();
-    
-    public static final WoodTypeEntryWrapper OAK = new WoodTypeEntryWrapper(OAK_WOOD_ENTRY, TKCYAMetaBlocks.BLOCK_CUT_WOOD.getItemVariant(BlockCutWood.CutWoodType.OAK));
-    public static final WoodTypeEntryWrapper BIRCH = new WoodTypeEntryWrapper(BIRCH_WOOD_ENTRY, TKCYAMetaBlocks.BLOCK_CUT_WOOD.getItemVariant(BlockCutWood.CutWoodType.BIRCH));
-    public static final WoodTypeEntryWrapper JUNGLE = new WoodTypeEntryWrapper(JUNGLE_WOOD_ENTRY, TKCYAMetaBlocks.BLOCK_CUT_WOOD.getItemVariant(BlockCutWood.CutWoodType.JUNGLE));
-    public static final WoodTypeEntryWrapper ACACIA = new WoodTypeEntryWrapper(ACACIA_WOOD_ENTRY, TKCYAMetaBlocks.BLOCK_CUT_WOOD.getItemVariant(BlockCutWood.CutWoodType.ACACIA));
-    public static final WoodTypeEntryWrapper SPRUCE = new WoodTypeEntryWrapper(SPRUCE_WOOD_ENTRY, TKCYAMetaBlocks.BLOCK_CUT_WOOD.getItemVariant(BlockCutWood.CutWoodType.SPRUCE));
-    public static final WoodTypeEntryWrapper DARK_OAK = new WoodTypeEntryWrapper(DARK_OAK_WOOD_ENTRY, TKCYAMetaBlocks.BLOCK_CUT_WOOD.getItemVariant(BlockCutWood.CutWoodType.DARK_OAK));
-    public static final WoodTypeEntryWrapper RUBBER = new WoodTypeEntryWrapper(RUBBER_WOOD_ENTRY, TKCYAMetaBlocks.BLOCK_CUT_WOOD.getItemVariant(BlockCutWood.CutWoodType.RUBBER));
-    
 
-    public static final List<WoodTypeEntryWrapper> WOOD_TYPE_ENTRIES_RAW = Arrays.asList(OAK, BIRCH, DARK_OAK, JUNGLE, ACACIA, RUBBER, SPRUCE);
-    public static final List<WoodTypeEntry> WOOD_TYPE_ENTRIES = Arrays.asList(OAK_WOOD_ENTRY, BIRCH_WOOD_ENTRY, DARK_OAK_WOOD_ENTRY, JUNGLE_WOOD_ENTRY, ACACIA_WOOD_ENTRY, RUBBER_WOOD_ENTRY, SPRUCE_WOOD_ENTRY, TREATED_WOOD_ENTRY);
-    
+    public static final WoodTypeEntryWrapper OAK = new WoodTypeEntryWrapper(OAK_WOOD_ENTRY,
+            TKCYAMetaBlocks.BLOCK_CUT_WOOD.getItemVariant(BlockCutWood.CutWoodType.OAK));
+    public static final WoodTypeEntryWrapper BIRCH = new WoodTypeEntryWrapper(BIRCH_WOOD_ENTRY,
+            TKCYAMetaBlocks.BLOCK_CUT_WOOD.getItemVariant(BlockCutWood.CutWoodType.BIRCH));
+    public static final WoodTypeEntryWrapper JUNGLE = new WoodTypeEntryWrapper(JUNGLE_WOOD_ENTRY,
+            TKCYAMetaBlocks.BLOCK_CUT_WOOD.getItemVariant(BlockCutWood.CutWoodType.JUNGLE));
+    public static final WoodTypeEntryWrapper ACACIA = new WoodTypeEntryWrapper(ACACIA_WOOD_ENTRY,
+            TKCYAMetaBlocks.BLOCK_CUT_WOOD.getItemVariant(BlockCutWood.CutWoodType.ACACIA));
+    public static final WoodTypeEntryWrapper SPRUCE = new WoodTypeEntryWrapper(SPRUCE_WOOD_ENTRY,
+            TKCYAMetaBlocks.BLOCK_CUT_WOOD.getItemVariant(BlockCutWood.CutWoodType.SPRUCE));
+    public static final WoodTypeEntryWrapper DARK_OAK = new WoodTypeEntryWrapper(DARK_OAK_WOOD_ENTRY,
+            TKCYAMetaBlocks.BLOCK_CUT_WOOD.getItemVariant(BlockCutWood.CutWoodType.DARK_OAK));
+    public static final WoodTypeEntryWrapper RUBBER = new WoodTypeEntryWrapper(RUBBER_WOOD_ENTRY,
+            TKCYAMetaBlocks.BLOCK_CUT_WOOD.getItemVariant(BlockCutWood.CutWoodType.RUBBER));
+
+    public static final List<WoodTypeEntryWrapper> WOOD_TYPE_ENTRIES_RAW = Arrays.asList(OAK, BIRCH, DARK_OAK, JUNGLE,
+            ACACIA, RUBBER, SPRUCE);
+    public static final List<WoodTypeEntry> WOOD_TYPE_ENTRIES = Arrays.asList(OAK_WOOD_ENTRY, BIRCH_WOOD_ENTRY,
+            DARK_OAK_WOOD_ENTRY, JUNGLE_WOOD_ENTRY, ACACIA_WOOD_ENTRY, RUBBER_WOOD_ENTRY, SPRUCE_WOOD_ENTRY,
+            TREATED_WOOD_ENTRY);
 }

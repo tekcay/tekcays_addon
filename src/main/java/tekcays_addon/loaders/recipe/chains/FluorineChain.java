@@ -1,9 +1,5 @@
 package tekcays_addon.loaders.recipe.chains;
 
-
-import tekcays_addon.common.blocks.TKCYAMetaBlocks;
-import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
-
 import static gregtech.api.GTValues.*;
 import static gregtech.api.recipes.RecipeMaps.CHEMICAL_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
@@ -14,10 +10,12 @@ import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.ELECTROLYSIS;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
 import static tekcays_addon.loaders.DamageableItemsLoader.*;
 
+import tekcays_addon.common.blocks.TKCYAMetaBlocks;
+import tekcays_addon.common.blocks.blocks.BlockLargeMultiblockCasing;
+
 public class FluorineChain {
 
     public static void init() {
-
         // CaF2 + H2SO4 -> CaSO4 + 2 HF
         CHEMICAL_RECIPES.recipeBuilder()
                 .input(dust, Fluorite, 1)
@@ -58,8 +56,6 @@ public class FluorineChain {
                 .EUt(VA[LV])
                 .buildAndRegister();
 
-
-
         // KF + HF -> KF.HF
         CHEMICAL_RECIPES.recipeBuilder()
                 .input(dust, Potash, 1)
@@ -70,28 +66,25 @@ public class FluorineChain {
                 .EUt(VA[LV])
                 .buildAndRegister();
 
-
         // KF.HF(s) -> KF.HF(l)
-        CHEMICAL_RECIPES.recipeBuilder() //TODO Melter or liquid extractor
+        CHEMICAL_RECIPES.recipeBuilder() // TODO Melter or liquid extractor
                 .input(dust, PotassiumBifluoride, 1)
                 .fluidOutputs(PotassiumBifluoride.getFluid(1000))
                 .duration(80)
                 .EUt(VA[LV])
                 .buildAndRegister();
 
-
-
-        // KF.HF(l) + electrode + LiF -> H2 + F2  //TODO 70-130 °C
+        // KF.HF(l) + electrode + LiF -> H2 + F2 //TODO 70-130 °C
         ELECTROLYSIS.recipeBuilder()
                 .input(dustTiny, LithiumFluoride, 1)
                 .notConsumable(electrodeCarbon)
                 .notConsumable(electrodeSteel)
-                .notConsumable(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING.getItemVariant(BlockLargeMultiblockCasing.CasingType.MONEL_CASING))
+                .notConsumable(TKCYAMetaBlocks.LARGE_MULTIBLOCK_CASING
+                        .getItemVariant(BlockLargeMultiblockCasing.CasingType.MONEL_CASING))
                 .fluidInputs(PotassiumBifluoride.getFluid(1000))
                 .fluidOutputs(Hydrogen.getFluid(1000), Fluorine.getFluid(1000))
                 .duration(80)
                 .EUt(VA[HV])
                 .buildAndRegister();
     }
-
 }

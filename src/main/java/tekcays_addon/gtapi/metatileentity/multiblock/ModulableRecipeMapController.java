@@ -1,5 +1,24 @@
 package tekcays_addon.gtapi.metatileentity.multiblock;
 
+import static tekcays_addon.api.metatileentity.MultiAmperageControllerMethods.areAllEnergyHatchesTheSameVoltage;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MAX_PRESSURE;
+import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
+import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.HEAT_CONTAINER;
+import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.ROTATION_CONTAINER;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.FluidStack;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import codechicken.lib.raytracer.IndexedCuboid6;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.vec.Matrix4;
@@ -11,13 +30,6 @@ import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMap;
 import lombok.Getter;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.NotNull;
 import tekcays_addon.api.metatileentity.LogicType;
 import tekcays_addon.api.metatileentity.MultiAmperageControllerMethods;
 import tekcays_addon.api.recipe.PressureContainerCheckRecipeHelper;
@@ -33,18 +45,9 @@ import tekcays_addon.gtapi.capability.machines.IPressureMachine;
 import tekcays_addon.gtapi.capability.machines.IRotationMachine;
 import tekcays_addon.gtapi.logic.ModulableLogic;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-
-import static tekcays_addon.api.metatileentity.MultiAmperageControllerMethods.areAllEnergyHatchesTheSameVoltage;
-import static tekcays_addon.gtapi.consts.TKCYAValues.MAX_PRESSURE;
-import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
-import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.HEAT_CONTAINER;
-import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.ROTATION_CONTAINER;
-
-public abstract class ModulableRecipeMapController extends RecipeMapMultiblockController implements IPressureMachine, IHeatMachine, IRotationMachine, IContainerDetectorMachine, PressureContainerCheckRecipeHelper {
+public abstract class ModulableRecipeMapController extends RecipeMapMultiblockController
+                                                   implements IPressureMachine, IHeatMachine, IRotationMachine,
+                                                   IContainerDetectorMachine, PressureContainerCheckRecipeHelper {
 
     private IHeatContainer heatContainer;
     private IPressureContainer pressureContainer;
@@ -57,7 +60,8 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
     private int currentTemp, currentHeat, currentPressure, volumeContainer;
     private final List<LogicType> logicTypes;
 
-    public ModulableRecipeMapController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap, LogicType logicType, LogicType... logicTypes) {
+    public ModulableRecipeMapController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap, LogicType logicType,
+                                        LogicType... logicTypes) {
         super(metaTileEntityId, recipeMap);
         this.recipeMapWorkable = new ModulableLogic(this, logicTypes);
         this.logicTypes = LogicType.setLogicType(logicType, logicTypes);
@@ -106,10 +110,14 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
     }
 
     @Override
-    public TraceabilityPredicate autoAbilities(boolean checkEnergyIn, boolean checkMaintenance, boolean checkItemIn, boolean checkItemOut, boolean checkFluidIn, boolean checkFluidOut, boolean checkMuffler) {
-        TraceabilityPredicate predicate = super.autoAbilities(this.checkEnergyIn, this.checkMaintenance, checkItemIn, checkItemOut, checkFluidIn, checkFluidOut, this.checkMuffler);
+    public TraceabilityPredicate autoAbilities(boolean checkEnergyIn, boolean checkMaintenance, boolean checkItemIn,
+                                               boolean checkItemOut, boolean checkFluidIn, boolean checkFluidOut,
+                                               boolean checkMuffler) {
+        TraceabilityPredicate predicate = super.autoAbilities(this.checkEnergyIn, this.checkMaintenance, checkItemIn,
+                checkItemOut, checkFluidIn, checkFluidOut, this.checkMuffler);
         if (logicTypes.contains(LogicType.PRESSURE)) {
-            predicate = predicate.or(abilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER)).setExactLimit(1).setPreviewCount(1);
+            predicate = predicate.or(abilities(TKCYAMultiblockAbility.PRESSURE_CONTAINER)).setExactLimit(1)
+                    .setPreviewCount(1);
         }
         if (logicTypes.contains(LogicType.DETECTOR)) {
             predicate = predicate.or(abilities(TKCYAMultiblockAbility.CONTAINER_CONTROL)).setPreviewCount(1);
@@ -182,7 +190,8 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
                 containerDetector.setCurrentValue(currentPressure);
             }
             if (recipeMapWorkable.isWorking()) {
-                pressureContainer.changePressurizedFluidStack(getPressurizedFluidStack(), -getPressurizedFluidStackRate());
+                pressureContainer.changePressurizedFluidStack(getPressurizedFluidStack(),
+                        -getPressurizedFluidStackRate());
             }
         }
     }
@@ -192,7 +201,7 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
         return getCurrentTemp();
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public FluidStack getFluidStack() {
         return getPressureContainer().getPressurizedFluidStack();
@@ -202,7 +211,7 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
         return this.pressureContainer.getPressurizedFluidStack();
     }
 
-    //TODO find a formula
+    // TODO find a formula
     private int getPressurizedFluidStackRate() {
         return getPressurizedFluidStack().amount * currentPressure;
     }
@@ -212,14 +221,15 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
     }
 
     @Override
-    public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
+    public boolean checkRecipe(@NotNull Recipe recipe, boolean consumeIfSuccess) {
         if (logicTypes.contains(LogicType.MULTI_AMPER)) {
-            return MultiAmperageControllerMethods.multiAmperageRecipeChecker(recipe, inputEnergyHatches, areAllEnergyHatchesTheSameVoltage);
+            return MultiAmperageControllerMethods.multiAmperageRecipeChecker(recipe, inputEnergyHatches,
+                    areAllEnergyHatchesTheSameVoltage);
         }
         return super.checkRecipe(recipe, consumeIfSuccess);
     }
 
-    //implementations
+    // implementations
 
     @Override
     public void dropAllCovers() {
@@ -237,7 +247,8 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
     }
 
     @Override
-    public void renderCovers(@NotNull CCRenderState renderState, @NotNull Matrix4 translation, @NotNull BlockRenderLayer layer) {
+    public void renderCovers(@NotNull CCRenderState renderState, @NotNull Matrix4 translation,
+                             @NotNull BlockRenderLayer layer) {
         super.renderCovers(renderState, translation, layer);
     }
 
@@ -247,7 +258,8 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
     }
 
     @Override
-    public boolean hasCapability(@NotNull Capability<?> capability, @org.jetbrains.annotations.Nullable EnumFacing facing) {
+    public boolean hasCapability(@NotNull Capability<?> capability,
+                                 @org.jetbrains.annotations.Nullable EnumFacing facing) {
         return super.hasCapability(capability, facing);
     }
 
@@ -270,7 +282,4 @@ public abstract class ModulableRecipeMapController extends RecipeMapMultiblockCo
     public SoundEvent getBreakdownSound() {
         return super.getBreakdownSound();
     }
-
-
-
 }

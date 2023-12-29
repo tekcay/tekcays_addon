@@ -1,83 +1,93 @@
 package tekcays_addon.gtapi.render;
 
-import tekcays_addon.TekCaysAddon;
-import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
-import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
+import static tekcays_addon.gtapi.utils.HeatersMethods.*;
+
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.relauncher.Side;
+
+import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
+import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
+import tekcays_addon.TekCaysAddon;
 import tekcays_addon.common.blocks.blocks.BlockBrick;
 import tekcays_addon.common.blocks.blocks.BlockDirt;
-
-import static tekcays_addon.gtapi.utils.HeatersMethods.*;
 
 @Mod.EventBusSubscriber(modid = TekCaysAddon.MODID, value = Side.CLIENT)
 public class TKCYATextures {
 
-
     // SimpleMachines
     public static OrientedOverlayRenderer CLUSTER_MILL_OVERLAY = new OrientedOverlayRenderer("machines/cluster_mill");
-    public static OrientedOverlayRenderer ADVANCED_POLARIZER_OVERLAY = new OrientedOverlayRenderer("machines/advanced_polarizer");
-    public static OrientedOverlayRenderer ROLLING_MACHINE_OVERLAY = new OrientedOverlayRenderer("machines/rolling_machine");
-
-
+    public static OrientedOverlayRenderer ADVANCED_POLARIZER_OVERLAY = new OrientedOverlayRenderer(
+            "machines/advanced_polarizer");
+    public static OrientedOverlayRenderer ROLLING_MACHINE_OVERLAY = new OrientedOverlayRenderer(
+            "machines/rolling_machine");
 
     public static OrientedOverlayRenderer CASTING_TABLE_OVERLAY = new OrientedOverlayRenderer("machines/casting_table");
 
-    //Casings
+    // Casings
     public static SimpleOverlayRenderer MONEL;
 
-    //MeltingOverhaul
-    public static OrientedOverlayRenderer PRIMITIVE_MELTER_OVERLAY = new OrientedOverlayRenderer("multiblocks/primitive");
-    public static OrientedOverlayRenderer ELECTRIC_MELTER_OVERLAY = new OrientedOverlayRenderer("multiblocks/electric_melter");
-    public static OrientedOverlayRenderer ALLOYING_CRUCIBLE_OVERLAY = new OrientedOverlayRenderer("multiblocks/primitive");
+    // MeltingOverhaul
+    public static OrientedOverlayRenderer PRIMITIVE_MELTER_OVERLAY = new OrientedOverlayRenderer(
+            "multiblocks/primitive");
+    public static OrientedOverlayRenderer ELECTRIC_MELTER_OVERLAY = new OrientedOverlayRenderer(
+            "multiblocks/electric_melter");
+    public static OrientedOverlayRenderer ALLOYING_CRUCIBLE_OVERLAY = new OrientedOverlayRenderer(
+            "multiblocks/primitive");
     public static OrientedOverlayRenderer LIQUID_FUEL_HEATER = new OrientedOverlayRenderer("generators/liquid_heater");
-    public static OrientedOverlayRenderer FLUIDIZED_FUEL_HEATER = new OrientedOverlayRenderer("generators/fluidized_heater");
+    public static OrientedOverlayRenderer FLUIDIZED_FUEL_HEATER = new OrientedOverlayRenderer(
+            "generators/fluidized_heater");
     public static OrientedOverlayRenderer SOLID_FUEL_HEATER = new OrientedOverlayRenderer("generators/solid_heater");
     public static OrientedOverlayRenderer GAS_FUEL_HEATER = new OrientedOverlayRenderer("generators/gas_heater");
 
-    //Rotation
-    public static OrientedOverlayRenderer ROTATION_TURBINE_OVERLAY = new OrientedOverlayRenderer("rotation/turbine/rotation");
+    // Rotation
+    public static OrientedOverlayRenderer ROTATION_TURBINE_OVERLAY = new OrientedOverlayRenderer(
+            "rotation/turbine/rotation");
     public static OrientedOverlayRenderer DYNAMO_OVERLAY = new OrientedOverlayRenderer("dynamo");
 
     // Bricks
     public static SimpleOverlayRenderer[] BRICKS = new SimpleOverlayRenderer[4];
     public static SimpleOverlayRenderer HALF_BRICK;
 
-
-    //GT6 style
-    //Casing
+    // GT6 style
+    // Casing
     public static SimpleOverlayRenderer STEEL_GT;
     public static SimpleOverlayRenderer WHITE_GT;
     public static SimpleOverlayRenderer STAINLESS_STEEL_GT;
 
-    //SteamCasing
+    // SteamCasing
     public static SimpleOverlayRenderer[] STEAM_CASING = new SimpleOverlayRenderer[5];
 
-    //Acceptors
+    // Acceptors
     public static SimpleOverlayRenderer HEAT_ACCEPTOR_HORIZONTALS_OVERLAY;
     public static SimpleOverlayRenderer HEAT_ACCEPTOR_VERTICALS_OVERLAY;
 
-    //Rotation
+    // Rotation
     public static SimpleOverlayRenderer ROTATION_WATER_OUTPUT_OVERLAY;
     public static SimpleOverlayRenderer ROTATION_STATIC;
 
-    //Cooler
+    // Cooler
     public static SimpleOverlayRenderer COOLER_COOL_SIDE_OVERLAY;
     public static SimpleOverlayRenderer COOLER_HOT_SIDE_OVERLAY;
 
-    //Covers
-    
-    ////Detectors
-    //Covers
-    ////Detectors
-    public static final SimpleOverlayRenderer DETECTOR_TEMPERATURE = new SimpleOverlayRenderer("cover/detector/overlay_temperature_detector");
-    public static final SimpleOverlayRenderer DETECTOR_PRESSURE = new SimpleOverlayRenderer("cover/detector/overlay_pressure_detector");
-    public static final SimpleOverlayRenderer DETECTOR_VACUUM = new SimpleOverlayRenderer("cover/detector/overlay_vacuum_detector");
-    public static final SimpleOverlayRenderer DETECTOR_SPEED = new SimpleOverlayRenderer("cover/detector/overlay_speed_detector");
-    public static final SimpleOverlayRenderer DETECTOR_TORQUE = new SimpleOverlayRenderer("cover/detector/overlay_torque_detector");
-    public static final SimpleOverlayRenderer DETECTOR_ROTATION_POWER = new SimpleOverlayRenderer("cover/detector/overlay_rotation_power_detector");
-    
-    ////Molds
+    // Covers
+
+    //// Detectors
+    // Covers
+    //// Detectors
+    public static final SimpleOverlayRenderer DETECTOR_TEMPERATURE = new SimpleOverlayRenderer(
+            "cover/detector/overlay_temperature_detector");
+    public static final SimpleOverlayRenderer DETECTOR_PRESSURE = new SimpleOverlayRenderer(
+            "cover/detector/overlay_pressure_detector");
+    public static final SimpleOverlayRenderer DETECTOR_VACUUM = new SimpleOverlayRenderer(
+            "cover/detector/overlay_vacuum_detector");
+    public static final SimpleOverlayRenderer DETECTOR_SPEED = new SimpleOverlayRenderer(
+            "cover/detector/overlay_speed_detector");
+    public static final SimpleOverlayRenderer DETECTOR_TORQUE = new SimpleOverlayRenderer(
+            "cover/detector/overlay_torque_detector");
+    public static final SimpleOverlayRenderer DETECTOR_ROTATION_POWER = new SimpleOverlayRenderer(
+            "cover/detector/overlay_rotation_power_detector");
+
+    //// Molds
     public static SimpleOverlayRenderer COVER_MOLD_INGOT_CERAMIC_TEXTURE;
     public static SimpleOverlayRenderer COVER_MOLD_PLATE_CERAMIC_TEXTURE;
     public static SimpleOverlayRenderer COVER_MOLD_STICK_CERAMIC_TEXTURE;
@@ -114,8 +124,8 @@ public class TKCYATextures {
     public static SimpleOverlayRenderer COVER_MOLD_BOLT_CARBON_TEXTURE;
     public static SimpleOverlayRenderer COVER_MOLD_RING_CARBON_TEXTURE;
     public static SimpleOverlayRenderer COVER_MOLD_BLOCK_CARBON_TEXTURE;
-    
-    //Ct trees
+
+    // Ct trees
     public static SimpleOverlayRenderer LOG_ACACIA_TOP;
     public static SimpleOverlayRenderer LOG_DARK_OAK_TOP;
     public static SimpleOverlayRenderer LOG_BIRCH_TOP;
@@ -123,17 +133,16 @@ public class TKCYATextures {
     public static SimpleOverlayRenderer LOG_OAK_TOP;
     public static SimpleOverlayRenderer LOG_SPRUCE_TOP;
 
-    //Misc
+    // Misc
     public static SimpleOverlayRenderer[] DIRTS = new SimpleOverlayRenderer[1];
-
 
     public static void preInit() {
         // Simple Machines
 
-        //CASINGS
+        // CASINGS
         MONEL = new SimpleOverlayRenderer("casings/large_multiblock_casing/monel_casing");
 
-        //BRICKS
+        // BRICKS
         BRICKS[BlockBrick.BRICK] = new SimpleOverlayRenderer("casings/block_brick/brick");
         BRICKS[BlockBrick.REINFORCED_BRICK] = new SimpleOverlayRenderer("casings/block_brick/reinforced_brick");
         BRICKS[BlockBrick.FIRECLAY_BRICK] = new SimpleOverlayRenderer("casings/block_brick/fireclay_brick");
@@ -141,33 +150,30 @@ public class TKCYATextures {
 
         HALF_BRICK = new SimpleOverlayRenderer("half_brick");
 
-        //GT6 Style
-        //Casing
+        // GT6 Style
+        // Casing
         STEEL_GT = new SimpleOverlayRenderer("steel_gt");
         WHITE_GT = new SimpleOverlayRenderer("white_gt");
         STAINLESS_STEEL_GT = new SimpleOverlayRenderer("stainless_steel_gt");
-        //SteamCasing
+        // SteamCasing
         STEAM_CASING[BRONZE] = new SimpleOverlayRenderer("casings/steam/bronze/top");
         STEAM_CASING[STEEL] = new SimpleOverlayRenderer("casings/steam/steel/top");
         STEAM_CASING[INVAR] = new SimpleOverlayRenderer("casings/steam/invar/top");
         STEAM_CASING[TITANIUM] = new SimpleOverlayRenderer("casings/steam/titanium/top");
         STEAM_CASING[TUNGSTEN_STEEL] = new SimpleOverlayRenderer("casings/steam/tungsten_steel/top");
 
-        //Acceptors
+        // Acceptors
         HEAT_ACCEPTOR_HORIZONTALS_OVERLAY = new SimpleOverlayRenderer("multiblockpart/heat_acceptor_horizontals");
         HEAT_ACCEPTOR_VERTICALS_OVERLAY = new SimpleOverlayRenderer("multiblockpart/heat_acceptor_verticals");
 
         COOLER_COOL_SIDE_OVERLAY = new SimpleOverlayRenderer("machines/cooler/cool");
         COOLER_HOT_SIDE_OVERLAY = new SimpleOverlayRenderer("machines/cooler/hot");
 
-        //Rotation
+        // Rotation
         ROTATION_WATER_OUTPUT_OVERLAY = new SimpleOverlayRenderer("rotation/water_output");
         ROTATION_STATIC = new SimpleOverlayRenderer("rotation/rotation_static");
 
-
-
-
-        ////Molds
+        //// Molds
         COVER_MOLD_INGOT_CERAMIC_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_ingot_ceramic");
         COVER_MOLD_PLATE_CERAMIC_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_plate_ceramic");
         COVER_MOLD_STICK_CERAMIC_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_stick_ceramic");
@@ -186,15 +192,24 @@ public class TKCYATextures {
         COVER_MOLD_BOLT_STEEL_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_bolt_steel");
         COVER_MOLD_RING_STEEL_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_ring_steel");
         COVER_MOLD_BLOCK_STEEL_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_block_steel");
-        COVER_MOLD_INGOT_TUNGSTEN_CARBIDE_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_ingot_tungsten_carbide");
-        COVER_MOLD_PLATE_TUNGSTEN_CARBIDE_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_plate_tungsten_carbide");
-        COVER_MOLD_STICK_TUNGSTEN_CARBIDE_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_stick_tungsten_carbide");
-        COVER_MOLD_STICK_LONG_TUNGSTEN_CARBIDE_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_stick_long_tungsten_carbide");
-        COVER_MOLD_GEAR_TUNGSTEN_CARBIDE_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_gear_tungsten_carbide");
-        COVER_MOLD_GEAR_SMALL_TUNGSTEN_CARBIDE_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_gear_small_tungsten_carbide");
-        COVER_MOLD_BOLT_TUNGSTEN_CARBIDE_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_bolt_tungsten_carbide");
-        COVER_MOLD_RING_TUNGSTEN_CARBIDE_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_ring_tungsten_carbide");
-        COVER_MOLD_BLOCK_TUNGSTEN_CARBIDE_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_block_tungsten_carbide");
+        COVER_MOLD_INGOT_TUNGSTEN_CARBIDE_TEXTURE = new SimpleOverlayRenderer(
+                "cover/mold/overlay_ingot_tungsten_carbide");
+        COVER_MOLD_PLATE_TUNGSTEN_CARBIDE_TEXTURE = new SimpleOverlayRenderer(
+                "cover/mold/overlay_plate_tungsten_carbide");
+        COVER_MOLD_STICK_TUNGSTEN_CARBIDE_TEXTURE = new SimpleOverlayRenderer(
+                "cover/mold/overlay_stick_tungsten_carbide");
+        COVER_MOLD_STICK_LONG_TUNGSTEN_CARBIDE_TEXTURE = new SimpleOverlayRenderer(
+                "cover/mold/overlay_stick_long_tungsten_carbide");
+        COVER_MOLD_GEAR_TUNGSTEN_CARBIDE_TEXTURE = new SimpleOverlayRenderer(
+                "cover/mold/overlay_gear_tungsten_carbide");
+        COVER_MOLD_GEAR_SMALL_TUNGSTEN_CARBIDE_TEXTURE = new SimpleOverlayRenderer(
+                "cover/mold/overlay_gear_small_tungsten_carbide");
+        COVER_MOLD_BOLT_TUNGSTEN_CARBIDE_TEXTURE = new SimpleOverlayRenderer(
+                "cover/mold/overlay_bolt_tungsten_carbide");
+        COVER_MOLD_RING_TUNGSTEN_CARBIDE_TEXTURE = new SimpleOverlayRenderer(
+                "cover/mold/overlay_ring_tungsten_carbide");
+        COVER_MOLD_BLOCK_TUNGSTEN_CARBIDE_TEXTURE = new SimpleOverlayRenderer(
+                "cover/mold/overlay_block_tungsten_carbide");
         COVER_MOLD_INGOT_CARBON_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_ingot_carbon");
         COVER_MOLD_PLATE_CARBON_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_plate_carbon");
         COVER_MOLD_STICK_CARBON_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_stick_carbon");
@@ -204,8 +219,8 @@ public class TKCYATextures {
         COVER_MOLD_BOLT_CARBON_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_bolt_carbon");
         COVER_MOLD_RING_CARBON_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_ring_carbon");
         COVER_MOLD_BLOCK_CARBON_TEXTURE = new SimpleOverlayRenderer("cover/mold/overlay_block_carbon");
-        
-        //Cut trees
+
+        // Cut trees
         LOG_ACACIA_TOP = new SimpleOverlayRenderer("trees/log_acacia_top");
         LOG_DARK_OAK_TOP = new SimpleOverlayRenderer("trees/log_dark_oak_top");
         LOG_BIRCH_TOP = new SimpleOverlayRenderer("trees/log_birch_top");
@@ -213,8 +228,7 @@ public class TKCYATextures {
         LOG_OAK_TOP = new SimpleOverlayRenderer("trees/log_oak_top");
         LOG_SPRUCE_TOP = new SimpleOverlayRenderer("trees/log_spruce_top");
 
-        //Misc
+        // Misc
         DIRTS[BlockDirt.DIRT] = new SimpleOverlayRenderer("block_dirt/dirt");
-
     }
 }

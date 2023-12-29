@@ -1,5 +1,8 @@
 package tekcays_addon.gtapi.recipes.builders;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.jetbrains.annotations.NotNull;
+
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMap;
@@ -7,24 +10,21 @@ import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
 import gregtech.api.recipes.recipeproperties.PrimitiveProperty;
 import gregtech.api.util.EnumValidationResult;
 import gregtech.api.util.ValidationResult;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import tekcays_addon.api.recipe.RecipeBuilderHelper;
 import tekcays_addon.gtapi.recipes.recipeproperties.IntervalPressureProperty;
 import tekcays_addon.gtapi.recipes.recipeproperties.IntervalTemperatureProperty;
 import tekcays_addon.gtapi.recipes.recipeproperties.PressurizedFluidStackProperty;
-import tekcays_addon.api.recipe.RecipeBuilderHelper;
 
-import javax.annotation.Nonnull;
+public class NoEnergyTemperaturePressureIntervalRecipeBuilder extends
+                                                              RecipeBuilder<NoEnergyTemperaturePressureIntervalRecipeBuilder>
+                                                              implements
+                                                              RecipeBuilderHelper<NoEnergyTemperaturePressureIntervalRecipeBuilder> {
 
+    public NoEnergyTemperaturePressureIntervalRecipeBuilder() {}
 
-public class NoEnergyTemperaturePressureIntervalRecipeBuilder extends RecipeBuilder<NoEnergyTemperaturePressureIntervalRecipeBuilder>
-implements RecipeBuilderHelper<NoEnergyTemperaturePressureIntervalRecipeBuilder> {
-
-    public NoEnergyTemperaturePressureIntervalRecipeBuilder() {
-
-    }
-
-    @SuppressWarnings(value ="unused")
-    public NoEnergyTemperaturePressureIntervalRecipeBuilder(Recipe recipe, RecipeMap<NoEnergyTemperaturePressureIntervalRecipeBuilder> recipeMap) {
+    @SuppressWarnings(value = "unused")
+    public NoEnergyTemperaturePressureIntervalRecipeBuilder(Recipe recipe,
+                                                            RecipeMap<NoEnergyTemperaturePressureIntervalRecipeBuilder> recipeMap) {
         super(recipe, recipeMap);
     }
 
@@ -38,7 +38,7 @@ implements RecipeBuilderHelper<NoEnergyTemperaturePressureIntervalRecipeBuilder>
     }
 
     @Override
-    public boolean applyProperty(@Nonnull String key, Object value) {
+    public boolean applyProperty(@NotNull String key, Object value) {
         applyPropertyHelper(key, value);
         return super.applyProperty(key, value);
     }
@@ -73,5 +73,4 @@ implements RecipeBuilderHelper<NoEnergyTemperaturePressureIntervalRecipeBuilder>
     public void setRecipeStatus(EnumValidationResult enumValidationResult) {
         recipeStatus = enumValidationResult;
     }
-
 }

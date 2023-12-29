@@ -1,5 +1,30 @@
 package tekcays_addon.common.metatileentities.multi.storage;
 
+import static gregtech.api.util.RelativeDirection.*;
+import static tekcays_addon.api.consts.NBTKeys.ITEM_COUNT;
+import static tekcays_addon.api.consts.NBTKeys.STORED_ITEM;
+import static tekcays_addon.api.metatileentity.TankMethods.getBaseTextureForTank;
+import static tekcays_addon.api.metatileentity.TankMethods.getBlockState;
+import static tekcays_addon.api.metatileentity.predicates.Predicates.isAir;
+
+import java.util.Collections;
+import java.util.List;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.event.HoverEvent;
+import net.minecraft.world.World;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
@@ -17,31 +42,9 @@ import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.MetaTileEntities;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.event.HoverEvent;
-import net.minecraft.world.World;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.List;
-
-import static gregtech.api.util.RelativeDirection.*;
-import static tekcays_addon.api.consts.NBTKeys.ITEM_COUNT;
-import static tekcays_addon.api.consts.NBTKeys.STORED_ITEM;
-import static tekcays_addon.api.metatileentity.predicates.Predicates.isAir;
-import static tekcays_addon.api.metatileentity.TankMethods.getBaseTextureForTank;
-import static tekcays_addon.api.metatileentity.TankMethods.getBlockState;
 
 public class MetaTileEntityModulableMultiblockCrate extends MultiblockWithDisplayBase {
+
     private final int capacity;
     private int actualCapacity;
     private final Material material;
@@ -57,7 +60,6 @@ public class MetaTileEntityModulableMultiblockCrate extends MultiblockWithDispla
     }
 
     protected void initializeAbilities() {
-
         this.importItems = new ItemHandlerList(getAbilities(MultiblockAbility.IMPORT_ITEMS));
         this.exportItems = new ItemHandlerList(getAbilities(MultiblockAbility.EXPORT_ITEMS));
     }
@@ -80,7 +82,6 @@ public class MetaTileEntityModulableMultiblockCrate extends MultiblockWithDispla
             this.storedItemStack = importItems.extractItem(0, stackSizeToExtract, false).copy();
             this.itemStackSize += stackSizeToExtract;
         }
-
     }
 
     private void handleExportItems() {
@@ -104,29 +105,26 @@ public class MetaTileEntityModulableMultiblockCrate extends MultiblockWithDispla
     }
 
     @Override
-    protected void updateFormedValid() {
-
-    }
+    protected void updateFormedValid() {}
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityModulableMultiblockCrate(metaTileEntityId, material, capacity);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
                 .aisle("XXX", "XXX", "XXX")
                 .aisle("XSX", "X X", "XXX")
-                .aisle("XXX", "XIX", "XXX").setRepeatable(1,11)
+                .aisle("XXX", "XIX", "XXX").setRepeatable(1, 11)
                 .aisle("XXX", "XXX", "XXX")
                 .where('S', selfPredicate())
                 .where('I', isAir("modulableTankHeight"))
                 .where('X', states(getBlockState(material))
                         .or(metaTileEntities(MetaTileEntities.ITEM_EXPORT_BUS[GTValues.ULV]).setExactLimit(1))
-                        .or(metaTileEntities(MetaTileEntities.ITEM_IMPORT_BUS[GTValues.ULV]).setExactLimit(1))
-                )
+                        .or(metaTileEntities(MetaTileEntities.ITEM_IMPORT_BUS[GTValues.ULV]).setExactLimit(1)))
                 .where(' ', air())
                 .build();
     }
@@ -138,7 +136,6 @@ public class MetaTileEntityModulableMultiblockCrate extends MultiblockWithDispla
         this.actualCapacity = this.capacity * height;
         initializeAbilities();
     }
-
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
@@ -155,13 +152,15 @@ public class MetaTileEntityModulableMultiblockCrate extends MultiblockWithDispla
     }
 
     public String getFillPercentage() {
-       return isCrateEmpty() ? "0% Filled" : String.format("%.1f%% Filled", (float) (100 *this.itemStackSize / this.actualCapacity));
+        return isCrateEmpty() ? "0% Filled" :
+                String.format("%.1f%% Filled", (float) (100 * this.itemStackSize / this.actualCapacity));
     }
 
     public String getCrateFormatedContent() {
         if (isCrateEmpty()) return "Empty";
         if (this.itemStackSize > 1000) {
-            return String.format("%.1f k of %s", (float) this.itemStackSize / 1000, this.storedItemStack.getDisplayName());
+            return String.format("%.1f k of %s", (float) this.itemStackSize / 1000,
+                    this.storedItemStack.getDisplayName());
         }
         return String.format("%d of %s", this.itemStackSize, this.storedItemStack.getDisplayName());
     }
@@ -172,7 +171,7 @@ public class MetaTileEntityModulableMultiblockCrate extends MultiblockWithDispla
         getFrontOverlay().renderSided(getFrontFacing(), renderState, translation, pipeline);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     protected ICubeRenderer getFrontOverlay() {
         return Textures.MULTIBLOCK_TANK_OVERLAY;
@@ -180,27 +179,28 @@ public class MetaTileEntityModulableMultiblockCrate extends MultiblockWithDispla
 
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
-
         if (!this.isStructureFormed()) {
             ITextComponent tooltip = new TextComponentTranslation("gregtech.multiblock.invalid_structure.tooltip");
             tooltip.setStyle((new Style()).setColor(TextFormatting.GRAY));
-            textList.add((new TextComponentTranslation("gregtech.multiblock.invalid_structure")).setStyle((new Style()).setColor(TextFormatting.RED).setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
+            textList.add((new TextComponentTranslation("gregtech.multiblock.invalid_structure")).setStyle((new Style())
+                    .setColor(TextFormatting.RED).setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
         } else {
-            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.content", getCrateFormatedContent()));
-            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_crate.capacity", this.actualCapacity / 1000));
-            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.fill.percentage", getFillPercentage()));
+            textList.add(
+                    new TextComponentTranslation("tkcya.multiblock.modulable_tank.content", getCrateFormatedContent()));
+            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_crate.capacity",
+                    this.actualCapacity / 1000));
+            textList.add(new TextComponentTranslation("tkcya.multiblock.modulable_tank.fill.percentage",
+                    getFillPercentage()));
         }
-
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World player, @NotNull List<String> tooltip,
+                               boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tkcya.multiblock.modulable_crate.capacity"));
         tooltip.add(I18n.format("tkcya.machine.modulable_crate.capacity", capacity, "per layer."));
     }
-
-
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
@@ -229,6 +229,5 @@ public class MetaTileEntityModulableMultiblockCrate extends MultiblockWithDispla
     public void receiveInitialSyncData(PacketBuffer buf) {
         super.receiveInitialSyncData(buf);
         itemStackSize = buf.readInt();
-
     }
 }

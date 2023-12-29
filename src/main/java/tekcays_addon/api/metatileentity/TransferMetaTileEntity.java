@@ -1,17 +1,18 @@
 package tekcays_addon.api.metatileentity;
 
-import gregtech.api.GTValues;
-import gregtech.api.capability.GregtechTileCapabilities;
-import gregtech.api.capability.IActiveOutputSide;
-import gregtech.core.sound.GTSoundEvents;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.capabilities.Capability;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import gregtech.api.GTValues;
+import gregtech.api.capability.GregtechTileCapabilities;
+import gregtech.api.capability.IActiveOutputSide;
+import gregtech.core.sound.GTSoundEvents;
 
 public abstract class TransferMetaTileEntity extends WrenchAbleTieredMetaTileEntity implements IActiveOutputSide {
 
@@ -58,7 +59,7 @@ public abstract class TransferMetaTileEntity extends WrenchAbleTieredMetaTileEnt
 
     @Override
     @Nullable
-    public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
+    public <T> T getCapability(@NotNull Capability<T> capability, EnumFacing side) {
         if (capability == GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE) {
             return side == getFrontFacing() ? GregtechTileCapabilities.CAPABILITY_ACTIVE_OUTPUT_SIDE.cast(this) : null;
         }
@@ -94,5 +95,4 @@ public abstract class TransferMetaTileEntity extends WrenchAbleTieredMetaTileEnt
     public boolean isAllowInputFromOutputSideFluids() {
         return false;
     }
-
 }

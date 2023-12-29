@@ -1,21 +1,22 @@
 package tekcays_addon.gtapi.capability.impl;
 
+import static tekcays_addon.api.consts.NBTKeys.*;
+
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.common.capabilities.Capability;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import gregtech.api.metatileentity.MTETrait;
 import gregtech.api.metatileentity.MetaTileEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.common.capabilities.Capability;
-import tekcays_addon.gtapi.capability.containers.IHeatContainer;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
+import tekcays_addon.gtapi.capability.containers.IHeatContainer;
 import tekcays_addon.gtapi.consts.TKCYAValues;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import static tekcays_addon.api.consts.NBTKeys.*;
 
 @Getter
 @Setter
@@ -50,7 +51,7 @@ public class HeatContainer extends MTETrait implements IHeatContainer {
         this.temperature = TKCYAValues.ROOM_TEMPERATURE;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public String getName() {
         return "HeatContainer";
@@ -67,6 +68,7 @@ public class HeatContainer extends MTETrait implements IHeatContainer {
         this.temperature = temperature;
         this.metaTileEntity.markDirty();
     }
+
     @Nullable
     public <T> T getCapability(Capability<T> capability) {
         if (capability == TKCYATileCapabilities.CAPABILITY_HEAT_CONTAINER) {
@@ -75,7 +77,7 @@ public class HeatContainer extends MTETrait implements IHeatContainer {
         return null;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = super.serializeNBT();
@@ -85,20 +87,20 @@ public class HeatContainer extends MTETrait implements IHeatContainer {
     }
 
     @Override
-    public void deserializeNBT(@Nonnull NBTTagCompound compound) {
+    public void deserializeNBT(@NotNull NBTTagCompound compound) {
         this.heat = compound.getInteger(HEAT_KEY);
         this.temperature = compound.getInteger(TEMPERATURE_KEY);
     }
 
     @Override
-    public void writeInitialData(@Nonnull PacketBuffer buffer) {
+    public void writeInitialData(@NotNull PacketBuffer buffer) {
         super.writeInitialData(buffer);
         buffer.writeInt(this.heat);
         buffer.writeInt(this.temperature);
     }
 
     @Override
-    public void receiveInitialData(@Nonnull PacketBuffer buffer) {
+    public void receiveInitialData(@NotNull PacketBuffer buffer) {
         super.receiveInitialData(buffer);
         this.heat = buffer.readInt();
         this.temperature = buffer.readInt();

@@ -1,5 +1,28 @@
 package tekcays_addon.common.metatileentities.multiblockpart.controllers;
 
+import static tekcays_addon.api.consts.DetectorModes.*;
+import static tekcays_addon.api.consts.UnitSymbol.BAR;
+import static tekcays_addon.gtapi.consts.TKCYAValues.MAX_PRESSURE;
+
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import codechicken.lib.raytracer.CuboidRayTraceResult;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
@@ -13,42 +36,22 @@ import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMulti
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import lombok.Getter;
 import lombok.Setter;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
-import tekcays_addon.gtapi.capability.containers.IContainerDetector;
-import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
-import tekcays_addon.gtapi.capability.impl.ContainerDetector;
 import tekcays_addon.api.consts.DetectorModes;
 import tekcays_addon.api.gui.CoverGuiHandler;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-
-import static tekcays_addon.api.consts.DetectorModes.*;
-import static tekcays_addon.api.consts.UnitSymbol.BAR;
-import static tekcays_addon.gtapi.consts.TKCYAValues.MAX_PRESSURE;
+import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
+import tekcays_addon.gtapi.capability.containers.IContainerDetector;
+import tekcays_addon.gtapi.capability.impl.ContainerDetector;
 
 @Getter
 @Setter
-public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPart implements CoverGuiHandler, IDataInfoProvider {
+public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPart
+                                              implements CoverGuiHandler, IDataInfoProvider {
 
     private IContainerDetector pressureControl;
     private int threshold;
     private int currentPressure;
 
-    public MetaTileEntityPressureController(@Nonnull ResourceLocation metaTileEntityId) {
+    public MetaTileEntityPressureController(@NotNull ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, 1);
         this.pressureControl = new ContainerDetector(this);
     }
@@ -63,7 +66,8 @@ public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPa
         super.update();
         if (getOffsetTimer() % 20 == 0) {
             this.currentPressure = pressureControl.getCurrentValue();
-            //updateRedstoneBehavior(getCurrentDetectorMode(), currentPressure, threshold, this::setOutputRedstoneSignal);
+            // updateRedstoneBehavior(getCurrentDetectorMode(), currentPressure, threshold,
+            // this::setOutputRedstoneSignal);
         }
     }
 
@@ -74,20 +78,22 @@ public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPa
     }
 
     @Override
-    public boolean onScrewdriverClick(EntityPlayer playerIn, EnumHand hand, EnumFacing facing, CuboidRayTraceResult hitResult) {
-         pressureControl.setDetectorMode(changeDetectModeAndSendMessage(pressureControl.getDetectorMode(), playerIn));
-         return true;
+    public boolean onScrewdriverClick(EntityPlayer playerIn, EnumHand hand, EnumFacing facing,
+                                      CuboidRayTraceResult hitResult) {
+        pressureControl.setDetectorMode(changeDetectModeAndSendMessage(pressureControl.getDetectorMode(), playerIn));
+        return true;
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, @Nonnull List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World player, @NotNull List<String> tooltip,
+                               boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tkcya.machine.pressure_controller.tooltip.1"));
     }
 
     @Override
     @Nullable
-    public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
+    public <T> T getCapability(@NotNull Capability<T> capability, EnumFacing side) {
         if (capability.equals(TKCYATileCapabilities.CAPABILITY_CONTAINER_DETECTOR)) {
             return TKCYATileCapabilities.CAPABILITY_CONTAINER_DETECTOR.cast(pressureControl);
         }
@@ -149,7 +155,7 @@ public class MetaTileEntityPressureController extends MetaTileEntityMultiblockPa
         return this.pressureControl.getDetectorMode();
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public List<ITextComponent> getDataInfo() {
         List<ITextComponent> list = new ObjectArrayList<>();

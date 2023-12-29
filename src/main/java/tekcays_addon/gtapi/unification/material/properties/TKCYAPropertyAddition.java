@@ -1,15 +1,15 @@
 package tekcays_addon.gtapi.unification.material.properties;
 
+import static gregtech.api.unification.material.Materials.*;
+
+import java.util.function.Function;
+
 import gregtech.api.fluids.FluidBuilder;
 import gregtech.api.fluids.store.FluidStorageKeys;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.properties.FluidProperty;
 import gregtech.api.unification.material.properties.IngotProperty;
 import gregtech.api.unification.material.properties.PropertyKey;
-
-import java.util.function.Function;
-
-import static gregtech.api.unification.material.Materials.*;
 
 public class TKCYAPropertyAddition {
 
@@ -22,7 +22,6 @@ public class TKCYAPropertyAddition {
     }
 
     public static void init() {
-
         addFluid(Barium, fluidBuilder -> fluidBuilder.temperature(1000));
         addFluid(Boron, fluidBuilder -> fluidBuilder.temperature(2347));
         addFluid(Calcium, fluidBuilder -> fluidBuilder.temperature(1115));
@@ -32,6 +31,5 @@ public class TKCYAPropertyAddition {
         addFluid(Calcite, fluidBuilder -> fluidBuilder.temperature(1612));
 
         Carbon.setProperty(PropertyKey.INGOT, new IngotProperty());
-
     }
 }

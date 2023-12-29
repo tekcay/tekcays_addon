@@ -3,9 +3,10 @@ package tekcays_addon.common.blocks.blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.IStringSerializable;
-import gregtech.api.block.VariantBlock;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
+
+import gregtech.api.block.VariantBlock;
 
 public class BlockDirt extends VariantBlock<BlockDirt.DirtType> {
 
@@ -25,7 +26,6 @@ public class BlockDirt extends VariantBlock<BlockDirt.DirtType> {
 
         DIRT("dirt", BlockDirt.DIRT);
 
-
         private final String name;
         private final int textureId;
 
@@ -34,7 +34,7 @@ public class BlockDirt extends VariantBlock<BlockDirt.DirtType> {
             this.textureId = textureId;
         }
 
-        @Nonnull
+        @NotNull
         @Override
         public String getName() {
             return this.name;
