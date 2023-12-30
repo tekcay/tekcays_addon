@@ -1,13 +1,13 @@
 package tekcays_addon.gtapi.consts;
 
-import static gregtech.api.unification.material.Materials.*;
-import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
+import gregtech.api.unification.material.Material;
+import tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import gregtech.api.unification.material.Material;
-import tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags;
+import static gregtech.api.unification.material.Materials.*;
+import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
 
 public class FlammableFluidMaterials {
 
