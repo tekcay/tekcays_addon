@@ -29,6 +29,8 @@ import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.pipelike.cable.ItemBlockCableExtraInfo;
 import tekcays_addon.common.pipelike.fluidpipe.ItemBlockFluidPipeExtraInfo;
 import tekcays_addon.common.pipelike.itempipe.ItemBlockPipeExtraInfo;
+import tekcays_addon.gtapi.unification.material.info.AdditionalFluidAttributes;
+import tekcays_addon.gtapi.unification.material.info.TKCYAMaterialFlags;
 import tekcays_addon.gtapi.unification.material.ore.OreDictAdditions;
 import tekcays_addon.gtapi.utils.FuelWithProperties;
 import tekcays_addon.gtapi.utils.TKCYALog;
@@ -108,5 +110,13 @@ public class CommonProxy {
     public static void registerRecipesLowest(RegistryEvent.Register<IRecipe> event) {
         TKCYALog.logger.info("Running late material handlers...");
         TKCYARecipeLoader.loadLatest();
+
+        AdditionalFluidAttributes.addFluidAttributeToMaterials(
+                AdditionalFluidAttributes.FLAMMABLE_ATTRIBUTE,
+                TKCYAMaterialFlags.FLAMMABLE);
+
+        AdditionalFluidAttributes.addFluidAttributeToMaterials(
+                AdditionalFluidAttributes.TOXIC_ATTRIBUTE,
+                TKCYAMaterialFlags.TOXIC);
     }
 }

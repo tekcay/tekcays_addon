@@ -10,6 +10,8 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.info.MaterialFlags;
 import tekcays_addon.common.TKCYAConfigHolder;
+import tekcays_addon.gtapi.consts.FlammableFluidMaterials;
+import tekcays_addon.gtapi.consts.ToxicFluidMaterials;
 
 public class TKCYAMaterialFlagAddition {
 
@@ -63,6 +65,11 @@ public class TKCYAMaterialFlagAddition {
         TungstenSteel.addFlags(GENERATE_ROUND);
         NaquadahAlloy.addFlags(GENERATE_ROUND);
         RhodiumPlatedPalladium.addFlags(GENERATE_ROUND);
+
+        // For fluid properties
+        // DangerFluids.init();
+        FlammableFluidMaterials.addFlag();
+        ToxicFluidMaterials.addFlag();
     }
 
     public static void polymersInit() {

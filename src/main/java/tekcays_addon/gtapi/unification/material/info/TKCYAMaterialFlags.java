@@ -53,4 +53,15 @@ public class TKCYAMaterialFlags {
         ALL_PARTS.add(GENERATE_CURVED_PLATE);
         ALL_PARTS.add(GENERATE_ROUND);
     }
+
+    /**
+     * Fluid properties
+     */
+
+    public static final MaterialFlag TOXIC = new MaterialFlag.Builder("fluid_property_toxic")
+            .requireProps(PropertyKey.FLUID)
+            .build();
+    public static final MaterialFlag FLAMMABLE = new MaterialFlag.Builder("fluid_property_inflammable")
+            .requireProps(PropertyKey.FLUID)
+            .build();
 }

@@ -31,12 +31,9 @@ public class TKCYAEventHandlers {
 
         TKCYAOrePrefixAdditions.componentsInit();
     }
-
     /*
-     * @SubscribeEvent
-     * public static void registerMaterialsPost(GregTechAPI.PostMaterialEvent event) {
-     * 
+     * @SubscribeEvent(priority = EventPriority.LOW)
+     * public static void registerMaterialsPost(PostMaterialEvent event) {
      * }
-     * 
      */
 }

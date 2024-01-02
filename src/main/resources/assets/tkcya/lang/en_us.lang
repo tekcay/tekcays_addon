@@ -419,6 +419,12 @@ gregtech.material.silver_oxide=Silver Oxide
 
 fluid.fuel.tooltip=To be used in the fuel consuming machines
 
+tkcya.fluid.properties.toxic=TOXIC!
+tkcya.fluid.properties.inflammable=INFLAMMABLE!
+
+gregtech.fluid.type_toxic.tooltip=§6Toxic!
+gregtech.fluid.type_flammable.tooltip=§6Flammable!
+
 ##GoldChain
 gregtech.material.precious_metal=Precious Metal
 gregtech.material.gold_alloy=Gold Alloy
