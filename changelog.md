@@ -1,7 +1,8 @@
 # Changelog
 
 ## 0.2.4
-*  Added Toxic and Flammable FluidAttributes, material lists getting those attributes and method to set those attributes to already GTCEu materials ([#139](https://github.com/tekcay/tekcays_addon/pull/139))
+* Added Toxic and Flammable FluidAttributes, material lists getting those attributes and method to set those attributes to already GTCEu materials ([#139](https://github.com/tekcay/tekcays_addon/pull/139))
+* Improved buildAndTest script ([#140](https://github.com/tekcay/tekcays_addon/pull/140))
 
 ## v0.2.3
 * added GT6 plates textures ([#132](https://github.com/tekcay/tekcays_addon/pull/132))

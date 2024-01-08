@@ -1,34 +1,50 @@
 #!/bin/bash
 
-#file where every constant is stored
-propertiesPath="buildAndTest.ini"
+set -e
 
+#file where every constant is stored
+propertiesPath="buildAndTest.cfg"
 gradlePropertiesPath=$(grep -oP "gradlePropertiesPath=\K(.*)" "$propertiesPath")
 
+# The path to the internal tags java class
+internalTagPath=$(grep -oP "internalTagPath=\K(.*)" "$propertiesPath")
+
+# The variable containing the mod version
+internalModVersionPrefix=$(grep -oP "internalModVersionPrefix=\K(.*)" "$propertiesPath")
+
+#The variable containing the GTCEu version
+internalGTCEuVersionPrefix=$(grep -oP "internalGTCEuVersionPrefix=\K(.*)" "$propertiesPath")
+
+modVersion=$(grep "$internalModVersionPrefix" "$internalTagPath" | awk -F '[""]' '{print $2}')
+gtceuVersion=$(grep "$internalGTCEuVersionPrefix" "$internalTagPath" | awk -F '[:@,);\\[]' '{print $4}')
+
 modName=$(grep -oP "modName=\K(.*)" "$propertiesPath")
+prismInstanceModPath=$(grep -oP "prismInstanceModPath=\K(.*)" "$propertiesPath")
+prismInstanceName=$(grep -oP "prismInstanceName=\K(.*)" "$propertiesPath")
 
-#Prism launcher instance mod directory
-instanceModPath=$(grep -oP "instanceModPath=\K(.*)" "$propertiesPath")
+# Gets the version of the building mod jar
+version="$modVersion-GT-$gtceuVersion"
 
-#mod version
-version=$(grep -A 1 "$modName\$" "$gradlePropertiesPath" | grep -oP 'version=\K[0-9.]+')
+# Gets the full name of the building jar
+fileName="$modName-$version.jar"
 
-#output file mod name
-fileName="$modName-1.12.2-$version.jar"
+if [ "$fileName" == "" ]
+    then exit 1
+fi
+
+# Replaces the modVersion field in gradle.properties by
+sed -i "s/modVersion = .*/modVersion = $version/g" "$gradlePropertiesPath"
 
 #remove all TKCYA mods version in the Prism launcher instance mod directory
-rm "$instanceModPath$modName"*
+rm -f "$prismInstanceModPath$modName"* &&
 
-echo "mod jars in $instanceModPath have been deleted."
-echo "building $fileName..."
-
-#build the jar mod
-./gradlew build &&
+echo "building $fileName..." &&
+./gradlew :spotlessApply build &&
 
 #copy paste the jar file to the Prism launcher instance mod directory
-cp build/libs/"$fileName" "$instanceModPath$fileName" &&
+cp build/libs/"$fileName" "$prismInstanceModPath$fileName" &&
 
 echo "mod jar has been moved."
 
-#launches the desired instance
-prismlauncher --launch TKCYA
+#launches the desired Prism Launcher instance
+prismlauncher --launch "$prismInstanceName"

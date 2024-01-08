@@ -10,8 +10,8 @@ thumbs.db
 
 *.class
 
-### Shell scripts
-*.sh
+#buildAndTest.sh config file
+/buildAndTest.cfg
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
