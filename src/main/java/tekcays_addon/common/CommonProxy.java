@@ -25,6 +25,8 @@ import gregtech.common.pipelike.cable.BlockCable;
 import gregtech.common.pipelike.fluidpipe.BlockFluidPipe;
 import gregtech.common.pipelike.itempipe.BlockItemPipe;
 import tekcays_addon.TekCaysAddon;
+import tekcays_addon.api.material.MaterialHelper;
+import tekcays_addon.api.material.MaterialLists;
 import tekcays_addon.common.blocks.TKCYAMetaBlocks;
 import tekcays_addon.common.pipelike.cable.ItemBlockCableExtraInfo;
 import tekcays_addon.common.pipelike.fluidpipe.ItemBlockFluidPipeExtraInfo;
@@ -78,6 +80,8 @@ public class CommonProxy {
             for (BlockItemPipe pipe : ITEM_PIPES.get(materialRegistry.getModid()))
                 registry.register(createItemBlock(pipe, ItemBlockPipeExtraInfo::new));
         }
+
+        MaterialLists.ALLOYS.forEach(MaterialHelper::setWeightMp);
     }
 
     private static <T extends Block> ItemBlock createItemBlock(T block, Function<T, ItemBlock> producer) {
