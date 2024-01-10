@@ -10,11 +10,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
-
-import org.jetbrains.annotations.Nullable;
 
 import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.items.metaitem.MetaItem;
@@ -24,33 +21,8 @@ import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.MaterialStack;
 import gregtech.api.util.GTTransferUtils;
 import tekcays_addon.common.items.TKCYAMetaItems;
-import tekcays_addon.gtapi.unification.TKCYAMaterials;
 
 public class MiscMethods {
-
-    public static boolean isFuel(@Nullable FluidStack fluid) {
-        if (fluid == null) return false;
-        if (fluid.isFluidEqual(new FluidStack(TKCYAMaterials.Fuel.getFluid(), 1))) return true;
-
-        return false;
-    }
-
-    /**
-     * Checks if a {@code FluidStack} is made of a certain {@code Fluid}.
-     * This can avoid certain {@code NullPointer} exceptions.
-     * <br />
-     * <br />
-     * 
-     * @param fluidStack the {@code FluidStack} that is checked.
-     * @param fluid      the {@code Fluid} to compare to.
-     * @return true if condition is met.
-     */
-    public static boolean isSameFluid(FluidStack fluidStack, Fluid fluid) {
-        if (fluidStack == null) return false;
-        if (fluidStack.isFluidEqual(new FluidStack(fluid, 1))) return true;
-
-        return false;
-    }
 
     public static Map<Integer, Integer> getPumpPressureMap() {
         Map<Integer, Integer> map = new HashMap<>();
@@ -64,10 +36,7 @@ public class MiscMethods {
     }
 
     /**
-     *
-     * @param m1
-     * @param m2
-     * @return the amount of {@code Material} m2 in {@code Material} m1.
+     * Returns the amount of {@code Material} m2 in {@code Material} m1.
      */
     public static int getAmountMaterial(Material m1, Material m2) {
         for (MaterialStack ms : m1.getMaterialComponents()) {
@@ -120,17 +89,6 @@ public class MiscMethods {
 
     /**
      *
-     * @param list {@code List<FluidStack>}
-     * @return the sum of the amount of each {@code FluidStack}.
-     */
-    public static int getFluidStackListSize(List<FluidStack> list) {
-        AtomicInteger stackSize = new AtomicInteger();
-        list.forEach(stack -> stackSize.addAndGet(stack.amount));
-        return stackSize.get();
-    }
-
-    /**
-     *
      * @param list {@code List<ItemStack>}
      * @return the sum of the amount of each {@code ItemStack}.
      */
@@ -152,20 +110,9 @@ public class MiscMethods {
         return output;
     }
 
-    public static List<FluidStack> getFluidStacksFromMaterialStacks(List<MaterialStack> list) {
-        List<FluidStack> output = new ArrayList<>();
-        list.forEach(ms -> output.add(ms.material.getFluid((int) ms.amount)));
-        return output;
-    }
-
     public static ItemStack getOutputItemStackFromNBT(OrePrefix prefix, NBTTagCompound nbt) {
         List<MaterialStack> list = getMaterialStacksFromString(nbt.getString("output"));
         return getItemStacksFromMaterialStacks(list, prefix).get(0);
-    }
-
-    public static FluidStack getOutputFluidStackFromNBT(NBTTagCompound nbt) {
-        List<MaterialStack> list = getMaterialStacksFromString(nbt.getString("fluidOutputs"));
-        return getFluidStacksFromMaterialStacks(list).get(0);
     }
 
     public static FluidStack getMixtureToFilterStack(MaterialStack output, MaterialStack fluidOutputs) {
@@ -219,10 +166,6 @@ public class MiscMethods {
 
     /**
      * Multiplies energyConsumption by 20 as the number of ticks to actualize the multi only once per second.
-     * 
-     * @param energyConsumption
-     * @param energyContainer
-     * @return
      */
     public static boolean hasEnoughEnergy(int energyConsumption, IEnergyContainer energyContainer) {
         return energyContainer.getEnergyStored() >= (long) energyConsumption * 20;

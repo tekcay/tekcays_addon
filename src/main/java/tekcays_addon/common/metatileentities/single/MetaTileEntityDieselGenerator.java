@@ -3,10 +3,10 @@ package tekcays_addon.common.metatileentities.single;
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
 import static gregtech.api.unification.material.Materials.CarbonDioxide;
 import static java.util.Collections.*;
+import static tekcays_addon.api.fluids.FluidStackHelper.*;
 import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
 import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.DIESEL_GENERATOR;
 import static tekcays_addon.gtapi.render.TKCYATextures.*;
-import static tekcays_addon.gtapi.utils.FluidStackHelper.*;
 
 import java.util.List;
 import java.util.Objects;
