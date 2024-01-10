@@ -1,7 +1,7 @@
 package tekcays_addon.gtapi.capability.impl;
 
 import static tekcays_addon.api.consts.NBTKeys.*;
-import static tekcays_addon.api.utils.Numbers.changeByKeepingPositive;
+import static tekcays_addon.api.number.Numbers.*;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,7 +17,7 @@ import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.ore.OrePrefix;
 import lombok.Getter;
-import tekcays_addon.api.utils.Numbers;
+import tekcays_addon.api.number.Numbers;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.capability.containers.IHinderedContainer;
 

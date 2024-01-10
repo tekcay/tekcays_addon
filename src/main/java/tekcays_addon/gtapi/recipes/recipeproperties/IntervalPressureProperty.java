@@ -1,5 +1,6 @@
 package tekcays_addon.gtapi.recipes.recipeproperties;
 
+import static tekcays_addon.api.units.PressureFormatting.*;
 import static tekcays_addon.gtapi.consts.TKCYAValues.INTERVAL_PRESSURE_PROPERTY;
 
 import net.minecraft.client.Minecraft;
@@ -9,10 +10,9 @@ import org.jetbrains.annotations.NotNull;
 
 import gregtech.api.recipes.recipeproperties.RecipeProperty;
 import tekcays_addon.api.recipeproperties.RecipePropertiesHelper;
-import tekcays_addon.api.units.IPressureFormatting;
 
 public class IntervalPressureProperty extends RecipeProperty<Integer[]>
-                                      implements IPressureFormatting, RecipePropertiesHelper {
+                                      implements RecipePropertiesHelper {
 
     @Override
     public String getKey() {
@@ -38,11 +38,11 @@ public class IntervalPressureProperty extends RecipeProperty<Integer[]>
         String maxPressure;
 
         if (isVacuum(casted[0])) {
-            minPressure = convertPressureToMbar(casted[0], false);
+            minPressure = convertPressureToMillibar(casted[0], false);
         } else minPressure = convertPressureToBar(casted[0], false);
 
         if (isVacuum(casted[1])) {
-            maxPressure = convertPressureToMbar(casted[1], true);
+            maxPressure = convertPressureToMillibar(casted[1], true);
         } else maxPressure = convertPressureToBar(casted[1], true);
 
         minecraft.fontRenderer.drawString(I18n.format(

@@ -2,34 +2,29 @@ package tekcays_addon.api.units;
 
 import static tekcays_addon.gtapi.consts.TKCYAValues.ATMOSPHERIC_PRESSURE;
 
-public interface IPressureFormatting {
+public class PressureFormatting {
 
-    default boolean isVacuum(int pressure) {
-        return pressure < ATMOSPHERIC_PRESSURE;
+    public static boolean isVacuum(int pressureInPa) {
+        return pressureInPa < ATMOSPHERIC_PRESSURE;
     }
 
     /**
      * A method to convert a pressure in {@code Pa} into {@code mbar}.
      * 
-     * @param pressureInPa
-     * @param addsUnit
      * @return a {@code String} containing the value of the pressure with its unit.
      */
-    default String convertPressureToMbar(int pressureInPa, boolean addsUnit) {
-        // Returns the pressure in mbar
-        if (pressureInPa < ATMOSPHERIC_PRESSURE) return String.format((addsUnit ? "%d mbar" : "%d mbar"),
-                (int) (1000.0 * pressureInPa / ATMOSPHERIC_PRESSURE));
-        return "error";
+    public static String convertPressureToMillibar(int pressureInPa, boolean addsUnit) {
+        if (pressureInPa < ATMOSPHERIC_PRESSURE) {
+            return String.format((addsUnit ? "%d mbar" : "%d"), (int) (1000.0 * pressureInPa / ATMOSPHERIC_PRESSURE));
+        } else return "error";
     }
 
     /**
      * A method to convert a pressure in {@code Pa} into {@code bar} or {@code kbar}.
      * 
-     * @param pressureInPa
-     * @param addsUnit
      * @return a {@code String} containing the value of the pressure with its unit.
      */
-    default String convertPressureToBar(int pressureInPa, boolean addsUnit) {
+    public static String convertPressureToBar(int pressureInPa, boolean addsUnit) {
         // Returns the pressure in kbar
         if (pressureInPa > ATMOSPHERIC_PRESSURE * 1000) {
             return String.format((addsUnit ? "%4.1f kbar" : "%4.1f"),

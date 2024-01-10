@@ -2,6 +2,7 @@ package tekcays_addon.gtapi.capability.impl;
 
 import static tekcays_addon.api.consts.DataIds.PRESSURIZED_FLUID_STACK;
 import static tekcays_addon.api.consts.NBTKeys.PRESSURE_KEY;
+import static tekcays_addon.api.units.PressureFormatting.*;
 import static tekcays_addon.gtapi.consts.TKCYAValues.*;
 
 import java.util.List;
@@ -20,14 +21,13 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import tekcays_addon.api.units.IPressureFormatting;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.capability.containers.IPressureContainer;
 import tekcays_addon.gtapi.utils.FluidStackHelper;
 
 @Getter
 @Setter
-public class PressureContainer extends MTETrait implements IPressureContainer, IPressureFormatting, FluidStackHelper {
+public class PressureContainer extends MTETrait implements IPressureContainer, FluidStackHelper {
 
     @Setter(AccessLevel.NONE)
     protected int volume;

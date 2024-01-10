@@ -8,10 +8,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
 
 import gregtech.api.unification.material.Material;
-import tekcays_addon.api.units.IPressureFormatting;
 import tekcays_addon.gtapi.utils.FluidStackHelper;
 
-public interface IVacuumContainer extends IPressureFormatting, FluidStackHelper {
+public interface IVacuumContainer extends FluidStackHelper {
 
     /**
      * @return the amount of pressure in the container in {@code Pa}
