@@ -90,7 +90,6 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
         return getNullableFluidStackLocalizedName(this.pressurizedFluidStack);
     }
 
-    @Nullable
     @Override
     public void setPressurizedFluidStack(FluidStack fluidStack) {
         this.pressurizedFluidStack = fluidStack;

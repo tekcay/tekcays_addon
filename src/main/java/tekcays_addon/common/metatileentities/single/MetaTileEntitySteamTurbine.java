@@ -265,7 +265,7 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity
     }
 
     @Override
-    public void receiveCustomData(int dataId, PacketBuffer buf) {
+    public void receiveCustomData(int dataId, @NotNull PacketBuffer buf) {
         super.receiveCustomData(dataId, buf);
         if (dataId == IS_WORKING) {
             this.isRunning = buf.readBoolean();

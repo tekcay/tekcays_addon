@@ -65,7 +65,7 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity
     private final int tier;
     private int transferRate;
     private boolean isRunning;
-    private int inputTankCapacity;
+    private final int inputTankCapacity;
 
     public MetaTileEntityRotationCompressor(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId);

@@ -65,7 +65,7 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
     private IFluidTank importFuelTank;
     private IRotationContainer rotationContainer;
     private final int tier;
-    private int fuelTankCapacity;
+    private final int fuelTankCapacity;
     private int fuelConsumption;
     private final int BASE_FUEL_CONSUMPTION;
     private int carbonDioxideOutputRate;
@@ -285,7 +285,7 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
     }
 
     @Override
-    public void receiveCustomData(int dataId, PacketBuffer buf) {
+    public void receiveCustomData(int dataId, @NotNull PacketBuffer buf) {
         super.receiveCustomData(dataId, buf);
         if (dataId == IS_WORKING) {
             this.isRunning = buf.readBoolean();
