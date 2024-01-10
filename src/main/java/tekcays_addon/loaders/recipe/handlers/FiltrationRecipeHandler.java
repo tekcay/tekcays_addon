@@ -3,8 +3,8 @@ package tekcays_addon.loaders.recipe.handlers;
 import static gregtech.api.recipes.RecipeMaps.LASER_ENGRAVER_RECIPES;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static tekcays_addon.api.fluids.FluidStackHelper.getOutputFluidStackFromNBT;
+import static tekcays_addon.api.mixtures.MixtureUtil.MIXTURE_TO_FILTER;
 import static tekcays_addon.gtapi.consts.TKCYAValues.FILTER_MATERIALS;
-import static tekcays_addon.gtapi.consts.TKCYAValues.MIXTURE_TO_FILTER;
 import static tekcays_addon.gtapi.utils.MiscMethods.*;
 import static tekcays_addon.loaders.DamageableItemsLoader.filterStainlessSteel;
 

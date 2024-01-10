@@ -9,10 +9,8 @@ import static tekcays_addon.gtapi.unification.material.ore.TKCYAOrePrefix.*;
 import java.nio.file.Path;
 import java.util.*;
 
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Loader;
 
 import gregtech.api.items.metaitem.MetaItem;
@@ -177,9 +175,6 @@ public class TKCYAValues {
             addAll(GTCEu_POLYMERS);
         }
     };
-
-    public static final List<FluidStack> MIXTURE_TO_FILTER = new ArrayList<>();
-    public static final List<ItemStack> DUST_MIXTURE_WITH_NBT = new ArrayList<>();
 
     public static final List<Material> MOLD_MATERIALS = new ArrayList<Material>() {
 

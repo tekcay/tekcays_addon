@@ -1,27 +1,22 @@
 package tekcays_addon.gtapi.utils;
 
 import static gregtech.api.unification.material.Materials.Air;
-import static tekcays_addon.api.material.MaterialHelper.getAllMaterials;
 import static tekcays_addon.api.material.MaterialHelper.getMaterialStacksFromString;
 import static tekcays_addon.gtapi.consts.TKCYAValues.*;
-import static tekcays_addon.gtapi.unification.TKCYAMaterials.MixtureToFilter;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.unification.OreDictUnifier;
-import gregtech.api.unification.material.Material;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.MaterialStack;
 import gregtech.api.util.GTTransferUtils;
-import tekcays_addon.common.items.TKCYAMetaItems;
 
 public class MiscMethods {
 
@@ -36,20 +31,6 @@ public class MiscMethods {
         return map;
     }
 
-    public static NBTTagCompound writeNBTtoDustMixture(List<MaterialStack> list) {
-        NBTTagCompound nbt = new NBTTagCompound();
-        final StringBuilder composition = new StringBuilder();
-
-        list.forEach(ms -> composition.append(ms.material.getUnlocalizedName())
-                .append(",")
-                .append(ms.amount)
-                .append(","));
-
-        nbt.setString("Composition", composition.toString());
-        return nbt;
-    }
-
-
     /**
      *
      * @param list {@code List<ItemStack>}
@@ -57,7 +38,7 @@ public class MiscMethods {
      */
     public static int getItemStackListSize(List<ItemStack> list) {
         AtomicInteger stackSize = new AtomicInteger();
-        list.forEach(stack -> stackSize.addAndGet((int) stack.getCount()));
+        list.forEach(stack -> stackSize.addAndGet(stack.getCount()));
         return stackSize.get();
     }
 
@@ -76,20 +57,6 @@ public class MiscMethods {
     public static ItemStack getOutputItemStackFromNBT(OrePrefix prefix, NBTTagCompound nbt) {
         List<MaterialStack> list = getMaterialStacksFromString(nbt.getString("output"));
         return getItemStacksFromMaterialStacks(list, prefix).get(0);
-    }
-
-    public static FluidStack getMixtureToFilterStack(MaterialStack output, MaterialStack fluidOutputs) {
-        FluidStack fs = new FluidStack(MixtureToFilter.getFluid(), 1000,
-                writeNBTtoMixtureToFilter(output, fluidOutputs));
-        MIXTURE_TO_FILTER.add(fs);
-        return fs;
-    }
-
-    public static NBTTagCompound writeNBTtoMixtureToFilter(MaterialStack output, MaterialStack fluidOutputs) {
-        NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setString("output", output.material.getUnlocalizedName() + "," + output.amount);
-        nbt.setString("fluidOutputs", fluidOutputs.material.getUnlocalizedName() + "," + fluidOutputs.amount);
-        return nbt;
     }
 
     /**
@@ -154,35 +121,6 @@ public class MiscMethods {
         return dividedOutputStack;
     }
 
-    public static List<ItemStack> setOutputStackPerSec(IItemHandlerModifiable inputInventory, int inputSlot,
-                                                       OrePrefix prefix) {
-        ItemStack input = inputInventory.getStackInSlot(inputSlot);
-        NBTTagCompound nbt = input.getTagCompound();
-        List<MaterialStack> list = getMaterialStacksFromString(nbt.getString("Composition"));
-        return getItemStacksFromMaterialStacks(list, prefix);
-    }
-
-    public static List<ItemStack> setOutputStackPerSec(String composition, OrePrefix prefix) {
-        List<MaterialStack> list = getMaterialStacksFromString(composition);
-        return getItemStacksFromMaterialStacks(list, prefix);
-    }
-
-    public static List<ItemStack> setOutputStack(String composition, OrePrefix prefix) {
-        List<MaterialStack> list = getMaterialStacksFromString(composition);
-        return getItemStacksFromMaterialStacks(list, prefix);
-    }
-
-    public static List<ItemStack> setOutputStack(String composition, OrePrefix prefix, boolean applyMaterialAmount) {
-        List<MaterialStack> list = getMaterialStacksFromString(composition);
-        return getItemStacksFromMaterialStacks(list, prefix, applyMaterialAmount);
-    }
-
-    public static String getComposition(IItemHandlerModifiable inputInventory, int inputSlot) {
-        ItemStack input = inputInventory.getStackInSlot(inputSlot);
-        NBTTagCompound nbt = input.getTagCompound();
-        return nbt.getString("Composition");
-    }
-
     /**
      * Check if a multiblock can process by checking if there is enough energy and room in the output.
      * 
@@ -199,13 +137,5 @@ public class MiscMethods {
         if (!hasEnoughEnergy(energyCost, energyContainer)) return false;
         return GTTransferUtils.addItemsToItemHandler(outputInventory, true, outputStackPerSec);
         // return canOutputItem(outputStackPerSec, outputInventory);
-    }
-
-    public static ItemStack getDustMixtureStackWithNBT(List<MaterialStack> materials) {
-        NBTTagCompound nbt = writeNBTtoDustMixture(materials);
-        ItemStack outputStack = TKCYAMetaItems.DUST_MIXTURE.getStackForm();
-        outputStack.setTagCompound(nbt);
-        DUST_MIXTURE_WITH_NBT.add(outputStack);
-        return outputStack;
     }
 }
