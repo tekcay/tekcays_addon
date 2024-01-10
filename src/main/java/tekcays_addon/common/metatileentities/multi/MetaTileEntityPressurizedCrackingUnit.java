@@ -1,5 +1,6 @@
 package tekcays_addon.common.metatileentities.multi;
 
+import static tekcays_addon.api.units.PressureFormatting.convertPressureToBar;
 import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.HEAT_CONTAINER;
 
 import java.util.List;
@@ -28,11 +29,10 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
 import tekcays_addon.api.metatileentity.LogicType;
-import tekcays_addon.api.units.IPressureFormatting;
 import tekcays_addon.gtapi.metatileentity.multiblock.ModulableRecipeMapController;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 
-public class MetaTileEntityPressurizedCrackingUnit extends ModulableRecipeMapController implements IPressureFormatting {
+public class MetaTileEntityPressurizedCrackingUnit extends ModulableRecipeMapController {
 
     private int coilTier;
     private String displayedPressure;

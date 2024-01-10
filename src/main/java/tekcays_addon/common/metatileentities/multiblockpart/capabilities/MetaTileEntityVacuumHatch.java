@@ -29,6 +29,7 @@ import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import tekcays_addon.api.units.PressureFormatting;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.capability.containers.IVacuumContainer;
 import tekcays_addon.gtapi.capability.impl.VacuumContainer;
@@ -92,7 +93,7 @@ public class MetaTileEntityVacuumHatch extends MetaTileEntityMultiblockPart
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.vacuum",
-                vacuumContainer.convertPressureToMbar(minPressure, true)));
+                PressureFormatting.convertPressureToMillibar(minPressure, true)));
         tooltip.add(I18n.format("tkcya.machine.pressure_hatch.tooltip.vacuum.leak", leakingRate));
     }
 

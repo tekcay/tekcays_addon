@@ -1,5 +1,6 @@
 package tekcays_addon.common.metatileentities.multiblockpart.capabilities;
 
+import static tekcays_addon.api.units.PressureFormatting.convertPressureToBar;
 import static tekcays_addon.gtapi.consts.TKCYAValues.*;
 
 import java.util.List;
@@ -28,15 +29,13 @@ import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import tekcays_addon.api.units.IPressureFormatting;
 import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.capability.containers.IPressureContainer;
 import tekcays_addon.gtapi.capability.impl.PressureContainer;
 import tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility;
 
 public class MetaTileEntityPressureHatch extends MetaTileEntityMultiblockPart
-                                         implements IMultiblockAbilityPart<IPressureContainer>, IDataInfoProvider,
-                                         IPressureFormatting {
+                                         implements IMultiblockAbilityPart<IPressureContainer>, IDataInfoProvider {
 
     private final IPressureContainer pressureContainer;
     private final int leakingRate;

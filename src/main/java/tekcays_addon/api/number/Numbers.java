@@ -1,4 +1,4 @@
-package tekcays_addon.api.utils;
+package tekcays_addon.api.number;
 
 public class Numbers {
 

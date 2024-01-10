@@ -1,6 +1,6 @@
 package tekcays_addon.api.recipe;
 
-import static tekcays_addon.api.utils.Misc.isBetweenInclusive;
+import static tekcays_addon.api.number.IsBetweenUtils.isBetweenInclusive;
 import static tekcays_addon.gtapi.consts.TKCYAValues.EMPTY_INT_TWO_ARRAY;
 
 import net.minecraftforge.fluids.FluidStack;

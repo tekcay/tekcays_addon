@@ -5,6 +5,7 @@ import static gregtech.api.unification.material.Materials.*;
 import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
 import static tekcays_addon.gtapi.consts.TKCYAValues.STEAM_TO_WATER;
 import static tekcays_addon.gtapi.render.TKCYATextures.*;
+import static tekcays_addon.gtapi.utils.FluidStackHelper.*;
 
 import java.util.List;
 
@@ -51,10 +52,9 @@ import tekcays_addon.gtapi.capability.containers.IRotationContainer;
 import tekcays_addon.gtapi.capability.containers.ISteamConsumer;
 import tekcays_addon.gtapi.capability.impl.RotationContainer;
 import tekcays_addon.gtapi.capability.impl.SteamConsumer;
-import tekcays_addon.gtapi.utils.FluidStackHelper;
 
 public class MetaTileEntitySteamTurbine extends MetaTileEntity
-                                        implements IDataInfoProvider, IActiveOutputSide, FluidStackHelper {
+                                        implements IDataInfoProvider, IActiveOutputSide {
 
     private IFluidTank importFluidTank, exportFluidTank;
     private IRotationContainer rotationContainer;

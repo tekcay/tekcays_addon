@@ -3,6 +3,7 @@ package tekcays_addon.common.metatileentities.multi.storage;
 import static gregtech.api.util.RelativeDirection.*;
 import static tekcays_addon.api.metatileentity.TankMethods.*;
 import static tekcays_addon.api.metatileentity.predicates.Predicates.isAir;
+import static tekcays_addon.api.units.PressureFormatting.convertPressureToBar;
 import static tekcays_addon.gtapi.metatileentity.multiblock.TKCYAMultiblockAbility.*;
 
 import java.math.BigDecimal;
@@ -35,11 +36,9 @@ import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import lombok.Getter;
-import tekcays_addon.api.units.IPressureFormatting;
 import tekcays_addon.gtapi.capability.containers.IPressureContainer;
 
-public class MetaTileEntityModulablePressurizedMultiblockTank extends MultiblockWithDisplayBase
-                                                              implements IPressureFormatting {
+public class MetaTileEntityModulablePressurizedMultiblockTank extends MultiblockWithDisplayBase {
 
     private final Material material;
     private final int maxPressure;

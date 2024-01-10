@@ -6,6 +6,7 @@ import static java.util.Collections.*;
 import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
 import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.DIESEL_GENERATOR;
 import static tekcays_addon.gtapi.render.TKCYATextures.*;
+import static tekcays_addon.gtapi.utils.FluidStackHelper.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -57,10 +58,9 @@ import tekcays_addon.api.metatileentity.IFreeFace;
 import tekcays_addon.gtapi.capability.containers.IRotationContainer;
 import tekcays_addon.gtapi.capability.impl.RotationContainer;
 import tekcays_addon.gtapi.logic.DieselLogic;
-import tekcays_addon.gtapi.utils.FluidStackHelper;
 
 public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDataInfoProvider, IActiveOutputSide,
-                                           IFreeFace, AdjacentCapabilityHelper<IFluidHandler>, FluidStackHelper {
+                                           IFreeFace, AdjacentCapabilityHelper<IFluidHandler> {
 
     private IFluidTank importFuelTank;
     private IRotationContainer rotationContainer;
