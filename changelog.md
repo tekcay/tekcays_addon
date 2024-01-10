@@ -5,6 +5,7 @@
 * Improved `buildAndTest` script ([#140](https://github.com/tekcay/tekcays_addon/pull/140))
 * Added several material methods included setting mp from chem formula ([#141](https://github.com/tekcay/tekcays_addon/pull/141))
 * Added several methods for numbers and units, refacto of two interfaces ([#142](https://github.com/tekcay/tekcays_addon/pull/142))
+* Regrouped fluidStack, material and mixture methods, other fixes ([#143](https://github.com/tekcay/tekcays_addon/pull/143))
 
 ## v0.2.3
 * added GT6 plates textures ([#132](https://github.com/tekcay/tekcays_addon/pull/132))
