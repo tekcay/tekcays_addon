@@ -1,10 +1,9 @@
-package tekcays_addon.gtapi.utils.roasting;
+package tekcays_addon.api.mixtures;
 
 import static gregtech.api.unification.material.Materials.Sulfur;
 import static gregtech.api.unification.ore.OrePrefix.dust;
+import static tekcays_addon.api.mixtures.MixtureUtil.*;
 import static tekcays_addon.common.items.TKCYAMetaItems.DUST_MIXTURE;
-import static tekcays_addon.gtapi.consts.TKCYAValues.DUST_MIXTURE_WITH_NBT;
-import static tekcays_addon.gtapi.utils.MiscMethods.writeNBTtoDustMixture;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,7 +17,7 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.MaterialStack;
 
-public class RoastingRecipeHandlerMethods {
+public class MixtureRoastingRecipeHandlerMethods {
 
     /**
      *

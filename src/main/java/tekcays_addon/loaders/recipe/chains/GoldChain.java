@@ -3,6 +3,7 @@ package tekcays_addon.loaders.recipe.chains;
 import static gregtech.api.recipes.RecipeMaps.CHEMICAL_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
+import static tekcays_addon.api.mixtures.MixtureUtil.getMixtureToFilterStack;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.*;
 import static tekcays_addon.loaders.DamageableItemsLoader.electrodeSilver;
 
@@ -15,7 +16,6 @@ import gregtech.api.unification.stack.MaterialStack;
 import tekcays_addon.common.items.TKCYAMetaItems;
 import tekcays_addon.gtapi.recipes.TKCYARecipeMaps;
 import tekcays_addon.gtapi.unification.TKCYAMaterials;
-import tekcays_addon.gtapi.utils.MiscMethods;
 
 public class GoldChain {
 
@@ -47,14 +47,14 @@ public class GoldChain {
                 .EUt(30)
                 .input(dust, GoldLeach, 4)
                 .fluidInputs(HydrochloricAcid.getFluid(1000))
-                .fluidOutputs(MiscMethods.getMixtureToFilterStack(new MaterialStack(CopperLeach, 4),
+                .fluidOutputs(getMixtureToFilterStack(new MaterialStack(CopperLeach, 4),
                         new MaterialStack(ChloroauricAcid, 1000)))
                 .buildAndRegister();
 
         // STEP 4
         // HAuCl(OH) -> Au + H2O + Cl
 
-        FluidStack output = MiscMethods.getMixtureToFilterStack(new MaterialStack(Gold, 4),
+        FluidStack output = getMixtureToFilterStack(new MaterialStack(Gold, 4),
                 new MaterialStack(HydrochloricAcid, 4000));
 
         TKCYARecipeMaps.ELECTROLYSIS.recipeBuilder().duration(100)

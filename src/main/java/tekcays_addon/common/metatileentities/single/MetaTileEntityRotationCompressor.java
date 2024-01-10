@@ -2,10 +2,10 @@ package tekcays_addon.common.metatileentities.single;
 
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
 import static tekcays_addon.api.consts.NBTKeys.IS_RUNNING;
+import static tekcays_addon.api.fluids.FluidStackHelper.*;
 import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER;
 import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
 import static tekcays_addon.gtapi.render.TKCYATextures.*;
-import static tekcays_addon.gtapi.utils.FluidStackHelper.*;
 
 import java.util.List;
 
@@ -65,7 +65,7 @@ public class MetaTileEntityRotationCompressor extends MetaTileEntity
     private final int tier;
     private int transferRate;
     private boolean isRunning;
-    private int inputTankCapacity;
+    private final int inputTankCapacity;
 
     public MetaTileEntityRotationCompressor(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId);

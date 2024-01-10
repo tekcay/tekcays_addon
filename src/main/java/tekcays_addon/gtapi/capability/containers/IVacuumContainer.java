@@ -1,9 +1,9 @@
 package tekcays_addon.gtapi.capability.containers;
 
 import static gregtech.api.unification.material.Materials.Air;
+import static tekcays_addon.api.fluids.FluidStackHelper.*;
 import static tekcays_addon.gtapi.consts.TKCYAValues.*;
 import static tekcays_addon.gtapi.consts.TKCYAValues.ROOM_TEMPERATURE;
-import static tekcays_addon.gtapi.utils.FluidStackHelper.*;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
@@ -73,11 +73,11 @@ public interface IVacuumContainer {
     /**
      *
      * @param amount
-     * @param doAdd  true: adds the amount, false: substracts the amount
+     * @param doAdd  true: adds the amount, false: subtracts the amount
      */
     default void changeAirFluidStack(int amount, boolean doAdd) {
-        if (doAdd) setAirFluidStack(addFluidStacks(getAirFluidStack(), amount));
-        else setAirFluidStack(subtractFluidStacks(getAirFluidStack(), amount));
+        if (doAdd) setAirFluidStack(getAmountChangedFluidStack(getAirFluidStack(), amount));
+        else setAirFluidStack(getDecreasedAmountFluidStack(getAirFluidStack(), amount));
     }
 
     default void leaksContainer(int amount) {

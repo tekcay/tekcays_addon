@@ -2,10 +2,10 @@ package tekcays_addon.common.metatileentities.single;
 
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
 import static gregtech.api.unification.material.Materials.*;
+import static tekcays_addon.api.fluids.FluidStackHelper.*;
 import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
 import static tekcays_addon.gtapi.consts.TKCYAValues.STEAM_TO_WATER;
 import static tekcays_addon.gtapi.render.TKCYATextures.*;
-import static tekcays_addon.gtapi.utils.FluidStackHelper.*;
 
 import java.util.List;
 
@@ -265,7 +265,7 @@ public class MetaTileEntitySteamTurbine extends MetaTileEntity
     }
 
     @Override
-    public void receiveCustomData(int dataId, PacketBuffer buf) {
+    public void receiveCustomData(int dataId, @NotNull PacketBuffer buf) {
         super.receiveCustomData(dataId, buf);
         if (dataId == IS_WORKING) {
             this.isRunning = buf.readBoolean();

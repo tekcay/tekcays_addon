@@ -2,9 +2,9 @@ package tekcays_addon.gtapi.capability.impl;
 
 import static tekcays_addon.api.consts.DataIds.PRESSURIZED_FLUID_STACK;
 import static tekcays_addon.api.consts.NBTKeys.PRESSURE_KEY;
+import static tekcays_addon.api.fluids.FluidStackHelper.*;
 import static tekcays_addon.api.units.PressureFormatting.*;
 import static tekcays_addon.gtapi.consts.TKCYAValues.*;
-import static tekcays_addon.gtapi.utils.FluidStackHelper.*;
 
 import java.util.List;
 
@@ -73,7 +73,7 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
 
         if (fluidStack.isFluidEqual(this.pressurizedFluidStack)) {
             setPressurizedFluidStack(
-                    getChangedFluidStack(getPressurizedFluidStack(), smallestFluidStackToTransfer.amount));
+                    getAmountChangedFluidStack(getPressurizedFluidStack(), smallestFluidStackToTransfer.amount));
             changed = smallestFluidStackToTransfer.amount;
         }
 
@@ -90,7 +90,6 @@ public class PressureContainer extends MTETrait implements IPressureContainer {
         return getNullableFluidStackLocalizedName(this.pressurizedFluidStack);
     }
 
-    @Nullable
     @Override
     public void setPressurizedFluidStack(FluidStack fluidStack) {
         this.pressurizedFluidStack = fluidStack;

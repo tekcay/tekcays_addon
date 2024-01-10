@@ -3,10 +3,10 @@ package tekcays_addon.common.metatileentities.single;
 import static gregtech.api.capability.GregtechDataCodes.IS_WORKING;
 import static gregtech.api.unification.material.Materials.CarbonDioxide;
 import static java.util.Collections.*;
+import static tekcays_addon.api.fluids.FluidStackHelper.*;
 import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
 import static tekcays_addon.gtapi.recipes.TKCYARecipeMaps.DIESEL_GENERATOR;
 import static tekcays_addon.gtapi.render.TKCYATextures.*;
-import static tekcays_addon.gtapi.utils.FluidStackHelper.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -65,7 +65,7 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
     private IFluidTank importFuelTank;
     private IRotationContainer rotationContainer;
     private final int tier;
-    private int fuelTankCapacity;
+    private final int fuelTankCapacity;
     private int fuelConsumption;
     private final int BASE_FUEL_CONSUMPTION;
     private int carbonDioxideOutputRate;
@@ -285,7 +285,7 @@ public class MetaTileEntityDieselGenerator extends MetaTileEntity implements IDa
     }
 
     @Override
-    public void receiveCustomData(int dataId, PacketBuffer buf) {
+    public void receiveCustomData(int dataId, @NotNull PacketBuffer buf) {
         super.receiveCustomData(dataId, buf);
         if (dataId == IS_WORKING) {
             this.isRunning = buf.readBoolean();
