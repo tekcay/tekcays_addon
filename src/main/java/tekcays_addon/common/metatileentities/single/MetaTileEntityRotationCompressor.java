@@ -5,6 +5,7 @@ import static tekcays_addon.api.consts.NBTKeys.IS_RUNNING;
 import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_PRESSURE_CONTAINER;
 import static tekcays_addon.gtapi.capability.TKCYATileCapabilities.CAPABILITY_ROTATIONAL_CONTAINER;
 import static tekcays_addon.gtapi.render.TKCYATextures.*;
+import static tekcays_addon.gtapi.utils.FluidStackHelper.*;
 
 import java.util.List;
 
@@ -50,11 +51,10 @@ import tekcays_addon.gtapi.capability.TKCYATileCapabilities;
 import tekcays_addon.gtapi.capability.containers.IPressureContainer;
 import tekcays_addon.gtapi.capability.containers.IRotationContainer;
 import tekcays_addon.gtapi.capability.impl.RotationContainer;
-import tekcays_addon.gtapi.utils.FluidStackHelper;
 import tekcays_addon.gtapi.utils.PressureContainerHandler;
 
 public class MetaTileEntityRotationCompressor extends MetaTileEntity
-                                              implements IDataInfoProvider, IActiveOutputSide, FluidStackHelper,
+                                              implements IDataInfoProvider, IActiveOutputSide,
                                               PressureContainerHandler, AdjacentCapabilityHelper<IPressureContainer> {
 
     private IFluidTank importSteamTank;
