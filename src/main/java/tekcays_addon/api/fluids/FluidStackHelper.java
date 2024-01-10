@@ -1,7 +1,7 @@
 package tekcays_addon.api.fluids;
 
+import static tekcays_addon.api.material.MaterialHelper.getMaterialStacksFromString;
 import static tekcays_addon.gtapi.consts.TKCYAValues.NO_FLUID;
-import static tekcays_addon.gtapi.utils.MiscMethods.getMaterialStacksFromString;
 
 import java.util.ArrayList;
 import java.util.List;

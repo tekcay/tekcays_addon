@@ -2,8 +2,11 @@ package tekcays_addon.api.material;
 
 import static gregtech.api.unification.ore.OrePrefix.dust;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -30,7 +33,7 @@ public class MaterialHelper {
     }
 
     public static int getAmountComponentsSum(@NotNull Material material) {
-        return Math.toIntExact((con.apply(material)));
+        return Math.toIntExact(getAmountComponentsSum.apply(material));
     }
 
     public static int getInputAmountFromSubComposition(@NotNull Material material) {
@@ -38,7 +41,7 @@ public class MaterialHelper {
         return getAmountComponentsSum(subMaterial);
     }
 
-    private static final Function<Material, Long> con = material -> material
+    private static final Function<Material, Long> getAmountComponentsSum = material -> material
             .getMaterialComponents()
             .stream()
             .mapToLong(materialStack -> materialStack.amount)
@@ -68,5 +71,33 @@ public class MaterialHelper {
                 .stream()
                 .mapToInt(MaterialHelper::getFluidTemperature)
                 .sum() / getAmountComponentsSum(material));
+    }
+
+    /**
+     * Returns the amount of {@code Material} m2 in {@code Material} m1.
+     */
+    public static int getMaterialAmountInMaterial(Material m1, Material m2) {
+        for (MaterialStack ms : m1.getMaterialComponents()) {
+            if (ms.material.equals(m2)) return (int) ms.amount;
+        }
+        return 0;
+    }
+
+    public static Material getMaterialFromUnlocalizedName(String unlocalizedName) {
+        for (Material m : getAllMaterials()) {
+            if (m.getUnlocalizedName().equals(unlocalizedName)) return m;
+        }
+        return null;
+    }
+
+    public static List<MaterialStack> getMaterialStacksFromString(String formula) {
+        List<String> compounds = Arrays.asList(formula.split(","));
+        List<MaterialStack> list = new ArrayList<>();
+
+        for (int i = 0; i < compounds.size(); i += 2) {
+            list.add(new MaterialStack(getMaterialFromUnlocalizedName(compounds.get(i)),
+                    Integer.parseInt(compounds.get(i + 1))));
+        }
+        return list;
     }
 }

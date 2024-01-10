@@ -2,6 +2,7 @@ package tekcays_addon.gtapi.utils;
 
 import static gregtech.api.unification.material.Materials.Air;
 import static tekcays_addon.api.material.MaterialHelper.getAllMaterials;
+import static tekcays_addon.api.material.MaterialHelper.getMaterialStacksFromString;
 import static tekcays_addon.gtapi.consts.TKCYAValues.*;
 import static tekcays_addon.gtapi.unification.TKCYAMaterials.MixtureToFilter;
 
@@ -35,34 +36,6 @@ public class MiscMethods {
         return map;
     }
 
-    /**
-     * Returns the amount of {@code Material} m2 in {@code Material} m1.
-     */
-    public static int getAmountMaterial(Material m1, Material m2) {
-        for (MaterialStack ms : m1.getMaterialComponents()) {
-            if (ms.material.equals(m2)) return (int) ms.amount;
-        }
-        return 0;
-    }
-
-    public static Material getMaterialFromUnlocalizedName(String unlocalizedName) {
-        for (Material m : getAllMaterials()) {
-            if (m.getUnlocalizedName().equals(unlocalizedName)) return m;
-        }
-        return null;
-    }
-
-    public static List<MaterialStack> getMaterialStacksFromString(String formula) {
-        List<String> compounds = Arrays.asList(formula.split(","));
-        List<MaterialStack> list = new ArrayList<>();
-
-        for (int i = 0; i < compounds.size(); i += 2) {
-            list.add(new MaterialStack(getMaterialFromUnlocalizedName(compounds.get(i)),
-                    Integer.parseInt(compounds.get(i + 1))));
-        }
-        return list;
-    }
-
     public static NBTTagCompound writeNBTtoDustMixture(List<MaterialStack> list) {
         NBTTagCompound nbt = new NBTTagCompound();
         final StringBuilder composition = new StringBuilder();
@@ -76,16 +49,6 @@ public class MiscMethods {
         return nbt;
     }
 
-    /**
-     *
-     * @param list {@code List<MaterialStack>}
-     * @return the sum of the amount of each {@code MaterialStack}.
-     */
-    public static int getMaterialStackListSize(List<MaterialStack> list) {
-        AtomicInteger stackSize = new AtomicInteger();
-        list.forEach(ms -> stackSize.addAndGet((int) ms.amount));
-        return stackSize.get();
-    }
 
     /**
      *
